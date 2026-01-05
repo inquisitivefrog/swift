@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Swift Workspace
 
 Applications developed using Swift with help from Cursor
@@ -38,3 +39,7 @@ swift/
 └── README.md            # This file
 ```
 
+=======
+# swift
+iPhone Applications developed using Swift and popular related tools with help from Cursor
+>>>>>>> 278a86f78f30f0aa360cac44524ca6c823365607
