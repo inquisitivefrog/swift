@@ -29,6 +29,9 @@ A native iOS mobile application for managing grocery shopping lists on iPhone. T
   - Add custom items directly to the shopping list (optionally add to master list)
   - Remove items from the shopping list
   - Reorder items in the shopping list
+  - Associate shopping list with store(s) (Safeway, Whole Foods, Trader Joe's, etc.)
+  - Support single-store or multi-store shopping trips
+  - Group items by store in shopping list
 
 ### 3. Item Status Management
 - **Purpose**: Track the status of items during shopping
@@ -38,13 +41,23 @@ A native iOS mobile application for managing grocery shopping lists on iPhone. T
   - Visual indication of checked/unchecked status
   - Ability to toggle check status
 
-### 4. Data Persistence
+### 5. Store Management
+- **Purpose**: Organize shopping by store location
+- **Functionality**:
+  - Create and manage multiple stores (Safeway, Whole Foods, Trader Joe's, Sprouts, Ranch 99, etc.)
+  - Associate items with preferred stores
+  - Create store-specific shopping lists
+  - Support multi-store shopping trips
+  - Store icons and visual identification
+
+### 6. Data Persistence
 - **Storage**: Core Data (local storage on iPhone)
 - **Backup**: Automatic iCloud backup via iPhone backup (no iCloud sync needed)
 - **Data Model**: 
   - Master list items (persistent)
   - Shopping list items (can be cleared after shopping)
-  - Item metadata (name, category, category icon, etc.)
+  - Store entities (persistent)
+  - Item metadata (name, category, category icon, preferred store, etc.)
   - Category system with visual icons (SF Symbols)
 
 ## Technical Architecture
@@ -63,12 +76,15 @@ grocery-app/
 │   ├── ContentView.swift              # Main view
 │   ├── Models/
 │   │   ├── GroceryItem.swift          # Core Data model
-│   │   └── ShoppingList.swift         # Shopping list model
+│   │   ├── ShoppingListItem.swift     # Shopping list item model
+│   │   └── Store.swift                # Store model
 │   ├── Views/
 │   │   ├── MasterListView.swift       # Master list view
 │   │   ├── ShoppingListView.swift     # Active shopping list view
 │   │   ├── AddItemView.swift          # Add item view
-│   │   └── ItemDetailView.swift       # Item detail/edit view
+│   │   ├── ItemDetailView.swift       # Item detail/edit view
+│   │   ├── StoreListView.swift        # Store management view
+│   │   └── AddStoreView.swift         # Add/edit store view
 │   ├── ViewModels/
 │   │   ├── MasterListViewModel.swift  # Master list view model
 │   │   └── ShoppingListViewModel.swift # Shopping list view model
@@ -91,13 +107,25 @@ grocery-app/
 - `name`: String (item name)
 - `category`: String? (optional category: Produce, Dairy, Meat & Seafood, etc.)
 - `categoryIcon`: String? (SF Symbol name for category icon, e.g., "leaf.fill")
+- `preferredStore`: Store? (optional relationship to preferred store)
 - `isInMasterList`: Bool (true if in master list)
 - `createdDate`: Date
 - `lastUsedDate`: Date? (last time item was added to shopping list)
 
+#### Store
+- `id`: UUID (primary key)
+- `name`: String (store name, e.g., "Safeway", "Whole Foods")
+- `iconName`: String? (SF Symbol name for store icon, e.g., "storefront.fill")
+- `color`: String? (hex color code for store branding, optional)
+- `isFavorite`: Bool (mark frequently used stores)
+- `createdDate`: Date
+- `lastUsedDate`: Date? (last time store was used)
+- `shoppingListItems`: Relationship (one-to-many with ShoppingListItem)
+
 #### ShoppingListItem
 - `id`: UUID (primary key)
 - `groceryItem`: Relationship to GroceryItem
+- `store`: Store? (which store to buy this item from)
 - `isChecked`: Bool (found/selected status)
 - `addedDate`: Date (when added to shopping list)
 - `checkedDate`: Date? (when item was checked off)
@@ -111,6 +139,7 @@ grocery-app/
 1. **Tab View** (Main Navigation)
    - Master List Tab
    - Shopping List Tab
+   - Stores Tab (optional, or accessible from settings)
 
 2. **Master List View**
    - List of all grocery items
@@ -121,18 +150,38 @@ grocery-app/
 
 3. **Shopping List View**
    - List of items for current shopping trip
+   - Store selector/picker (single store or multi-store mode)
+   - Items grouped by store (if multi-store)
+   - Store badge/icon on each item
    - Checkbox for each item (unchecked/checked)
    - Visual distinction for checked items (strikethrough, grayed out)
    - Add button to add items from master list or create new
    - Clear/Reset button to uncheck all items
    - Option to clear completed items
+   - Filter by store (if multi-store)
 
 4. **Add/Edit Item View**
    - Text field for item name
    - Category picker with icons (Produce, Dairy, Meat, Bakery, Canned Goods, Packaged Goods, Frozen, Beverages, Pantry Staples, Snacks, Personal Care, Household, Other)
    - Visual category icons using SF Symbols
+   - Preferred store picker (optional)
    - Save/Cancel buttons
    - Option to add to master list when creating from shopping list
+
+5. **Store Management View**
+   - List of all stores
+   - Add new store button
+   - Edit/delete stores
+   - Favorite toggle
+   - Store icons and colors
+   - Usage statistics
+
+6. **Add/Edit Store View**
+   - Store name text field
+   - Icon picker (SF Symbols)
+   - Color picker (optional)
+   - Favorite toggle
+   - Save/Cancel buttons
 
 ## User Workflows
 
@@ -144,9 +193,12 @@ grocery-app/
 
 ### Creating a Shopping List
 1. Navigate to Shopping List tab
-2. Tap "Add Items" button
-3. Select items from master list (multi-select)
-4. Items are added to shopping list in unchecked state
+2. Select store(s) for this shopping trip (optional)
+3. Tap "Add Items" button
+4. Select items from master list (multi-select)
+   - Items can be filtered by preferred store
+5. Items are added to shopping list in unchecked state
+6. Each item can be assigned to a specific store (if multi-store trip)
 
 ### Shopping Workflow
 1. Open Shopping List view
@@ -205,6 +257,16 @@ grocery-app/
 - [ ] Category picker in Add/Edit Item view
 - [ ] Display category icons in list views
 - [ ] Filter/group by category (optional)
+
+### Phase 5: Store Management
+- [ ] Create Store Core Data entity
+- [ ] Store management view (list, add, edit, delete)
+- [ ] Pre-populate common stores (Safeway, Whole Foods, Trader Joe's, etc.)
+- [ ] Store icons using SF Symbols
+- [ ] Associate items with preferred stores
+- [ ] Store selection in shopping list
+- [ ] Group shopping list items by store
+- [ ] Multi-store shopping trip support
 
 ### Phase 5: Polish
 - [ ] Improve UI/UX
