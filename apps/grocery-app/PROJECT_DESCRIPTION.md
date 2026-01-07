@@ -19,6 +19,8 @@ A native iOS mobile application for managing grocery shopping lists on iPhone. T
   - Edit existing items
   - Delete items from the master list
   - View all items in the master list
+  - Organize items by category (Produce, Dairy, Meat, etc.)
+  - Visual category icons using SF Symbols
 
 ### 2. Shopping List (Active List)
 - **Purpose**: Create a list of items to purchase on a specific shopping trip
@@ -42,7 +44,8 @@ A native iOS mobile application for managing grocery shopping lists on iPhone. T
 - **Data Model**: 
   - Master list items (persistent)
   - Shopping list items (can be cleared after shopping)
-  - Item metadata (name, category, etc.)
+  - Item metadata (name, category, category icon, etc.)
+  - Category system with visual icons (SF Symbols)
 
 ## Technical Architecture
 
@@ -86,7 +89,8 @@ grocery-app/
 #### GroceryItem
 - `id`: UUID (primary key)
 - `name`: String (item name)
-- `category`: String? (optional category: produce, dairy, meat, etc.)
+- `category`: String? (optional category: Produce, Dairy, Meat & Seafood, etc.)
+- `categoryIcon`: String? (SF Symbol name for category icon, e.g., "leaf.fill")
 - `isInMasterList`: Bool (true if in master list)
 - `createdDate`: Date
 - `lastUsedDate`: Date? (last time item was added to shopping list)
@@ -125,7 +129,8 @@ grocery-app/
 
 4. **Add/Edit Item View**
    - Text field for item name
-   - Optional category picker
+   - Category picker with icons (Produce, Dairy, Meat, Bakery, Canned Goods, Packaged Goods, Frozen, Beverages, Pantry Staples, Snacks, Personal Care, Household, Other)
+   - Visual category icons using SF Symbols
    - Save/Cancel buttons
    - Option to add to master list when creating from shopping list
 
@@ -194,22 +199,29 @@ grocery-app/
 - [ ] Implement check/uncheck functionality
 - [ ] Add visual indicators for checked items
 
-### Phase 4: Polish
+### Phase 4: Categories & Organization
+- [ ] Implement category system (enum or string-based)
+- [ ] Add category icons using SF Symbols
+- [ ] Category picker in Add/Edit Item view
+- [ ] Display category icons in list views
+- [ ] Filter/group by category (optional)
+
+### Phase 5: Polish
 - [ ] Improve UI/UX
-- [ ] Add categories and organization
 - [ ] Add quantity support
 - [ ] Testing and bug fixes
 
 ## Future Enhancements (Optional)
 
-- Item categories with icons
 - Quantity tracking
 - Price tracking
 - Shopping history
 - Favorite/frequently used items
 - Custom item ordering
-- Dark mode support
+- Dark mode support (automatic with SF Symbols)
 - Haptic feedback for checking items
+- Category-based sorting in shopping list
+- Store layout organization (group by store section)
 
 ## Notes
 
