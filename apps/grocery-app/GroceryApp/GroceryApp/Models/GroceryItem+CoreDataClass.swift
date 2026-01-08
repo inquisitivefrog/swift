@@ -32,3 +32,8 @@ public class GroceryItem: NSManagedObject {
     }
 }
 
+// MARK: - Identifiable Conformance
+extension GroceryItem: Identifiable {
+    // Uses the 'id' property from Core Data as the identifier
+}
+

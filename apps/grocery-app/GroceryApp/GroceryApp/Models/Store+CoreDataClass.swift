@@ -26,3 +26,8 @@ public class Store: NSManagedObject {
     }
 }
 
+// MARK: - Identifiable Conformance
+extension Store: Identifiable {
+    // Uses the 'id' property from Core Data as the identifier
+}
+

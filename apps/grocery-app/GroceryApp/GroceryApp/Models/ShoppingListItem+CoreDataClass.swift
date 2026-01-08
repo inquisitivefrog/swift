@@ -34,3 +34,8 @@ public class ShoppingListItem: NSManagedObject {
     }
 }
 
+// MARK: - Identifiable Conformance
+extension ShoppingListItem: Identifiable {
+    // Uses the 'id' property from Core Data as the identifier
+}
+

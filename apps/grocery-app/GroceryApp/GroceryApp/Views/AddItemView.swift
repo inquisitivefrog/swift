@@ -16,6 +16,7 @@ struct AddItemView: View {
     @State private var selectedCategory: GroceryCategory? = nil
     @State private var selectedStore: Store? = nil
     @State private var addToShoppingList = false
+    @State private var showDuplicateAlert = false
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Store.name, ascending: true)],
@@ -71,10 +72,41 @@ struct AddItemView: View {
                     .disabled(itemName.isEmpty)
                 }
             }
+            .alert("Duplicate Item", isPresented: $showDuplicateAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                if let storeName = selectedStore?.name {
+                    Text("An item named '\(itemName)' at \(storeName) already exists in your master list.")
+                } else {
+                    Text("An item named '\(itemName)' with no preferred store already exists in your master list.")
+                }
+            }
         }
     }
     
     private func saveItem() {
+        // Check for duplicate: same name + same store (or both nil stores)
+        let fetchRequest: NSFetchRequest<GroceryItem> = GroceryItem.fetchRequest()
+        
+        // Build predicate based on whether store is selected
+        if let store = selectedStore {
+            fetchRequest.predicate = NSPredicate(format: "name == %@ AND preferredStore == %@", itemName, store)
+        } else {
+            // Check for items with same name and no store
+            fetchRequest.predicate = NSPredicate(format: "name == %@ AND preferredStore == nil", itemName)
+        }
+        
+        do {
+            let existingItems = try viewContext.fetch(fetchRequest)
+            if !existingItems.isEmpty {
+                // Duplicate found - show alert
+                showDuplicateAlert = true
+                return
+            }
+        } catch {
+            print("Error checking for duplicates: \(error)")
+        }
+        
         withAnimation {
             // Create grocery item
             let item = GroceryItem(context: viewContext)

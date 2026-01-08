@@ -84,29 +84,39 @@ struct ShoppingListView: View {
     }
     
     private func deleteItems(offsets: IndexSet) {
+        // Get all items as array to avoid issues with FetchedResults during deletion
+        let allItems = Array(items)
+        let itemsToDelete = offsets.map { allItems[$0] }
+        
         withAnimation {
-            let allItems = Array(items)
-            offsets.map { allItems[$0] }.forEach(viewContext.delete)
-            
-            do {
-                try viewContext.save()
-            } catch {
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+            itemsToDelete.forEach(viewContext.delete)
+        }
+        
+        // Save outside animation to avoid CoreGraphics NaN issues
+        do {
+            try viewContext.save()
+        } catch {
+            let nsError = error as NSError
+            print("Error deleting items: \(nsError), \(nsError.userInfo)")
+            // Don't fatalError - just log the error
         }
     }
     
     private func clearCheckedItems() {
+        // Get a snapshot of checked items before deletion to avoid issues during iteration
+        let itemsToDelete = checkedItems
+        
         withAnimation {
-            checkedItems.forEach(viewContext.delete)
-            
-            do {
-                try viewContext.save()
-            } catch {
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
+            itemsToDelete.forEach(viewContext.delete)
+        }
+        
+        // Save outside animation to avoid CoreGraphics NaN issues
+        do {
+            try viewContext.save()
+        } catch {
+            let nsError = error as NSError
+            print("Error clearing checked items: \(nsError), \(nsError.userInfo)")
+            // Don't fatalError - just log the error
         }
     }
 }

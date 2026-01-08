@@ -13,7 +13,8 @@ struct MasterListView: View {
     
     @FetchRequest(
         sortDescriptors: [
-            NSSortDescriptor(keyPath: \GroceryItem.name, ascending: true)
+            NSSortDescriptor(keyPath: \GroceryItem.name, ascending: true),
+            NSSortDescriptor(keyPath: \GroceryItem.createdDate, ascending: true)
         ],
         animation: .default
     )
@@ -96,11 +97,16 @@ struct MasterListItemRow: View {
             
             Spacer()
             
-            // Preferred store icon
+            // Preferred store name and icon
             if let store = item.preferredStore {
-                Image(systemName: store.displayIconName)
-                    .foregroundColor(.orange)
-                    .font(.caption)
+                HStack(spacing: 4) {
+                    Image(systemName: store.displayIconName)
+                        .foregroundColor(.orange)
+                        .font(.caption)
+                    Text(store.name)
+                        .font(.caption)
+                        .foregroundColor(.orange)
+                }
             }
         }
     }
