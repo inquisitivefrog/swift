@@ -124,6 +124,13 @@
    - [ ] Custom item ordering
    - [ ] Store sections (produce, dairy, etc.)
 
+4. **Data Management**
+   - [ ] "Clear All Data" option for development/testing
+     - Useful during prototyping phase
+     - Should be in Settings/Developer menu
+     - Clear all stores, items, and shopping list items
+     - Note: Production app should NOT have this (data persistence is desired)
+
 **Time**: ~4-6 hours
 
 ---
@@ -219,4 +226,22 @@ If you encounter issues:
 - [ ] Test checking items in shopping list
 
 Once these work, you're ready to enhance and polish!
+
+---
+
+## Design Notes
+
+### Master List Naming Strategy
+- **Generic/Common Names**: Use generic product names, not brand-specific (e.g., "soy milk" not "Silk Soy Milk")
+- **Purpose**: Generic names help navigate to the correct aisle, then user can browse and choose specific brand
+- **Multiple Entries**: If preference is very common, create separate entries (e.g., "potato chips plain" vs "potato chips sour cream & onion")
+- **Long-term Stability**: Master list items remain unchanged for long periods once entered
+- **Current Design**: The app already supports this approach well - generic names with category organization
+
+### Data Persistence
+- **Intentional**: Data persists across app launches and updates (as designed)
+- **Production**: On real iPhone, deleting app removes all data (standard iOS behavior)
+- **Development**: Simulator may retain data even after app deletion (simulator quirk)
+- **Backup**: Automatic iCloud backup via iPhone backup (no additional setup needed)
+- **Prototyping**: Persistence is helpful during testing to avoid re-entering data
 

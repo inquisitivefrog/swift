@@ -8,19 +8,28 @@
 import Foundation
 
 /// Grocery item categories with associated SF Symbol icons
-enum GroceryCategory: String, CaseIterable, Identifiable {
+/// Focused on supermarket/grocery store items
+enum GroceryCategory: String, CaseIterable, Identifiable, Hashable {
+    // Fresh items
     case produce = "Produce"
     case dairy = "Dairy"
     case meat = "Meat & Seafood"
+    case deli = "Deli"
     case bakery = "Bakery"
-    case canned = "Canned Goods"
-    case packaged = "Packaged Goods"
-    case frozen = "Frozen"
-    case beverages = "Beverages"
+    
+    // Shelf-stable items
     case pantry = "Pantry Staples"
+    case canned = "Canned Goods"
+    case beverages = "Beverages"
     case snacks = "Snacks"
-    case personalCare = "Personal Care"
-    case household = "Household"
+    case condiments = "Condiments & Spices"
+    case breakfast = "Breakfast Items"
+    case baking = "Baking Supplies"
+    
+    // Frozen
+    case frozen = "Frozen"
+    
+    // Other
     case other = "Other"
     
     var id: String { rawValue }
@@ -31,15 +40,16 @@ enum GroceryCategory: String, CaseIterable, Identifiable {
         case .produce: return "leaf.fill"
         case .dairy: return "drop.fill"
         case .meat: return "fish.fill"
+        case .deli: return "fork.knife"
         case .bakery: return "birthday.cake.fill"
-        case .canned: return "cylinder.fill"
-        case .packaged: return "square.fill"
-        case .frozen: return "snowflake"
-        case .beverages: return "cup.and.saucer.fill"
         case .pantry: return "cabinet.fill"
+        case .canned: return "cylinder.fill"
+        case .beverages: return "cup.and.saucer.fill"
         case .snacks: return "circle.grid.hex.fill"
-        case .personalCare: return "person.fill"
-        case .household: return "house.fill"
+        case .condiments: return "sparkles"
+        case .breakfast: return "sunrise.fill"
+        case .baking: return "flame.fill"
+        case .frozen: return "snowflake"
         case .other: return "questionmark.circle.fill"
         }
     }
