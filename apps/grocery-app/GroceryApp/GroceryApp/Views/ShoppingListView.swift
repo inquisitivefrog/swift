@@ -20,18 +20,11 @@ struct ShoppingListView: View {
     )
     private var items: FetchedResults<ShoppingListItem>
     
-    // Fetch master list items for category browsing
     @FetchRequest(
-        sortDescriptors: [
-            NSSortDescriptor(keyPath: \GroceryItem.name, ascending: true)
-        ],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Category.name, ascending: true)],
         animation: .default
     )
-    private var masterItems: FetchedResults<GroceryItem>
-    
-    @State private var showingAddItem = false
-    @State private var isClearingChecked = false
-    @State private var selectedCategory: GroceryCategory? = nil
+    private var categories: FetchedResults<Category>
     
     var uncheckedItems: [ShoppingListItem] {
         items.filter { !$0.isChecked }
@@ -41,18 +34,22 @@ struct ShoppingListView: View {
         items.filter { $0.isChecked }
     }
     
-    // Get shopping list items filtered by selected category
-    var categoryShoppingItems: [ShoppingListItem] {
-        guard let category = selectedCategory else { return [] }
-        return items.filter { item in
-            item.groceryItem.categoryEnum == category
-        }
-    }
+    @State private var isClearingChecked = false
     
-    // Get category counts from shopping list (not master list)
-    var categoryCounts: [(category: GroceryCategory, count: Int)] {
-        GroceryCategory.allCases.map { category in
-            let count = items.filter { $0.groceryItem.categoryEnum == category }.count
+    // Get category counts from shopping list (not master list) - optimized
+    var categoryCounts: [(category: Category, count: Int)] {
+        // Use Dictionary for O(1) lookups instead of filtering
+        var itemCountsByCategory: [UUID: Int] = [:]
+        for item in items {
+            // groceryItem is non-optional, but category might be optional
+            if let categoryId = item.groceryItem.category?.id {
+                itemCountsByCategory[categoryId, default: 0] += 1
+            }
+        }
+        
+        // Build result array efficiently
+        return categories.map { category in
+            let count = itemCountsByCategory[category.id] ?? 0
             return (category: category, count: count)
         }.sorted { $0.count > $1.count } // Sort by count, most to least
     }
@@ -78,23 +75,10 @@ struct ShoppingListView: View {
             }
             .background(Color(.systemGroupedBackground))
             .navigationTitle("Shopping List")
-            .navigationDestination(for: GroceryCategory.self) { category in
-                ShoppingListCategoryView(
-                    category: category,
-                    onDelete: { item in
-                        deleteShoppingItem(item)
-                    },
-                    onAddItem: {
-                        // Handled in ShoppingListCategoryView
-                    }
-                )
+            .navigationDestination(for: Category.self) { category in
+                ShoppingListCategoryView(category: category)
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: { showingAddItem = true }) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
                 ToolbarItem(placement: .navigationBarLeading) {
                     if !checkedItems.isEmpty && !isClearingChecked {
                         Button("Clear Checked") {
@@ -105,37 +89,6 @@ struct ShoppingListView: View {
                     }
                 }
             }
-            .sheet(isPresented: $showingAddItem) {
-                AddItemView(alwaysAddToShoppingList: true)
-            }
-        }
-    }
-    
-    private func deleteShoppingItem(_ item: ShoppingListItem) {
-        viewContext.delete(item)
-        do {
-            try viewContext.save()
-        } catch {
-            print("Error deleting shopping item: \(error)")
-        }
-    }
-    
-    private func deleteItems(offsets: IndexSet) {
-        // Get all items as array to avoid issues with FetchedResults during deletion
-        let allItems = Array(items)
-        let itemsToDelete = offsets.map { allItems[$0] }
-        
-        withAnimation {
-            itemsToDelete.forEach(viewContext.delete)
-        }
-        
-        // Save outside animation to avoid CoreGraphics NaN issues
-        do {
-            try viewContext.save()
-        } catch {
-            let nsError = error as NSError
-            print("Error deleting items: \(nsError), \(nsError.userInfo)")
-            // Don't fatalError - just log the error
         }
     }
     
@@ -146,6 +99,11 @@ struct ShoppingListView: View {
         // Use performBackgroundTask to avoid blocking main thread and FetchedResults conflicts
         let container = PersistenceController.shared.container
         container.performBackgroundTask { backgroundContext in
+            defer {
+                // Ensure context is processed and released
+                backgroundContext.processPendingChanges()
+            }
+            
             // Fetch object IDs in background context
             let fetchRequest: NSFetchRequest<NSManagedObjectID> = NSFetchRequest(entityName: "ShoppingListItem")
             fetchRequest.predicate = NSPredicate(format: "isChecked == YES")
@@ -165,89 +123,39 @@ struct ShoppingListView: View {
                 if backgroundContext.hasChanges {
                     try backgroundContext.save()
                 }
+                
+                // Reset flag on main thread after save completes
+                DispatchQueue.main.async {
+                    self.isClearingChecked = false
+                }
             } catch {
                 print("Error clearing checked items: \(error)")
-            }
-        }
-        
-        // Reset flag after a delay to allow background task to complete
-        // The view will update automatically when changes merge from background context
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            isClearingChecked = false
-        }
-    }
-}
-
-struct ShoppingListItemRow: View {
-    @ObservedObject var item: ShoppingListItem
-    @Environment(\.managedObjectContext) private var viewContext
-    
-    var body: some View {
-        HStack {
-            // Checkbox
-            Button(action: {
-                item.toggleChecked()
-                saveContext()
-            }) {
-                Image(systemName: item.isChecked ? "checkmark.circle.fill" : "circle")
-                    .foregroundColor(item.isChecked ? .green : .gray)
-                    .font(.title2)
-            }
-            .buttonStyle(.plain)
-            
-            VStack(alignment: .leading, spacing: 4) {
-                Text(item.groceryItem.name)
-                    .font(.body)
-                    .strikethrough(item.isChecked)
-                    .foregroundColor(item.isChecked ? .secondary : .primary)
-                
-                HStack {
-                    // Category
-                    if let category = item.groceryItem.categoryEnum {
-                        Label(category.displayName, systemImage: category.iconName)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                    
-                    // Store
-                    if let store = item.store {
-                        Label(store.name, systemImage: store.displayIconName)
-                            .font(.caption)
-                            .foregroundColor(.orange)
-                    }
+                // Reset flag even on error
+                DispatchQueue.main.async {
+                    self.isClearingChecked = false
                 }
             }
-            
-            Spacer()
-        }
-        .contentShape(Rectangle())
-    }
-    
-    private func saveContext() {
-        do {
-            try viewContext.save()
-        } catch {
-            print("Error saving context: \(error)")
         }
     }
 }
 
-// Category button content (for use in NavigationLink)
+// Category button content
 struct CategoryButtonContent: View {
-    let category: GroceryCategory
+    let category: Category
     let itemCount: Int
     
     var body: some View {
         VStack(spacing: 6) {
-            Image(systemName: category.iconName)
+            Image(systemName: category.displayIconName)
                 .font(.title2)
                 .foregroundColor(.blue)
             
-            Text(category.displayName)
+            Text(category.name)
                 .font(.caption)
                 .foregroundColor(.primary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.8)
+                .lineLimit(2)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
             
             Text("\(itemCount)")
                 .font(.caption2)
@@ -264,84 +172,55 @@ struct CategoryButtonContent: View {
     }
 }
 
-// Category button widget (for backward compatibility if needed)
-struct CategoryButton: View {
-    let category: GroceryCategory
-    let isSelected: Bool
-    let itemCount: Int
-    let action: () -> Void
-    
-    var body: some View {
-        Button(action: action) {
-            VStack(spacing: 6) {
-                Image(systemName: category.iconName)
-                    .font(.title2)
-                    .foregroundColor(isSelected ? .white : .blue)
-                
-                Text(category.displayName)
-                    .font(.caption)
-                    .foregroundColor(isSelected ? .white : .primary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-                
-                Text("\(itemCount)")
-                    .font(.caption2)
-                    .foregroundColor(isSelected ? .white.opacity(0.8) : (itemCount > 0 ? .secondary : Color.secondary.opacity(0.5)))
-            }
-            .frame(width: 80, height: 80)
-            .background(isSelected ? Color.blue : Color(.systemBackground))
-            .cornerRadius(12)
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(isSelected ? Color.blue : Color(.separator), lineWidth: isSelected ? 2 : 1)
-            )
-            .shadow(color: isSelected ? Color.blue.opacity(0.3) : Color.black.opacity(0.1), radius: isSelected ? 4 : 2)
-        }
-        .buttonStyle(.plain)
-    }
-}
-
 // View showing shopping list items in a selected category with edit options
 struct ShoppingListCategoryView: View {
-    let category: GroceryCategory
-    let onDelete: (ShoppingListItem) -> Void
-    let onAddItem: () -> Void
     @Environment(\.managedObjectContext) private var viewContext
-    @Environment(\.dismiss) private var dismiss
+    let category: Category
     @State private var showingAddItem = false
     
-    // Fetch master list items for this category
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \GroceryItem.name, ascending: true)],
-        animation: .default
-    )
-    private var allMasterItems: FetchedResults<GroceryItem>
+    // Fetch all master list items for this category
+    @FetchRequest var allMasterItems: FetchedResults<GroceryItem>
     
-    // Fetch all shopping list items dynamically
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \ShoppingListItem.addedDate, ascending: true)],
-        animation: .default
-    )
-    private var allShoppingItems: FetchedResults<ShoppingListItem>
+    // Fetch shopping list items for this category
+    @FetchRequest var shoppingItems: FetchedResults<ShoppingListItem>
     
-    // Get master list items in this category
-    var masterItemsInCategory: [GroceryItem] {
-        allMasterItems.filter { $0.categoryEnum == category }
+    // Sorted items: by store name, then by item name
+    var sortedMasterItems: [GroceryItem] {
+        allMasterItems.sorted { item1, item2 in
+            let store1Name = item1.preferredStore?.name ?? ""
+            let store2Name = item2.preferredStore?.name ?? ""
+            
+            if store1Name != store2Name {
+                return store1Name < store2Name
+            }
+            return item1.name < item2.name
+        }
     }
     
-    // Get shopping list items in this category (dynamic)
-    var shoppingItemsInCategory: [ShoppingListItem] {
-        allShoppingItems.filter { $0.groceryItem.categoryEnum == category }
+    init(category: Category) {
+        self.category = category
+        _allMasterItems = FetchRequest(
+            sortDescriptors: [
+                NSSortDescriptor(keyPath: \GroceryItem.name, ascending: true)
+            ],
+            predicate: NSPredicate(format: "category == %@", category),
+            animation: .default
+        )
+        _shoppingItems = FetchRequest(
+            sortDescriptors: [NSSortDescriptor(keyPath: \ShoppingListItem.addedDate, ascending: true)],
+            predicate: NSPredicate(format: "groceryItem.category == %@", category),
+            animation: .default
+        )
     }
     
     // Check if a master item is in shopping list
     func isInShoppingList(_ item: GroceryItem) -> Bool {
-        shoppingItemsInCategory.contains { $0.groceryItem == item }
+        shoppingItems.contains { $0.groceryItem == item }
     }
     
     // Toggle item in shopping list
     func toggleItemInShoppingList(_ item: GroceryItem) {
-        if let shoppingItem = shoppingItemsInCategory.first(where: { $0.groceryItem == item }) {
+        if let shoppingItem = shoppingItems.first(where: { $0.groceryItem == item }) {
             // Item is in shopping list - remove it
             viewContext.delete(shoppingItem)
         } else {
@@ -363,11 +242,11 @@ struct ShoppingListCategoryView: View {
     }
     
     var body: some View {
-        List {
-            Section {
+        ScrollView {
+            VStack(spacing: 0) {
                 // Category title and add button
                 HStack {
-                    Text(category.displayName)
+                    Text(category.name)
                         .font(.title2)
                         .fontWeight(.semibold)
                     Spacer()
@@ -378,62 +257,80 @@ struct ShoppingListCategoryView: View {
                             .font(.body)
                     }
                 }
-                .listRowInsets(EdgeInsets())
-                .listRowBackground(Color(.systemGroupedBackground))
-            }
-            
-            Section {
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color(.systemGroupedBackground))
+                
+                Divider()
+                
                 // Master list items
-                if masterItemsInCategory.isEmpty {
+                if sortedMasterItems.isEmpty {
                     Text("No items in master list")
                         .foregroundColor(.secondary)
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.vertical, 20)
-                        .listRowInsets(EdgeInsets())
+                        .padding(.vertical, 40)
                 } else {
-                    ForEach(masterItemsInCategory) { item in
+                    ForEach(sortedMasterItems) { item in
                         Button(action: {
                             toggleItemInShoppingList(item)
                         }) {
                             HStack {
+                                // Checkmark indicator for selected items (colorblind-friendly)
+                                if isInShoppingList(item) {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(.blue)
+                                        .font(.title3)
+                                        .frame(width: 24)
+                                } else {
+                                    Image(systemName: "circle")
+                                        .foregroundColor(.gray.opacity(0.3))
+                                        .font(.title3)
+                                        .frame(width: 24)
+                                }
+                                
                                 // Category icon
-                                Image(systemName: category.iconName)
+                                Image(systemName: category.displayIconName)
                                     .foregroundColor(.blue)
                                     .frame(width: 24)
                                 
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(item.name)
-                                        .foregroundColor(isInShoppingList(item) ? .white : .primary)
+                                        .foregroundColor(.primary)
                                     
                                     if let store = item.preferredStore {
                                         HStack(spacing: 4) {
                                             Image(systemName: store.displayIconName)
-                                                .foregroundColor(isInShoppingList(item) ? .white.opacity(0.8) : .orange)
+                                                .foregroundColor(.orange)
                                                 .font(.caption)
                                             Text(store.name)
                                                 .font(.caption)
-                                                .foregroundColor(isInShoppingList(item) ? .white.opacity(0.8) : .orange)
+                                                .foregroundColor(.orange)
                                         }
                                     }
                                 }
                                 
                                 Spacer()
                             }
-                            .padding(.vertical, 8)
-                            .padding(.horizontal, 4)
-                            .background(isInShoppingList(item) ? Color.green.opacity(0.3) : Color.clear)
-                            .cornerRadius(8)
+                            .padding(.vertical, 12)
+                            .padding(.horizontal, 16)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(isInShoppingList(item) ? Color.blue.opacity(0.1) : Color(.systemBackground))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(isInShoppingList(item) ? Color.blue : Color.clear, lineWidth: 2)
+                            )
                             .contentShape(Rectangle())
                         }
                         .buttonStyle(.plain)
-                        .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
+                        
+                        Divider()
+                            .padding(.leading, 40)
                     }
                 }
             }
         }
-        .listStyle(.insetGrouped)
         .scrollIndicators(.visible)
-        .navigationTitle(category.displayName)
+        .navigationTitle(category.name)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showingAddItem) {
             AddItemView(alwaysAddToShoppingList: true, prefillCategory: category)
@@ -445,4 +342,3 @@ struct ShoppingListCategoryView: View {
     ShoppingListView()
         .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
-

@@ -23,11 +23,18 @@ struct PersistenceController {
         sampleStore.isFavorite = true
         sampleStore.createdDate = Date()
         
+        // Create a sample category
+        let sampleCategory = Category(context: viewContext)
+        sampleCategory.id = UUID()
+        sampleCategory.name = "Dairy"
+        sampleCategory.iconName = "drop.fill"
+        sampleCategory.isDefault = true
+        sampleCategory.createdDate = Date()
+        
         let sampleItem = GroceryItem(context: viewContext)
         sampleItem.id = UUID()
         sampleItem.name = "Milk"
-        sampleItem.category = GroceryCategory.dairy.rawValue
-        sampleItem.categoryIcon = GroceryCategory.dairy.iconName
+        sampleItem.category = sampleCategory
         sampleItem.isInMasterList = true
         sampleItem.createdDate = Date()
         sampleItem.preferredStore = sampleStore

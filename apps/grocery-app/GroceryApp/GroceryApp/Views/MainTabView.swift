@@ -35,6 +35,10 @@ struct MainTabView: View {
             // Create default stores on first launch
             let storeService = StoreService(context: viewContext)
             storeService.createDefaultStores()
+            
+            // Create default categories on first launch
+            let categoryService = CategoryService(context: viewContext)
+            categoryService.createDefaultCategories()
         }
     }
 }

@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788.4" systemVersion="24G90" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Category" representedClassName="Category" syncable="YES">
+        <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="iconName" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isDefault" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="groceryItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GroceryItem" inverseName="category" inverseEntity="GroceryItem"/>
+    </entity>
     <entity name="GroceryItem" representedClassName="GroceryItem" syncable="YES">
-        <attribute name="category" optional="YES" attributeType="String"/>
-        <attribute name="categoryIcon" optional="YES" attributeType="String"/>
         <attribute name="createdDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isInMasterList" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="lastUsedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="preferredStore" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Store"/>
-        <relationship name="shoppingListItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ShoppingListItem"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Category" inverseName="groceryItems" inverseEntity="Category"/>
+        <relationship name="preferredStore" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Store" inverseName="groceryItems" inverseEntity="Store"/>
+        <relationship name="shoppingListItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ShoppingListItem" inverseName="groceryItem" inverseEntity="ShoppingListItem"/>
     </entity>
     <entity name="ShoppingListItem" representedClassName="ShoppingListItem" syncable="YES">
         <attribute name="addedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -18,7 +25,7 @@
         <attribute name="isChecked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="notes" optional="YES" attributeType="String"/>
         <attribute name="quantity" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="groceryItem" maxCount="1" deletionRule="Nullify" destinationEntity="GroceryItem"/>
+        <relationship name="groceryItem" maxCount="1" deletionRule="Nullify" destinationEntity="GroceryItem" inverseName="shoppingListItems" inverseEntity="GroceryItem"/>
         <relationship name="store" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Store" inverseName="shoppingListItems" inverseEntity="Store"/>
     </entity>
     <entity name="Store" representedClassName="Store" syncable="YES">
@@ -29,6 +36,7 @@
         <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="lastUsedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="groceryItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="GroceryItem" inverseName="preferredStore" inverseEntity="GroceryItem"/>
         <relationship name="shoppingListItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ShoppingListItem" inverseName="store" inverseEntity="ShoppingListItem"/>
     </entity>
 </model>

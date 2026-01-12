@@ -25,16 +25,23 @@ struct StoreListView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(stores) { store in
-                    StoreRow(store: store) {
-                        // Tap to edit
-                        storeToEdit = store
-                        showingAddStore = true
+                List {
+                    ForEach(stores) { store in
+                        StoreRow(store: store) {
+                            // Tap to edit
+                            storeToEdit = store
+                            showingAddStore = true
+                        }
+                        .contextMenu {
+                            Button(role: .destructive, action: {
+                                deleteStore(store)
+                            }) {
+                                Label("Delete Store", systemImage: "trash")
+                            }
+                        }
                     }
+                    .onDelete(perform: deleteStores)
                 }
-                .onDelete(perform: deleteStores)
-            }
             .navigationTitle("Stores")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -55,20 +62,59 @@ struct StoreListView: View {
         }
     }
     
-    private func deleteStores(offsets: IndexSet) {
-        let storesToDelete = offsets.map { stores[$0] }
-        
-        withAnimation {
-            storesToDelete.forEach(viewContext.delete)
+        private func deleteStore(_ store: Store) {
+            // Use background context to avoid blocking main thread
+            let container = PersistenceController.shared.container
+            let storeID = store.objectID
+            
+            container.performBackgroundTask { backgroundContext in
+                defer {
+                    // Ensure context is processed and released
+                    backgroundContext.processPendingChanges()
+                }
+                
+                do {
+                    if let storeToDelete = try? backgroundContext.existingObject(with: storeID) {
+                        backgroundContext.delete(storeToDelete)
+                        
+                        if backgroundContext.hasChanges {
+                            try backgroundContext.save()
+                        }
+                    }
+                } catch {
+                    print("Error deleting store: \(error)")
+                }
+            }
         }
         
-        do {
-            try viewContext.save()
-        } catch {
-            let nsError = error as NSError
-            print("Error deleting stores: \(nsError), \(nsError.userInfo)")
+        private func deleteStores(offsets: IndexSet) {
+            let storesToDelete = offsets.map { stores[$0] }
+            let storeIDs = storesToDelete.map { $0.objectID }
+            
+            // Use background context to avoid blocking main thread
+            let container = PersistenceController.shared.container
+            
+            container.performBackgroundTask { backgroundContext in
+                defer {
+                    // Ensure context is processed and released
+                    backgroundContext.processPendingChanges()
+                }
+                
+                do {
+                    for storeID in storeIDs {
+                        if let storeToDelete = try? backgroundContext.existingObject(with: storeID) {
+                            backgroundContext.delete(storeToDelete)
+                        }
+                    }
+                    
+                    if backgroundContext.hasChanges {
+                        try backgroundContext.save()
+                    }
+                } catch {
+                    print("Error deleting stores: \(error)")
+                }
+            }
         }
-    }
 }
 
 struct StoreRow: View {

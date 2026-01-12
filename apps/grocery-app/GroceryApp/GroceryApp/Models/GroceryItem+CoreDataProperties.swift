@@ -16,8 +16,7 @@ extension GroceryItem {
     
     @NSManaged public var id: UUID
     @NSManaged public var name: String
-    @NSManaged public var category: String?
-    @NSManaged public var categoryIcon: String?
+    @NSManaged public var category: Category?
     @NSManaged public var isInMasterList: Bool
     @NSManaged public var createdDate: Date
     @NSManaged public var lastUsedDate: Date?

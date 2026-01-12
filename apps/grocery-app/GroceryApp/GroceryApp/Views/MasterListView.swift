@@ -20,24 +20,31 @@ struct MasterListView: View {
     )
     private var items: FetchedResults<GroceryItem>
     
-    @State private var showingAddItem = false
-    @State private var itemToEdit: GroceryItem? = nil
-    @State private var selectedCategory: GroceryCategory? = nil
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \Category.name, ascending: true)],
+        animation: .default
+    )
+    private var categories: FetchedResults<Category>
     
-    // Get category counts from master list
-    var categoryCounts: [(category: GroceryCategory, count: Int)] {
-        GroceryCategory.allCases.map { category in
-            let count = items.filter { $0.categoryEnum == category }.count
+    @State private var showingAddCategory = false
+    @State private var categoryToEdit: Category? = nil
+    @State private var isImporting = false
+    
+    // Get category counts from master list - optimized to reduce memory allocations
+    var categoryCounts: [(category: Category, count: Int)] {
+        // Use Dictionary for O(1) lookups instead of filtering
+        var itemCountsByCategory: [UUID: Int] = [:]
+        for item in items {
+            if let categoryId = item.category?.id {
+                itemCountsByCategory[categoryId, default: 0] += 1
+            }
+        }
+        
+        // Build result array efficiently
+        return categories.map { category in
+            let count = itemCountsByCategory[category.id] ?? 0
             return (category: category, count: count)
         }.sorted { $0.count > $1.count } // Sort by count, most to least
-    }
-    
-    // Get items from master list filtered by selected category
-    var categoryItems: [GroceryItem] {
-        guard let category = selectedCategory else { return [] }
-        return items.filter { item in
-            item.categoryEnum == category
-        }
     }
     
     var body: some View {
@@ -51,15 +58,16 @@ struct MasterListView: View {
                     ForEach(categoryCounts, id: \.category.id) { categoryData in
                         NavigationLink(value: categoryData.category) {
                             VStack(spacing: 6) {
-                                Image(systemName: categoryData.category.iconName)
+                                Image(systemName: categoryData.category.displayIconName)
                                     .font(.title2)
                                     .foregroundColor(.blue)
                                 
-                                Text(categoryData.category.displayName)
+                                Text(categoryData.category.name)
                                     .font(.caption)
                                     .foregroundColor(.primary)
-                                    .lineLimit(1)
-                                    .minimumScaleFactor(0.8)
+                                    .lineLimit(2)
+                                    .multilineTextAlignment(.center)
+                                    .fixedSize(horizontal: false, vertical: true)
                                 
                                 Text("\(categoryData.count)")
                                     .font(.caption2)
@@ -74,118 +82,230 @@ struct MasterListView: View {
                             )
                             .shadow(color: Color.black.opacity(0.1), radius: 2)
                         }
+                        .contextMenu {
+                            Button(role: .destructive, action: {
+                                deleteCategory(categoryData.category)
+                            }) {
+                                Label("Delete Category", systemImage: "trash")
+                            }
+                            .disabled(categoryData.count > 0) // Can't delete if it has items
+                            
+                            Button(action: {
+                                categoryToEdit = categoryData.category
+                                showingAddCategory = true
+                            }) {
+                                Label("Edit Category", systemImage: "pencil")
+                            }
+                        }
                     }
                 }
                 .padding()
             }
             .background(Color(.systemGroupedBackground))
             .navigationTitle("Master List")
-            .navigationDestination(for: GroceryCategory.self) { category in
-                MasterListCategoryView(
-                    category: category,
-                    items: items.filter { $0.categoryEnum == category },
-                    onItemTap: { item in
-                        itemToEdit = item
-                        showingAddItem = true
-                    },
-                    onDelete: { item in
-                        deleteItem(item)
-                    },
-                    onAddItem: {
-                        showingAddItem = true
-                    }
-                )
+            .navigationDestination(for: Category.self) { category in
+                MasterListCategoryView(category: category)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { 
-                        itemToEdit = nil
-                        showingAddItem = true 
+                        categoryToEdit = nil
+                        showingAddCategory = true 
                     }) {
-                        Label("Add Item", systemImage: "plus")
+                        Label("Add Category", systemImage: "plus")
                     }
                 }
-            }
-            .sheet(isPresented: $showingAddItem) {
-                AddItemView(itemToEdit: itemToEdit)
-                    .onDisappear {
-                        itemToEdit = nil
+                ToolbarItem(placement: .navigationBarLeading) {
+                    // Import button - always visible, shows state clearly
+                    let canImport = !isImporting && items.count < 50
+                    
+                    Button {
+                        print("=== IMPORT BUTTON TAPPED ===")
+                        print("Items count: \(items.count)")
+                        print("Is importing: \(isImporting)")
+                        print("Can import: \(canImport)")
+                        print("===========================")
+                        
+                        if canImport {
+                            importCommonItems()
+                        } else {
+                            print("❌ Import BLOCKED - isImporting=\(isImporting), items.count=\(items.count) (need < 50)")
+                        }
+                    } label: {
+                        if isImporting {
+                            ProgressView()
+                                .frame(width: 20, height: 20)
+                                .tint(.blue)
+                        } else {
+                            Image(systemName: "square.and.arrow.down")
+                                .font(.body)
+                                .foregroundColor(canImport ? .blue : .secondary)
+                        }
                     }
+                    .buttonStyle(.plain)
+                    .disabled(!canImport)
+                }
+            }
+            .sheet(isPresented: $showingAddCategory) {
+                AddCategoryView(categoryToEdit: categoryToEdit)
+                    .onDisappear {
+                        categoryToEdit = nil
+                    }
+            }
+            .onAppear {
+                // Force reset import state if stuck (safety measure)
+                if isImporting {
+                    print("⚠️ Warning: isImporting was true on appear, resetting")
+                    isImporting = false
+                }
+                // Debug: log current state
+                print("📋 MasterListView appeared")
+                print("   Total items in database: \(items.count)")
+                print("   Is importing: \(isImporting)")
+                print("   Import button will be: \(items.count < 50 && !isImporting ? "ENABLED (blue)" : "DISABLED (gray)")")
             }
         }
     }
     
-    private func deleteItem(_ item: GroceryItem) {
-        viewContext.delete(item)
+    private func deleteCategory(_ category: Category) {
+        let categoryService = CategoryService(context: viewContext)
         do {
-            try viewContext.save()
+            try categoryService.deleteCategory(category)
         } catch {
-            let nsError = error as NSError
-            print("Error deleting item: \(nsError), \(nsError.userInfo)")
+            print("Error deleting category: \(error)")
+            // Could show an alert here if category has items
+        }
+    }
+    
+    private func importCommonItems() {
+        guard !isImporting && items.count < 50 else {
+            print("Import blocked - isImporting: \(isImporting), items.count: \(items.count)")
+            return
+        }
+        
+        print("Starting import...")
+        isImporting = true
+        
+        // Run import asynchronously so UI can update first
+        DispatchQueue.main.async {
+            // Import on main context (items will appear immediately)
+            let importService = MasterListImportService(context: viewContext)
+            importService.importCommonItems()
+            
+            // Reset flag after import completes (give UI time to show progress)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                print("Import complete, resetting flag")
+                self.isImporting = false
+            }
         }
     }
 }
 
 // View showing master list items in a selected category
 struct MasterListCategoryView: View {
-    let category: GroceryCategory
-    let items: [GroceryItem]
-    let onItemTap: (GroceryItem) -> Void
-    let onDelete: (GroceryItem) -> Void
-    let onAddItem: () -> Void
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.managedObjectContext) private var viewContext
+    let category: Category
+    
+    @FetchRequest var items: FetchedResults<GroceryItem>
+    
     @State private var showingAddItem = false
     @State private var itemToEdit: GroceryItem? = nil
+    @State private var isImporting = false
+    
+    // Sorted items: by store name, then by item name
+    var sortedItems: [GroceryItem] {
+        items.sorted { item1, item2 in
+            let store1Name = item1.preferredStore?.name ?? ""
+            let store2Name = item2.preferredStore?.name ?? ""
+            
+            if store1Name != store2Name {
+                return store1Name < store2Name
+            }
+            return item1.name < item2.name
+        }
+    }
+    
+    init(category: Category) {
+        self.category = category
+        _items = FetchRequest(
+            sortDescriptors: [
+                NSSortDescriptor(keyPath: \GroceryItem.name, ascending: true)
+            ],
+            predicate: NSPredicate(format: "category == %@", category),
+            animation: .default
+        )
+    }
     
     var body: some View {
-        List {
-            Section {
-                // Category title and add button
+        ScrollView {
+            VStack(spacing: 0) {
+                // Category title
                 HStack {
-                    Text(category.displayName)
+                    Text(category.name)
                         .font(.title2)
                         .fontWeight(.semibold)
                     Spacer()
+                }
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color(.systemGroupedBackground))
+                
+                Divider()
+                
+                // Items list
+                if sortedItems.isEmpty {
+                    Text("No items in this category")
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.vertical, 40)
+                } else {
+                    ForEach(sortedItems) { item in
+                        MasterListItemRow(item: item, onTap: {
+                            itemToEdit = item
+                            showingAddItem = true
+                        })
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        
+                        Divider()
+                            .padding(.leading, 40)
+                    }
+                }
+            }
+        }
+        .scrollIndicators(.visible)
+        .navigationTitle(category.name)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                HStack(spacing: 16) {
+                    // Import button for this category
+                    Button {
+                        if !isImporting {
+                            importCategoryItems()
+                        }
+                    } label: {
+                        if isImporting {
+                            ProgressView()
+                                .frame(width: 20, height: 20)
+                        } else {
+                            Image(systemName: "square.and.arrow.down")
+                                .foregroundColor(.blue)
+                        }
+                    }
+                    .disabled(isImporting)
+                    .opacity(isImporting ? 0.5 : 1.0)
+                    
+                    // Add item button
                     Button(action: {
                         itemToEdit = nil
                         showingAddItem = true
                     }) {
                         Image(systemName: "plus")
-                            .font(.body)
-                    }
-                }
-                .listRowInsets(EdgeInsets())
-                .listRowBackground(Color(.systemGroupedBackground))
-            }
-            
-            Section {
-                // Items list
-                if items.isEmpty {
-                    Text("No items in this category")
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.vertical, 20)
-                        .listRowInsets(EdgeInsets())
-                } else {
-                    ForEach(items) { item in
-                        MasterListItemRow(item: item, onTap: {
-                            itemToEdit = item
-                            showingAddItem = true
-                        })
-                        .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
-                    }
-                    .onDelete { indexSet in
-                        for index in indexSet {
-                            onDelete(items[index])
-                        }
                     }
                 }
             }
         }
-        .listStyle(.insetGrouped)
-        .scrollIndicators(.visible)
-        .navigationTitle(category.displayName)
-        .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showingAddItem) {
             AddItemView(itemToEdit: itemToEdit, prefillCategory: category)
                 .onDisappear {
@@ -193,7 +313,34 @@ struct MasterListCategoryView: View {
                 }
         }
     }
-}
+    
+        private func deleteItem(_ item: GroceryItem) {
+            viewContext.delete(item)
+            do {
+                try viewContext.save()
+            } catch {
+                let nsError = error as NSError
+                print("Error deleting item: \(nsError), \(nsError.userInfo)")
+            }
+        }
+        
+        private func importCategoryItems() {
+            guard !isImporting else { return }
+            isImporting = true
+            
+            // Run import asynchronously so UI can update first
+            DispatchQueue.main.async {
+                let importService = MasterListImportService(context: viewContext)
+                let importedCount = importService.importItemsForCategory(self.category)
+                
+                // Reset flag after import completes (give UI time to show progress)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.isImporting = false
+                    print("Category import completed: \(importedCount) items imported")
+                }
+            }
+        }
+    }
 
 struct MasterListItemRow: View {
     let item: GroceryItem
@@ -203,8 +350,8 @@ struct MasterListItemRow: View {
         Button(action: onTap) {
             HStack {
                 // Category icon
-                if let category = item.categoryEnum {
-                    Image(systemName: category.iconName)
+                if let category = item.category {
+                    Image(systemName: category.displayIconName)
                         .foregroundColor(.blue)
                         .frame(width: 24)
                 }
@@ -239,4 +386,3 @@ struct MasterListItemRow: View {
     MasterListView()
         .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
-

@@ -11,24 +11,15 @@ import CoreData
 @objc(GroceryItem)
 public class GroceryItem: NSManagedObject {
     
-    /// Get category enum from string
-    var categoryEnum: GroceryCategory? {
-        guard let categoryString = category else { return nil }
-        return GroceryCategory(rawValue: categoryString)
-    }
-    
-    /// Set category from enum
-    func setCategory(_ category: GroceryCategory?) {
-        self.category = category?.rawValue
-        self.categoryIcon = category?.iconName
-    }
-    
     /// Get category icon name
+    /// Uses Category relationship (new model)
     var displayCategoryIcon: String {
-        if let icon = categoryIcon, !icon.isEmpty {
-            return icon
+        // Category is now a Category entity (relationship)
+        if let categoryEntity = category {
+            return categoryEntity.displayIconName
         }
-        return categoryEnum?.iconName ?? GroceryCategory.other.iconName
+        // Final fallback
+        return Category.defaultIconName
     }
 }
 

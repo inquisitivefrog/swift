@@ -14,18 +14,18 @@ struct AddItemView: View {
     
     let alwaysAddToShoppingList: Bool
     let itemToEdit: GroceryItem?
-    let prefillCategory: GroceryCategory?
+    let prefillCategory: Category?
     
     @FocusState private var isTextFieldFocused: Bool
     @State private var itemName = ""
-    @State private var selectedCategory: GroceryCategory? = nil
+    @State private var selectedCategory: Category? = nil
     @State private var selectedStore: Store? = nil
     @State private var addToShoppingList = false
     @State private var selectedExistingItem: GroceryItem? = nil
     @State private var showDuplicateShoppingListAlert = false
     @State private var duplicateItemName = ""
     
-    init(alwaysAddToShoppingList: Bool = false, itemToEdit: GroceryItem? = nil, prefillCategory: GroceryCategory? = nil) {
+    init(alwaysAddToShoppingList: Bool = false, itemToEdit: GroceryItem? = nil, prefillCategory: Category? = nil) {
         self.alwaysAddToShoppingList = alwaysAddToShoppingList
         self.itemToEdit = itemToEdit
         self.prefillCategory = prefillCategory
@@ -36,6 +36,12 @@ struct AddItemView: View {
         animation: .default
     )
     private var stores: FetchedResults<Store>
+    
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \Category.name, ascending: true)],
+        animation: .default
+    )
+    private var categories: FetchedResults<Category>
     
     // Fetch existing grocery items for matching
     @FetchRequest(
@@ -80,8 +86,8 @@ struct AddItemView: View {
                                 selectExistingItem(item)
                             }) {
                                 HStack {
-                                    if let category = item.categoryEnum {
-                                        Image(systemName: category.iconName)
+                                    if let category = item.category {
+                                        Image(systemName: category.displayIconName)
                                             .foregroundColor(.blue)
                                             .frame(width: 24)
                                     }
@@ -92,7 +98,7 @@ struct AddItemView: View {
                                         
                                         HStack {
                                             if let category = item.category {
-                                                Text(category)
+                                                Text(category.name)
                                                     .font(.caption)
                                                     .foregroundColor(.secondary)
                                             }
@@ -124,8 +130,8 @@ struct AddItemView: View {
                 if let existingItem = selectedExistingItem {
                     Section("Selected Item") {
                         HStack {
-                            if let category = existingItem.categoryEnum {
-                                Image(systemName: category.iconName)
+                            if let category = existingItem.category {
+                                Image(systemName: category.displayIconName)
                                     .foregroundColor(.blue)
                             }
                             Text(existingItem.name)
@@ -148,13 +154,13 @@ struct AddItemView: View {
                 } else {
                     Section("Item Details") {
                         Picker("Category", selection: $selectedCategory) {
-                            Text("None").tag(nil as GroceryCategory?)
-                            ForEach(GroceryCategory.allCases) { category in
+                            Text("None").tag(nil as Category?)
+                            ForEach(categories) { category in
                                 HStack {
-                                    Image(systemName: category.iconName)
-                                    Text(category.displayName)
+                                    Image(systemName: category.displayIconName)
+                                    Text(category.name)
                                 }
-                                .tag(category as GroceryCategory?)
+                                .tag(category as Category?)
                             }
                         }
                         
@@ -203,7 +209,7 @@ struct AddItemView: View {
             // If editing an existing item, populate the form
             if let item = itemToEdit {
                 itemName = item.name
-                selectedCategory = item.categoryEnum
+                selectedCategory = item.category
                 selectedStore = item.preferredStore
                 addToShoppingList = false // Don't add to shopping list when editing
             } else {
@@ -227,7 +233,7 @@ struct AddItemView: View {
     private func selectExistingItem(_ item: GroceryItem) {
         selectedExistingItem = item
         itemName = item.name
-        selectedCategory = item.categoryEnum
+        selectedCategory = item.category
         selectedStore = item.preferredStore
         // Default to adding to shopping list when selecting existing item
         addToShoppingList = true
@@ -267,7 +273,7 @@ struct AddItemView: View {
         if let itemToEdit = itemToEdit {
             item = itemToEdit
             item.name = itemName
-            item.setCategory(selectedCategory)
+            item.category = selectedCategory
             item.preferredStore = selectedStore
             
             // Add to shopping list if requested
@@ -312,7 +318,7 @@ struct AddItemView: View {
                     selectExistingItem(existingItems[0])
                     // If addToShoppingList is true, add it to shopping list
                     if addToShoppingList {
-                        addToShoppingList(item: existingItems[0])
+                        _ = addToShoppingList(item: existingItems[0])
                     }
                     return
                 }
@@ -324,7 +330,7 @@ struct AddItemView: View {
             item = GroceryItem(context: viewContext)
             item.id = UUID()
             item.name = itemName
-            item.setCategory(selectedCategory)
+            item.category = selectedCategory
             item.preferredStore = selectedStore
             item.isInMasterList = true
             item.createdDate = Date()
