@@ -54,10 +54,10 @@ struct MasterListView: View {
             ScrollView(.vertical, showsIndicators: true) {
                 LazyVGrid(columns: [
                     GridItem(.adaptive(minimum: 80), spacing: 12)
-                ], spacing: 12) {
+                ], spacing: 20) {
                     ForEach(categoryCounts, id: \.category.id) { categoryData in
                         NavigationLink(value: categoryData.category) {
-                            VStack(spacing: 6) {
+                            VStack(alignment: .center, spacing: 6) {
                                 Image(systemName: categoryData.category.displayIconName)
                                     .font(.title2)
                                     .foregroundColor(.blue)
@@ -72,8 +72,12 @@ struct MasterListView: View {
                                 Text("\(categoryData.count)")
                                     .font(.caption2)
                                     .foregroundColor(categoryData.count > 0 ? .secondary : Color.secondary.opacity(0.5))
+                                
+                                Spacer(minLength: 0)
                             }
-                            .frame(width: 80, height: 80)
+                            .frame(width: 80, alignment: .top)
+                            .frame(minHeight: 80)
+                            .padding(.vertical, 4)
                             .background(Color(.systemBackground))
                             .cornerRadius(12)
                             .overlay(
@@ -82,6 +86,8 @@ struct MasterListView: View {
                             )
                             .shadow(color: Color.black.opacity(0.1), radius: 2)
                         }
+                        .disabled(isImporting)
+                        .opacity(isImporting ? 0.6 : 1.0)
                         .contextMenu {
                             Button(role: .destructive, action: {
                                 deleteCategory(categoryData.category)
@@ -117,19 +123,12 @@ struct MasterListView: View {
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
                     // Import button - always visible, shows state clearly
-                    let canImport = !isImporting && items.count < 50
+                    // Allow re-import to update store assignments and add new items
+                    let canImport = !isImporting
                     
                     Button {
-                        print("=== IMPORT BUTTON TAPPED ===")
-                        print("Items count: \(items.count)")
-                        print("Is importing: \(isImporting)")
-                        print("Can import: \(canImport)")
-                        print("===========================")
-                        
                         if canImport {
                             importCommonItems()
-                        } else {
-                            print("❌ Import BLOCKED - isImporting=\(isImporting), items.count=\(items.count) (need < 50)")
                         }
                     } label: {
                         if isImporting {
@@ -155,14 +154,8 @@ struct MasterListView: View {
             .onAppear {
                 // Force reset import state if stuck (safety measure)
                 if isImporting {
-                    print("⚠️ Warning: isImporting was true on appear, resetting")
                     isImporting = false
                 }
-                // Debug: log current state
-                print("📋 MasterListView appeared")
-                print("   Total items in database: \(items.count)")
-                print("   Is importing: \(isImporting)")
-                print("   Import button will be: \(items.count < 50 && !isImporting ? "ENABLED (blue)" : "DISABLED (gray)")")
             }
         }
     }
@@ -178,25 +171,21 @@ struct MasterListView: View {
     }
     
     private func importCommonItems() {
-        guard !isImporting && items.count < 50 else {
-            print("Import blocked - isImporting: \(isImporting), items.count: \(items.count)")
+        guard !isImporting else {
             return
         }
         
-        print("Starting import...")
         isImporting = true
         
-        // Run import asynchronously so UI can update first
-        DispatchQueue.main.async {
+        // Run import on main thread (Core Data context must be used on its creating thread)
+        // Use async to allow UI to update first
+        Task { @MainActor in
             // Import on main context (items will appear immediately)
             let importService = MasterListImportService(context: viewContext)
             importService.importCommonItems()
             
-            // Reset flag after import completes (give UI time to show progress)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                print("Import complete, resetting flag")
-                self.isImporting = false
-            }
+            // Reset flag after import completes (save is synchronous, so this happens after save)
+            isImporting = false
         }
     }
 }
@@ -214,9 +203,12 @@ struct MasterListCategoryView: View {
     
     // Sorted items: by store name, then by item name
     var sortedItems: [GroceryItem] {
-        items.sorted { item1, item2 in
-            let store1Name = item1.preferredStore?.name ?? ""
-            let store2Name = item2.preferredStore?.name ?? ""
+        let itemsArray = Array(items)
+        return itemsArray.sorted { item1, item2 in
+            let store1 = item1.firstPreferredStore
+            let store2 = item2.firstPreferredStore
+            let store1Name = store1?.name ?? ""
+            let store2Name = store2?.name ?? ""
             
             if store1Name != store2Name {
                 return store1Name < store2Name
@@ -328,16 +320,14 @@ struct MasterListCategoryView: View {
             guard !isImporting else { return }
             isImporting = true
             
-            // Run import asynchronously so UI can update first
-            DispatchQueue.main.async {
+            // Run import on main thread (Core Data context must be used on its creating thread)
+            // Use async to allow UI to update first
+            Task { @MainActor in
                 let importService = MasterListImportService(context: viewContext)
-                let importedCount = importService.importItemsForCategory(self.category)
+                _ = importService.importItemsForCategory(category)
                 
-                // Reset flag after import completes (give UI time to show progress)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.isImporting = false
-                    print("Category import completed: \(importedCount) items imported")
-                }
+                // Reset flag after import completes (save is synchronous, so this happens after save)
+                isImporting = false
             }
         }
     }
@@ -362,7 +352,7 @@ struct MasterListItemRow: View {
                         .foregroundColor(.primary)
                     
                     // Preferred store name and icon
-                    if let store = item.preferredStore {
+                    if let store = item.firstPreferredStore {
                         HStack(spacing: 4) {
                             Image(systemName: store.displayIconName)
                                 .foregroundColor(.orange)

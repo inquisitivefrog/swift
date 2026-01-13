@@ -61,7 +61,7 @@ struct ShoppingListView: View {
             ScrollView(.vertical, showsIndicators: true) {
                 LazyVGrid(columns: [
                     GridItem(.adaptive(minimum: 80), spacing: 12)
-                ], spacing: 12) {
+                ], spacing: 20) {
                     ForEach(categoryCounts, id: \.category.id) { categoryData in
                         NavigationLink(value: categoryData.category) {
                             CategoryButtonContent(
@@ -145,7 +145,7 @@ struct CategoryButtonContent: View {
     let itemCount: Int
     
     var body: some View {
-        VStack(spacing: 6) {
+        VStack(alignment: .center, spacing: 6) {
             Image(systemName: category.displayIconName)
                 .font(.title2)
                 .foregroundColor(.blue)
@@ -160,8 +160,12 @@ struct CategoryButtonContent: View {
             Text("\(itemCount)")
                 .font(.caption2)
                 .foregroundColor(itemCount > 0 ? .secondary : Color.secondary.opacity(0.5))
+            
+            Spacer(minLength: 0)
         }
-        .frame(width: 80, height: 80)
+        .frame(width: 80, alignment: .top)
+        .frame(minHeight: 80)
+        .padding(.vertical, 4)
         .background(Color(.systemBackground))
         .cornerRadius(12)
         .overlay(
@@ -177,6 +181,7 @@ struct ShoppingListCategoryView: View {
     @Environment(\.managedObjectContext) private var viewContext
     let category: Category
     @State private var showingAddItem = false
+    @State private var itemToEdit: GroceryItem? = nil
     
     // Fetch all master list items for this category
     @FetchRequest var allMasterItems: FetchedResults<GroceryItem>
@@ -184,17 +189,41 @@ struct ShoppingListCategoryView: View {
     // Fetch shopping list items for this category
     @FetchRequest var shoppingItems: FetchedResults<ShoppingListItem>
     
-    // Sorted items: by store name, then by item name
-    var sortedMasterItems: [GroceryItem] {
-        allMasterItems.sorted { item1, item2 in
-            let store1Name = item1.preferredStore?.name ?? ""
-            let store2Name = item2.preferredStore?.name ?? ""
+    // Cached grouped items - recalculated only when needed
+    @State private var cachedItemsByStore: [(store: Store?, items: [GroceryItem])] = []
+    
+    // Group items by store for display - optimized to reduce memory usage
+    private func calculateItemsByStore() -> [(store: Store?, items: [GroceryItem])] {
+        // Group by store - iterate through FetchedResults directly (lazy, doesn't load all into memory)
+        var grouped: [String: (store: Store?, items: [GroceryItem])] = [:]
+        
+        for item in allMasterItems {
+            let store = item.firstPreferredStore
+            let storeKey = store?.name ?? "ZZZ_No_Store"
             
-            if store1Name != store2Name {
-                return store1Name < store2Name
+            if grouped[storeKey] == nil {
+                grouped[storeKey] = (store: store, items: [])
             }
-            return item1.name < item2.name
+            grouped[storeKey]?.items.append(item)
         }
+        
+        // Convert to sorted array
+        var result: [(store: Store?, items: [GroceryItem])] = []
+        result.reserveCapacity(grouped.count)
+        
+        for (_, group) in grouped {
+            let sortedItems = group.items.sorted { $0.name < $1.name }
+            result.append((store: group.store, items: sortedItems))
+        }
+        
+        // Sort groups by store name
+        result.sort { group1, group2 in
+            let name1 = group1.store?.name ?? "ZZZ No Store"
+            let name2 = group2.store?.name ?? "ZZZ No Store"
+            return name1 < name2
+        }
+        
+        return result
     }
     
     init(category: Category) {
@@ -228,7 +257,7 @@ struct ShoppingListCategoryView: View {
             let shoppingItem = ShoppingListItem(context: viewContext)
             shoppingItem.id = UUID()
             shoppingItem.groceryItem = item
-            shoppingItem.store = item.preferredStore
+            shoppingItem.store = item.firstPreferredStore
             shoppingItem.isChecked = false
             shoppingItem.addedDate = Date()
             shoppingItem.quantity = 1
@@ -263,68 +292,90 @@ struct ShoppingListCategoryView: View {
                 
                 Divider()
                 
-                // Master list items
-                if sortedMasterItems.isEmpty {
+                // Master list items grouped by store
+                if cachedItemsByStore.isEmpty {
                     Text("No items in master list")
                         .foregroundColor(.secondary)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.vertical, 40)
                 } else {
-                    ForEach(sortedMasterItems) { item in
-                        Button(action: {
-                            toggleItemInShoppingList(item)
-                        }) {
-                            HStack {
-                                // Checkmark indicator for selected items (colorblind-friendly)
-                                if isInShoppingList(item) {
-                                    Image(systemName: "checkmark.circle.fill")
+                    ForEach(Array(cachedItemsByStore.enumerated()), id: \.offset) { index, storeGroup in
+                        // Store section header
+                        HStack {
+                            if let store = storeGroup.store {
+                                Image(systemName: store.displayIconName)
+                                    .foregroundColor(.orange)
+                                    .font(.headline)
+                                Text(store.name)
+                                    .font(.headline)
+                                    .foregroundColor(.primary)
+                            } else {
+                                Image(systemName: "questionmark.circle")
+                                    .foregroundColor(.secondary)
+                                    .font(.headline)
+                                Text("No Store")
+                                    .font(.headline)
+                                    .foregroundColor(.secondary)
+                            }
+                            Spacer()
+                        }
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Color(.systemGroupedBackground))
+                        
+                        // Items in this store group
+                        ForEach(storeGroup.items) { item in
+                            Button(action: {
+                                // Toggle item in/out of shopping list
+                                toggleItemInShoppingList(item)
+                            }) {
+                                HStack {
+                                    // Checkmark indicator for selected items (colorblind-friendly)
+                                    if isInShoppingList(item) {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundColor(.blue)
+                                            .font(.title3)
+                                            .frame(width: 24)
+                                    } else {
+                                        Image(systemName: "circle")
+                                            .foregroundColor(.gray.opacity(0.3))
+                                            .font(.title3)
+                                            .frame(width: 24)
+                                    }
+                                    
+                                    // Category icon
+                                    Image(systemName: category.displayIconName)
                                         .foregroundColor(.blue)
-                                        .font(.title3)
                                         .frame(width: 24)
-                                } else {
-                                    Image(systemName: "circle")
-                                        .foregroundColor(.gray.opacity(0.3))
-                                        .font(.title3)
-                                        .frame(width: 24)
-                                }
-                                
-                                // Category icon
-                                Image(systemName: category.displayIconName)
-                                    .foregroundColor(.blue)
-                                    .frame(width: 24)
-                                
-                                VStack(alignment: .leading, spacing: 4) {
+                                    
                                     Text(item.name)
                                         .foregroundColor(.primary)
                                     
-                                    if let store = item.preferredStore {
-                                        HStack(spacing: 4) {
-                                            Image(systemName: store.displayIconName)
-                                                .foregroundColor(.orange)
-                                                .font(.caption)
-                                            Text(store.name)
-                                                .font(.caption)
-                                                .foregroundColor(.orange)
-                                        }
-                                    }
+                                    Spacer()
                                 }
-                                
-                                Spacer()
+                                .padding(.vertical, 12)
+                                .padding(.horizontal, 16)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .background(isInShoppingList(item) ? Color.blue.opacity(0.1) : Color(.systemBackground))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(isInShoppingList(item) ? Color.blue : Color.clear, lineWidth: 2)
+                                )
+                                .contentShape(Rectangle())
                             }
-                            .padding(.vertical, 12)
-                            .padding(.horizontal, 16)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(isInShoppingList(item) ? Color.blue.opacity(0.1) : Color(.systemBackground))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(isInShoppingList(item) ? Color.blue : Color.clear, lineWidth: 2)
-                            )
-                            .contentShape(Rectangle())
+                            .buttonStyle(.plain)
+                            .contextMenu {
+                                Button(action: {
+                                    itemToEdit = item
+                                    showingAddItem = true
+                                }) {
+                                    Label("Edit Item", systemImage: "pencil")
+                                }
+                            }
+                            
+                            Divider()
+                                .padding(.leading, 40)
                         }
-                        .buttonStyle(.plain)
-                        
-                        Divider()
-                            .padding(.leading, 40)
                     }
                 }
             }
@@ -333,7 +384,18 @@ struct ShoppingListCategoryView: View {
         .navigationTitle(category.name)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showingAddItem) {
-            AddItemView(alwaysAddToShoppingList: true, prefillCategory: category)
+            AddItemView(alwaysAddToShoppingList: true, itemToEdit: itemToEdit, prefillCategory: category)
+                .onDisappear {
+                    itemToEdit = nil
+                }
+        }
+        .onAppear {
+            // Recalculate when view appears
+            cachedItemsByStore = calculateItemsByStore()
+        }
+        .onChange(of: allMasterItems.count) {
+            // Recalculate when items change
+            cachedItemsByStore = calculateItemsByStore()
         }
     }
 }

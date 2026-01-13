@@ -15,38 +15,45 @@ class StoreService {
         self.viewContext = context
     }
     
-    /// Create default stores if none exist
+    /// Create default stores - adds any missing stores from the default list
     func createDefaultStores() {
         let fetchRequest: NSFetchRequest<Store> = Store.fetchRequest()
         
         do {
             let existingStores = try viewContext.fetch(fetchRequest)
-            if !existingStores.isEmpty {
-                return // Stores already exist
-            }
+            let existingStoreNames = Set(existingStores.map { $0.name.lowercased() })
             
             // Default stores to create
             let defaultStores: [(name: String, icon: String)] = [
-                ("Safeway", "storefront.fill"),
+                ("Andronico's", "storefront.fill"),
                 ("Whole Foods", "storefront.fill"),
                 ("Trader Joe's", "storefront.fill"),
                 ("Sprouts", "storefront.fill"),
+                ("Monterey Market", "storefront.fill"),
                 ("Ranch 99", "storefront.fill"),
                 ("Costco", "storefront.fill"),
+                ("Berkeley Bowl", "storefront.fill"),
                 ("Target", "target"),
                 ("Walmart", "storefront.fill")
             ]
             
+            // Only create stores that don't already exist
+            var createdCount = 0
             for storeData in defaultStores {
-                let store = Store(context: viewContext)
-                store.id = UUID()
-                store.name = storeData.name
-                store.iconName = storeData.icon
-                store.isFavorite = false
-                store.createdDate = Date()
+                if !existingStoreNames.contains(storeData.name.lowercased()) {
+                    let store = Store(context: viewContext)
+                    store.id = UUID()
+                    store.name = storeData.name
+                    store.iconName = storeData.icon
+                    store.isFavorite = false
+                    store.createdDate = Date()
+                    createdCount += 1
+                }
             }
             
-            try viewContext.save()
+            if createdCount > 0 {
+                try viewContext.save()
+            }
         } catch {
             print("Error creating default stores: \(error)")
         }

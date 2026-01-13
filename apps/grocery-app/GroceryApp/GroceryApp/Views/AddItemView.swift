@@ -102,7 +102,7 @@ struct AddItemView: View {
                                                     .font(.caption)
                                                     .foregroundColor(.secondary)
                                             }
-                                            if let store = item.preferredStore {
+                                            if let store = item.firstPreferredStore {
                                                 Image(systemName: store.displayIconName)
                                                     .foregroundColor(.orange)
                                                     .font(.caption)
@@ -143,7 +143,7 @@ struct AddItemView: View {
                             .font(.caption)
                         }
                         
-                        if let store = existingItem.preferredStore {
+                        if let store = existingItem.firstPreferredStore {
                             HStack {
                                 Image(systemName: store.displayIconName)
                                     .foregroundColor(.orange)
@@ -210,7 +210,7 @@ struct AddItemView: View {
             if let item = itemToEdit {
                 itemName = item.name
                 selectedCategory = item.category
-                selectedStore = item.preferredStore
+                selectedStore = item.firstPreferredStore
                 addToShoppingList = false // Don't add to shopping list when editing
             } else {
                 // Pre-fill category if provided
@@ -234,7 +234,7 @@ struct AddItemView: View {
         selectedExistingItem = item
         itemName = item.name
         selectedCategory = item.category
-        selectedStore = item.preferredStore
+        selectedStore = item.firstPreferredStore
         // Default to adding to shopping list when selecting existing item
         addToShoppingList = true
         
@@ -274,7 +274,7 @@ struct AddItemView: View {
             item = itemToEdit
             item.name = itemName
             item.category = selectedCategory
-            item.preferredStore = selectedStore
+            item.setPreferredStore(selectedStore)
             
             // Add to shopping list if requested
             if addToShoppingList {
@@ -331,7 +331,7 @@ struct AddItemView: View {
             item.id = UUID()
             item.name = itemName
             item.category = selectedCategory
-            item.preferredStore = selectedStore
+            item.setPreferredStore(selectedStore)
             item.isInMasterList = true
             item.createdDate = Date()
         }
@@ -368,7 +368,7 @@ struct AddItemView: View {
                 let shoppingItem = ShoppingListItem(context: viewContext)
                 shoppingItem.id = UUID()
                 shoppingItem.groceryItem = item
-                shoppingItem.store = item.preferredStore ?? selectedStore
+                shoppingItem.store = item.firstPreferredStore ?? selectedStore
                 shoppingItem.isChecked = false
                 shoppingItem.addedDate = Date()
                 shoppingItem.quantity = 1

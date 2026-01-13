@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "EF12DEE8-4A21-4249-A3A2-13320647B45C",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:GroceryApp.xcodeproj",
+      "identifier" : "225F6AD62F0D7C61005528C7",
+      "name" : "GroceryApp"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:GroceryApp.xcodeproj",
+        "identifier" : "225F6AE82F0D7C62005528C7",
+        "name" : "GroceryAppTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:GroceryApp.xcodeproj",
+        "identifier" : "225F6AF22F0D7C62005528C7",
+        "name" : "GroceryAppUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

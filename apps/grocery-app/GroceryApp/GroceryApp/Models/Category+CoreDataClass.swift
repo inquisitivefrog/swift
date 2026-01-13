@@ -26,5 +26,6 @@ extension Category: Identifiable {
 }
 
 // Note: Category already conforms to Hashable via NSObject (NSManagedObject's parent class)
-// No need to manually implement Hashable - NSObject provides default implementation
+// Core Data does not allow overriding isEqual: or hash on NSManagedObject subclasses
+// SwiftUI navigation will work with the default NSObject hash/equality implementation
 

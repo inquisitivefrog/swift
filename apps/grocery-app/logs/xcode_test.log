@@ -1,0 +1,317 @@
+
+Test Suite 'All tests' started at 2026-01-12 15:36:00.883.
+Test Suite 'GroceryAppTests.xctest' started at 2026-01-12 15:36:00.884.
+Test Suite 'CategoryServiceTests' started at 2026-01-12 15:36:00.884.
+Test Case '-[GroceryAppTests.CategoryServiceTests testCreateCategory_CreatesCategoryWithCustomIcon]' started.
+CoreData: warning: Multiple NSEntityDescriptions claim the NSManagedObject subclass 'Category' so +entity is unable to disambiguate.
+CoreData: warning: Multiple NSEntityDescriptions claim the NSManagedObject subclass 'Category' so +entity is unable to disambiguate.
+CoreData: warning:  	 'Category' (0x102da4000) from NSManagedObjectModel (0x10265b9c0) claims 'Category'.
+CoreData: warning:  	 'Category' (0x102da4000) from NSManagedObjectModel (0x10265b9c0) claims 'Category'.
+CoreData: warning:  	 'Category' (0x106266ac0) from NSManagedObjectModel (0x11057e350) claims 'Category'.
+CoreData: warning:  	 'Category' (0x106266ac0) from NSManagedObjectModel (0x11057e350) claims 'Category'.
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.CategoryServiceTests testCreateCategory_CreatesCategoryWithCustomIcon]' passed (0.004 seconds).
+Test Case '-[GroceryAppTests.CategoryServiceTests testCreateCategory_CreatesCategoryWithName]' started.
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.CategoryServiceTests testCreateCategory_CreatesCategoryWithName]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.CategoryServiceTests testCreateCategory_PersistsToContext]' started.
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.CategoryServiceTests testCreateCategory_PersistsToContext]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.CategoryServiceTests testCreateDefaultCategories_CreatesAllDefaultCategories]' started.
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.CategoryServiceTests testCreateDefaultCategories_CreatesAllDefaultCategories]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.CategoryServiceTests testCreateDefaultCategories_DoesNotDuplicateExistingCategories]' started.
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.CategoryServiceTests testCreateDefaultCategories_DoesNotDuplicateExistingCategories]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.CategoryServiceTests testCreateDefaultCategories_SetsIsDefaultFlag]' started.
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.CategoryServiceTests testCreateDefaultCategories_SetsIsDefaultFlag]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.CategoryServiceTests testDeleteCategory_ReassignsItemsWhenTargetProvided]' started.
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: warning: Multiple NSEntityDescriptions claim the NSManagedObject subclass 'GroceryItem' so +entity is unable to disambiguate.
+CoreData: warning: Multiple NSEntityDescriptions claim the NSManagedObject subclass 'GroceryItem' so +entity is unable to disambiguate.
+CoreData: warning:  	 'GroceryItem' (0x102da40c0) from NSManagedObjectModel (0x10265b9c0) claims 'GroceryItem'.
+CoreData: warning:  	 'GroceryItem' (0x102da40c0) from NSManagedObjectModel (0x10265b9c0) claims 'GroceryItem'.
+CoreData: warning:  	 'GroceryItem' (0x106266c40) from NSManagedObjectModel (0x11057e350) claims 'GroceryItem'.
+CoreData: warning:  	 'GroceryItem' (0x106266c40) from NSManagedObjectModel (0x11057e350) claims 'GroceryItem'.
+CoreData: warning:  	 'GroceryItem' (0x106267240) from NSManagedObjectModel (0x11057e5d0) claims 'GroceryItem'.
+CoreData: warning:  	 'GroceryItem' (0x106267240) from NSManagedObjectModel (0x11057e5d0) claims 'GroceryItem'.
+CoreData: warning:  	 'GroceryItem' (0x106267900) from NSManagedObjectModel (0x11057e3f0) claims 'GroceryItem'.
+CoreData: warning:  	 'GroceryItem' (0x106267900) from NSManagedObjectModel (0x11057e3f0) claims 'GroceryItem'.
+CoreData: warning:  	 'GroceryItem' (0x102da5b00) from NSManagedObjectModel (0x11057f110) claims 'GroceryItem'.
+CoreData: warning:  	 'GroceryItem' (0x102da5b00) from NSManagedObjectModel (0x11057f110) claims 'GroceryItem'.
+CoreData: warning:  	 'GroceryItem' (0x110af8600) from NSManagedObjectModel (0x11057f390) claims 'GroceryItem'.
+CoreData: warning:  	 'GroceryItem' (0x110af8600) from NSManagedObjectModel (0x11057f390) claims 'GroceryItem'.
+CoreData: warning:  	 'GroceryItem' (0x110af8cc0) from NSManagedObjectModel (0x11057f610) claims 'GroceryItem'.
+CoreData: warning:  	 'GroceryItem' (0x110af8cc0) from NSManagedObjectModel (0x11057f610) claims 'GroceryItem'.
+CoreData: warning:  	 'GroceryItem' (0x110af9380) from NSManagedObjectModel (0x11057f890) claims 'GroceryItem'.
+CoreData: warning:  	 'GroceryItem' (0x110af9380) from NSManagedObjectModel (0x11057f890) claims 'GroceryItem'.
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.CategoryServiceTests testDeleteCategory_ReassignsItemsWhenTargetProvided]' passed (0.004 seconds).
+Test Case '-[GroceryAppTests.CategoryServiceTests testDeleteCategory_RemovesEmptyCategory]' started.
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.CategoryServiceTests testDeleteCategory_RemovesEmptyCategory]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.CategoryServiceTests testDeleteCategory_ThrowsErrorWhenCategoryHasItems]' started.
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.CategoryServiceTests testDeleteCategory_ThrowsErrorWhenCategoryHasItems]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.CategoryServiceTests testFetchAllCategories_ReturnsAllCategories]' started.
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.CategoryServiceTests testFetchAllCategories_ReturnsAllCategories]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.CategoryServiceTests testFetchAllCategories_ReturnsEmptyArrayWhenNoCategories]' started.
+Test Case '-[GroceryAppTests.CategoryServiceTests testFetchAllCategories_ReturnsEmptyArrayWhenNoCategories]' passed (0.002 seconds).
+Test Case '-[GroceryAppTests.CategoryServiceTests testFetchAllCategories_SortsByName]' started.
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.CategoryServiceTests testFetchAllCategories_SortsByName]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.CategoryServiceTests testGetItemCount_ReturnsCorrectCount]' started.
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.CategoryServiceTests testGetItemCount_ReturnsCorrectCount]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.CategoryServiceTests testGetItemCount_ReturnsZeroForEmptyCategory]' started.
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.CategoryServiceTests testGetItemCount_ReturnsZeroForEmptyCategory]' passed (0.003 seconds).
+Test Suite 'CategoryServiceTests' passed at 2026-01-12 15:36:00.928.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.041 (0.044) seconds
+Test Suite 'DataServiceTests' started at 2026-01-12 15:36:00.928.
+Test Case '-[GroceryAppTests.DataServiceTests testClearAllData_DeletesAllCategories]' started.
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+All data cleared successfully
+Test Case '-[GroceryAppTests.DataServiceTests testClearAllData_DeletesAllCategories]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.DataServiceTests testClearAllData_DeletesAllGroceryItems]' started.
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+All data cleared successfully
+Test Case '-[GroceryAppTests.DataServiceTests testClearAllData_DeletesAllGroceryItems]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.DataServiceTests testClearAllData_DeletesAllShoppingListItems]' started.
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: warning: Multiple NSEntityDescriptions claim the NSManagedObject subclass 'ShoppingListItem' so +entity is unable to disambiguate.
+CoreData: warning: Multiple NSEntityDescriptions claim the NSManagedObject subclass 'ShoppingListItem' so +entity is unable to disambiguate.
+CoreData: warning:  	 'ShoppingListItem' (0x102da4180) from NSManagedObjectModel (0x10265b9c0) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x102da4180) from NSManagedObjectModel (0x10265b9c0) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x106266a00) from NSManagedObjectModel (0x11057e350) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x106266a00) from NSManagedObjectModel (0x11057e350) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x106267300) from NSManagedObjectModel (0x11057e5d0) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x106267300) from NSManagedObjectModel (0x11057e5d0) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x1062679c0) from NSManagedObjectModel (0x11057e3f0) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x1062679c0) from NSManagedObjectModel (0x11057e3f0) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x102da7a80) from NSManagedObjectModel (0x11057f110) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x102da7a80) from NSManagedObjectModel (0x11057f110) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110af86c0) from NSManagedObjectModel (0x11057f390) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110af86c0) from NSManagedObjectModel (0x11057f390) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110af8d80) from NSManagedObjectModel (0x11057f610) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110af8d80) from NSManagedObjectModel (0x11057f610) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110af9440) from NSManagedObjectModel (0x11057f890) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110af9440) from NSManagedObjectModel (0x11057f890) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110af9c80) from NSManagedObjectModel (0x11057fb10) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110af9c80) from NSManagedObjectModel (0x11057fb10) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110afa400) from NSManagedObjectModel (0x11057fd90) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110afa400) from NSManagedObjectModel (0x11057fd90) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110afaac0) from NSManagedObjectModel (0x102dd2490) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110afaac0) from NSManagedObjectModel (0x102dd2490) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110afb0c0) from NSManagedObjectModel (0x102dd3110) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110afb0c0) from NSManagedObjectModel (0x102dd3110) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110afb840) from NSManagedObjectModel (0x102dd3340) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110afb840) from NSManagedObjectModel (0x102dd3340) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110afbf00) from NSManagedObjectModel (0x102dd3660) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110afbf00) from NSManagedObjectModel (0x102dd3660) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110b84600) from NSManagedObjectModel (0x102dd39d0) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110b84600) from NSManagedObjectModel (0x102dd39d0) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110b84d80) from NSManagedObjectModel (0x102dd3ca0) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110b84d80) from NSManagedObjectModel (0x102dd3ca0) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110b855c0) from NSManagedObjectModel (0x1060902d0) claims 'ShoppingListItem'.
+CoreData: warning:  	 'ShoppingListItem' (0x110b855c0) from NSManagedObjectModel (0x1060902d0) claims 'ShoppingListItem'.
+CoreData: error: +[ShoppingListItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[ShoppingListItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+All data cleared successfully
+Test Case '-[GroceryAppTests.DataServiceTests testClearAllData_DeletesAllShoppingListItems]' passed (0.004 seconds).
+Test Case '-[GroceryAppTests.DataServiceTests testClearAllData_DeletesAllStores]' started.
+CoreData: warning: Multiple NSEntityDescriptions claim the NSManagedObject subclass 'Store' so +entity is unable to disambiguate.
+CoreData: warning: Multiple NSEntityDescriptions claim the NSManagedObject subclass 'Store' so +entity is unable to disambiguate.
+CoreData: warning:  	 'Store' (0x102da4240) from NSManagedObjectModel (0x10265b9c0) claims 'Store'.
+CoreData: warning:  	 'Store' (0x102da4240) from NSManagedObjectModel (0x10265b9c0) claims 'Store'.
+CoreData: warning:  	 'Store' (0x106266d00) from NSManagedObjectModel (0x11057e350) claims 'Store'.
+CoreData: warning:  	 'Store' (0x106266d00) from NSManagedObjectModel (0x11057e350) claims 'Store'.
+CoreData: warning:  	 'Store' (0x1062673c0) from NSManagedObjectModel (0x11057e5d0) claims 'Store'.
+CoreData: warning:  	 'Store' (0x1062673c0) from NSManagedObjectModel (0x11057e5d0) claims 'Store'.
+CoreData: warning:  	 'Store' (0x106267a80) from NSManagedObjectModel (0x11057e3f0) claims 'Store'.
+CoreData: warning:  	 'Store' (0x106267a80) from NSManagedObjectModel (0x11057e3f0) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110af8000) from NSManagedObjectModel (0x11057f110) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110af8000) from NSManagedObjectModel (0x11057f110) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110af8780) from NSManagedObjectModel (0x11057f390) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110af8780) from NSManagedObjectModel (0x11057f390) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110af8e40) from NSManagedObjectModel (0x11057f610) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110af8e40) from NSManagedObjectModel (0x11057f610) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110af9500) from NSManagedObjectModel (0x11057f890) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110af9500) from NSManagedObjectModel (0x11057f890) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110af9d40) from NSManagedObjectModel (0x11057fb10) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110af9d40) from NSManagedObjectModel (0x11057fb10) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110afa4c0) from NSManagedObjectModel (0x11057fd90) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110afa4c0) from NSManagedObjectModel (0x11057fd90) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110afab80) from NSManagedObjectModel (0x102dd2490) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110afab80) from NSManagedObjectModel (0x102dd2490) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110afb000) from NSManagedObjectModel (0x102dd3110) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110afb000) from NSManagedObjectModel (0x102dd3110) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110afb900) from NSManagedObjectModel (0x102dd3340) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110afb900) from NSManagedObjectModel (0x102dd3340) claims 'Store'.
+CoreData: warning:  	 'Store' (0x106266b80) from NSManagedObjectModel (0x102dd3660) claims 'Store'.
+CoreData: warning:  	 'Store' (0x106266b80) from NSManagedObjectModel (0x102dd3660) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110b846c0) from NSManagedObjectModel (0x102dd39d0) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110b846c0) from NSManagedObjectModel (0x102dd39d0) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110b84e40) from NSManagedObjectModel (0x102dd3ca0) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110b84e40) from NSManagedObjectModel (0x102dd3ca0) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110b85680) from NSManagedObjectModel (0x1060902d0) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110b85680) from NSManagedObjectModel (0x1060902d0) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110b85ec0) from NSManagedObjectModel (0x106090230) claims 'Store'.
+CoreData: warning:  	 'Store' (0x110b85ec0) from NSManagedObjectModel (0x106090230) claims 'Store'.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+All data cleared successfully
+Test Case '-[GroceryAppTests.DataServiceTests testClearAllData_DeletesAllStores]' passed (0.004 seconds).
+Test Case '-[GroceryAppTests.DataServiceTests testClearAllData_DeletesEverything]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[ShoppingListItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[ShoppingListItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+All data cleared successfully
+Test Case '-[GroceryAppTests.DataServiceTests testClearAllData_DeletesEverything]' passed (0.004 seconds).
+Test Suite 'DataServiceTests' passed at 2026-01-12 15:36:00.948.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 0.019 (0.020) seconds
+Test Suite 'GroceryAppTests' started at 2026-01-12 15:36:00.948.
+Test Case '-[GroceryAppTests.GroceryAppTests testAppLaunches]' started.
+Test Case '-[GroceryAppTests.GroceryAppTests testAppLaunches]' passed (0.001 seconds).
+Test Suite 'GroceryAppTests' passed at 2026-01-12 15:36:00.949.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'MasterListImportServiceTests' started at 2026-01-12 15:36:00.949.
+Test Case '-[GroceryAppTests.MasterListImportServiceTests testImportCommonItems_AssignsStoresWhenSpecified]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Import complete: 207 new items
+Test Case '-[GroceryAppTests.MasterListImportServiceTests testImportCommonItems_AssignsStoresWhenSpecified]' passed (0.010 seconds).
+Test Case '-[GroceryAppTests.MasterListImportServiceTests testImportCommonItems_CreatesItemsFromImportData]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Import complete: 207 new items
+Test Case '-[GroceryAppTests.MasterListImportServiceTests testImportCommonItems_CreatesItemsFromImportData]' passed (0.010 seconds).
+Test Case '-[GroceryAppTests.MasterListImportServiceTests testImportCommonItems_DoesNotDuplicateExistingItems]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Import complete: 206 new items, 1 items updated
+Test Case '-[GroceryAppTests.MasterListImportServiceTests testImportCommonItems_DoesNotDuplicateExistingItems]' passed (0.010 seconds).
+Test Case '-[GroceryAppTests.MasterListImportServiceTests testImportCommonItems_UpdatesStoreAssignmentForExistingItems]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Import complete: 206 new items, 1 items updated
+Test Case '-[GroceryAppTests.MasterListImportServiceTests testImportCommonItems_UpdatesStoreAssignmentForExistingItems]' passed (0.009 seconds).
+Test Case '-[GroceryAppTests.MasterListImportServiceTests testImportItemsForCategory_DoesNotImportItemsForOtherCategories]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.MasterListImportServiceTests testImportItemsForCategory_DoesNotImportItemsForOtherCategories]' passed (0.005 seconds).
+Test Case '-[GroceryAppTests.MasterListImportServiceTests testImportItemsForCategory_ImportsOnlyItemsForThatCategory]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Category entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[GroceryItem entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.MasterListImportServiceTests testImportItemsForCategory_ImportsOnlyItemsForThatCategory]' passed (0.005 seconds).
+Test Suite 'MasterListImportServiceTests' passed at 2026-01-12 15:36:01.000.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.049 (0.050) seconds
+Test Suite 'StoreServiceTests' started at 2026-01-12 15:36:01.000.
+Test Case '-[GroceryAppTests.StoreServiceTests testCreateDefaultStores_AddsMissingStores]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.StoreServiceTests testCreateDefaultStores_AddsMissingStores]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.StoreServiceTests testCreateDefaultStores_CreatesAllDefaultStores]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.StoreServiceTests testCreateDefaultStores_CreatesAllDefaultStores]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.StoreServiceTests testCreateDefaultStores_DoesNotDuplicateExistingStores]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.StoreServiceTests testCreateDefaultStores_DoesNotDuplicateExistingStores]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.StoreServiceTests testCreateStore_CreatesStoreWithColor]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.StoreServiceTests testCreateStore_CreatesStoreWithColor]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.StoreServiceTests testCreateStore_CreatesStoreWithCustomIcon]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.StoreServiceTests testCreateStore_CreatesStoreWithCustomIcon]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.StoreServiceTests testCreateStore_CreatesStoreWithName]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.StoreServiceTests testCreateStore_CreatesStoreWithName]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.StoreServiceTests testCreateStore_PersistsToContext]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.StoreServiceTests testCreateStore_PersistsToContext]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.StoreServiceTests testDeleteStore_RemovesStoreFromContext]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.StoreServiceTests testDeleteStore_RemovesStoreFromContext]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.StoreServiceTests testFetchAllStores_ReturnsAllStores]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.StoreServiceTests testFetchAllStores_ReturnsAllStores]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.StoreServiceTests testFetchAllStores_ReturnsEmptyArrayWhenNoStores]' started.
+Test Case '-[GroceryAppTests.StoreServiceTests testFetchAllStores_ReturnsEmptyArrayWhenNoStores]' passed (0.002 seconds).
+Test Case '-[GroceryAppTests.StoreServiceTests testFetchAllStores_SortsByFavoriteThenName]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.StoreServiceTests testFetchAllStores_SortsByFavoriteThenName]' passed (0.003 seconds).
+Test Case '-[GroceryAppTests.StoreServiceTests testFetchFavoriteStores_ReturnsEmptyWhenNoFavorites]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.StoreServiceTests testFetchFavoriteStores_ReturnsEmptyWhenNoFavorites]' passed (0.005 seconds).
+Test Case '-[GroceryAppTests.StoreServiceTests testFetchFavoriteStores_ReturnsOnlyFavorites]' started.
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+CoreData: error: +[Store entity] Failed to find a unique match for an NSEntityDescription to a managed object subclass
+Test Case '-[GroceryAppTests.StoreServiceTests testFetchFavoriteStores_ReturnsOnlyFavorites]' passed (0.003 seconds).
+Test Suite 'StoreServiceTests' passed at 2026-01-12 15:36:01.042.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.039 (0.042) seconds
+Test Suite 'GroceryAppTests.xctest' passed at 2026-01-12 15:36:01.042.
+	 Executed 39 tests, with 0 failures (0 unexpected) in 0.148 (0.158) seconds
+Test Suite 'All tests' passed at 2026-01-12 15:36:01.042.
+	 Executed 39 tests, with 0 failures (0 unexpected) in 0.148 (0.158) seconds

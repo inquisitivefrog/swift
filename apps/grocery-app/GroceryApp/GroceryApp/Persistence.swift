@@ -50,8 +50,12 @@ struct PersistenceController {
 
     let container: NSPersistentContainer
 
-    init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "GroceryApp")
+    init(inMemory: Bool = false, managedObjectModel: NSManagedObjectModel? = nil) {
+        if let model = managedObjectModel {
+            container = NSPersistentContainer(name: "GroceryApp", managedObjectModel: model)
+        } else {
+            container = NSPersistentContainer(name: "GroceryApp")
+        }
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }

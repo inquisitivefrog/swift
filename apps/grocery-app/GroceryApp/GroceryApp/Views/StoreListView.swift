@@ -22,6 +22,7 @@ struct StoreListView: View {
     
     @State private var showingAddStore = false
     @State private var storeToEdit: Store? = nil
+    @State private var showingClearDataAlert = false
     
     var body: some View {
         NavigationView {
@@ -41,6 +42,30 @@ struct StoreListView: View {
                         }
                     }
                     .onDelete(perform: deleteStores)
+                    
+                    // Clear All Data section
+                    Section {
+                        Button(role: .destructive, action: {
+                            showingClearDataAlert = true
+                        }) {
+                            HStack {
+                                Image(systemName: "trash.fill")
+                                Text("Clear All Data")
+                            }
+                        }
+                    } footer: {
+                        Text("This will delete all items, shopping lists, stores, and categories. Default stores and categories will be recreated on next launch.")
+                    }
+                    
+                    // About section
+                    Section {
+                        NavigationLink(destination: AboutView()) {
+                            HStack {
+                                Image(systemName: "info.circle")
+                                Text("About")
+                            }
+                        }
+                    }
                 }
             .navigationTitle("Stores")
             .toolbar {
@@ -53,6 +78,14 @@ struct StoreListView: View {
                     }
                 }
             }
+            .alert("Clear All Data", isPresented: $showingClearDataAlert) {
+                Button("Cancel", role: .cancel) { }
+                Button("Clear All", role: .destructive) {
+                    clearAllData()
+                }
+            } message: {
+                Text("This will permanently delete all items, shopping lists, stores, and categories. This action cannot be undone. Default stores and categories will be recreated on next launch.")
+            }
             .sheet(isPresented: $showingAddStore) {
                 AddStoreView(storeToEdit: storeToEdit)
                     .onDisappear {
@@ -60,6 +93,11 @@ struct StoreListView: View {
                     }
             }
         }
+    }
+    
+    private func clearAllData() {
+        let dataService = DataService(context: viewContext)
+        dataService.clearAllData()
     }
     
         private func deleteStore(_ store: Store) {
