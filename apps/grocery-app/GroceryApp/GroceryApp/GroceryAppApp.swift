@@ -13,7 +13,7 @@ struct GroceryAppApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MainTabView()
+            LandingView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

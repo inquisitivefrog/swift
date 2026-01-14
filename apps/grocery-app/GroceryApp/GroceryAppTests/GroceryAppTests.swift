@@ -16,5 +16,6 @@ final class GroceryAppTests: XCTestCase {
         XCTAssertNotNil(CategoryService.self)
         XCTAssertNotNil(MasterListImportService.self)
         XCTAssertNotNil(DataService.self)
+        XCTAssertNotNil(ShoppingListService.self)
     }
 }

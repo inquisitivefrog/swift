@@ -9,27 +9,22 @@ import SwiftUI
 
 struct MainTabView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @State private var selectedTab = 1 // Start with Shopping List (index 1)
+    @State private var selectedTab = 0 // Start with Shopping List (index 0)
+    @State private var showingSettings = false
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            MasterListView()
+            ShoppingListView()
                 .tabItem {
-                    Label("Master List", systemImage: "list.bullet")
+                    Label("Build My List", systemImage: "cart.fill")
                 }
                 .tag(0)
             
-            ShoppingListView()
+            StoreShoppingListView()
                 .tabItem {
-                    Label("Shopping", systemImage: "cart.fill")
+                    Label("Shop By Stores", systemImage: "storefront.fill")
                 }
                 .tag(1)
-            
-            StoreListView()
-                .tabItem {
-                    Label("Stores", systemImage: "storefront.fill")
-                }
-                .tag(2)
         }
         .onAppear {
             // Create default stores on first launch

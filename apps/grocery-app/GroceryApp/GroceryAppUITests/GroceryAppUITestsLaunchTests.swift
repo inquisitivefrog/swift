@@ -22,12 +22,29 @@ final class GroceryAppUITestsLaunchTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        // Insert steps here to perform after app launch but before taking a screenshot,
-        // such as logging into a test account or navigating somewhere in the app
+        // Wait for landing page to appear
+        let landingPageTitle = app.staticTexts["GroceryApp"]
+        XCTAssertTrue(landingPageTitle.waitForExistence(timeout: 5), "Landing page should appear on launch")
 
+        // Take screenshot of landing page
         let attachment = XCTAttachment(screenshot: app.screenshot())
-        attachment.name = "Launch Screen"
+        attachment.name = "Launch Screen (Landing Page)"
         attachment.lifetime = .keepAlways
         add(attachment)
+        
+        // Navigate to main view for additional screenshots
+        let getStartedButton = app.buttons["Get Started"]
+        if getStartedButton.waitForExistence(timeout: 2) {
+            getStartedButton.tap()
+            
+            // Wait for main view
+            let buildMyListTab = app.tabBars.buttons["Build My List"]
+            if buildMyListTab.waitForExistence(timeout: 5) {
+                let mainViewAttachment = XCTAttachment(screenshot: app.screenshot())
+                mainViewAttachment.name = "Main View (Build My List)"
+                mainViewAttachment.lifetime = .keepAlways
+                add(mainViewAttachment)
+            }
+        }
     }
 }

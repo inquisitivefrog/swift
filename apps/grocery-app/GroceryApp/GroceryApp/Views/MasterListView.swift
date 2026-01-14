@@ -29,9 +29,15 @@ struct MasterListView: View {
     @State private var showingAddCategory = false
     @State private var categoryToEdit: Category? = nil
     @State private var isImporting = false
+    @State private var cachedCategoryCounts: [(category: Category, count: Int)] = []
     
-    // Get category counts from master list - optimized to reduce memory allocations
+    // Get category counts from master list - cached to reduce memory usage
     var categoryCounts: [(category: Category, count: Int)] {
+        cachedCategoryCounts
+    }
+    
+    // Calculate category counts - only called when data changes
+    private func calculateCategoryCounts() {
         // Use Dictionary for O(1) lookups instead of filtering
         var itemCountsByCategory: [UUID: Int] = [:]
         for item in items {
@@ -41,7 +47,7 @@ struct MasterListView: View {
         }
         
         // Build result array efficiently
-        return categories.map { category in
+        cachedCategoryCounts = categories.map { category in
             let count = itemCountsByCategory[category.id] ?? 0
             return (category: category, count: count)
         }.sorted { $0.count > $1.count } // Sort by count, most to least
@@ -108,7 +114,7 @@ struct MasterListView: View {
                 .padding()
             }
             .background(Color(.systemGroupedBackground))
-            .navigationTitle("Master List")
+            .navigationTitle("FoodStuffs")
             .navigationDestination(for: Category.self) { category in
                 MasterListCategoryView(category: category)
             }
@@ -144,6 +150,18 @@ struct MasterListView: View {
                     .buttonStyle(.plain)
                     .disabled(!canImport)
                 }
+            }
+            .onAppear {
+                // Calculate category counts on appear
+                calculateCategoryCounts()
+            }
+            .onChange(of: items.count) {
+                // Recalculate when items change
+                calculateCategoryCounts()
+            }
+            .onChange(of: categories.count) {
+                // Recalculate when categories change
+                calculateCategoryCounts()
             }
             .sheet(isPresented: $showingAddCategory) {
                 AddCategoryView(categoryToEdit: categoryToEdit)
@@ -200,20 +218,45 @@ struct MasterListCategoryView: View {
     @State private var showingAddItem = false
     @State private var itemToEdit: GroceryItem? = nil
     @State private var isImporting = false
+    @State private var cachedSortedItems: [GroceryItem] = []
     
-    // Sorted items: by store name, then by item name
+    // Sorted items: by store name, then by item name - cached to prevent crashes
     var sortedItems: [GroceryItem] {
+        cachedSortedItems
+    }
+    
+    // Calculate sorted items - only called when data changes
+    private func calculateSortedItems() {
+        // Convert to array and ensure objects are loaded (not faulted)
         let itemsArray = Array(items)
-        return itemsArray.sorted { item1, item2 in
-            let store1 = item1.firstPreferredStore
-            let store2 = item2.firstPreferredStore
-            let store1Name = store1?.name ?? ""
-            let store2Name = store2?.name ?? ""
+        
+        // Pre-fetch store relationships to avoid faults during sorting
+        let itemIDs = itemsArray.compactMap { $0.objectID }
+        let fetchRequest = NSFetchRequest<GroceryItem>(entityName: "GroceryItem")
+        fetchRequest.predicate = NSPredicate(format: "SELF IN %@", itemIDs)
+        fetchRequest.relationshipKeyPathsForPrefetching = ["preferredStore"]
+        
+        do {
+            let context = viewContext
+            let loadedItems = try context.fetch(fetchRequest)
             
-            if store1Name != store2Name {
-                return store1Name < store2Name
+            // Now sort with fully loaded objects
+            cachedSortedItems = loadedItems.sorted { item1, item2 in
+                // Safely access store names
+                let store1 = item1.firstPreferredStore
+                let store2 = item2.firstPreferredStore
+                let store1Name = store1?.name ?? ""
+                let store2Name = store2?.name ?? ""
+                
+                if store1Name != store2Name {
+                    return store1Name < store2Name
+                }
+                return item1.name < item2.name
             }
-            return item1.name < item2.name
+        } catch {
+            // Fallback to simple name sorting if fetch fails
+            cachedSortedItems = itemsArray.sorted { $0.name < $1.name }
+            print("Error prefetching stores for sorting: \(error)")
         }
     }
     
@@ -268,6 +311,14 @@ struct MasterListCategoryView: View {
         .scrollIndicators(.visible)
         .navigationTitle(category.name)
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            // Calculate sorted items on appear
+            calculateSortedItems()
+        }
+        .onChange(of: items.count) {
+            // Recalculate when items change
+            calculateSortedItems()
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 HStack(spacing: 16) {

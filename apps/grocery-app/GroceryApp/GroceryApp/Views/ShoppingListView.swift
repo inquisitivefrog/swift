@@ -10,6 +10,17 @@ import CoreData
 
 struct ShoppingListView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @State private var showingSettings = false
+    @State private var isSaving = false
+    @State private var isLoading = false
+    @State private var showingSaveAlert = false
+    @State private var showingLoadAlert = false
+    @State private var hasSavedList = false
+    
+    // Service for managing saved shopping lists
+    private var shoppingListService: ShoppingListService {
+        ShoppingListService(context: viewContext)
+    }
     
     @FetchRequest(
         sortDescriptors: [
@@ -35,9 +46,15 @@ struct ShoppingListView: View {
     }
     
     @State private var isClearingChecked = false
+    @State private var cachedCategoryCounts: [(category: Category, count: Int)] = []
     
-    // Get category counts from shopping list (not master list) - optimized
+    // Get category counts from shopping list (not master list) - cached to reduce memory usage
     var categoryCounts: [(category: Category, count: Int)] {
+        cachedCategoryCounts
+    }
+    
+    // Calculate category counts - only called when data changes
+    private func calculateCategoryCounts() {
         // Use Dictionary for O(1) lookups instead of filtering
         var itemCountsByCategory: [UUID: Int] = [:]
         for item in items {
@@ -48,7 +65,7 @@ struct ShoppingListView: View {
         }
         
         // Build result array efficiently
-        return categories.map { category in
+        cachedCategoryCounts = categories.map { category in
             let count = itemCountsByCategory[category.id] ?? 0
             return (category: category, count: count)
         }.sorted { $0.count > $1.count } // Sort by count, most to least
@@ -74,27 +91,144 @@ struct ShoppingListView: View {
                 .padding()
             }
             .background(Color(.systemGroupedBackground))
-            .navigationTitle("Shopping List")
+            .navigationTitle("Build My List")
             .navigationDestination(for: Category.self) { category in
                 ShoppingListCategoryView(category: category)
             }
+            .sheet(isPresented: $showingSettings) {
+                SettingsView()
+            }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    if !checkedItems.isEmpty && !isClearingChecked {
-                        Button("Clear Checked") {
-                            clearCheckedItems()
+                // Settings button - place first to ensure it's always visible
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        showingSettings = true
+                    }) {
+                        Image(systemName: "gearshape.fill")
+                    }
+                }
+                
+                // Leading toolbar items - Save and Load buttons
+                ToolbarItemGroup(placement: .navigationBarLeading) {
+                    // Save button
+                    Button(action: {
+                        saveShoppingList()
+                    }) {
+                        if isSaving {
+                            ProgressView()
+                                .frame(width: 20, height: 20)
+                        } else {
+                            Image(systemName: "square.and.arrow.down")
                         }
-                    } else if isClearingChecked {
+                    }
+                    .disabled(isSaving)
+                    
+                    // Load button
+                    Button(action: {
+                        loadShoppingList()
+                    }) {
+                        if isLoading {
+                            ProgressView()
+                                .frame(width: 20, height: 20)
+                        } else {
+                            Image(systemName: "square.and.arrow.up")
+                        }
+                    }
+                    .disabled(isLoading || !hasSavedList)
+                }
+                
+                // Clear Checked button - only when there are checked items (separate item to avoid crowding)
+                if !checkedItems.isEmpty && !isClearingChecked {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            clearCheckedItems()
+                        }) {
+                            Image(systemName: "checkmark.circle.fill")
+                        }
+                    }
+                } else if isClearingChecked {
+                    ToolbarItem(placement: .navigationBarLeading) {
                         ProgressView()
+                            .frame(width: 20, height: 20)
                     }
                 }
             }
+            .alert("Shopping List Saved", isPresented: $showingSaveAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("Your shopping list has been saved. Use Load to restore it later.")
+            }
+            .alert("Shopping List Loaded", isPresented: $showingLoadAlert) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("Items from your saved shopping list have been added.")
+            }
+            .onAppear {
+                // Check if saved list exists on view appear
+                hasSavedList = shoppingListService.hasSavedList
+                // Calculate category counts on appear
+                calculateCategoryCounts()
+            }
+            .onChange(of: items.count) {
+                // Recalculate when items change
+                calculateCategoryCounts()
+            }
+            .onChange(of: categories.count) {
+                // Recalculate when categories change
+                calculateCategoryCounts()
+            }
+        }
+    }
+    
+    private func saveShoppingList() {
+        guard !isSaving else { return }
+        isSaving = true
+        
+        shoppingListService.saveCurrentShoppingList { result in
+            switch result {
+            case .success(let count):
+                self.hasSavedList = true // Update state to enable Load button
+                self.showingSaveAlert = true
+                print("Saved shopping list with \(count) items")
+            case .failure(let error):
+                print("Error saving shopping list: \(error)")
+            }
+            self.isSaving = false
+        }
+    }
+    
+    private func loadShoppingList() {
+        guard !isLoading else { return }
+        isLoading = true
+        
+        shoppingListService.loadSavedShoppingList { result in
+            switch result {
+            case .success(let count):
+                if count > 0 {
+                    self.showingLoadAlert = true
+                    print("Loaded \(count) items from saved shopping list")
+                } else {
+                    // All items already in list - could show different message
+                    print("All saved items are already in the shopping list")
+                }
+            case .failure(let error):
+                print("Error loading shopping list: \(error)")
+            }
+            self.isLoading = false
         }
     }
     
     private func clearCheckedItems() {
         guard !isClearingChecked else { return }
         isClearingChecked = true
+        
+        // Get object IDs from main context first (where we know the checked items exist)
+        let checkedItemIDs = checkedItems.compactMap { $0.objectID }
+        
+        guard !checkedItemIDs.isEmpty else {
+            isClearingChecked = false
+            return
+        }
         
         // Use performBackgroundTask to avoid blocking main thread and FetchedResults conflicts
         let container = PersistenceController.shared.container
@@ -104,16 +238,9 @@ struct ShoppingListView: View {
                 backgroundContext.processPendingChanges()
             }
             
-            // Fetch object IDs in background context
-            let fetchRequest: NSFetchRequest<NSManagedObjectID> = NSFetchRequest(entityName: "ShoppingListItem")
-            fetchRequest.predicate = NSPredicate(format: "isChecked == YES")
-            fetchRequest.resultType = .managedObjectIDResultType
-            
             do {
-                let objectIDs = try backgroundContext.fetch(fetchRequest)
-                
-                // Delete objects in background context
-                for objectID in objectIDs {
+                // Delete objects in background context using the object IDs from main context
+                for objectID in checkedItemIDs {
                     if let object = try? backgroundContext.existingObject(with: objectID) {
                         backgroundContext.delete(object)
                     }
@@ -122,6 +249,7 @@ struct ShoppingListView: View {
                 // Save background context
                 if backgroundContext.hasChanges {
                     try backgroundContext.save()
+                    print("Cleared \(checkedItemIDs.count) checked items")
                 }
                 
                 // Reset flag on main thread after save completes
@@ -192,12 +320,30 @@ struct ShoppingListCategoryView: View {
     // Cached grouped items - recalculated only when needed
     @State private var cachedItemsByStore: [(store: Store?, items: [GroceryItem])] = []
     
-    // Group items by store for display - optimized to reduce memory usage
+    // Group items by store for display - optimized to reduce memory usage and prevent crashes
     private func calculateItemsByStore() -> [(store: Store?, items: [GroceryItem])] {
-        // Group by store - iterate through FetchedResults directly (lazy, doesn't load all into memory)
+        // Convert to array and pre-fetch relationships to avoid faults during sorting
+        let itemsArray = Array(allMasterItems)
+        let itemIDs = itemsArray.compactMap { $0.objectID }
+        
+        // Pre-fetch store relationships to avoid faults
+        let fetchRequest = NSFetchRequest<GroceryItem>(entityName: "GroceryItem")
+        fetchRequest.predicate = NSPredicate(format: "SELF IN %@", itemIDs)
+        fetchRequest.relationshipKeyPathsForPrefetching = ["preferredStore"]
+        
+        let loadedItems: [GroceryItem]
+        do {
+            loadedItems = try viewContext.fetch(fetchRequest)
+        } catch {
+            // Fallback to original items if fetch fails
+            loadedItems = itemsArray
+            print("Error prefetching stores for grouping: \(error)")
+        }
+        
+        // Group by store with fully loaded objects
         var grouped: [String: (store: Store?, items: [GroceryItem])] = [:]
         
-        for item in allMasterItems {
+        for item in loadedItems {
             let store = item.firstPreferredStore
             let storeKey = store?.name ?? "ZZZ_No_Store"
             
@@ -212,11 +358,12 @@ struct ShoppingListCategoryView: View {
         result.reserveCapacity(grouped.count)
         
         for (_, group) in grouped {
+            // Sort items by name (safe now that objects are loaded)
             let sortedItems = group.items.sorted { $0.name < $1.name }
             result.append((store: group.store, items: sortedItems))
         }
         
-        // Sort groups by store name
+        // Sort groups by store name (safe now that stores are loaded)
         result.sort { group1, group2 in
             let name1 = group1.store?.name ?? "ZZZ No Store"
             let name2 = group2.store?.name ?? "ZZZ No Store"
@@ -247,11 +394,21 @@ struct ShoppingListCategoryView: View {
         shoppingItems.contains { $0.groceryItem == item }
     }
     
+    // Get the shopping list item for a grocery item
+    func getShoppingItem(_ item: GroceryItem) -> ShoppingListItem? {
+        shoppingItems.first { $0.groceryItem == item }
+    }
+    
     // Toggle item in shopping list
     func toggleItemInShoppingList(_ item: GroceryItem) {
         if let shoppingItem = shoppingItems.first(where: { $0.groceryItem == item }) {
-            // Item is in shopping list - remove it
-            viewContext.delete(shoppingItem)
+            // Item is in shopping list - toggle checked state
+            shoppingItem.isChecked.toggle()
+            if shoppingItem.isChecked {
+                shoppingItem.checkedDate = Date()
+            } else {
+                shoppingItem.checkedDate = nil
+            }
         } else {
             // Item is not in shopping list - add it
             let shoppingItem = ShoppingListItem(context: viewContext)
@@ -326,16 +483,23 @@ struct ShoppingListCategoryView: View {
                         // Items in this store group
                         ForEach(storeGroup.items) { item in
                             Button(action: {
-                                // Toggle item in/out of shopping list
+                                // Toggle item in/out of shopping list or check/uncheck if already in list
                                 toggleItemInShoppingList(item)
                             }) {
                                 HStack {
-                                    // Checkmark indicator for selected items (colorblind-friendly)
-                                    if isInShoppingList(item) {
-                                        Image(systemName: "checkmark.circle.fill")
-                                            .foregroundColor(.blue)
-                                            .font(.title3)
-                                            .frame(width: 24)
+                                    // Checkmark indicator - show checked state if in list, or empty circle if not
+                                    if let shoppingItem = getShoppingItem(item) {
+                                        if shoppingItem.isChecked {
+                                            Image(systemName: "checkmark.circle.fill")
+                                                .foregroundColor(.green)
+                                                .font(.title3)
+                                                .frame(width: 24)
+                                        } else {
+                                            Image(systemName: "checkmark.circle")
+                                                .foregroundColor(.blue)
+                                                .font(.title3)
+                                                .frame(width: 24)
+                                        }
                                     } else {
                                         Image(systemName: "circle")
                                             .foregroundColor(.gray.opacity(0.3))
@@ -356,10 +520,22 @@ struct ShoppingListCategoryView: View {
                                 .padding(.vertical, 12)
                                 .padding(.horizontal, 16)
                                 .frame(maxWidth: .infinity, alignment: .leading)
-                                .background(isInShoppingList(item) ? Color.blue.opacity(0.1) : Color(.systemBackground))
+                                .background({
+                                    if let shoppingItem = getShoppingItem(item) {
+                                        return shoppingItem.isChecked ? Color.green.opacity(0.1) : Color.blue.opacity(0.1)
+                                    } else {
+                                        return Color(.systemBackground)
+                                    }
+                                }())
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 8)
-                                        .stroke(isInShoppingList(item) ? Color.blue : Color.clear, lineWidth: 2)
+                                        .stroke({
+                                            if let shoppingItem = getShoppingItem(item) {
+                                                return shoppingItem.isChecked ? Color.green : Color.blue
+                                            } else {
+                                                return Color.clear
+                                            }
+                                        }(), lineWidth: 2)
                                 )
                                 .contentShape(Rectangle())
                             }

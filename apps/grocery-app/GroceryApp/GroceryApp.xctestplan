@@ -18,7 +18,7 @@
   },
   "testTargets" : [
     {
-      "parallelizable" : true,
+      "parallelizable" : false,
       "target" : {
         "containerPath" : "container:GroceryApp.xcodeproj",
         "identifier" : "225F6AE82F0D7C62005528C7",
@@ -26,7 +26,7 @@
       }
     },
     {
-      "parallelizable" : true,
+      "parallelizable" : false,
       "target" : {
         "containerPath" : "container:GroceryApp.xcodeproj",
         "identifier" : "225F6AF22F0D7C62005528C7",
