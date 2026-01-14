@@ -315,3 +315,12 @@ Test Suite 'GroceryAppTests.xctest' passed at 2026-01-12 15:36:01.042.
 	 Executed 39 tests, with 0 failures (0 unexpected) in 0.148 (0.158) seconds
 Test Suite 'All tests' passed at 2026-01-12 15:36:01.042.
 	 Executed 39 tests, with 0 failures (0 unexpected) in 0.148 (0.158) seconds
+
+(⎈|N/A:N/A)tim@Timothys-MacBook-Air grocery-app % ./ci-cd-commands.sh test | xcpretty --test                        
+..............................................
+
+	 Executed 46 tests, with 0 failures (0 unexpected) in 0.114 (0.123) seconds
+............
+
+	 Executed 12 tests, with 0 failures (0 unexpected) in 89.911 (89.924) seconds
+
