@@ -1,0 +1,10 @@
+
+(⎈|N/A:N/A)tim@Timothys-MacBook-Air grocery-app % xcodebuild -exportArchive \
+  -archivePath ./build/GroceryApp.xcarchive \
+  -exportPath ./build/export \
+  -exportOptionsPlist ExportOptions.plist
+error: Couldn't load -exportOptionsPlist The file “ExportOptions.plist” couldn’t be opened because there is no such file.
+
+** EXPORT FAILED **
+
+

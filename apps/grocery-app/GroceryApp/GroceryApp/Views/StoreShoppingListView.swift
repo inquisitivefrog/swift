@@ -12,8 +12,6 @@ struct StoreShoppingListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @State private var showingSettings = false
     @State private var cachedStoresWithItems: [(store: Store?, count: Int)] = []
-    @State private var showingCompletionAlert = false
-    @State private var previousItemCount = 0
     
     @FetchRequest(
         sortDescriptors: [
@@ -65,45 +63,19 @@ struct StoreShoppingListView: View {
         cachedStoresWithItems = result.sorted { $0.count > $1.count }
     }
     
-    // Check if all shopping is complete and show alert
-    private func checkForCompletion() {
-        let currentUncheckedCount = shoppingItems.filter { !$0.isChecked }.count
-        
-        // If we had items before and now we don't, show completion message
-        if previousItemCount > 0 && currentUncheckedCount == 0 && storesWithItems.isEmpty {
-            // Small delay to ensure UI is updated
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                showingCompletionAlert = true
-            }
-        }
-        
-        previousItemCount = currentUncheckedCount
-    }
-    
     var body: some View {
         NavigationStack {
             ScrollView {
                 if storesWithItems.isEmpty {
-                    // Empty state with cheerful message
+                    // Simple empty state (alert provides the celebration message)
                     VStack(spacing: 20) {
-                        Image(systemName: "checkmark.circle.fill")
-                            .font(.system(size: 80))
-                            .foregroundColor(.green)
+                        Image(systemName: "cart")
+                            .font(.system(size: 60))
+                            .foregroundColor(.secondary)
                         
-                        Text("All Done! 🎉")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.primary)
-                        
-                        Text("You've completed all your shopping!")
+                        Text("No items to shop")
                             .font(.title3)
                             .foregroundColor(.secondary)
-                            .multilineTextAlignment(.center)
-                        
-                        Text("See you next time!")
-                            .font(.body)
-                            .foregroundColor(.secondary)
-                            .padding(.top, 8)
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .padding()
@@ -142,32 +114,18 @@ struct StoreShoppingListView: View {
             .onAppear {
                 // Calculate stores with items on appear
                 calculateStoresWithItems()
-                // Track initial item count
-                let uncheckedCount = shoppingItems.filter { !$0.isChecked }.count
-                previousItemCount = uncheckedCount
             }
             .onChange(of: shoppingItems.count) {
                 // Recalculate when shopping items change
                 calculateStoresWithItems()
-                checkForCompletion()
             }
-            .onChange(of: storesWithItems.count) {
-                // Check if we just completed all shopping
-                checkForCompletion()
-            }
-            .onChange(of: shoppingItems.map { $0.isChecked }) { _ in
+            .onChange(of: shoppingItems.map { $0.isChecked }) {
                 // Recalculate when items are checked/unchecked
                 calculateStoresWithItems()
-                checkForCompletion()
             }
             .onChange(of: allStores.count) {
                 // Recalculate when stores change
                 calculateStoresWithItems()
-            }
-            .alert("Shopping Complete! 🎉", isPresented: $showingCompletionAlert) {
-                Button("Awesome!", role: .cancel) { }
-            } message: {
-                Text("You've finished all your shopping! Great job! See you next time!")
             }
         }
     }

@@ -197,6 +197,87 @@ run() {
     fi
 }
 
+# Function: Archive (for App Store/TestFlight)
+archive() {
+    echo -e "${YELLOW}Creating archive for App Store distribution...${NC}"
+    
+    # Create build directory if it doesn't exist
+    mkdir -p build
+    
+    # Use generic iOS device destination for archive
+    local archive_destination="generic/platform=iOS"
+    
+    echo -e "${YELLOW}Note: Archive requires valid code signing. Make sure your Apple Developer account is configured in Xcode.${NC}"
+    
+    xcodebuild archive \
+        -project "$PROJECT_PATH" \
+        -scheme "$SCHEME" \
+        -configuration Release \
+        -destination "$archive_destination" \
+        -archivePath ./build/GroceryApp.xcarchive \
+        -allowProvisioningUpdates
+    
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✓ Archive created successfully${NC}"
+        echo -e "${YELLOW}Archive location: ./build/GroceryApp.xcarchive${NC}"
+        echo -e "${YELLOW}Next step: Run './ci-cd-commands.sh export' to export for App Store${NC}"
+    else
+        echo -e "${RED}✗ Archive failed${NC}"
+        echo -e "${YELLOW}Tip: Make sure you have:${NC}"
+        echo -e "${YELLOW}  1. Apple Developer account configured in Xcode${NC}"
+        echo -e "${YELLOW}  2. Valid provisioning profile for your app${NC}"
+        echo -e "${YELLOW}  3. Code signing set up in Xcode (Signing & Capabilities tab)${NC}"
+        exit 1
+    fi
+}
+
+# Function: Export archive (for App Store/TestFlight)
+export_archive() {
+    echo -e "${YELLOW}Exporting archive for App Store distribution...${NC}"
+    
+    if [ ! -f "./build/GroceryApp.xcarchive" ]; then
+        echo -e "${RED}✗ Archive not found. Run './ci-cd-commands.sh archive' first${NC}"
+        exit 1
+    fi
+    
+    if [ ! -f "./ExportOptions.plist" ]; then
+        echo -e "${RED}✗ ExportOptions.plist not found${NC}"
+        echo -e "${YELLOW}Please create ExportOptions.plist or update YOUR_TEAM_ID in the file${NC}"
+        exit 1
+    fi
+    
+    # Check if Team ID needs to be set
+    if grep -q "YOUR_TEAM_ID" ./ExportOptions.plist; then
+        echo -e "${YELLOW}⚠ Warning: ExportOptions.plist contains placeholder YOUR_TEAM_ID${NC}"
+        echo -e "${YELLOW}To find your Team ID:${NC}"
+        echo -e "${YELLOW}  1. Open Xcode > Preferences > Accounts${NC}"
+        echo -e "${YELLOW}  2. Select your Apple ID > View Details${NC}"
+        echo -e "${YELLOW}  3. Copy the Team ID and update ExportOptions.plist${NC}"
+        echo ""
+        read -p "Do you want to continue anyway? (y/n) " -n 1 -r
+        echo
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            exit 1
+        fi
+    fi
+    
+    mkdir -p build/export
+    
+    xcodebuild -exportArchive \
+        -archivePath ./build/GroceryApp.xcarchive \
+        -exportPath ./build/export \
+        -exportOptionsPlist ./ExportOptions.plist
+    
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}✓ Export successful${NC}"
+        echo -e "${YELLOW}Export location: ./build/export${NC}"
+        echo -e "${YELLOW}Upload the .ipa file to App Store Connect via Xcode or Transporter${NC}"
+    else
+        echo -e "${RED}✗ Export failed${NC}"
+        exit 1
+    fi
+}
+
 # Function: All (clean, build, test)
 all() {
     clean
@@ -221,23 +302,35 @@ case "${1:-help}" in
     all)
         all
         ;;
+    archive)
+        archive
+        ;;
+    export)
+        export_archive
+        ;;
     help|--help|-h)
         echo "CI/CD Commands for GroceryApp"
         echo ""
         echo "Usage: $0 [command]"
         echo ""
-        echo "Commands:"
+        echo "Development Commands:"
         echo "  clean    Clean build folder (Product > Clean Build Folder)"
         echo "  build    Build the project (Product > Build)"
         echo "  test     Run all tests (Product > Test)"
         echo "  run      Build and prepare to run (Product > Run)"
         echo "  all      Clean, build, and test"
         echo ""
+        echo "Distribution Commands:"
+        echo "  archive  Create archive for App Store/TestFlight (Product > Archive)"
+        echo "  export   Export archive for App Store distribution"
+        echo ""
         echo "Examples:"
         echo "  $0 clean"
         echo "  $0 build"
         echo "  $0 test"
         echo "  $0 all"
+        echo "  $0 archive    # Create archive"
+        echo "  $0 export     # Export archive (requires ExportOptions.plist)"
         echo ""
         echo "Environment Variables:"
         echo "  USE_SIMULATOR=1    Force simulator (default behavior - safer)"
@@ -248,6 +341,11 @@ case "${1:-help}" in
         echo "  $0 test    # Default: uses simulator (iPhone 16e)"
         echo "  USE_DEVICE=1 $0 test    # Try to use physical device"
         echo "  DESTINATION_OVERRIDE='id=B9FBB080-6DFB-419E-93D1-C407A735356B' $0 test  # Use specific device/simulator"
+        echo ""
+        echo "Distribution Notes:"
+        echo "  - Archive requires Release configuration and valid code signing"
+        echo "  - Export requires ExportOptions.plist with your Team ID"
+        echo "  - Find Team ID: Xcode > Preferences > Accounts > View Details"
         ;;
     *)
         echo -e "${RED}Unknown command: $1${NC}"
