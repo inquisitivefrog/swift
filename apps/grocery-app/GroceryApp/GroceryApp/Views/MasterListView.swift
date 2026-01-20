@@ -61,64 +61,61 @@ struct MasterListView: View {
                 LazyVGrid(columns: [
                     GridItem(.adaptive(minimum: 80), spacing: 12)
                 ], spacing: 20) {
-                    ForEach(categoryCounts, id: \.category.id) { categoryData in
-                        NavigationLink(value: categoryData.category) {
-                            VStack(alignment: .center, spacing: 6) {
-                                Image(systemName: categoryData.category.displayIconName)
-                                    .font(.title2)
-                                    .foregroundColor(.blue)
-                                
-                                Text(categoryData.category.name)
-                                    .font(.caption)
-                                    .foregroundColor(.primary)
-                                    .lineLimit(2)
-                                    .multilineTextAlignment(.center)
-                                    .fixedSize(horizontal: false, vertical: true)
-                                
-                                Text("\(categoryData.count)")
-                                    .font(.caption2)
-                                    .foregroundColor(categoryData.count > 0 ? .secondary : Color.secondary.opacity(0.5))
-                                
-                                Spacer(minLength: 0)
-                            }
-                            .frame(width: 80, alignment: .top)
-                            .frame(minHeight: 80)
-                            .padding(.vertical, 4)
-                            .background(Color(.systemBackground))
-                            .cornerRadius(12)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(Color(.separator), lineWidth: 1)
-                            )
-                            .shadow(color: Color.black.opacity(0.1), radius: 2)
-                        }
-                        .disabled(isImporting)
-                        .opacity(isImporting ? 0.6 : 1.0)
-                        .contextMenu {
-                            Button(role: .destructive, action: {
-                                deleteCategory(categoryData.category)
-                            }) {
-                                Label("Delete Category", systemImage: "trash")
-                            }
-                            .disabled(categoryData.count > 0) // Can't delete if it has items
+                ForEach(categoryCounts, id: \.category.id) { categoryData in
+                    NavigationLink(destination: MasterListCategoryView(category: categoryData.category)) {
+                        VStack(alignment: .center, spacing: 6) {
+                            Image(systemName: categoryData.category.displayIconName)
+                                .font(.title2)
+                                .foregroundColor(.blue)
                             
-                            Button(action: {
-                                categoryToEdit = categoryData.category
-                                showingAddCategory = true
-                            }) {
-                                Label("Edit Category", systemImage: "pencil")
-                            }
+                            Text(categoryData.category.name)
+                                .font(.caption)
+                                .foregroundColor(.primary)
+                                .lineLimit(2)
+                                .multilineTextAlignment(.center)
+                                .fixedSize(horizontal: false, vertical: true)
+                            
+                            Text("\(categoryData.count)")
+                                .font(.caption2)
+                                .foregroundColor(categoryData.count > 0 ? .secondary : Color.secondary.opacity(0.5))
+                            
+                            Spacer(minLength: 0)
+                        }
+                        .frame(width: 80, alignment: .top)
+                        .frame(minHeight: 80)
+                        .padding(.vertical, 4)
+                        .background(Color(.systemBackground))
+                        .cornerRadius(12)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(Color(.separator), lineWidth: 1)
+                        )
+                        .shadow(color: Color.black.opacity(0.1), radius: 2)
+                    }
+                    .disabled(isImporting)
+                    .opacity(isImporting ? 0.6 : 1.0)
+                    .contextMenu {
+                        Button(role: .destructive, action: {
+                            deleteCategory(categoryData.category)
+                        }) {
+                            Label("Delete Category", systemImage: "trash")
+                        }
+                        .disabled(categoryData.count > 0) // Can't delete if it has items
+                        
+                        Button(action: {
+                            categoryToEdit = categoryData.category
+                            showingAddCategory = true
+                        }) {
+                            Label("Edit Category", systemImage: "pencil")
                         }
                     }
                 }
-                .padding()
             }
-            .background(Color(.systemGroupedBackground))
-            .navigationTitle("FoodStuffs")
-            .navigationDestination(for: Category.self) { category in
-                MasterListCategoryView(category: category)
-            }
-            .toolbar {
+            .padding()
+        }
+        .background(Color(.systemGroupedBackground))
+        .navigationTitle("FoodStuffs")
+        .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { 
                         categoryToEdit = nil
@@ -127,54 +124,54 @@ struct MasterListView: View {
                         Label("Add Category", systemImage: "plus")
                     }
                 }
-                ToolbarItem(placement: .navigationBarLeading) {
-                    // Import button - always visible, shows state clearly
-                    // Allow re-import to update store assignments and add new items
-                    let canImport = !isImporting
-                    
-                    Button {
-                        if canImport {
-                            importCommonItems()
-                        }
-                    } label: {
-                        if isImporting {
-                            ProgressView()
-                                .frame(width: 20, height: 20)
-                                .tint(.blue)
-                        } else {
-                            Image(systemName: "square.and.arrow.down")
-                                .font(.body)
-                                .foregroundColor(canImport ? .blue : .secondary)
-                        }
+            ToolbarItem(placement: .navigationBarLeading) {
+                // Import button - always visible, shows state clearly
+                // Allow re-import to update store assignments and add new items
+                let canImport = !isImporting
+                
+                Button {
+                    if canImport {
+                        importCommonItems()
                     }
-                    .buttonStyle(.plain)
-                    .disabled(!canImport)
-                }
-            }
-            .onAppear {
-                // Calculate category counts on appear
-                calculateCategoryCounts()
-            }
-            .onChange(of: items.count) {
-                // Recalculate when items change
-                calculateCategoryCounts()
-            }
-            .onChange(of: categories.count) {
-                // Recalculate when categories change
-                calculateCategoryCounts()
-            }
-            .sheet(isPresented: $showingAddCategory) {
-                AddCategoryView(categoryToEdit: categoryToEdit)
-                    .onDisappear {
-                        categoryToEdit = nil
+                } label: {
+                    if isImporting {
+                        ProgressView()
+                            .frame(width: 20, height: 20)
+                            .tint(.blue)
+                    } else {
+                        Image(systemName: "square.and.arrow.down")
+                            .font(.body)
+                            .foregroundColor(canImport ? .blue : .secondary)
                     }
-            }
-            .onAppear {
-                // Force reset import state if stuck (safety measure)
-                if isImporting {
-                    isImporting = false
                 }
+                .buttonStyle(.plain)
+                .disabled(!canImport)
             }
+        }
+        .onAppear {
+            // Calculate category counts on appear
+            calculateCategoryCounts()
+        }
+        .onChange(of: items.count) {
+            // Recalculate when items change
+            calculateCategoryCounts()
+        }
+        .onChange(of: categories.count) {
+            // Recalculate when categories change
+            calculateCategoryCounts()
+        }
+        .sheet(isPresented: $showingAddCategory) {
+            AddCategoryView(categoryToEdit: categoryToEdit)
+                .onDisappear {
+                    categoryToEdit = nil
+                }
+        }
+        .onAppear {
+            // Force reset import state if stuck (safety measure)
+            if isImporting {
+                isImporting = false
+            }
+        }
         }
     }
     
@@ -424,6 +421,8 @@ struct MasterListItemRow: View {
 }
 
 #Preview {
-    MasterListView()
-        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    NavigationStack {
+        MasterListView()
+    }
+    .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

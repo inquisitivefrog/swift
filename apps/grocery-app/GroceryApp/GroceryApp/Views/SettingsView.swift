@@ -12,6 +12,7 @@ struct SettingsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
     @State private var showingClearDataAlert = false
+    @State private var showingStoreSelection = false
     
     var body: some View {
         NavigationStack {
@@ -34,6 +35,17 @@ struct SettingsView: View {
                             Text("Stores")
                         }
                     }
+                    
+                    Button(action: {
+                        showingStoreSelection = true
+                    }) {
+                        HStack {
+                            Image(systemName: "checkmark.circle")
+                            Text("Update Preferred Stores")
+                        }
+                    }
+                } footer: {
+                    Text("Manage your stores and update which stores you prefer for item imports.")
                 }
                 
                 // Clear All Data
@@ -48,6 +60,16 @@ struct SettingsView: View {
                     }
                 } footer: {
                     Text("This will delete all items, shopping lists, stores, and categories. Default stores and categories will be recreated on next launch.")
+                }
+                
+                // Help
+                Section {
+                    NavigationLink(destination: HelpView()) {
+                        HStack {
+                            Image(systemName: "questionmark.circle")
+                            Text("Getting Started")
+                        }
+                    }
                 }
                 
                 // About
@@ -76,6 +98,12 @@ struct SettingsView: View {
                 }
             } message: {
                 Text("This will permanently delete all items, shopping lists, stores, and categories. This action cannot be undone. Default stores and categories will be recreated on next launch.")
+            }
+            .sheet(isPresented: $showingStoreSelection) {
+                StoreSelectionView(isUpdating: true) {
+                    showingStoreSelection = false
+                }
+                .environment(\.managedObjectContext, viewContext)
             }
         }
     }

@@ -18,40 +18,52 @@ class DataService {
     /// Clear all data from the app (items, shopping lists, stores, categories)
     /// This will delete everything and allow a fresh start
     func clearAllData() {
-        // Delete all GroceryItems
-        let itemsRequest: NSFetchRequest<GroceryItem> = GroceryItem.fetchRequest()
-        if let items = try? viewContext.fetch(itemsRequest) {
-            for item in items {
-                viewContext.delete(item)
-            }
-        }
+        // Use batch delete to avoid relationship access issues and UUID exceptions
+        // Delete in order: child entities first, then parent entities
         
-        // Delete all ShoppingListItems
-        let shoppingItemsRequest: NSFetchRequest<ShoppingListItem> = ShoppingListItem.fetchRequest()
-        if let shoppingItems = try? viewContext.fetch(shoppingItemsRequest) {
-            for item in shoppingItems {
-                viewContext.delete(item)
-            }
-        }
+        // 1. Delete all ShoppingListItems (child of GroceryItem)
+        let shoppingItemsRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ShoppingListItem")
+        let shoppingItemsDelete = NSBatchDeleteRequest(fetchRequest: shoppingItemsRequest)
+        shoppingItemsDelete.resultType = .resultTypeObjectIDs
         
-        // Delete all Stores
-        let storesRequest: NSFetchRequest<Store> = Store.fetchRequest()
-        if let stores = try? viewContext.fetch(storesRequest) {
-            for store in stores {
-                viewContext.delete(store)
-            }
-        }
+        // 2. Delete all GroceryItems (has relationships to Category and Store)
+        let itemsRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "GroceryItem")
+        let itemsDelete = NSBatchDeleteRequest(fetchRequest: itemsRequest)
+        itemsDelete.resultType = .resultTypeObjectIDs
         
-        // Delete all Categories
-        let categoriesRequest: NSFetchRequest<Category> = Category.fetchRequest()
-        if let categories = try? viewContext.fetch(categoriesRequest) {
-            for category in categories {
-                viewContext.delete(category)
-            }
-        }
+        // 3. Delete all Stores
+        let storesRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Store")
+        let storesDelete = NSBatchDeleteRequest(fetchRequest: storesRequest)
+        storesDelete.resultType = .resultTypeObjectIDs
         
-        // Save changes
+        // 4. Delete all Categories
+        let categoriesRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Category")
+        let categoriesDelete = NSBatchDeleteRequest(fetchRequest: categoriesRequest)
+        categoriesDelete.resultType = .resultTypeObjectIDs
+        
+        // Execute batch deletes
         do {
+            // Execute deletes
+            let shoppingItemsResult = try viewContext.execute(shoppingItemsDelete) as? NSBatchDeleteResult
+            let itemsResult = try viewContext.execute(itemsDelete) as? NSBatchDeleteResult
+            let storesResult = try viewContext.execute(storesDelete) as? NSBatchDeleteResult
+            let categoriesResult = try viewContext.execute(categoriesDelete) as? NSBatchDeleteResult
+            
+            // Merge changes from batch delete into context
+            if let objectIDs = shoppingItemsResult?.result as? [NSManagedObjectID] {
+                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey: objectIDs], into: [viewContext])
+            }
+            if let objectIDs = itemsResult?.result as? [NSManagedObjectID] {
+                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey: objectIDs], into: [viewContext])
+            }
+            if let objectIDs = storesResult?.result as? [NSManagedObjectID] {
+                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey: objectIDs], into: [viewContext])
+            }
+            if let objectIDs = categoriesResult?.result as? [NSManagedObjectID] {
+                NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey: objectIDs], into: [viewContext])
+            }
+            
+            // Save the context
             try viewContext.save()
             print("All data cleared successfully")
         } catch {

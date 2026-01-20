@@ -29,6 +29,7 @@ class StoreService {
                 ("Whole Foods", "storefront.fill"),
                 ("Trader Joe's", "storefront.fill"),
                 ("Sprouts", "storefront.fill"),
+                ("Safeway", "storefront.fill"),
                 ("Monterey Market", "storefront.fill"),
                 ("Ranch 99", "storefront.fill"),
                 ("Costco", "storefront.fill"),

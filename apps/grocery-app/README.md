@@ -19,9 +19,21 @@ A native iOS mobile application for managing grocery shopping lists on iPhone.
 
 ## Project Status
 
-🚧 **In Development**
+✅ **Functional** - Ready for personal use and portfolio demonstration
 
-See [PROJECT_DESCRIPTION.md](./PROJECT_DESCRIPTION.md) for detailed project specifications and development plan.
+See [docs/PROJECT_DESCRIPTION.md](./docs/PROJECT_DESCRIPTION.md) for detailed project specifications.
+
+## Documentation
+
+All documentation is organized in the [`docs/`](./docs/) directory:
+
+- **Getting Started**: [docs/CLI_COMMANDS.md](./docs/CLI_COMMANDS.md) - Command-line build/test commands
+- **Architecture**: [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) - App architecture overview
+- **Testing**: [docs/TEST_PATTERNS_GUIDE.md](./docs/TEST_PATTERNS_GUIDE.md) - Test patterns and examples
+- **Distribution**: [docs/DISTRIBUTION.md](./docs/DISTRIBUTION.md) - TestFlight and App Store setup
+- **Import Data**: [docs/IMPORT_DATA_README.md](./docs/IMPORT_DATA_README.md) - How to update grocery items
+
+See the [`docs/`](./docs/) directory for complete documentation.
 
 ## Getting Started
 
@@ -29,7 +41,17 @@ This project is an Xcode project with SwiftUI and Core Data.
 
 The project name is **GroceryShopping** (Product Name in Xcode).
 
-Follow the project structure outlined in PROJECT_DESCRIPTION.md for development.
+Quick start:
+```bash
+# Run tests
+./ci-cd-commands.sh test
+
+# Build
+./ci-cd-commands.sh build
+
+# See all commands
+./ci-cd-commands.sh help
+```
 
 ## Requirements
 

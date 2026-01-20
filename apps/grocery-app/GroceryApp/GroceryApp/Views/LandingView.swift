@@ -10,7 +10,14 @@ import SwiftUI
 struct LandingView: View {
     @State private var hasSeenLanding = false
     @State private var showingHelp = false
+    @State private var showingStoreSelection = false
     @Environment(\.managedObjectContext) private var viewContext
+    
+    // Check if user has already selected stores
+    private var hasSelectedStores: Bool {
+        let selectedStores = UserDefaults.standard.stringArray(forKey: "selectedStoreNames") ?? []
+        return !selectedStores.isEmpty
+    }
     
     var body: some View {
         if hasSeenLanding {
@@ -69,7 +76,12 @@ struct LandingView: View {
                     
                     // Get Started Button
                     Button(action: {
-                        hasSeenLanding = true
+                        // If stores haven't been selected, show store selection first
+                        if !hasSelectedStores {
+                            showingStoreSelection = true
+                        } else {
+                            hasSeenLanding = true
+                        }
                     }) {
                         HStack {
                             Text("Get Started")
@@ -88,6 +100,13 @@ struct LandingView: View {
             }
             .sheet(isPresented: $showingHelp) {
                 HelpView()
+            }
+            .fullScreenCover(isPresented: $showingStoreSelection) {
+                StoreSelectionView(isUpdating: false, onComplete: {
+                    showingStoreSelection = false
+                    hasSeenLanding = true
+                })
+                .environment(\.managedObjectContext, viewContext)
             }
         }
     }

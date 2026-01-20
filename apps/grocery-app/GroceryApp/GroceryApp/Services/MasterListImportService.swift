@@ -21,10 +21,18 @@ class MasterListImportService {
     
     /// Import common grocery items organized by category
     /// Updates existing items if they already exist (updates store assignment)
+    /// Only imports items from stores selected by the user
     func importCommonItems() {
         // Ensure categories and stores exist first
         categoryService.createDefaultCategories()
         storeService.createDefaultStores()
+        
+        // Get selected store names from UserDefaults (set during store selection)
+        let selectedStoreNames = UserDefaults.standard.stringArray(forKey: "selectedStoreNames") ?? []
+        let selectedStoreNamesSet = Set(selectedStoreNames.map { $0.lowercased() })
+        
+        // If no stores are selected, import all items (backward compatibility)
+        let filterByStore = !selectedStoreNames.isEmpty
         
         // Fetch all categories to map names to entities
         let allCategories = categoryService.fetchAllCategories()
@@ -44,16 +52,31 @@ class MasterListImportService {
         let commonItems = ImportData.commonItems
         
         // Fetch existing items to check for updates
+        // Use composite key: name + store ID (allows same item from different stores)
         let existingItems = try? viewContext.fetch(GroceryItem.fetchRequest())
         var existingItemsMap: [String: GroceryItem] = [:]
         for item in existingItems ?? [] {
-            existingItemsMap[item.name.lowercased()] = item
+            let storeId = item.firstPreferredStore?.id.uuidString ?? "nostore"
+            let compositeKey = "\(item.name.lowercased()):\(storeId)"
+            existingItemsMap[compositeKey] = item
         }
         
         var importedCount = 0
-        var updatedCount = 0
         
         for itemData in commonItems {
+            // Filter by selected stores if store selection has been made
+            if filterByStore {
+                if let storeName = itemData.store {
+                    // Item has a store - only import if store is selected
+                    if !selectedStoreNamesSet.contains(storeName.lowercased()) {
+                        continue // Skip items from unselected stores
+                    }
+                } else {
+                    // Item has no store - skip if filtering is enabled (only import items with selected stores)
+                    continue
+                }
+            }
+            
             // Find category
             guard let category = categoryMap[itemData.category.lowercased()] else {
                 print("Warning: Category '\(itemData.category)' not found, skipping '\(itemData.name)'")
@@ -69,15 +92,12 @@ class MasterListImportService {
                 }
             }
             
-            // Check if item already exists
-            let itemKey = itemData.name.lowercased()
-            if let existingItem = existingItemsMap[itemKey] {
-                // Update existing item: update store assignment if import data has a store
-                if let store = store {
-                    existingItem.setPreferredStore(store)
-                    updatedCount += 1
-                }
-                // Skip creating new item
+            // Check if item already exists (using composite key: name + store)
+            // This allows the same item from different stores to exist as separate items
+            let storeId = store?.id.uuidString ?? "nostore"
+            let itemKey = "\(itemData.name.lowercased()):\(storeId)"
+            if existingItemsMap[itemKey] != nil {
+                // Item with same name and store already exists - skip
                 continue
             }
             
@@ -95,19 +115,11 @@ class MasterListImportService {
             importedCount += 1
         }
         
-        // Save all imported/updated items
+        // Save all imported items
         do {
             try viewContext.save()
-            if importedCount > 0 || updatedCount > 0 {
-                var message = "Import complete: "
-                if importedCount > 0 {
-                    message += "\(importedCount) new items"
-                }
-                if updatedCount > 0 {
-                    if importedCount > 0 { message += ", " }
-                    message += "\(updatedCount) items updated"
-                }
-                print(message)
+            if importedCount > 0 {
+                print("Import complete: \(importedCount) new items")
             }
         } catch {
             print("Error importing items: \(error)")
@@ -115,9 +127,17 @@ class MasterListImportService {
     }
     
     /// Import items for a specific category
+    /// Only imports items from stores selected by the user
     func importItemsForCategory(_ category: Category) -> Int {
         // Ensure stores exist
         storeService.createDefaultStores()
+        
+        // Get selected store names from UserDefaults (set during store selection)
+        let selectedStoreNames = UserDefaults.standard.stringArray(forKey: "selectedStoreNames") ?? []
+        let selectedStoreNamesSet = Set(selectedStoreNames.map { $0.lowercased() })
+        
+        // If no stores are selected, import all items (backward compatibility)
+        let filterByStore = !selectedStoreNames.isEmpty
         
         // Fetch all stores to map names to entities
         let allStores = storeService.fetchAllStores()
@@ -127,13 +147,16 @@ class MasterListImportService {
         }
         
         // Fetch existing items in this category
+        // Use composite key: name + store ID (allows same item from different stores)
         let fetchRequest: NSFetchRequest<GroceryItem> = GroceryItem.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "category == %@", category)
         
         let existingItems = try? viewContext.fetch(fetchRequest)
         var existingItemsMap: [String: GroceryItem] = [:]
         for item in existingItems ?? [] {
-            existingItemsMap[item.name.lowercased()] = item
+            let storeId = item.firstPreferredStore?.id.uuidString ?? "nostore"
+            let compositeKey = "\(item.name.lowercased()):\(storeId)"
+            existingItemsMap[compositeKey] = item
         }
         
         // Get items for this category from ImportData
@@ -144,9 +167,20 @@ class MasterListImportService {
         let categoryItems = commonItems.filter { $0.category.lowercased() == categoryName }
         
         var importedCount = 0
-        var updatedCount = 0
         
         for itemData in categoryItems {
+            // Filter by selected stores if store selection has been made
+            if filterByStore {
+                if let storeName = itemData.store {
+                    // Item has a store - only import if store is selected
+                    if !selectedStoreNamesSet.contains(storeName.lowercased()) {
+                        continue // Skip items from unselected stores
+                    }
+                } else {
+                    // Item has no store - skip if filtering is enabled
+                    continue
+                }
+            }
             // Find store if specified
             var store: Store? = nil
             if let storeName = itemData.store {
@@ -156,15 +190,12 @@ class MasterListImportService {
                 }
             }
             
-            // Check if item already exists
-            let itemKey = itemData.name.lowercased()
-            if let existingItem = existingItemsMap[itemKey] {
-                // Update existing item: update store assignment if import data has a store
-                if let store = store {
-                    existingItem.setPreferredStore(store)
-                    updatedCount += 1
-                }
-                // Skip creating new item
+            // Check if item already exists (using composite key: name + store)
+            // This allows the same item from different stores to exist as separate items
+            let storeId = store?.id.uuidString ?? "nostore"
+            let itemKey = "\(itemData.name.lowercased()):\(storeId)"
+            if existingItemsMap[itemKey] != nil {
+                // Item with same name and store already exists - skip
                 continue
             }
             
@@ -182,8 +213,8 @@ class MasterListImportService {
             importedCount += 1
         }
         
-        // Save imported/updated items
-        if importedCount > 0 || updatedCount > 0 {
+        // Save imported items
+        if importedCount > 0 {
             do {
                 try viewContext.save()
             } catch {
@@ -191,7 +222,7 @@ class MasterListImportService {
             }
         }
         
-        return importedCount + updatedCount
+        return importedCount
     }
     
     /// Clear all items from master list (use with caution!)

@@ -24,6 +24,7 @@ struct AddItemView: View {
     @State private var selectedExistingItem: GroceryItem? = nil
     @State private var showDuplicateShoppingListAlert = false
     @State private var duplicateItemName = ""
+    @State private var isSaving = false
     
     init(alwaysAddToShoppingList: Bool = false, itemToEdit: GroceryItem? = nil, prefillCategory: Category? = nil) {
         self.alwaysAddToShoppingList = alwaysAddToShoppingList
@@ -196,7 +197,7 @@ struct AddItemView: View {
                     Button(selectedExistingItem == nil ? "Save" : "Add") {
                         saveItem()
                     }
-                    .disabled(itemName.isEmpty)
+                    .disabled(itemName.isEmpty || isSaving)
                 }
             }
             .alert("Already in Shopping List", isPresented: $showDuplicateShoppingListAlert) {
@@ -267,92 +268,108 @@ struct AddItemView: View {
     }
     
     private func saveItem() {
-        let item: GroceryItem
+        guard !isSaving else { return }
+        isSaving = true
         
-        // If editing an existing item, update it
-        if let itemToEdit = itemToEdit {
-            item = itemToEdit
-            item.name = itemName
-            item.category = selectedCategory
-            item.setPreferredStore(selectedStore)
+        // Perform save operation asynchronously to avoid blocking UI
+        Task { @MainActor in
+            let item: GroceryItem
             
-            // Add to shopping list if requested
-            if addToShoppingList {
+            // If editing an existing item, update it
+            if let itemToEdit = itemToEdit {
+                item = itemToEdit
+                item.name = itemName
+                item.category = selectedCategory
+                item.setPreferredStore(selectedStore)
+                
+                // Add to shopping list if requested
+                if addToShoppingList {
+                    let added = addToShoppingList(item: item)
+                    if !added {
+                        duplicateItemName = item.name
+                        showDuplicateShoppingListAlert = true
+                        isSaving = false
+                        return
+                    }
+                }
+                
+                do {
+                    try viewContext.save()
+                    isSaving = false
+                    dismiss()
+                } catch {
+                    let nsError = error as NSError
+                    print("Error saving item: \(nsError), \(nsError.userInfo)")
+                    isSaving = false
+                }
+                return
+            }
+            
+            if let existingItem = selectedExistingItem {
+                // Using existing item - just add to shopping list if requested
+                item = existingItem
+            } else {
+                // Creating new item - check for duplicate first
+                let fetchRequest: NSFetchRequest<GroceryItem> = GroceryItem.fetchRequest()
+                
+                // Build predicate based on whether store is selected
+                // Note: preferredStore is a to-many relationship, so we use ANY to check membership
+                if let store = selectedStore {
+                    fetchRequest.predicate = NSPredicate(format: "name == %@ AND ANY preferredStore == %@", itemName, store)
+                } else {
+                    // Check for items with same name and no store (empty set)
+                    fetchRequest.predicate = NSPredicate(format: "name == %@ AND preferredStore.@count == 0", itemName)
+                }
+                
+                do {
+                    let existingItems = try viewContext.fetch(fetchRequest)
+                    if !existingItems.isEmpty {
+                        // Duplicate found - select the existing item instead
+                        selectExistingItem(existingItems[0])
+                        // If addToShoppingList is true, add it to shopping list
+                        if addToShoppingList {
+                            _ = addToShoppingList(item: existingItems[0])
+                        }
+                        isSaving = false
+                        return
+                    }
+                } catch {
+                    print("Error checking for duplicates: \(error)")
+                    isSaving = false
+                    return
+                }
+                
+                // Create new grocery item
+                item = GroceryItem(context: viewContext)
+                item.id = UUID()
+                item.name = itemName
+                item.category = selectedCategory
+                item.setPreferredStore(selectedStore)
+                item.isInMasterList = true
+                item.createdDate = Date()
+            }
+            
+            // Add to shopping list if requested or always required
+            if addToShoppingList || alwaysAddToShoppingList {
                 let added = addToShoppingList(item: item)
                 if !added {
+                    // Duplicate in shopping list - show error and don't save
                     duplicateItemName = item.name
                     showDuplicateShoppingListAlert = true
+                    isSaving = false
                     return
                 }
             }
             
             do {
                 try viewContext.save()
+                isSaving = false
                 dismiss()
             } catch {
                 let nsError = error as NSError
                 print("Error saving item: \(nsError), \(nsError.userInfo)")
+                isSaving = false
             }
-            return
-        }
-        
-        if let existingItem = selectedExistingItem {
-            // Using existing item - just add to shopping list if requested
-            item = existingItem
-        } else {
-            // Creating new item - check for duplicate first
-            let fetchRequest: NSFetchRequest<GroceryItem> = GroceryItem.fetchRequest()
-            
-            // Build predicate based on whether store is selected
-            if let store = selectedStore {
-                fetchRequest.predicate = NSPredicate(format: "name == %@ AND preferredStore == %@", itemName, store)
-            } else {
-                // Check for items with same name and no store
-                fetchRequest.predicate = NSPredicate(format: "name == %@ AND preferredStore == nil", itemName)
-            }
-            
-            do {
-                let existingItems = try viewContext.fetch(fetchRequest)
-                if !existingItems.isEmpty {
-                    // Duplicate found - select the existing item instead
-                    selectExistingItem(existingItems[0])
-                    // If addToShoppingList is true, add it to shopping list
-                    if addToShoppingList {
-                        _ = addToShoppingList(item: existingItems[0])
-                    }
-                    return
-                }
-            } catch {
-                print("Error checking for duplicates: \(error)")
-            }
-            
-            // Create new grocery item
-            item = GroceryItem(context: viewContext)
-            item.id = UUID()
-            item.name = itemName
-            item.category = selectedCategory
-            item.setPreferredStore(selectedStore)
-            item.isInMasterList = true
-            item.createdDate = Date()
-        }
-        
-        // Add to shopping list if requested or always required
-        if addToShoppingList || alwaysAddToShoppingList {
-            let added = addToShoppingList(item: item)
-            if !added {
-                // Duplicate in shopping list - show error and don't save
-                duplicateItemName = item.name
-                showDuplicateShoppingListAlert = true
-                return
-            }
-        }
-        
-        do {
-            try viewContext.save()
-            dismiss()
-        } catch {
-            let nsError = error as NSError
-            print("Error saving item: \(nsError), \(nsError.userInfo)")
         }
     }
     

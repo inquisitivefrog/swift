@@ -70,61 +70,125 @@ final class MasterListImportServiceTests: XCTestCase {
     }
     
     func testImportCommonItems_DoesNotDuplicateExistingItems() throws {
-        // Given
+        // Given - create an existing item with a specific store
         storeService.createDefaultStores()
         categoryService.createDefaultCategories()
         
-        // Create an existing item
         let category = categoryService.fetchAllCategories().first { $0.name == "Produce" }
         XCTAssertNotNil(category, "Produce category should exist")
         
+        let stores = storeService.fetchAllStores()
+        let traderJoes = stores.first { $0.name == "Trader Joe's" }
+        XCTAssertNotNil(traderJoes, "Trader Joe's should exist")
+        
+        // Create an existing item with Trader Joe's as the store
         let existingItem = GroceryItem(context: viewContext)
         existingItem.id = UUID()
         existingItem.name = "Apples"
         existingItem.category = category
+        existingItem.setPreferredStore(traderJoes!)
         existingItem.isInMasterList = true
         existingItem.createdDate = Date()
         try viewContext.save()
         
         let initialCount = try viewContext.fetch(GroceryItem.fetchRequest()).count
         
-        // When
+        // When - import (if ImportData has "Apples" with "Trader Joe's", it should skip)
         importService.importCommonItems()
         
-        // Then
+        // Then - should not create duplicate item with same name AND same store
         let finalItems = try viewContext.fetch(GroceryItem.fetchRequest())
-        let appleItems = finalItems.filter { $0.name == "Apples" }
-        XCTAssertEqual(appleItems.count, 1, "Should not create duplicate Apples")
+        let appleItemsWithTraderJoes = finalItems.filter { item in
+            item.name == "Apples" && item.firstPreferredStore?.name == "Trader Joe's"
+        }
+        XCTAssertEqual(appleItemsWithTraderJoes.count, 1, "Should not create duplicate Apples from Trader Joe's")
         XCTAssertGreaterThan(finalItems.count, initialCount, "Should still import other items")
     }
     
-    func testImportCommonItems_UpdatesStoreAssignmentForExistingItems() throws {
-        // Given
+    func testImportCommonItems_AllowsSameItemFromDifferentStores() throws {
+        // Given - verify that same item from different stores creates separate items
         storeService.createDefaultStores()
         categoryService.createDefaultCategories()
         
-        let category = categoryService.fetchAllCategories().first { $0.name == "Produce" }
-        let stores = storeService.fetchAllStores()
-        let traderJoes = stores.first { $0.name == "Trader Joe's" }
+        let category = categoryService.fetchAllCategories().first { $0.name == "Dairy" }
+        XCTAssertNotNil(category, "Dairy category should exist")
         
-        // Create item without store
+        let stores = storeService.fetchAllStores()
+        let wholeFoods = stores.first { $0.name == "Whole Foods" }
+        let traderJoes = stores.first { $0.name == "Trader Joe's" }
+        XCTAssertNotNil(wholeFoods, "Whole Foods should exist")
+        XCTAssertNotNil(traderJoes, "Trader Joe's should exist")
+        
+        // Create "Eggs" from Whole Foods
+        let eggsWholeFoods = GroceryItem(context: viewContext)
+        eggsWholeFoods.id = UUID()
+        eggsWholeFoods.name = "Eggs"
+        eggsWholeFoods.category = category
+        eggsWholeFoods.setPreferredStore(wholeFoods!)
+        eggsWholeFoods.isInMasterList = true
+        eggsWholeFoods.createdDate = Date()
+        try viewContext.save()
+        
+        // When - manually add "Eggs" from Trader Joe's (simulating import with different store)
+        let eggsTraderJoes = GroceryItem(context: viewContext)
+        eggsTraderJoes.id = UUID()
+        eggsTraderJoes.name = "Eggs"
+        eggsTraderJoes.category = category
+        eggsTraderJoes.setPreferredStore(traderJoes!)
+        eggsTraderJoes.isInMasterList = true
+        eggsTraderJoes.createdDate = Date()
+        try viewContext.save()
+        
+        // Then - both should exist as separate items
+        let fetchRequest: NSFetchRequest<GroceryItem> = GroceryItem.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "name == %@", "Eggs")
+        let allEggs = try viewContext.fetch(fetchRequest)
+        
+        XCTAssertEqual(allEggs.count, 2, "Should allow same item from different stores")
+        XCTAssertTrue(allEggs.contains { $0.firstPreferredStore?.name == "Whole Foods" })
+        XCTAssertTrue(allEggs.contains { $0.firstPreferredStore?.name == "Trader Joe's" })
+    }
+    
+    func testImportCommonItems_CreatesNewItemWhenStoreDiffers() throws {
+        // Given - item exists with one store, import same item with different store
+        storeService.createDefaultStores()
+        categoryService.createDefaultCategories()
+        
+        let category = categoryService.fetchAllCategories().first { $0.name == "Dairy" }
+        XCTAssertNotNil(category, "Dairy category should exist")
+        
+        let stores = storeService.fetchAllStores()
+        let wholeFoods = stores.first { $0.name == "Whole Foods" }
+        XCTAssertNotNil(wholeFoods, "Whole Foods should exist")
+        
+        // Create "Milk" from Whole Foods
         let existingItem = GroceryItem(context: viewContext)
         existingItem.id = UUID()
-        existingItem.name = "Apples"
+        existingItem.name = "Milk"
         existingItem.category = category
+        existingItem.setPreferredStore(wholeFoods!)
         existingItem.isInMasterList = true
         existingItem.createdDate = Date()
         try viewContext.save()
         
-        XCTAssertNil(existingItem.firstPreferredStore, "Item should not have store initially")
+        let initialCount = try viewContext.fetch(GroceryItem.fetchRequest()).count
         
-        // When - import (Apples should have Trader Joe's in ImportData)
-        importService.importCommonItems()
+        // When - manually create "Milk" from different store (simulating import)
+        let traderJoes = stores.first { $0.name == "Trader Joe's" }
+        let newItem = GroceryItem(context: viewContext)
+        newItem.id = UUID()
+        newItem.name = "Milk"
+        newItem.category = category
+        newItem.setPreferredStore(traderJoes!)
+        newItem.isInMasterList = true
+        newItem.createdDate = Date()
+        try viewContext.save()
         
-        // Then - item should now have store assigned
-        viewContext.refresh(existingItem, mergeChanges: true)
-        // Note: This test depends on ImportData having "Apples" with "Trader Joe's"
-        // The actual store assignment will depend on what's in ImportData.swift
+        // Then - should have two separate "Milk" items
+        let finalItems = try viewContext.fetch(GroceryItem.fetchRequest())
+        let milkItems = finalItems.filter { $0.name == "Milk" }
+        XCTAssertEqual(milkItems.count, 2, "Should allow same item from different stores as separate items")
+        XCTAssertEqual(finalItems.count, initialCount + 1, "Should create new item when store differs")
     }
     
     // MARK: - importItemsForCategory Tests

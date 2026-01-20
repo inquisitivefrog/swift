@@ -48,8 +48,8 @@ class TestDataGenerator {
     
     /// Create a test category
     @discardableResult
-    func createCategory(name: String, iconName: String = "folder.fill", isDefault: Bool = false) -> Category {
-        let category = Category(context: context)
+    func createCategory(name: String, iconName: String = "folder.fill", isDefault: Bool = false) -> GroceryApp.Category {
+        let category = GroceryApp.Category(context: context)
         category.id = UUID()
         category.name = name
         category.iconName = iconName
@@ -60,7 +60,7 @@ class TestDataGenerator {
     
     /// Create default test categories
     @discardableResult
-    func createDefaultCategories() -> [Category] {
+    func createDefaultCategories() -> [GroceryApp.Category] {
         let categories = [
             createCategory(name: "Produce", iconName: "leaf.fill", isDefault: true),
             createCategory(name: "Dairy", iconName: "drop.fill", isDefault: true),
@@ -78,7 +78,7 @@ class TestDataGenerator {
     @discardableResult
     func createGroceryItem(
         name: String,
-        category: Category,
+        category: GroceryApp.Category,
         store: Store? = nil,
         isInMasterList: Bool = true
     ) -> GroceryItem {
@@ -98,7 +98,7 @@ class TestDataGenerator {
     
     /// Create sample grocery items for testing
     @discardableResult
-    func createSampleGroceryItems(categories: [Category], stores: [Store]) -> [GroceryItem] {
+    func createSampleGroceryItems(categories: [GroceryApp.Category], stores: [Store]) -> [GroceryItem] {
         guard !categories.isEmpty, !stores.isEmpty else { return [] }
         
         let produceCategory = categories.first { $0.name == "Produce" } ?? categories[0]
@@ -156,7 +156,7 @@ class TestDataGenerator {
     
     /// Create a complete shopping list scenario for testing
     @discardableResult
-    func createShoppingListScenario() -> (stores: [Store], categories: [Category], items: [GroceryItem], shoppingItems: [ShoppingListItem]) {
+    func createShoppingListScenario() -> (stores: [Store], categories: [GroceryApp.Category], items: [GroceryItem], shoppingItems: [ShoppingListItem]) {
         // Create stores and categories
         let stores = createDefaultStores()
         let categories = createDefaultCategories()
@@ -179,7 +179,7 @@ class TestDataGenerator {
     
     /// Create a scenario where all shopping is complete (all items checked)
     @discardableResult
-    func createCompletedShoppingListScenario() -> (stores: [Store], categories: [Category], items: [GroceryItem], shoppingItems: [ShoppingListItem]) {
+    func createCompletedShoppingListScenario() -> (stores: [Store], categories: [GroceryApp.Category], items: [GroceryItem], shoppingItems: [ShoppingListItem]) {
         let scenario = createShoppingListScenario()
         
         // Mark all shopping items as checked
@@ -195,7 +195,7 @@ class TestDataGenerator {
     
     /// Create a scenario with items for specific stores (for Shop By Stores testing)
     @discardableResult
-    func createStoreBasedShoppingScenario() -> (stores: [Store], categories: [Category], items: [GroceryItem], shoppingItems: [ShoppingListItem]) {
+    func createStoreBasedShoppingScenario() -> (stores: [Store], categories: [GroceryApp.Category], items: [GroceryItem], shoppingItems: [ShoppingListItem]) {
         let stores = createDefaultStores()
         let categories = createDefaultCategories()
         
