@@ -1,0 +1,31 @@
+
+(⎈|N/A:N/A)tim@Timothys-MacBook-Air GroceryApp % pwd
+/Users/tim/Documents/workspace/swift/apps/grocery-app/GroceryApp
+(⎈|N/A:N/A)tim@Timothys-MacBook-Air GroceryApp % xcodebuild -project GroceryApp.xcodeproj -scheme GroceryApp -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' clean
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project GroceryApp.xcodeproj -scheme GroceryApp -sdk iphonesimulator -destination "generic/platform=iOS Simulator" clean
+
+Build settings from command line:
+    SDKROOT = iphonesimulator26.2
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+** CLEAN SUCCEEDED **
+
+(⎈|N/A:N/A)tim@Timothys-MacBook-Air GroceryApp % xcodebuild -scheme GroceryApp -destination 'platform=iOS Simulator,name=iPhone 16e' clean
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -scheme GroceryApp -destination "platform=iOS Simulator,name=iPhone 16e" clean
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+** CLEAN SUCCEEDED **
+
+
