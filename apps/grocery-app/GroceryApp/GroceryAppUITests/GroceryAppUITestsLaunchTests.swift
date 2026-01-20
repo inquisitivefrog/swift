@@ -22,9 +22,16 @@ final class GroceryAppUITestsLaunchTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        // Wait for landing page to appear
+        // Wait for either landing page or main tabs to appear
+        // Note: If hasSeenLanding is true (UserDefaults persisted), the app will skip to MainTabView
+        // So we check for either landing page OR main tabs
         let landingPageTitle = app.staticTexts["GroceryApp"]
-        XCTAssertTrue(landingPageTitle.waitForExistence(timeout: 5), "Landing page should appear on launch")
+        let buildMyListTab = app.tabBars.buttons["Build My List"]
+        
+        let landingPageExists = landingPageTitle.waitForExistence(timeout: 5)
+        let mainTabsExist = buildMyListTab.waitForExistence(timeout: 5)
+        
+        XCTAssertTrue(landingPageExists || mainTabsExist, "Either landing page or main tabs should appear on launch")
 
         // Take screenshot of landing page
         let attachment = XCTAttachment(screenshot: app.screenshot())

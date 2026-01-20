@@ -54,7 +54,7 @@ final class StoreServiceTests: XCTestCase {
     
     func testCreateDefaultStores_DoesNotDuplicateExistingStores() throws {
         // Given - create a store first
-        let existingStore = storeService.createStore(name: "Trader Joe's", iconName: "storefront.fill")
+        _ = storeService.createStore(name: "Trader Joe's", iconName: "storefront.fill")
         try viewContext.save()
         
         // When
@@ -170,10 +170,10 @@ final class StoreServiceTests: XCTestCase {
     
     func testFetchAllStores_SortsByFavoriteThenName() throws {
         // Given
-        let store1 = storeService.createStore(name: "Zebra Store")
+        _ = storeService.createStore(name: "Zebra Store")
         let store2 = storeService.createStore(name: "Alpha Store")
         store2.isFavorite = true
-        let store3 = storeService.createStore(name: "Beta Store")
+        _ = storeService.createStore(name: "Beta Store")
         try viewContext.save()
         
         // When

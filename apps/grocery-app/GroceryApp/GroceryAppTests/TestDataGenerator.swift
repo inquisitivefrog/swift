@@ -241,7 +241,7 @@ class TestDataGenerator {
         for entityName in entities {
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
             let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-            try? context.execute(deleteRequest)
+            _ = try? context.execute(deleteRequest)
         }
         try? context.save()
     }
