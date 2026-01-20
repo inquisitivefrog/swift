@@ -30,6 +30,23 @@
 		228AE62F2F15BB8A00E123C1 /* GroceryApp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = GroceryApp.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		22DE735D2F2023A9005D93D5 /* Exceptions for "GroceryAppTests" folder in "GroceryAppTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 225F6AE82F0D7C62005528C7 /* GroceryAppTests */;
+		};
+		22DE735E2F2023B9005D93D5 /* Exceptions for "GroceryAppUITests" folder in "GroceryAppUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 225F6AF22F0D7C62005528C7 /* GroceryAppUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		225F6AD92F0D7C61005528C7 /* GroceryApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -38,11 +55,17 @@
 		};
 		225F6AEC2F0D7C62005528C7 /* GroceryAppTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				22DE735D2F2023A9005D93D5 /* Exceptions for "GroceryAppTests" folder in "GroceryAppTests" target */,
+			);
 			path = GroceryAppTests;
 			sourceTree = "<group>";
 		};
 		225F6AF62F0D7C62005528C7 /* GroceryAppUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				22DE735E2F2023B9005D93D5 /* Exceptions for "GroceryAppUITests" folder in "GroceryAppUITests" target */,
+			);
 			path = GroceryAppUITests;
 			sourceTree = "<group>";
 		};

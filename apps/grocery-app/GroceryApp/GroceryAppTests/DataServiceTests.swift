@@ -172,4 +172,24 @@ final class DataServiceTests: XCTestCase {
         XCTAssertEqual(try viewContext.fetch(Store.fetchRequest()).count, 0)
         XCTAssertEqual(try viewContext.fetch(Category.fetchRequest()).count, 0)
     }
+    
+    func testClearAllData_ClearsUserDefaults() throws {
+        // Given - set UserDefaults values
+        UserDefaults.standard.set(["Safeway", "Whole Foods"], forKey: "selectedStoreNames")
+        UserDefaults.standard.set(true, forKey: "hasSeenLanding")
+        
+        // Verify they're set
+        XCTAssertNotNil(UserDefaults.standard.stringArray(forKey: "selectedStoreNames"))
+        XCTAssertTrue(UserDefaults.standard.bool(forKey: "hasSeenLanding"))
+        
+        // When
+        dataService.clearAllData()
+        
+        // Then - UserDefaults should be cleared
+        let selectedStores = UserDefaults.standard.stringArray(forKey: "selectedStoreNames")
+        XCTAssertNil(selectedStores, "selectedStoreNames should be cleared")
+        
+        let hasSeenLanding = UserDefaults.standard.bool(forKey: "hasSeenLanding")
+        XCTAssertFalse(hasSeenLanding, "hasSeenLanding should be cleared")
+    }
 }

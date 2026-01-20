@@ -27,16 +27,20 @@ class CategoryService {
             
             // Default categories from the enum
             let defaultCategories: [(name: String, icon: String)] = [
-                ("Produce", "leaf.fill"),
+                ("Produce Fruit", "leaf.fill"),
+                ("Produce Vegetables", "carrot.fill"),
                 ("Dairy", "drop.fill"),
-                ("Meat & Seafood", "fish.fill"),
+                ("Meats", "fish.fill"),
+                ("Seafood", "fish.fill"),
                 ("Deli", "fork.knife"),
                 ("Bakery", "birthday.cake.fill"),
                 ("Pantry Staples", "cabinet.fill"),
                 ("Canned Goods", "cylinder.fill"),
+                ("Packaged Goods", "shippingbox.fill"),
                 ("Beverages", "cup.and.saucer.fill"),
                 ("Snacks", "circle.grid.hex.fill"),
-                ("Condiments & Spices", "sparkles"),
+                ("Condiments", "sparkles"),
+                ("Spices", "sparkles"),
                 ("Breakfast Items", "sunrise.fill"),
                 ("Baking Supplies", "flame.fill"),
                 ("Frozen", "snowflake"),

@@ -74,8 +74,8 @@ final class MasterListImportServiceTests: XCTestCase {
         storeService.createDefaultStores()
         categoryService.createDefaultCategories()
         
-        let category = categoryService.fetchAllCategories().first { $0.name == "Produce" }
-        XCTAssertNotNil(category, "Produce category should exist")
+        let category = categoryService.fetchAllCategories().first { $0.name == "Produce Fruit" }
+        XCTAssertNotNil(category, "Produce Fruit category should exist")
         
         let stores = storeService.fetchAllStores()
         let traderJoes = stores.first { $0.name == "Trader Joe's" }
@@ -221,16 +221,16 @@ final class MasterListImportServiceTests: XCTestCase {
         categoryService.createDefaultCategories()
         
         let dairyCategory = categoryService.fetchAllCategories().first { $0.name == "Dairy" }
-        let produceCategory = categoryService.fetchAllCategories().first { $0.name == "Produce" }
+        let produceFruitCategory = categoryService.fetchAllCategories().first { $0.name == "Produce Fruit" }
         
         // When
         _ = importService.importItemsForCategory(dairyCategory!)
         
         // Then
         let fetchRequest: NSFetchRequest<GroceryItem> = GroceryItem.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "category == %@", produceCategory!)
-        let produceItems = try viewContext.fetch(fetchRequest)
+        fetchRequest.predicate = NSPredicate(format: "category == %@", produceFruitCategory!)
+        let produceFruitItems = try viewContext.fetch(fetchRequest)
         
-        XCTAssertEqual(produceItems.count, 0, "Should not import items for other categories")
+        XCTAssertEqual(produceFruitItems.count, 0, "Should not import items for other categories")
     }
 }

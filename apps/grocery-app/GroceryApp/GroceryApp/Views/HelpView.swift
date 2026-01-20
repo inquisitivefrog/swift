@@ -65,7 +65,7 @@ struct HelpView: View {
                     HelpSection(
                         icon: "cart.fill",
                         title: "Build Your Shopping List",
-                        description: "Use the 'Build My List' tab to add items to your shopping list. Tap category icons to browse items, then tap any item to add or remove it from your list. Long-press an item to edit it (change store, update details). Check off items as you shop!"
+                        description: "Use the 'Build My List' tab to add items to your shopping list. First tap a store icon, then tap a category icon to browse items. Tap any item to add or remove it from your list. Long-press an item to edit it (change store, update details). Check off items as you shop!"
                     )
                     
                     // Shop By Stores

@@ -35,15 +35,21 @@ final class StoreServiceTests: XCTestCase {
         
         // Then
         let stores = storeService.fetchAllStores()
-        XCTAssertEqual(stores.count, 10, "Should create 10 default stores")
+        XCTAssertEqual(stores.count, 12, "Should create 12 default stores")
         
         let storeNames = Set(stores.map { $0.name })
         XCTAssertTrue(storeNames.contains("Andronico's"), "Should contain Andronico's")
         XCTAssertTrue(storeNames.contains("Whole Foods"), "Should contain Whole Foods")
         XCTAssertTrue(storeNames.contains("Trader Joe's"), "Should contain Trader Joe's")
         XCTAssertTrue(storeNames.contains("Sprouts"), "Should contain Sprouts")
+        XCTAssertTrue(storeNames.contains("Safeway"), "Should contain Safeway")
+        XCTAssertTrue(storeNames.contains("Lucky's"), "Should contain Lucky's")
         XCTAssertTrue(storeNames.contains("Monterey Market"), "Should contain Monterey Market")
+        XCTAssertTrue(storeNames.contains("Ranch 99"), "Should contain Ranch 99")
+        XCTAssertTrue(storeNames.contains("Costco"), "Should contain Costco")
         XCTAssertTrue(storeNames.contains("Berkeley Bowl"), "Should contain Berkeley Bowl")
+        XCTAssertTrue(storeNames.contains("Target"), "Should contain Target")
+        XCTAssertTrue(storeNames.contains("Walmart"), "Should contain Walmart")
     }
     
     func testCreateDefaultStores_DoesNotDuplicateExistingStores() throws {

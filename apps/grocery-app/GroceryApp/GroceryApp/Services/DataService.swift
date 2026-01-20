@@ -17,7 +17,12 @@ class DataService {
     
     /// Clear all data from the app (items, shopping lists, stores, categories)
     /// This will delete everything and allow a fresh start
+    /// Runs on the main thread but uses efficient batch deletes
     func clearAllData() {
+        // Clear UserDefaults first to prevent any auto-import triggers
+        UserDefaults.standard.removeObject(forKey: "selectedStoreNames")
+        UserDefaults.standard.removeObject(forKey: "hasSeenLanding")
+        
         // Use batch delete to avoid relationship access issues and UUID exceptions
         // Delete in order: child entities first, then parent entities
         
@@ -65,6 +70,7 @@ class DataService {
             
             // Save the context
             try viewContext.save()
+            
             print("All data cleared successfully")
         } catch {
             print("Error clearing data: \(error)")

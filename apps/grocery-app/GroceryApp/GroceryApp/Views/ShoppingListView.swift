@@ -32,10 +32,16 @@ struct ShoppingListView: View {
     private var items: FetchedResults<ShoppingListItem>
     
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Category.name, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Store.name, ascending: true)],
         animation: .default
     )
-    private var categories: FetchedResults<Category>
+    private var allStores: FetchedResults<Store>
+    
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \GroceryItem.name, ascending: true)],
+        animation: .default
+    )
+    private var allMasterItems: FetchedResults<GroceryItem>
     
     var uncheckedItems: [ShoppingListItem] {
         items.filter { !$0.isChecked }
@@ -46,55 +52,87 @@ struct ShoppingListView: View {
     }
     
     @State private var isClearingChecked = false
-    @State private var cachedCategoryCounts: [(category: Category, count: Int)] = []
+    @State private var cachedStoreCounts: [(store: Store?, count: Int)] = []
     
-    // Get category counts from shopping list (not master list) - cached to reduce memory usage
-    var categoryCounts: [(category: Category, count: Int)] {
-        cachedCategoryCounts
+    // Get store counts from master list - cached to reduce memory usage
+    var storeCounts: [(store: Store?, count: Int)] {
+        cachedStoreCounts
     }
     
-    // Calculate category counts - only called when data changes
-    private func calculateCategoryCounts() {
-        // Use Dictionary for O(1) lookups instead of filtering
-        var itemCountsByCategory: [UUID: Int] = [:]
-        for item in items {
-            // groceryItem is non-optional, but category might be optional
-            if let categoryId = item.groceryItem.category?.id {
-                itemCountsByCategory[categoryId, default: 0] += 1
+    // Calculate store counts from master list - only called when data changes
+    private func calculateStoreCounts() {
+        // Count master list items per store
+        var storeItemCounts: [UUID?: Int] = [:]
+        
+        for item in allMasterItems {
+            let storeId = item.firstPreferredStore?.id
+            storeItemCounts[storeId, default: 0] += 1
+        }
+        
+        // Build result array
+        var result: [(store: Store?, count: Int)] = []
+        
+        // Add stores with items
+        for store in allStores {
+            let storeId = store.id
+            if let count = storeItemCounts[storeId], count > 0 {
+                result.append((store: store, count: count))
             }
         }
         
-        // Build result array efficiently
-        cachedCategoryCounts = categories.map { category in
-            let count = itemCountsByCategory[category.id] ?? 0
-            return (category: category, count: count)
-        }.sorted { $0.count > $1.count } // Sort by count, most to least
+        // Add "No Store" if there are items without a store
+        if let noStoreCount = storeItemCounts[nil], noStoreCount > 0 {
+            result.append((store: nil, count: noStoreCount))
+        }
+        
+        // Sort by count (most to least)
+        cachedStoreCounts = result.sorted { $0.count > $1.count }
     }
     
     var body: some View {
         NavigationStack {
-            // Category picker - scrollable grid of category buttons
-            // Sorted by count (most to least), showing shopping list counts
+            // Store picker - scrollable grid of store buttons
+            // Sorted by count (most to least), showing master list item counts
             ScrollView(.vertical, showsIndicators: true) {
-                LazyVGrid(columns: [
-                    GridItem(.adaptive(minimum: 80), spacing: 12)
-                ], spacing: 20) {
-                    ForEach(categoryCounts, id: \.category.id) { categoryData in
-                        NavigationLink(value: categoryData.category) {
-                            CategoryButtonContent(
-                                category: categoryData.category,
-                                itemCount: categoryData.count
-                            )
+                if storeCounts.isEmpty {
+                    VStack(spacing: 20) {
+                        Image(systemName: "storefront")
+                            .font(.system(size: 60))
+                            .foregroundColor(.secondary)
+                        
+                        Text("No items imported yet")
+                            .font(.title3)
+                            .foregroundColor(.secondary)
+                        
+                        Text("Import default grocery lists from your preferred stores to get started")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                            .multilineTextAlignment(.center)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .padding()
+                } else {
+                    LazyVGrid(columns: [
+                        GridItem(.adaptive(minimum: 100), spacing: 12)
+                    ], spacing: 20) {
+                        ForEach(Array(storeCounts.enumerated()), id: \.offset) { index, storeData in
+                            NavigationLink {
+                                StoreCategoryView(store: storeData.store)
+                            } label: {
+                                StoreButtonContent(
+                                    store: storeData.store,
+                                    itemCount: storeData.count
+                                )
+                            }
                         }
                     }
+                    .padding()
                 }
-                .padding()
             }
             .background(Color(.systemGroupedBackground))
             .navigationTitle("Build My List")
-            .navigationDestination(for: Category.self) { category in
-                ShoppingListCategoryView(category: category)
-            }
             .sheet(isPresented: $showingSettings) {
                 SettingsView()
             }
@@ -166,16 +204,16 @@ struct ShoppingListView: View {
             .onAppear {
                 // Check if saved list exists on view appear
                 hasSavedList = shoppingListService.hasSavedList
-                // Calculate category counts on appear
-                calculateCategoryCounts()
+                // Calculate store counts on appear
+                calculateStoreCounts()
             }
-            .onChange(of: items.count) {
-                // Recalculate when items change
-                calculateCategoryCounts()
+            .onChange(of: allMasterItems.count) {
+                // Recalculate when master items change
+                calculateStoreCounts()
             }
-            .onChange(of: categories.count) {
-                // Recalculate when categories change
-                calculateCategoryCounts()
+            .onChange(of: allStores.count) {
+                // Recalculate when stores change
+                calculateStoreCounts()
             }
         }
     }
@@ -267,6 +305,127 @@ struct ShoppingListView: View {
     }
 }
 
+// View showing categories for a selected store
+struct StoreCategoryView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    let store: Store?
+    
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \Category.name, ascending: true)],
+        animation: .default
+    )
+    private var categories: FetchedResults<Category>
+    
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(keyPath: \GroceryItem.name, ascending: true)],
+        animation: .default
+    )
+    private var allMasterItems: FetchedResults<GroceryItem>
+    
+    @State private var cachedCategoryCounts: [(category: Category, count: Int)] = []
+    
+    // Get category counts for this store - cached to reduce memory usage
+    var categoryCounts: [(category: Category, count: Int)] {
+        cachedCategoryCounts
+    }
+    
+    // Calculate category counts for this store - only called when data changes
+    private func calculateCategoryCounts() {
+        // Filter master items for this store
+        let storeItems = allMasterItems.filter { item in
+            if let store = store {
+                return item.firstPreferredStore?.id == store.id
+            } else {
+                return item.firstPreferredStore == nil
+            }
+        }
+        
+        // Count items per category
+        var itemCountsByCategory: [UUID: Int] = [:]
+        for item in storeItems {
+            if let categoryId = item.category?.id {
+                itemCountsByCategory[categoryId, default: 0] += 1
+            }
+        }
+        
+        // Build result array
+        cachedCategoryCounts = categories.compactMap { category in
+            let count = itemCountsByCategory[category.id] ?? 0
+            if count > 0 {
+                return (category: category, count: count)
+            }
+            return nil
+        }.sorted { $0.count > $1.count } // Sort by count, most to least
+    }
+    
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 0) {
+                // Store header
+                HStack {
+                    if let store = store {
+                        Image(systemName: store.displayIconName)
+                            .foregroundColor(.orange)
+                            .font(.title2)
+                        Text(store.name)
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    } else {
+                        Image(systemName: "questionmark.circle")
+                            .foregroundColor(.secondary)
+                            .font(.title2)
+                        Text("No Store")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    }
+                    Spacer()
+                }
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background(Color(.systemGroupedBackground))
+                
+                Divider()
+                
+                // Category grid
+                if categoryCounts.isEmpty {
+                    Text("No items in master list for this store")
+                        .foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.vertical, 40)
+                } else {
+                    LazyVGrid(columns: [
+                        GridItem(.adaptive(minimum: 80), spacing: 12)
+                    ], spacing: 20) {
+                        ForEach(categoryCounts, id: \.category.id) { categoryData in
+                            NavigationLink {
+                                ShoppingListCategoryView(category: categoryData.category, store: store)
+                            } label: {
+                                CategoryButtonContent(
+                                    category: categoryData.category,
+                                    itemCount: categoryData.count
+                                )
+                            }
+                        }
+                    }
+                    .padding()
+                }
+            }
+        }
+        .scrollIndicators(.visible)
+        .navigationTitle(store?.name ?? "No Store")
+        .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            calculateCategoryCounts()
+        }
+        .onChange(of: allMasterItems.count) {
+            calculateCategoryCounts()
+        }
+        .onChange(of: categories.count) {
+            calculateCategoryCounts()
+        }
+    }
+}
+
 // Category button content
 struct CategoryButtonContent: View {
     let category: Category
@@ -308,73 +467,37 @@ struct CategoryButtonContent: View {
 struct ShoppingListCategoryView: View {
     @Environment(\.managedObjectContext) private var viewContext
     let category: Category
+    let store: Store? // NEW: filter by store
     @State private var showingAddItem = false
     @State private var itemToEdit: GroceryItem? = nil
     
-    // Fetch all master list items for this category
+    // Fetch master list items for this category and store
     @FetchRequest var allMasterItems: FetchedResults<GroceryItem>
     
     // Fetch shopping list items for this category
     @FetchRequest var shoppingItems: FetchedResults<ShoppingListItem>
     
-    // Cached grouped items - recalculated only when needed
-    @State private var cachedItemsByStore: [(store: Store?, items: [GroceryItem])] = []
+    // Cached items for this store - recalculated only when needed
+    @State private var cachedItems: [GroceryItem] = []
     
-    // Group items by store for display - optimized to reduce memory usage and prevent crashes
-    private func calculateItemsByStore() -> [(store: Store?, items: [GroceryItem])] {
-        // Convert to array and pre-fetch relationships to avoid faults during sorting
-        let itemsArray = Array(allMasterItems)
-        let itemIDs = itemsArray.compactMap { $0.objectID }
-        
-        // Pre-fetch store relationships to avoid faults
-        let fetchRequest = NSFetchRequest<GroceryItem>(entityName: "GroceryItem")
-        fetchRequest.predicate = NSPredicate(format: "SELF IN %@", itemIDs)
-        fetchRequest.relationshipKeyPathsForPrefetching = ["preferredStore"]
-        
-        let loadedItems: [GroceryItem]
-        do {
-            loadedItems = try viewContext.fetch(fetchRequest)
-        } catch {
-            // Fallback to original items if fetch fails
-            loadedItems = itemsArray
-            print("Error prefetching stores for grouping: \(error)")
-        }
-        
-        // Group by store with fully loaded objects
-        var grouped: [String: (store: Store?, items: [GroceryItem])] = [:]
-        
-        for item in loadedItems {
-            let store = item.firstPreferredStore
-            let storeKey = store?.name ?? "ZZZ_No_Store"
-            
-            if grouped[storeKey] == nil {
-                grouped[storeKey] = (store: store, items: [])
+    // Filter items by store - optimized to reduce memory usage
+    private func calculateItems() -> [GroceryItem] {
+        // Filter items for this store
+        let filteredItems = allMasterItems.filter { item in
+            if let store = store {
+                return item.firstPreferredStore?.id == store.id
+            } else {
+                return item.firstPreferredStore == nil
             }
-            grouped[storeKey]?.items.append(item)
         }
         
-        // Convert to sorted array
-        var result: [(store: Store?, items: [GroceryItem])] = []
-        result.reserveCapacity(grouped.count)
-        
-        for (_, group) in grouped {
-            // Sort items by name (safe now that objects are loaded)
-            let sortedItems = group.items.sorted { $0.name < $1.name }
-            result.append((store: group.store, items: sortedItems))
-        }
-        
-        // Sort groups by store name (safe now that stores are loaded)
-        result.sort { group1, group2 in
-            let name1 = group1.store?.name ?? "ZZZ No Store"
-            let name2 = group2.store?.name ?? "ZZZ No Store"
-            return name1 < name2
-        }
-        
-        return result
+        // Sort by name
+        return filteredItems.sorted { $0.name < $1.name }
     }
     
-    init(category: Category) {
+    init(category: Category, store: Store?) {
         self.category = category
+        self.store = store
         _allMasterItems = FetchRequest(
             sortDescriptors: [
                 NSSortDescriptor(keyPath: \GroceryItem.name, ascending: true)
@@ -399,18 +522,13 @@ struct ShoppingListCategoryView: View {
         shoppingItems.first { $0.groceryItem == item }
     }
     
-    // Toggle item in shopping list
+    // Toggle item in shopping list - true toggle: add if not in list, remove if in list
     func toggleItemInShoppingList(_ item: GroceryItem) {
         if let shoppingItem = shoppingItems.first(where: { $0.groceryItem == item }) {
-            // Item is in shopping list - toggle checked state
-            shoppingItem.isChecked.toggle()
-            if shoppingItem.isChecked {
-                shoppingItem.checkedDate = Date()
-            } else {
-                shoppingItem.checkedDate = nil
-            }
+            // Item is in shopping list - remove it (Wax Off)
+            viewContext.delete(shoppingItem)
         } else {
-            // Item is not in shopping list - add it
+            // Item is not in shopping list - add it (Wax On)
             let shoppingItem = ShoppingListItem(context: viewContext)
             shoppingItem.id = UUID()
             shoppingItem.groceryItem = item
@@ -430,11 +548,23 @@ struct ShoppingListCategoryView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
-                // Category title and add button
+                // Category and store header with add button
                 HStack {
-                    Text(category.name)
-                        .font(.title2)
-                        .fontWeight(.semibold)
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(category.name)
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                        if let store = store {
+                            HStack(spacing: 4) {
+                                Image(systemName: store.displayIconName)
+                                    .font(.caption)
+                                    .foregroundColor(.orange)
+                                Text(store.name)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                    }
                     Spacer()
                     Button(action: {
                         showingAddItem = true
@@ -449,109 +579,56 @@ struct ShoppingListCategoryView: View {
                 
                 Divider()
                 
-                // Master list items grouped by store
-                if cachedItemsByStore.isEmpty {
+                // Master list items for this store
+                if cachedItems.isEmpty {
                     Text("No items in master list")
                         .foregroundColor(.secondary)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.vertical, 40)
                 } else {
-                    ForEach(Array(cachedItemsByStore.enumerated()), id: \.offset) { index, storeGroup in
-                        // Store section header
-                        HStack {
-                            if let store = storeGroup.store {
-                                Image(systemName: store.displayIconName)
-                                    .foregroundColor(.orange)
-                                    .font(.headline)
-                                Text(store.name)
-                                    .font(.headline)
+                    ForEach(cachedItems) { item in
+                        Button(action: {
+                            // Toggle item in/out of shopping list or check/uncheck if already in list
+                            toggleItemInShoppingList(item)
+                        }) {
+                            HStack {
+                                // Category icon
+                                Image(systemName: category.displayIconName)
+                                    .foregroundColor(.blue)
+                                    .frame(width: 24)
+                                
+                                Text(item.name)
                                     .foregroundColor(.primary)
-                            } else {
-                                Image(systemName: "questionmark.circle")
-                                    .foregroundColor(.secondary)
-                                    .font(.headline)
-                                Text("No Store")
-                                    .font(.headline)
-                                    .foregroundColor(.secondary)
+                                
+                                Spacer()
                             }
-                            Spacer()
+                            .padding(.vertical, 12)
+                            .padding(.horizontal, 16)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(
+                                isInShoppingList(item) ? Color.blue.opacity(0.15) : Color(.systemBackground)
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(
+                                        isInShoppingList(item) ? Color.blue : Color.clear,
+                                        lineWidth: 2
+                                    )
+                            )
+                            .contentShape(Rectangle())
                         }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Color(.systemGroupedBackground))
-                        
-                        // Items in this store group
-                        ForEach(storeGroup.items) { item in
+                        .buttonStyle(.plain)
+                        .contextMenu {
                             Button(action: {
-                                // Toggle item in/out of shopping list or check/uncheck if already in list
-                                toggleItemInShoppingList(item)
+                                itemToEdit = item
+                                showingAddItem = true
                             }) {
-                                HStack {
-                                    // Checkmark indicator - show checked state if in list, or empty circle if not
-                                    if let shoppingItem = getShoppingItem(item) {
-                                        if shoppingItem.isChecked {
-                                            Image(systemName: "checkmark.circle.fill")
-                                                .foregroundColor(.green)
-                                                .font(.title3)
-                                                .frame(width: 24)
-                                        } else {
-                                            Image(systemName: "checkmark.circle")
-                                                .foregroundColor(.blue)
-                                                .font(.title3)
-                                                .frame(width: 24)
-                                        }
-                                    } else {
-                                        Image(systemName: "circle")
-                                            .foregroundColor(.gray.opacity(0.3))
-                                            .font(.title3)
-                                            .frame(width: 24)
-                                    }
-                                    
-                                    // Category icon
-                                    Image(systemName: category.displayIconName)
-                                        .foregroundColor(.blue)
-                                        .frame(width: 24)
-                                    
-                                    Text(item.name)
-                                        .foregroundColor(.primary)
-                                    
-                                    Spacer()
-                                }
-                                .padding(.vertical, 12)
-                                .padding(.horizontal, 16)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .background({
-                                    if let shoppingItem = getShoppingItem(item) {
-                                        return shoppingItem.isChecked ? Color.green.opacity(0.1) : Color.blue.opacity(0.1)
-                                    } else {
-                                        return Color(.systemBackground)
-                                    }
-                                }())
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke({
-                                            if let shoppingItem = getShoppingItem(item) {
-                                                return shoppingItem.isChecked ? Color.green : Color.blue
-                                            } else {
-                                                return Color.clear
-                                            }
-                                        }(), lineWidth: 2)
-                                )
-                                .contentShape(Rectangle())
+                                Label("Edit Item", systemImage: "pencil")
                             }
-                            .buttonStyle(.plain)
-                            .contextMenu {
-                                Button(action: {
-                                    itemToEdit = item
-                                    showingAddItem = true
-                                }) {
-                                    Label("Edit Item", systemImage: "pencil")
-                                }
-                            }
-                            
-                            Divider()
-                                .padding(.leading, 40)
                         }
+                        
+                        Divider()
+                            .padding(.leading, 40)
                     }
                 }
             }
@@ -560,18 +637,18 @@ struct ShoppingListCategoryView: View {
         .navigationTitle(category.name)
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $showingAddItem) {
-            AddItemView(alwaysAddToShoppingList: true, itemToEdit: itemToEdit, prefillCategory: category)
+            AddItemView(alwaysAddToShoppingList: true, itemToEdit: itemToEdit, prefillCategory: category, prefillStore: store)
                 .onDisappear {
                     itemToEdit = nil
                 }
         }
         .onAppear {
             // Recalculate when view appears
-            cachedItemsByStore = calculateItemsByStore()
+            cachedItems = calculateItems()
         }
         .onChange(of: allMasterItems.count) {
             // Recalculate when items change
-            cachedItemsByStore = calculateItemsByStore()
+            cachedItems = calculateItems()
         }
     }
 }

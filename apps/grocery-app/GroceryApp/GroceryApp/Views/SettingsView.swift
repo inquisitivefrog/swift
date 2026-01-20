@@ -13,6 +13,8 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var showingClearDataAlert = false
     @State private var showingStoreSelection = false
+    @State private var isImporting = false
+    @State private var isClearingData = false
     
     var body: some View {
         NavigationStack {
@@ -25,6 +27,23 @@ struct SettingsView: View {
                             Text("FoodStuffs")
                         }
                     }
+                    
+                    Button(action: {
+                        importItems()
+                    }) {
+                        HStack {
+                            if isImporting {
+                                ProgressView()
+                                    .frame(width: 20, height: 20)
+                            } else {
+                                Image(systemName: "square.and.arrow.down")
+                            }
+                            Text("Import Default Items")
+                        }
+                    }
+                    .disabled(isImporting)
+                } footer: {
+                    Text("Import default grocery lists from your preferred stores.")
                 }
                 
                 // Stores
@@ -54,10 +73,16 @@ struct SettingsView: View {
                         showingClearDataAlert = true
                     }) {
                         HStack {
-                            Image(systemName: "trash.fill")
+                            if isClearingData {
+                                ProgressView()
+                                    .frame(width: 20, height: 20)
+                            } else {
+                                Image(systemName: "trash.fill")
+                            }
                             Text("Clear All Data")
                         }
                     }
+                    .disabled(isClearingData)
                 } footer: {
                     Text("This will delete all items, shopping lists, stores, and categories. Default stores and categories will be recreated on next launch.")
                 }
@@ -109,8 +134,41 @@ struct SettingsView: View {
     }
     
     private func clearAllData() {
-        let dataService = DataService(context: viewContext)
-        dataService.clearAllData()
+        guard !isClearingData else { return }
+        isClearingData = true
+        
+        Task { @MainActor in
+            let dataService = DataService(context: viewContext)
+            dataService.clearAllData()
+            isClearingData = false
+        }
+    }
+    
+    private func importItems() {
+        guard !isImporting else { return }
+        isImporting = true
+        
+        Task { @MainActor in
+            // Ensure categories and stores exist
+            let categoryService = CategoryService(context: viewContext)
+            categoryService.createDefaultCategories()
+            
+            let storeService = StoreService(context: viewContext)
+            storeService.createDefaultStores()
+            
+            // Import items for selected stores
+            let importService = MasterListImportService(context: viewContext)
+            importService.importCommonItems()
+            
+            do {
+                try viewContext.save()
+                print("Import complete from Settings")
+            } catch {
+                print("Error during import: \(error)")
+            }
+            
+            isImporting = false
+        }
     }
 }
 

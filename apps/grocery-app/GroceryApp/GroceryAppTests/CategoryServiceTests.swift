@@ -34,18 +34,23 @@ final class CategoryServiceTests: XCTestCase {
         
         // Then
         let categories = categoryService.fetchAllCategories()
-        XCTAssertEqual(categories.count, 14, "Should create 14 default categories")
+        XCTAssertEqual(categories.count, 18, "Should create 18 default categories")
         
         let categoryNames = Set(categories.map { $0.name })
-        XCTAssertTrue(categoryNames.contains("Produce"))
+        XCTAssertTrue(categoryNames.contains("Produce Fruit"))
+        XCTAssertTrue(categoryNames.contains("Produce Vegetables"))
         XCTAssertTrue(categoryNames.contains("Dairy"))
-        XCTAssertTrue(categoryNames.contains("Meat & Seafood"))
+        XCTAssertTrue(categoryNames.contains("Meats"))
+        XCTAssertTrue(categoryNames.contains("Seafood"))
+        XCTAssertTrue(categoryNames.contains("Condiments"))
+        XCTAssertTrue(categoryNames.contains("Spices"))
+        XCTAssertTrue(categoryNames.contains("Packaged Goods"))
         XCTAssertTrue(categoryNames.contains("Other"))
     }
     
     func testCreateDefaultCategories_DoesNotDuplicateExistingCategories() throws {
         // Given
-        _ = categoryService.createCategory(name: "Produce", iconName: "leaf.fill")
+        _ = categoryService.createCategory(name: "Produce Fruit", iconName: "leaf.fill")
         try viewContext.save()
         
         // When
@@ -53,8 +58,8 @@ final class CategoryServiceTests: XCTestCase {
         
         // Then
         let categories = categoryService.fetchAllCategories()
-        let produceCategories = categories.filter { $0.name == "Produce" }
-        XCTAssertEqual(produceCategories.count, 1, "Should not create duplicate Produce category")
+        let produceFruitCategories = categories.filter { $0.name == "Produce Fruit" }
+        XCTAssertEqual(produceFruitCategories.count, 1, "Should not create duplicate Produce Fruit category")
     }
     
     func testCreateDefaultCategories_SetsIsDefaultFlag() throws {
@@ -64,7 +69,7 @@ final class CategoryServiceTests: XCTestCase {
         // Then
         let categories = categoryService.fetchAllCategories()
         let defaultCategories = categories.filter { $0.isDefault == true }
-        XCTAssertEqual(defaultCategories.count, 14, "All default categories should be marked as default")
+        XCTAssertEqual(defaultCategories.count, 18, "All default categories should be marked as default")
     }
     
     // MARK: - createCategory Tests

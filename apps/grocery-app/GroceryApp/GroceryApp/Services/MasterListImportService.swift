@@ -20,7 +20,7 @@ class MasterListImportService {
     }
     
     /// Import common grocery items organized by category
-    /// Updates existing items if they already exist (updates store assignment)
+    /// Expands commonItems to all selected stores, imports specialtyItems only for their stores
     /// Only imports items from stores selected by the user
     func importCommonItems() {
         // Ensure categories and stores exist first
@@ -48,9 +48,6 @@ class MasterListImportService {
             storeMap[store.name.lowercased()] = store
         }
         
-        // Get import data from ImportData.swift (single source of truth)
-        let commonItems = ImportData.commonItems
-        
         // Fetch existing items to check for updates
         // Use composite key: name + store ID (allows same item from different stores)
         let existingItems = try? viewContext.fetch(GroceryItem.fetchRequest())
@@ -63,56 +60,98 @@ class MasterListImportService {
         
         var importedCount = 0
         
+        // Import common items - expand to all selected stores
+        let commonItems = ImportData.commonItems
         for itemData in commonItems {
-            // Filter by selected stores if store selection has been made
-            if filterByStore {
-                if let storeName = itemData.store {
-                    // Item has a store - only import if store is selected
-                    if !selectedStoreNamesSet.contains(storeName.lowercased()) {
-                        continue // Skip items from unselected stores
-                    }
-                } else {
-                    // Item has no store - skip if filtering is enabled (only import items with selected stores)
-                    continue
-                }
-            }
-            
             // Find category
             guard let category = categoryMap[itemData.category.lowercased()] else {
                 print("Warning: Category '\(itemData.category)' not found, skipping '\(itemData.name)'")
                 continue
             }
             
-            // Find store if specified
-            var store: Store? = nil
-            if let storeName = itemData.store {
-                store = storeMap[storeName.lowercased()]
-                if store == nil {
-                    print("Warning: Store '\(storeName)' not found for item '\(itemData.name)', skipping store assignment")
+            // Expand common items to all selected stores
+            if filterByStore {
+                // Create item for each selected store
+                for storeName in selectedStoreNames {
+                    guard let store = storeMap[storeName.lowercased()] else {
+                        continue
+                    }
+                    
+                    // Check if item already exists
+                    let storeId = store.id.uuidString
+                    let itemKey = "\(itemData.name.lowercased()):\(storeId)"
+                    if existingItemsMap[itemKey] != nil {
+                        continue
+                    }
+                    
+                    // Create new item
+                    let item = GroceryItem(context: viewContext)
+                    item.id = UUID()
+                    item.name = itemData.name
+                    item.category = category
+                    item.setPreferredStore(store)
+                    item.isInMasterList = true
+                    item.createdDate = Date()
+                    
+                    importedCount += 1
+                }
+            } else {
+                // Backward compatibility: if no stores selected, create items without store
+                let itemKey = "\(itemData.name.lowercased()):nostore"
+                if existingItemsMap[itemKey] == nil {
+                    let item = GroceryItem(context: viewContext)
+                    item.id = UUID()
+                    item.name = itemData.name
+                    item.category = category
+                    item.isInMasterList = true
+                    item.createdDate = Date()
+                    
+                    importedCount += 1
                 }
             }
-            
-            // Check if item already exists (using composite key: name + store)
-            // This allows the same item from different stores to exist as separate items
-            let storeId = store?.id.uuidString ?? "nostore"
-            let itemKey = "\(itemData.name.lowercased()):\(storeId)"
-            if existingItemsMap[itemKey] != nil {
-                // Item with same name and store already exists - skip
+        }
+        
+        // Import specialty items - only for their specified stores
+        let specialtyItems = ImportData.specialtyItems
+        for itemData in specialtyItems {
+            // Find category
+            guard let category = categoryMap[itemData.category.lowercased()] else {
+                print("Warning: Category '\(itemData.category)' not found, skipping '\(itemData.name)'")
                 continue
             }
             
-            // Create new item
-            let item = GroceryItem(context: viewContext)
-            item.id = UUID()
-            item.name = itemData.name
-            item.category = category
-            if let store = store {
+            // Import only if at least one of the item's stores is selected
+            for storeName in itemData.stores {
+                let storeNameLower = storeName.lowercased()
+                
+                // Filter by selected stores if store selection has been made
+                if filterByStore && !selectedStoreNamesSet.contains(storeNameLower) {
+                    continue // Skip if store is not selected
+                }
+                
+                guard let store = storeMap[storeNameLower] else {
+                    print("Warning: Store '\(storeName)' not found for item '\(itemData.name)'")
+                    continue
+                }
+                
+                // Check if item already exists
+                let storeId = store.id.uuidString
+                let itemKey = "\(itemData.name.lowercased()):\(storeId)"
+                if existingItemsMap[itemKey] != nil {
+                    continue
+                }
+                
+                // Create new item
+                let item = GroceryItem(context: viewContext)
+                item.id = UUID()
+                item.name = itemData.name
+                item.category = category
                 item.setPreferredStore(store)
+                item.isInMasterList = true
+                item.createdDate = Date()
+                
+                importedCount += 1
             }
-            item.isInMasterList = true
-            item.createdDate = Date()
-            
-            importedCount += 1
         }
         
         // Save all imported items
@@ -162,55 +201,90 @@ class MasterListImportService {
         // Get items for this category from ImportData
         let categoryName = category.name.lowercased()
         let commonItems = ImportData.commonItems
+        let specialtyItems = ImportData.specialtyItems
         
         // Filter items for this category
-        let categoryItems = commonItems.filter { $0.category.lowercased() == categoryName }
+        let categoryCommonItems = commonItems.filter { $0.category.lowercased() == categoryName }
+        let categorySpecialtyItems = specialtyItems.filter { $0.category.lowercased() == categoryName }
         
         var importedCount = 0
         
-        for itemData in categoryItems {
-            // Filter by selected stores if store selection has been made
+        // Import common items - expand to all selected stores
+        for itemData in categoryCommonItems {
             if filterByStore {
-                if let storeName = itemData.store {
-                    // Item has a store - only import if store is selected
-                    if !selectedStoreNamesSet.contains(storeName.lowercased()) {
-                        continue // Skip items from unselected stores
+                // Create item for each selected store
+                for storeName in selectedStoreNames {
+                    guard let store = storeMap[storeName.lowercased()] else {
+                        continue
                     }
-                } else {
-                    // Item has no store - skip if filtering is enabled
+                    
+                    // Check if item already exists
+                    let storeId = store.id.uuidString
+                    let itemKey = "\(itemData.name.lowercased()):\(storeId)"
+                    if existingItemsMap[itemKey] != nil {
+                        continue
+                    }
+                    
+                    // Create new item
+                    let item = GroceryItem(context: viewContext)
+                    item.id = UUID()
+                    item.name = itemData.name
+                    item.category = category
+                    item.setPreferredStore(store)
+                    item.isInMasterList = true
+                    item.createdDate = Date()
+                    
+                    importedCount += 1
+                }
+            } else {
+                // Backward compatibility: if no stores selected, create items without store
+                let itemKey = "\(itemData.name.lowercased()):nostore"
+                if existingItemsMap[itemKey] == nil {
+                    let item = GroceryItem(context: viewContext)
+                    item.id = UUID()
+                    item.name = itemData.name
+                    item.category = category
+                    item.isInMasterList = true
+                    item.createdDate = Date()
+                    
+                    importedCount += 1
+                }
+            }
+        }
+        
+        // Import specialty items - only for their specified stores
+        for itemData in categorySpecialtyItems {
+            for storeName in itemData.stores {
+                let storeNameLower = storeName.lowercased()
+                
+                // Filter by selected stores if store selection has been made
+                if filterByStore && !selectedStoreNamesSet.contains(storeNameLower) {
                     continue
                 }
-            }
-            // Find store if specified
-            var store: Store? = nil
-            if let storeName = itemData.store {
-                store = storeMap[storeName.lowercased()]
-                if store == nil {
-                    print("Warning: Store '\(storeName)' not found for item '\(itemData.name)', skipping store assignment")
+                
+                guard let store = storeMap[storeNameLower] else {
+                    print("Warning: Store '\(storeName)' not found for item '\(itemData.name)'")
+                    continue
                 }
-            }
-            
-            // Check if item already exists (using composite key: name + store)
-            // This allows the same item from different stores to exist as separate items
-            let storeId = store?.id.uuidString ?? "nostore"
-            let itemKey = "\(itemData.name.lowercased()):\(storeId)"
-            if existingItemsMap[itemKey] != nil {
-                // Item with same name and store already exists - skip
-                continue
-            }
-            
-            // Create new item
-            let item = GroceryItem(context: viewContext)
-            item.id = UUID()
-            item.name = itemData.name
-            item.category = category
-            if let store = store {
+                
+                // Check if item already exists
+                let storeId = store.id.uuidString
+                let itemKey = "\(itemData.name.lowercased()):\(storeId)"
+                if existingItemsMap[itemKey] != nil {
+                    continue
+                }
+                
+                // Create new item
+                let item = GroceryItem(context: viewContext)
+                item.id = UUID()
+                item.name = itemData.name
+                item.category = category
                 item.setPreferredStore(store)
+                item.isInMasterList = true
+                item.createdDate = Date()
+                
+                importedCount += 1
             }
-            item.isInMasterList = true
-            item.createdDate = Date()
-            
-            importedCount += 1
         }
         
         // Save imported items

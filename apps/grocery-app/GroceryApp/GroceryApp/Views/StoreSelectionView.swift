@@ -145,6 +145,28 @@ struct StoreSelectionView: View {
         } catch {
             print("Error saving selected stores: \(error)")
         }
+        
+        // Auto-import items after first-time store selection (not when updating)
+        if !isUpdating {
+            autoImportItems()
+        }
+    }
+    
+    private func autoImportItems() {
+        // Ensure categories and stores exist
+        let categoryService = CategoryService(context: viewContext)
+        categoryService.createDefaultCategories()
+        
+        // Import items for selected stores
+        let importService = MasterListImportService(context: viewContext)
+        importService.importCommonItems()
+        
+        do {
+            try viewContext.save()
+            print("Auto-imported items after store selection")
+        } catch {
+            print("Error during auto-import: \(error)")
+        }
     }
 }
 

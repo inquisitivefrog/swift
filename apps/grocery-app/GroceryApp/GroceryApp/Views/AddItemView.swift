@@ -15,6 +15,7 @@ struct AddItemView: View {
     let alwaysAddToShoppingList: Bool
     let itemToEdit: GroceryItem?
     let prefillCategory: Category?
+    let prefillStore: Store?
     
     @FocusState private var isTextFieldFocused: Bool
     @State private var itemName = ""
@@ -26,10 +27,11 @@ struct AddItemView: View {
     @State private var duplicateItemName = ""
     @State private var isSaving = false
     
-    init(alwaysAddToShoppingList: Bool = false, itemToEdit: GroceryItem? = nil, prefillCategory: Category? = nil) {
+    init(alwaysAddToShoppingList: Bool = false, itemToEdit: GroceryItem? = nil, prefillCategory: Category? = nil, prefillStore: Store? = nil) {
         self.alwaysAddToShoppingList = alwaysAddToShoppingList
         self.itemToEdit = itemToEdit
         self.prefillCategory = prefillCategory
+        self.prefillStore = prefillStore
     }
     
     @FetchRequest(
@@ -217,6 +219,9 @@ struct AddItemView: View {
                 // Pre-fill category if provided
                 if let category = prefillCategory {
                     selectedCategory = category
+                }
+                if let store = prefillStore {
+                    selectedStore = store
                 }
                 if alwaysAddToShoppingList {
                     addToShoppingList = true

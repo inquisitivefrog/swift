@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LandingView: View {
-    @State private var hasSeenLanding = false
+    @State private var hasSeenLanding = UserDefaults.standard.bool(forKey: "hasSeenLanding")
     @State private var showingHelp = false
     @State private var showingStoreSelection = false
     @Environment(\.managedObjectContext) private var viewContext
@@ -80,6 +80,7 @@ struct LandingView: View {
                         if !hasSelectedStores {
                             showingStoreSelection = true
                         } else {
+                            UserDefaults.standard.set(true, forKey: "hasSeenLanding")
                             hasSeenLanding = true
                         }
                     }) {
@@ -104,6 +105,7 @@ struct LandingView: View {
             .fullScreenCover(isPresented: $showingStoreSelection) {
                 StoreSelectionView(isUpdating: false, onComplete: {
                     showingStoreSelection = false
+                    UserDefaults.standard.set(true, forKey: "hasSeenLanding")
                     hasSeenLanding = true
                 })
                 .environment(\.managedObjectContext, viewContext)
