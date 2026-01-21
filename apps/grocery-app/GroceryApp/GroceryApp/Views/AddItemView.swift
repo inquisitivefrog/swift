@@ -192,6 +192,8 @@ struct AddItemView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
+                        // Resign text field focus before dismissing to prevent keyboard warnings
+                        isTextFieldFocused = false
                         dismiss()
                     }
                 }
