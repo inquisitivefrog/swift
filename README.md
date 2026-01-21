@@ -12,33 +12,28 @@ Applications developed using Swift with help from Cursor
    - Tested with XCTest
    - Uses Swift Package Manager (SPM)
 
-### 2. grocery-app
+### 2. ShoppingKart (grocery-app)
 
-   Native iOS grocery shopping application for iPhone
+   **Portfolio Project**: Native iOS shopping list application
   
-   - **Master List Management**: Comprehensive grocery item database organized by categories
-   - **Shopping Lists**: Create and manage active shopping lists
-   - **Store Organization**: Organize shopping by store with preferred store assignments
-   - **Save/Load Lists**: Save shopping lists for recurring shopping trips
-   - **Check-off Items**: Mark items as purchased during shopping
-   - **Landing Page**: Welcome screen with first-time user instructions
-   - **Local Storage**: All data stored locally using Core Data
-   - **Memory Optimized**: Cached computed properties to prevent memory issues
+   **Status**: ✅ Submitted to App Store for Review
+  
+   A production-ready iOS app demonstrating modern SwiftUI development, Core Data persistence, and complete App Store submission workflow. Helps users organize grocery shopping by store with intelligent item filtering and category management.
    
    **Technology Stack:**
-   - SwiftUI for user interface
-   - Core Data for data persistence
-   - Model-View-Service (MVS) architecture
-   - Unit tests with XCTest
+   - SwiftUI + Core Data
+   - Swift Concurrency (async/await)
+   - XCTest (Unit + UI tests)
+   - Xcode Cloud CI/CD
    
    **Key Features:**
-   - Import common grocery items with category and store assignments
-   - Shop by category or by store
-   - Clear checked items after shopping
-   - Settings for managing stores, categories, and data
-   - Completion celebration when all shopping is done
+   - Store-based shopping organization (Trader Joe's, Whole Foods, Costco, etc.)
+   - Smart item import filtered by preferred stores
+   - Category management (Produce, Dairy, Meats, etc.)
+   - Shopping list persistence with local-first architecture
+   - First-time user onboarding flow
    
-   See [apps/grocery-app/README.md](./apps/grocery-app/README.md) for more details.
+   See [apps/grocery-app/README.md](./apps/grocery-app/README.md) for complete documentation and portfolio details.
 
 ## Getting Started
 
@@ -55,7 +50,7 @@ swift test     # Run tests
 
 ### iOS Projects (Xcode)
 
-For iOS projects like `grocery-app`, open the Xcode project:
+For iOS projects like `ShoppingKart`, open the Xcode project:
 
 ```bash
 cd apps/grocery-app
@@ -65,7 +60,9 @@ open GroceryApp/GroceryApp.xcodeproj
 Then build and run from Xcode, or use command line:
 
 ```bash
-xcodebuild -project GroceryApp/GroceryApp.xcodeproj -scheme GroceryApp -destination 'platform=iOS Simulator,name=iPhone 15' build
+cd apps/grocery-app
+./ci-cd-commands.sh build    # Build
+./ci-cd-commands.sh test     # Run tests
 ```
 
 ## Requirements
@@ -80,7 +77,7 @@ xcodebuild -project GroceryApp/GroceryApp.xcodeproj -scheme GroceryApp -destinat
 swift/
 ├── apps/
 │   ├── helloworld/      # Hello World command-line application
-│   └── grocery-app/    # iOS Grocery Shopping application
+│   └── grocery-app/    # ShoppingKart - iOS shopping list app (Portfolio)
 └── README.md            # This file
 ```
 
