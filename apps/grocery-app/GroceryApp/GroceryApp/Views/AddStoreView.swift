@@ -71,7 +71,10 @@ struct AddStoreView: View {
                     Button("Cancel") {
                         // Resign text field focus before dismissing to prevent keyboard warnings
                         isTextFieldFocused = false
-                        dismiss()
+                        // Small delay to ensure focus resignation completes before dismissing
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            dismiss()
+                        }
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
