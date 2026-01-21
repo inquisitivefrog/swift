@@ -1,6 +1,6 @@
 # Distribution Guide
 
-This guide walks you through preparing your GroceryApp for TestFlight and App Store distribution.
+This guide walks you through preparing your ShoppingKart app for TestFlight and App Store distribution.
 
 ## Prerequisites
 
@@ -92,7 +92,7 @@ xcrun altool --upload-app \
 2. Click **My Apps** > **+** (Create App)
 3. Fill in:
    - **Platform**: iOS
-   - **Name**: GroceryApp (or your preferred name)
+   - **Name**: ShoppingKart (or your preferred name)
    - **Primary Language**: English
    - **Bundle ID**: `com.inquisitivefrog.GroceryShopping`
    - **SKU**: A unique identifier (e.g., `grocery-app-001`)

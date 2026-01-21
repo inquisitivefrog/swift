@@ -37,7 +37,7 @@ struct LandingView: View {
                     Spacer()
                     
                     // App Image
-                    Image("GroceryApp_image")
+                    Image("ShoppingKart_image")
                         .resizable()
                         .scaledToFit()
                         .frame(maxWidth: 300, maxHeight: 300)
@@ -45,7 +45,7 @@ struct LandingView: View {
                         .shadow(radius: 10)
                     
                     // App Title
-                    Text("GroceryApp")
+                    Text("ShoppingKart")
                         .font(.largeTitle)
                         .fontWeight(.bold)
                         .foregroundColor(.primary)

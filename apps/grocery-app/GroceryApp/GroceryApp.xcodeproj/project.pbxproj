@@ -427,7 +427,7 @@
 				DEVELOPMENT_TEAM = 4XJNBSJ5AQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = GroceryShopping;
+				INFOPLIST_KEY_CFBundleDisplayName = ShoppingKart;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Timothy Stilwell. All rights reserved.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -458,7 +458,7 @@
 				DEVELOPMENT_TEAM = 4XJNBSJ5AQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = GroceryShopping;
+				INFOPLIST_KEY_CFBundleDisplayName = ShoppingKart;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.shopping";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Timothy Stilwell. All rights reserved.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

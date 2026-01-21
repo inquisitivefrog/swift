@@ -1,6 +1,6 @@
 //
 //  HelpView.swift
-//  GroceryApp
+//  ShoppingKart
 //
 //  Help and instructions for first-time users
 //
@@ -16,7 +16,7 @@ struct HelpView: View {
                 VStack(alignment: .leading, spacing: 24) {
                     // Header
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Welcome to GroceryApp!")
+                        Text("Welcome to ShoppingKart!")
                             .font(.largeTitle)
                             .fontWeight(.bold)
                         
