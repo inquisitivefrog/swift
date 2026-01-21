@@ -51,8 +51,8 @@ final class AssetVerificationTests: XCTestCase {
             .appendingPathComponent("GroceryApp")
             .appendingPathComponent("GroceryApp")
             .appendingPathComponent("Assets.xcassets")
-            .appendingPathComponent("GroceryApp_image.imageset")
-            .appendingPathComponent("GroceryApp_image.png")
+            .appendingPathComponent("ShoppingKart_image.imageset")
+            .appendingPathComponent("ShoppingKart_image.png")
     }
     
     func testAppIconMeetsSizeRequirements() throws {
@@ -107,10 +107,10 @@ final class AssetVerificationTests: XCTestCase {
     // MARK: - Landing Page Image Tests
     
     func testLandingPageImageExists() throws {
-        // Verify GroceryApp_image.png exists in the asset catalog
+        // Verify ShoppingKart_image.png exists in the asset catalog
         let imagePath = landingPageImagePath()
         let fileExists = FileManager.default.fileExists(atPath: imagePath.path)
-        XCTAssertTrue(fileExists, "GroceryApp_image.png must exist at: \(imagePath.path)")
+        XCTAssertTrue(fileExists, "ShoppingKart_image.png must exist at: \(imagePath.path)")
     }
     
     func testLandingPageImageHasReasonableDimensions() throws {

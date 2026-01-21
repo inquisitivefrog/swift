@@ -91,7 +91,7 @@ final class GroceryAppUITests: XCTestCase {
         app.launch()
         
         // Check if landing page appears (first launch) or main tabs (subsequent launches)
-        let appTitle = app.staticTexts["GroceryApp"]
+        let appTitle = app.staticTexts["ShoppingKart"]
         let buildMyListTab = app.tabBars.buttons["Build My List"]
         
         let landingPageExists = appTitle.waitForExistence(timeout: 3)
@@ -175,7 +175,7 @@ final class GroceryAppUITests: XCTestCase {
         XCTAssertTrue(helpView.waitForExistence(timeout: 5), "Help view should appear")
         
         // Check for help content
-        let helpTitle = app.staticTexts["Welcome to GroceryApp!"]
+        let helpTitle = app.staticTexts["Welcome to ShoppingKart!"]
         XCTAssertTrue(helpTitle.waitForExistence(timeout: 5), "Help title should be visible")
         XCTAssertTrue(app.staticTexts["Import Items"].exists, "Help section 'Import Items' should be visible")
         
@@ -187,7 +187,7 @@ final class GroceryAppUITests: XCTestCase {
         // Verify we're back to the correct view based on where we came from
         if cameFromLandingPage {
             // If we came from landing page, we should return to landing page
-            let landingPageTitle = app.staticTexts["GroceryApp"]
+            let landingPageTitle = app.staticTexts["ShoppingKart"]
             XCTAssertTrue(landingPageTitle.waitForExistence(timeout: 2), "Should return to landing page")
         } else {
             // If we came from Settings, we should return to Settings

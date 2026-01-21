@@ -25,7 +25,7 @@ final class GroceryAppUITestsLaunchTests: XCTestCase {
         // Wait for either landing page or main tabs to appear
         // Note: If hasSeenLanding is true (UserDefaults persisted), the app will skip to MainTabView
         // So we check for either landing page OR main tabs
-        let landingPageTitle = app.staticTexts["GroceryApp"]
+        let landingPageTitle = app.staticTexts["ShoppingKart"]
         let buildMyListTab = app.tabBars.buttons["Build My List"]
         
         let landingPageExists = landingPageTitle.waitForExistence(timeout: 5)
