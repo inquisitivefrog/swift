@@ -11,7 +11,8 @@ import CoreData
 struct StoreSelectionView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
-    @State private var selectedStores: Set<UUID> = []
+    @State private var selectedStores: Set<UUID> = [] // For quick lookup
+    @State private var selectedStoreOrder: [UUID] = [] // Preserve selection order
     @State private var allStores: [Store] = []
     
     let onComplete: () -> Void
@@ -62,10 +63,17 @@ struct StoreSelectionView: View {
                 // Continue/Save button
                 Button(action: {
                     saveSelectedStores()
+                    
+                    // Post notification that preferred stores were updated
+                    NotificationCenter.default.post(name: NSNotification.Name("PreferredStoresUpdated"), object: nil)
+                    
                     if isUpdating {
+                        // Dismiss this view and Settings view, returning to Build My List
                         dismiss()
+                        onComplete()
+                    } else {
+                        onComplete()
                     }
-                    onComplete()
                 }) {
                     HStack {
                         Text(isUpdating ? "Save" : "Continue")
@@ -107,14 +115,22 @@ struct StoreSelectionView: View {
         
         // Load existing selected stores if updating
         if isUpdating {
-            // Load from UserDefaults (selected store names)
+            // Load from UserDefaults (selected store names) - preserve order
             let selectedStoreNames = UserDefaults.standard.stringArray(forKey: "selectedStoreNames") ?? []
-            let selectedStoreNamesSet = Set(selectedStoreNames.map { $0.lowercased() })
             
-            // Also check Store.isFavorite as backup
-            for store in allStores {
-                if selectedStoreNamesSet.contains(store.name.lowercased()) || store.isFavorite {
+            // Preserve the order from UserDefaults
+            for storeName in selectedStoreNames {
+                if let store = allStores.first(where: { $0.name == storeName }) {
                     selectedStores.insert(store.id)
+                    selectedStoreOrder.append(store.id)
+                }
+            }
+            
+            // Also check Store.isFavorite as backup (for stores not in UserDefaults)
+            for store in allStores {
+                if !selectedStores.contains(store.id) && store.isFavorite {
+                    selectedStores.insert(store.id)
+                    selectedStoreOrder.append(store.id)
                 }
             }
         }
@@ -123,8 +139,10 @@ struct StoreSelectionView: View {
     private func toggleStore(_ store: Store) {
         if selectedStores.contains(store.id) {
             selectedStores.remove(store.id)
+            selectedStoreOrder.removeAll { $0 == store.id }
         } else {
             selectedStores.insert(store.id)
+            selectedStoreOrder.append(store.id) // Add to end to preserve selection order
         }
     }
     
@@ -134,9 +152,14 @@ struct StoreSelectionView: View {
             store.isFavorite = selectedStores.contains(store.id)
         }
         
-        // Save selected store names to UserDefaults for import filtering
-        let selectedStoreNames = allStores
-            .filter { selectedStores.contains($0.id) }
+        // Save selected store names to UserDefaults in selection order
+        var storeMap: [UUID: Store] = [:]
+        for store in allStores {
+            storeMap[store.id] = store
+        }
+        
+        let selectedStoreNames = selectedStoreOrder
+            .compactMap { storeMap[$0] }
             .map { $0.name }
         UserDefaults.standard.set(selectedStoreNames, forKey: "selectedStoreNames")
         
@@ -146,10 +169,9 @@ struct StoreSelectionView: View {
             print("Error saving selected stores: \(error)")
         }
         
-        // Auto-import items after first-time store selection (not when updating)
-        if !isUpdating {
-            autoImportItems()
-        }
+        // Auto-import items after store selection (both first-time and updating)
+        // This ensures items are always created with correct store assignments
+        autoImportItems()
     }
     
     private func autoImportItems() {
@@ -158,6 +180,7 @@ struct StoreSelectionView: View {
         categoryService.createDefaultCategories()
         
         // Import items for selected stores
+        // This will create items for the newly selected stores
         let importService = MasterListImportService(context: viewContext)
         importService.importCommonItems()
         

@@ -10,8 +10,11 @@ import CoreData
 
 struct StoreShoppingListView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Binding var selectedTab: Int
     @State private var showingSettings = false
     @State private var cachedStoresWithItems: [(store: Store?, count: Int)] = []
+    @State private var showingCelebrationAlert = false
+    @State private var hasShownCelebration = false
     
     @FetchRequest(
         sortDescriptors: [
@@ -33,8 +36,16 @@ struct StoreShoppingListView: View {
         cachedStoresWithItems
     }
     
+    // Count of checked items - used to trigger onChange when items are toggled
+    var checkedItemsCount: Int {
+        shoppingItems.filter { $0.isChecked }.count
+    }
+    
     // Calculate stores with items - only called when data changes
     private func calculateStoresWithItems() {
+        // Get preferred store names in selection order
+        let selectedStoreNames = UserDefaults.standard.stringArray(forKey: "selectedStoreNames") ?? []
+        
         var storeCounts: [UUID?: Int] = [:]
         
         // Count items per store (only unchecked items)
@@ -43,24 +54,32 @@ struct StoreShoppingListView: View {
             storeCounts[storeId, default: 0] += 1
         }
         
-        // Build result array
+        // Build result array - only include preferred stores, in selection order
         var result: [(store: Store?, count: Int)] = []
         
-        // Add stores with items
-        for store in allStores {
-            let storeId = store.id
-            if let count = storeCounts[storeId], count > 0 {
-                result.append((store: store, count: count))
+        // First, add stores in the order they were selected (preferred stores only)
+        for storeName in selectedStoreNames {
+            if let store = allStores.first(where: { $0.name == storeName }) {
+                let storeId = store.id
+                if let count = storeCounts[storeId], count > 0 {
+                    result.append((store: store, count: count))
+                }
             }
         }
         
-        // Add "No Store" if there are items without a store
-        if let noStoreCount = storeCounts[nil], noStoreCount > 0 {
-            result.append((store: nil, count: noStoreCount))
+        // If no preferred stores selected, show all stores alphabetically (fallback)
+        if selectedStoreNames.isEmpty {
+            for store in allStores.sorted(by: { $0.name < $1.name }) {
+                let storeId = store.id
+                if let count = storeCounts[storeId], count > 0 {
+                    result.append((store: store, count: count))
+                }
+            }
         }
         
-        // Sort by count (most to least)
-        cachedStoresWithItems = result.sorted { $0.count > $1.count }
+        // Do NOT add "No Store" - filter it out
+        // Do NOT sort by count - preserve selection order
+        cachedStoresWithItems = result
     }
     
     var body: some View {
@@ -100,7 +119,7 @@ struct StoreShoppingListView: View {
             .background(Color(.systemGroupedBackground))
             .navigationTitle("Shop By Stores")
             .sheet(isPresented: $showingSettings) {
-                SettingsView()
+                SettingsView(selectedTab: $selectedTab)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -114,21 +133,55 @@ struct StoreShoppingListView: View {
             .onAppear {
                 // Calculate stores with items on appear
                 calculateStoresWithItems()
+                // Check if shopping is already complete
+                checkShoppingComplete()
             }
             .onChange(of: shoppingItems.count) {
                 // Recalculate when shopping items change
                 calculateStoresWithItems()
-            }
-            .onChange(of: shoppingItems.map { $0.isChecked }) {
-                // Recalculate when items are checked/unchecked
-                calculateStoresWithItems()
+                checkShoppingComplete()
             }
             .onChange(of: allStores.count) {
                 // Recalculate when stores change
                 calculateStoresWithItems()
             }
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("PreferredStoresUpdated"))) { _ in
+                // Refresh when preferred stores are updated
+                calculateStoresWithItems()
+            }
+            .onChange(of: storesWithItems.isEmpty) {
+                // Check if shopping is complete (all items checked)
+                checkShoppingComplete()
+            }
+            .onChange(of: checkedItemsCount) {
+                // Check if shopping is complete when items are toggled
+                checkShoppingComplete()
+            }
+            .alert("Shopping Complete! 🎉", isPresented: $showingCelebrationAlert) {
+                Button("Great!", role: .cancel) { }
+            } message: {
+                Text("Congratulations! You've completed your shopping. Come back next week to build your next shopping list!")
+            }
         }
     }
+    
+    private func checkShoppingComplete() {
+        // Check if there are any unchecked items
+        let hasUncheckedItems = shoppingItems.contains { !$0.isChecked }
+        
+        // If no unchecked items and we haven't shown the alert yet, show celebration
+        // Only show if there were items to begin with (not just empty list)
+        if !hasUncheckedItems && !hasShownCelebration && !shoppingItems.isEmpty {
+            hasShownCelebration = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                showingCelebrationAlert = true
+            }
+        } else if hasUncheckedItems {
+            // Reset flag if items are unchecked again
+            hasShownCelebration = false
+        }
+    }
+    
 }
 
 // Store button content for the grid
@@ -371,6 +424,6 @@ struct StoreShoppingListItemsView: View {
 }
 
 #Preview {
-    StoreShoppingListView()
+    StoreShoppingListView(selectedTab: .constant(1))
         .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

@@ -10,6 +10,7 @@ import CoreData
 
 struct ShoppingListView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Binding var selectedTab: Int
     @State private var showingSettings = false
     @State private var isSaving = false
     @State private var isLoading = false
@@ -61,6 +62,9 @@ struct ShoppingListView: View {
     
     // Calculate store counts from master list - only called when data changes
     private func calculateStoreCounts() {
+        // Get preferred store names in selection order
+        let selectedStoreNames = UserDefaults.standard.stringArray(forKey: "selectedStoreNames") ?? []
+        
         // Count master list items per store
         var storeItemCounts: [UUID?: Int] = [:]
         
@@ -69,24 +73,32 @@ struct ShoppingListView: View {
             storeItemCounts[storeId, default: 0] += 1
         }
         
-        // Build result array
+        // Build result array - only include preferred stores, in selection order
         var result: [(store: Store?, count: Int)] = []
         
-        // Add stores with items
-        for store in allStores {
-            let storeId = store.id
-            if let count = storeItemCounts[storeId], count > 0 {
-                result.append((store: store, count: count))
+        // First, add stores in the order they were selected (preferred stores only)
+        for storeName in selectedStoreNames {
+            if let store = allStores.first(where: { $0.name == storeName }) {
+                let storeId = store.id
+                if let count = storeItemCounts[storeId], count > 0 {
+                    result.append((store: store, count: count))
+                }
             }
         }
         
-        // Add "No Store" if there are items without a store
-        if let noStoreCount = storeItemCounts[nil], noStoreCount > 0 {
-            result.append((store: nil, count: noStoreCount))
+        // If no preferred stores selected, show all stores alphabetically (fallback)
+        if selectedStoreNames.isEmpty {
+            for store in allStores.sorted(by: { $0.name < $1.name }) {
+                let storeId = store.id
+                if let count = storeItemCounts[storeId], count > 0 {
+                    result.append((store: store, count: count))
+                }
+            }
         }
         
-        // Sort by count (most to least)
-        cachedStoreCounts = result.sorted { $0.count > $1.count }
+        // Do NOT add "No Store" - filter it out
+        // Do NOT sort by count - preserve selection order
+        cachedStoreCounts = result
     }
     
     var body: some View {
@@ -134,7 +146,7 @@ struct ShoppingListView: View {
             .background(Color(.systemGroupedBackground))
             .navigationTitle("Build My List")
             .sheet(isPresented: $showingSettings) {
-                SettingsView()
+                SettingsView(selectedTab: $selectedTab)
             }
             .toolbar {
                 // Settings button - place first to ensure it's always visible
@@ -213,6 +225,10 @@ struct ShoppingListView: View {
             }
             .onChange(of: allStores.count) {
                 // Recalculate when stores change
+                calculateStoreCounts()
+            }
+            .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("PreferredStoresUpdated"))) { _ in
+                // Refresh when preferred stores are updated
                 calculateStoreCounts()
             }
         }
@@ -654,6 +670,6 @@ struct ShoppingListCategoryView: View {
 }
 
 #Preview {
-    ShoppingListView()
+    ShoppingListView(selectedTab: .constant(0))
         .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

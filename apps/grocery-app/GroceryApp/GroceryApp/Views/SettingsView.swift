@@ -11,6 +11,7 @@ import CoreData
 struct SettingsView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.dismiss) private var dismiss
+    @Binding var selectedTab: Int
     @State private var showingClearDataAlert = false
     @State private var showingStoreSelection = false
     @State private var isImporting = false
@@ -27,23 +28,8 @@ struct SettingsView: View {
                             Text("FoodStuffs")
                         }
                     }
-                    
-                    Button(action: {
-                        importItems()
-                    }) {
-                        HStack {
-                            if isImporting {
-                                ProgressView()
-                                    .frame(width: 20, height: 20)
-                            } else {
-                                Image(systemName: "square.and.arrow.down")
-                            }
-                            Text("Import Default Items")
-                        }
-                    }
-                    .disabled(isImporting)
                 } footer: {
-                    Text("Import default grocery lists from your preferred stores.")
+                    Text("Manage your master grocery list.")
                 }
                 
                 // Stores
@@ -67,24 +53,24 @@ struct SettingsView: View {
                     Text("Manage your stores and update which stores you prefer for item imports.")
                 }
                 
-                // Clear All Data
+                // Reset App Data and Import Defaults
                 Section {
                     Button(role: .destructive, action: {
                         showingClearDataAlert = true
                     }) {
                         HStack {
-                            if isClearingData {
+                            if isClearingData || isImporting {
                                 ProgressView()
                                     .frame(width: 20, height: 20)
                             } else {
-                                Image(systemName: "trash.fill")
+                                Image(systemName: "arrow.clockwise")
                             }
-                            Text("Clear All Data")
+                            Text("Reset App Data and Import Defaults")
                         }
                     }
-                    .disabled(isClearingData)
+                    .disabled(isClearingData || isImporting)
                 } footer: {
-                    Text("This will delete all items, shopping lists, stores, and categories. Default stores and categories will be recreated on next launch.")
+                    Text("This will delete all items, shopping lists, stores, and categories, then import default items. You'll be asked to select your preferred stores.")
                 }
                 
                 // Help
@@ -116,17 +102,23 @@ struct SettingsView: View {
                     }
                 }
             }
-            .alert("Clear All Data", isPresented: $showingClearDataAlert) {
+            .alert("Reset App Data and Import Defaults", isPresented: $showingClearDataAlert) {
                 Button("Cancel", role: .cancel) { }
-                Button("Clear All", role: .destructive) {
-                    clearAllData()
+                Button("Reset and Import", role: .destructive) {
+                    resetAndImport()
                 }
             } message: {
-                Text("This will permanently delete all items, shopping lists, stores, and categories. This action cannot be undone. Default stores and categories will be recreated on next launch.")
+                Text("This will permanently delete all items, shopping lists, stores, and categories, then import default items. You'll be asked to select your preferred stores. This action cannot be undone.")
             }
             .sheet(isPresented: $showingStoreSelection) {
                 StoreSelectionView(isUpdating: true) {
                     showingStoreSelection = false
+                    // Dismiss Settings view after store selection completes
+                    dismiss()
+                    // Switch to Build My List tab
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        selectedTab = 0 // Build My List tab
+                    }
                 }
                 .environment(\.managedObjectContext, viewContext)
             }
@@ -144,35 +136,47 @@ struct SettingsView: View {
         }
     }
     
-    private func importItems() {
-        guard !isImporting else { return }
-        isImporting = true
+    private func resetAndImport() {
+        guard !isClearingData && !isImporting else { return }
+        isClearingData = true
         
         Task { @MainActor in
-            // Ensure categories and stores exist
+            // Step 1: Clear all data (this also clears selectedStoreNames)
+            let dataService = DataService(context: viewContext)
+            dataService.clearAllData()
+            isClearingData = false
+            
+            // Step 2: Create default stores and categories (but don't import items yet)
+            // Items will be imported AFTER user selects preferred stores
             let categoryService = CategoryService(context: viewContext)
             categoryService.createDefaultCategories()
             
             let storeService = StoreService(context: viewContext)
             storeService.createDefaultStores()
             
-            // Import items for selected stores
-            let importService = MasterListImportService(context: viewContext)
-            importService.importCommonItems()
-            
             do {
                 try viewContext.save()
-                print("Import complete from Settings")
+                print("Reset complete - ready for store selection")
             } catch {
-                print("Error during import: \(error)")
+                print("Error during reset: \(error)")
             }
             
-            isImporting = false
+            // Step 3: Automatically show Update Preferred Stores
+            // Items will be imported after user selects stores
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                showingStoreSelection = true
+            }
+            
+            // Step 4: Switch to Build My List tab after completion
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                selectedTab = 0 // Build My List tab
+            }
         }
     }
+    
 }
 
 #Preview {
-    SettingsView()
+    SettingsView(selectedTab: .constant(0))
         .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }

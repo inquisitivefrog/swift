@@ -391,6 +391,137 @@ final class GroceryAppUITests: XCTestCase {
     }
 
     @MainActor
+    func testShoppingCompleteCelebrationAlert() throws {
+        // Test that congratulatory alert appears when all shopping items are checked
+        // 
+        // Test flow:
+        // 1. Launch app with pre-loaded test data (store-based shopping scenario)
+        // 2. Navigate to Shop By Stores tab
+        // 3. Navigate into stores and check all items
+        // 4. Verify celebration alert appears when all items are checked
+        // 5. Verify alert message and dismiss button
+        
+        let app = XCUIApplication()
+        // Launch with test data pre-loaded
+        app.launchWithScenario(.storeBasedShopping)
+        
+        // With test data pre-loaded, we should go directly to main tabs
+        // (hasSeenLanding is set to true in test data setup)
+        let buildMyListTab = app.tabBars.buttons["Build My List"]
+        let shopByStoresTab = app.tabBars.buttons["Shop By Stores"]
+        
+        // Wait for tabs to appear (test data setup may take a moment)
+        XCTAssertTrue(shopByStoresTab.waitForExistence(timeout: 10), "Shop By Stores tab should exist")
+        shopByStoresTab.tap()
+        
+        // Wait for the view to load
+        let navBar = app.navigationBars["Shop By Stores"]
+        XCTAssertTrue(navBar.waitForExistence(timeout: 5), "Shop By Stores navigation bar should exist")
+        
+        // Wait a moment for stores to load
+        Thread.sleep(forTimeInterval: 1.0)
+        
+        // Test data includes stores: "Berkeley Bowl" and "Whole Foods"
+        // Check items in each store until all are checked
+        
+        let testStores = ["Berkeley Bowl", "Whole Foods"]
+        var totalItemsChecked = 0
+        
+        for storeName in testStores {
+            // Try to find the store button
+            let storeButton = app.buttons[storeName]
+            if storeButton.waitForExistence(timeout: 3) && storeButton.isHittable {
+                storeButton.tap()
+                
+                // Wait for store detail view to load
+                let storeNavBar = app.navigationBars[storeName]
+                if storeNavBar.waitForExistence(timeout: 3) {
+                    // Wait for items to load
+                    Thread.sleep(forTimeInterval: 0.5)
+                    
+                    // Find and check all unchecked items in this store
+                    // Items appear as buttons in the list
+                    // We'll look for buttons that are tappable and not navigation buttons
+                    var itemsChecked = 0
+                    var attempts = 0
+                    let maxAttempts = 10 // Safety limit
+                    
+                    while attempts < maxAttempts {
+                        // Look for item buttons (they contain item names)
+                        let itemNames = ["Apples", "Bananas", "Milk", "Cheese"]
+                        var foundUnchecked = false
+                        
+                        for itemName in itemNames {
+                            // Try to find the item as a button or static text that's tappable
+                            // Items in the list are typically in a button or can be tapped
+                            let itemElement = app.buttons[itemName]
+                            if !itemElement.exists {
+                                // Try as static text
+                                let itemText = app.staticTexts[itemName]
+                                if itemText.exists && itemText.isHittable {
+                                    itemText.tap()
+                                    itemsChecked += 1
+                                    foundUnchecked = true
+                                    Thread.sleep(forTimeInterval: 0.3)
+                                }
+                            } else if itemElement.isHittable {
+                                itemElement.tap()
+                                itemsChecked += 1
+                                foundUnchecked = true
+                                Thread.sleep(forTimeInterval: 0.3)
+                            }
+                        }
+                        
+                        if !foundUnchecked {
+                            break // No more unchecked items
+                        }
+                        
+                        attempts += 1
+                    }
+                    
+                    totalItemsChecked += itemsChecked
+                    
+                    // Go back to main Shop By Stores view
+                    let backButton = app.navigationBars.buttons.element(boundBy: 0)
+                    if backButton.exists {
+                        backButton.tap()
+                        Thread.sleep(forTimeInterval: 0.5)
+                    }
+                }
+            }
+        }
+        
+        // Wait for the alert to appear after checking all items
+        // The alert should appear when all items are checked
+        Thread.sleep(forTimeInterval: 1.0)
+        
+        // Check if the celebration alert appears
+        let celebrationAlert = app.alerts["Shopping Complete! 🎉"]
+        let alertExists = celebrationAlert.waitForExistence(timeout: 3.0)
+        
+        if alertExists {
+            // Verify the alert title
+            XCTAssertTrue(celebrationAlert.exists, "Celebration alert should appear when all items are checked")
+            
+            // Verify the alert message
+            let messageText = "Congratulations! You've completed your shopping. Come back next week to build your next shopping list!"
+            let messageExists = celebrationAlert.staticTexts[messageText].waitForExistence(timeout: 1.0)
+            XCTAssertTrue(messageExists, "Celebration alert should show the correct message")
+            
+            // Verify the "Great!" button exists
+            let greatButton = celebrationAlert.buttons["Great!"]
+            XCTAssertTrue(greatButton.exists, "Great! button should exist in celebration alert")
+            
+            // Dismiss the alert
+            greatButton.tap()
+        } else {
+            // If alert didn't appear, it might be because not all items were checked
+            // This could happen if the UI structure is different than expected
+            XCTFail("Celebration alert should appear when all shopping items are checked. Items checked: \(totalItemsChecked)")
+        }
+    }
+    
+    @MainActor
     func testLaunchPerformance() throws {
         // This measures how long it takes to launch your application.
         measure(metrics: [XCTApplicationLaunchMetric()]) {

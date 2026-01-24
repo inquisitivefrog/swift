@@ -14,13 +14,19 @@ struct MainTabView: View {
     
     var body: some View {
         TabView(selection: $selectedTab) {
-            ShoppingListView()
+            ShoppingListView(selectedTab: Binding(
+                get: { selectedTab },
+                set: { selectedTab = $0 }
+            ))
                 .tabItem {
                     Label("Build My List", systemImage: "cart.fill")
                 }
                 .tag(0)
             
-            StoreShoppingListView()
+            StoreShoppingListView(selectedTab: Binding(
+                get: { selectedTab },
+                set: { selectedTab = $0 }
+            ))
                 .tabItem {
                     Label("Shop By Stores", systemImage: "storefront.fill")
                 }

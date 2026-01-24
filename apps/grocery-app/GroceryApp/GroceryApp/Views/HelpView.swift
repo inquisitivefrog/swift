@@ -30,14 +30,14 @@ struct HelpView: View {
                     HelpSection(
                         icon: "storefront.fill",
                         title: "Select Your Stores",
-                        description: "When you first tap 'Get Started', you'll be asked to select your preferred stores. Choose the stores where you typically shop. Only items available at your selected stores will be imported, making your list personalized to your shopping habits."
+                        description: "When you first tap 'Get Started', you'll be asked to select your preferred stores. Choose the stores where you typically shop in the order you usually visit them. Items will be automatically imported for your selected stores, and the order you select stores will be preserved in 'Build My List' and 'Shop By Stores' to match your shopping route."
                     )
                     
                     // Import Items
                     HelpSection(
                         icon: "square.and.arrow.down.fill",
                         title: "Import Items",
-                        description: "Go to the FoodStuffs tab (accessible from Settings) and tap the 'Import Data' button. This will add common grocery items organized by category to your master list. Only items from your selected stores will be imported."
+                        description: "Items are automatically imported after you select your preferred stores. If you need to reset and re-import, go to Settings and tap 'Reset App Data and Import Defaults'. This will clear all data and import default items, then prompt you to select stores again."
                     )
                     
                     // Modify or Delete Items
@@ -65,14 +65,14 @@ struct HelpView: View {
                     HelpSection(
                         icon: "cart.fill",
                         title: "Build Your Shopping List",
-                        description: "Use the 'Build My List' tab to add items to your shopping list. First tap a store icon, then tap a category icon to browse items. Tap any item to add or remove it from your list. Long-press an item to edit it (change store, update details). Check off items as you shop!"
+                        description: "Use the 'Build My List' tab to add items to your shopping list. Stores are shown in the order you selected them. Tap a store icon, then tap a category icon to browse items. Tap any item to add or remove it from your list. Long-press an item to edit it (change store, update details)."
                     )
                     
                     // Shop By Stores
                     HelpSection(
                         icon: "storefront.fill",
                         title: "Shop By Stores",
-                        description: "The 'Shop By Stores' tab organizes your shopping list by store, showing which items to buy at each location. Stores are sorted by the number of items you need."
+                        description: "The 'Shop By Stores' tab organizes your shopping list by store, showing which items to buy at each location. Stores are displayed in the order you selected them, matching your shopping route. Tap a store to see items organized by category. Check off items as you shop - when all items are checked, you'll see a celebration message!"
                     )
                     
                     // Save and Load
