@@ -24,7 +24,7 @@ Each matching game is defined by a `MatchingGameConfig` that contains:
 **Game ID**: `dino-features`
 - **Title**: "Match the Dinosaur!"
 - **Image Name**: `game-dino-features` (in Assets.xcassets)
-- **Intro Audio**: `game-intro-matching`
+- **Intro Audio**: played on transition as `can-you-match-each-dinosaur` (no separate game-intro)
 - **Content**: Dinosaurs matched to their special features (teeth, footprints, eggs, skin, spikes)
 
 ## Adding a New Matching Game

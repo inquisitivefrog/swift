@@ -1,6 +1,21 @@
 # Audio Files Setup for Xcode 26.2
 
-## Current Situation
+## Folder layout (by game type)
+
+Audio is organized by category for easier maintenance as you add more dinosaurs, pterosaurs, and marine reptiles:
+
+| Folder | Contents | Filename prefix |
+|--------|----------|------------------|
+| **Dinosaurs/** | Dinosaur name clips | `dino-` (e.g. dino-t-rex, dino-triceratops) |
+| **Dino-Characteristics/** | Feature audio for Match the Dinosaur | no prefix (teeth, crest, footprints, …) |
+| **Ptero-Characteristics/** | Feature audio for Match the Pterosaur | no prefix (wings, small, no-teeth, crest, …) |
+| **Pterosaurs/** | Pterosaur name clips | `ptero-` (e.g. ptero-pteranodon, ptero-quetzacoatlus) |
+| **Feedback/** | Try again, great match, game over, etc. | no prefix |
+| **Games/** | Intros and prompts | no prefix |
+
+**Shared words** (used in both dinosaur and pterosaur games, e.g. crest, teeth, big, long-neck): the app picks the folder from the current game. You can put the same file in both **Dino-Characteristics** and **Ptero-Characteristics** if you want different recordings, or one copy in either folder if the same clip is fine for both.
+
+## Current situation
 - Audio files exist at: `DinoGames/DinoGames/Assets/Audio/`
 - Xcode 26.2 uses automatic file system synchronization
 - Files may need to be explicitly added to bundle resources
@@ -50,7 +65,7 @@
 
 After adding:
 1. The `Audio` folder should appear as a **blue folder** in Project Navigator
-2. Inside it, you should see `Characteristics/`, `Dinosaurs/`, `Feedback/` (all blue folders)
+2. Inside it you should see `Dinosaurs/`, `Dino-Characteristics/`, `Ptero-Characteristics/`, `Pterosaurs/`, `Feedback/`, `Games/` (all blue folders)
 3. The `.m4a` files should be visible inside those folders
 
 ## If You Still See Issues

@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "iguanodon-hitchhiking-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "iguanodon-hitchhiking-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "iguanodon-hitchhiking-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

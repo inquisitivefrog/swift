@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import AVFoundation
+@preconcurrency import AVFoundation
 import UIKit
 
 // Track specific dinosaur-characteristic pairs that have been matched
@@ -27,9 +27,32 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     var onAudioFinished: (() -> Void)?
     var isPlaying: Bool = false
     
+    /// Folder for characteristic audio: "Dino-Characteristics" or "Ptero-Characteristics" (set by MatchingGameView so shared words like "crest" load from the right place).
+    var characteristicSubfolder: String = "Dino-Characteristics"
+    
     override init() {
         super.init()
         synthesizer.delegate = self
+    }
+    
+    // Stop current audio with fade-out to prevent click sounds
+    // Needs to be accessible from other views (e.g. CategorySelectionView onDisappear, GuessGameView onDisappear).
+    func stopCurrentAudio() {
+        if let player = currentPlayer, player.isPlaying {
+            let targetID = ObjectIdentifier(player)
+            Task { @MainActor in
+                await self.fadeAndStopCurrentPlayerIfMatches(targetID: targetID, duration: 0.2)
+            }
+        } else {
+            // Not playing or no player, stop immediately
+            currentPlayer?.stop()
+            currentPlayer = nil
+        }
+        
+        // Stop TTS if speaking
+        if synthesizer.isSpeaking {
+            synthesizer.stopSpeaking(at: .immediate)
+        }
     }
     
     // Map text to audio file paths (case-insensitive matching)
@@ -47,28 +70,178 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Dinosaurs/triceratops"
         case "stegosaurus":
             return "Dinosaurs/stegosaurus"
+        case "troodon":
+            return "Dinosaurs/troodon"
+        case "velociraptor":
+            return "Dinosaurs/velociraptor"
+        case "iguanodon":
+            return "Dinosaurs/iguanodon"
+        case "ankylosaurus":
+            return "Dinosaurs/ankylosaurus"
+        case "therizinosaurus":
+            return "Dinosaurs/therizinosaurus"
+        case "spinosaurus":
+            return "Dinosaurs/spinosaurus"
+        case "apatosaurus":
+            return "Dinosaurs/apatosaurus"
+        case "corythosaurus":
+            return "Dinosaurs/corythosaurus"
+        case "parasaurolophus":
+            return "Dinosaurs/parasaurolophus"
+        case "diplodocus":
+            return "Dinosaurs/diplodocus"
+        case "pachycephalosaurus":
+            return "Dinosaurs/pachycephalosaurus"
+
+        // Pterosaurs (Match the Pterosaur game) - name audio in Pterosaurs/ with ptero- prefix (like dino- for Dinosaurs/)
+        case "pterodactyl", "pteradactyl":
+            return "Pterosaurs/ptero-pteradactyl"
+        case "pteranodon":
+            return "Pterosaurs/ptero-pteranodon"
+        case "quetzalcoatlus", "quetzacoatlus":
+            return "Pterosaurs/ptero-quetzacoatlus"
+        case "rhamphorhynchus":
+            return "Pterosaurs/ptero-rhamphorhynchus"
+        case "dimorphodon":
+            return "Pterosaurs/ptero-dimorphodon"
+        case "anurognathus":
+            return "Pterosaurs/ptero-anurognathus"
+        case "dsungaripterus":
+            return "Pterosaurs/ptero-dsungaripterus"
+        case "nyctosaurus":
+            return "Pterosaurs/ptero-nyctosaurus"
+        case "tapejara":
+            return "Pterosaurs/ptero-tapejara"
+        case "tupandactylus":
+            return "Pterosaurs/ptero-tupandactylus"
             
-        // Characteristics - matching your data: "Teeth", "Footprints", "Eggs", "Skin", "Spikes"
+        // Weigh game: "X is heavier" (one phrase file after dinosaur name)
+        case "is-heavier", "is heavier":
+            return "Feedback/is-heavier"
+        case "they-both-weigh-about-the-same", "they both weigh about the same":
+            return "Feedback/they-both-weigh-about-the-same"
+
+        // Dinosaur characteristics (Dino-Characteristics folder)
         case "teeth":
-            return "Characteristics/teeth"
+            return "\(characteristicSubfolder)/teeth"
         case "footprints":
-            return "Characteristics/footprints"
-        case "eggs":
-            return "Characteristics/eggs"
-        case "skin":
-            return "Characteristics/skin"
+            return "Dino-Characteristics/footprints"
+        case "frill":
+            return "Dino-Characteristics/frill"
+        case "horns":
+            return "Dino-Characteristics/horns"
         case "spikes":
-            return "Characteristics/spikes"
+            return "Dino-Characteristics/spikes"
+        case "claws", "claw":
+            return "Dino-Characteristics/claws"
+        case "toe-claw", "toe claw":
+            return "Dino-Characteristics/toe-claw"
+        case "fast":
+            return "Dino-Characteristics/fast"
+        case "long-claws", "long claws":
+            return "Dino-Characteristics/long-claws"
+        case "feathers":
+            return "Dino-Characteristics/feathers"
+        case "sail":
+            return "Dino-Characteristics/sail"
+        case "swims":
+            return "Dino-Characteristics/swims"
+        case "long-neck", "long neck":
+            return "\(characteristicSubfolder)/long-neck"
+        case "big":
+            return "\(characteristicSubfolder)/big"
+        case "armor":
+            return "Dino-Characteristics/armor"
+        case "club-tail", "club tail":
+            return "Dino-Characteristics/club-tail"
+        case "crest":
+            return "\(characteristicSubfolder)/crest"
+        case "duck-bill", "duck bill":
+            return "Dino-Characteristics/duck-bill"
+        case "long-crest", "long crest":
+            return "\(characteristicSubfolder)/crest"
+        case "thumb-spikes", "thumb spikes", "thumb-spike", "thumb spike":
+            return "Dino-Characteristics/thumb-spike"
+        case "smart":
+            return "Dino-Characteristics/smart"
+        case "big-eyes", "big eyes":
+            return "Dino-Characteristics/big-eyes"
+        // Pterosaur-only characteristics (Ptero-Characteristics folder)
+        case "wings":
+            return "Ptero-Characteristics/wings"
+        case "small":
+            return "Ptero-Characteristics/small"
+        case "no-teeth", "no teeth":
+            return "Ptero-Characteristics/no-teeth"
+        case "long-tail", "long tail":
+            return "Ptero-Characteristics/long-tail"
+        case "big-head", "big head":
+            return "Ptero-Characteristics/big-head"
             
         // Feedback
         case "great-match", "great match":
             return "Feedback/great-match"
+        case "thats-right-you-guessed-it", "that's right you guessed it":
+            return "Feedback/thats-right-you-guessed-it"
         case "try-again", "try again":
             return "Feedback/try-again"
-        case "game-intro-matching", "game intro", "game intro matching":
-            return "Feedback/game-intro-matching"
+        case "thats-not-right-try-again", "that's not right try again":
+            return "Feedback/thats-not-right-try-again"
+        case "thats-still-not-right", "that's still not right":
+            return "Feedback/thats-still-not-right"
+        case "thats-not-right", "that's not right":
+            return "Feedback/thats-not-right"
+        case "skipping-this-round", "skipping this round":
+            return "Feedback/skipping-this-round"
+        case "game-intro-pterosaur", "game intro pterosaur":
+            return "Feedback/game-intro-pterosaur"
+        case "welcome-to-dino-games", "welcome", "welcome to dino games":
+            // Check Games folder first (where user placed it), fallback to Feedback if needed
+            return "Games/welcome-to-dino-games"
+        case "choose-a-dinosaur-game", "choose a dinosaur game", "choose game":
+            return "Games/choose-a-dinosaur-game"
+        case "choose-a-pterosaur-game", "choose a pterosaur game":
+            return "Games/choose-a-pterosaur-game"
+        case "choose-a-marine-reptile-game", "choose a marine reptile game":
+            return "Games/choose-a-marine-reptile-game"
+        case "sorry-game-over", "sorry game over", "game over":
+            return "Feedback/sorry-game-over"
+        case "you-didnt-get-them-all-right", "you didnt get them all right":
+            return "Feedback/you-didnt-get-them-all-right"
         case "success-all-matches", "successallmatches", "success all matches", "you did it", "all matches found":
             return "Feedback/success-all-matches"
+        case "good-job-you-got-them-all", "good job you got them all", "good job":
+            return "Feedback/good-job-you-got-them-all"
+        case "great-job-you-weighed-six-dinosaurs", "great job you weighed six dinosaurs":
+            return "Feedback/great-job-you-weighed-six-dinosaurs"
+
+        // Categories (Land / Sea / Air)
+        // You currently placed these files in `Assets/Audio/Games/`:
+        // Category cards (cover view): Dinosaurs, Marine Reptiles, Pterosaurs
+        case "dinosaurs", "category-land", "land":
+            return "Games/dinosaurs"
+        case "marine reptiles", "marine-reptiles", "category-sea", "sea":
+            return "Games/marine-reptiles"
+        case "pterosaurs", "category-air", "air":
+            return "Games/pterosaurs"
+        
+        // Game intro audio files
+        case "can-you-match-each-dinosaur", "can you match each dinosaur":
+            return "Games/can-you-match-each-dinosaur"
+        case "can-you-match-each-pterosaur", "can you match each pterosaur":
+            return "Games/can-you-match-each-pterosaur"
+        case "guess-which-dinosaur-is-heavier", "guess which dinosaur is heavier":
+            return "Games/guess-which-dinosaur-is-heavier"
+        case "guess-which-pterosaur-is-heavier", "guess which pterosaur is heavier":
+            return "Games/guess-which-pterosaur-is-heavier"
+        case "can-you-name-the-dinosaur", "can you name the dinosaur", "game-intro-guess-dinosaur":
+            return "Games/can-you-name-the-dinosaur"
+        case "name-that-dinosaur", "name that dinosaur":
+            return "Games/name-that-dinosaur"
+        case "can-you-name-that-dinosaur", "can you name that dinosaur":
+            return "Games/can-you-name-that-dinosaur"
+        case "can-you-name-the-pterosaur", "can you name the pterosaur":
+            return "Games/can-you-name-the-pterosaur"
             
         default:
             // Debug output to help diagnose mapping issues
@@ -79,7 +252,8 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         }
     }
     
-    func speak(_ text: String) {
+    /// - Parameter chainDelay: If true, use a shorter delay (e.g. when chaining name + "is heavier") so the gap between clips is smaller.
+    func speak(_ text: String, chainDelay: Bool = false) {
         // Rate limiting: prevent audio overload from rapid taps
         let now = Date()
         guard now.timeIntervalSince(lastPlayTime) >= minimumPlayInterval else {
@@ -88,12 +262,12 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         }
         lastPlayTime = now
         
-        // Stop any current audio
-        currentPlayer?.stop()
-        synthesizer.stopSpeaking(at: .immediate)
+        // Stop any current audio with fade-out to prevent clicks
+        stopCurrentAudio()
         
-        // Small delay to let stop complete and prevent HALC overload
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+        // Small delay to let stop complete and prevent HALC overload; shorter when chaining clips
+        let delay: TimeInterval = chainDelay ? 0.03 : 0.1
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             // Try to play recorded audio first
             if let audioPath = self.audioFilePath(for: text) {
                 // Try different path formats - files are in bundle with full paths like DinoGames/Assets/Audio/...
@@ -137,7 +311,7 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
                 }
                 
                 if let url = foundURL {
-                    self.playAudioFile(url: url)
+                    self.playAudioFile(url: url, fallbackSpeakText: text)
                     print("🔊 Playing audio: \(audioPath).m4a")
                 } else {
                     // Fallback to text-to-speech if no audio file found
@@ -174,21 +348,123 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         }
     }
     
-    func playAudioFile(url: URL) {
+    func playAudioFile(url: URL, fallbackSpeakText: String? = nil) {
         do {
+            // Stop any current player immediately (volume to 0 first to reduce click) before starting next
+            if let old = currentPlayer {
+                old.volume = 0
+                old.stop()
+                currentPlayer = nil
+            }
+            
             let player = try AVAudioPlayer(contentsOf: url)
-            player.volume = 1.0 // Maximum volume
+            player.volume = 0 // Start at 0 to avoid click at start
             player.delegate = self // Set delegate to detect when playback finishes
+            player.numberOfLoops = 0
             player.prepareToPlay()
             player.play()
             currentPlayer = player
             isPlaying = true
+            
+            // If file has no duration (empty/corrupt), fall back to TTS so we don't get stuck
+            if player.duration <= 0 {
+                isPlaying = false
+                onAudioFinished?()
+                let fallback = fallbackSpeakText ?? url.deletingPathExtension().lastPathComponent
+                startSpeaking(fallback)
+                return
+            }
+            
+            let fadeInDuration: TimeInterval = 0.12
+            let fadeOutDuration: TimeInterval = 0.2
+            let targetID = ObjectIdentifier(player)
+            let duration = player.duration
+            Task { @MainActor in
+                // Fade in to prevent click at start
+                await self.fadeInPlayerIfMatches(targetID: targetID, duration: fadeInDuration)
+                // Fade out in the last stretch to prevent click at end
+                if duration > fadeInDuration + fadeOutDuration, let p = self.currentPlayer, ObjectIdentifier(p) == targetID, p.isPlaying {
+                    let waitTime = max(0, duration - fadeOutDuration - fadeInDuration)
+                    try? await Task.sleep(nanoseconds: UInt64(waitTime * 1_000_000_000))
+                    await self.fadeCurrentPlayerIfMatches(targetID: targetID, duration: fadeOutDuration)
+                }
+            }
+            
             print("🔊 Playing at volume: \(player.volume)")
         } catch {
             print("❌ Error playing audio file: \(error)")
             isPlaying = false
-            // Fallback to TTS on error
-            startSpeaking(url.lastPathComponent)
+            // Fallback to TTS with original text (e.g. "Pteranodon") not filename
+            let fallback = fallbackSpeakText ?? url.deletingPathExtension().lastPathComponent
+            startSpeaking(fallback)
+        }
+    }
+    
+    // Fade in the current player (only if it still matches) to prevent click at start.
+    private func fadeInPlayerIfMatches(targetID: ObjectIdentifier, duration: TimeInterval) async {
+        let fadeSteps = 15
+        let fadeInterval = duration / Double(fadeSteps)
+        
+        for step in 1...fadeSteps {
+            guard let player = currentPlayer,
+                  ObjectIdentifier(player) == targetID,
+                  player.isPlaying else {
+                return
+            }
+            
+            let newVolume = Double(step) / Double(fadeSteps)
+            player.volume = min(1.0, Float(newVolume))
+            try? await Task.sleep(nanoseconds: UInt64(fadeInterval * 1_000_000_000))
+        }
+        
+        if let player = currentPlayer, ObjectIdentifier(player) == targetID {
+            player.volume = 1.0
+        }
+    }
+    
+    // Fade out the current player (only if it still matches) to prevent clicks.
+    private func fadeCurrentPlayerIfMatches(targetID: ObjectIdentifier, duration: TimeInterval) async {
+        let fadeSteps = 25
+        let fadeInterval = duration / Double(fadeSteps)
+        
+        for step in 1...fadeSteps {
+            guard let player = currentPlayer,
+                  ObjectIdentifier(player) == targetID,
+                  player.isPlaying else {
+                return
+            }
+            
+            let newVolume = 1.0 - (Double(step) / Double(fadeSteps))
+            player.volume = max(0.0, Float(newVolume))
+            try? await Task.sleep(nanoseconds: UInt64(fadeInterval * 1_000_000_000))
+        }
+        
+        if let player = currentPlayer, ObjectIdentifier(player) == targetID {
+            player.volume = 0
+        }
+    }
+    
+    // Fade out and stop the current player (only if it still matches).
+    private func fadeAndStopCurrentPlayerIfMatches(targetID: ObjectIdentifier, duration: TimeInterval) async {
+        let fadeSteps = 20
+        let fadeInterval = duration / Double(fadeSteps)
+        
+        for step in 1...fadeSteps {
+            guard let player = currentPlayer,
+                  ObjectIdentifier(player) == targetID,
+                  player.isPlaying else {
+                return
+            }
+            
+            let newVolume = 1.0 - (Double(step) / Double(fadeSteps))
+            player.volume = max(0.0, Float(newVolume))
+            try? await Task.sleep(nanoseconds: UInt64(fadeInterval * 1_000_000_000))
+        }
+        
+        if let player = currentPlayer, ObjectIdentifier(player) == targetID {
+            player.volume = 0
+            player.stop()
+            currentPlayer = nil
         }
     }
     
@@ -245,10 +521,13 @@ struct MatchingGameView: View {
     @State private var isCorrect = false
     @State private var audioTestMessage = ""
     @State private var isAudioPlaying = false // Track if audio is currently playing
+    @State private var failedAttemptCount = 0 // Track total failed attempts (max 2)
+    @State private var firstWrongDinosaurId: Int? // First wrong guess: which creature (for second-guess audio: same vs different)
+    @State private var isGameOver = false // Track if game is over due to failures
     
     // Convenience accessors
-    private var dinosaurs: [Dinosaur] { gameConfig.dinosaurs }
-    private var characteristics: [Characteristic] { gameConfig.characteristics }
+    private var dinosaurs: [Dinosaur] { gameConfig.selectedDinosaurs }
+    private var characteristics: [Characteristic] { gameConfig.selectedCharacteristics }
     
     // Reset game state when view appears (allows replay)
     private func resetGameState() {
@@ -258,6 +537,9 @@ struct MatchingGameView: View {
         selectedCharacteristic = nil
         showFeedback = false
         feedbackMessage = ""
+        failedAttemptCount = 0
+        firstWrongDinosaurId = nil
+        isGameOver = false
     }
     
     var body: some View {
@@ -265,14 +547,16 @@ struct MatchingGameView: View {
             VStack(spacing: 20) {
                 // Title
                 Text(gameConfig.title)
-                    .font(.largeTitle)
-                    .padding()
+                    .font(.title2)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                    .padding(.top, 8)
                 
                 // Main game area (centered)
                 HStack(spacing: 20) {
-                    // Left: Dinosaurs
+                    // Left: Dinosaurs or Pterosaurs (dynamic by game)
                     VStack(spacing: 15) {
-                        Text("Dinosaurs")
+                        Text(gameConfig.id == "match-the-pterosaur" ? "Pterosaurs" : "Dinosaurs")
                             .font(.headline)
                         
                         ForEach(dinosaurs) { dinosaur in
@@ -324,21 +608,31 @@ struct MatchingGameView: View {
                 }
                 
             // Progress indicator (matches = number of dinosaurs matched)
-            Text("Matches: \(matchedPairs.count) / \(dinosaurs.count)")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+            if !isGameOver {
+                Text("Matches: \(matchedPairs.count) / \(dinosaurs.count)")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            } else {
+                Text("Game Over - Too many wrong guesses")
+                    .font(.subheadline)
+                    .foregroundColor(.red)
+            }
             }
             .padding()
             .onAppear {
                 // Reset game state for fresh play (allows replay)
                 resetGameState()
+                // Use correct characteristic audio folder for this game type
+                speechManager.characteristicSubfolder = gameConfig.id == "match-the-pterosaur" ? "Ptero-Characteristics" : "Dino-Characteristics"
                 // Set up audio finished callback
                 speechManager.onAudioFinished = {
                     isAudioPlaying = false
                 }
-                // Play game introduction when view appears
-                isAudioPlaying = true
-                speechManager.speak(gameConfig.introAudio)
+                // Intro not played here: dinosaur matching uses can-you-match-each-dinosaur on transition; pterosaur uses can-you-match-each-pterosaur on transition.
+                
+                // Debug: Print selected dinosaurs and characteristics
+                print("🎮 Game started with \(dinosaurs.count) dinosaurs: \(dinosaurs.map { $0.name }.joined(separator: ", "))")
+                print("🎮 Game has \(characteristics.count) characteristics: \(characteristics.map { $0.type }.joined(separator: ", "))")
             }
             .allowsHitTesting(!isAudioPlaying) // Disable interaction while audio plays
             .opacity(isAudioPlaying ? 0.7 : 1.0) // Visual indicator that interaction is disabled
@@ -347,6 +641,9 @@ struct MatchingGameView: View {
     } // End body
     
     private func handleDinosaurTap(_ dinosaur: Dinosaur) {
+        // Don't allow interaction while audio is playing or game is over
+        guard !isAudioPlaying && !isGameOver else { return }
+        
         // If this dinosaur is fully matched (all characteristics matched), don't allow selection
         let dinosaurCharacteristics = characteristics.filter { $0.dinosaurId == dinosaur.id }
         let matchedCount = matchedPairs.filter { $0.dinosaurId == dinosaur.id }.count
@@ -369,6 +666,9 @@ struct MatchingGameView: View {
     }
     
     private func handleCharacteristicTap(_ characteristic: Characteristic) {
+        // Don't allow interaction while audio is playing or game is over
+        guard !isAudioPlaying && !isGameOver else { return }
+        
         // If this specific characteristic is already matched, don't allow selection
         guard !matchedPairs.contains(where: { $0.characteristicId == characteristic.id }) else { return }
         
@@ -408,7 +708,7 @@ struct MatchingGameView: View {
         
         if isMatch {
             // Success!
-            feedbackMessage = "🎉 Great match! \(dinosaur.name) has \(characteristic.type)!"
+            feedbackMessage = "Great Match!"
             isAudioPlaying = true
             speechManager.speak("great-match")
             
@@ -422,15 +722,11 @@ struct MatchingGameView: View {
             let allDinosaursMatched = matchedPairs.count == dinosaurs.count
             
             if allDinosaursMatched {
-                // Game complete! Show success message and return to home
+                // Game complete! Play success audio and return to home (no text message)
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    self.feedbackMessage = "🎊 You did it! All matches found!"
-                    // Use exact string that matches the audio file name
                     self.isAudioPlaying = true
-                    self.speechManager.speak("success-all-matches")
-                    self.showFeedback = true
+                    self.speechManager.speak("good-job-you-got-them-all")
                     
-                    // Return to game selection after showing success message
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
                         self.isPresented = false
                     }
@@ -444,23 +740,41 @@ struct MatchingGameView: View {
                 }
             }
         } else {
-            // Try again - track failed attempt (visual only, doesn't block)
+            // Wrong match - track failed attempt
             let failedPair = MatchedPair(dinosaurId: dinosaur.id, characteristicId: characteristic.id)
             failedAttempts.insert(failedPair)
+            failedAttemptCount += 1
             
-            feedbackMessage = "Try again! Find the right match."
             isAudioPlaying = true
-            speechManager.speak("try-again")
             
-            // Reset selection after delay (pregnant pause for "Try Again" to be heard)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                selectedDinosaur = nil
-                selectedCharacteristic = nil
-                showFeedback = false
-                
-                // Clear failed attempt indicator after showing it for a bit
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    failedAttempts.remove(failedPair)
+            if failedAttemptCount == 1 {
+                // First wrong guess: text "Try again!" + audio "That's not right, try again"
+                feedbackMessage = "Try again!"
+                speechManager.speak("thats-not-right-try-again")
+                firstWrongDinosaurId = dinosaur.id
+                // Reset selection after delay so they can try again
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    selectedDinosaur = nil
+                    selectedCharacteristic = nil
+                    showFeedback = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        failedAttempts.remove(failedPair)
+                    }
+                }
+            } else {
+                // Second wrong guess: show matching text + audio, then game over
+                let sameCreature = dinosaur.id == firstWrongDinosaurId
+                feedbackMessage = sameCreature ? "That's still not right." : "That's not right."
+                let secondWrongAudio = sameCreature ? "thats-still-not-right" : "thats-not-right"
+                speechManager.speak(secondWrongAudio)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    self.isGameOver = true
+                    self.feedbackMessage = "Game Over"
+                    self.isAudioPlaying = true
+                    self.speechManager.speak("you-didnt-get-them-all-right")
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                        self.isPresented = false
+                    }
                 }
             }
         }
@@ -470,15 +784,65 @@ struct MatchingGameView: View {
 // MARK: - Game Configuration
 
 struct MatchingGameConfig {
-    let id: String // Unique identifier (e.g., "dino-features", "dino-habitat", "dino-food")
+    let id: String // Unique identifier (e.g., "match-the-dinosaur", "match-the-pterosaur")
     let title: String // Game title shown to player
     let introAudio: String // Audio file name for game intro (e.g., "game-intro-matching")
-    let dinosaurs: [Dinosaur]
-    let characteristics: [Characteristic]
+    let selectedDinosaurs: [Dinosaur] // 3 randomly selected dinosaurs for this game
+    let selectedCharacteristics: [Characteristic] // 5 characteristics (from selected + padding)
     
     // Helper to get all characteristics for a specific dinosaur
     func characteristics(for dinosaurId: Int) -> [Characteristic] {
-        characteristics.filter { $0.dinosaurId == dinosaurId }
+        selectedCharacteristics.filter { $0.dinosaurId == dinosaurId }
+    }
+    
+    // Create a random game configuration from the full pool
+    static func createRandom(
+        from allDinosaurs: [Dinosaur],
+        allCharacteristics: [Characteristic],
+        id: String = "match-the-dinosaur",
+        title: String = "Match the Dinosaur!",
+        introAudio: String = "game-intro-matching"
+    ) -> MatchingGameConfig {
+        // Randomly select 3 unique dinosaurs
+        let shuffled = allDinosaurs.shuffled()
+        let selected = Array(shuffled.prefix(3))
+        
+        // Get characteristics for selected dinosaurs, then deduplicate by type so we don't show duplicate "Wings", "Crest", etc.
+        var gameCharacteristics: [Characteristic] = []
+        var seenTypes: Set<String> = []
+        for dino in selected {
+            let dinoChars = allCharacteristics.filter { $0.dinosaurId == dino.id }
+            for c in dinoChars.shuffled() {
+                if !seenTypes.contains(c.type) {
+                    seenTypes.insert(c.type)
+                    gameCharacteristics.append(c)
+                }
+            }
+        }
+        
+        // If less than 5 unique types, pad with characteristics from the full pool (still no duplicates by type)
+        if gameCharacteristics.count < 5 {
+            let allCharsShuffled = allCharacteristics.shuffled()
+            for c in allCharsShuffled {
+                guard gameCharacteristics.count < 5 else { break }
+                if !seenTypes.contains(c.type) {
+                    seenTypes.insert(c.type)
+                    gameCharacteristics.append(c)
+                }
+            }
+        }
+        
+        // Take exactly 5 (we may have more than 5 from the first loop)
+        gameCharacteristics = Array(gameCharacteristics.prefix(5))
+        gameCharacteristics.shuffle()
+        
+        return MatchingGameConfig(
+            id: id,
+            title: title,
+            introAudio: introAudio,
+            selectedDinosaurs: selected,
+            selectedCharacteristics: gameCharacteristics
+        )
     }
 }
 
@@ -701,24 +1065,152 @@ struct CharacteristicCard: View {
 // MARK: - Game Configurations
 
 struct MatchingGameConfigs {
-    // Current game: Match dinosaurs to their special features
-    static let dinoFeatures = MatchingGameConfig(
-        id: "dino-features",
-        title: "Match the Dinosaur!",
-        introAudio: "game-intro-matching",
-        dinosaurs: [
-            Dinosaur(id: 1, name: "T-Rex", icon: "🦖", imageName: "dino-trex", characteristicIds: [1, 2]),
-            Dinosaur(id: 2, name: "Triceratops", icon: "🦏", imageName: "dino-triceratops", characteristicIds: [3, 4]),
-            Dinosaur(id: 3, name: "Stegosaurus", icon: "🦎", imageName: "dino-stegosaurus", characteristicIds: [5])
-        ],
-        characteristics: [
-            Characteristic(id: 1, type: "Teeth", icon: "🦷", imageName: "char-teeth", dinosaurId: 1),
-            Characteristic(id: 2, type: "Footprints", icon: "👣", imageName: "char-footprints", dinosaurId: 1),
-            Characteristic(id: 3, type: "Eggs", icon: "🥚", imageName: "char-eggs", dinosaurId: 2),
-            Characteristic(id: 4, type: "Skin", icon: "🐍", imageName: "char-skin", dinosaurId: 2),
-            Characteristic(id: 5, type: "Spikes", icon: "🔺", imageName: "char-spikes", dinosaurId: 3)
-        ]
-    )
+    // Full pool of available dinosaurs (can be expanded)
+    static let allDinosaurs: [Dinosaur] = [
+        Dinosaur(id: 1, name: "T-Rex", icon: "🦖", imageName: "dino-trex", characteristicIds: [1, 2]),
+        Dinosaur(id: 2, name: "Triceratops", icon: "🦏", imageName: "dino-triceratops", characteristicIds: [3, 4]),
+        Dinosaur(id: 3, name: "Stegosaurus", icon: "🦎", imageName: "dino-stegosaurus", characteristicIds: [5]),
+        Dinosaur(id: 4, name: "Velociraptor", icon: "🦖", imageName: "dino-velociraptor", characteristicIds: [6, 7, 23]),
+        Dinosaur(id: 5, name: "Therizinosaurus", icon: "🦕", imageName: "dino-therizinosaurus", characteristicIds: [8, 9]),
+        Dinosaur(id: 6, name: "Spinosaurus", icon: "🦖", imageName: "dino-spinosaurus", characteristicIds: [10, 11]),
+        Dinosaur(id: 7, name: "Apatosaurus", icon: "🦕", imageName: "dino-apatosaurus", characteristicIds: [12, 13]),
+        Dinosaur(id: 8, name: "Ankylosaurus", icon: "🛡️", imageName: "dino-ankylosaurus", characteristicIds: [14, 15]),
+        Dinosaur(id: 9, name: "Corythosaurus", icon: "🦆", imageName: "dino-corythosaurus", characteristicIds: [16, 17]),
+        Dinosaur(id: 10, name: "Parasaurolophus", icon: "🦆", imageName: "dino-parasaurolophus", characteristicIds: [18, 19]),
+        Dinosaur(id: 11, name: "Iguanodon", icon: "🦎", imageName: "dino-iguanodon", characteristicIds: [20]),
+        Dinosaur(id: 12, name: "Troodon", icon: "🦉", imageName: "dino-troodon", characteristicIds: [21, 22]),
+        // Add more dinosaurs here as they become available:
+        // Dinosaur(id: 13, name: "Brachiosaurus", icon: "🦕", imageName: "dino-brachiosaurus", characteristicIds: [23, 24]),
+        // etc.
+    ]
+    
+    // Full pool of available characteristics (can be expanded)
+    // Image sets: dino-char-<characteristic> (e.g. dino-char-teeth, dino-char-crest)
+    static let allCharacteristics: [Characteristic] = [
+        // T-Rex characteristics
+        Characteristic(id: 1, type: "Teeth", icon: "🦷", imageName: "dino-char-teeth", dinosaurId: 1),
+        Characteristic(id: 2, type: "Footprints", icon: "👣", imageName: "dino-char-footprints", dinosaurId: 1),
+        // Triceratops characteristics
+        Characteristic(id: 3, type: "Frill", icon: "🦎", imageName: "dino-char-frill", dinosaurId: 2),
+        Characteristic(id: 4, type: "Horns", icon: "🦏", imageName: "dino-char-horns", dinosaurId: 2),
+        // Stegosaurus characteristics
+        Characteristic(id: 5, type: "Spikes", icon: "🔺", imageName: "dino-char-spikes", dinosaurId: 3),
+        // Velociraptor characteristics
+        Characteristic(id: 6, type: "Claws", icon: "🦅", imageName: "dino-char-claws", dinosaurId: 4),
+        Characteristic(id: 7, type: "Fast", icon: "💨", imageName: "dino-char-fast", dinosaurId: 4),
+        Characteristic(id: 23, type: "Toe Claw", icon: "🦅", imageName: "dino-char-toe-claw", dinosaurId: 4),
+        // Therizinosaurus characteristics
+        Characteristic(id: 8, type: "Long Claws", icon: "✂️", imageName: "dino-char-long-claws", dinosaurId: 5),
+        Characteristic(id: 9, type: "Feathers", icon: "🪶", imageName: "dino-char-feathers", dinosaurId: 5),
+        // Spinosaurus characteristics
+        Characteristic(id: 10, type: "Sail", icon: "⛵", imageName: "dino-char-sail", dinosaurId: 6),
+        Characteristic(id: 11, type: "Swims", icon: "🏊", imageName: "dino-char-swims", dinosaurId: 6),
+        // Apatosaurus characteristics
+        Characteristic(id: 12, type: "Long Neck", icon: "🦒", imageName: "dino-char-long-neck", dinosaurId: 7),
+        Characteristic(id: 13, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 7),
+        // Ankylosaurus characteristics
+        Characteristic(id: 14, type: "Armor", icon: "🛡️", imageName: "dino-char-armor", dinosaurId: 8),
+        Characteristic(id: 15, type: "Club Tail", icon: "🔨", imageName: "dino-char-club-tail", dinosaurId: 8),
+        // Corythosaurus characteristics
+        Characteristic(id: 16, type: "Crest", icon: "🪖", imageName: "dino-char-crest", dinosaurId: 9),
+        Characteristic(id: 17, type: "Duck Bill", icon: "🦆", imageName: "dino-char-duck-bill", dinosaurId: 9),
+        // Parasaurolophus characteristics
+        Characteristic(id: 18, type: "Crest", icon: "📯", imageName: "dino-char-crest", dinosaurId: 10),
+        Characteristic(id: 19, type: "Duck Bill", icon: "🦆", imageName: "dino-char-duck-bill", dinosaurId: 10),
+        // Iguanodon characteristics
+        Characteristic(id: 20, type: "Thumb Spike", icon: "👍", imageName: "dino-char-thumb-spike", dinosaurId: 11),
+        // Troodon characteristics
+        Characteristic(id: 21, type: "Smart", icon: "🧠", imageName: "dino-char-smart", dinosaurId: 12),
+        Characteristic(id: 22, type: "Big Eyes", icon: "👀", imageName: "dino-char-big-eyes", dinosaurId: 12),
+        // Add more characteristics here as dinosaurs are added:
+        // Brachiosaurus characteristics
+        // Characteristic(id: 23, type: "Long Neck", icon: "🦒", imageName: nil, dinosaurId: 13),
+        // Characteristic(id: 24, type: "Big Feet", icon: "🐘", imageName: nil, dinosaurId: 13),
+        // etc.
+    ]
+    
+    // Create a random game configuration (3 dinosaurs, 5 characteristics)
+    // Image: game-match-the-dinosaur.imageset
+    static var dinoFeatures: MatchingGameConfig {
+        MatchingGameConfig.createRandom(
+            from: allDinosaurs,
+            allCharacteristics: allCharacteristics,
+            id: "match-the-dinosaur",
+            title: "Match the Dinosaur!",
+            introAudio: "game-intro-matching"
+        )
+    }
+    
+    // Full pool of available pterosaurs (flying reptiles) — 10 total
+    static let allPterosaurs: [Dinosaur] = [
+        Dinosaur(id: 101, name: "Pterodactyl", icon: "🦅", imageName: "ptero-pteradactyl", characteristicIds: [101, 102, 103]),
+        Dinosaur(id: 102, name: "Pteranodon", icon: "🦅", imageName: "ptero-pteranodon", characteristicIds: [104, 105, 106]),
+        Dinosaur(id: 103, name: "Quetzalcoatlus", icon: "🦅", imageName: "ptero-quetzacoatlus", characteristicIds: [107, 108, 109]),
+        Dinosaur(id: 104, name: "Rhamphorhynchus", icon: "🦅", imageName: "ptero-rhamphorhynchus", characteristicIds: [110, 111, 112]),
+        Dinosaur(id: 105, name: "Dimorphodon", icon: "🦅", imageName: "ptero-dimorphodon", characteristicIds: [113, 114, 115]),
+        Dinosaur(id: 106, name: "Anurognathus", icon: "🦅", imageName: "ptero-anurognathus", characteristicIds: [116, 117, 118]),
+        Dinosaur(id: 107, name: "Dsungaripterus", icon: "🦅", imageName: "ptero-dsungaripterus", characteristicIds: [119, 120, 121]),
+        Dinosaur(id: 108, name: "Nyctosaurus", icon: "🦅", imageName: "ptero-nyctosaurus", characteristicIds: [122, 123, 124]),
+        Dinosaur(id: 109, name: "Tapejara", icon: "🦅", imageName: "ptero-tapejara", characteristicIds: [125, 126, 127]),
+        Dinosaur(id: 110, name: "Tupandactylus", icon: "🦅", imageName: "ptero-tupandactylus", characteristicIds: [128, 129, 130]),
+    ]
+    
+    // Full pool of available pterosaur characteristics
+    // Image sets: ptero-char-<characteristic> (e.g. ptero-char-wings, ptero-char-crest)
+    static let allPterosaurCharacteristics: [Characteristic] = [
+        // Pterodactyl characteristics
+        Characteristic(id: 101, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 101),
+        Characteristic(id: 102, type: "Small", icon: "🐦", imageName: "ptero-char-small", dinosaurId: 101),
+        Characteristic(id: 103, type: "Teeth", icon: "🦷", imageName: "ptero-char-teeth", dinosaurId: 101),
+        // Pteranodon characteristics
+        Characteristic(id: 104, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 102),
+        Characteristic(id: 105, type: "Crest", icon: "🪖", imageName: "ptero-char-crest", dinosaurId: 102),
+        Characteristic(id: 106, type: "No Teeth", icon: "🦷", imageName: "ptero-char-no-teeth", dinosaurId: 102),
+        // Quetzalcoatlus characteristics
+        Characteristic(id: 107, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 103),
+        Characteristic(id: 108, type: "Big", icon: "🐘", imageName: "ptero-char-big", dinosaurId: 103),
+        Characteristic(id: 109, type: "Long Neck", icon: "🦒", imageName: "ptero-char-long-neck", dinosaurId: 103),
+        // Rhamphorhynchus characteristics
+        Characteristic(id: 110, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 104),
+        Characteristic(id: 111, type: "Long Tail", icon: "🦎", imageName: "ptero-char-long-tail", dinosaurId: 104),
+        Characteristic(id: 112, type: "Teeth", icon: "🦷", imageName: "ptero-char-teeth", dinosaurId: 104),
+        // Dimorphodon characteristics
+        Characteristic(id: 113, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 105),
+        Characteristic(id: 114, type: "Big Head", icon: "🧠", imageName: "ptero-char-big-head", dinosaurId: 105),
+        Characteristic(id: 115, type: "Teeth", icon: "🦷", imageName: "ptero-char-teeth", dinosaurId: 105),
+        // Anurognathus characteristics
+        Characteristic(id: 116, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 106),
+        Characteristic(id: 117, type: "Small", icon: "🐦", imageName: "ptero-char-small", dinosaurId: 106),
+        Characteristic(id: 118, type: "Teeth", icon: "🦷", imageName: "ptero-char-teeth", dinosaurId: 106),
+        // Dsungaripterus characteristics
+        Characteristic(id: 119, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 107),
+        Characteristic(id: 120, type: "Crest", icon: "🪖", imageName: "ptero-char-crest", dinosaurId: 107),
+        Characteristic(id: 121, type: "Teeth", icon: "🦷", imageName: "ptero-char-teeth", dinosaurId: 107),
+        // Nyctosaurus characteristics
+        Characteristic(id: 122, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 108),
+        Characteristic(id: 123, type: "Crest", icon: "🪖", imageName: "ptero-char-crest", dinosaurId: 108),
+        Characteristic(id: 124, type: "No Teeth", icon: "🦷", imageName: "ptero-char-no-teeth", dinosaurId: 108),
+        // Tapejara characteristics
+        Characteristic(id: 125, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 109),
+        Characteristic(id: 126, type: "Crest", icon: "🪖", imageName: "ptero-char-crest", dinosaurId: 109),
+        Characteristic(id: 127, type: "Teeth", icon: "🦷", imageName: "ptero-char-teeth", dinosaurId: 109),
+        // Tupandactylus characteristics
+        Characteristic(id: 128, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 110),
+        Characteristic(id: 129, type: "Crest", icon: "🪖", imageName: "ptero-char-crest", dinosaurId: 110),
+        Characteristic(id: 130, type: "Big Head", icon: "🧠", imageName: "ptero-char-big-head", dinosaurId: 110),
+    ]
+    
+    // Create a random pterosaur game configuration (3 pterosaurs, 5 characteristics)
+    // Image: add game-match-the-pterosaur.imageset with match-the-pterosaur-1024.png
+    static var pterosaurFeatures: MatchingGameConfig {
+        MatchingGameConfig.createRandom(
+            from: allPterosaurs,
+            allCharacteristics: allPterosaurCharacteristics,
+            id: "match-the-pterosaur",
+            title: "Match the Pterosaur!",
+            introAudio: "game-intro-pterosaur"
+        )
+    }
     
     // Future games can be added here:
     // static let dinoHabitat = MatchingGameConfig(...)

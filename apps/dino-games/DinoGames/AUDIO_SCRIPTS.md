@@ -2,29 +2,7 @@
 
 ## Matching Game Introduction
 
-**File Name**: `game-intro-matching.m4a`
-
-**Script Options** (choose one or create your own):
-
-### Option 1 (Simple):
-"Match each dinosaur to what makes it special!"
-
-### Option 2 (More descriptive):
-"Can you match the dinosaur to its special feature?"
-
-### Option 3 (Most descriptive):
-"Look at each dinosaur. What makes it special? Match them together!"
-
-### Option 4 (Question format):
-"What makes each dinosaur special? Match them to find out!"
-
-**Recommended**: Option 1 or 2 - short, clear, age-appropriate
-
-**Recording Notes**:
-- Speak clearly and slowly
-- Use an enthusiastic, friendly tone
-- Pause slightly after the question/exclamation
-- Keep it under 3-4 seconds
+The matching-game intro is played from the game-selection transition using **`can-you-match-each-dinosaur.m4a`** (in Games/). No separate game-intro file is used.
 
 ---
 

@@ -38,15 +38,6 @@
 		22F873BE2F2491FA00406D2B /* Exceptions for "DinoGames" folder in "DinoGames" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Assets/Audio/Characteristics/eggs.m4a,
-				Assets/Audio/Characteristics/footprints.m4a,
-				Assets/Audio/Characteristics/skin.m4a,
-				Assets/Audio/Characteristics/spikes.m4a,
-				Assets/Audio/Characteristics/teeth.m4a,
-				Assets/Audio/Dinosaurs/stegosaurus.m4a,
-				"Assets/Audio/Dinosaurs/t-rex.m4a",
-				Assets/Audio/Dinosaurs/triceratops.m4a,
-				"Assets/Audio/Feedback/game-intro-matching.m4a",
 				"Assets/Audio/Feedback/great-match.m4a",
 				"Assets/Audio/Feedback/success-all-matches.m4a",
 				"Assets/Audio/Feedback/try-again.m4a",

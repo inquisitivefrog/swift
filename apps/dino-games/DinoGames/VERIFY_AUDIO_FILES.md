@@ -3,7 +3,7 @@
 ## Current Situation
 - Files exist in `Assets/Audio/` folders
 - Audio/ folder is in Copy Bundle Resources (but can't expand to see contents)
-- New files: `game-intro-matching.m4a` and `success-all-matches.m4a` are in Feedback/
+- New files: `success-all-matches.m4a` are in Feedback/
 
 ## How to Verify Files Are in Bundle
 
@@ -11,7 +11,6 @@
 1. Build and run the app
 2. Start the matching game
 3. Check console for:
-   - `✅ Found at path: Audio/Feedback/game-intro-matching` (intro should play)
    - `✅ Found at path: Audio/Feedback/success-all-matches` (when game completes)
    - If you see `⚠️ No audio file found...`, the files aren't in the bundle
 
@@ -21,7 +20,7 @@
 3. Show in Finder
 4. Right-click the `.app` → Show Package Contents
 5. Look for `Audio/Feedback/` folder
-6. Verify `game-intro-matching.m4a` and `success-all-matches.m4a` are there
+6. Verify `success-all-matches.m4a` is there
 
 ### Method 3: Xcode File System Sync
 Since you're using Xcode 26.2 with file system sync:

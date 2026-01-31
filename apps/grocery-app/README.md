@@ -119,12 +119,8 @@ This project showcases:
 
 ## 📄 License
 
-This project is licensed under the Apache License 2.0. See [LICENSE](./LICENSE) for details.
-
-This is a portfolio demonstration piece.
+This project is a portfolio demonstration piece.
 
 ## 👤 Developer
 
-Built as a portfolio project to demonstrate iOS development capabilities and modern development workflows.
-
----**Note**: This app is designed for personal use and portfolio demonstration. Store names are used for organizational purposes only and are not affiliated with or endorsed by the respective retailers.
+Built as a portfolio project to demonstrate iOS development capabilities and modern development workflows.---**Note**: This app is designed for personal use and portfolio demonstration. Store names are used for organizational purposes only and are not affiliated with or endorsed by the respective retailers.

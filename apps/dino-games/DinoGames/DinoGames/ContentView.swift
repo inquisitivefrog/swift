@@ -9,8 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        // Start with Game Selection screen
-        GameSelectionView()
+        // Start with splash screen (copyright notice), then category selection
+        SplashScreenView()
     }
 }
 
