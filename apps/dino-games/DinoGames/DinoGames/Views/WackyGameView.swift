@@ -48,7 +48,7 @@ struct WackyGameView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 0) {
+            VStack(spacing: 12) {
                 if selectedItems.isEmpty {
                     Text("Loading…")
                         .font(.title2)
@@ -60,17 +60,18 @@ struct WackyGameView: View {
                         Image(item.imageName)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .padding()
+                            .frame(maxWidth: .infinity, maxHeight: 420)
+                            .padding(.horizontal)
                     } else {
                         Text("Wacky!")
                             .font(.largeTitle)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .frame(maxWidth: .infinity, minHeight: 200)
                     }
                     Text(item.displayName)
                         .font(.title)
                         .fontWeight(.semibold)
                         .foregroundColor(.primary)
+                        .padding(.horizontal)
                         .padding(.bottom, 24)
                 }
             }

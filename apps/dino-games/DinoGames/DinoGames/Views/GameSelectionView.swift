@@ -20,10 +20,12 @@ struct GameSelectionView: View {
     @State private var showWeighGame = false
     @State private var showGuessGame = false
     @State private var showWackyGame = false
+    @State private var showToothacheGame = false
     @State private var currentGameConfig: MatchingGameConfig?
     @State private var currentWeighConfig: WeighGameConfig?
     @State private var currentGuessConfig: GuessGameConfig?
     @State private var currentWackyConfig: WackyGameConfig?
+    @State private var currentToothacheConfig: ToothacheGameConfig?
     @State private var speechManager = SpeechManager()
     @State private var isAudioPlaying = false
     @State private var hasPlayedWelcome = false
@@ -74,6 +76,19 @@ struct GameSelectionView: View {
         }
     }
     
+    private var toothacheGames: [GameType] {
+        switch category {
+        case .land:
+            return [.toothache(ToothacheGameConfigs.toothache)]
+        case .air, .sea:
+            return []
+        }
+    }
+    
+    private var selectedGameId: String? {
+        selectedGame?.gameConfig?.id ?? selectedGame?.weighConfig?.id ?? selectedGame?.guessConfig?.id ?? selectedGame?.wackyConfig?.id ?? selectedGame?.toothacheConfig?.id
+    }
+    
     private var gameSelectionTitle: String {
         switch category {
         case .land: return "Choose a Dinosaur Game!"
@@ -105,6 +120,8 @@ struct GameSelectionView: View {
                                         showGuessGame = true
                                     } else if gameType.wackyConfig != nil {
                                         showWackyGame = true
+                                    } else if gameType.toothacheConfig != nil {
+                                        showToothacheGame = true
                                     }
                                 }
                             }
@@ -131,7 +148,7 @@ struct GameSelectionView: View {
                 
                 // Game cards
                 VStack(spacing: 20) {
-                    if matchingGames.isEmpty && weighGames.isEmpty && guessGames.isEmpty && wackyGames.isEmpty {
+                    if matchingGames.isEmpty && weighGames.isEmpty && guessGames.isEmpty && wackyGames.isEmpty && toothacheGames.isEmpty {
                         Text("New games are coming soon")
                             .font(.headline)
                             .foregroundColor(.secondary)
@@ -144,8 +161,8 @@ struct GameSelectionView: View {
                             gameType: gameType,
                             icon: "🔗",
                             imageName: gameType.imageName,
-                            isSelected: (selectedGame?.gameConfig?.id ?? selectedGame?.weighConfig?.id ?? selectedGame?.guessConfig?.id ?? selectedGame?.wackyConfig?.id) == gameType.gameConfig?.id,
-                            showName: showGameName && (selectedGame?.gameConfig?.id ?? selectedGame?.weighConfig?.id ?? selectedGame?.guessConfig?.id ?? selectedGame?.wackyConfig?.id) == gameType.gameConfig?.id,
+                            isSelected: selectedGameId == gameType.gameConfig?.id,
+                            showName: showGameName && selectedGameId == gameType.gameConfig?.id,
                             onTap: {
                                 handleGameTap(gameType)
                             }
@@ -158,8 +175,8 @@ struct GameSelectionView: View {
                             gameType: gameType,
                             icon: "⚖️",
                             imageName: gameType.imageName,
-                            isSelected: (selectedGame?.gameConfig?.id ?? selectedGame?.weighConfig?.id ?? selectedGame?.guessConfig?.id ?? selectedGame?.wackyConfig?.id) == gameType.weighConfig?.id,
-                            showName: showGameName && (selectedGame?.gameConfig?.id ?? selectedGame?.weighConfig?.id ?? selectedGame?.guessConfig?.id ?? selectedGame?.wackyConfig?.id) == gameType.weighConfig?.id,
+                            isSelected: selectedGameId == gameType.weighConfig?.id,
+                            showName: showGameName && selectedGameId == gameType.weighConfig?.id,
                             onTap: {
                                 handleGameTap(gameType)
                             }
@@ -172,22 +189,36 @@ struct GameSelectionView: View {
                             gameType: gameType,
                             icon: "🔍",
                             imageName: gameType.imageName,
-                            isSelected: (selectedGame?.gameConfig?.id ?? selectedGame?.weighConfig?.id ?? selectedGame?.guessConfig?.id ?? selectedGame?.wackyConfig?.id) == gameType.guessConfig?.id,
-                            showName: showGameName && (selectedGame?.gameConfig?.id ?? selectedGame?.weighConfig?.id ?? selectedGame?.guessConfig?.id ?? selectedGame?.wackyConfig?.id) == gameType.guessConfig?.id,
+                            isSelected: selectedGameId == gameType.guessConfig?.id,
+                            showName: showGameName && selectedGameId == gameType.guessConfig?.id,
                             onTap: {
                                 handleGameTap(gameType)
                             }
                         )
                     }
                     
-                    // Wacky Game cards
+                    // Toothache Game cards
+                    ForEach(toothacheGames, id: \.toothacheConfig?.id) { gameType in
+                        GameCard(
+                            gameType: gameType,
+                            icon: "🦷",
+                            imageName: gameType.imageName,
+                            isSelected: selectedGameId == gameType.toothacheConfig?.id,
+                            showName: showGameName && selectedGameId == gameType.toothacheConfig?.id,
+                            onTap: {
+                                handleGameTap(gameType)
+                            }
+                        )
+                    }
+                    
+                    // Wacky Game cards (always last)
                     ForEach(wackyGames, id: \.wackyConfig?.id) { gameType in
                         GameCard(
                             gameType: gameType,
                             icon: "🦕",
                             imageName: gameType.imageName,
-                            isSelected: (selectedGame?.gameConfig?.id ?? selectedGame?.weighConfig?.id ?? selectedGame?.guessConfig?.id ?? selectedGame?.wackyConfig?.id) == gameType.wackyConfig?.id,
-                            showName: showGameName && (selectedGame?.gameConfig?.id ?? selectedGame?.weighConfig?.id ?? selectedGame?.guessConfig?.id ?? selectedGame?.wackyConfig?.id) == gameType.wackyConfig?.id,
+                            isSelected: selectedGameId == gameType.wackyConfig?.id,
+                            showName: showGameName && selectedGameId == gameType.wackyConfig?.id,
                             onTap: {
                                 handleGameTap(gameType)
                             }
@@ -257,11 +288,18 @@ struct GameSelectionView: View {
                     WackyGameView(isPresented: $showWackyGame, gameConfig: WackyGameConfigs.wackyDinosaurs)
                 }
             }
+            .sheet(isPresented: $showToothacheGame) {
+                if let config = currentToothacheConfig {
+                    ToothacheGameView(isPresented: $showToothacheGame, gameConfig: config)
+                } else {
+                    ToothacheGameView(isPresented: $showToothacheGame, gameConfig: ToothacheGameConfigs.toothache)
+                }
+            }
             .onChange(of: showMatchingGame) { oldValue, newValue in
                 // Reset selection state when game is dismissed to allow replay
                 if !newValue {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        if !showWeighGame && !showGuessGame && !showWackyGame {
+                        if !showWeighGame && !showGuessGame && !showWackyGame && !showToothacheGame {
                             selectedGame = nil
                             showGameName = false
                             currentGameConfig = nil // Clear config to force new random config next time
@@ -283,7 +321,7 @@ struct GameSelectionView: View {
                 // Reset selection state when game is dismissed to allow replay
                 if !newValue {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        if !showMatchingGame && !showGuessGame && !showWackyGame {
+                        if !showMatchingGame && !showGuessGame && !showWackyGame && !showToothacheGame {
                             selectedGame = nil
                             showGameName = false
                             currentWeighConfig = nil
@@ -295,7 +333,7 @@ struct GameSelectionView: View {
                 // Reset selection state when game is dismissed to allow replay
                 if !newValue {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        if !showMatchingGame && !showWeighGame && !showWackyGame {
+                        if !showMatchingGame && !showWeighGame && !showWackyGame && !showToothacheGame {
                             selectedGame = nil
                             showGameName = false
                             currentGuessConfig = nil // Clear config to force new random config next time
@@ -309,12 +347,25 @@ struct GameSelectionView: View {
             .onChange(of: showWackyGame) { oldValue, newValue in
                 if !newValue {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        if !showMatchingGame && !showWeighGame && !showGuessGame {
+                        if !showMatchingGame && !showWeighGame && !showGuessGame && !showToothacheGame {
                             selectedGame = nil
                             showGameName = false
                             currentWackyConfig = nil
                         }
                     }
+                }
+            }
+            .onChange(of: showToothacheGame) { oldValue, newValue in
+                if !newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        if !showMatchingGame && !showWeighGame && !showGuessGame && !showWackyGame {
+                            selectedGame = nil
+                            showGameName = false
+                            currentToothacheConfig = nil
+                        }
+                    }
+                } else {
+                    currentToothacheConfig = ToothacheGameConfigs.toothache
                 }
             }
             .onAppear {
@@ -354,12 +405,15 @@ struct GameSelectionView: View {
         currentWeighConfig = gameType.weighConfig != nil ? WeighGameConfigs.weighDinosaurRandomized() : nil
         currentGuessConfig = gameType.guessConfig
         currentWackyConfig = gameType.wackyConfig
+        currentToothacheConfig = gameType.toothacheConfig
         
         // Determine which audio file to play based on game type
         var audioFile: String?
         if gameType.wackyConfig != nil {
             // Optional: add intro audio key for Wacky Dinosaurs when you have a file
             audioFile = nil
+        } else if gameType.toothacheConfig != nil {
+            audioFile = "toothache"
         } else if let config = gameType.gameConfig {
             // Matching games
             if config.id == "match-the-dinosaur" {
@@ -389,6 +443,7 @@ enum GameType {
     case weigh(WeighGameConfig) // Weigh game configuration
     case guess(GuessGameConfig) // Guess game configuration
     case wacky(WackyGameConfig) // Wacky Dinosaurs! etc.
+    case toothache(ToothacheGameConfig) // Toothache: match tooth to grumpy dinosaur
     
     var name: String {
         switch self {
@@ -399,6 +454,8 @@ enum GameType {
         case .guess(let config):
             return config.title
         case .wacky(let config):
+            return config.title
+        case .toothache(let config):
             return config.title
         }
     }
@@ -413,6 +470,8 @@ enum GameType {
             return "Match silhouettes to dinosaurs"
         case .wacky:
             return "Wacky dinosaur fun!"
+        case .toothache:
+            return "Match the tooth to the grumpy dinosaur"
         }
     }
     
@@ -420,7 +479,7 @@ enum GameType {
         switch self {
         case .matching(let config):
             return config
-        case .weigh, .guess, .wacky:
+        case .weigh, .guess, .wacky, .toothache:
             return nil
         }
     }
@@ -429,7 +488,7 @@ enum GameType {
         switch self {
         case .weigh(let config):
             return config
-        case .matching, .guess, .wacky:
+        case .matching, .guess, .wacky, .toothache:
             return nil
         }
     }
@@ -438,7 +497,7 @@ enum GameType {
         switch self {
         case .guess(let config):
             return config
-        case .matching, .weigh, .wacky:
+        case .matching, .weigh, .wacky, .toothache:
             return nil
         }
     }
@@ -447,7 +506,16 @@ enum GameType {
         switch self {
         case .wacky(let config):
             return config
-        case .matching, .weigh, .guess:
+        case .matching, .weigh, .guess, .toothache:
+            return nil
+        }
+    }
+    
+    var toothacheConfig: ToothacheGameConfig? {
+        switch self {
+        case .toothache(let config):
+            return config
+        case .matching, .weigh, .guess, .wacky:
             return nil
         }
     }
@@ -461,6 +529,8 @@ enum GameType {
         case .guess(let config):
             return "game-\(config.id)"
         case .wacky(let config):
+            return "game-\(config.id)"
+        case .toothache(let config):
             return "game-\(config.id)"
         }
     }

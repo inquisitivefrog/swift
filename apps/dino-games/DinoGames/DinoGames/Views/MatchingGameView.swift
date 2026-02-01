@@ -242,6 +242,10 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Games/can-you-name-that-dinosaur"
         case "can-you-name-the-pterosaur", "can you name the pterosaur":
             return "Games/can-you-name-the-pterosaur"
+        case "toothache":
+            return "Games/toothache"
+        case "can-you-return-the-tooth", "can you return the tooth":
+            return "Games/can-you-return-the-tooth"
             
         default:
             // Debug output to help diagnose mapping issues
