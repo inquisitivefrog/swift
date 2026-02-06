@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "matrix-limestone-archaeopteryx-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "matrix-limestone-archaeopteryx-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "matrix-limestone-archaeopteryx-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

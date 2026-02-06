@@ -99,6 +99,12 @@ These are used as `Image(imageName)` where `imageName` comes from the game confi
 - **Teeth**: `tooth-{slug}` (e.g. tooth-trex, tooth-triceratops) – same slug as `dino-*`.
 - **Grumpy dinosaurs**: `grumpy-{slug}` (e.g. grumpy-trex, grumpy-triceratops).
 
+### Racing Dinosaurs! (for later)
+
+- **Racer (in-race):** `racer-{slug}` (e.g. racer-stegosaurus, racer-allosaurus) – dinosaur in track and field jersey; one per dinosaur in the racing pool; shown in the two lanes during the race.
+- **Winner (race result):** `winner-race-{slug}` (e.g. winner-race-stegosaurus) – winner pose with trophy; one per dinosaur in the racing pool; shown on the race result screen.
+- **Future:** A second game (type TBD) will also require a winner image; that game may use a different prefix (e.g. `winner-[game]-{slug}`).
+
 ### Weigh / Wacky
 
 - Dinosaur images same as matching (`dino-*`).

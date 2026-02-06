@@ -1,0 +1,17 @@
+{
+  "app_image_config": {
+    "reference_anchor": "MANDATORY: lunch-tray-base-layer-1024.png. Red tray, 3 wells only.",
+    "layer_1_style": "High-poly 3D clay style. Flat lay, bird's-eye view, perfectly centered from above. Isolated on a plain white studio floor.",
+    "layer_2_setting": {
+      "tray_structure": "STRICT 3-WELL RIGID PLASTIC. Large vertical well on the left. Two small stacked wells on the right.",
+      "ui_layout": "A white paper napkin sits on the white floor OUTSIDE the tray, to the bottom-right. On the napkin sits one red fork and one red spoon. Blue translucent glass of water OUTSIDE the tray to the top-right."
+    },
+    "layer_3_action": {
+      "dinosaur_target": "Velociraptor",
+      "large_well": "A heap of shredded red 3D clay meat mixed with several small white 3D clay bones.",
+      "top_right_well": "A few broken and cracked 3D clay eggshells with red speckles.",
+      "bottom_right_well": "Two small drumsticks of toy meat."
+    },
+    "negative_constraints": "No 4-well trays, no 5-well trays, no perspective distortion, no camera tilt, no extra dividers."
+  }
+}"

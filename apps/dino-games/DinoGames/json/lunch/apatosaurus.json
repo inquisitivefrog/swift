@@ -1,0 +1,24 @@
+{
+  "app_image_config": {
+    "reference_anchor": "MANDATORY: MATCH ALL GEOMETRY, CAMERA ANGLE, AND LIGHTING OF ATTACHED lunch-tray-base-layer-1024.png.",
+    "consistency_lock": "100% consistency required. No rotation. No perspective shifts. Preserve exact tray dimensions and well placement.",
+    "layer_1_style": {
+      "vibe": "High-poly 3D animation, Octane render, cinematic CGI.",
+      "material_lock": "Smooth matte clay textures. NO PHOTOREALISM. NO REAL BIOLOGICAL TEXTURES.",
+      "constraints": "Isolated on plain white background. NO UNRELATED TOYS. No characters."
+    },
+    "layer_2_setting": {
+      "geometry_lock": "Fixed 45-degree isometric perspective. NO OVERHEAD OR FLAT VIEWS.",
+      "tray_structure": "Rigid red plastic tray. EXACTLY THREE WELLS: 1 large vertical left, 2 small stacked right. High divider walls.",
+      "ui_anchors": "Blue translucent glass top-right. Red fork/spoon on white napkin bottom-right."
+    },
+    "layer_3_action": {
+      "dinosaur_target": "Apatosaurus",
+      "large_well": "A dense bundle of feathered Cycad leaves, rendered with a thick, plastic-toy appearance.",
+      "top_right_well": "A tidy nest of pine needles containing three small, smooth, brown pine cones.",
+      "bottom_right_well": "A heap of shredded ginkgo bark, rendered with soft brown clay textures.",
+      "rendering_rule": "Render all food as stylized 'play-food' toys. Sharp or biological objects must be converted into smooth, colorful 3D toy assets."
+    },
+    "negative_constraints": "No split wells, no extra dividers, no 2D flat views, no real fish skin, no raw meat textures, no camera rotation, no purple dinosaur toys."
+  }
+}

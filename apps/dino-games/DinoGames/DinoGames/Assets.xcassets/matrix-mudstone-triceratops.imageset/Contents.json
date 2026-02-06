@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "matrix-mudstone-triceratops-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "matrix-mudstone-triceratops-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "matrix-mudstone-triceratops-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

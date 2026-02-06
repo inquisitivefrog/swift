@@ -13,80 +13,51 @@ import AVFoundation
 
 struct GameSelectionView: View {
     let category: GameCategory
-    
+    /// When false, pops back to the cover (Choose A Game Type) so back button can return to game list when transition is showing.
+    @Binding var navigateToCategories: Bool
+
     @State private var selectedGame: GameType?
     @State private var showGameName = false
     @State private var showMatchingGame = false
     @State private var showWeighGame = false
+    @State private var showBalanceGame = false
     @State private var showGuessGame = false
     @State private var showWackyGame = false
     @State private var showToothacheGame = false
+    @State private var showRacingGame = false
+    @State private var showRacingPeriodSelection = false
+    @State private var showFindMamaGame = false
+    @State private var showDinoLunchGame = false
+    @State private var showMatrixMaterialsGame = false
+    @State private var showDinoAgesGame = false
     @State private var currentGameConfig: MatchingGameConfig?
     @State private var currentWeighConfig: WeighGameConfig?
+    @State private var currentBalanceConfig: BalanceGameConfig?
     @State private var currentGuessConfig: GuessGameConfig?
     @State private var currentWackyConfig: WackyGameConfig?
     @State private var currentToothacheConfig: ToothacheGameConfig?
+    @State private var currentRacingConfig: RacingGameConfig?
+    @State private var currentFindMamaConfig: FindMamaConfig?
+    @State private var currentDinoLunchConfig: DinoLunchConfig?
+    @State private var currentMatrixMaterialsConfig: MatrixMaterialsGameConfig?
+    @State private var currentDinoAgesConfig: DinoAgesGameConfig?
     @State private var speechManager = SpeechManager()
-    @State private var isAudioPlaying = false
+    /// true from first frame when category intro will play, so the list is disabled until intro + game walk finish.
+    @State private var isAudioPlaying = true
     @State private var hasPlayedWelcome = false
     @State private var showGameTransition = false
+    /// When non-nil, we're walking the game list: highlight card at this index and play its intro audio; cards stay disabled until walk finishes.
+    @State private var gameWalkIndex: Int? = nil
     @State private var transitionGameImage: String?
     @State private var transitionAudioFile: String?
     
-    // Games shown depend on the selected category from the prior screen.
-    private var matchingGames: [GameType] {
-        switch category {
-        case .land:
-            return [
-                .matching(MatchingGameConfigs.dinoFeatures)
-            ]
-        case .air:
-            return [
-                .matching(MatchingGameConfigs.pterosaurFeatures)
-            ]
-        case .sea:
-            return []
-        }
-    }
-    
-    private var weighGames: [GameType] {
-        switch category {
-        case .land:
-            return [.weigh(WeighGameConfigs.weighDinosaur)]
-        case .air, .sea:
-            return []
-        }
-    }
-    
-    private var guessGames: [GameType] {
-        switch category {
-        case .land:
-            return [.guess(GuessGameConfigs.nameThatDinosaur)]
-        case .air, .sea:
-            return []
-        }
-    }
-    
-    private var wackyGames: [GameType] {
-        switch category {
-        case .land:
-            return [.wacky(WackyGameConfigs.wackyDinosaurs)]
-        case .air, .sea:
-            return []
-        }
-    }
-    
-    private var toothacheGames: [GameType] {
-        switch category {
-        case .land:
-            return [.toothache(ToothacheGameConfigs.toothache)]
-        case .air, .sea:
-            return []
-        }
+    /// Games for the current category; source of truth is per-category catalog (split data, shared UI).
+    private var gamesForCategory: [GameType] {
+        GameCatalog.games(for: category)
     }
     
     private var selectedGameId: String? {
-        selectedGame?.gameConfig?.id ?? selectedGame?.weighConfig?.id ?? selectedGame?.guessConfig?.id ?? selectedGame?.wackyConfig?.id ?? selectedGame?.toothacheConfig?.id
+        selectedGame?.id
     }
     
     private var gameSelectionTitle: String {
@@ -96,173 +67,252 @@ struct GameSelectionView: View {
         case .sea: return "Choose a Marine Reptile Game!"
         }
     }
+
+    /// Call after transition dismisses to present the correct game sheet.
+    private func presentSheetForSelectedGame() {
+        guard let gameType = selectedGame else { return }
+        if gameType.gameConfig != nil {
+            showMatchingGame = true
+        } else if gameType.weighConfig != nil {
+            showWeighGame = true
+        } else if gameType.balanceConfig != nil {
+            showBalanceGame = true
+        } else if gameType.guessConfig != nil {
+            showGuessGame = true
+        } else if gameType.findMamaConfig != nil {
+            showFindMamaGame = true
+        } else if gameType.dinoLunchConfig != nil {
+            showDinoLunchGame = true
+        } else if gameType.wackyConfig != nil {
+            showWackyGame = true
+        } else if gameType.toothacheConfig != nil {
+            showToothacheGame = true
+        } else if gameType.racingConfig != nil {
+            showRacingPeriodSelection = true
+        } else if gameType.matrixMaterialsConfig != nil {
+            showMatrixMaterialsGame = true
+        } else if gameType.dinoAgesConfig != nil {
+            showDinoAgesGame = true
+        }
+    }
+
+    private var hasNoGames: Bool {
+        gamesForCategory.isEmpty
+    }
+
+    /// Extracted to reduce type-checker load on body.
+    private var gameSelectionNavigationContent: some View {
+        GameSelectionNavigationContent(
+            category: category,
+            gameSelectionTitle: gameSelectionTitle,
+            hasNoGames: hasNoGames,
+            selectedGameId: selectedGameId,
+            showGameName: $showGameName,
+            showMatchingGame: $showMatchingGame,
+            showWeighGame: $showWeighGame,
+            showBalanceGame: $showBalanceGame,
+            showGuessGame: $showGuessGame,
+            showFindMamaGame: $showFindMamaGame,
+            showDinoLunchGame: $showDinoLunchGame,
+            showMatrixMaterialsGame: $showMatrixMaterialsGame,
+            showDinoAgesGame: $showDinoAgesGame,
+            showWackyGame: $showWackyGame,
+            showToothacheGame: $showToothacheGame,
+            showRacingPeriodSelection: $showRacingPeriodSelection,
+            showRacingGame: $showRacingGame,
+            selectedGame: $selectedGame,
+            currentGameConfig: $currentGameConfig,
+            currentWeighConfig: $currentWeighConfig,
+            currentBalanceConfig: $currentBalanceConfig,
+            currentGuessConfig: $currentGuessConfig,
+            currentFindMamaConfig: $currentFindMamaConfig,
+            currentDinoLunchConfig: $currentDinoLunchConfig,
+            currentMatrixMaterialsConfig: $currentMatrixMaterialsConfig,
+            currentDinoAgesConfig: $currentDinoAgesConfig,
+            currentWackyConfig: $currentWackyConfig,
+            currentToothacheConfig: $currentToothacheConfig,
+            currentRacingConfig: $currentRacingConfig,
+            hasPlayedWelcome: $hasPlayedWelcome,
+            speechManager: speechManager,
+            isAudioPlaying: $isAudioPlaying,
+            gameWalkIndex: $gameWalkIndex,
+            content: AnyView(gameCardsStack)
+        )
+    }
+
+    /// Game cards list; single ForEach over catalog (shared UI). When category has no games (e.g. Marine Reptiles), show game-coming-soon image.
+    @ViewBuilder
+    private var gameCardsStack: some View {
+        Group {
+            if hasNoGames {
+                if UIImage(named: "game-coming-soon") != nil {
+                    Image("game-coming-soon")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 320, maxHeight: 320)
+                        .padding(.vertical, 24)
+                } else {
+                    Text("New games are coming soon")
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                        .padding(.vertical, 12)
+                }
+            }
+            ForEach(Array(gamesForCategory.enumerated()), id: \.element.id) { index, gameType in
+                GameCard(
+                    gameType: gameType,
+                    icon: gameType.icon,
+                    imageName: gameType.imageName,
+                    isSelected: selectedGameId == gameType.id || (gameWalkIndex != nil && gameWalkIndex == index),
+                    showName: showGameName && selectedGameId == gameType.id,
+                    isDisabled: isAudioPlaying,
+                    onTap: { handleGameTap(gameType) }
+                )
+                .id(gameType.id)
+            }
+        }
+    }
     
     var body: some View {
         Group {
             if showGameTransition, let imageName = transitionGameImage {
-                // Transition screen: full-size game image with audio
                 GameTransitionView(
                     imageName: imageName,
                     audioFile: transitionAudioFile ?? "",
                     onComplete: {
-                        // Dismiss transition first so the list view (with .sheet) is on screen,
-                        // then present the game sheet so it actually shows.
-                        let gameType = selectedGame
                         DispatchQueue.main.async {
                             showGameTransition = false
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                                if let gameType = gameType {
-                                    if gameType.gameConfig != nil {
-                                        showMatchingGame = true
-                                    } else if gameType.weighConfig != nil {
-                                        showWeighGame = true
-                                    } else if gameType.guessConfig != nil {
-                                        showGuessGame = true
-                                    } else if gameType.wackyConfig != nil {
-                                        showWackyGame = true
-                                    } else if gameType.toothacheConfig != nil {
-                                        showToothacheGame = true
-                                    }
-                                }
+                                presentSheetForSelectedGame()
                             }
                         }
                     }
                 )
             } else {
-                NavigationView {
+                gameSelectionNavigationContent
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    if showGameTransition {
+                        showGameTransition = false
+                        selectedGame = nil
+                    } else {
+                        navigateToCategories = false
+                    }
+                } label: {
+                    Image(systemName: "chevron.left")
+                }
+            }
+        }
+        .navigationBarBackButtonHidden(true)
+    }
+    
+    private func handleGameTap(_ gameType: GameType) {
+        guard !isAudioPlaying && !showGameTransition else { return }
+        
+        // Store the selected game
+        selectedGame = gameType
+        currentGameConfig = gameType.gameConfig
+        // Weigh game: use a new random set of 9 dinosaurs each time
+        currentWeighConfig = gameType.weighConfig != nil ? WeighGameConfigs.weighDinosaurRandomized() : nil
+        currentBalanceConfig = gameType.balanceConfig != nil ? BalanceGameConfigs.balanceDinosaurRandomized() : nil
+        currentGuessConfig = gameType.guessConfig
+        currentFindMamaConfig = gameType.findMamaConfig != nil ? FindMamaConfigs.findMama : nil
+        currentDinoLunchConfig = gameType.dinoLunchConfig != nil ? DinoLunchConfigs.dinoLunch : nil
+        currentWackyConfig = gameType.wackyConfig
+        currentToothacheConfig = gameType.toothacheConfig
+        currentMatrixMaterialsConfig = gameType.matrixMaterialsConfig
+        currentDinoAgesConfig = gameType.dinoAgesConfig
+        
+        // Use game-{slug} for transition intro (same as walk)
+        transitionGameImage = gameType.imageName
+        transitionAudioFile = gameType.introAudioKey
+        
+        // Fade out current screen, then show transition
+        withAnimation(.easeOut(duration: 0.3)) {
+            showGameTransition = true
+        }
+    }
+}
+
+// MARK: - GameSelectionNavigationContent (extracted to reduce type-checker load)
+
+private struct GameSelectionNavigationContent: View {
+    let category: GameCategory
+    let gameSelectionTitle: String
+    let hasNoGames: Bool
+    let selectedGameId: String?
+    @Binding var showGameName: Bool
+    @Binding var showMatchingGame: Bool
+    @Binding var showWeighGame: Bool
+    @Binding var showBalanceGame: Bool
+    @Binding var showGuessGame: Bool
+    @Binding var showFindMamaGame: Bool
+    @Binding var showDinoLunchGame: Bool
+    @Binding var showMatrixMaterialsGame: Bool
+    @Binding var showDinoAgesGame: Bool
+    @Binding var showWackyGame: Bool
+    @Binding var showToothacheGame: Bool
+    @Binding var showRacingPeriodSelection: Bool
+    @Binding var showRacingGame: Bool
+    @Binding var selectedGame: GameType?
+    @Binding var currentGameConfig: MatchingGameConfig?
+    @Binding var currentWeighConfig: WeighGameConfig?
+    @Binding var currentBalanceConfig: BalanceGameConfig?
+    @Binding var currentGuessConfig: GuessGameConfig?
+    @Binding var currentFindMamaConfig: FindMamaConfig?
+    @Binding var currentDinoLunchConfig: DinoLunchConfig?
+    @Binding var currentMatrixMaterialsConfig: MatrixMaterialsGameConfig?
+    @Binding var currentDinoAgesConfig: DinoAgesGameConfig?
+    @Binding var currentWackyConfig: WackyGameConfig?
+    @Binding var currentToothacheConfig: ToothacheGameConfig?
+    @Binding var currentRacingConfig: RacingGameConfig?
+    @Binding var hasPlayedWelcome: Bool
+    let speechManager: SpeechManager
+    @Binding var isAudioPlaying: Bool
+    @Binding var gameWalkIndex: Int?
+    let content: AnyView
+
+    private var noOtherGameShowing: Bool {
+        !showMatchingGame && !showWeighGame && !showBalanceGame && !showGuessGame &&
+        !showFindMamaGame && !showDinoLunchGame && !showMatrixMaterialsGame && !showDinoAgesGame && !showWackyGame && !showToothacheGame &&
+        !showRacingGame && !showRacingPeriodSelection
+    }
+
+    private var navigationContent: some View {
+        NavigationView {
+            ScrollViewReader { proxy in
+                ScrollView {
                     VStack(spacing: 20) {
-                // Title
-                Text(gameSelectionTitle)
-                    .font(.title2)
-                    .padding(.top, 10)
-                
-                // Cover image only for Land (Dinosaurs); Pterosaurs and Marine Reptiles show only title and game cards
-                if category == .land {
-                    Image("CoverImage")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxHeight: 300)
-                        .padding(.horizontal)
-                        .padding(.top, 10)
+                        content
+                    }
+                    .padding()
                 }
-                
-                // Game cards
-                VStack(spacing: 20) {
-                    if matchingGames.isEmpty && weighGames.isEmpty && guessGames.isEmpty && wackyGames.isEmpty && toothacheGames.isEmpty {
-                        Text("New games are coming soon")
-                            .font(.headline)
-                            .foregroundColor(.secondary)
-                            .padding(.vertical, 12)
+                .onChange(of: gameWalkIndex) { _, newValue in
+                    guard let idx = newValue else { return }
+                    let games = GameCatalog.games(for: category)
+                    guard idx < games.count, let id = games[idx].id else { return }
+                    // Defer scroll so the list has updated (highlight state); ensures off-screen cards become visible.
+                    func doScroll() {
+                        withAnimation(.easeInOut(duration: 0.35)) {
+                            proxy.scrollTo(id, anchor: .center)
+                        }
                     }
-                    
-                    // Matching Game cards
-                    ForEach(matchingGames, id: \.gameConfig?.id) { gameType in
-                        GameCard(
-                            gameType: gameType,
-                            icon: "🔗",
-                            imageName: gameType.imageName,
-                            isSelected: selectedGameId == gameType.gameConfig?.id,
-                            showName: showGameName && selectedGameId == gameType.gameConfig?.id,
-                            onTap: {
-                                handleGameTap(gameType)
-                            }
-                        )
-                    }
-                    
-                    // Weigh Game cards
-                    ForEach(weighGames, id: \.weighConfig?.id) { gameType in
-                        GameCard(
-                            gameType: gameType,
-                            icon: "⚖️",
-                            imageName: gameType.imageName,
-                            isSelected: selectedGameId == gameType.weighConfig?.id,
-                            showName: showGameName && selectedGameId == gameType.weighConfig?.id,
-                            onTap: {
-                                handleGameTap(gameType)
-                            }
-                        )
-                    }
-                    
-                    // Guess Game cards
-                    ForEach(guessGames, id: \.guessConfig?.id) { gameType in
-                        GameCard(
-                            gameType: gameType,
-                            icon: "🔍",
-                            imageName: gameType.imageName,
-                            isSelected: selectedGameId == gameType.guessConfig?.id,
-                            showName: showGameName && selectedGameId == gameType.guessConfig?.id,
-                            onTap: {
-                                handleGameTap(gameType)
-                            }
-                        )
-                    }
-                    
-                    // Toothache Game cards
-                    ForEach(toothacheGames, id: \.toothacheConfig?.id) { gameType in
-                        GameCard(
-                            gameType: gameType,
-                            icon: "🦷",
-                            imageName: gameType.imageName,
-                            isSelected: selectedGameId == gameType.toothacheConfig?.id,
-                            showName: showGameName && selectedGameId == gameType.toothacheConfig?.id,
-                            onTap: {
-                                handleGameTap(gameType)
-                            }
-                        )
-                    }
-                    
-                    // Wacky Game cards (always last)
-                    ForEach(wackyGames, id: \.wackyConfig?.id) { gameType in
-                        GameCard(
-                            gameType: gameType,
-                            icon: "🦕",
-                            imageName: gameType.imageName,
-                            isSelected: selectedGameId == gameType.wackyConfig?.id,
-                            showName: showGameName && selectedGameId == gameType.wackyConfig?.id,
-                            onTap: {
-                                handleGameTap(gameType)
-                            }
-                        )
-                    }
+                    DispatchQueue.main.async { doScroll() }
+                    // Second attempt after layout pass; improves reliability when list is long.
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { doScroll() }
                 }
-                .padding()
-                
-                // Countdown indicator (optional - shows game will start soon)
-                if showGameName && selectedGame != nil {
-                    Text("Starting game...")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .transition(.opacity)
-                }
-                
-                Spacer()
-                
-                // Scoreboard placeholder (for future multi-player tracking)
-                VStack(spacing: 8) {
-                    Divider()
-                        .padding(.vertical, 8)
-                    
-                    Text("Scoreboard")
-                        .font(.headline)
-                        .foregroundColor(.secondary)
-                    
-                    // Placeholder - will show player scores when multi-player is implemented
-                    Text("Multi-player tracking coming soon")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .italic()
-                }
-                .padding(.bottom, 10)
             }
+            .navigationTitle(gameSelectionTitle)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    // Empty - title is in cover image
-                }
-            }
+        }
+    }
+
+    private var contentWithSheets: some View {
+        navigationContent
             .sheet(isPresented: $showMatchingGame) {
-                // Create a new random game configuration each time the game opens
-                // Use the selected game's config, or fallback to dinoFeatures
                 if let config = currentGameConfig {
                     MatchingGameView(isPresented: $showMatchingGame, gameConfig: config)
                 } else {
@@ -274,11 +324,30 @@ struct GameSelectionView: View {
                     WeighGameView(isPresented: $showWeighGame, gameConfig: config)
                 }
             }
+            .sheet(isPresented: $showBalanceGame) {
+                if let config = currentBalanceConfig {
+                    BalanceGameView(isPresented: $showBalanceGame, gameConfig: config)
+                }
+            }
             .sheet(isPresented: $showGuessGame) {
                 if let config = currentGuessConfig {
                     GuessGameView(isPresented: $showGuessGame, gameConfig: config)
                 } else {
                     GuessGameView(isPresented: $showGuessGame, gameConfig: GuessGameConfigs.nameThatDinosaur)
+                }
+            }
+            .sheet(isPresented: $showFindMamaGame) {
+                if let config = currentFindMamaConfig {
+                    FindMamaGameView(isPresented: $showFindMamaGame, gameConfig: config)
+                } else {
+                    FindMamaGameView(isPresented: $showFindMamaGame, gameConfig: FindMamaConfigs.findMama)
+                }
+            }
+            .sheet(isPresented: $showDinoLunchGame) {
+                if let config = currentDinoLunchConfig {
+                    DinoLunchGameView(isPresented: $showDinoLunchGame, gameConfig: config)
+                } else {
+                    DinoLunchGameView(isPresented: $showDinoLunchGame, gameConfig: DinoLunchConfigs.dinoLunch)
                 }
             }
             .sheet(isPresented: $showWackyGame) {
@@ -295,33 +364,59 @@ struct GameSelectionView: View {
                     ToothacheGameView(isPresented: $showToothacheGame, gameConfig: ToothacheGameConfigs.toothache)
                 }
             }
-            .onChange(of: showMatchingGame) { oldValue, newValue in
-                // Reset selection state when game is dismissed to allow replay
-                if !newValue {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        if !showWeighGame && !showGuessGame && !showWackyGame && !showToothacheGame {
-                            selectedGame = nil
-                            showGameName = false
-                            currentGameConfig = nil // Clear config to force new random config next time
-                        }
-                    }
-                } else {
-                    // Game is opening - create new random config for matching games
-                    if let gameType = selectedGame, let _ = gameType.gameConfig {
-                        // Create a new random config based on which game type
-                        if gameType.gameConfig?.id == "match-the-pterosaur" {
-                            currentGameConfig = MatchingGameConfigs.pterosaurFeatures
-                        } else {
-                            currentGameConfig = MatchingGameConfigs.dinoFeatures
-                        }
+            .sheet(isPresented: $showRacingPeriodSelection) {
+                RacingPeriodSelectionView(isPresented: $showRacingPeriodSelection) { config in
+                    currentRacingConfig = config
+                    showRacingPeriodSelection = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        showRacingGame = true
                     }
                 }
             }
-            .onChange(of: showWeighGame) { oldValue, newValue in
-                // Reset selection state when game is dismissed to allow replay
+            .sheet(isPresented: $showRacingGame) {
+                if let config = currentRacingConfig {
+                    RacingGameView(isPresented: $showRacingGame, gameConfig: config)
+                }
+            }
+            .sheet(isPresented: $showMatrixMaterialsGame) {
+                if let config = currentMatrixMaterialsConfig {
+                    MatrixMaterialsGameView(isPresented: $showMatrixMaterialsGame, gameConfig: config)
+                } else {
+                    MatrixMaterialsGameView(isPresented: $showMatrixMaterialsGame, gameConfig: MatrixMaterialsGameConfigs.matrixMaterials)
+                }
+            }
+            .sheet(isPresented: $showDinoAgesGame) {
+                if let config = currentDinoAgesConfig {
+                    DinoAgesGameView(isPresented: $showDinoAgesGame, gameConfig: config)
+                } else {
+                    DinoAgesGameView(isPresented: $showDinoAgesGame, gameConfig: DinoAgesGameConfigs.dinoAges)
+                }
+            }
+    }
+
+    private var contentWithOnChangeStep1: some View {
+        contentWithSheets
+            .onChange(of: showMatchingGame) { _, newValue in
                 if !newValue {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        if !showMatchingGame && !showGuessGame && !showWackyGame && !showToothacheGame {
+                        if noOtherGameShowing {
+                            selectedGame = nil
+                            showGameName = false
+                            currentGameConfig = nil
+                        }
+                    }
+                } else {
+                    if let gameType = selectedGame, gameType.gameConfig != nil {
+                        currentGameConfig = gameType.gameConfig?.id == "match-the-pterosaur"
+                            ? MatchingGameConfigs.pterosaurFeatures
+                            : MatchingGameConfigs.dinoFeatures
+                    }
+                }
+            }
+            .onChange(of: showWeighGame) { _, newValue in
+                if !newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        if noOtherGameShowing {
                             selectedGame = nil
                             showGameName = false
                             currentWeighConfig = nil
@@ -329,25 +424,68 @@ struct GameSelectionView: View {
                     }
                 }
             }
-            .onChange(of: showGuessGame) { oldValue, newValue in
-                // Reset selection state when game is dismissed to allow replay
+            .onChange(of: showBalanceGame) { _, newValue in
                 if !newValue {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        if !showMatchingGame && !showWeighGame && !showWackyGame && !showToothacheGame {
+                        if noOtherGameShowing {
                             selectedGame = nil
                             showGameName = false
-                            currentGuessConfig = nil // Clear config to force new random config next time
+                            currentBalanceConfig = nil
+                        }
+                    }
+                }
+            }
+    }
+
+    private var contentWithOnChangeStep2: some View {
+        contentWithOnChangeStep1
+            .onChange(of: showGuessGame) { _, newValue in
+                if !newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        if noOtherGameShowing {
+                            selectedGame = nil
+                            showGameName = false
+                            currentGuessConfig = nil
                         }
                     }
                 } else {
-                    // Game is opening - create new random config
                     currentGuessConfig = GuessGameConfigs.nameThatDinosaur
                 }
             }
-            .onChange(of: showWackyGame) { oldValue, newValue in
+            .onChange(of: showFindMamaGame) { _, newValue in
                 if !newValue {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        if !showMatchingGame && !showWeighGame && !showGuessGame && !showToothacheGame {
+                        if noOtherGameShowing {
+                            selectedGame = nil
+                            showGameName = false
+                            currentFindMamaConfig = nil
+                        }
+                    }
+                } else {
+                    currentFindMamaConfig = FindMamaConfigs.findMama
+                }
+            }
+            .onChange(of: showDinoLunchGame) { _, newValue in
+                if !newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        if noOtherGameShowing {
+                            selectedGame = nil
+                            showGameName = false
+                            currentDinoLunchConfig = nil
+                        }
+                    }
+                } else {
+                    currentDinoLunchConfig = DinoLunchConfigs.dinoLunch
+                }
+            }
+    }
+
+    private var contentWithOnChangeStep3: some View {
+        contentWithOnChangeStep2
+            .onChange(of: showWackyGame) { _, newValue in
+                if !newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        if noOtherGameShowing {
                             selectedGame = nil
                             showGameName = false
                             currentWackyConfig = nil
@@ -355,10 +493,10 @@ struct GameSelectionView: View {
                     }
                 }
             }
-            .onChange(of: showToothacheGame) { oldValue, newValue in
+            .onChange(of: showToothacheGame) { _, newValue in
                 if !newValue {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        if !showMatchingGame && !showWeighGame && !showGuessGame && !showWackyGame {
+                        if noOtherGameShowing {
                             selectedGame = nil
                             showGameName = false
                             currentToothacheConfig = nil
@@ -368,72 +506,127 @@ struct GameSelectionView: View {
                     currentToothacheConfig = ToothacheGameConfigs.toothache
                 }
             }
-            .onAppear {
-                // Play category-appropriate game selection audio after a short gap (so it doesn't run into the category name just played)
-                if !hasPlayedWelcome {
-                    hasPlayedWelcome = true
-                    speechManager.onAudioFinished = {
-                        isAudioPlaying = false
-                    }
-                    let introKey: String
-                    switch category {
-                    case .land: introKey = "choose-a-dinosaur-game"
-                    case .air: introKey = "choose-a-pterosaur-game"
-                    case .sea: introKey = "choose-a-marine-reptile-game"
-                    }
-                    let delay: TimeInterval = 1.2
-                    DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                        isAudioPlaying = true
-                        speechManager.speak(introKey)
+            .onChange(of: showRacingPeriodSelection) { _, newValue in
+                if !newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        if !showRacingGame && !showRacingPeriodSelection {
+                            selectedGame = nil
+                            showGameName = false
+                            currentRacingConfig = nil
+                        }
                     }
                 }
             }
-            .allowsHitTesting(!isAudioPlaying) // Disable interaction while welcome audio plays
-            .opacity(isAudioPlaying ? 0.7 : 1.0) // Visual indicator that interaction is disabled
+    }
+
+    private var contentWithOnChangeStep4: some View {
+        contentWithOnChangeStep3
+            .onChange(of: showRacingGame) { _, newValue in
+                if !newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        selectedGame = nil
+                        showGameName = false
+                        currentRacingConfig = nil
+                    }
                 }
             }
+            .onChange(of: showMatrixMaterialsGame) { _, newValue in
+                if !newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        if noOtherGameShowing {
+                            selectedGame = nil
+                            showGameName = false
+                            currentMatrixMaterialsConfig = nil
+                        }
+                    }
+                } else {
+                    currentMatrixMaterialsConfig = MatrixMaterialsGameConfigs.matrixMaterials
+                }
+            }
+            .onChange(of: showDinoAgesGame) { _, newValue in
+                if !newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        if noOtherGameShowing {
+                            selectedGame = nil
+                            showGameName = false
+                            currentDinoAgesConfig = nil
+                        }
+                    }
+                } else {
+                    currentDinoAgesConfig = DinoAgesGameConfigs.dinoAges
+                }
+            }
+    }
+
+    private var contentWithOnChange: some View {
+        contentWithOnChangeStep4
+    }
+
+    var body: some View {
+        contentWithOnChange
+        .onAppear {
+            if !hasPlayedWelcome {
+                hasPlayedWelcome = true
+                isAudioPlaying = true
+                speechManager.onAudioFinished = {
+                    DispatchQueue.main.async {
+                        startGameWalk()
+                    }
+                }
+                let introKey: String
+                switch category {
+                case .land: introKey = "choose-a-dinosaur-game"
+                case .air: introKey = "choose-a-pterosaur-game"
+                case .sea: introKey = "choose-a-marine-reptile-game"
+                }
+                let delay: TimeInterval = 1.2
+                DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                    speechManager.speak(introKey)
+                }
+            }
+        }
+        .allowsHitTesting(!isAudioPlaying)
+    }
+
+    /// After category intro finishes, walk the game list: highlight each card and play its intro audio so children learn image ↔ name.
+    private func startGameWalk() {
+        let games = GameCatalog.games(for: category)
+        if games.isEmpty {
+            isAudioPlaying = false
+            speechManager.onAudioFinished = nil
+            return
+        }
+        isAudioPlaying = true
+        gameWalkIndex = 0
+        speechManager.onAudioFinished = {
+            DispatchQueue.main.async {
+                advanceGameWalk(index: 1, games: games)
+            }
+        }
+        if let key = games[0].introAudioKey {
+            speechManager.speak(key)
+        } else {
+            advanceGameWalk(index: 1, games: games)
         }
     }
-    
-    private func handleGameTap(_ gameType: GameType) {
-        guard !isAudioPlaying && !showGameTransition else { return }
-        
-        // Store the selected game
-        selectedGame = gameType
-        currentGameConfig = gameType.gameConfig
-        // Weigh game: use a new random set of 9 dinosaurs each time
-        currentWeighConfig = gameType.weighConfig != nil ? WeighGameConfigs.weighDinosaurRandomized() : nil
-        currentGuessConfig = gameType.guessConfig
-        currentWackyConfig = gameType.wackyConfig
-        currentToothacheConfig = gameType.toothacheConfig
-        
-        // Determine which audio file to play based on game type
-        var audioFile: String?
-        if gameType.wackyConfig != nil {
-            // Optional: add intro audio key for Wacky Dinosaurs when you have a file
-            audioFile = nil
-        } else if gameType.toothacheConfig != nil {
-            audioFile = "toothache"
-        } else if let config = gameType.gameConfig {
-            // Matching games
-            if config.id == "match-the-dinosaur" {
-                audioFile = "can-you-match-each-dinosaur"
-            } else if config.id == "match-the-pterosaur" {
-                audioFile = "can-you-match-each-pterosaur"
-            }
-        } else if gameType.weighConfig != nil {
-            audioFile = "guess-which-dinosaur-is-heavier"
-        } else if gameType.guessConfig != nil {
-            audioFile = (gameType.guessConfig?.id == "name-that-dinosaur") ? "can-you-name-that-dinosaur" : "can-you-name-the-dinosaur"
+
+    private func advanceGameWalk(index: Int, games: [GameType]) {
+        if index >= games.count {
+            gameWalkIndex = nil
+            isAudioPlaying = false
+            speechManager.onAudioFinished = nil
+            return
         }
-        
-        // Show transition screen with full-size image
-        transitionGameImage = gameType.imageName
-        transitionAudioFile = audioFile
-        
-        // Fade out current screen, then show transition
-        withAnimation(.easeOut(duration: 0.3)) {
-            showGameTransition = true
+        gameWalkIndex = index
+        speechManager.onAudioFinished = {
+            DispatchQueue.main.async {
+                advanceGameWalk(index: index + 1, games: games)
+            }
+        }
+        if let key = games[index].introAudioKey {
+            speechManager.speak(key)
+        } else {
+            advanceGameWalk(index: index + 1, games: games)
         }
     }
 }
@@ -441,9 +634,15 @@ struct GameSelectionView: View {
 enum GameType {
     case matching(MatchingGameConfig) // Matching game configuration
     case weigh(WeighGameConfig) // Weigh game configuration
+    case balance(BalanceGameConfig) // Balance the Dinosaurs
     case guess(GuessGameConfig) // Guess game configuration
+    case findMama(FindMamaConfig) // Find Mama: return the egg to its mother
+    case dinoLunch(DinoLunchConfig) // Dino Lunch!: match diet with dinosaur
     case wacky(WackyGameConfig) // Wacky Dinosaurs! etc.
     case toothache(ToothacheGameConfig) // Toothache: match tooth to grumpy dinosaur
+    case racing(RacingGameConfig) // Racing Dinosaurs!
+    case matrixMaterials(MatrixMaterialsGameConfig) // Matrix Materials: identify matrix encasing fossil
+    case dinoAges(DinoAgesGameConfig) // Dino Ages: when dinosaurs lived
     
     var name: String {
         switch self {
@@ -451,11 +650,23 @@ enum GameType {
             return config.title
         case .weigh(let config):
             return config.title
+        case .balance(let config):
+            return config.title
         case .guess(let config):
+            return config.title
+        case .findMama(let config):
+            return config.title
+        case .dinoLunch(let config):
             return config.title
         case .wacky(let config):
             return config.title
         case .toothache(let config):
+            return config.title
+        case .racing(let config):
+            return config.title
+        case .matrixMaterials(let config):
+            return config.title
+        case .dinoAges(let config):
             return config.title
         }
     }
@@ -466,57 +677,118 @@ enum GameType {
             return "Match dinosaurs to their special features"
         case .weigh:
             return "Compare weights on a seesaw"
+        case .balance:
+            return "Add dinosaurs to balance the seesaw"
         case .guess:
             return "Match silhouettes to dinosaurs"
+        case .findMama:
+            return "Return the lost egg to its worried mother"
+        case .dinoLunch:
+            return "Match the diet with the dinosaur"
         case .wacky:
             return "Wacky dinosaur fun!"
         case .toothache:
             return "Match the tooth to the grumpy dinosaur"
+        case .racing:
+            return "Race two dinosaurs!"
+        case .matrixMaterials:
+            return "Identify the matrix material encasing the fossil"
+        case .dinoAges:
+            return "Discover when dinosaurs lived"
         }
     }
     
     var gameConfig: MatchingGameConfig? {
         switch self {
-        case .matching(let config):
-            return config
-        case .weigh, .guess, .wacky, .toothache:
-            return nil
+        case .matching(let config): return config
+        case .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges: return nil
         }
     }
-    
+
     var weighConfig: WeighGameConfig? {
         switch self {
-        case .weigh(let config):
-            return config
-        case .matching, .guess, .wacky, .toothache:
-            return nil
+        case .weigh(let config): return config
+        case .matching, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges: return nil
         }
     }
-    
+
+    var balanceConfig: BalanceGameConfig? {
+        switch self {
+        case .balance(let config): return config
+        case .matching, .weigh, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges: return nil
+        }
+    }
+
     var guessConfig: GuessGameConfig? {
         switch self {
-        case .guess(let config):
-            return config
-        case .matching, .weigh, .wacky, .toothache:
-            return nil
+        case .guess(let config): return config
+        case .matching, .weigh, .balance, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges: return nil
         }
     }
-    
+
+    var findMamaConfig: FindMamaConfig? {
+        switch self {
+        case .findMama(let config): return config
+        case .matching, .weigh, .balance, .guess, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges: return nil
+        }
+    }
+
+    var dinoLunchConfig: DinoLunchConfig? {
+        switch self {
+        case .dinoLunch(let config): return config
+        case .matching, .weigh, .balance, .guess, .findMama, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges: return nil
+        }
+    }
+
     var wackyConfig: WackyGameConfig? {
         switch self {
-        case .wacky(let config):
-            return config
-        case .matching, .weigh, .guess, .toothache:
-            return nil
+        case .wacky(let config): return config
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .toothache, .racing, .matrixMaterials, .dinoAges: return nil
+        }
+    }
+
+    var toothacheConfig: ToothacheGameConfig? {
+        switch self {
+        case .toothache(let config): return config
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .racing, .matrixMaterials, .dinoAges: return nil
+        }
+    }
+
+    var racingConfig: RacingGameConfig? {
+        switch self {
+        case .racing(let config): return config
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .matrixMaterials, .dinoAges: return nil
+        }
+    }
+
+    var matrixMaterialsConfig: MatrixMaterialsGameConfig? {
+        switch self {
+        case .matrixMaterials(let config): return config
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoAges: return nil
+        }
+    }
+
+    var dinoAgesConfig: DinoAgesGameConfig? {
+        switch self {
+        case .dinoAges(let config): return config
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials: return nil
         }
     }
     
-    var toothacheConfig: ToothacheGameConfig? {
+    /// Config id for this game type; used for selection state and ForEach identity.
+    var id: String? {
         switch self {
-        case .toothache(let config):
-            return config
-        case .matching, .weigh, .guess, .wacky:
-            return nil
+        case .matching(let config): return config.id
+        case .weigh(let config): return config.id
+        case .balance(let config): return config.id
+        case .guess(let config): return config.id
+        case .findMama(let config): return config.id
+        case .dinoLunch(let config): return config.id
+        case .wacky(let config): return config.id
+        case .toothache(let config): return config.id
+        case .racing(let config): return config.id
+        case .matrixMaterials(let config): return config.id
+        case .dinoAges(let config): return config.id
         }
     }
     
@@ -526,12 +798,58 @@ enum GameType {
             return "game-\(config.id)"
         case .weigh(let config):
             return "game-\(config.id)"
+        case .balance:
+            return "game-balance-the-dinosaurs"
         case .guess(let config):
+            return "game-\(config.id)"
+        case .findMama(let config):
+            return "game-\(config.id)"
+        case .dinoLunch(let config):
             return "game-\(config.id)"
         case .wacky(let config):
             return "game-\(config.id)"
         case .toothache(let config):
             return "game-\(config.id)"
+        case .racing:
+            return "game-racing-dinosaurs"
+        case .matrixMaterials(let config):
+            return "game-\(config.id)"
+        case .dinoAges(let config):
+            return "game-\(config.id)"
+        }
+    }
+    
+    /// Emoji icon for the game card when no image asset is available; also used for accessibility.
+    var icon: String {
+        switch self {
+        case .matching: return "🔗"
+        case .weigh: return "⚖️"
+        case .balance: return "⚖️"
+        case .guess: return "🔍"
+        case .findMama: return "🥚"
+        case .dinoLunch: return "🍽️"
+        case .wacky: return "🦕"
+        case .toothache: return "🦷"
+        case .racing: return "🏃"
+        case .matrixMaterials: return "🪨"
+        case .dinoAges: return "🕐"
+        }
+    }
+
+    /// Audio key played when this game is highlighted during the "walk" (and on transition when tapping). File should be game-{slug}.m4a in Games/.
+    var introAudioKey: String? {
+        switch self {
+        case .matching(let config): return "game-\(config.id)"
+        case .weigh(let config): return "game-\(config.id)"
+        case .balance(let config): return "game-\(config.id)"
+        case .guess(let config): return "game-\(config.id)"
+        case .findMama(let config): return "game-\(config.id)"
+        case .dinoLunch(let config): return "game-\(config.id)"
+        case .wacky(let config): return "game-\(config.id)"
+        case .toothache(let config): return "game-\(config.id)"
+        case .racing: return "game-racing-dinosaurs"
+        case .matrixMaterials(let config): return "game-\(config.id)"
+        case .dinoAges(let config): return config.introAudio
         }
     }
 }
@@ -542,6 +860,7 @@ struct GameCard: View {
     let imageName: String? // Optional image name from Assets.xcassets
     let isSelected: Bool
     let showName: Bool
+    let isDisabled: Bool
     let onTap: () -> Void
     
     var body: some View {
@@ -552,10 +871,10 @@ struct GameCard: View {
                     Image(imageName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 120, height: 120)
+                        .frame(width: 180, height: 180)
                 } else {
                     Text(icon)
-                        .font(.system(size: 80))
+                        .font(.system(size: 100))
                 }
                 
                 // Show name when selected (for parents) - removed description to prevent truncation
@@ -569,7 +888,7 @@ struct GameCard: View {
                         .transition(.opacity.combined(with: .move(edge: .bottom)))
                 }
             }
-            .frame(width: 200, height: showName ? 180 : 150)
+            .frame(width: 260, height: showName ? 240 : 210)
             .background(
                 RoundedRectangle(cornerRadius: 20)
                     .fill(isSelected ? Color.blue.opacity(0.2) : Color.gray.opacity(0.1))
@@ -578,10 +897,12 @@ struct GameCard: View {
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 3)
             )
+            .opacity(isDisabled ? 0.7 : 1.0)
             .scaleEffect(isSelected ? 1.05 : 1.0)
             .animation(.spring(response: 0.3), value: isSelected)
             .animation(.spring(response: 0.3), value: showName)
         }
+        .disabled(isDisabled)
     }
 }
 
@@ -643,5 +964,5 @@ struct GameTransitionView: View {
 }
 
 #Preview {
-    GameSelectionView(category: .land)
+    GameSelectionView(category: .land, navigateToCategories: .constant(true))
 }

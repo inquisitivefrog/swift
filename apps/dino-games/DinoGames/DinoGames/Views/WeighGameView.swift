@@ -45,11 +45,19 @@ struct WeighGameView: View {
     @State private var leftItemOffset: CGFloat = 0
     @State private var rightItemOffset: CGFloat = 0
     @State private var leftItemOpacity: Double = 1.0
+    @State private var rightItemOpacity: Double = 1.0
     @State private var showSpeedLines = false
+    /// When the lighter dino is sent flying: true = left flew, false = right flew (used for speed lines).
+    @State private var lighterFlewFromLeft: Bool? = nil
     @State private var roundsCompleted = 0
     private let maxRounds = 3
     /// When true, the user can tap a second dinosaur; stays false until the first dinosaur's name audio has finished.
     @State private var canSelectSecondDinosaur = false
+    /// Running list of dinosaurs that played (left + right per round); we show unique dinos only (no repeats).
+    @State private var dinosaursWeighed: [WeighableItem] = []
+    /// Victory walk: -1 none, 1 = walking list (highlight + name), 2 = good-job + crowd then dismiss.
+    @State private var endSequenceStep: Int = -1
+    @State private var endHighlightIndex: Int = 0
     
     private var isGameOver: Bool { roundsCompleted >= maxRounds }
     
@@ -60,18 +68,9 @@ struct WeighGameView: View {
                 Spacer()
                     .frame(height: geometry.size.height * 0.05) // 5% padding at top
                 
-                // Top - Item grid (2 rows x 4 columns) or game-over message
+                // Top - Item grid or victory message (same as Match the Dinosaur: Good job! + row of dinos)
                 if isGameOver {
-                    VStack(spacing: 16) {
-                        Text("Great job!")
-                            .font(.title)
-                            .foregroundColor(.primary)
-                        Text("You weighed six dinosaurs.")
-                            .font(.headline)
-                            .foregroundColor(.secondary)
-                    }
-                    .frame(width: geometry.size.width)
-                    .padding(.top, 20)
+                    weighVictoryView
                 } else {
                     VStack(spacing: 10) {
                         Text("Round \(roundsCompleted + 1) of \(maxRounds)")
@@ -157,9 +156,13 @@ struct WeighGameView: View {
                             .offset(x: -(geometry.size.width * 0.28), y: leftItemOffset - 70)
                             .opacity(leftItemOpacity)
                             
-                            if showSpeedLines && selectedRightItem != nil {
+                            if showSpeedLines, lighterFlewFromLeft == false, selectedRightItem != nil {
                                 SpeedLinesView()
                                     .offset(x: geometry.size.width * 0.28, y: rightItemOffset - 70)
+                            }
+                            if showSpeedLines, lighterFlewFromLeft == true, selectedLeftItem != nil {
+                                SpeedLinesView()
+                                    .offset(x: -(geometry.size.width * 0.28), y: leftItemOffset - 70)
                             }
                         }
                         
@@ -177,6 +180,7 @@ struct WeighGameView: View {
                                 }
                             }
                             .offset(x: geometry.size.width * 0.28, y: rightItemOffset - 70)
+                            .opacity(rightItemOpacity)
                         }
                     }
                     .frame(height: 250) // Seesaw area height
@@ -244,11 +248,14 @@ struct WeighGameView: View {
         
         isWeighing = true
         let weightDiff = left.weight - right.weight
-        
+        let absDiff = abs(weightDiff)
+        // Sauropod-sized difference (e.g. Apatosaurus vs Iguanodon): rank diff often 5+; use bigger tilt and launch
+        let isMassiveDifference = absDiff >= 4
+
         // Pause 0.2 seconds before adjusting seesaw
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             withAnimation(.easeInOut(duration: 1.5)) {
-                if abs(weightDiff) <= gameConfig.similarWeightThreshold {
+                if absDiff <= gameConfig.similarWeightThreshold {
                     // Similar weight - slight tilt, one higher
                     if weightDiff > 0 {
                         seesawAngle = -3 // Slight tilt left (reversed)
@@ -258,17 +265,21 @@ struct WeighGameView: View {
                         leftItemOffset = -20 // Left item higher
                     }
                 } else if weightDiff > 0 {
-                    // Left is heavier - left side goes down (reversed direction)
-                    seesawAngle = -15 // Tilt left (reversed)
-                    leftItemOffset = 20 // Left item goes down
-                    rightItemOffset = -20 // Right item goes up
+                    // Left is heavier - left side goes down; lighter (right) gets sent flying
+                    lighterFlewFromLeft = false
+                    seesawAngle = isMassiveDifference ? -22 : -15
+                    leftItemOffset = 20
+                    rightItemOffset = isMassiveDifference ? -220 : -150 // Lighter dinosaur launched up and off
+                    rightItemOpacity = 0
                     showSpeedLines = true
                 } else {
-                    // Right is heavier - right side goes down, left launches up
-                    seesawAngle = 15 // Tilt right (reversed)
-                    rightItemOffset = 20 // Right item goes down
-                    leftItemOffset = -150 // Launch up (from -70 base)
-                    leftItemOpacity = 0 // Fade out
+                    // Right is heavier - right side goes down; lighter (left) gets sent flying
+                    lighterFlewFromLeft = true
+                    seesawAngle = isMassiveDifference ? 22 : 15
+                    rightItemOffset = 20
+                    leftItemOffset = isMassiveDifference ? -220 : -150
+                    leftItemOpacity = 0
+                    showSpeedLines = true
                 }
             }
             
@@ -300,17 +311,132 @@ struct WeighGameView: View {
     
     /// Called when the result audio for this round has finished (so the winner is declared before we advance).
     private func finishWeighingRound() {
+        // Keep running list of dinosaurs that played (add only if not already present — no repeats)
+        if let left = selectedLeftItem, let right = selectedRightItem {
+            if !dinosaursWeighed.contains(where: { $0.id == left.id }) { dinosaursWeighed.append(left) }
+            if !dinosaursWeighed.contains(where: { $0.id == right.id }) { dinosaursWeighed.append(right) }
+        }
         roundsCompleted += 1
         if roundsCompleted >= maxRounds {
             isWeighing = false
             selectedLeftItem = nil
             selectedRightItem = nil
-            speechManager.speak("great-job-you-weighed-six-dinosaurs")
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                self.isPresented = false
-            }
+            // Victory view will walk the list, then play good-job + crowd and dismiss
         } else {
             resetWeighing()
+        }
+    }
+
+    /// Victory screen: walk list of dinosaurs (highlight + name), then good-job + crowd and dismiss.
+    private var weighVictoryView: some View {
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(spacing: 12) {
+                    Text("Good job!")
+                        .font(.title)
+                        .fontWeight(.semibold)
+                        .padding(.top, 8)
+                        .padding(.bottom, 8)
+                    ForEach(Array(dinosaursWeighed.enumerated()), id: \.offset) { index, item in
+                        let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                        HStack(spacing: 16) {
+                            weighVictoryImage(item: item, isHighlighted: isHighlighted)
+                            Text(item.name)
+                                .font(.title2)
+                                .fontWeight(isHighlighted ? .semibold : .regular)
+                                .foregroundColor(.primary)
+                                .multilineTextAlignment(.leading)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.8)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .opacity(isHighlighted ? 1.0 : 0.5)
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                        )
+                        .id(index)
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 16)
+            }
+            .onChange(of: endHighlightIndex) { _, newIndex in
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    proxy.scrollTo(newIndex, anchor: .center)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            guard endSequenceStep == -1 else { return }
+            endSequenceStep = 1
+            endHighlightIndex = 0
+            if dinosaursWeighed.isEmpty {
+                playWeighGoodJobAndCrowdThenDismiss()
+            } else {
+                speechManager.speak(dinosaursWeighed[0].name)
+                speechManager.onAudioFinished = { advanceWeighEndHighlight() }
+            }
+        }
+    }
+    
+    private func weighVictoryImage(item: WeighableItem, isHighlighted: Bool) -> some View {
+        Group {
+            if let name = item.imageName, UIImage(named: name) != nil {
+                Image(name)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 72, height: 72)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .opacity(isHighlighted ? 1.0 : 0.4)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
+                    )
+            } else {
+                Text(item.emoji)
+                    .font(.system(size: 40))
+                    .frame(width: 72, height: 72)
+                    .opacity(isHighlighted ? 1.0 : 0.4)
+            }
+        }
+    }
+    
+    private func advanceWeighEndHighlight() {
+        speechManager.onAudioFinished = nil
+        endHighlightIndex += 1
+        if endHighlightIndex < dinosaursWeighed.count {
+            speechManager.speak(dinosaursWeighed[endHighlightIndex].name)
+            speechManager.onAudioFinished = { advanceWeighEndHighlight() }
+        } else {
+            playWeighGoodJobAndCrowdThenDismiss()
+        }
+    }
+    
+    private func playWeighGoodJobAndCrowdThenDismiss() {
+        endSequenceStep = 2
+        let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
+        let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
+        if let u1 = goodJobURL, let u2 = crowdURL {
+            speechManager.playTogether(url1: u1, url2: u2) {
+                self.speechManager.onAudioFinished = nil
+                self.isPresented = false
+            }
+        } else if let u = goodJobURL ?? crowdURL {
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = nil
+                self.isPresented = false
+            }
+            speechManager.playAudioFile(url: u)
+        } else {
+            isPresented = false
         }
     }
     
@@ -320,7 +446,9 @@ struct WeighGameView: View {
             leftItemOffset = 0
             rightItemOffset = 0
             leftItemOpacity = 1.0
+            rightItemOpacity = 1.0
             showSpeedLines = false
+            lighterFlewFromLeft = nil
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -444,6 +572,7 @@ private let allWeighableDinosaurs: [WeighableDinosaurPoolEntry] = [
     WeighableDinosaurPoolEntry(name: "Troodon", imageName: "dino-troodon", emoji: "🦉", estimatedWeightKg: 50),
     WeighableDinosaurPoolEntry(name: "Parasaurolophus", imageName: "dino-parasaurolophus", emoji: "🦆", estimatedWeightKg: 2_700),
     WeighableDinosaurPoolEntry(name: "Corythosaurus", imageName: "dino-corythosaurus", emoji: "🦆", estimatedWeightKg: 3_500),
+    WeighableDinosaurPoolEntry(name: "Edmontosaurus", imageName: "dino-edmontosaurus", emoji: "🦆", estimatedWeightKg: 4_000),
     WeighableDinosaurPoolEntry(name: "Iguanodon", imageName: "dino-iguanodon", emoji: "🦎", estimatedWeightKg: 4_500),
     WeighableDinosaurPoolEntry(name: "Therizinosaurus", imageName: "dino-therizinosaurus", emoji: "🦕", estimatedWeightKg: 5_000),
     WeighableDinosaurPoolEntry(name: "Stegosaurus", imageName: "dino-stegosaurus", emoji: "🦎", estimatedWeightKg: 4_500),

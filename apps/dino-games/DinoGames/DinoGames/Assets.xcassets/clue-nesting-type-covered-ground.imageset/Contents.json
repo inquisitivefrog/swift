@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "egg-nest-covered-ground-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "egg-nest-covered-ground-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "egg-nest-covered-ground-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

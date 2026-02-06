@@ -10,7 +10,7 @@ import AVFoundation
 import UIKit
 
 /// Seconds after success/game-over audio starts before auto-returning to game list (players 4–6 cannot read a button).
-private let autoReturnDelay: TimeInterval = 5.5
+private let autoReturnDelay: TimeInterval = 2.0
 
 // MARK: - Data Models
 
@@ -46,6 +46,8 @@ struct ToothacheGameView: View {
     @State private var wrongGuessesThisRound = 0
     @State private var isGameComplete = false
     @State private var isProcessingAnswer = false
+    /// When non-nil, we're walking the dinosaur options (highlight + name); index 0..<options.count. When nil, walk not in progress and selection is allowed.
+    @State private var introWalkIndex: Int? = nil
     
     private var currentQuestion: ToothacheRound? {
         gameConfig.rounds.first { $0.id == currentRound }
@@ -59,6 +61,7 @@ struct ToothacheGameView: View {
         wrongGuessesThisRound = 0
         isGameComplete = false
         isProcessingAnswer = false
+        introWalkIndex = nil
     }
     
     /// Grumpy image name for a dinosaur: grumpy- + slug from imageName (e.g. dino-trex → grumpy-trex).
@@ -99,14 +102,15 @@ struct ToothacheGameView: View {
                         }
                         .padding()
                         
-                        // Bottom: 3 grumpy dinosaur options
+                        // Bottom: 3 grumpy dinosaur options (walked before selection each round)
                         HStack(spacing: 8) {
-                            ForEach(question.options) { dinosaur in
+                            ForEach(Array(question.options.enumerated()), id: \.element.id) { index, dinosaur in
                                 GrumpyOptionCard(
                                     dinosaur: dinosaur,
                                     grumpyImageName: grumpyImageName(for: dinosaur),
                                     isSelected: selectedDinosaur?.id == dinosaur.id,
-                                    isDisabled: isProcessingAnswer || isAudioPlaying,
+                                    isDisabled: isProcessingAnswer || isAudioPlaying || (introWalkIndex != nil),
+                                    isHighlighted: introWalkIndex == index,
                                     onTap: {
                                         handleDinosaurTap(dinosaur, question: question)
                                     }
@@ -132,11 +136,12 @@ struct ToothacheGameView: View {
                 resetGameState()
                 speechManager.isPlaying = false
                 speechManager.onAudioFinished = nil
-                speechManager.onAudioFinished = {
-                    isAudioPlaying = false
-                }
-                // Play game intro when view loads (transition already played toothache.m4a)
+                // Round 1: play intro then walk dinosaur list before allowing selection
                 isAudioPlaying = true
+                speechManager.onAudioFinished = {
+                    self.speechManager.onAudioFinished = nil
+                    self.startOptionsWalk()
+                }
                 speechManager.speak("can-you-return-the-tooth")
             }
             .onDisappear {
@@ -148,6 +153,36 @@ struct ToothacheGameView: View {
             .opacity((isAudioPlaying || isProcessingAnswer) ? 0.7 : 1.0)
             .navigationBarTitleDisplayMode(.inline)
         }
+    }
+    
+    /// Walk the list of dinosaur options (highlight + name audio) for the current round; when done, allow selection.
+    private func startOptionsWalk() {
+        guard let question = currentQuestion, !question.options.isEmpty else {
+            isAudioPlaying = false
+            return
+        }
+        introWalkIndex = 0
+        isAudioPlaying = true
+        speechManager.onAudioFinished = { advanceOptionsWalk() }
+        speechManager.speak(question.options[0].name)
+    }
+    
+    private func advanceOptionsWalk() {
+        speechManager.onAudioFinished = nil
+        guard let question = currentQuestion else {
+            introWalkIndex = nil
+            isAudioPlaying = false
+            return
+        }
+        let next = (introWalkIndex ?? 0) + 1
+        if next >= question.options.count {
+            introWalkIndex = nil
+            isAudioPlaying = false
+            return
+        }
+        introWalkIndex = next
+        speechManager.onAudioFinished = { advanceOptionsWalk() }
+        speechManager.speak(question.options[next].name)
     }
     
     private func handleDinosaurTap(_ dinosaur: Dinosaur, question: ToothacheRound) {
@@ -180,6 +215,10 @@ struct ToothacheGameView: View {
                         self.wrongGuessesThisRound = 0
                         self.isProcessingAnswer = false
                         self.isAudioPlaying = false
+                        // Walk the next round's dinosaur list before allowing selection
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                            self.startOptionsWalk()
+                        }
                     } else {
                         self.isGameComplete = true
                         // Use successCount (just incremented) as source of truth: 3 correct = win. Auto-return after audio + pause (no button for 4–6 year olds).
@@ -204,48 +243,14 @@ struct ToothacheGameView: View {
             wrongGuessesThisRound += 1
             errorCount += 1
             isAudioPlaying = true
-            if wrongGuessesThisRound >= 2 {
-                speechManager.speak("skipping-this-round")
-                speechManager.onAudioFinished = {
-                    self.speechManager.onAudioFinished = nil
-                    DispatchQueue.main.async {
-                        self.advanceAfterRoundEnd()
-                    }
-                }
-            } else {
-                speechManager.speak("try-again")
-                speechManager.onAudioFinished = {
-                    self.speechManager.onAudioFinished = nil
-                    DispatchQueue.main.async {
-                        self.isAudioPlaying = false
-                        self.selectedDinosaur = nil
-                        self.isProcessingAnswer = false
-                    }
-                }
-            }
-        }
-    }
-    
-    private func advanceAfterRoundEnd() {
-        isAudioPlaying = false
-        selectedDinosaur = nil
-        wrongGuessesThisRound = 0
-        isProcessingAnswer = false
-        if currentRound < 3 {
-            currentRound += 1
-        } else {
-            isGameComplete = true
-            if successCount == 3 {
-                speechManager.speak("good-job-you-got-them-all")
-                DispatchQueue.main.asyncAfter(deadline: .now() + autoReturnDelay) {
-                    self.isPresented = false
-                }
-            } else {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                    self.speechManager.speak("you-didnt-get-them-all-right")
-                    DispatchQueue.main.asyncAfter(deadline: .now() + autoReturnDelay) {
-                        self.isPresented = false
-                    }
+            // No auto-skip: allow unlimited attempts so kids can map sound ↔ image.
+            speechManager.speak("try-again")
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = nil
+                DispatchQueue.main.async {
+                    self.isAudioPlaying = false
+                    self.selectedDinosaur = nil
+                    self.isProcessingAnswer = false
                 }
             }
         }
@@ -259,7 +264,11 @@ struct GrumpyOptionCard: View {
     let grumpyImageName: String
     let isSelected: Bool
     let isDisabled: Bool
+    /// When true (e.g. options walk), show same highlight and name as selected.
+    var isHighlighted: Bool = false
     let onTap: () -> Void
+    
+    private var showHighlight: Bool { isSelected || isHighlighted }
     
     var body: some View {
         Button(action: onTap) {
@@ -273,21 +282,25 @@ struct GrumpyOptionCard: View {
                     Text(dinosaur.icon)
                         .font(.system(size: 60))
                 }
-                if isSelected {
+                if showHighlight {
                     Text(dinosaur.name)
-                        .font(.headline)
+                        .font(.subheadline.weight(.semibold))
                         .foregroundColor(.primary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.55)
+                        .allowsTightening(true)
+                        .multilineTextAlignment(TextAlignment.center)
                         .transition(.opacity.combined(with: .move(edge: .bottom)))
                 }
             }
-            .frame(width: 100, height: isSelected ? 140 : 120)
+            .frame(width: showHighlight ? 120 : 100, height: showHighlight ? 150 : 120)
             .background(
                 RoundedRectangle(cornerRadius: 15)
-                    .fill(isSelected ? Color.blue.opacity(0.3) : Color.gray.opacity(0.1))
+                    .fill(showHighlight ? Color.blue.opacity(0.3) : Color.gray.opacity(0.1))
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
-                    .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 3)
+                    .stroke(showHighlight ? Color.blue : Color.clear, lineWidth: 3)
             )
             .opacity(isDisabled ? 0.5 : 1.0)
         }

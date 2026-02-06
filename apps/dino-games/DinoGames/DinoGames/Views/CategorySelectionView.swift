@@ -45,65 +45,105 @@ struct CategorySelectionView: View {
     @State private var selectedCategory: GameCategory?
     @State private var navigateToGames = false
     @State private var speechManager = SpeechManager()
-    @State private var isSpeaking = false
-    @State private var hasPlayedWelcome = false
+    /// Each category image is disabled until its cover message has played.
+    @State private var enabledLand = false
+    @State private var enabledAir = false
+    @State private var enabledSea = false
+    /// True only after the fourth clip (marine reptiles) has finished; prevents tapping during that clip and overlapping audio.
+    @State private var coverSequenceComplete = false
+    @State private var hasStartedCoverSequence = false
+    
+    private func isEnabled(_ category: GameCategory) -> Bool {
+        switch category {
+        case .land: return enabledLand
+        case .air: return enabledAir
+        case .sea: return enabledSea
+        }
+    }
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 18) {
+            VStack(spacing: 0) {
+                // Title fixed at top so it isn't pushed off by larger cards
                 Text("Choose A Game Type")
                     .font(.title2)
                     .fontWeight(.semibold)
-                    .padding(.top, 24)
+                    .padding(.top, 16)
+                    .padding(.bottom, 8)
                 
-                VStack(spacing: 18) {
-                    ForEach(GameCategory.allCases) { category in
-                        CategoryCard(
-                            category: category,
-                            isSelected: selectedCategory == category,
-                            isDisabled: isSpeaking,
-                            onTap: { handleTap(category) }
-                        )
+                ScrollView(.vertical, showsIndicators: true) {
+                    VStack(spacing: 12) {
+                        ForEach(GameCategory.allCases) { category in
+                            CategoryCard(
+                                category: category,
+                                isSelected: selectedCategory == category,
+                                isDisabled: !isEnabled(category),
+                                onTap: { handleTap(category) }
+                            )
+                        }
                     }
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 24)
                 }
-                .padding(.horizontal, 20)
-                
-                Spacer()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
-                // Track when TTS/audio finishes so we can re-enable taps quickly.
-                speechManager.onAudioFinished = {
-                    isSpeaking = false
-                }
-                
-                // Play welcome audio when view first appears (after splash screen)
-                if !hasPlayedWelcome {
-                    hasPlayedWelcome = true
-                    isSpeaking = true
-                    speechManager.speak("welcome-to-dino-games")
+                if !hasStartedCoverSequence {
+                    hasStartedCoverSequence = true
+                    startCoverSequence()
                 }
             }
             .onDisappear {
-                // Fade out category name audio when navigating to game list to avoid a click
                 speechManager.stopCurrentAudio()
             }
             .navigationDestination(isPresented: $navigateToGames) {
-                GameSelectionView(category: selectedCategory ?? .land)
+                GameSelectionView(category: selectedCategory ?? .land, navigateToCategories: $navigateToGames)
             }
-            .allowsHitTesting(!isSpeaking) // Disable interaction while welcome audio plays
-            .opacity(isSpeaking ? 0.7 : 1.0) // Visual indicator that interaction is disabled
+            // Ignore taps until all four cover clips have finished (avoids overlapping audio when user taps right after sea is enabled)
+            .allowsHitTesting(coverSequenceComplete)
         }
+    }
+    
+    /// Four-step cover: welcome → enable land + dinosaurs → enable air + pterosaurs → enable sea + marine. Chain with short delay to avoid clicks.
+    private func startCoverSequence() {
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.coverWelcomeDone()
+        }
+        speechManager.speak("cover-welcome-to-dino-games")
+    }
+    
+    private func coverWelcomeDone() {
+        enabledLand = true
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.coverLandDone()
+        }
+        speechManager.speak("cover-dinosaurs-on-land", chainDelay: true)
+    }
+    
+    private func coverLandDone() {
+        enabledAir = true
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.coverAirDone()
+        }
+        speechManager.speak("cover-pterosaurs-in-the-sky", chainDelay: true)
+    }
+    
+    private func coverAirDone() {
+        enabledSea = true
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.coverSequenceComplete = true
+        }
+        speechManager.speak("cover-and-marine-reptiles-in-the-sea", chainDelay: true)
     }
     
     private func handleTap(_ category: GameCategory) {
         selectedCategory = category
-        
-        // Speak the category name. We don't have recorded audio yet, so this will fall back to TTS.
-        isSpeaking = true
         speechManager.speak(category.title)
-        
-        // Navigate after a short moment so the category name audio can finish (or nearly finish) before the next screen.
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             navigateToGames = true
         }
@@ -123,13 +163,13 @@ private struct CategoryCard: View {
                     Image(category.imageAssetName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(height: 120)
+                        .frame(minHeight: 160, maxHeight: 200)
                         .padding(.top, 6)
                 } else {
                     Image(systemName: category.fallbackSystemImageName)
-                        .font(.system(size: 72, weight: .semibold))
+                        .font(.system(size: 56, weight: .semibold))
                         .foregroundColor(.accentColor)
-                        .frame(height: 120)
+                        .frame(height: 160)
                         .padding(.top, 6)
                 }
                 
@@ -142,7 +182,7 @@ private struct CategoryCard: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 10)
+            .padding(.vertical, 6)
             .background(
                 RoundedRectangle(cornerRadius: 18)
                     .fill(isSelected ? Color.blue.opacity(0.18) : Color.gray.opacity(0.10))

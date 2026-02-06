@@ -1,0 +1,17 @@
+{
+  "app_image_config": {
+    "reference_anchor": "MANDATORY: lunch-tray-base-layer-1024.png. Red tray, 3 wells only.",
+    "layer_1_style": "High-poly 3D clay style. Isolated on a plain white studio floor.",
+    "layer_2_setting": {
+      "tray_structure": "STRICT 3-WELL RIGID PLASTIC. Large vertical well on the left. Two small stacked wells on the right.",
+      "ui_layout": "A white paper napkin sits on the white floor OUTSIDE the tray, to the bottom-right. On the napkin sits one red fork and one red spoon. Blue translucent glass of water OUTSIDE the tray to the top-right."
+    },
+    "layer_3_action": {
+      "dinosaur_target": "Tyrannosaurus Rex",
+      "large_well": "A thick red protein steak with a large white bone in the center, matte texture.",
+      "top_right_well": "A single white, pointed plastic 3D triceratops head toy.",
+      "bottom_right_well": "A collection of thick 3D clay red meat chunks."
+    },
+    "negative_constraints": "No 4-well trays, no 5-well trays, no realistic feathers, no blood, no camera tilt, no extra dividers, no real meat textures."
+  }
+}
