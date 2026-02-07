@@ -143,6 +143,8 @@ struct DinoAgesGameView: View {
 
     /// During intro, index of the circle being introduced (0..<5). nil when not walking.
     @State private var introWalkIndex: Int? = nil
+    /// Dinosaur name shown after tap (before feedback).
+    @State private var displayedDinoName: String? = nil
 
     /// Matched dinosaurs this round in the order they were tapped (for adding to victory walk).
     private var matchedDinosaursThisRoundInTapOrder: [Dinosaur] {
@@ -178,10 +180,20 @@ struct DinoAgesGameView: View {
     private var gameBody: some View {
         if let p = period, !isGameComplete {
             periodImage(p)
+            Text(p.rawValue.capitalized)
+                .font(.title2)
+                .fontWeight(.semibold)
+                .foregroundColor(.primary)
             Text("Round \(currentRound) of \(totalRounds)")
                 .font(.headline)
                 .foregroundColor(.secondary)
                 .padding(.vertical, 4)
+            if let name = displayedDinoName {
+                Text(name)
+                    .font(.title3)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal)
+            }
             fiveStarLayout
         } else if isGameComplete {
             dinoAgesEndSequenceView
@@ -242,25 +254,32 @@ struct DinoAgesGameView: View {
             if matchedIds.contains(dino.id) { return }
             matchedIds.insert(dino.id)
             matchedOrderThisRound.append(dino.id)
-            isAudioPlaying = true
-            speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                self.isAudioPlaying = false
-                if self.matchedIds.count >= self.matchesNeededPerRound {
-                    self.finishRound()
-                }
+        }
+        displayedDinoName = dino.name
+        isAudioPlaying = true
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.playFeedbackAfterTap(correct: isCorrect)
+        }
+        speechManager.speak(audioKey: dino.imageName ?? dino.name, fallbackText: dino.name)
+    }
+
+    private func playFeedbackAfterTap(correct: Bool) {
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.displayedDinoName = nil
+            self.isAudioPlaying = false
+            if correct, self.matchedIds.count >= self.matchesNeededPerRound {
+                self.finishRound()
             }
+        }
+        if correct {
             if let url = speechManager.urlForAudio(key: "great-match") {
                 speechManager.playAudioFile(url: url)
             } else {
                 speechManager.speak("great-match")
             }
         } else {
-            isAudioPlaying = true
-            speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                self.isAudioPlaying = false
-            }
             if let url = speechManager.urlForAudio(key: "not-that-one") {
                 speechManager.playAudioFile(url: url)
             } else {
@@ -300,13 +319,33 @@ struct DinoAgesGameView: View {
         }
         currentRound += 1
         var rng = SeededRandomNumberGenerator(seed: dinoAgesTimeSeed())
+        // Pick the other period so rounds 2 and 3 are different from the previous round (guaranteed mix of Jurassic and Cretaceous).
+        if let current = period {
+            period = current == .jurassic ? .cretaceous : .jurassic
+        } else {
+            period = DinoAgesPeriod.allCases.randomElement(using: &rng)!
+        }
         buildSlotsForRound(using: &rng)
         playFindInPeriodThenAllowTaps()
     }
 
+    /// Reminder: play period name audio, then find-in-period instruction, then walk the dinosaur list.
     private func playFindInPeriodThenAllowTaps() {
         guard let p = period else { return }
         isAudioPlaying = true
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.playFindInPeriodInstructionThenWalk()
+        }
+        if let url = speechManager.urlForAudio(key: p.coverAudioKey) {
+            speechManager.playAudioFile(url: url)
+        } else {
+            speechManager.speak(p.coverAudioKey)
+        }
+    }
+
+    private func playFindInPeriodInstructionThenWalk() {
+        guard let p = period else { return }
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
             self.startIntroWalk()
@@ -327,7 +366,7 @@ struct DinoAgesGameView: View {
         introWalkIndex = 0
         isAudioPlaying = true
         speechManager.onAudioFinished = { advanceIntroWalk() }
-        speechManager.speak(slots[0].name)
+        speechManager.speak(audioKey: slots[0].imageName ?? slots[0].name, fallbackText: slots[0].name)
     }
 
     private func advanceIntroWalk() {
@@ -340,7 +379,7 @@ struct DinoAgesGameView: View {
         }
         introWalkIndex = next
         speechManager.onAudioFinished = { advanceIntroWalk() }
-        speechManager.speak(slots[next].name)
+        speechManager.speak(audioKey: slots[next].imageName ?? slots[next].name, fallbackText: slots[next].name)
     }
 
     private func startGame() {
@@ -400,7 +439,8 @@ struct DinoAgesGameView: View {
             if victoryWalkDinosaurs.isEmpty {
                 playCrowdThenDismiss()
             } else {
-                speechManager.speak(victoryWalkDinosaurs[0].name)
+                let d = victoryWalkDinosaurs[0]
+                speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
                 speechManager.onAudioFinished = { advanceEndHighlight() }
             }
         }
@@ -410,7 +450,8 @@ struct DinoAgesGameView: View {
         speechManager.onAudioFinished = nil
         endHighlightIndex += 1
         if endHighlightIndex < victoryWalkDinosaurs.count {
-            speechManager.speak(victoryWalkDinosaurs[endHighlightIndex].name)
+            let d = victoryWalkDinosaurs[endHighlightIndex]
+            speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
             speechManager.onAudioFinished = { advanceEndHighlight() }
         } else {
             playCrowdThenDismiss()

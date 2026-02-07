@@ -259,7 +259,7 @@ struct DinoLunchGameView: View {
         if speechManager.urlForAudio(key: introKey) != nil {
             speechManager.speak(introKey)
         } else {
-            speechManager.speak(dinosaur.name)
+            speechManager.speak(audioKey: dinosaur.imageName ?? dinosaur.name, fallbackText: dinosaur.name)
         }
     }
 
@@ -347,7 +347,8 @@ struct DinoLunchGameView: View {
             if endSequenceDinosaurs.isEmpty {
                 playGoodJobAndCrowdThenDismiss()
             } else {
-                speechManager.speak(endSequenceDinosaurs[0].name)
+                let d = endSequenceDinosaurs[0]
+                speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
                 speechManager.onAudioFinished = { advanceDinoLunchEndHighlight() }
             }
         }
@@ -391,7 +392,8 @@ struct DinoLunchGameView: View {
         speechManager.onAudioFinished = nil
         endHighlightIndex += 1
         if endHighlightIndex < endSequenceDinosaurs.count {
-            speechManager.speak(endSequenceDinosaurs[endHighlightIndex].name)
+            let d = endSequenceDinosaurs[endHighlightIndex]
+            speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
             speechManager.onAudioFinished = { advanceDinoLunchEndHighlight() }
         } else {
             playGoodJobAndCrowdThenDismiss()

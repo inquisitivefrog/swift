@@ -1,0 +1,584 @@
+//
+//  DinoFormationsGameView.swift
+//  DinoGames
+//
+//  Dino Formations: Pick a named formation. Three rounds; each round: 5 dinos (3 from formation, 2 from elsewhere).
+//  Player selects the 3 that are found in the formation shown. No repeat dinosaurs across rounds. Victory: walk 9 selected, then crowd-cheering.
+//
+
+import SwiftUI
+
+struct DinoFormationsGameConfig {
+    let id: String
+    let title: String
+    let introAudio: String?
+}
+
+// MARK: - Formation (named fossil formation)
+
+struct DinoFormation: Identifiable {
+    let id: String
+    /// Display name, e.g. "Hell Creek"
+    let name: String
+    /// Asset name for formation image, e.g. "formation-hell-creek"
+    let imageName: String
+    /// Audio key for "Find the dinosaurs from [name]", e.g. "game-dino-formations-find-in-hell-creek"
+    let findInFormationAudioKey: String
+    /// Dino image set names (dino-*) found in this formation.
+    let dinoImageNames: Set<String>
+}
+
+/// JSON format for formation files in Formations/<id>.json (e.g. cloverly.json, hell-creek.json).
+private struct FormationJSON: Decodable {
+    let name: String
+    let dinoImageNames: [String]
+}
+
+/// Formation → dinosaurs: only formations that have at least 3 dinosaurs in the game pool are playable (3 correct + 2 decoys per round).
+/// List is dynamic: any Formations/*.json in the bundle is loaded; adding new formations requires no code changes.
+private let dinoFormationsList: [DinoFormation] = {
+    var list: [DinoFormation] = []
+    guard let urls = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: "Formations") else {
+        return fallbackFormationsList
+    }
+    for url in urls.sorted(by: { $0.lastPathComponent < $1.lastPathComponent }) {
+        let id = url.deletingPathExtension().lastPathComponent
+        guard let data = try? Data(contentsOf: url),
+              let json = try? JSONDecoder().decode(FormationJSON.self, from: data),
+              json.dinoImageNames.count >= 3 else { continue }
+        list.append(DinoFormation(
+            id: id,
+            name: json.name,
+            imageName: "formation-\(id)",
+            findInFormationAudioKey: "game-dino-formations-find-in-\(id)",
+            dinoImageNames: Set(json.dinoImageNames)
+        ))
+    }
+    let poolImageNames = Set(dinoFormationsPool.compactMap(\.imageName))
+    list = list.filter { formation in
+        formation.dinoImageNames.filter { poolImageNames.contains($0) }.count >= 3
+    }
+    return list.isEmpty ? fallbackFormationsList : list
+}()
+
+private let fallbackFormationsList: [DinoFormation] = [
+    DinoFormation(id: "hell-creek", name: "Hell Creek", imageName: "formation-hell-creek", findInFormationAudioKey: "game-dino-formations-find-in-hell-creek", dinoImageNames: ["dino-trex", "dino-triceratops", "dino-ankylosaurus", "dino-edmontosaurus", "dino-pachycephalosaurus", "dino-torosaurus"]),
+    DinoFormation(id: "morrison", name: "Morrison", imageName: "formation-morrison", findInFormationAudioKey: "game-dino-formations-find-in-morrison", dinoImageNames: ["dino-stegosaurus", "dino-apatosaurus", "dino-brachiosaurus", "dino-diplodocus", "dino-camarasaurus", "dino-dryosaurus", "dino-ceratosaurus"]),
+    DinoFormation(id: "cloverly", name: "Cloverly", imageName: "formation-cloverly", findInFormationAudioKey: "game-dino-formations-find-in-cloverly", dinoImageNames: ["dino-gallimimus", "dino-therizinosaurus", "dino-velociraptor", "dino-deinonychus"]),
+]
+
+/// Same pool as Dino Ages: all dinosaurs with dino-* image sets.
+private let dinoFormationsPool: [Dinosaur] = {
+    let fromCatalog = MatchingGameConfigs.allDinosaurs.filter { $0.imageName?.hasPrefix("dino-") == true }
+    let extras: [Dinosaur] = [
+        Dinosaur(id: 14, name: "Camarasaurus", icon: "🦕", imageName: "dino-camarasaurus", characteristicIds: []),
+        Dinosaur(id: 15, name: "Dryosaurus", icon: "🦎", imageName: "dino-dryosaurus", characteristicIds: []),
+        Dinosaur(id: 16, name: "Gallimimus", icon: "🦵", imageName: "dino-gallimimus", characteristicIds: []),
+        Dinosaur(id: 17, name: "Pachycephalosaurus", icon: "🦏", imageName: "dino-pachycephalosaurus", characteristicIds: []),
+        Dinosaur(id: 18, name: "Albertosaurus", icon: "🦖", imageName: "dino-albertosaurus", characteristicIds: []),
+        Dinosaur(id: 19, name: "Anchiornis", icon: "🦅", imageName: "dino-anchiornis", characteristicIds: []),
+        Dinosaur(id: 20, name: "Archaeopteryx", icon: "🦅", imageName: "dino-archaeopteryx", characteristicIds: []),
+        Dinosaur(id: 21, name: "Argentinosaurus", icon: "🦕", imageName: "dino-argentinosaurus", characteristicIds: []),
+        Dinosaur(id: 22, name: "Baryonyx", icon: "🦖", imageName: "dino-baryonyx", characteristicIds: []),
+        Dinosaur(id: 23, name: "Brachiosaurus", icon: "🦕", imageName: "dino-brachiosaurus", characteristicIds: []),
+        Dinosaur(id: 24, name: "Ceratosaurus", icon: "🦖", imageName: "dino-ceratosaurus", characteristicIds: []),
+        Dinosaur(id: 25, name: "Chasmosaurus", icon: "🦏", imageName: "dino-chasmosaurus", characteristicIds: []),
+        Dinosaur(id: 26, name: "Compsognathus", icon: "🦎", imageName: "dino-compsognathus", characteristicIds: []),
+        Dinosaur(id: 27, name: "Deinonychus", icon: "🦖", imageName: "dino-deinonychus", characteristicIds: []),
+        Dinosaur(id: 28, name: "Diplodocus", icon: "🦕", imageName: "dino-diplodocus", characteristicIds: []),
+        Dinosaur(id: 29, name: "Dromaeosaurus", icon: "🦖", imageName: "dino-dromeosaurus", characteristicIds: []),
+        Dinosaur(id: 30, name: "Eosinopteryx", icon: "🦅", imageName: "dino-eosinopteryx", characteristicIds: []),
+        Dinosaur(id: 31, name: "Giganotosaurus", icon: "🦖", imageName: "dino-giganotosaurus", characteristicIds: []),
+        Dinosaur(id: 32, name: "Kosmoceratops", icon: "🦏", imageName: "dino-kosmoceratops", characteristicIds: []),
+        Dinosaur(id: 33, name: "Microraptor", icon: "🦅", imageName: "dino-microraptor", characteristicIds: []),
+        Dinosaur(id: 34, name: "Pedopenna", icon: "🦅", imageName: "dino-pedopenna", characteristicIds: []),
+        Dinosaur(id: 35, name: "Torosaurus", icon: "🦏", imageName: "dino-torosaurus", characteristicIds: []),
+        Dinosaur(id: 36, name: "Utahraptor", icon: "🦖", imageName: "dino-utahraptor", characteristicIds: []),
+        Dinosaur(id: 37, name: "Xiaotingia", icon: "🦅", imageName: "dino-xiaotingia", characteristicIds: []),
+    ]
+    return fromCatalog + extras
+}()
+
+/// Dinosaur belongs to formation if its imageName is in that formation's set.
+private func dinoFormationsIsInFormation(_ dino: Dinosaur, _ formation: DinoFormation) -> Bool {
+    guard let name = dino.imageName else { return false }
+    return formation.dinoImageNames.contains(name)
+}
+
+/// Diameter of each dinosaur circle (match Dino Ages).
+private let dinoFormationsCircleSize: CGFloat = 96
+
+private let dinoFormationsStarAngles: [Double] = [
+    -Double.pi / 2,
+    -Double.pi / 2 + 2 * Double.pi / 5,
+    -Double.pi / 2 + 4 * Double.pi / 5,
+    -Double.pi / 2 + 6 * Double.pi / 5,
+    -Double.pi / 2 + 8 * Double.pi / 5
+]
+
+private func dinoFormationsTimeSeed() -> UInt64 {
+    UInt64(bitPattern: Int64(Date().timeIntervalSince1970 * 1_000_000))
+}
+
+private struct SeededRandomNumberGenerator: RandomNumberGenerator {
+    private var state: UInt64
+    init(seed: UInt64) { state = seed }
+    mutating func next() -> UInt64 {
+        state = state &* 6364136223846793005 &+ 1442695040888963407
+        return state
+    }
+}
+
+// MARK: - View
+
+struct DinoFormationsGameView: View {
+    @Binding var isPresented: Bool
+    let gameConfig: DinoFormationsGameConfig
+
+    @State private var speechManager = SpeechManager()
+    @State private var formation: DinoFormation?
+    @State private var slots: [Dinosaur] = []
+    @State private var matchedIds: Set<Int> = []
+    @State private var isAudioPlaying = false
+    @State private var isGameComplete = false
+    @State private var endSequenceStep = -1
+    @State private var endHighlightIndex = 0
+    @State private var currentRound = 1
+    @State private var usedDinosaurIds: Set<Int> = []
+    @State private var victoryWalkDinosaurs: [Dinosaur] = []
+    @State private var matchedOrderThisRound: [Int] = []
+    @State private var introWalkIndex: Int? = nil
+    /// Current dinosaur name shown during intro walk or after tap (before feedback).
+    @State private var displayedDinoName: String? = nil
+    /// Prevents intro from playing twice when onAppear fires more than once.
+    @State private var hasStartedGame = false
+
+    private let totalRounds = 3
+    private let matchesNeededPerRound = 3
+
+    private var matchedDinosaursThisRoundInTapOrder: [Dinosaur] {
+        matchedOrderThisRound.compactMap { id in slots.first { $0.id == id } }
+    }
+
+    var body: some View {
+        NavigationView {
+            mainContent
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .navigationBarTitleDisplayMode(.inline)
+                .onAppear {
+                    guard !hasStartedGame else { return }
+                    hasStartedGame = true
+                    startGame()
+                }
+                .onDisappear {
+                    hasStartedGame = false
+                    speechManager.onAudioFinished = nil
+                    speechManager.stopCurrentAudio()
+                }
+                .allowsHitTesting(!isAudioPlaying)
+                .opacity(isAudioPlaying ? 0.85 : 1.0)
+        }
+    }
+
+    @ViewBuilder
+    private var mainContent: some View {
+        VStack(spacing: 20) {
+            Text(gameConfig.title)
+                .font(.largeTitle)
+                .padding(.top, 8)
+            gameBody
+        }
+    }
+
+    @ViewBuilder
+    private var gameBody: some View {
+        if let f = formation, !isGameComplete {
+            formationImage(f)
+            Text(f.name)
+                .font(.title2)
+                .fontWeight(.semibold)
+                .foregroundColor(.primary)
+            Text("Round \(currentRound) of \(totalRounds)")
+                .font(.headline)
+                .foregroundColor(.secondary)
+                .padding(.vertical, 4)
+            if let name = displayedDinoName {
+                Text(name)
+                    .font(.title3)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal)
+            }
+            fiveStarLayout
+        } else if isGameComplete {
+            endSequenceView
+        } else {
+            ProgressView("Loading…")
+                .padding()
+        }
+    }
+
+    private func formationImage(_ f: DinoFormation) -> some View {
+        Group {
+            if UIImage(named: f.imageName) != nil {
+                Image(f.imageName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 280, maxHeight: 140)
+            } else {
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(Color.brown.opacity(0.2))
+                    .frame(width: 200, height: 80)
+                    .overlay(Text(f.name).font(.title2))
+            }
+        }
+        .padding(.horizontal)
+    }
+
+    private var fiveStarLayout: some View {
+        DinoFormationsStarLayoutView(slots: slots, matchedIds: matchedIds, introHighlightIndex: introWalkIndex, tapHandler: DinoFormationsTapHandler(perform: handleTap))
+            .frame(height: 320)
+            .padding(.horizontal)
+    }
+
+    private func handleTap(dino: Dinosaur) {
+        guard !isAudioPlaying, let f = formation else { return }
+        let isCorrect = dinoFormationsIsInFormation(dino, f)
+        if isCorrect {
+            if matchedIds.contains(dino.id) { return }
+            matchedIds.insert(dino.id)
+            matchedOrderThisRound.append(dino.id)
+        }
+        // Play dinosaur name and show text first, then give feedback.
+        displayedDinoName = dino.name
+        isAudioPlaying = true
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.playFeedbackAfterTap(correct: isCorrect)
+        }
+        speechManager.speak(audioKey: dino.imageName ?? dino.name, fallbackText: dino.name)
+    }
+
+    private func playFeedbackAfterTap(correct: Bool) {
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.displayedDinoName = nil
+            self.isAudioPlaying = false
+            if correct, self.matchedIds.count >= self.matchesNeededPerRound {
+                self.finishRound()
+            }
+        }
+        if correct {
+            if let url = speechManager.urlForAudio(key: "great-match") {
+                speechManager.playAudioFile(url: url)
+            } else {
+                speechManager.speak("great-match")
+            }
+        } else {
+            if let url = speechManager.urlForAudio(key: "not-that-one") {
+                speechManager.playAudioFile(url: url)
+            } else {
+                speechManager.speak("not-that-one")
+            }
+        }
+    }
+
+    /// Picks a formation that has at least 3 in-formation and 2 out-of-formation dinosaurs not yet used in any round. Returns nil if none.
+    private func pickFormationWithEnoughUnused(using rng: inout SeededRandomNumberGenerator) -> DinoFormation? {
+        let candidates = dinoFormationsList.filter { f in
+            let inF = dinoFormationsPool.filter { dinoFormationsIsInFormation($0, f) }
+            let outF = dinoFormationsPool.filter { !dinoFormationsIsInFormation($0, f) }
+            let inUnused = inF.filter { !usedDinosaurIds.contains($0.id) }
+            let outUnused = outF.filter { !usedDinosaurIds.contains($0.id) }
+            return inUnused.count >= 3 && outUnused.count >= 2
+        }
+        return candidates.randomElement(using: &rng)
+    }
+
+    private func buildSlotsForRound(using rng: inout SeededRandomNumberGenerator) {
+        guard let f = formation else { return }
+        let inFormation = dinoFormationsPool.filter { dinoFormationsIsInFormation($0, f) }
+        let outFormation = dinoFormationsPool.filter { !dinoFormationsIsInFormation($0, f) }
+        let inPreferred = inFormation.filter { !usedDinosaurIds.contains($0.id) }
+        let outPreferred = outFormation.filter { !usedDinosaurIds.contains($0.id) }
+        // Prefer unused dinosaurs; fall back to any in/out so we can always fill round 2 and 3 (exactly three rounds).
+        let inPool = inPreferred.count >= 3 ? inPreferred : inFormation
+        let outPool = outPreferred.count >= 2 ? outPreferred : outFormation
+        let corrects = Array(inPool.shuffled(using: &rng).prefix(3))
+        let wrongs = Array(outPool.shuffled(using: &rng).prefix(2))
+        guard corrects.count == 3, wrongs.count == 2 else {
+            isGameComplete = true
+            return
+        }
+        for d in corrects + wrongs { usedDinosaurIds.insert(d.id) }
+        slots = (corrects + wrongs).shuffled(using: &rng)
+        matchedIds = []
+        matchedOrderThisRound = []
+    }
+
+    private func finishRound() {
+        let matchedOrdered = matchedDinosaursThisRoundInTapOrder
+        victoryWalkDinosaurs.append(contentsOf: matchedOrdered)
+        // Only three rounds: if we just finished round 3, go to victory.
+        if currentRound >= totalRounds {
+            isGameComplete = true
+            return
+        }
+        currentRound += 1
+        var rng = SeededRandomNumberGenerator(seed: dinoFormationsTimeSeed())
+        // Pick a new formation for this round; prefer one with enough unused dinosaurs. For round 3, allow re-use if needed so we always play three rounds.
+        formation = pickFormationWithEnoughUnused(using: &rng) ?? dinoFormationsList.randomElement(using: &rng)
+        buildSlotsForRound(using: &rng)
+        playFindInFormationThenAllowTaps()
+    }
+
+    /// Round begin: play formation name (Audio/Formations/{slug}.m4a), then invitation (choose three dinosaurs...), then walk the five dinosaur names with text.
+    private func playFindInFormationThenAllowTaps() {
+        guard let f = formation else { return }
+        isAudioPlaying = true
+        // 1. Formation name from Audio/Formations/{slug}.m4a
+        let formationNameKey = "formation-name-\(f.id)"
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.playChooseDinosaurThenStartWalk()
+        }
+        if let url = speechManager.urlForAudio(key: formationNameKey) {
+            speechManager.playAudioFile(url: url)
+        } else {
+            speechManager.speak(f.name)
+        }
+    }
+
+    private func playChooseDinosaurThenStartWalk() {
+        // 2. Invitation: "choose three dinosaurs whose fossils are found in this formation" — Audio/Games/game-dino-formations-choose-a-dinosaur.m4a
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.startIntroWalk()
+        }
+        if let url = speechManager.urlForAudio(key: "game-dino-formations-choose-a-dinosaur") {
+            speechManager.playAudioFile(url: url)
+        } else {
+            speechManager.speak("game-dino-formations-choose-a-dinosaur")
+        }
+    }
+
+    /// Walk the five dinosaurs: play each name and display text; then allow taps.
+    private func startIntroWalk() {
+        guard slots.count >= 5 else {
+            isAudioPlaying = false
+            return
+        }
+        introWalkIndex = 0
+        displayedDinoName = slots[0].name
+        isAudioPlaying = true
+        speechManager.onAudioFinished = { advanceIntroWalk() }
+        speechManager.speak(audioKey: slots[0].imageName ?? slots[0].name, fallbackText: slots[0].name)
+    }
+
+    private func advanceIntroWalk() {
+        speechManager.onAudioFinished = nil
+        let next = (introWalkIndex ?? 0) + 1
+        if next >= 5 {
+            introWalkIndex = nil
+            displayedDinoName = nil
+            isAudioPlaying = false
+            return
+        }
+        introWalkIndex = next
+        displayedDinoName = slots[next].name
+        speechManager.onAudioFinished = { advanceIntroWalk() }
+        speechManager.speak(audioKey: slots[next].imageName ?? slots[next].name, fallbackText: slots[next].name)
+    }
+
+    private func startGame() {
+        var rng = SeededRandomNumberGenerator(seed: dinoFormationsTimeSeed())
+        formation = dinoFormationsList.randomElement(using: &rng)
+        currentRound = 1
+        usedDinosaurIds = []
+        victoryWalkDinosaurs = []
+        isGameComplete = false
+        endSequenceStep = -1
+        endHighlightIndex = 0
+        buildSlotsForRound(using: &rng)
+        guard formation != nil else { return }
+        // Skip playing game name here; it was already played when the user selected the game. Go straight to formation name → choose-a-dinosaur → walk dinosaur names.
+        isAudioPlaying = true
+        playFindInFormationThenAllowTaps()
+    }
+
+    // MARK: - End sequence (victory list with scrollbar; scroll highlighted row into view like Dino Ages)
+
+    private var endSequenceView: some View {
+        VStack(spacing: 16) {
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(spacing: 12) {
+                        ForEach(Array(uniqueVictoryDinosaurs.enumerated()), id: \.element.id) { index, dino in
+                            DinoFormationsEndRowView(dino: dino, isHighlighted: endSequenceStep >= 1 && index == endHighlightIndex)
+                                .id(dino.id)
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+                .scrollIndicators(.visible)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .onChange(of: endHighlightIndex) { _, newValue in
+                    guard newValue < uniqueVictoryDinosaurs.count else { return }
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        proxy.scrollTo(uniqueVictoryDinosaurs[newValue].id, anchor: .center)
+                    }
+                }
+            }
+            Text("Good job!")
+                .font(.title)
+                .fontWeight(.semibold)
+                .padding(.top, 8)
+                .padding(.bottom, 8)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            guard endSequenceStep == -1 else { return }
+            endSequenceStep = 1
+            endHighlightIndex = 0
+            if uniqueVictoryDinosaurs.isEmpty {
+                playCrowdThenDismiss()
+            } else {
+                let d = uniqueVictoryDinosaurs[0]
+                speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
+                speechManager.onAudioFinished = { advanceEndHighlight() }
+            }
+        }
+    }
+
+    /// Victory list with duplicates removed by id (first occurrence kept) so we don't show the same dinosaur twice.
+    private var uniqueVictoryDinosaurs: [Dinosaur] {
+        var seen = Set<Int>()
+        return victoryWalkDinosaurs.filter { seen.insert($0.id).inserted }
+    }
+
+    private func advanceEndHighlight() {
+        speechManager.onAudioFinished = nil
+        endHighlightIndex += 1
+        if endHighlightIndex < uniqueVictoryDinosaurs.count {
+            let d = uniqueVictoryDinosaurs[endHighlightIndex]
+            speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
+            speechManager.onAudioFinished = { advanceEndHighlight() }
+        } else {
+            playCrowdThenDismiss()
+        }
+    }
+
+    private func playCrowdThenDismiss() {
+        endSequenceStep = 2
+        if let crowdURL = speechManager.urlForAudio(key: "crowd-cheering") {
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = nil
+                self.isPresented = false
+            }
+            speechManager.playAudioFile(url: crowdURL)
+        } else {
+            speechManager.speak("crowd-cheering")
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = nil
+                self.isPresented = false
+            }
+        }
+    }
+}
+
+// MARK: - Star layout
+
+private struct DinoFormationsTapHandler {
+    let perform: (Dinosaur) -> Void
+}
+
+private struct DinoFormationsStarLayoutView: View {
+    let slots: [Dinosaur]
+    let matchedIds: Set<Int>
+    let introHighlightIndex: Int?
+    let tapHandler: DinoFormationsTapHandler
+    private let radius: CGFloat = 100
+
+    var body: some View {
+        GeometryReader { geo in
+            ZStack(alignment: .center) {
+                ForEach(Array(slots.enumerated()), id: \.element.id) { index, dino in
+                    DinoFormationsCircleView(dino: dino, isMatched: matchedIds.contains(dino.id), isIntroHighlighted: introHighlightIndex == index)
+                        .position(
+                            x: geo.size.width / 2 + radius * CGFloat(cos(dinoFormationsStarAngles[index])),
+                            y: geo.size.height / 2 + 20 + radius * CGFloat(sin(dinoFormationsStarAngles[index]))
+                        )
+                        .onTapGesture { tapHandler.perform(dino) }
+                }
+            }
+            .frame(width: geo.size.width, height: geo.size.height)
+        }
+    }
+}
+
+private struct DinoFormationsCircleView: View {
+    let dino: Dinosaur
+    let isMatched: Bool
+    var isIntroHighlighted: Bool = false
+
+    var body: some View {
+        Group {
+            if let name = dino.imageName, UIImage(named: name) != nil {
+                Image(name)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: dinoFormationsCircleSize, height: dinoFormationsCircleSize)
+                    .clipShape(Circle())
+            } else {
+                Circle()
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: dinoFormationsCircleSize, height: dinoFormationsCircleSize)
+                    .overlay(Text(dino.icon).font(.system(size: 32)))
+            }
+        }
+        .overlay(Circle().stroke(strokeColor, lineWidth: isMatched || isIntroHighlighted ? 4 : 2).frame(width: dinoFormationsCircleSize, height: dinoFormationsCircleSize))
+        .opacity(isMatched ? 0.9 : 1.0)
+    }
+
+    private var strokeColor: Color {
+        if isMatched { return .green }
+        if isIntroHighlighted { return Color.accentColor }
+        return Color.gray.opacity(0.4)
+    }
+}
+
+private struct DinoFormationsEndRowView: View {
+    let dino: Dinosaur
+    let isHighlighted: Bool
+
+    var body: some View {
+        HStack(spacing: 16) {
+            DinoFormationsCircleView(dino: dino, isMatched: true)
+                .frame(width: dinoFormationsCircleSize, height: dinoFormationsCircleSize)
+                .opacity(isHighlighted ? 1.0 : 0.4)
+            Text(dino.name)
+                .font(.title2)
+                .fontWeight(isHighlighted ? .semibold : .regular)
+                .foregroundColor(.primary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .opacity(isHighlighted ? 1.0 : 0.5)
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 10)
+        .background(RoundedRectangle(cornerRadius: 12).fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear))
+        .overlay(RoundedRectangle(cornerRadius: 12).stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2))
+    }
+}
+
+// MARK: - Configs
+
+enum DinoFormationsGameConfigs {
+    static let dinoFormations = DinoFormationsGameConfig(
+        id: "dino-formations",
+        title: "Dino Formations!",
+        introAudio: "game-dino-formations"
+    )
+}
+
+#Preview {
+    DinoFormationsGameView(isPresented: .constant(true), gameConfig: DinoFormationsGameConfigs.dinoFormations)
+}

@@ -203,6 +203,8 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Dinosaurs/dino-albertosaurus"
         case "pachycephalosaurus":
             return "Dinosaurs/dino-pachycephalosaurus"
+        case "baryonyx":
+            return "Dinosaurs/dino-baryonyx"
 
         // Pterosaurs (Match the Pterosaur game) - name audio in Pterosaurs/ with ptero- prefix (like dino- for Dinosaurs/)
         case "pterodactyl", "pteradactyl":
@@ -441,6 +443,19 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         // Game name-only intros (walk + transition): game-{slug} → Games/game-{slug}
         case _ where normalized.hasPrefix("game-"):
             return "Games/\(normalized)"
+        // Level picker intro (play when level picker is shown): Levels/choose-a-level
+        case "choose-a-level", "choose a level":
+            return "Levels/choose-a-level"
+        // Level intros for Dinosaurs (e.g. "Level One Really Easy Games"): level-* → Levels/level-*
+        case _ where normalized.hasPrefix("level-"):
+            return "Levels/\(normalized)"
+        // Dino Formations: formation name from Audio/Formations/{slug}-formation.m4a. Key: formation-name-{slug}
+        case _ where normalized.hasPrefix("formation-name-"):
+            let slug = String(normalized.dropFirst("formation-name-".count))
+            return "Formations/\(slug)-formation"
+        // Dinosaurs: Audio/Dinosaurs/{key}.m4a for any dino-* key (e.g. dino-camarasaurus) so all dinosaur name files are used when present
+        case _ where normalized.hasPrefix("dino-"):
+            return "Dinosaurs/\(normalized)"
 
         // Matrix Materials game: material names → Audio/Materials/{slug}.m4a
         case "limestone", "mudstone", "bentonite", "sandstone", "siltstone", "tuff", "amber", "shale",
@@ -553,6 +568,25 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
                 // No mapping found, use TTS
                 print("🔊 No mapping for '\(text)', using TTS")
                 self.startSpeaking(text)
+            }
+        }
+    }
+    
+    /// Use when playing dinosaur (or creature) name audio: look up by audioKey (e.g. dino imageName) so Audio/Dinosaurs/*.m4a is used when present; use fallbackText for TTS if no file is found.
+    func speak(audioKey: String, fallbackText: String, chainDelay: Bool = false) {
+        let now = Date()
+        guard now.timeIntervalSince(lastPlayTime) >= minimumPlayInterval else {
+            onAudioFinished?()
+            return
+        }
+        lastPlayTime = now
+        stopCurrentAudio()
+        let delay: TimeInterval = chainDelay ? 0.03 : 0.1
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            if let url = self.urlForAudio(key: audioKey) {
+                self.playAudioFile(url: url, fallbackSpeakText: fallbackText)
+            } else {
+                self.startSpeaking(fallbackText)
             }
         }
     }
@@ -876,7 +910,8 @@ struct MatchingGameView: View {
             if victoryDinosaurs.isEmpty {
                 playMatchingGoodJobAndCrowdThenDismiss()
             } else {
-                speechManager.speak(victoryDinosaurs[0].name)
+                let d = victoryDinosaurs[0]
+                speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
                 speechManager.onAudioFinished = { advanceMatchingEndHighlight() }
             }
         }
@@ -908,7 +943,8 @@ struct MatchingGameView: View {
         speechManager.onAudioFinished = nil
         endHighlightIndex += 1
         if endHighlightIndex < victoryDinosaurs.count {
-            speechManager.speak(victoryDinosaurs[endHighlightIndex].name)
+            let d = victoryDinosaurs[endHighlightIndex]
+            speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
             speechManager.onAudioFinished = { advanceMatchingEndHighlight() }
         } else {
             playMatchingGoodJobAndCrowdThenDismiss()
@@ -1030,7 +1066,8 @@ struct MatchingGameView: View {
         introWalkStep = 0
         isAudioPlaying = true
         speechManager.onAudioFinished = { advanceIntroWalk() }
-        speechManager.speak(dinosaurs[0].name)
+        let d0 = dinosaurs[0]
+        speechManager.speak(audioKey: d0.imageName ?? d0.name, fallbackText: d0.name)
     }
     
     private func advanceIntroWalk() {
@@ -1043,7 +1080,8 @@ struct MatchingGameView: View {
         }
         speechManager.onAudioFinished = { advanceIntroWalk() }
         if introWalkStep < 3 {
-            speechManager.speak(dinosaurs[introWalkStep].name)
+            let d = dinosaurs[introWalkStep]
+            speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
         } else {
             speechManager.speak(characteristics[introWalkStep - 3].type)
         }
@@ -1076,7 +1114,7 @@ struct MatchingGameView: View {
         speechManager.onAudioFinished = {
             DispatchQueue.main.async { self.isAudioPlaying = false }
         }
-        speechManager.speak(dinosaur.name)
+        speechManager.speak(audioKey: dinosaur.imageName ?? dinosaur.name, fallbackText: dinosaur.name)
         
         selectedDinosaur = dinosaur
         selectedCharacteristic = nil // Reset characteristic selection

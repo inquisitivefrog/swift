@@ -30,6 +30,7 @@ struct GameSelectionView: View {
     @State private var showDinoLunchGame = false
     @State private var showMatrixMaterialsGame = false
     @State private var showDinoAgesGame = false
+    @State private var showDinoFormationsGame = false
     @State private var currentGameConfig: MatchingGameConfig?
     @State private var currentWeighConfig: WeighGameConfig?
     @State private var currentBalanceConfig: BalanceGameConfig?
@@ -41,19 +42,27 @@ struct GameSelectionView: View {
     @State private var currentDinoLunchConfig: DinoLunchConfig?
     @State private var currentMatrixMaterialsConfig: MatrixMaterialsGameConfig?
     @State private var currentDinoAgesConfig: DinoAgesGameConfig?
+    @State private var currentDinoFormationsConfig: DinoFormationsGameConfig?
     @State private var speechManager = SpeechManager()
     /// true from first frame when category intro will play, so the list is disabled until intro + game walk finish.
-    @State private var isAudioPlaying = true
+    @State private var isAudioPlaying = false
     @State private var hasPlayedWelcome = false
     @State private var showGameTransition = false
     /// When non-nil, we're walking the game list: highlight card at this index and play its intro audio; cards stay disabled until walk finishes.
     @State private var gameWalkIndex: Int? = nil
     @State private var transitionGameImage: String?
     @State private var transitionAudioFile: String?
-    
-    /// Games for the current category; source of truth is per-category catalog (split data, shared UI).
+    /// For Dinosaurs only: selected level (Easy/Mid/Hard). nil = showing level picker; non-nil = showing game list for that level.
+    @State private var selectedLevel: GameLevel? = nil
+
+    /// Games for the current category (and level when category is land). When land + selectedLevel == nil we show level picker, not this list.
     private var gamesForCategory: [GameType] {
-        GameCatalog.games(for: category)
+        GameCatalog.games(for: category, level: category == .land ? selectedLevel : nil)
+    }
+
+    /// True when we show the game list (so intro + game walk run). False when we show the level picker (land, no level yet).
+    private var showingGameList: Bool {
+        category != .land || selectedLevel != nil
     }
     
     private var selectedGameId: String? {
@@ -62,7 +71,9 @@ struct GameSelectionView: View {
     
     private var gameSelectionTitle: String {
         switch category {
-        case .land: return "Choose a Dinosaur Game!"
+        case .land:
+            if let level = selectedLevel { return "\(level.title) — Choose a Dinosaur Game!" }
+            return "Choose a level"
         case .air: return "Choose a Pterosaur Game!"
         case .sea: return "Choose a Marine Reptile Game!"
         }
@@ -93,6 +104,8 @@ struct GameSelectionView: View {
             showMatrixMaterialsGame = true
         } else if gameType.dinoAgesConfig != nil {
             showDinoAgesGame = true
+        } else if gameType.dinoFormationsConfig != nil {
+            showDinoFormationsGame = true
         }
     }
 
@@ -100,13 +113,53 @@ struct GameSelectionView: View {
         gamesForCategory.isEmpty
     }
 
+    /// Level picker: Level 1–6 cards (Dinosaurs only). Shown when category == .land && selectedLevel == nil.
+    @ViewBuilder
+    private var levelPickerContent: some View {
+        VStack(spacing: 10) {
+            ForEach(GameLevel.allCases) { level in
+                LevelCard(level: level, onTap: { selectedLevel = level })
+            }
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 12)
+        .onAppear {
+            // Level picker should be tappable after the prompt finishes.
+            // While the prompt is playing, we temporarily disable hit testing via `isAudioPlaying`.
+            guard let url = speechManager.urlForAudio(key: "choose-a-level") else {
+                isAudioPlaying = false
+                return
+            }
+            isAudioPlaying = true
+            speechManager.onAudioFinished = {
+                DispatchQueue.main.async {
+                    isAudioPlaying = false
+                    speechManager.onAudioFinished = nil
+                }
+            }
+            speechManager.playAudioFile(url: url)
+        }
+    }
+
+    /// Main content: level picker for Dinosaurs (no level chosen) or game cards.
+    @ViewBuilder
+    private var mainSelectionContent: some View {
+        if category == .land && selectedLevel == nil {
+            levelPickerContent
+        } else {
+            gameCardsStack
+        }
+    }
+
     /// Extracted to reduce type-checker load on body.
     private var gameSelectionNavigationContent: some View {
         GameSelectionNavigationContent(
             category: category,
+            selectedLevel: selectedLevel,
             gameSelectionTitle: gameSelectionTitle,
             hasNoGames: hasNoGames,
             selectedGameId: selectedGameId,
+            showingGameList: showingGameList,
             showGameName: $showGameName,
             showMatchingGame: $showMatchingGame,
             showWeighGame: $showWeighGame,
@@ -116,6 +169,7 @@ struct GameSelectionView: View {
             showDinoLunchGame: $showDinoLunchGame,
             showMatrixMaterialsGame: $showMatrixMaterialsGame,
             showDinoAgesGame: $showDinoAgesGame,
+            showDinoFormationsGame: $showDinoFormationsGame,
             showWackyGame: $showWackyGame,
             showToothacheGame: $showToothacheGame,
             showRacingPeriodSelection: $showRacingPeriodSelection,
@@ -129,6 +183,7 @@ struct GameSelectionView: View {
             currentDinoLunchConfig: $currentDinoLunchConfig,
             currentMatrixMaterialsConfig: $currentMatrixMaterialsConfig,
             currentDinoAgesConfig: $currentDinoAgesConfig,
+            currentDinoFormationsConfig: $currentDinoFormationsConfig,
             currentWackyConfig: $currentWackyConfig,
             currentToothacheConfig: $currentToothacheConfig,
             currentRacingConfig: $currentRacingConfig,
@@ -136,7 +191,7 @@ struct GameSelectionView: View {
             speechManager: speechManager,
             isAudioPlaying: $isAudioPlaying,
             gameWalkIndex: $gameWalkIndex,
-            content: AnyView(gameCardsStack)
+            content: AnyView(mainSelectionContent)
         )
     }
 
@@ -198,6 +253,8 @@ struct GameSelectionView: View {
                     if showGameTransition {
                         showGameTransition = false
                         selectedGame = nil
+                    } else if category == .land && selectedLevel != nil {
+                        selectedLevel = nil
                     } else {
                         navigateToCategories = false
                     }
@@ -207,8 +264,12 @@ struct GameSelectionView: View {
             }
         }
         .navigationBarBackButtonHidden(true)
+        .onChange(of: selectedLevel) { _, _ in
+            // So the game-name walk runs for each level when the list changes (non-readers memorize by hearing names).
+            hasPlayedWelcome = false
+        }
     }
-    
+
     private func handleGameTap(_ gameType: GameType) {
         guard !isAudioPlaying && !showGameTransition else { return }
         
@@ -225,7 +286,8 @@ struct GameSelectionView: View {
         currentToothacheConfig = gameType.toothacheConfig
         currentMatrixMaterialsConfig = gameType.matrixMaterialsConfig
         currentDinoAgesConfig = gameType.dinoAgesConfig
-        
+        currentDinoFormationsConfig = gameType.dinoFormationsConfig
+
         // Use game-{slug} for transition intro (same as walk)
         transitionGameImage = gameType.imageName
         transitionAudioFile = gameType.introAudioKey
@@ -241,9 +303,11 @@ struct GameSelectionView: View {
 
 private struct GameSelectionNavigationContent: View {
     let category: GameCategory
+    let selectedLevel: GameLevel?
     let gameSelectionTitle: String
     let hasNoGames: Bool
     let selectedGameId: String?
+    let showingGameList: Bool
     @Binding var showGameName: Bool
     @Binding var showMatchingGame: Bool
     @Binding var showWeighGame: Bool
@@ -253,6 +317,7 @@ private struct GameSelectionNavigationContent: View {
     @Binding var showDinoLunchGame: Bool
     @Binding var showMatrixMaterialsGame: Bool
     @Binding var showDinoAgesGame: Bool
+    @Binding var showDinoFormationsGame: Bool
     @Binding var showWackyGame: Bool
     @Binding var showToothacheGame: Bool
     @Binding var showRacingPeriodSelection: Bool
@@ -266,6 +331,7 @@ private struct GameSelectionNavigationContent: View {
     @Binding var currentDinoLunchConfig: DinoLunchConfig?
     @Binding var currentMatrixMaterialsConfig: MatrixMaterialsGameConfig?
     @Binding var currentDinoAgesConfig: DinoAgesGameConfig?
+    @Binding var currentDinoFormationsConfig: DinoFormationsGameConfig?
     @Binding var currentWackyConfig: WackyGameConfig?
     @Binding var currentToothacheConfig: ToothacheGameConfig?
     @Binding var currentRacingConfig: RacingGameConfig?
@@ -277,7 +343,7 @@ private struct GameSelectionNavigationContent: View {
 
     private var noOtherGameShowing: Bool {
         !showMatchingGame && !showWeighGame && !showBalanceGame && !showGuessGame &&
-        !showFindMamaGame && !showDinoLunchGame && !showMatrixMaterialsGame && !showDinoAgesGame && !showWackyGame && !showToothacheGame &&
+        !showFindMamaGame && !showDinoLunchGame && !showMatrixMaterialsGame && !showDinoAgesGame && !showDinoFormationsGame && !showWackyGame && !showToothacheGame &&
         !showRacingGame && !showRacingPeriodSelection
     }
 
@@ -292,7 +358,7 @@ private struct GameSelectionNavigationContent: View {
                 }
                 .onChange(of: gameWalkIndex) { _, newValue in
                     guard let idx = newValue else { return }
-                    let games = GameCatalog.games(for: category)
+                    let games = GameCatalog.games(for: category, level: category == .land ? selectedLevel : nil)
                     guard idx < games.count, let id = games[idx].id else { return }
                     // Defer scroll so the list has updated (highlight state); ensures off-screen cards become visible.
                     func doScroll() {
@@ -390,6 +456,13 @@ private struct GameSelectionNavigationContent: View {
                     DinoAgesGameView(isPresented: $showDinoAgesGame, gameConfig: config)
                 } else {
                     DinoAgesGameView(isPresented: $showDinoAgesGame, gameConfig: DinoAgesGameConfigs.dinoAges)
+                }
+            }
+            .sheet(isPresented: $showDinoFormationsGame) {
+                if let config = currentDinoFormationsConfig {
+                    DinoFormationsGameView(isPresented: $showDinoFormationsGame, gameConfig: config)
+                } else {
+                    DinoFormationsGameView(isPresented: $showDinoFormationsGame, gameConfig: DinoFormationsGameConfigs.dinoFormations)
                 }
             }
     }
@@ -556,6 +629,19 @@ private struct GameSelectionNavigationContent: View {
                     currentDinoAgesConfig = DinoAgesGameConfigs.dinoAges
                 }
             }
+            .onChange(of: showDinoFormationsGame) { _, newValue in
+                if !newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        if noOtherGameShowing {
+                            selectedGame = nil
+                            showGameName = false
+                            currentDinoFormationsConfig = nil
+                        }
+                    }
+                } else {
+                    currentDinoFormationsConfig = DinoFormationsGameConfigs.dinoFormations
+                }
+            }
     }
 
     private var contentWithOnChange: some View {
@@ -565,32 +651,39 @@ private struct GameSelectionNavigationContent: View {
     var body: some View {
         contentWithOnChange
         .onAppear {
-            if !hasPlayedWelcome {
-                hasPlayedWelcome = true
-                isAudioPlaying = true
-                speechManager.onAudioFinished = {
-                    DispatchQueue.main.async {
-                        startGameWalk()
-                    }
-                }
-                let introKey: String
-                switch category {
-                case .land: introKey = "choose-a-dinosaur-game"
-                case .air: introKey = "choose-a-pterosaur-game"
-                case .sea: introKey = "choose-a-marine-reptile-game"
-                }
-                let delay: TimeInterval = 1.2
-                DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                    speechManager.speak(introKey)
-                }
-            }
+            runWelcomeAndWalkIfNeeded()
+        }
+        .onChange(of: showingGameList) { _, newValue in
+            if newValue { runWelcomeAndWalkIfNeeded() }
         }
         .allowsHitTesting(!isAudioPlaying)
     }
 
+    private func runWelcomeAndWalkIfNeeded() {
+        guard showingGameList, !hasPlayedWelcome else { return }
+        hasPlayedWelcome = true
+        isAudioPlaying = true
+        speechManager.onAudioFinished = {
+            DispatchQueue.main.async {
+                startGameWalk()
+            }
+        }
+        let introKey: String
+        switch category {
+        case .land:
+            introKey = selectedLevel.map { $0.introAudioKey } ?? "choose-a-dinosaur-game"
+        case .air: introKey = "choose-a-pterosaur-game"
+        case .sea: introKey = "choose-a-marine-reptile-game"
+        }
+        let delay: TimeInterval = 1.2
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            speechManager.speak(introKey)
+        }
+    }
+
     /// After category intro finishes, walk the game list: highlight each card and play its intro audio so children learn image ↔ name.
     private func startGameWalk() {
-        let games = GameCatalog.games(for: category)
+        let games = GameCatalog.games(for: category, level: category == .land ? selectedLevel : nil)
         if games.isEmpty {
             isAudioPlaying = false
             speechManager.onAudioFinished = nil
@@ -643,7 +736,8 @@ enum GameType {
     case racing(RacingGameConfig) // Racing Dinosaurs!
     case matrixMaterials(MatrixMaterialsGameConfig) // Matrix Materials: identify matrix encasing fossil
     case dinoAges(DinoAgesGameConfig) // Dino Ages: when dinosaurs lived
-    
+    case dinoFormations(DinoFormationsGameConfig) // Dino Formations: dinosaurs found in named formation
+
     var name: String {
         switch self {
         case .matching(let config):
@@ -668,9 +762,11 @@ enum GameType {
             return config.title
         case .dinoAges(let config):
             return config.title
+        case .dinoFormations(let config):
+            return config.title
         }
     }
-    
+
     var description: String {
         switch self {
         case .matching:
@@ -695,86 +791,95 @@ enum GameType {
             return "Identify the matrix material encasing the fossil"
         case .dinoAges:
             return "Discover when dinosaurs lived"
+        case .dinoFormations:
+            return "Pick dinosaurs found in the formation shown"
         }
     }
-    
+
     var gameConfig: MatchingGameConfig? {
         switch self {
         case .matching(let config): return config
-        case .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges: return nil
+        case .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations: return nil
         }
     }
 
     var weighConfig: WeighGameConfig? {
         switch self {
         case .weigh(let config): return config
-        case .matching, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges: return nil
+        case .matching, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations: return nil
         }
     }
 
     var balanceConfig: BalanceGameConfig? {
         switch self {
         case .balance(let config): return config
-        case .matching, .weigh, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges: return nil
+        case .matching, .weigh, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations: return nil
         }
     }
 
     var guessConfig: GuessGameConfig? {
         switch self {
         case .guess(let config): return config
-        case .matching, .weigh, .balance, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges: return nil
+        case .matching, .weigh, .balance, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations: return nil
         }
     }
 
     var findMamaConfig: FindMamaConfig? {
         switch self {
         case .findMama(let config): return config
-        case .matching, .weigh, .balance, .guess, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges: return nil
+        case .matching, .weigh, .balance, .guess, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations: return nil
         }
     }
 
     var dinoLunchConfig: DinoLunchConfig? {
         switch self {
         case .dinoLunch(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations: return nil
         }
     }
 
     var wackyConfig: WackyGameConfig? {
         switch self {
         case .wacky(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .toothache, .racing, .matrixMaterials, .dinoAges: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations: return nil
         }
     }
 
     var toothacheConfig: ToothacheGameConfig? {
         switch self {
         case .toothache(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .racing, .matrixMaterials, .dinoAges: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .racing, .matrixMaterials, .dinoAges, .dinoFormations: return nil
         }
     }
 
     var racingConfig: RacingGameConfig? {
         switch self {
         case .racing(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .matrixMaterials, .dinoAges: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .matrixMaterials, .dinoAges, .dinoFormations: return nil
         }
     }
 
     var matrixMaterialsConfig: MatrixMaterialsGameConfig? {
         switch self {
         case .matrixMaterials(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoAges: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoAges, .dinoFormations: return nil
         }
     }
 
     var dinoAgesConfig: DinoAgesGameConfig? {
         switch self {
         case .dinoAges(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoFormations: return nil
         }
     }
-    
+
+    var dinoFormationsConfig: DinoFormationsGameConfig? {
+        switch self {
+        case .dinoFormations(let config): return config
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges: return nil
+        }
+    }
+
     /// Config id for this game type; used for selection state and ForEach identity.
     var id: String? {
         switch self {
@@ -789,9 +894,10 @@ enum GameType {
         case .racing(let config): return config.id
         case .matrixMaterials(let config): return config.id
         case .dinoAges(let config): return config.id
+        case .dinoFormations(let config): return config.id
         }
     }
-    
+
     var imageName: String {
         switch self {
         case .matching(let config):
@@ -816,9 +922,11 @@ enum GameType {
             return "game-\(config.id)"
         case .dinoAges(let config):
             return "game-\(config.id)"
+        case .dinoFormations(let config):
+            return "game-\(config.id)"
         }
     }
-    
+
     /// Emoji icon for the game card when no image asset is available; also used for accessibility.
     var icon: String {
         switch self {
@@ -833,6 +941,7 @@ enum GameType {
         case .racing: return "🏃"
         case .matrixMaterials: return "🪨"
         case .dinoAges: return "🕐"
+        case .dinoFormations: return "🪨"
         }
     }
 
@@ -850,7 +959,54 @@ enum GameType {
         case .racing: return "game-racing-dinosaurs"
         case .matrixMaterials(let config): return "game-\(config.id)"
         case .dinoAges(let config): return config.introAudio
+        case .dinoFormations(let config): return config.introAudio
         }
+    }
+}
+
+// MARK: - Level card (Easy / Mid / Hard)
+
+private struct LevelCard: View {
+    let level: GameLevel
+    let onTap: () -> Void
+
+    var body: some View {
+        Button(action: onTap) {
+            HStack(spacing: 12) {
+                // Label-style image: wide and short so all six levels fit on screen; size progression (small→big dino) still reads.
+                if UIImage(named: level.imageName) != nil {
+                    Image(level.imageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 72, height: 48)
+                } else {
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color.accentColor.opacity(0.15))
+                        .frame(width: 72, height: 48)
+                        .overlay(
+                            Text(level.title)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.primary)
+                        )
+                }
+                Text(level.title)
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                Spacer(minLength: 0)
+            }
+            .padding(.vertical, 10)
+            .padding(.horizontal, 14)
+            .background(
+                RoundedRectangle(cornerRadius: 14)
+                    .fill(Color.gray.opacity(0.1))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 14)
+                    .stroke(Color.accentColor.opacity(0.4), lineWidth: 2)
+            )
+        }
+        .buttonStyle(.plain)
     }
 }
 

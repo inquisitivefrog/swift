@@ -1,0 +1,9 @@
+{
+  "name": "Dinosaur Park",
+  "dinoImageNames": [
+    "dino-corythosaurus",
+    "dino-chasmosaurus",
+    "dino-parasaurolophus",
+    "dino-edmontosaurus"
+  ]
+}

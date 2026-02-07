@@ -164,7 +164,7 @@ struct BalanceGameView: View {
         leftItem = item
         availableToAdd = gameConfig.items.filter { $0.id != item.id }
         phase = .adding
-        speechManager.speak(item.name)
+        speechManager.speak(audioKey: item.imageName ?? item.name, fallbackText: item.name)
         if isHeavy(item) {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
@@ -219,7 +219,7 @@ struct BalanceGameView: View {
         let newRightMass = rightMass
         updateSeesawTilt()
 
-        speechManager.speak(item.name)
+        speechManager.speak(audioKey: item.imageName ?? item.name, fallbackText: item.name)
         speechManager.onAudioFinished = {
             speechManager.onAudioFinished = nil
             playHandrailAfterAdd(newRightMass: newRightMass, addedItem: item)
@@ -444,7 +444,8 @@ struct BalanceGameView: View {
         if participants.isEmpty {
             playWeHaveWinnerAndDismiss()
         } else {
-            speechManager.speak(participants[0].name)
+            let p = participants[0]
+            speechManager.speak(audioKey: p.imageName ?? p.name, fallbackText: p.name)
             speechManager.onAudioFinished = { advanceEndHighlight() }
         }
     }
@@ -454,7 +455,8 @@ struct BalanceGameView: View {
         endHighlightIndex += 1
         let participants = allDinosaursUsed
         if endHighlightIndex < participants.count {
-            speechManager.speak(participants[endHighlightIndex].name)
+            let p = participants[endHighlightIndex]
+            speechManager.speak(audioKey: p.imageName ?? p.name, fallbackText: p.name)
             speechManager.onAudioFinished = { advanceEndHighlight() }
         } else {
             playWeHaveWinnerAndDismiss()
@@ -506,7 +508,8 @@ struct BalanceGameView: View {
                     if participants.isEmpty {
                         playWeHaveWinnerAndDismiss()
                     } else {
-                        speechManager.speak(participants[0].name)
+                        let p = participants[0]
+                        speechManager.speak(audioKey: p.imageName ?? p.name, fallbackText: p.name)
                         speechManager.onAudioFinished = { advanceEndHighlight() }
                     }
                 }
