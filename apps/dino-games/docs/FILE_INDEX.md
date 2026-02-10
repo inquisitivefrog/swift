@@ -18,7 +18,28 @@ Design docs and brainstorming are under **docs/design/** for easier reading and 
 | **CHILD_PSYCHOLOGY_GUIDELINES.md** | Child psychology guidelines (3 facts rule, 20+ game elements) |
 | **GAMEPLAY_DESIGN.md** | Challenge-first gameplay mechanics |
 
-### Game Concepts (docs/design/game-concepts/)
+### Guidelines (docs/design/guidelines/)
+| File | Description |
+|------|-------------|
+| **PRIVACY_LEGAL.md** | COPPA compliance and legal considerations |
+| **SOCIAL_CONCERNS.md** | Advocacy group considerations and responses |
+
+### Technical (docs/design/technical/)
+| File | Description |
+|------|-------------|
+| **TECHNICAL_FEASIBILITY.md** | Technical assessment and feasibility analysis |
+| **IMAGE_GENERATION_GUIDE.md** | Asset creation strategies and workflows |
+| **AUDIO_STRATEGY.md** | Audio file sizes, memory usage, and strategies |
+| **GRID_TOUCH_DETECTION.md** | Grid-based touch detection for Where's Waldo game |
+| **FUN_FACTOR_AND_REPEAT_PLAY.md** | Fun factor and repeat play considerations |
+
+---
+
+## Gameplay (docs/gameplay/)
+
+Game-specific design, concepts, and reference. See [gameplay/README.md](gameplay/README.md) for an overview.
+
+### Game concepts (brainstorming ideas)
 | File | Description |
 |------|-------------|
 | **MATCHING_GAME.md** | Matching game implementation (dinosaurs & characteristics) |
@@ -40,20 +61,19 @@ Design docs and brainstorming are under **docs/design/** for easier reading and 
 | **LEVEL_PROGRESSION.md** | Level progression system |
 | **SPECIES_LISTS_12_PER_GROUP.md** | Species lists (12 per group) |
 
-### Guidelines (docs/design/guidelines/)
+### Game implementation & reference (from app)
 | File | Description |
 |------|-------------|
-| **PRIVACY_LEGAL.md** | COPPA compliance and legal considerations |
-| **SOCIAL_CONCERNS.md** | Advocacy group considerations and responses |
-
-### Technical (docs/design/technical/)
-| File | Description |
-|------|-------------|
-| **TECHNICAL_FEASIBILITY.md** | Technical assessment and feasibility analysis |
-| **IMAGE_GENERATION_GUIDE.md** | Asset creation strategies and workflows |
-| **AUDIO_STRATEGY.md** | Audio file sizes, memory usage, and strategies |
-| **GRID_TOUCH_DETECTION.md** | Grid-based touch detection for Where's Waldo game |
-| **FUN_FACTOR_AND_REPEAT_PLAY.md** | Fun factor and repeat play considerations |
+| **GAME_SELECTION_ARCHITECTURE.md** | Game selection and categories architecture |
+| **MATCHING_GAME_DESIGN.md** | Match-the-dinosaur design |
+| **MATCHING_GAME_REVIEW.md** | Matching game review |
+| **MATCHING_GAME_LOGIC_REVIEW.md** | Matching game logic review |
+| **MULTIPLE_MATCHING_GAMES.md** | Supporting multiple matching games (e.g. pterosaurs) |
+| **RACING_DINOSAURS_DESIGN.md** | Racing game design and metrics |
+| **PTEROSAUR_GAME_PLAN.md** | Pterosaur games plan |
+| **TOOTHACHE_ASSETS.md** | Toothache game asset reference |
+| **NAME_THAT_DINOSAUR_ASSETS.md** | Name That Dinosaur asset reference |
+| **WEIGH_GAME_WEIGHTS.md** | Weigh game weights reference |
 
 ---
 
@@ -62,7 +82,7 @@ Design docs and brainstorming are under **docs/design/** for easier reading and 
 | File | Description |
 |------|-------------|
 | **README.md** | Project overview, tech stack, app size considerations |
-| **FILE_INDEX.md** | This file – index of docs and design folder |
+| **FILE_INDEX.md** | This file – index of docs, design, and gameplay |
 
 ---
 
@@ -73,24 +93,16 @@ dino-games/
 ├── docs/
 │   ├── README.md
 │   ├── FILE_INDEX.md (this file)
-│   └── design/
+│   ├── design/
+│   │   ├── README.md
+│   │   ├── brainstorming/
+│   │   ├── philosophy/
+│   │   ├── guidelines/
+│   │   └── technical/
+│   └── gameplay/
 │       ├── README.md
-│       ├── brainstorming/
-│       │   ├── BRAINSTORMING.md
-│       │   └── SESSION_NOTES.md
-│       ├── philosophy/
-│       │   ├── DESIGN_PHILOSOPHY.md
-│       │   ├── DESIGN_CONCERNS.md
-│       │   ├── CHILD_PSYCHOLOGY_GUIDELINES.md
-│       │   └── GAMEPLAY_DESIGN.md
-│       ├── game-concepts/
-│       │   └── (18 game/feature design docs)
-│       ├── guidelines/
-│       │   ├── PRIVACY_LEGAL.md
-│       │   └── SOCIAL_CONCERNS.md
-│       └── technical/
-│           └── (5 technical design docs)
-├── DinoGames/          (app + asset/setup docs)
+│       └── (28 game concept + implementation docs)
+├── DinoGames/          (app code, asset/setup docs)
 └── ...
 ```
 
@@ -106,10 +118,10 @@ dino-games/
 - **design/guidelines/PRIVACY_LEGAL.md** – Legal considerations
 - **design/philosophy/CHILD_PSYCHOLOGY_GUIDELINES.md** – Design guidelines
 
-### Implementation
-- Game guides in **design/game-concepts/**
-- Asset/audio guides in **design/technical/**
+### Game-specific knowledge
+- **gameplay/** – Game concepts, design, and per-game reference (matching, racing, pterosaurs, toothache, weigh, etc.)
+- **design/technical/** – Asset/audio guides
 
 ---
 
-**Last updated:** Design folder created; docs sorted into design subfolders.
+**Last updated:** Gameplay folder added; game-specific docs moved from design/game-concepts and DinoGames into docs/gameplay/.
