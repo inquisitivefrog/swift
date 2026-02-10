@@ -32,16 +32,17 @@ private enum DinoAgesPeriod: String, CaseIterable {
 private let dinoAgesJurassicImageNames: Set<String> = [
     "dino-anchiornis", "dino-apatosaurus", "dino-archaeopteryx", "dino-brachiosaurus", "dino-camarasaurus",
     "dino-ceratosaurus", "dino-compsognathus", "dino-diplodocus", "dino-dryosaurus", "dino-eosinopteryx",
-    "dino-pedopenna", "dino-stegosaurus", "dino-xiaotingia"
+    "dino-allosaurus", "dino-pedopenna", "dino-stegosaurus", "dino-torvosaurus", "dino-xiaotingia"
 ]
 
 /// Dino image set names (dino-*) that are Cretaceous period. Used to filter the pool.
 private let dinoAgesCretaceousImageNames: Set<String> = [
     "dino-albertosaurus", "dino-ankylosaurus", "dino-argentinosaurus", "dino-baryonyx", "dino-chasmosaurus",
     "dino-corythosaurus", "dino-deinonychus", "dino-dromeosaurus", "dino-edmontosaurus", "dino-gallimimus",
-    "dino-giganotosaurus", "dino-iguanodon", "dino-kosmoceratops", "dino-microraptor", "dino-pachycephalosaurus",
-    "dino-parasaurolophus", "dino-spinosaurus", "dino-therizinosaurus", "dino-torosaurus", "dino-trex",
-    "dino-triceratops", "dino-troodon", "dino-utahraptor", "dino-velociraptor"
+    "dino-giganotosaurus", "dino-iguanodon", "dino-kosmoceratops", "dino-majungasaurus", "dino-masiakasaurus",
+    "dino-microraptor", "dino-pachycephalosaurus", "dino-parasaurolophus", "dino-rapetosaurus", "dino-spinosaurus",
+    "dino-therizinosaurus", "dino-torosaurus", "dino-trex", "dino-triceratops", "dino-troodon",
+    "dino-oviraptor", "dino-utahraptor", "dino-velociraptor"
 ]
 
 /// All dinosaurs that have a dino- imageset: catalog (ids 1–13) + extras (ids 14–37) so all 37 asset sets are included.
@@ -72,6 +73,12 @@ private let dinoAgesPool: [Dinosaur] = {
         Dinosaur(id: 35, name: "Torosaurus", icon: "🦏", imageName: "dino-torosaurus", characteristicIds: []),
         Dinosaur(id: 36, name: "Utahraptor", icon: "🦖", imageName: "dino-utahraptor", characteristicIds: []),
         Dinosaur(id: 37, name: "Xiaotingia", icon: "🦅", imageName: "dino-xiaotingia", characteristicIds: []),
+        Dinosaur(id: 38, name: "Masiakasaurus", icon: "🦖", imageName: "dino-masiakasaurus", characteristicIds: []),
+        Dinosaur(id: 39, name: "Torvosaurus", icon: "🦖", imageName: "dino-torvosaurus", characteristicIds: []),
+        Dinosaur(id: 40, name: "Rapetosaurus", icon: "🦕", imageName: "dino-rapetosaurus", characteristicIds: []),
+        Dinosaur(id: 41, name: "Majungasaurus", icon: "🦖", imageName: "dino-majungasaurus", characteristicIds: []),
+        Dinosaur(id: 42, name: "Allosaurus", icon: "🦖", imageName: "dino-allosaurus", characteristicIds: []),
+        Dinosaur(id: 43, name: "Oviraptor", icon: "🦅", imageName: "dino-oviraptor", characteristicIds: []),
     ]
     return fromCatalog + extras
 }()

@@ -58,7 +58,7 @@ Dinosaur name speech maps to `Dinosaurs/{slug}.m4a`. Slugs: t-rex, triceratops, 
 
 ### Pterosaurs/
 
-Pterosaur name speech maps to `Pterosaurs/ptero-{slug}.m4a`: ptero-pteradactyl, ptero-pteranodon, ptero-quetzacoatlus, ptero-rhamphorhynchus, ptero-dimorphodon, ptero-anurognathus, ptero-dsungaripterus, ptero-nyctosaurus, ptero-tapejara, ptero-tupandactylus.
+Pterosaur name speech maps to `Pterosaurs/ptero-{slug}.m4a`: ptero-pteradactylus, ptero-pteranodon, ptero-quetzacoatlus, ptero-rhamphorhynchus, ptero-dimorphodon, ptero-anurognathus, ptero-dsungaripterus, ptero-nyctosaurus, ptero-tapejara, ptero-tupandactylus.
 
 ### Dino-Characteristics/ and Ptero-Characteristics/
 
@@ -92,7 +92,7 @@ These are used as `Image(imageName)` where `imageName` comes from the game confi
 
 ### Guess (Name That Dinosaur)
 
-- **Silhouettes**: `silhouette-trex`, `silhouette-triceratops`, etc.
+- **Silhouettes**: `dino-silhouette-trex`, `dino-silhouette-triceratops`, etc. (prefix allows `ptero-silhouette-` / marine later)
 
 ### Toothache
 

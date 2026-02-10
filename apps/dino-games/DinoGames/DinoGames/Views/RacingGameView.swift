@@ -3,7 +3,7 @@
 //  DinoGames
 //
 //  Racing Dinosaurs!: Player picks two dinosaurs from four per period; they race on an oval track.
-//  Uses emojis for now (racer-* and winner-race-* imagesets can be added later).
+//  Dinosaur racing uses dino-racer-* and dino-winner-race-* imagesets (ptero-racer-*, etc. for future games).
 //
 
 import SwiftUI
@@ -16,22 +16,53 @@ struct RacingRacer: Identifiable {
     let name: String
     let icon: String // Emoji fallback when imageset missing
     let speed: Double // Estimated top speed (mph) for deterministic winner
+    /// When set (e.g. for pterosaurs), used for fallback image and name audio; nil = use prefix-based fallback (dino).
+    let fallbackImageName: String?
 
     /// Slug for asset names: lowercase, spaces → hyphens (e.g. "T-Rex" → "t-rex").
     var imageSlug: String {
         name.lowercased().replacingOccurrences(of: " ", with: "-")
     }
-    /// racer-{slug} imageset (track & field jersey); use icon if missing.
-    var racerImageName: String { "racer-\(imageSlug)" }
-    /// winner-race-{slug} imageset (winner pose with trophy); use icon if missing.
-    var winnerImageName: String { "winner-race-\(imageSlug)" }
+    /// Racer image name for a given asset prefix (e.g. "dino" → dino-racer-*, "ptero" → ptero-racer-*). T-Rex special case for dino only.
+    func racerImageName(prefix: String) -> String {
+        if prefix == "dino" && imageSlug == "t-rex" { return "dino-racer-trex" }
+        return "\(prefix)-racer-\(imageSlug)"
+    }
+    /// Winner image name for a given asset prefix.
+    func winnerImageName(prefix: String) -> String {
+        if prefix == "dino" && imageSlug == "t-rex" { return "dino-winner-race-trex" }
+        return "\(prefix)-winner-race-\(imageSlug)"
+    }
+    /// Fallback image/audio name when racer/winner assets are missing. Uses fallbackImageName if set, else prefix-based (dino: dino-{slug}).
+    func effectiveFallbackImageName(prefix: String) -> String {
+        if let f = fallbackImageName { return f }
+        let dinoSlug = imageSlug.replacingOccurrences(of: "-", with: "")
+        return "dino-\(dinoSlug)"
+    }
+}
+
+/// Returns image name to use for a racer: {prefix}-racer-{slug} if present, else fallback (e.g. dino-trex, ptero-pteranodon).
+private func racerDisplayImageName(for racer: RacingRacer, config: RacingGameConfig) -> String? {
+    let prefix = config.assetPrefix
+    if UIImage(named: racer.racerImageName(prefix: prefix)) != nil { return racer.racerImageName(prefix: prefix) }
+    let fallback = racer.effectiveFallbackImageName(prefix: prefix)
+    if UIImage(named: fallback) != nil { return fallback }
+    return nil
+}
+
+/// Returns image name for winner view: {prefix}-winner-race-{slug} if present, else same fallback as racer.
+private func winnerDisplayImageName(for racer: RacingRacer, config: RacingGameConfig) -> String? {
+    let prefix = config.assetPrefix
+    if UIImage(named: racer.winnerImageName(prefix: prefix)) != nil { return racer.winnerImageName(prefix: prefix) }
+    return racerDisplayImageName(for: racer, config: config)
 }
 
 struct RacingGameConfig {
     let id: String
     let title: String
     let introAudio: String
-    let racers: [RacingRacer] // 4 dinosaurs per period
+    let assetPrefix: String // "dino" or "ptero" for racer/winner/referee image names
+    let racers: [RacingRacer] // 4 racers per game
 }
 
 // MARK: - Main View
@@ -57,7 +88,7 @@ struct RacingGameView: View {
     @State private var isAudioPlaying = false
     /// Pre-race: 0 = racer1 image 2s, 1 = racer2 image 2s, 2 = referee-start image 2s then starting-whistle
     @State private var preRaceStep: Int? = nil
-    /// Post-race: "referee" = referee-finish image + crowd-cheering, "winner" = winner-race-{slug}
+    /// Post-race: "referee" = dino-racer-referee-finish image, "winner" = dino-winner-race-{slug}
     @State private var postRaceStep: String? = nil
     @State private var hasPlayedStartingGun = false
     @State private var hasPlayedWeHaveAWinner = false
@@ -91,7 +122,8 @@ struct RacingGameView: View {
                                 .onAppear {
                                     if selectedLane1 == nil && !hasPlayedFirstRacerPrompt {
                                         hasPlayedFirstRacerPrompt = true
-                                        speechManager.speak("game-racer-choose-your-first-dinosaur-to-race")
+                                        let firstPrompt = gameConfig.assetPrefix == "ptero" ? "game-racer-choose-your-first-pterosaur-to-race" : "game-racer-choose-your-first-dinosaur-to-race"
+                                        speechManager.speak(firstPrompt)
                                     }
                                 }
                         }
@@ -134,6 +166,7 @@ struct RacingGameView: View {
                         ForEach(Array(gameConfig.racers.dropFirst(row * 2).prefix(2))) { racer in
                             RacingRacerCard(
                                 racer: racer,
+                                gameConfig: gameConfig,
                                 isSelected: selectedLane1?.id == racer.id || selectedLane2?.id == racer.id || pendingRacer2?.id == racer.id,
                                 isDisabled: (selectedLane1 != nil && selectedLane2 == nil && pendingRacer2 == nil && !canSelectSecond) || (selectedLane1 != nil && (selectedLane2 != nil || pendingRacer2 != nil))
                             ) {
@@ -152,24 +185,25 @@ struct RacingGameView: View {
         if selectedLane1 == nil {
             showingExpandedRacer = racer
             canSelectSecond = false
-            speechManager.speak(racer.name)
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 self.showingExpandedRacer = nil
                 self.selectedLane1 = racer
                 self.canSelectSecond = true
-                self.speechManager.speak("game-racer-choose-your-second-dinosaur-to-race")
+                let secondPrompt = self.gameConfig.assetPrefix == "ptero" ? "game-racer-choose-your-second-pterosaur-to-race" : "game-racer-choose-your-second-dinosaur-to-race"
+                self.speechManager.speak(secondPrompt)
             }
+            speechManager.speak(racer.name)
         } else if selectedLane2 == nil && pendingRacer2 == nil && selectedLane1?.id != racer.id && canSelectSecond {
             showingExpandedRacer = racer
             canSelectSecond = false
-            speechManager.speak(racer.name)
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 self.showingExpandedRacer = nil
                 self.selectedLane2 = racer
                 self.beginPreRaceSequence()
             }
+            speechManager.speak(racer.name)
         }
     }
 
@@ -177,8 +211,8 @@ struct RacingGameView: View {
     private func expandedRacerView(geometry: GeometryProxy, racer: RacingRacer) -> some View {
         let size = min(geometry.size.width, geometry.size.height) * 0.45
         return VStack(spacing: 20) {
-            if UIImage(named: racer.racerImageName) != nil {
-                Image(racer.racerImageName)
+            if let imageName = racerDisplayImageName(for: racer, config: gameConfig) {
+                Image(imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: size, height: size)
@@ -222,7 +256,7 @@ struct RacingGameView: View {
                         }
                     }
             } else {
-                refereeImageView("racer-referee-start")
+                refereeImageView("\(gameConfig.assetPrefix)-racer-referee-start")
                     .onAppear {
                         guard !hasPlayedStartingGun else { return }
                         hasPlayedStartingGun = true
@@ -244,8 +278,8 @@ struct RacingGameView: View {
 
     private func racerImageFullView(racer: RacingRacer, size: CGFloat) -> some View {
         Group {
-            if UIImage(named: racer.racerImageName) != nil {
-                Image(racer.racerImageName)
+            if let imageName = racerDisplayImageName(for: racer, config: gameConfig) {
+                Image(imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: size, height: size)
@@ -275,7 +309,7 @@ struct RacingGameView: View {
             if UIImage(named: "game-referee-finish") != nil {
                 refereeImageView("game-referee-finish")
             } else {
-                refereeImageView("racer-referee-finish")
+                refereeImageView("\(gameConfig.assetPrefix)-racer-referee-finish")
             }
         }
             .onAppear {
@@ -288,35 +322,169 @@ struct RacingGameView: View {
             }
     }
     
-    // MARK: - Race (oval track: center→right, up, right→left, down, left→center)
+    // MARK: - Race (oval for dinosaurs; airport A→B→C→D for pterosaurs)
 
     private func raceTrack(geometry: GeometryProxy) -> some View {
         guard let r1 = selectedLane1, let r2 = selectedLane2 else { return AnyView(EmptyView()) }
+        if gameConfig.assetPrefix == "ptero" {
+            return AnyView(airportTrackView(geometry: geometry, progress1: progress1, progress2: progress2, racer1: r1, racer2: r2))
+        }
         return AnyView(ovalTrackView(geometry: geometry, progress1: progress1, progress2: progress2, racer1: r1, racer2: r2))
     }
 
-    /// Oval path: 1) left→right from middle, 2) up one row, 3) right→left, 4) down one row, 5) left→right to middle.
-    private func pointOnOval(progress: Double, width: CGFloat, height: CGFloat) -> CGPoint {
+    /// Airport course for pterosaurs: A (left) → B (diagonal up, top-right) → C (straight down, bottom-right) → D (diagonal up, top-left) → A.
+    /// Returns point on path for progress in [0, 1]. inset > 0 gives inner (shorter) path.
+    private func pointOnAirportCourse(progress: Double, width: CGFloat, height: CGFloat, inset: CGFloat = 0) -> CGPoint {
+        let p = max(0, min(1, progress))
+        let m = 24 + inset
+        let w = width
+        let h = height
+        let A = CGPoint(x: m, y: h - m)
+        let B = CGPoint(x: w - m, y: m)
+        let C = CGPoint(x: w - m, y: h - m)
+        let D = CGPoint(x: m, y: m)
+        func len(_ a: CGPoint, _ b: CGPoint) -> CGFloat {
+            hypot(b.x - a.x, b.y - a.y)
+        }
+        let L_AB = len(A, B)
+        let L_BC = len(B, C)
+        let L_CD = len(C, D)
+        let L_DA = len(D, A)
+        let total = L_AB + L_BC + L_CD + L_DA
+        let d = CGFloat(p) * total
+        func lerp(_ a: CGPoint, _ b: CGPoint, t: CGFloat) -> CGPoint {
+            CGPoint(x: a.x + t * (b.x - a.x), y: a.y + t * (b.y - a.y))
+        }
+        if d < L_AB { return lerp(A, B, t: d / L_AB) }
+        let d2 = d - L_AB
+        if d2 < L_BC { return lerp(B, C, t: d2 / L_BC) }
+        let d3 = d2 - L_BC
+        if d3 < L_CD { return lerp(C, D, t: d3 / L_CD) }
+        let d4 = d3 - L_CD
+        return lerp(D, A, t: d4 / L_DA)
+    }
+
+    /// Path for airport course (same corners as pointOnAirportCourse with inset 0).
+    private func airportPath(width: CGFloat, height: CGFloat, inset: CGFloat = 0) -> Path {
+        let m = 24 + inset
+        let w = width
+        let h = height
+        let A = CGPoint(x: m, y: h - m)
+        let B = CGPoint(x: w - m, y: m)
+        let C = CGPoint(x: w - m, y: h - m)
+        let D = CGPoint(x: m, y: m)
+        var path = Path()
+        path.move(to: A)
+        path.addLine(to: B)
+        path.addLine(to: C)
+        path.addLine(to: D)
+        path.closeSubpath()
+        return path
+    }
+
+    private func airportTrackView(geometry: GeometryProxy, progress1: Double, progress2: Double, racer1: RacingRacer, racer2: RacingRacer) -> some View {
+        let padding: CGFloat = 24
+        let trackWidth = geometry.size.width - padding * 2
+        let trackHeight = max(120, geometry.size.height - 140)
+        let racerSize: CGFloat = 48
+        let trackInset: CGFloat = 36
+
+        let outerPath = airportPath(width: trackWidth, height: trackHeight, inset: 0)
+        let innerPath = airportPath(width: trackWidth, height: trackHeight, inset: trackInset)
+
+        let pt1Outer = pointOnAirportCourse(progress: progress1, width: trackWidth, height: trackHeight, inset: 0)
+        let pt2Outer = pointOnAirportCourse(progress: progress2, width: trackWidth, height: trackHeight, inset: 0)
+        let pt1Inner = pointOnAirportCourse(progress: progress1, width: trackWidth, height: trackHeight, inset: trackInset)
+        let pt2Inner = pointOnAirportCourse(progress: progress2, width: trackWidth, height: trackHeight, inset: trackInset)
+
+        let racer1OnInner = racer1.speed <= racer2.speed
+        let pos1 = racer1OnInner ? pt1Inner : pt1Outer
+        let pos2 = racer1OnInner ? pt2Outer : pt2Inner
+
+        let half = racerSize / 2
+        let margin: CGFloat = 24
+        let finishLineHeight: CGFloat = 12
+        let finishLineX = margin - 2
+        return VStack(spacing: 8) {
+            Text("Race!")
+                .font(.headline)
+            ZStack(alignment: .topLeading) {
+                outerPath
+                    .stroke(Color.gray.opacity(0.5), lineWidth: 6)
+                    .frame(width: trackWidth, height: trackHeight)
+                innerPath
+                    .stroke(Color.gray.opacity(0.35), lineWidth: 6)
+                    .frame(width: trackWidth, height: trackHeight)
+                // Start/finish at airport A (left)
+                Rectangle()
+                    .fill(Color.white.opacity(0.95))
+                    .frame(width: 4, height: finishLineHeight)
+                    .offset(x: finishLineX, y: trackHeight - margin - finishLineHeight / 2)
+                // Airport labels
+                Text("A").font(.caption.weight(.bold)).foregroundColor(.secondary).offset(x: margin - 8, y: trackHeight - margin - 6)
+                Text("B").font(.caption.weight(.bold)).foregroundColor(.secondary).offset(x: trackWidth - margin - 8, y: margin - 4)
+                Text("C").font(.caption.weight(.bold)).foregroundColor(.secondary).offset(x: trackWidth - margin - 8, y: trackHeight - margin - 6)
+                Text("D").font(.caption.weight(.bold)).foregroundColor(.secondary).offset(x: margin - 8, y: margin - 4)
+                racerView(racer: racer1, size: racerSize)
+                    .offset(x: pos1.x - half, y: pos1.y - half)
+                racerView(racer: racer2, size: racerSize)
+                    .offset(x: pos2.x - half, y: pos2.y - half)
+            }
+            .frame(width: trackWidth, height: trackHeight)
+        }
+        .padding(.horizontal, padding)
+    }
+
+    /// Rounded-rectangle path: start/finish at center bottom; clockwise lap (right → up → left → down → right to center).
+    /// Returns point on path for progress in [0, 1]. Uses same corner radius proportion as drawn track.
+    private func pointOnRoundedRect(progress: Double, width: CGFloat, height: CGFloat) -> CGPoint {
         let p = max(0, min(1, progress))
         let w = width
         let h = height
         let cx = w / 2
-        if p <= 0.2 {
-            let t = p / 0.2
-            return CGPoint(x: cx + t * (w - cx), y: h)
-        } else if p <= 0.4 {
-            let t = (p - 0.2) / 0.2
-            return CGPoint(x: w, y: h - t * h)
-        } else if p <= 0.6 {
-            let t = (p - 0.4) / 0.2
-            return CGPoint(x: w - t * w, y: 0)
-        } else if p <= 0.8 {
-            let t = (p - 0.6) / 0.2
-            return CGPoint(x: 0, y: t * h)
-        } else {
-            let t = (p - 0.8) / 0.2
-            return CGPoint(x: t * cx, y: h)
+        let r = min(min(w, h) * 0.18, min(w, h) / 4)
+        let arcLen = .pi * r / 2
+        let L1 = (w - r) - cx
+        let L2 = h - 2 * r
+        let L3 = w - 2 * r
+        let L4 = cx - r
+        let total = L1 + arcLen + L2 + arcLen + L3 + arcLen + L2 + arcLen + L4
+        let d = p * total
+        let t1 = d / L1
+        if d < L1 { return CGPoint(x: cx + t1 * (w - r - cx), y: h) }
+        let d2 = d - L1
+        if d2 < arcLen {
+            let t = CGFloat(d2 / arcLen)
+            let angle = CGFloat.pi / 2 * (1 - t)
+            return CGPoint(x: (w - r) + r * cos(angle), y: (h - r) + r * sin(angle))
         }
+        let d3 = d2 - arcLen
+        if d3 < L2 { return CGPoint(x: w, y: (h - r) - d3 / L2 * (h - 2 * r)) }
+        let d4 = d3 - L2
+        if d4 < arcLen {
+            let t = CGFloat(d4 / arcLen)
+            let angle = -CGFloat.pi / 2 * t
+            return CGPoint(x: (w - r) + r * cos(angle), y: r + r * sin(angle))
+        }
+        let d5 = d4 - arcLen
+        if d5 < L3 { return CGPoint(x: (w - r) - d5 / L3 * (w - 2 * r), y: 0) }
+        let d6 = d5 - L3
+        if d6 < arcLen {
+            let t = CGFloat(d6 / arcLen)
+            let angle = -CGFloat.pi / 2 + (3 * CGFloat.pi / 2) * t
+            return CGPoint(x: r + r * cos(angle), y: r + r * sin(angle))
+        }
+        let d7 = d6 - arcLen
+        if d7 < L2 { return CGPoint(x: 0, y: r + d7 / L2 * (h - 2 * r)) }
+        let d8 = d7 - L2
+        if d8 < arcLen {
+            let t = CGFloat(d8 / arcLen)
+            let angle = CGFloat.pi - CGFloat.pi / 2 * t
+            return CGPoint(x: r + r * cos(angle), y: (h - r) + r * sin(angle))
+        }
+        let d9 = d8 - arcLen
+        let t9 = d9 / L4
+        return CGPoint(x: r + t9 * (cx - r), y: h)
     }
 
     private func ovalTrackView(geometry: GeometryProxy, progress1: Double, progress2: Double, racer1: RacingRacer, racer2: RacingRacer) -> some View {
@@ -325,22 +493,20 @@ struct RacingGameView: View {
         let ovalHeight = max(120, geometry.size.height - 140)
         let racerSize: CGFloat = 48
         let trackInset: CGFloat = 44 // Inner track inset so both racers stay visible (no overlay when neck-and-neck)
+        let cornerRadius = min(min(ovalWidth, ovalHeight) * 0.18, min(ovalWidth, ovalHeight) / 4)
 
-        // Outer oval (racer 1) and inner oval (racer 2) in same coordinate space
-        let outerPath = Path { path in
-            path.addRect(CGRect(x: 0, y: 0, width: ovalWidth, height: ovalHeight))
-        }
+        // Rounded-rectangle tracks (outer and inner)
+        let outerPath = RoundedRectangle(cornerRadius: cornerRadius).path(in: CGRect(x: 0, y: 0, width: ovalWidth, height: ovalHeight))
         let innerW = ovalWidth - trackInset * 2
         let innerH = ovalHeight - trackInset * 2
-        let innerPath = Path { path in
-            path.addRect(CGRect(x: trackInset, y: trackInset, width: innerW, height: innerH))
-        }
+        let innerCornerRadius = max(0, cornerRadius - trackInset / 2)
+        let innerPath = RoundedRectangle(cornerRadius: innerCornerRadius).path(in: CGRect(x: 0, y: 0, width: innerW, height: innerH))
 
         // Outer and inner positions for each racer's progress (inner track is shorter)
-        let pt1Outer = pointOnOval(progress: progress1, width: ovalWidth, height: ovalHeight)
-        let pt2Outer = pointOnOval(progress: progress2, width: ovalWidth, height: ovalHeight)
-        let pt1InnerRaw = pointOnOval(progress: progress1, width: innerW, height: innerH)
-        let pt2InnerRaw = pointOnOval(progress: progress2, width: innerW, height: innerH)
+        let pt1Outer = pointOnRoundedRect(progress: progress1, width: ovalWidth, height: ovalHeight)
+        let pt2Outer = pointOnRoundedRect(progress: progress2, width: ovalWidth, height: ovalHeight)
+        let pt1InnerRaw = pointOnRoundedRect(progress: progress1, width: innerW, height: innerH)
+        let pt2InnerRaw = pointOnRoundedRect(progress: progress2, width: innerW, height: innerH)
         let pt1Inner = CGPoint(x: pt1InnerRaw.x + trackInset, y: pt1InnerRaw.y + trackInset)
         let pt2Inner = CGPoint(x: pt2InnerRaw.x + trackInset, y: pt2InnerRaw.y + trackInset)
 
@@ -362,7 +528,8 @@ struct RacingGameView: View {
                     .frame(width: ovalWidth, height: ovalHeight)
                 innerPath
                     .stroke(Color.gray.opacity(0.35), lineWidth: 6)
-                    .frame(width: ovalWidth, height: ovalHeight)
+                    .frame(width: innerW, height: innerH)
+                    .offset(x: trackInset, y: trackInset)
                 // Start/finish line on outer track (one row at center bottom)
                 Rectangle()
                     .fill(Color.white.opacity(0.95))
@@ -385,8 +552,8 @@ struct RacingGameView: View {
 
     private func racerView(racer: RacingRacer, size: CGFloat) -> some View {
         Group {
-            if UIImage(named: racer.racerImageName) != nil {
-                Image(racer.racerImageName)
+            if let imageName = racerDisplayImageName(for: racer, config: gameConfig) {
+                Image(imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: size, height: size)
@@ -412,8 +579,8 @@ struct RacingGameView: View {
                 .frame(maxWidth: .infinity, alignment: .trailing)
             // Racer: left-justified at start (progress 0 = x 0), same formula for both lanes
             Group {
-                if UIImage(named: racer.racerImageName) != nil {
-                    Image(racer.racerImageName)
+                if let imageName = racerDisplayImageName(for: racer, config: gameConfig) {
+                    Image(imageName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: emojiSize, height: emojiSize)
@@ -443,14 +610,17 @@ struct RacingGameView: View {
     private func fireRaceTimer(r1: RacingRacer, r2: RacingRacer) {
         let maxSpeed = max(r1.speed, r2.speed)
         raceTimer = Timer.scheduledTimer(withTimeInterval: tickInterval, repeats: true) { _ in
-            let newP1 = min(1.0, progress1 + stepPerTick * (r1.speed / maxSpeed))
-            let newP2 = min(1.0, progress2 + stepPerTick * (r2.speed / maxSpeed))
+            let rawP1 = progress1 + stepPerTick * (r1.speed / maxSpeed)
+            let rawP2 = progress2 + stepPerTick * (r2.speed / maxSpeed)
+            let newP1 = min(1.0, rawP1)
+            let newP2 = min(1.0, rawP2)
             DispatchQueue.main.async {
                 progress1 = newP1
                 progress2 = newP2
                 if newP1 >= 1.0 || newP2 >= 1.0 {
                     stopRace()
-                    winner = newP1 >= newP2 ? r1 : r2
+                    // Use raw progress to break ties: when both hit 1.0 in same tick, higher raw value crossed first
+                    winner = rawP1 >= rawP2 ? r1 : r2
                     postRaceStep = "referee"
                 }
             }
@@ -471,8 +641,8 @@ struct RacingGameView: View {
             Text("The winner is")
                 .font(.title3)
                 .foregroundColor(.secondary)
-            if UIImage(named: w.winnerImageName) != nil {
-                Image(w.winnerImageName)
+            if let imageName = winnerDisplayImageName(for: w, config: gameConfig) {
+                Image(imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(height: 120)
@@ -494,17 +664,10 @@ struct RacingGameView: View {
     private func playWinnerAnnouncement(winner w: RacingRacer) {
         let announceURL = speechManager.urlForAudio(key: "racing-the-winner-is")
         let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
-        let winnerURL = speechManager.urlForAudio(key: w.name)
 
-        func playCrowdAndWinnerThenDismiss() {
-            if let u1 = crowdURL, let u2 = winnerURL {
-                speechManager.playTogether(url1: u1, url2: u2) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        self.isPresented = false
-                    }
-                }
-            } else if let u = crowdURL ?? winnerURL {
-                speechManager.playAudioFile(url: u)
+        func playCrowdThenDismiss() {
+            if let url = crowdURL {
+                speechManager.playAudioFile(url: url)
                 speechManager.onAudioFinished = {
                     self.speechManager.onAudioFinished = nil
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
@@ -518,22 +681,31 @@ struct RacingGameView: View {
             }
         }
 
+        func playWinnerNameThenCrowd() {
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = nil
+                playCrowdThenDismiss()
+            }
+            speechManager.speak(audioKey: w.effectiveFallbackImageName(prefix: gameConfig.assetPrefix), fallbackText: w.name)
+        }
+
         if let url = announceURL {
             speechManager.playAudioFile(url: url)
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
-                playCrowdAndWinnerThenDismiss()
+                playWinnerNameThenCrowd()
             }
         } else {
-            playCrowdAndWinnerThenDismiss()
+            playWinnerNameThenCrowd()
         }
     }
 }
 
-// MARK: - Racer Card (racer-{slug} image when present, else emoji)
+// MARK: - Racer Card (dino-racer-{slug} image when present, else emoji)
 
 struct RacingRacerCard: View {
     let racer: RacingRacer
+    let gameConfig: RacingGameConfig
     let isSelected: Bool
     let isDisabled: Bool
     let onTap: () -> Void
@@ -541,8 +713,8 @@ struct RacingRacerCard: View {
     var body: some View {
         Button(action: onTap) {
             VStack(spacing: 6) {
-                if UIImage(named: racer.racerImageName) != nil {
-                    Image(racer.racerImageName)
+                if let imageName = racerDisplayImageName(for: racer, config: gameConfig) {
+                    Image(imageName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 84, height: 84)
@@ -606,11 +778,53 @@ private let cretaceousRacerPool: [RacingRacerPoolEntry] = [
     RacingRacerPoolEntry(name: "Albertosaurus", icon: "🦖", speed: 25),
 ]
 
+/// Pterosaur pool for Racing Pterosaurs: name, icon, speed (estimated flight mph), imageName for fallback/audio.
+private let pterosaurRacerPool: [(name: String, icon: String, speed: Double, imageName: String)] = {
+    MatchingGameConfigs.allPterosaurs.compactMap { p in
+        guard let img = p.imageName else { return nil }
+        return (p.name, p.icon, pterosaurSpeedEstimate(name: p.name), img)
+    }
+}()
+
+private func pterosaurSpeedEstimate(name: String) -> Double {
+    switch name {
+    case "Pteranodon", "Nyctosaurus": return 25
+    case "Rhamphorhynchus", "Dsungaripterus", "Tapejara": return 22
+    case "Pterodactylus", "Quetzalcoatlus", "Anurognathus", "Tupandactylus": return 20
+    case "Dimorphodon": return 18
+    default: return 20
+    }
+}
+
 struct RacingGameConfigs {
     /// Config used for the game list card only (id "racing-dinosaurs" matches imageset game-racing-dinosaurs). Period choice then loads Jurassic or Cretaceous.
     static let racingDinosaurs: RacingGameConfig = {
         makeConfig(for: .cretaceous)
     }()
+
+    /// Card config for Racing Pterosaurs! (id used for image/audio; actual play uses racingPterosaursRandomized()).
+    static var racingPterosaursCardConfig: RacingGameConfig {
+        racingPterosaursRandomized()
+    }
+
+    /// Returns a new config with 4 pterosaurs chosen at random. Use when starting Racing Pterosaurs! so each game has a fresh set.
+    static func racingPterosaursRandomized() -> RacingGameConfig {
+        let pool = pterosaurRacerPool
+        guard pool.count >= 4 else {
+            return RacingGameConfig(id: "racing-pterosaurs", title: "Racing Pterosaurs!", introAudio: "racing-pterosaurs", assetPrefix: "ptero", racers: [])
+        }
+        let picked = pool.shuffled().prefix(4)
+        let racers = picked.enumerated().map { index, entry in
+            RacingRacer(id: 300 + index + 1, name: entry.name, icon: entry.icon, speed: entry.speed, fallbackImageName: entry.imageName)
+        }
+        return RacingGameConfig(
+            id: "racing-pterosaurs",
+            title: "Racing Pterosaurs!",
+            introAudio: "racing-pterosaurs",
+            assetPrefix: "ptero",
+            racers: Array(racers)
+        )
+    }
 
     /// Returns a new config with 4 racers chosen at random from the period's pool. Call when user picks a period so each game has a fresh set.
     static func makeConfig(for period: RacingPeriod) -> RacingGameConfig {
@@ -629,12 +843,13 @@ struct RacingGameConfigs {
         }
         let picked = pool.shuffled().prefix(4)
         let racers = picked.enumerated().map { index, entry in
-            RacingRacer(id: idBase + index + 1, name: entry.name, icon: entry.icon, speed: entry.speed)
+            RacingRacer(id: idBase + index + 1, name: entry.name, icon: entry.icon, speed: entry.speed, fallbackImageName: nil)
         }
         return RacingGameConfig(
             id: "racing-dinosaurs-\(period.rawValue)",
             title: title,
             introAudio: "racing-dinosaurs",
+            assetPrefix: "dino",
             racers: Array(racers)
         )
     }
@@ -692,6 +907,7 @@ struct RacingPeriodSelectionView: View {
                 }
             }
             .onAppear {
+                showText = true
                 if !hasStartedSequence {
                     hasStartedSequence = true
                     startPeriodSequence()
@@ -755,7 +971,6 @@ struct RacingPeriodSelectionView: View {
         enabledCretaceous = true
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
-            showText = true
         }
         speechManager.speak("cover-cretaceous", chainDelay: true)
     }

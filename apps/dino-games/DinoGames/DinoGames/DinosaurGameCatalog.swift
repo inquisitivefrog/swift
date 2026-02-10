@@ -75,6 +75,7 @@ enum DinosaurGameCatalog {
             ]
         case .level3:
             return [
+                .guess(GuessGameConfigs.dinoFootprints),        // Dino Footprints
                 .racing(RacingGameConfigs.racingDinosaurs),     // Racing Dinosaurs
             ]
         case .level4:

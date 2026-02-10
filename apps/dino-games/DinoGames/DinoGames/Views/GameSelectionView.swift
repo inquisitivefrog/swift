@@ -98,8 +98,13 @@ struct GameSelectionView: View {
             showWackyGame = true
         } else if gameType.toothacheConfig != nil {
             showToothacheGame = true
-        } else if gameType.racingConfig != nil {
-            showRacingPeriodSelection = true
+        } else if let racingConfig = gameType.racingConfig {
+            if racingConfig.id == "racing-pterosaurs" {
+                currentRacingConfig = RacingGameConfigs.racingPterosaursRandomized()
+                showRacingGame = true
+            } else {
+                showRacingPeriodSelection = true
+            }
         } else if gameType.matrixMaterialsConfig != nil {
             showMatrixMaterialsGame = true
         } else if gameType.dinoAgesConfig != nil {
@@ -113,16 +118,34 @@ struct GameSelectionView: View {
         gamesForCategory.isEmpty
     }
 
-    /// Level picker: Level 1–6 cards (Dinosaurs only). Shown when category == .land && selectedLevel == nil.
+    /// Level picker: Level 1–6 cards (Dinosaurs only), grouped as Easy Games (1–4) and Harder Games (5–6). Shown when category == .land && selectedLevel == nil.
     @ViewBuilder
     private var levelPickerContent: some View {
-        VStack(spacing: 10) {
-            ForEach(GameLevel.allCases) { level in
-                LevelCard(level: level, onTap: { selectedLevel = level })
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                Text("Easy Games")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal, 4)
+                VStack(spacing: 10) {
+                    ForEach(Array(GameLevel.allCases.prefix(4))) { level in
+                        LevelCard(level: level, onTap: { selectedLevel = level })
+                    }
+                }
+                Text("Harder Games")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+                    .padding(.horizontal, 4)
+                    .padding(.top, 4)
+                VStack(spacing: 10) {
+                    ForEach(Array(GameLevel.allCases.suffix(2))) { level in
+                        LevelCard(level: level, onTap: { selectedLevel = level })
+                    }
+                }
             }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 12)
         }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 12)
         .onAppear {
             // Level picker should be tappable after the prompt finishes.
             // While the prompt is playing, we temporarily disable hit testing via `isAudioPlaying`.
@@ -276,9 +299,21 @@ struct GameSelectionView: View {
         // Store the selected game
         selectedGame = gameType
         currentGameConfig = gameType.gameConfig
-        // Weigh game: use a new random set of 9 dinosaurs each time
-        currentWeighConfig = gameType.weighConfig != nil ? WeighGameConfigs.weighDinosaurRandomized() : nil
-        currentBalanceConfig = gameType.balanceConfig != nil ? BalanceGameConfigs.balanceDinosaurRandomized() : nil
+        // Weigh game: use random set of 9 (dinosaurs or pterosaurs) based on which game was tapped
+        if let weighConfig = gameType.weighConfig {
+            currentWeighConfig = weighConfig.id == "weigh-pterosaur"
+                ? WeighGameConfigs.weighPterosaurRandomized()
+                : WeighGameConfigs.weighDinosaurRandomized()
+        } else {
+            currentWeighConfig = nil
+        }
+        if let balanceConfig = gameType.balanceConfig {
+            currentBalanceConfig = balanceConfig.id == "balance-the-pterosaur"
+                ? BalanceGameConfigs.balancePterosaurRandomized()
+                : BalanceGameConfigs.balanceDinosaurRandomized()
+        } else {
+            currentBalanceConfig = nil
+        }
         currentGuessConfig = gameType.guessConfig
         currentFindMamaConfig = gameType.findMamaConfig != nil ? FindMamaConfigs.findMama : nil
         currentDinoLunchConfig = gameType.dinoLunchConfig != nil ? DinoLunchConfigs.dinoLunch : nil
@@ -522,7 +557,10 @@ private struct GameSelectionNavigationContent: View {
                         }
                     }
                 } else {
-                    currentGuessConfig = GuessGameConfigs.nameThatDinosaur
+                    // Use config already set by handleGameTap (Name That Dinosaur vs Name That Pterosaur)
+                    if currentGuessConfig == nil {
+                        currentGuessConfig = GuessGameConfigs.nameThatDinosaur
+                    }
                 }
             }
             .onChange(of: showFindMamaGame) { _, newValue in
@@ -904,8 +942,9 @@ enum GameType {
             return "game-\(config.id)"
         case .weigh(let config):
             return "game-\(config.id)"
-        case .balance:
-            return "game-balance-the-dinosaurs"
+        case .balance(let config):
+            // Asset names use plural: game-balance-the-dinosaurs, game-balance-the-pterosaurs
+            return config.id == "balance-the-pterosaur" ? "game-balance-the-pterosaurs" : "game-balance-the-dinosaurs"
         case .guess(let config):
             return "game-\(config.id)"
         case .findMama(let config):
@@ -916,8 +955,8 @@ enum GameType {
             return "game-\(config.id)"
         case .toothache(let config):
             return "game-\(config.id)"
-        case .racing:
-            return "game-racing-dinosaurs"
+        case .racing(let config):
+            return config.id.hasPrefix("racing-pterosaur") ? "game-racing-pterosaurs" : "game-racing-dinosaurs"
         case .matrixMaterials(let config):
             return "game-\(config.id)"
         case .dinoAges(let config):
@@ -956,7 +995,7 @@ enum GameType {
         case .dinoLunch(let config): return "game-\(config.id)"
         case .wacky(let config): return "game-\(config.id)"
         case .toothache(let config): return "game-\(config.id)"
-        case .racing: return "game-racing-dinosaurs"
+        case .racing(let config): return config.id.hasPrefix("racing-pterosaur") ? "game-racing-pterosaurs" : "game-racing-dinosaurs"
         case .matrixMaterials(let config): return "game-\(config.id)"
         case .dinoAges(let config): return config.introAudio
         case .dinoFormations(let config): return config.introAudio

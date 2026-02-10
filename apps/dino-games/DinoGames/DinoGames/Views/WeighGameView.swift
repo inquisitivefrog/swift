@@ -58,8 +58,11 @@ struct WeighGameView: View {
     /// Victory walk: -1 none, 1 = walking list (highlight + name), 2 = good-job + crowd then dismiss.
     @State private var endSequenceStep: Int = -1
     @State private var endHighlightIndex: Int = 0
+    /// Items for the current round; reshuffled at start of each round when randomizeItems is set.
+    @State private var currentRoundItems: [WeighableItem] = []
     
     private var isGameOver: Bool { roundsCompleted >= maxRounds }
+    private var displayItems: [WeighableItem] { currentRoundItems.isEmpty ? gameConfig.items : currentRoundItems }
     
     var body: some View {
         GeometryReader { geometry in
@@ -76,11 +79,11 @@ struct WeighGameView: View {
                         Text("Round \(roundsCompleted + 1) of \(maxRounds)")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
-                        // 3×3 grid (9 items)
+                        // Grid: 3 columns; row count depends on item count (9 → 3 rows, 6 → 2 rows)
                         VStack(spacing: 10) {
-                            ForEach(0..<3, id: \.self) { row in
+                            ForEach(0..<((displayItems.count + 2) / 3), id: \.self) { row in
                                 HStack(spacing: 10) {
-                                    ForEach(Array(gameConfig.items.dropFirst(row * 3).prefix(3))) { item in
+                                    ForEach(Array(displayItems.dropFirst(row * 3).prefix(3))) { item in
                                         ItemCard(
                                             item: item,
                                             isSelected: selectedLeftItem?.id == item.id || selectedRightItem?.id == item.id,
@@ -200,6 +203,11 @@ struct WeighGameView: View {
             }
         }
         .onAppear {
+            // First round: use shuffled pool (or config items if no per-round randomizer for this game)
+            currentRoundItems = WeighGameConfigs.randomizedItems(forId: gameConfig.id)
+            if currentRoundItems.isEmpty {
+                currentRoundItems = gameConfig.items
+            }
             // Force landscape orientation immediately
             DispatchQueue.main.async {
                 if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
@@ -229,7 +237,7 @@ struct WeighGameView: View {
                 self.canSelectSecondDinosaur = true
                 self.speechManager.onAudioFinished = nil
             }
-            speechManager.speak(item.name)
+            speechManager.speak(audioKey: item.imageName ?? item.name, fallbackText: item.name)
         } else if selectedRightItem == nil && selectedLeftItem?.id != item.id && canSelectSecondDinosaur {
             // Second selection: show name, play audio, then start weighing when name finishes
             selectedRightItem = item
@@ -238,7 +246,7 @@ struct WeighGameView: View {
                 self.speechManager.onAudioFinished = nil
                 self.startWeighing()
             }
-            speechManager.speak(item.name)
+            speechManager.speak(audioKey: item.imageName ?? item.name, fallbackText: item.name)
         }
     }
     
@@ -304,7 +312,7 @@ struct WeighGameView: View {
                         }
                     }
                 }
-                self.speechManager.speak(heavier.name)
+                self.speechManager.speak(audioKey: heavier.imageName ?? heavier.name, fallbackText: heavier.name)
             }
         }
     }
@@ -323,6 +331,11 @@ struct WeighGameView: View {
             selectedRightItem = nil
             // Victory view will walk the list, then play good-job + crowd and dismiss
         } else {
+            // New round: shuffle pool again for the next round
+            let nextItems = WeighGameConfigs.randomizedItems(forId: gameConfig.id)
+            if !nextItems.isEmpty {
+                currentRoundItems = nextItems
+            }
             resetWeighing()
         }
     }
@@ -381,7 +394,7 @@ struct WeighGameView: View {
             if dinosaursWeighed.isEmpty {
                 playWeighGoodJobAndCrowdThenDismiss()
             } else {
-                speechManager.speak(dinosaursWeighed[0].name)
+                speechManager.speak(audioKey: dinosaursWeighed[0].imageName ?? dinosaursWeighed[0].name, fallbackText: dinosaursWeighed[0].name)
                 speechManager.onAudioFinished = { advanceWeighEndHighlight() }
             }
         }
@@ -413,7 +426,7 @@ struct WeighGameView: View {
         speechManager.onAudioFinished = nil
         endHighlightIndex += 1
         if endHighlightIndex < dinosaursWeighed.count {
-            speechManager.speak(dinosaursWeighed[endHighlightIndex].name)
+            speechManager.speak(audioKey: dinosaursWeighed[endHighlightIndex].imageName ?? dinosaursWeighed[endHighlightIndex].name, fallbackText: dinosaursWeighed[endHighlightIndex].name)
             speechManager.onAudioFinished = { advanceWeighEndHighlight() }
         } else {
             playWeighGoodJobAndCrowdThenDismiss()
@@ -583,6 +596,28 @@ private let allWeighableDinosaurs: [WeighableDinosaurPoolEntry] = [
     WeighableDinosaurPoolEntry(name: "Apatosaurus", imageName: "dino-apatosaurus", emoji: "🦕", estimatedWeightKg: 25_000),
 ]
 
+// MARK: - Pterosaur Weight Pool (for Weigh the Pterosaur)
+
+private struct WeighablePterosaurPoolEntry {
+    let name: String
+    let imageName: String
+    let emoji: String
+    let estimatedWeightKg: Double
+}
+
+private let allWeighablePterosaurs: [WeighablePterosaurPoolEntry] = [
+    WeighablePterosaurPoolEntry(name: "Anurognathus", imageName: "ptero-anurognathus", emoji: "🦅", estimatedWeightKg: 0.2),
+    WeighablePterosaurPoolEntry(name: "Rhamphorhynchus", imageName: "ptero-rhamphorhynchus", emoji: "🦅", estimatedWeightKg: 1.5),
+    WeighablePterosaurPoolEntry(name: "Dimorphodon", imageName: "ptero-dimorphodon", emoji: "🦅", estimatedWeightKg: 2),
+    WeighablePterosaurPoolEntry(name: "Pterodactylus", imageName: "ptero-pteradactylus", emoji: "🦅", estimatedWeightKg: 2),
+    WeighablePterosaurPoolEntry(name: "Nyctosaurus", imageName: "ptero-nyctosaurus", emoji: "🦅", estimatedWeightKg: 2),
+    WeighablePterosaurPoolEntry(name: "Tapejara", imageName: "ptero-tapejara", emoji: "🦅", estimatedWeightKg: 15),
+    WeighablePterosaurPoolEntry(name: "Tupandactylus", imageName: "ptero-tupandactylus", emoji: "🦅", estimatedWeightKg: 15),
+    WeighablePterosaurPoolEntry(name: "Dsungaripterus", imageName: "ptero-dsungaripterus", emoji: "🦅", estimatedWeightKg: 20),
+    WeighablePterosaurPoolEntry(name: "Pteranodon", imageName: "ptero-pteranodon", emoji: "🦅", estimatedWeightKg: 25),
+    WeighablePterosaurPoolEntry(name: "Quetzalcoatlus", imageName: "ptero-quetzacoatlus", emoji: "🦅", estimatedWeightKg: 200),
+]
+
 // MARK: - Game Configurations
 
 struct WeighGameConfigs {
@@ -594,13 +629,21 @@ struct WeighGameConfigs {
         items: [] // Not used; caller uses weighDinosaurRandomized() for a random set of 9.
     )
 
-    /// Returns a config with 9 dinosaurs chosen at random from the pool, ordered by estimated weight.
-    /// Dinosaurs with the same estimated weight get the same game weight so "they both weigh about the same" can play.
-    static func weighDinosaurRandomized() -> WeighGameConfig {
+    /// Returns randomized items for the given weigh game id (weigh-dinosaur or weigh-pterosaur), or [] for template configs. Used at game start and each new round.
+    static func randomizedItems(forId id: String) -> [WeighableItem] {
+        switch id {
+        case "weigh-dinosaur": return makeRandomDinosaurItems()
+        case "weigh-pterosaur": return makeRandomPterosaurItems()
+        default: return []
+        }
+    }
+
+    /// Returns 9 dinosaurs chosen at random from the pool, ordered by estimated weight. Used at game start and each new round.
+    static func makeRandomDinosaurItems() -> [WeighableItem] {
         let chosen = allWeighableDinosaurs.shuffled().prefix(9).sorted { $0.estimatedWeightKg < $1.estimatedWeightKg }
         var rank = 0
         var prevKg: Double = -1
-        let items = chosen.enumerated().map { index, entry in
+        return chosen.enumerated().map { index, entry in
             if entry.estimatedWeightKg > prevKg {
                 rank += 1
                 prevKg = entry.estimatedWeightKg
@@ -614,11 +657,56 @@ struct WeighGameConfigs {
                 category: "dinosaur"
             )
         }
+    }
+
+    /// Returns a config with 9 dinosaurs chosen at random from the pool, ordered by estimated weight.
+    /// Pool is reshuffled at the start of each round (view uses randomizedItems(forId:)).
+    static func weighDinosaurRandomized() -> WeighGameConfig {
         return WeighGameConfig(
             id: "weigh-dinosaur",
             title: "Weigh the Dinosaur!",
             introAudio: "game-intro-weigh",
-            items: items
+            items: makeRandomDinosaurItems()
+        )
+    }
+
+    /// Template for Weigh the Pterosaur (use weighPterosaurRandomized() for play).
+    static let weighPterosaur = WeighGameConfig(
+        id: "weigh-pterosaur",
+        title: "Weigh the Pterosaur!",
+        introAudio: "game-intro-weigh-pterosaur",
+        items: []
+    )
+
+    /// Returns 6 pterosaurs chosen at random from the pool, ordered by estimated weight. Used at game start and each new round.
+    static func makeRandomPterosaurItems() -> [WeighableItem] {
+        let chosen = allWeighablePterosaurs.shuffled().prefix(6).sorted { $0.estimatedWeightKg < $1.estimatedWeightKg }
+        var rank = 0
+        var prevKg: Double = -1
+        return chosen.enumerated().map { index, entry in
+            if entry.estimatedWeightKg > prevKg {
+                rank += 1
+                prevKg = entry.estimatedWeightKg
+            }
+            return WeighableItem(
+                id: index + 1,
+                name: entry.name,
+                imageName: entry.imageName,
+                emoji: entry.emoji,
+                weight: rank,
+                category: "pterosaur"
+            )
+        }
+    }
+
+    /// Returns a config with 6 pterosaurs chosen at random, ordered by estimated weight.
+    /// Pool is reshuffled at the start of each round (view uses randomizedItems(forId:)).
+    static func weighPterosaurRandomized() -> WeighGameConfig {
+        return WeighGameConfig(
+            id: "weigh-pterosaur",
+            title: "Weigh the Pterosaur!",
+            introAudio: "game-intro-weigh-pterosaur",
+            items: makeRandomPterosaurItems()
         )
     }
 }

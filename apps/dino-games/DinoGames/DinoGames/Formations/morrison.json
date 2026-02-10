@@ -1,12 +1,1 @@
-{
-  "name": "Morrison",
-  "dinoImageNames": [
-    "dino-stegosaurus",
-    "dino-apatosaurus",
-    "dino-brachiosaurus",
-    "dino-diplodocus",
-    "dino-camarasaurus",
-    "dino-dryosaurus",
-    "dino-ceratosaurus"
-  ]
-}
+{"name":"Morrison","dinoImageNames":["dino-stegosaurus","dino-apatosaurus","dino-brachiosaurus","dino-diplodocus","dino-camarasaurus","dino-dryosaurus","dino-ceratosaurus","dino-torvosaurus","dino-allosaurus"]}

@@ -95,6 +95,12 @@ private let dinoFormationsPool: [Dinosaur] = {
         Dinosaur(id: 35, name: "Torosaurus", icon: "🦏", imageName: "dino-torosaurus", characteristicIds: []),
         Dinosaur(id: 36, name: "Utahraptor", icon: "🦖", imageName: "dino-utahraptor", characteristicIds: []),
         Dinosaur(id: 37, name: "Xiaotingia", icon: "🦅", imageName: "dino-xiaotingia", characteristicIds: []),
+        Dinosaur(id: 38, name: "Masiakasaurus", icon: "🦖", imageName: "dino-masiakasaurus", characteristicIds: []),
+        Dinosaur(id: 39, name: "Torvosaurus", icon: "🦖", imageName: "dino-torvosaurus", characteristicIds: []),
+        Dinosaur(id: 40, name: "Rapetosaurus", icon: "🦕", imageName: "dino-rapetosaurus", characteristicIds: []),
+        Dinosaur(id: 41, name: "Majungasaurus", icon: "🦖", imageName: "dino-majungasaurus", characteristicIds: []),
+        Dinosaur(id: 42, name: "Allosaurus", icon: "🦖", imageName: "dino-allosaurus", characteristicIds: []),
+        Dinosaur(id: 43, name: "Oviraptor", icon: "🦅", imageName: "dino-oviraptor", characteristicIds: []),
     ]
     return fromCatalog + extras
 }()
@@ -145,6 +151,7 @@ struct DinoFormationsGameView: View {
     @State private var endHighlightIndex = 0
     @State private var currentRound = 1
     @State private var usedDinosaurIds: Set<Int> = []
+    @State private var usedFormationIds: Set<String> = []
     @State private var victoryWalkDinosaurs: [Dinosaur] = []
     @State private var matchedOrderThisRound: [Int] = []
     @State private var introWalkIndex: Int? = nil
@@ -282,16 +289,18 @@ struct DinoFormationsGameView: View {
         }
     }
 
-    /// Picks a formation that has at least 3 in-formation and 2 out-of-formation dinosaurs not yet used in any round. Returns nil if none.
-    private func pickFormationWithEnoughUnused(using rng: inout SeededRandomNumberGenerator) -> DinoFormation? {
-        let candidates = dinoFormationsList.filter { f in
+    /// Picks a formation for the next round. Prefers formations not yet used this game; among those, prefers ones with enough unused dinosaurs so we avoid re-using dinos when possible.
+    private func pickFormationForRound(using rng: inout SeededRandomNumberGenerator) -> DinoFormation {
+        let notYetUsed = dinoFormationsList.filter { !usedFormationIds.contains($0.id) }
+        let pool = notYetUsed.isEmpty ? dinoFormationsList : notYetUsed
+        let withEnoughUnused = pool.filter { f in
             let inF = dinoFormationsPool.filter { dinoFormationsIsInFormation($0, f) }
             let outF = dinoFormationsPool.filter { !dinoFormationsIsInFormation($0, f) }
             let inUnused = inF.filter { !usedDinosaurIds.contains($0.id) }
             let outUnused = outF.filter { !usedDinosaurIds.contains($0.id) }
             return inUnused.count >= 3 && outUnused.count >= 2
         }
-        return candidates.randomElement(using: &rng)
+        return withEnoughUnused.randomElement(using: &rng) ?? pool.randomElement(using: &rng)!
     }
 
     private func buildSlotsForRound(using rng: inout SeededRandomNumberGenerator) {
@@ -325,8 +334,8 @@ struct DinoFormationsGameView: View {
         }
         currentRound += 1
         var rng = SeededRandomNumberGenerator(seed: dinoFormationsTimeSeed())
-        // Pick a new formation for this round; prefer one with enough unused dinosaurs. For round 3, allow re-use if needed so we always play three rounds.
-        formation = pickFormationWithEnoughUnused(using: &rng) ?? dinoFormationsList.randomElement(using: &rng)
+        formation = pickFormationForRound(using: &rng)
+        usedFormationIds.insert(formation!.id)
         buildSlotsForRound(using: &rng)
         playFindInFormationThenAllowTaps()
     }
@@ -391,7 +400,9 @@ struct DinoFormationsGameView: View {
 
     private func startGame() {
         var rng = SeededRandomNumberGenerator(seed: dinoFormationsTimeSeed())
-        formation = dinoFormationsList.randomElement(using: &rng)
+        usedFormationIds = []
+        formation = pickFormationForRound(using: &rng)
+        usedFormationIds.insert(formation!.id)
         currentRound = 1
         usedDinosaurIds = []
         victoryWalkDinosaurs = []

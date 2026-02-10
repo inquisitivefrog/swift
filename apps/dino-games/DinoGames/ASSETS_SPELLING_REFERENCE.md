@@ -21,7 +21,7 @@ All T-Rex assets should use the slug **trex**, not **t-rex**.
 These already use **trex** (no hyphen) and need no change:
 - `lunch-carnivore-trex.imageset` (filenames: lunch-trex-80.png, …)
 - `teen-carnivore-trex.imageset` (filenames: teen-trex-80.png, …)
-- `silhouette-trex.imageset`, `racer-trex.imageset`, `winner-race-trex.imageset`, `tooth-trex.imageset`, `grumpy-trex.imageset`
+- `dino-silhouette-trex.imageset`, `racer-trex.imageset`, `winner-race-trex.imageset`, `tooth-trex.imageset`, `grumpy-trex.imageset`
 - `wacky-trex.imageset` (filenames: trex-beachcombing-80.png, …)
 
 ---

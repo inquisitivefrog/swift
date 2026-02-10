@@ -71,10 +71,11 @@ struct BalanceGameView: View {
         return [left] + rightItems
     }
 
-    /// Heavy = in top half of game's 9 items by weight; light = bottom half.
+    /// Heavy = in top half of game's items by weight; light = bottom half. Works for 9 (dinosaur) or 6 (pterosaur) items.
     private func isHeavy(_ item: BalanceItem) -> Bool {
         let sorted = gameConfig.items.sorted { $0.estimatedWeightKg < $1.estimatedWeightKg }
-        guard let threshold = sorted.dropFirst(4).first?.estimatedWeightKg else { return true }
+        let half = sorted.count / 2
+        guard let threshold = sorted.dropFirst(half).first?.estimatedWeightKg else { return true }
         return item.estimatedWeightKg >= threshold
     }
 
@@ -117,7 +118,8 @@ struct BalanceGameView: View {
         .onAppear {
             // Intro already played on transition screen (game-can-you-balance-the-dinosaurs); don't repeat
             if phase == .selectHeavy {
-                speechManager.speak("game-balance-choose-a-heavy-dinosaur")
+                let chooseHeavyKey = gameConfig.id == "balance-the-pterosaur" ? "game-balance-choose-a-heavy-pterosaur" : "game-balance-choose-a-heavy-dinosaur"
+                speechManager.speak(chooseHeavyKey)
                 speechManager.onAudioFinished = { self.speechManager.onAudioFinished = nil }
             }
             DispatchQueue.main.async {
@@ -139,7 +141,7 @@ struct BalanceGameView: View {
 
     private func selectHeavyView(geometry: GeometryProxy) -> some View {
         VStack(spacing: 12) {
-            Text("Choose a heavy dinosaur")
+            Text(gameConfig.id == "balance-the-pterosaur" ? "Choose a heavy pterosaur" : "Choose a heavy dinosaur")
                 .font(.headline)
                 .foregroundColor(.secondary)
             VStack(spacing: 10) {
@@ -595,6 +597,19 @@ private let balanceDinosaurPool: [BalancePoolEntry] = [
     BalancePoolEntry(name: "Apatosaurus", imageName: "dino-apatosaurus", emoji: "🦕", estimatedWeightKg: 25_000),
 ]
 
+private let balancePterosaurPool: [BalancePoolEntry] = [
+    BalancePoolEntry(name: "Anurognathus", imageName: "ptero-anurognathus", emoji: "🦅", estimatedWeightKg: 0.2),
+    BalancePoolEntry(name: "Rhamphorhynchus", imageName: "ptero-rhamphorhynchus", emoji: "🦅", estimatedWeightKg: 1.5),
+    BalancePoolEntry(name: "Dimorphodon", imageName: "ptero-dimorphodon", emoji: "🦅", estimatedWeightKg: 2),
+    BalancePoolEntry(name: "Pterodactylus", imageName: "ptero-pteradactylus", emoji: "🦅", estimatedWeightKg: 2),
+    BalancePoolEntry(name: "Nyctosaurus", imageName: "ptero-nyctosaurus", emoji: "🦅", estimatedWeightKg: 2),
+    BalancePoolEntry(name: "Tapejara", imageName: "ptero-tapejara", emoji: "🦅", estimatedWeightKg: 15),
+    BalancePoolEntry(name: "Tupandactylus", imageName: "ptero-tupandactylus", emoji: "🦅", estimatedWeightKg: 15),
+    BalancePoolEntry(name: "Dsungaripterus", imageName: "ptero-dsungaripterus", emoji: "🦅", estimatedWeightKg: 20),
+    BalancePoolEntry(name: "Pteranodon", imageName: "ptero-pteranodon", emoji: "🦅", estimatedWeightKg: 25),
+    BalancePoolEntry(name: "Quetzalcoatlus", imageName: "ptero-quetzacoatlus", emoji: "🦅", estimatedWeightKg: 200),
+]
+
 struct BalanceGameConfigs {
     static let balanceDinosaur = BalanceGameConfig(
         id: "balance-the-dinosaur",
@@ -618,6 +633,32 @@ struct BalanceGameConfigs {
             id: "balance-the-dinosaur",
             title: "Balance the Dinosaurs!",
             introAudio: "game-can-you-balance-the-dinosaurs",
+            items: items
+        )
+    }
+
+    static let balancePterosaur = BalanceGameConfig(
+        id: "balance-the-pterosaur",
+        title: "Balance the Pterosaurs!",
+        introAudio: "game-can-you-balance-the-pterosaurs",
+        items: []
+    )
+
+    static func balancePterosaurRandomized() -> BalanceGameConfig {
+        let chosen = balancePterosaurPool.shuffled().prefix(6)
+        let items = chosen.enumerated().map { index, entry in
+            BalanceItem(
+                id: index + 1,
+                name: entry.name,
+                imageName: entry.imageName,
+                emoji: entry.emoji,
+                estimatedWeightKg: entry.estimatedWeightKg
+            )
+        }
+        return BalanceGameConfig(
+            id: "balance-the-pterosaur",
+            title: "Balance the Pterosaurs!",
+            introAudio: "game-can-you-balance-the-pterosaurs",
             items: items
         )
     }

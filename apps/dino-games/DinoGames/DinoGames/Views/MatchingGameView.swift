@@ -207,8 +207,8 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Dinosaurs/dino-baryonyx"
 
         // Pterosaurs (Match the Pterosaur game) - name audio in Pterosaurs/ with ptero- prefix (like dino- for Dinosaurs/)
-        case "pterodactyl", "pteradactyl":
-            return "Pterosaurs/ptero-pteradactyl"
+        case "pterodactylus", "pterodactyl":
+            return "Pterosaurs/ptero-pteradactylus"
         case "pteranodon":
             return "Pterosaurs/ptero-pteranodon"
         case "quetzalcoatlus", "quetzacoatlus":
@@ -304,8 +304,6 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Feedback/thats-still-not-right"
         case "thats-not-right", "that's not right":
             return "Feedback/thats-not-right"
-        case "skipping-this-round", "skipping this round":
-            return "Feedback/skipping-this-round"
         case "game-intro-pterosaur", "game intro pterosaur":
             return "Feedback/game-intro-pterosaur"
         case "welcome-to-dino-games", "welcome", "welcome to dino games":
@@ -332,16 +330,10 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Cover/cover-choose-a-pterosaur-game"
         case "choose-a-marine-reptile-game", "choose a marine reptile game":
             return "Cover/cover-choose-a-marine-reptile-game"
-        case "sorry-game-over", "sorry game over", "game over":
-            return "Feedback/sorry-game-over"
         case "you-didnt-get-them-all-right", "you didnt get them all right":
             return "Feedback/you-didnt-get-them-all-right"
-        case "success-all-matches", "successallmatches", "success all matches", "all matches found":
-            return "Feedback/success-all-matches"
         case "good-job-you-got-them-all", "good job you got them all", "good job":
             return "Feedback/good-job-you-got-them-all"
-        case "that-was-fun", "that was fun":
-            return "Feedback/that-was-fun"
         case "starting-whistle", "starting whistle", "starting-gun", "starting gun":
             return "Feedback/starting-whistle"
         case "crowd-cheering", "we-have-a-winner", "we have a winner":
@@ -352,8 +344,6 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Feedback/not-that-one"
         case "wow-that-was-tricky", "wow that was tricky":
             return "Feedback/wow-that-was-tricky"
-        case "great-job-you-weighed-six-dinosaurs", "great job you weighed six dinosaurs":
-            return "Feedback/great-job-you-weighed-six-dinosaurs"
         case "you-have-to-select-a-dinosaur-first", "you have to select a dinosaur first", "pick-a-dinosaur-first", "pick a dinosaur first":
             return "Feedback/pick-a-dinosaur-first"
         case "pick-a-pterosaur-first", "pick a pterosaur first":
@@ -405,6 +395,8 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Games/game-can-you-return-the-tooth"
         case "racing-dinosaurs", "racing dinosaurs":
             return "Games/game-racing-dinosaurs"
+        case "racing-pterosaurs", "racing pterosaurs", "game-racing-pterosaurs", "game racing pterosaurs":
+            return "Games/game-racing-pterosaurs"
         case "game-can-you-balance-the-dinosaurs", "game can you balance the dinosaurs":
             return "Games/game-can-you-balance-the-dinosaurs"
         case "game-balance-choose-a-heavy-dinosaur", "choose a heavy dinosaur":
@@ -423,6 +415,10 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Games/game-racer-choose-your-first-dinosaur-to-race"
         case "game-racer-choose-your-second-dinosaur-to-race", "choose your second dinosaur to race":
             return "Games/game-racer-choose-your-second-dinosaur-to-race"
+        case "game-racer-choose-your-first-pterosaur-to-race", "choose your first pterosaur to race":
+            return "Games/game-racer-choose-your-first-pterosaur-to-race"
+        case "game-racer-choose-your-second-pterosaur-to-race", "choose your second pterosaur to race":
+            return "Games/game-racer-choose-your-second-pterosaur-to-race"
         case "racing-the-winner-is", "the winner is":
             return "Games/racing-the-winner-is"
         case "game-matrix-materials", "matrix materials":
@@ -439,6 +435,22 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Games/game-dino-lunch"
         case "game-give-this-nutritious-lunch", "give this nutritious lunch":
             return "Games/game-give-this-nutritious-lunch"
+        case "game-dino-footprints", "dino footprints":
+            return "Games/game-dino-footprints"
+        case "game-dino-footprints-identify-the-footprint", "identify the footprint":
+            return "Games/game-dino-footprints-identify-the-footprint"
+        case "game-dino-footprints-hint", "dino footprints hint":
+            return "Games/game-dino-footprints-hint"
+        case "footprint-therapod", "therapod":
+            return "Footprints/therapod"
+        case "footprint-sauropod", "sauropod":
+            return "Footprints/sauropod"
+        case "footprint-hadrosaur", "hadrosaur":
+            return "Footprints/hadrosaur"
+        case "footprint-ceratopsian", "ceratopsian":
+            return "Footprints/ceratopsian"
+        case "footprint-ankylosaur", "ankylosaur":
+            return "Footprints/ankylosaur"
 
         // Game name-only intros (walk + transition): game-{slug} → Games/game-{slug}
         case _ where normalized.hasPrefix("game-"):
@@ -456,6 +468,9 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         // Dinosaurs: Audio/Dinosaurs/{key}.m4a for any dino-* key (e.g. dino-camarasaurus) so all dinosaur name files are used when present
         case _ where normalized.hasPrefix("dino-"):
             return "Dinosaurs/\(normalized)"
+        // Pterosaurs: Audio/Pterosaurs/{key}.m4a for any ptero-* key (e.g. ptero-pteranodon) so Match the Pterosaur uses recorded name audio
+        case _ where normalized.hasPrefix("ptero-"):
+            return "Pterosaurs/\(normalized)"
 
         // Matrix Materials game: material names → Audio/Materials/{slug}.m4a
         case "limestone", "mudstone", "bentonite", "sandstone", "siltstone", "tuff", "amber", "shale",
@@ -489,79 +504,14 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         // Small delay to let stop complete and prevent HALC overload; shorter when chaining clips
         let delay: TimeInterval = chainDelay ? 0.03 : 0.1
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            // Try to play recorded audio first
+            // Try to play recorded audio first (use same resolution as urlForAudio, including subdirectory lookup)
             if let audioPath = self.audioFilePath(for: text) {
-                // Try different path formats - files are in bundle with full paths like DinoGames/Assets/Audio/...
-                // Extract just the filename from the path (e.g., "Dinosaurs/t-rex" -> "t-rex")
-                let fileName = (audioPath as NSString).lastPathComponent
-            
-                let paths = [
-                    "DinoGames/Assets/Audio/\(audioPath)",  // Full path as shown in bundle
-                    "Assets/Audio/\(audioPath)",           // Assets/Audio/Dinosaurs/t-rex
-                    "assets/Audio/\(audioPath)",            // assets/Audio/Dinosaurs/t-rex (lowercase)
-                    "Audio/\(audioPath)",                   // Audio/Dinosaurs/t-rex
-                    audioPath,                              // Dinosaurs/t-rex
-                    fileName                                // Just filename: t-rex (if flattened)
-                ]
-                
-                var foundURL: URL?
-                let extensions = ["m4a", "mp3"]
-                for path in paths {
-                    for ext in extensions {
-                        if let url = Bundle.main.url(forResource: path, withExtension: ext) {
-                            foundURL = url
-                            print("   ✅ Found at path: \(path).\(ext)")
-                            break
-                        }
-                    }
-                    if foundURL != nil { break }
-                }
-                
-                // Also try searching in subdirectories if direct path fails
-                if foundURL == nil {
-                    if let resourcePath = Bundle.main.resourcePath {
-                        let fileManager = FileManager.default
-                        if let enumerator = fileManager.enumerator(atPath: resourcePath) {
-                            while let file = enumerator.nextObject() as? String {
-                                let lower = file.lowercased()
-                                if lower.hasSuffix("\(fileName).m4a") || lower.hasSuffix("\(fileName).mp3") {
-                                    let fullPath = (resourcePath as NSString).appendingPathComponent(file)
-                                    foundURL = URL(fileURLWithPath: fullPath)
-                                    print("   ✅ Found by searching: \(file)")
-                                    break
-                                }
-                            }
-                        }
-                    }
-                }
-                
+                let foundURL = self.resolveURL(forPath: audioPath)
                 if let url = foundURL {
                     self.playAudioFile(url: url, fallbackSpeakText: text)
                     print("🔊 Playing audio: \(url.lastPathComponent)")
                 } else {
-                    // Fallback to text-to-speech if no audio file found
-                    print("⚠️ No audio file found for '\(text)' (tried: \(paths.joined(separator: ", ")))")
-                    
-                    // Debug: List what's actually in the bundle
-                    if let resourcePath = Bundle.main.resourcePath {
-                        print("   📦 Bundle resource path: \(resourcePath)")
-                        let fileManager = FileManager.default
-                        if let enumerator = fileManager.enumerator(atPath: resourcePath) {
-                            var foundFiles: [String] = []
-                            while let file = enumerator.nextObject() as? String {
-                                let lower = file.lowercased()
-                                if lower.hasSuffix(".m4a") || lower.hasSuffix(".mp3") {
-                                    foundFiles.append(file)
-                                }
-                            }
-                            if !foundFiles.isEmpty {
-                                print("   📁 Found audio files in bundle: \(foundFiles.prefix(10).joined(separator: ", "))")
-                            } else {
-                                print("   ❌ No .m4a or .mp3 files found in bundle!")
-                            }
-                        }
-                    }
-                    
+                    print("⚠️ No audio file found for '\(text)' (path: \(audioPath))")
                     self.startSpeaking(text)
                 }
             } else {
@@ -1578,6 +1528,12 @@ struct MatchingGameConfigs {
         Dinosaur(id: 11, name: "Iguanodon", icon: "🦎", imageName: "dino-iguanodon", characteristicIds: [20]),
         Dinosaur(id: 12, name: "Troodon", icon: "🦉", imageName: "dino-troodon", characteristicIds: [21, 22]),
         Dinosaur(id: 13, name: "Edmontosaurus", icon: "🦆", imageName: "dino-edmontosaurus", characteristicIds: [25, 27]),
+        Dinosaur(id: 38, name: "Masiakasaurus", icon: "🦖", imageName: "dino-masiakasaurus", characteristicIds: []),
+        Dinosaur(id: 39, name: "Torvosaurus", icon: "🦖", imageName: "dino-torvosaurus", characteristicIds: []),
+        Dinosaur(id: 40, name: "Rapetosaurus", icon: "🦕", imageName: "dino-rapetosaurus", characteristicIds: []),
+        Dinosaur(id: 41, name: "Majungasaurus", icon: "🦖", imageName: "dino-majungasaurus", characteristicIds: []),
+        Dinosaur(id: 42, name: "Allosaurus", icon: "🦖", imageName: "dino-allosaurus", characteristicIds: []),
+        Dinosaur(id: 43, name: "Oviraptor", icon: "🦅", imageName: "dino-oviraptor", characteristicIds: []),
     ]
     
     // Full pool of available characteristics (can be expanded)
@@ -1643,7 +1599,7 @@ struct MatchingGameConfigs {
     
     // Full pool of available pterosaurs (flying reptiles) — 10 total
     static let allPterosaurs: [Dinosaur] = [
-        Dinosaur(id: 101, name: "Pterodactyl", icon: "🦅", imageName: "ptero-pteradactyl", characteristicIds: [101, 102, 103]),
+        Dinosaur(id: 101, name: "Pterodactylus", icon: "🦅", imageName: "ptero-pteradactylus", characteristicIds: [101, 102, 103]),
         Dinosaur(id: 102, name: "Pteranodon", icon: "🦅", imageName: "ptero-pteranodon", characteristicIds: [104, 105, 106]),
         Dinosaur(id: 103, name: "Quetzalcoatlus", icon: "🦅", imageName: "ptero-quetzacoatlus", characteristicIds: [107, 108, 109]),
         Dinosaur(id: 104, name: "Rhamphorhynchus", icon: "🦅", imageName: "ptero-rhamphorhynchus", characteristicIds: [110, 111, 112]),
@@ -1658,7 +1614,7 @@ struct MatchingGameConfigs {
     // Full pool of available pterosaur characteristics
     // Image sets: ptero-char-<characteristic> (e.g. ptero-char-wings, ptero-char-crest)
     static let allPterosaurCharacteristics: [Characteristic] = [
-        // Pterodactyl characteristics
+        // Pterodactylus characteristics
         Characteristic(id: 101, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 101),
         Characteristic(id: 102, type: "Small", icon: "🐦", imageName: "ptero-char-small", dinosaurId: 101),
         Characteristic(id: 103, type: "Teeth", icon: "🦷", imageName: "ptero-char-teeth", dinosaurId: 101),
