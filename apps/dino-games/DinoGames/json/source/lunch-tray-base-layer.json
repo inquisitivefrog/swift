@@ -1,0 +1,21 @@
+{
+  "asset_id": "ui_lunch_tray_base_01",
+  "version": "1.0",
+  "style_config": {
+    "render_engine": "Octane",
+    "style": "high-poly 3D animation, cinematic CGI",
+    "lighting": "studio soft-box, infinite white background",
+    "textures": "smooth clay, matte plastic",
+    "color_profile": "vibrant, high-saturation"
+  },
+  "geometry_config": {
+    "view_angle": "Diagonal high-angle (isometric)",
+    "tray_type": "deep-welled plastic, 3-compartment",
+    "layout": "1 large vertical left, 2 small stacked right",
+    "accessories": ["plastic fork", "plastic spoon", "paper napkin", "water glass"]
+  },
+  "technical_specs": {
+    "resolution": "1024x1024",
+    "aspect_ratio": "1:1"
+  }
+}

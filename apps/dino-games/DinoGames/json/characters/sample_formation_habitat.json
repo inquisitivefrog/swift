@@ -1,0 +1,21 @@
+{
+  "habitat_id": "winton_floodplain_01",
+  "scientific_context": {
+    "formation": "Winton Formation, Australia",
+    "period": "Early-Late Cretaceous",
+    "environment_type": "Seasonal river plains and lush floodplains"
+  },
+  "visual_elements": {
+    "ground": "Red dusty earth meeting muddy riverbanks",
+    "flora_approved": [
+      "Feathery green ferns",
+      "Tall Araucaria (spiky conifer) trees",
+      "Gingko trees with yellow-green fan leaves"
+    ],
+    "sky_lighting": "Bright midday sun, scattered fluffy clouds"
+  },
+  "dietary_menu": {
+    "herbivore": ["Soft ferns", "Gingko fruit", "Conifer needles"],
+    "piscivore": ["Lungfish", "Silver river fish"]
+  }
+}

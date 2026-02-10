@@ -1,0 +1,8 @@
+{ 
+  "app_image_config": {
+    "layer_1_style": "1024x1024 px, high-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures.", 
+    "layer_2_setting": "Setting: Sunny Australian Outback, red sand. Character: Middle-aged male paleontologist, short beard, khaki explorer outfit.",
+    "layer_3_action": "A high-angle shot looking down at the ground.  The paleontologist is kneeling and studying an Ankylosaur trackway. The paleontologist is wearing a hat, holding a magnifying glass and a small checkered scale. In the foreground, there are exactly two large duck-shaped footprints with deep heel marks. In the background, there are two smaller footprints: each must have exactly five distinct toe depressions arranged in a curve. There are no lines or paths connecting them; they are individual depressions in the undisturbed red sand. A grove of Gingko trees and ferns is visible in the distance.",
+    "aspect_ratio": "1:1"
+  }
+}
