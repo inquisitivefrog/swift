@@ -1,0 +1,13 @@
+{
+  "habitat_id": "TROPICAL_ISLAND_LAGOONS",
+  "substrate": "White carbonate sand and coral-derived limestone",
+  "visuals": {
+    "ground": "Fine white sand and turquoise shallow water",
+    "flora": ["Early palm trees", "Pandanus-like shrubs"]
+  },
+  "small_fauna": {
+    "insects": ["Large beetles", "Coastal flies"],
+    "reptiles": ["Allodaposuchus (small crocodilian)"],
+    "mammals": ["Kogaionid multituberculates (primitive rodent-like)"]
+  }
+}

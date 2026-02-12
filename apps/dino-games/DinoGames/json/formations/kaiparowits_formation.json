@@ -1,0 +1,11 @@
+{
+  "formation_id": "CLOVERLY",
+  "base_habitat": "COASTAL_WETLANDS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Soft peat and black mud",
+    "color_palette": ["Grey", "Black"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "KAIPAROWITS_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}

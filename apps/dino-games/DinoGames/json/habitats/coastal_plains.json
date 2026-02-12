@@ -1,0 +1,12 @@
+{
+  "habitat_template": "COASTAL_PLAINS",
+  "physics": {
+    "altitude": "low_estuarine",
+    "water_type": "brackish_tidal",
+    "drainage": "poor"
+  },
+  "visual_logic": {
+    "water_features": "Meandering channels and stagnant oxbows",
+    "atmospheric_effects": ["Coastal haze", "Low-altitude humidity"]
+  }
+}

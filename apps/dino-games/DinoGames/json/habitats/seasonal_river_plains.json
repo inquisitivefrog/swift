@@ -1,0 +1,8 @@
+{
+  "habitat_id": "SEASONAL_RIVER_PLAINS",
+  "substrate": "Conglomerate and coarse sandstone",
+  "visuals": {
+    "ground": "Rocky soil with rounded river pebbles",
+    "water": "Receding waterlines, muddy banks",
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel, prominent specular highlights, visible skin folds, and handcrafted sculpture aesthetic."
+}
+
+{
+  "habitat_id": "RIVER_VALLEYS",
+  "substrate": "Siltstone and shale",
+  "visuals": {
+    "ground": "Lush green mossy banks",
+    "water": "Deep blue river with a rocky bed and high-gloss finish"
+  },
+  "small_fauna": {
+    "fish": ["Lepidotes (armored-scale fish)"],
+    "insects": ["Giant dragonflies"]
+  }
+}
+
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {
+      "habitat_id": "RIVER_VALLEYS"
+    },
+    "layer_3_action": {
+      "subject": "Juvenile Iguanodon",
+      "features": ["prominent thumb spikes", "large soulful eyes", "friendly expressive face"],
+      "action": "standing alert on a riverbank"
+    }
+  }
+}

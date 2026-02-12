@@ -1,0 +1,11 @@
+{
+  "formation_id": "CLOVERLY",
+  "base_habitat": "WOODLAND_FLOODPLAINS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Fine-grained fluvial sandstone and mudstone",
+    "color_palette": ["Grey", "White"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "CLOVERLY_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}

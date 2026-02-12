@@ -1,8 +1,1 @@
-{
-  "name": "Cloverly",
-  "dinoImageNames": [
-    "dino-deinonychus",
-    "dino-apatosaurus",
-    "dino-edmontosaurus"
-  ]
-}
+{"name":"Cloverly","dinoImageNames":["dino-deinonychus","dino-apatosaurus","dino-edmontosaurus"],"hintLocation":"Montana, Wyoming, USA","hintPeriod":"Early Cretaceous"}

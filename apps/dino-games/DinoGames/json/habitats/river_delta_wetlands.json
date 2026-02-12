@@ -1,0 +1,10 @@
+{
+  "habitat_id": "RIVER_DELTA_WETLANDS",
+  "physics": { "altitude": "sea_level", "water": "very_high" },
+  "visuals": {
+    "ground": "Unstable waterlogged sand and peat",
+    "water": "Network of distributary channels",
+    "flora_jurassic": ["Dense horsetail forests (Calamites)"],
+    "flora_cretaceous": ["Floating aquatic plants", "Early water lilies"]
+  }
+}

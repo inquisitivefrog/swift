@@ -1,0 +1,11 @@
+{
+  "formation_id": "CEDAR_MOUNTAIN",
+  "base_habitat": "SEMI_ARID_FLOODPLAINS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Deeply cracked clay with oxidized iron patches",
+    "color_palette": ["Red", "Green"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "CEDAR_MOUNTAIN_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}

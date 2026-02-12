@@ -1,0 +1,11 @@
+{
+  "formation_id": "WEALDEN_GROUP",
+  "base_habitat": "RIVER_DELTA_WETLANDS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Fine-grained fluvial sand and peat",
+    "color_palette": ["Yellowish-grey", "Dull green", "Ocher"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "WEALDEN_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}

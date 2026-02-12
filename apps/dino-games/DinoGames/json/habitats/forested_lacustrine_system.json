@@ -1,0 +1,8 @@
+{
+  "habitat_id": "FORESTED_LACUSTRINE_SYSTEM",
+  "substrate": "Laminated organic-rich shale",
+  "visuals": {
+    "ground": "Dark, damp, leafy forest floor",
+    "canopy": "Dense forest (80% coverage)",
+  }
+}

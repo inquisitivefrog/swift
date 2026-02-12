@@ -1,0 +1,11 @@
+{
+  "formation_id": "CANDELEROS",
+  "base_habitat": "SEASONAL_RIVER_PLAINS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Conglomerate and coarse sandstone",
+    "color_palette": ["Grey", "Red"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "CANDELEROS_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}

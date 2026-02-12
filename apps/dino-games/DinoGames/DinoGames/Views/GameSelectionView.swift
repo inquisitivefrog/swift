@@ -72,7 +72,7 @@ struct GameSelectionView: View {
     private var gameSelectionTitle: String {
         switch category {
         case .land:
-            if let level = selectedLevel { return "\(level.title) — Choose a Dinosaur Game!" }
+            if let level = selectedLevel { return level.gameListTitle }
             return "Choose a level"
         case .air: return "Choose a Pterosaur Game!"
         case .sea: return "Choose a Marine Reptile Game!"

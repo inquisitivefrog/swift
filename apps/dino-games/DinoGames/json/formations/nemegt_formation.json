@@ -1,0 +1,11 @@
+{
+  "formation_id": "NEMEGT",
+  "base_habitat": "COASTAL_FLOODPLAINS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Sticky black mud with salt-marsh grasses (ferns)",
+    "color_palette": ["Black", "Green"]
+  },
+  "flora_manifest": ["CRETACEOUS_BASE", "NEMEGT_ADDITIONS"], 
+  "fauna_manifest": ["CRETACEOUS_BASE", "NEMEGT_ADDITIONS"]
+}

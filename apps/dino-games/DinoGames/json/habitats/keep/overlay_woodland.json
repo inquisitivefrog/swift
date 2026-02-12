@@ -1,0 +1,9 @@
+{
+  "attribute_id": "woodland_overlay",
+  "visual_rules": {
+    "canopy_density": "Moderate (spaced out trees)",
+    "light_behavior": "Dappled sunlight (god rays hitting the clay floor)",
+    "undergrowth_level": "High (ferns and cycads covering the roots)",
+    "camera_advantage": "Allows for natural framing and 'peek-a-boo' mechanics"
+  }
+}

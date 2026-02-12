@@ -1,0 +1,8 @@
+{
+  "habitat_id": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+  "substrate": "Siltstone with desiccation cracks",
+  "visuals": {
+    "ground": "Brown-grey silt with visible 'mud-crack' geometry",
+    "water": "Flash-flood channels, currently dry",
+  }
+}

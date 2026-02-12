@@ -203,13 +203,13 @@ struct GuessGameView: View {
         }
     }
 
-    /// Plays game-dino-footprints-hint then starts the options walk. Keeps isAudioPlaying true so taps are blocked (no click sounds).
+    /// Plays game-hint then starts the options walk. Keeps isAudioPlaying true so taps are blocked (no click sounds).
     private func playFootprintsHintThenStartOptionsWalk() {
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
             self.startOptionsWalkIfNeeded()
         }
-        if let url = speechManager.urlForAudio(key: "game-dino-footprints-hint") {
+        if let url = speechManager.urlForAudio(key: "game-hint") {
             speechManager.playAudioFile(url: url)
         } else {
             startOptionsWalkIfNeeded()

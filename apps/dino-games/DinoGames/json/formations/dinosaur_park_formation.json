@@ -1,0 +1,11 @@
+{
+  "formation_id": "DINOSAUR_PARK",
+  "base_habitat": "COASTAL_FLOODPLAINS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Peaty clay and lignite",
+    "color_palette": ["Black", "Green"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "DINOSAUR_PARK_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}

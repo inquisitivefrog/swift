@@ -1,0 +1,8 @@
+{
+  "habitat_id": "LOWLAND_COASTAL_PLAINS",
+  "physics": { "altitude": "low", "water": "high" },
+  "visuals": {
+    "ground": "Dark, rich organic mud",
+    "water": "Steamy lagoons and slow estuaries",
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "formation_id": "KEM_KEM",
+  "base_habitat": "FLOODPLAINS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Point bars of gravel and coarse sand",
+    "color_palette": ["Grey", "Tan"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "KEM_KEM_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}

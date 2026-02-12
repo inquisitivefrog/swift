@@ -1,0 +1,8 @@
+{
+  "habitat_id": "FLOODPLAINS",
+  "substrate": "Alluvial mudstone",
+  "visuals": {
+    "ground": "Dense fern-meadows",
+    "water": "Isolated puddles/wallows"
+  }
+}

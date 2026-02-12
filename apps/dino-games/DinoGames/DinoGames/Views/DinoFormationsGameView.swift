@@ -26,12 +26,18 @@ struct DinoFormation: Identifiable {
     let findInFormationAudioKey: String
     /// Dino image set names (dino-*) found in this formation.
     let dinoImageNames: Set<String>
+    /// Hint: state(s)/province and country, e.g. "Montana, Wyoming, USA" or "Alberta, Canada"
+    let hintLocation: String?
+    /// Hint: Mesozoic period, e.g. "Late Cretaceous"
+    let hintPeriod: String?
 }
 
 /// JSON format for formation files in Formations/<id>.json (e.g. cloverly.json, hell-creek.json).
 private struct FormationJSON: Decodable {
     let name: String
     let dinoImageNames: [String]
+    let hintLocation: String?
+    let hintPeriod: String?
 }
 
 /// Formation → dinosaurs: only formations that have at least 3 dinosaurs in the game pool are playable (3 correct + 2 decoys per round).
@@ -51,7 +57,9 @@ private let dinoFormationsList: [DinoFormation] = {
             name: json.name,
             imageName: "formation-\(id)",
             findInFormationAudioKey: "game-dino-formations-find-in-\(id)",
-            dinoImageNames: Set(json.dinoImageNames)
+            dinoImageNames: Set(json.dinoImageNames),
+            hintLocation: json.hintLocation,
+            hintPeriod: json.hintPeriod
         ))
     }
     let poolImageNames = Set(dinoFormationsPool.compactMap(\.imageName))
@@ -62,9 +70,9 @@ private let dinoFormationsList: [DinoFormation] = {
 }()
 
 private let fallbackFormationsList: [DinoFormation] = [
-    DinoFormation(id: "hell-creek", name: "Hell Creek", imageName: "formation-hell-creek", findInFormationAudioKey: "game-dino-formations-find-in-hell-creek", dinoImageNames: ["dino-trex", "dino-triceratops", "dino-ankylosaurus", "dino-edmontosaurus", "dino-pachycephalosaurus", "dino-torosaurus"]),
-    DinoFormation(id: "morrison", name: "Morrison", imageName: "formation-morrison", findInFormationAudioKey: "game-dino-formations-find-in-morrison", dinoImageNames: ["dino-stegosaurus", "dino-apatosaurus", "dino-brachiosaurus", "dino-diplodocus", "dino-camarasaurus", "dino-dryosaurus", "dino-ceratosaurus"]),
-    DinoFormation(id: "cloverly", name: "Cloverly", imageName: "formation-cloverly", findInFormationAudioKey: "game-dino-formations-find-in-cloverly", dinoImageNames: ["dino-gallimimus", "dino-therizinosaurus", "dino-velociraptor", "dino-deinonychus"]),
+    DinoFormation(id: "hell-creek", name: "Hell Creek", imageName: "formation-hell-creek", findInFormationAudioKey: "game-dino-formations-find-in-hell-creek", dinoImageNames: ["dino-trex", "dino-triceratops", "dino-ankylosaurus", "dino-edmontosaurus", "dino-pachycephalosaurus", "dino-torosaurus"], hintLocation: "Montana, North Dakota, South Dakota, Wyoming, USA", hintPeriod: "Late Cretaceous"),
+    DinoFormation(id: "morrison", name: "Morrison", imageName: "formation-morrison", findInFormationAudioKey: "game-dino-formations-find-in-morrison", dinoImageNames: ["dino-stegosaurus", "dino-apatosaurus", "dino-brachiosaurus", "dino-diplodocus", "dino-camarasaurus", "dino-dryosaurus", "dino-ceratosaurus"], hintLocation: "Colorado, Utah, Wyoming, Montana, USA", hintPeriod: "Late Jurassic"),
+    DinoFormation(id: "cloverly", name: "Cloverly", imageName: "formation-cloverly", findInFormationAudioKey: "game-dino-formations-find-in-cloverly", dinoImageNames: ["dino-deinonychus", "dino-apatosaurus", "dino-edmontosaurus"], hintLocation: "Montana, Wyoming, USA", hintPeriod: "Early Cretaceous"),
 ]
 
 /// Same pool as Dino Ages: all dinosaurs with dino-* image sets.
@@ -159,6 +167,8 @@ struct DinoFormationsGameView: View {
     @State private var displayedDinoName: String? = nil
     /// Prevents intro from playing twice when onAppear fires more than once.
     @State private var hasStartedGame = false
+    /// When true, show the formation hints overlay (location + period).
+    @State private var showFormationHints = false
 
     private let totalRounds = 3
     private let matchesNeededPerRound = 3
@@ -194,6 +204,28 @@ struct DinoFormationsGameView: View {
                 .font(.largeTitle)
                 .padding(.top, 8)
             gameBody
+        }
+        .overlay(alignment: .topTrailing) {
+            if formation != nil, !isGameComplete {
+                Button {
+                    showFormationHints = true
+                } label: {
+                    Text("Hints")
+                        .font(.caption.weight(.semibold))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        .background(Circle().fill(Color.blue))
+                        .frame(width: 72, height: 72)
+                }
+                .padding(.top, 8)
+                .padding(.trailing, 16)
+            }
+        }
+        .fullScreenCover(isPresented: $showFormationHints) {
+            if let f = formation {
+                FormationHintsView(formation: f, onDismiss: { showFormationHints = false })
+            }
         }
     }
 
@@ -289,10 +321,18 @@ struct DinoFormationsGameView: View {
         }
     }
 
+    /// IDs excluded from round 1 only (so round 1 favors other formations; rounds 2–3 can use any).
+    private static let formationsExcludedFromRoundOne: Set<String> = ["morrison", "hell-creek"]
+
     /// Picks a formation for the next round. Prefers formations not yet used this game; among those, prefers ones with enough unused dinosaurs so we avoid re-using dinos when possible.
-    private func pickFormationForRound(using rng: inout SeededRandomNumberGenerator) -> DinoFormation {
-        let notYetUsed = dinoFormationsList.filter { !usedFormationIds.contains($0.id) }
-        let pool = notYetUsed.isEmpty ? dinoFormationsList : notYetUsed
+    /// When excludeMorrisonAndHellCreek is true (round 1), Morrison and Hell Creek are not allowed.
+    private func pickFormationForRound(using rng: inout SeededRandomNumberGenerator, excludeMorrisonAndHellCreek: Bool = false) -> DinoFormation {
+        let baseList = excludeMorrisonAndHellCreek
+            ? dinoFormationsList.filter { !Self.formationsExcludedFromRoundOne.contains($0.id) }
+            : dinoFormationsList
+        let list = baseList.isEmpty ? dinoFormationsList : baseList
+        let notYetUsed = list.filter { !usedFormationIds.contains($0.id) }
+        let pool = notYetUsed.isEmpty ? list : notYetUsed
         let withEnoughUnused = pool.filter { f in
             let inF = dinoFormationsPool.filter { dinoFormationsIsInFormation($0, f) }
             let outF = dinoFormationsPool.filter { !dinoFormationsIsInFormation($0, f) }
@@ -337,7 +377,22 @@ struct DinoFormationsGameView: View {
         formation = pickFormationForRound(using: &rng)
         usedFormationIds.insert(formation!.id)
         buildSlotsForRound(using: &rng)
-        playFindInFormationThenAllowTaps()
+        playFormationsHintThenFindInFormation()
+    }
+
+    /// Play game-hint then start round (formation name → choose-a-dinosaur → walk dinosaur names). Same pattern as Dino Footprints hint.
+    private func playFormationsHintThenFindInFormation() {
+        guard formation != nil else { return }
+        isAudioPlaying = true
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.playFindInFormationThenAllowTaps()
+        }
+        if let url = speechManager.urlForAudio(key: "game-hint") {
+            speechManager.playAudioFile(url: url)
+        } else {
+            playFindInFormationThenAllowTaps()
+        }
     }
 
     /// Round begin: play formation name (Audio/Formations/{slug}.m4a), then invitation (choose three dinosaurs...), then walk the five dinosaur names with text.
@@ -401,7 +456,7 @@ struct DinoFormationsGameView: View {
     private func startGame() {
         var rng = SeededRandomNumberGenerator(seed: dinoFormationsTimeSeed())
         usedFormationIds = []
-        formation = pickFormationForRound(using: &rng)
+        formation = pickFormationForRound(using: &rng, excludeMorrisonAndHellCreek: true)
         usedFormationIds.insert(formation!.id)
         currentRound = 1
         usedDinosaurIds = []
@@ -411,9 +466,9 @@ struct DinoFormationsGameView: View {
         endHighlightIndex = 0
         buildSlotsForRound(using: &rng)
         guard formation != nil else { return }
-        // Skip playing game name here; it was already played when the user selected the game. Go straight to formation name → choose-a-dinosaur → walk dinosaur names.
+        // Skip playing game name here; it was already played when the user selected the game. Play game-hint then formation name → choose-a-dinosaur → walk dinosaur names.
         isAudioPlaying = true
-        playFindInFormationThenAllowTaps()
+        playFormationsHintThenFindInFormation()
     }
 
     // MARK: - End sequence (victory list with scrollbar; scroll highlighted row into view like Dino Ages)
@@ -577,6 +632,58 @@ private struct DinoFormationsEndRowView: View {
         .padding(.vertical, 10)
         .background(RoundedRectangle(cornerRadius: 12).fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear))
         .overlay(RoundedRectangle(cornerRadius: 12).stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2))
+    }
+}
+
+// MARK: - Formation Hints (location + period)
+
+struct FormationHintsView: View {
+    let formation: DinoFormation
+    let onDismiss: () -> Void
+
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            VStack(spacing: 24) {
+                Text("Formation Hints")
+                    .font(.title2.weight(.semibold))
+                    .padding(.top, 44)
+                VStack(alignment: .leading, spacing: 16) {
+                    Text(formation.name)
+                        .font(.title3.weight(.semibold))
+                    if let loc = formation.hintLocation, !loc.isEmpty {
+                        Label(loc, systemImage: "mappin.circle.fill")
+                            .font(.body)
+                    }
+                    if let period = formation.hintPeriod, !period.isEmpty {
+                        Label(period, systemImage: "clock.fill")
+                            .font(.body)
+                    }
+                    if (formation.hintLocation ?? "").isEmpty && (formation.hintPeriod ?? "").isEmpty {
+                        Text("No hint data for this formation.")
+                            .font(.body)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 24)
+                .padding(.vertical, 16)
+                .background(RoundedRectangle(cornerRadius: 12).fill(Color(.secondarySystemBackground)))
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color(.systemBackground))
+
+            Button {
+                onDismiss()
+            } label: {
+                Text("<")
+                    .font(.system(size: 28, weight: .medium))
+                    .foregroundColor(.blue)
+                    .frame(width: 44, height: 44)
+            }
+            .padding(.leading, 8)
+            .padding(.top, 8)
+        }
     }
 }
 

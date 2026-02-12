@@ -1,0 +1,11 @@
+{
+  "formation_id": "TIAOJISHAN",
+  "base_habitat": "FORESTED_VOLCANIC_LAKE_REGION",
+  "period": "LATE_JURASSIC",
+  "strata_specifics": {
+    "ground_texture": "Siliceous sinter and ash beds",
+    "color_palette": ["black", "grey"]
+  },
+  "flora_manifest": ["JURASSIC_BASE", "TIAOJISHAN_ADDITIONS"], 
+  "fauna_manifest": ["JURASSIC_BASE"]
+}

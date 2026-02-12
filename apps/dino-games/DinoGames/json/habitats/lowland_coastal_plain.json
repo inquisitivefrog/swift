@@ -1,0 +1,15 @@
+{
+  "habitat_instance": "lowland_coastal_plain",
+  "base_template": "coastal",
+  "sub_type": "lowland",
+  "visual_variables": {
+    "ground_texture": "Silty mud and fine sand",
+    "water_type": "Brackish pools and slow-moving tidewater",
+    "key_flora": ["Mangrove-like shrubs", "Ferns", "Cycads"],
+    "atmosphere": "Hazy, humid, bright sunlight"
+  },
+  "critic_check": {
+    "allowed_formations": ["Dinosaur Park", "Hell Creek", "Winton"],
+    "forbidden_elements": ["Grass", "Oak trees", "Snow"]
+  }
+}

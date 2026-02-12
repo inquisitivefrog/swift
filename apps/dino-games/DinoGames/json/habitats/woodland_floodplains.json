@@ -1,0 +1,8 @@
+{
+  "habitat_id": "WOODLAND_FLOODPLAINS",
+  "substrate": "Mottled mudstone and volcanic ash (Bentonite)",
+  "visuals": {
+    "ground": "Light grey and greenish-grey clay-rich soil",
+    "canopy": "Open woodland (30% coverage)",
+  }
+}

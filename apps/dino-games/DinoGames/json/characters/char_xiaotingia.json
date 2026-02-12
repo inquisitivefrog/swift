@@ -1,0 +1,72 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{
+  "flora_library": {
+    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
+    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
+    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
+    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
+    "TIAOJISHAN_ADDITIONS": ["Giant Horsetails", "Dense Conifer forest"],
+    "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
+    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
+    "LANCE_HELL_CREEK_ADDITIONS": ["Palm-like Bennettitales", "Tree ferns", "Lush canopy"],
+    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
+    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
+    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"],
+    "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"],
+    "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
+    "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
+    "CEDAR_MOUNTAIN_ADDITIONS": ["Paleopus in damp cracks", "Shrubby angiosperms"],
+    "JEHOL_BIOTA_ADDITIONS": ["Water lilies at the edge", "Dense hardwoods"],
+    "CANDELEROS_ADDITIONS": ["Paleopus", "Early flowering reeds"],
+    "KAIPAROWITS_ADDITIONS": ["Giant horsetails", "Mosses", "Dense fern thickets"],
+    "DAOHUGOU_BEDS_ADDITIONS": ["Evergreen conifers", "Alpine ferns"],
+    "KEM_KEM_ADDITIONS": ["Early Sycamores", "Willow-like shrubs", "Horsetail banks"]
+  }
+}
+{
+  "fauna_library": {
+    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
+    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
+    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
+    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates")"],
+    "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
+    "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)," "Cicadas"],
+    "HELL_CREEK_ADDITIONS:" ["Alphadon (Opossum-like)", "Teiids (fast-running lizards)", "Cicadas", "Early wasps"],
+    "NEMEGT_ADDITIONS": ["Freshwater crabs", "Shrimp", "Gar-like predators", "Champsosaurus (crocodile-like but smaller)"]
+  }
+}
+{
+  "habitat_id": "FORESTED_VOLCANIC_LAKE_SYSTEM",
+  "substrate": "Bentonite clay and shale",
+  "visuals": {
+    "ground": "Slippery, light-colored volcanic mud",
+    "water": "Deep blue-green caldera lake",
+    "flora_jurassic": ["Tree ferns", "Ginkgos"],
+    "flora_cretaceous": ["Dense laurel-like forests", "Flowering shrubs"]
+  }
+}
+{
+  "formation_id": "TIAOJISHAN",
+  "base_habitat": "FORESTED_VOLCANIC_LAKE_REGION",
+  "period": "LATE_JURASSIC",
+  "strata_specifics": {
+    "ground_texture": "Bentonite clay and shale",
+    "color_palette": ["black", “grey”, “white"]
+  },
+  "flora_manifest": ["JURASSIC_BASE", "TIAOJISHAN_ADDITIONS"], 
+  "fauna_manifest": ["JURASSIC_BASE"]
+}
+{
+  "app_image_config": {
+    "layer_1_style": "[REF: STYLE_CLAY_MASTER]",
+    "layer_2_setting": “[REF: TIAOJISHAN]",
+    "layer_3_action": {
+      "subject": “Xiaotingia",
+      "features": [“small", “feathered wings, legs and tail", “long bony tail"],
+      "action": "A friendly, stylized Xiaotingia is climbing a conifer tree. No text." 
+    }
+  } 
+} 

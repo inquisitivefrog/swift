@@ -1,0 +1,11 @@
+{
+  "formation_id": "SOLNHOFEN_LIMESTONE",
+  "base_habitat": "TROPICAL_ISLAND_LAGOONS",
+  "period": "LATE_JURASSIC",
+  "strata_specifics": {
+    "ground_texture": "beach sand",
+    "color_palette": ["white"]
+  },
+  "flora_manifest": ["JURASSIC_BASE", "SOLNHOFEN_ADDITIONS"], 
+  "fauna_manifest": ["JURASSIC_BASE", "SOLNHOFEN_ADDITIONS"]
+}

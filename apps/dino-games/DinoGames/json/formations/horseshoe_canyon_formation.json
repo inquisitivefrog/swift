@@ -1,0 +1,11 @@
+{
+  "formation_id": "HORSESHOE_CANYON",
+  "base_habitat": "COASTAL_PLAIN",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Bentonitic 'popcorn' clay and dark coal seams",
+    "color_palette": ["Steel grey", "Carbon black", "Creamy tan"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "HORSESHOE_CANYON_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}

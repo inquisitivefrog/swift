@@ -439,8 +439,8 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Games/game-dino-footprints"
         case "game-dino-footprints-identify-the-footprint", "identify the footprint":
             return "Games/game-dino-footprints-identify-the-footprint"
-        case "game-dino-footprints-hint", "dino footprints hint":
-            return "Games/game-dino-footprints-hint"
+        case "game-hint", "game dino footprints hint", "dino footprints hint":
+            return "Games/game-hint"
         case "footprint-therapod", "therapod":
             return "Footprints/therapod"
         case "footprint-sauropod", "sauropod":

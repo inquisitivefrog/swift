@@ -1,0 +1,11 @@
+{
+  "formation_id": "LANCE",
+  "base_habitat": "COASTAL_PLAIN",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Fine-grained fluvial sandstone and mudstone",
+    "color_palette": ["Yellowish-grey", "Dull green", "Ocher"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}

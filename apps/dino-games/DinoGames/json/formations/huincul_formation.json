@@ -1,0 +1,11 @@
+{
+  "formation_id": "HUINCUL",
+  "base_habitat": "WARM_FLUVIAL_PLAINS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Fine-grained fluvial sandstone and mudstone",
+    "color_palette": ["Reddish-brown"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "HUINCUL_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}

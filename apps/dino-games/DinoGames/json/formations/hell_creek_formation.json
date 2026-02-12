@@ -1,0 +1,11 @@
+{
+  "formation_id": "HELL_CREEK",
+  "base_habitat": "LOWLAND_COASTAL_PLAINS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Dark, rich organic mud",
+    "color_palette": ["Grey", "Ocher", "Brown"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE", "HELL_CREEK_ADDITIONS"]
+}

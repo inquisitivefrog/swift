@@ -1,0 +1,11 @@
+{
+  "formation_id": "DJADOKHTA",
+  "base_habitat": "DESERT_DUNE_FIELDS",
+  "period": "LATE_JURASSIC",
+  "strata_specifics": {
+    "ground_texture": "wind-blown quartz sandstone",
+    "color_palette": ["red", "brown"]
+  },
+  "flora_manifest": ["JURASSIC_BASE", "DJADOKHTA_ADDITIONS"], 
+  "fauna_manifest": ["JURASSIC_BASE"]
+}

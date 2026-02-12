@@ -1,0 +1,11 @@
+{
+  "formation_id": "JEHOL_BIOTA",
+  "base_habitat": "FORESTED_LAKE_ECOSYSTEM",
+  "period": "EARLY_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Fine-grained siltstone and limestone",
+    "color_palette": ["Black", "White"]
+  },
+  "flora_manifest": ["EARLY_CRETACEOUS_BASE", "JEHOL_BIOTA_ADDITIONS"],
+  "fauna_manifest": ["EARLY_CRETACEOUS_BASE"]
+}

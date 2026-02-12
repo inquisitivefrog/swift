@@ -1,0 +1,10 @@
+{
+  "habitat_id": "RIVER_MARGINS",
+  "physics": { "altitude": "low", "water": "high_proximity" },
+  "visuals": {
+    "ground": "Slippery mud banks with leaf litter",
+    "water": "The very edge of a riverbank",
+    "flora_jurassic": ["Mossy logs", "Low ferns"],
+    "flora_cretaceous": ["Paleopus", "Ferns", "Small flowering weeds"]
+  }
+}

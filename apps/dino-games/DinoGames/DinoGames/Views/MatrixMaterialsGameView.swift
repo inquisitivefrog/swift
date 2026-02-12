@@ -110,6 +110,7 @@ struct MatrixMaterialsGameView: View {
                                     isSelected: selectedMaterial?.id == material.id,
                                     isDisabled: isProcessingAnswer || isAudioPlaying || optionsWalkIndex != nil,
                                     isHighlighted: optionsWalkIndex == index,
+                                    isOptionsWalkInProgress: optionsWalkIndex != nil,
                                     onTap: { handleMaterialTap(material, question: question) }
                                 )
                             }
@@ -140,7 +141,7 @@ struct MatrixMaterialsGameView: View {
                 isAudioPlaying = false
             }
             .allowsHitTesting(!isAudioPlaying && !isProcessingAnswer && optionsWalkIndex == nil)
-            .opacity((isAudioPlaying || isProcessingAnswer) ? 0.7 : 1.0)
+            .opacity((isAudioPlaying || isProcessingAnswer) && optionsWalkIndex == nil ? 0.7 : 1.0)
             .navigationBarTitleDisplayMode(.inline)
         }
     }
@@ -402,6 +403,8 @@ struct MatrixMaterialOptionCard: View {
     let isSelected: Bool
     let isDisabled: Bool
     var isHighlighted: Bool = false
+    /// True when the three options are being walked (audio intro); keep cards bright but taps still disabled.
+    var isOptionsWalkInProgress: Bool = false
     let onTap: () -> Void
 
     private var showHighlight: Bool { isSelected || isHighlighted }
@@ -450,7 +453,7 @@ struct MatrixMaterialOptionCard: View {
                 RoundedRectangle(cornerRadius: 12)
                     .stroke(showHighlight ? Color.blue : Color.clear, lineWidth: 3)
             )
-            .opacity(isDisabled ? 0.5 : 1.0)
+            .opacity(isDisabled ? (isOptionsWalkInProgress ? 0.9 : 0.5) : 1.0)
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(isDisabled)

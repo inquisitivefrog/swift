@@ -1,9 +1,1 @@
-{
-  "name": "Judith River",
-  "dinoImageNames": [
-    "dino-triceratops",
-    "dino-edmontosaurus",
-    "dino-parasaurolophus",
-    "dino-pachycephalosaurus"
-  ]
-}
+{"name":"Judith River","dinoImageNames":["dino-triceratops","dino-edmontosaurus","dino-parasaurolophus","dino-pachycephalosaurus"],"hintLocation":"Montana, USA","hintPeriod":"Late Cretaceous"}

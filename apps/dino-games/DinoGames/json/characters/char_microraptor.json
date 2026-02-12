@@ -1,0 +1,79 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{
+  "flora_library": {
+    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
+    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
+    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
+    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
+    "TIAOJISHAN_ADDITIONS": ["Hardy Ferns", "Mosses"],
+    "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
+    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
+    "LANCE_HELL_CREEK_ADDITIONS": ["Palms", "Platanites", "Viburnum"],
+    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
+    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
+    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"],
+    "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"],
+    "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
+    "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
+    "CEDAR_MOUNTAIN_ADDITIONS": ["Paleopus in damp cracks", "Shrubby angiosperms"],
+    "JEHOL_BIOTA_ADDITIONS": ["Water lilies at the edge", "Dense hardwoods"]
+  }
+}
+{
+  "fauna_library": {
+    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
+    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
+    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
+    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates")"],
+    "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
+    "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)," "Cicadas"]
+  }
+}
+{
+  "habitat_id": "FORESTED_LAKE_ECOSYSTEM",
+  "substrate": "Fine-grained siltstone and limestone",
+  "visuals": {
+    "ground": "Moist soil with limestone pebbles",
+    "canopy": "High (70% coverage)",
+  }
+}
+{
+  "formation_id": "JEHOL_BIOTA",
+  "base_habitat": "FORESTED_LAKE_ECOSYSTEM",
+  "period": "EARLY_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Fine-grained siltstone and limestone",
+    "color_palette": ["Black", "White"]
+  },
+  "flora_manifest": ["EARLY_CRETACEOUS_BASE", "JEHOL_BIOTA_ADDITIONS"],
+  "fauna_manifest": ["EARLY_CRETACEOUS_BASE"]
+}
+{ 
+  "app_image_config": { 
+    "layer_1_style": { 
+      "style_id": "STYLE_CLAY_MASTER", 
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel." 
+    }, 
+    "layer_2_setting": { 
+      "habitat_id": “FORESTED_LAKE_ECOSYTEM", 
+      "formation_id": “JEHOL_BIOTA”, 
+    }, 
+    "layer_3_action": { 
+      "subject": “Microraptor", 
+      "features": [ 
+        "Friendly expressive face", 
+        "Large soulful eyes", 
+        “Stiff tail used for balance”, 
+        “feathers on hind legs and fore legs", 
+        “Fore legs have three toes and short claws”, 
+        “Hind legs have three toes and short claws”, 
+        “Hind legs have one inner toe held high with a softened, blunt, hook-like claw", 
+        “Each hook-like claw has a thick, rounded tip to look like a toy or clay model" 
+      ], 
+      "action": "The friendly dinosaur is practicing karate with one raised hind foot extended in a Karate Kid pose. The raised hind foot is pointing toward a group of Bennettitales flowers.  The camera angle is low to clearly show the unique but 'softened' foot anatomy, ensuring the  claw looks like a charming character feature rather than a sharp weapon.  A bee is resting on the extended hind foot claw not the fore leg claw and looking at the dinosaur.   The dinosaur is urging the bee to jump off the claw and onto the flowers." 
+    } 
+  } 
+}

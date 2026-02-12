@@ -1,8 +1,1 @@
-{
-  "name": "Scollard",
-  "dinoImageNames": [
-    "dino-triceratops",
-    "dino-edmontosaurus",
-    "dino-albertosaurus"
-  ]
-}
+{"name":"Scollard","dinoImageNames":["dino-triceratops","dino-edmontosaurus","dino-albertosaurus"],"hintLocation":"Alberta, Canada","hintPeriod":"Late Cretaceous"}

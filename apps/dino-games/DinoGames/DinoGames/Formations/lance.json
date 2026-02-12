@@ -1,9 +1,1 @@
-{
-  "name": "Lance",
-  "dinoImageNames": [
-    "dino-trex",
-    "dino-triceratops",
-    "dino-edmontosaurus",
-    "dino-ankylosaurus"
-  ]
-}
+{"name":"Lance","dinoImageNames":["dino-trex","dino-triceratops","dino-edmontosaurus","dino-ankylosaurus"],"hintLocation":"Wyoming, USA","hintPeriod":"Late Cretaceous"}

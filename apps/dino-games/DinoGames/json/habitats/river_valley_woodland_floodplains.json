@@ -1,0 +1,10 @@
+{
+  "habitat_id": "RIVER_VALLEY_WOODLAND_FLOODPLAINS",
+  "substrate": "Cross-bedded sandstone with ironstone nodules",
+  "visuals": {
+    "ground": "Buff-colored sandy soil with occasional rusty-orange rock outcrops",
+    "canopy": "Moderate (40% coverage)",
+    "flora_jurassic": ["Ginkgo biloba", "Tree ferns"],
+    "flora_cretaceous": ["Early planes", "Sycamores", "Fern undergrowth"]
+  }
+}

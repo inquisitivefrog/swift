@@ -1,0 +1,8 @@
+{
+  "habitat_id": "DESERT_DUNE_FIELDS",
+  "substrate": "Aeolian (wind-blown) quartz sandstone",
+  "visuals": {
+    "ground": "High-relief orange and red sand dunes with ripple marks",
+    "water": "None (Oasis only)",
+  }
+}

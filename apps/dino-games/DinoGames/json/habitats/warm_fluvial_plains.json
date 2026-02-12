@@ -1,0 +1,8 @@
+{
+  "habitat_id": "WARM_FLUVIAL_PLAINS",
+  "physics": { "altitude": "low", "water": "medium_constant" },
+  "visuals": {
+    "ground": "Reddish-brown clay soil (iron-rich)",
+    "water": "Shallow, sluggish stream networks",
+  }
+}

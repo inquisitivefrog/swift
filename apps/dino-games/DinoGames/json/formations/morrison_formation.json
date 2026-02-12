@@ -1,0 +1,11 @@
+{
+  "formation_id": "MORRISON",
+  "base_habitat": "SEMI_ARID_PLAINS",
+  "period": "LATE_JURASSIC",
+  "strata_specifics": {
+    "ground_texture": "Pale, dusty tan earth with white chalky nodules",
+    "color_palette": ["Tan", "white"]
+  },
+  "flora_manifest": ["JURASSIC_BASE", "MORRISON_ADDITIONS"], 
+  "fauna_manifest": ["JURASSIC_BASE", "MORRISON_ADDITIONS"]
+}

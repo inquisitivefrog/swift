@@ -1,0 +1,8 @@
+{
+  "habitat_id": "RIVER_VALLEYS",
+  "substrate": "Siltstone and shale",
+  "visuals": {
+    "ground": "Lush green mossy banks",
+    "water": "Deep blue river with rocky bed"
+  },
+}
