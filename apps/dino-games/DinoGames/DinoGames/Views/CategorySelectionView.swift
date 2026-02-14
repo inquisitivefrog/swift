@@ -111,7 +111,7 @@ struct CategorySelectionView: View {
             self.speechManager.onAudioFinished = nil
             self.coverWelcomeDone()
         }
-        speechManager.speak("cover-welcome-to-dino-games")
+        speechManager.speak("cover-choose-a-game-type")
     }
     
     private func coverWelcomeDone() {

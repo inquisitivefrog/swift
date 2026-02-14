@@ -713,10 +713,7 @@ private struct GameSelectionNavigationContent: View {
         case .air: introKey = "choose-a-pterosaur-game"
         case .sea: introKey = "choose-a-marine-reptile-game"
         }
-        let delay: TimeInterval = 1.2
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            speechManager.speak(introKey)
-        }
+        speechManager.speak(introKey)
     }
 
     /// After category intro finishes, walk the game list: highlight each card and play its intro audio so children learn image ↔ name.

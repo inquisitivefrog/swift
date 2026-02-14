@@ -1,0 +1,63 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{
+  "flora_library": {
+    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
+    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
+    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
+    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
+    "TIAOJISHAN_ADDITIONS": ["Hardy Ferns", "Mosses"],
+    "CEDAR_MOUNTAIN_NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
+    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
+    "LANCE_HELL_CREEK_ADDITIONS": ["Palms", "Platanites", "Viburnum"],
+    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
+    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
+    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"]
+    "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"]
+  }
+}
+{
+  "fauna_library": {
+    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
+    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
+    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
+    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates")"],
+    "MORRISON_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)”],
+    "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)," "Cicadas"]
+  }
+}
+
+{
+  "habitat_id": "FLOODPLAINS",
+  "substrate": "Alluvial mudstone",
+  "visuals": {
+    "ground": "Dense fern-meadows",
+    "water": "Isolated puddles/wallows"
+  }
+}
+
+{
+  "formation_id": "MORRISON",
+  "base_habitat": "FLOODPLAINS",
+  "period": "LATE_JURASSIC",
+  "strata_specifics": {
+    "ground_texture": “green fern foilage everywhere",
+    "color_palette": ["Brown-grey", "red", "green"]
+  },
+  "flora_manifest": ["JURASSIC_BASE", "MORRISON_ADDITIONS"],
+  "fauna_manifest": ["JURASSIC_BASE"]
+}
+
+{
+  "app_image_config": {
+    "layer_1_style": "[REF: STYLE_CLAY_MASTER]",
+    "layer_2_setting": “[REF: MORRISON]",
+    "layer_3_action": {
+      "subject": “Diplodocus",
+      "features": [“long whip-like tail extending straight back", “long neck held low and horizontal”, "friendly expressive face”, “sharp solid black silhouette”, “dynamic pose with clear limb separation"],
+      "action": "A sharp solid black silhouette of the friendly Diplodocus from the reference image. It is a low horizontal posture standing in a lush fern meadow.  No text."
+    }
+  }
+}

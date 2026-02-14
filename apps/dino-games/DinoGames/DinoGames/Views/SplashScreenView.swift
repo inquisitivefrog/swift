@@ -9,7 +9,8 @@ import SwiftUI
 
 struct SplashScreenView: View {
     @State private var showMainApp = false
-    
+    @State private var speechManager = SpeechManager()
+
     var body: some View {
         Group {
             if showMainApp {
@@ -63,6 +64,8 @@ struct SplashScreenView: View {
                     }
                 }
                 .onAppear {
+                    // Play welcome audio when splash is displayed
+                    speechManager.speak("cover-welcome-to-dino-games")
                     // Auto-dismiss after 3.5 seconds
                     DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
                         withAnimation {

@@ -1,0 +1,57 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{
+  "flora_library": {
+    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
+    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
+    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
+    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
+    "TIAOJISHAN_ADDITIONS": ["Hardy Ferns", "Mosses"],
+    "CEDAR_MOUNTAIN_NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
+    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
+    "LANCE_HELL_CREEK_ADDITIONS": ["Palms", "Platanites", "Viburnum"],
+    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
+    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
+    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"]
+  }
+}
+{
+  "fauna_library": {
+    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
+    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
+    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
+    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates")"]
+  }
+}
+{
+  "habitat_id": "WARM_FLUVIAL_PLAINS",
+  "physics": { "altitude": "low", "water": "medium_constant" },
+  "visuals": {
+    "ground": "Reddish-brown clay soil (iron-rich)",
+    "water": "Shallow, sluggish stream networks",
+  }
+}
+{
+  "formation_id": "HUINCUL",
+  "base_habitat": "WARM_FLUVIAL_PLAINS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Fine-grained fluvial sandstone and mudstone",
+    "color_palette": ["Reddish-brown"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "HUINCUL_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}
+{
+  "app_image_config": {
+    "layer_1_style": "[REF: STYLE_CLAY_MASTER]",
+    "layer_2_setting": “[REF: HUINCUL]",
+    "layer_3_action": {
+      "subject": “Argentinosaurus",
+      "features": [“huge body", “long neck", "friendly expressive face”, “sharp solid black silhouette”, “dynamic pose with clear limb separation"],
+      "action": "A sharp solid black silhouette of a friendly, stylized Argentinosaurus with smooth clay-like skin wandering across wet plains in search of tree ferns."
+    }
+  }
+}

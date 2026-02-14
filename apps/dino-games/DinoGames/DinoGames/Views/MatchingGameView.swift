@@ -310,6 +310,8 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             // Check Games folder first (where user placed it), fallback to Feedback if needed
             return "Games/welcome-to-dino-games"
         // Cover page sequence (play in order; enable category image after each)
+        case "cover-choose-a-game-type", "cover choose a game type":
+            return "Cover/cover-choose-a-game-type"
         case "cover-welcome-to-dino-games", "cover welcome to dino games":
             return "Cover/cover-welcome-to-dino-games"
         case "cover-dinosaurs-on-land", "cover dinosaurs on land":

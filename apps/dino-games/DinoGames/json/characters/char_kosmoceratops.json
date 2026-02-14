@@ -43,7 +43,7 @@
 }
 }
 {
-"formation_id": "CLOVERLY",
+"formation_id": "KAIPAROWITS",
 "base_habitat": "COASTAL_WETLANDS",
 "period": "LATE_CRETACEOUS",
 "strata_specifics": {
@@ -64,8 +64,7 @@
     },
     "layer_3_action": {
       "subject": “Kosmoceratops",
-      "features": [“elaborate frill", “sweeping brow horns”, “small nasal horn”, "large soulful eyes", "friendly expressive face"],
+      "features": [“elaborate frill", “downward curving frill spikes“forward curving brow horns”, “small nasal horn”, "large soulful eyes", "friendly expressive face"],
       "action": “munching on a clump of reeds in a marsh"
     }
   } 
-} 

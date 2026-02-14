@@ -51,8 +51,10 @@ struct WeighGameView: View {
     @State private var lighterFlewFromLeft: Bool? = nil
     @State private var roundsCompleted = 0
     private let maxRounds = 3
-    /// When true, the user can tap a second dinosaur; stays false until the first dinosaur's name audio has finished.
+    /// When true, the user can tap a second dinosaur; stays false until the first dinosaur's name audio (and "choose second" prompt for dinosaur game) has finished.
     @State private var canSelectSecondDinosaur = false
+    /// When true, "choose your first dinosaur" intro is playing; block all taps until it finishes.
+    @State private var isChooseFirstAudioPlaying = false
     /// Running list of dinosaurs that played (left + right per round); we show unique dinos only (no repeats).
     @State private var dinosaursWeighed: [WeighableItem] = []
     /// Victory walk: -1 none, 1 = walking list (highlight + name), 2 = good-job + crowd then dismiss.
@@ -87,7 +89,7 @@ struct WeighGameView: View {
                                         ItemCard(
                                             item: item,
                                             isSelected: selectedLeftItem?.id == item.id || selectedRightItem?.id == item.id,
-                                            isDisabled: isWeighing || isGameOver || (selectedLeftItem != nil && selectedRightItem != nil) || (selectedLeftItem != nil && selectedRightItem == nil && !canSelectSecondDinosaur)
+                                            isDisabled: isWeighing || isGameOver || isChooseFirstAudioPlaying || (selectedLeftItem != nil && selectedRightItem != nil) || (selectedLeftItem != nil && selectedRightItem == nil && !canSelectSecondDinosaur)
                                         ) {
                                             handleItemTap(item)
                                         }
@@ -208,6 +210,15 @@ struct WeighGameView: View {
             if currentRoundItems.isEmpty {
                 currentRoundItems = gameConfig.items
             }
+            // Weigh the Dinosaur: play "choose your first dinosaur" and block taps until it finishes
+            if gameConfig.id == "weigh-dinosaur" {
+                isChooseFirstAudioPlaying = true
+                speechManager.onAudioFinished = {
+                    self.speechManager.onAudioFinished = nil
+                    self.isChooseFirstAudioPlaying = false
+                }
+                speechManager.speak("game-weigh-choose-your-first-dinosaur")
+            }
             // Force landscape orientation immediately
             DispatchQueue.main.async {
                 if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
@@ -230,12 +241,20 @@ struct WeighGameView: View {
         guard !isWeighing else { return }
         
         if selectedLeftItem == nil {
-            // First selection: show name, play audio, allow second selection only after name finishes
+            // First selection: show on scale, play name, then (Weigh Dinosaur) "choose your second dinosaur", then allow second tap
             selectedLeftItem = item
             canSelectSecondDinosaur = false
             speechManager.onAudioFinished = {
-                self.canSelectSecondDinosaur = true
                 self.speechManager.onAudioFinished = nil
+                if self.gameConfig.id == "weigh-dinosaur" {
+                    self.speechManager.onAudioFinished = {
+                        self.canSelectSecondDinosaur = true
+                        self.speechManager.onAudioFinished = nil
+                    }
+                    self.speechManager.speak("game-weigh-choose-your-second-dinosaur")
+                } else {
+                    self.canSelectSecondDinosaur = true
+                }
             }
             speechManager.speak(audioKey: item.imageName ?? item.name, fallbackText: item.name)
         } else if selectedRightItem == nil && selectedLeftItem?.id != item.id && canSelectSecondDinosaur {
@@ -469,6 +488,15 @@ struct WeighGameView: View {
             selectedRightItem = nil
             isWeighing = false
             canSelectSecondDinosaur = false
+            // Weigh the Dinosaur: play "choose your first dinosaur" each round for young non-readers
+            if self.gameConfig.id == "weigh-dinosaur" {
+                self.isChooseFirstAudioPlaying = true
+                self.speechManager.onAudioFinished = {
+                    self.speechManager.onAudioFinished = nil
+                    self.isChooseFirstAudioPlaying = false
+                }
+                self.speechManager.speak("game-weigh-choose-your-first-dinosaur")
+            }
         }
     }
 }

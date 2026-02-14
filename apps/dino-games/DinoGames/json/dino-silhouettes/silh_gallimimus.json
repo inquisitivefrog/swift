@@ -1,0 +1,59 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{
+  "flora_library": {
+    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
+    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
+    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
+    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
+    "TIAOJISHAN_ADDITIONS": ["Giant Horsetails", "Dense Conifer forest"],
+    "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
+    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
+    "LANCE_HELL_CREEK_ADDITIONS": ["Palms", "Platanites", "Viburnum"],
+    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
+    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
+    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"],
+    "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"],
+    "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
+    "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
+    "CEDAR_MOUNTAIN_ADDITIONS": ["Paleopus in damp cracks", "Shrubby angiosperms"],
+    "JEHOL_BIOTA_ADDITIONS": ["Water lilies at the edge", "Dense hardwoods"]
+  }
+}
+{
+  "habitat_id": "SEMI_ARID_FLOODPLAINS",
+  "substrate": "Mottled red and green mudstone",
+  "visuals": {
+    "ground": "Deeply cracked clay with oxidized iron patches",
+    "water": "Seasonal braided streams",
+  }
+}
+{
+  "formation_id": "NEMEGT",
+  "base_habitat": "SEMI_ARID_FLOODPLAINS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "wind-blown quartz sandstone",
+    "color_palette": ["red", "brown"]
+  },
+  "flora_manifest": ["CRETACEOUS_BASE", "NEMEGT_ADDITIONS"], 
+  "fauna_manifest": ["CRETACEOUS_BASE"]
+}
+{ 
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {
+     “formation_id”: “NEMEGT”,
+      "habitat_id": "SEMI_ARID_FLOODPLAINS"
+    },
+    "layer_3_action": {
+      "subject": “Gallimimus",
+      "features": [“toothless beak", “long hind legs”, “long neck”, "large soulful eyes", "friendly expressive face”, “sharp solid black silhouette”, “dynamic pose with clear limb separation"],
+      "action": “A sharp solid black silhouette of a Gallimimus striding across a floodplain"
+    }
+  } 
+} 

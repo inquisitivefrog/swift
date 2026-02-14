@@ -1,0 +1,52 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{
+  "flora_library": {
+    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
+    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
+    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
+    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
+    "CEDAR_MOUNTAIN_NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
+    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
+    "LANCE_HELL_CREEK_ADDITIONS": ["Palms", "Platanites", "Viburnum"]
+  }
+}
+{
+  "fauna_library": {
+    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
+    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
+    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
+  }
+}
+{
+  "habitat_id": "SEMI_ARID_FLOODPLAINS",
+  "substrate": "Mottled red and green mudstone",
+  "visuals": {
+    "ground": "Deeply cracked clay with oxidized iron patches",
+    "water": "Seasonal braided streams",
+  }
+}
+{
+  "formation_id": "MORRISON",
+  "base_habitat": "SEMI_ARID_FLOODPLAINS",
+  "period": "LATE_JURASSIC",
+  "strata_specifics": {
+    "ground_texture": "siltstone with desiccation cracks",
+    "color_palette": ["Brown-grey"]
+  },
+  "flora_manifest": ["JURASSIC_BASE", "MORRISON_ADDITIONS"], 
+  "fauna_manifest": ["JURASSIC_BASE"]
+}
+{
+  "app_image_config": {
+    "layer_1_style": "[REF: STYLE_CLAY_MASTER]",
+    "layer_2_setting": “[REF: MORRISON]",
+    "layer_3_action": {
+      "subject": "Juvenile Apatosaurus",
+      "features": [“long neck",, "friendly expressive face”, “sharp solid black silhouette”, “dynamic pose with clear limb separation"],
+      "action": “A sharp solid black silhouette of an Apatosaurus munching on a Paleopus in a damp crack."
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{
+  "flora_library": {
+    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
+    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
+    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
+    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
+    "TIAOJISHAN_ADDITIONS": ["Giant Horsetails", "Dense Conifer forest"],
+    "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
+    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
+    "LANCE_HELL_CREEK_ADDITIONS": ["Palms", "Platanites", "Viburnum"],
+    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
+    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
+    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"],
+    "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"],
+    "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
+    "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
+    "CEDAR_MOUNTAIN_ADDITIONS": ["Paleopus in damp cracks", "Shrubby angiosperms"],
+    "JEHOL_BIOTA_ADDITIONS": ["Water lilies at the edge", "Dense hardwoods"]
+  }
+}
+{
+  "fauna_library": {
+    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
+    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
+    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
+    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates")"],
+    "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
+    "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)," "Cicadas"]
+  }
+}
+{
+  "habitat_id": "FORESTED_LACUSTRINE_SYSTEM",
+  "substrate": "Laminated organic-rich shale",
+  "visuals": {
+    "ground": "Dark, damp, leafy forest floor",
+    "canopy": "Dense forest (80% coverage)",
+  }
+}
+{
+  "formation_id": "TIAOJISHAN",
+  "base_habitat": "FORESTED_LACUSTRINE_SYSTEM",
+  "period": "LATE_JURASSIC",
+  "strata_specifics": {
+    "ground_texture": “shale",
+    "color_palette": ["black", "grey"]
+  },
+  "flora_manifest": ["JURASSIC_BASE", "TIAOJISHAN_ADDITIONS"], 
+  "fauna_manifest": ["JURASSIC_BASE"]
+}
+{
+  "app_image_config": {
+    "layer_1_style": "[REF: STYLE_CLAY_MASTER]",
+    "layer_2_setting": “[REF: TIAOJISHAN]",
+    "layer_3_action": {
+      "subject": “Eosinopteryx",
+      "features": [“non-flight feathers", “small therapod body", “strong long hind legs”, “sharp solid black silhouette”, “dynamic pose with clear limb separation"],
+      "action": "A solid black silhouette of a friendly, stylized Eosinopteryx is darting among the conifers. No text." 
+    }
+  } 
+} 

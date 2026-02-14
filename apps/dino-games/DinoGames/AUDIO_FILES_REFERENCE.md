@@ -84,7 +84,7 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | Path | When used |
 |------|-----------|
 | `Games/welcome-to-dino-games.m4a` | Welcome (after category chosen) |
-| `Cover/cover-welcome-to-dino-games.m4a` | Cover sequence |
+| `Cover/cover-choose-a-game-type.m4a` | Cover sequence (game types: Dinosaurs, Pterosaurs, Marine Reptiles) |
 | `Cover/cover-dinosaurs-on-land.m4a` | Cover: land |
 | `Cover/cover-pterosaurs-in-the-sky.m4a` | Cover: air |
 | `Cover/cover-and-marine-reptiles-in-the-sea.m4a` | Cover: sea |
