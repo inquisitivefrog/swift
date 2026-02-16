@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "silhouette-trex-80.png",
+      "filename" : "dino-silhouette-trex-80.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "silhouette-trex-160.png",
+      "filename" : "dino-silhouette-trex-160.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "silhouette-trex-240.png",
+      "filename" : "dino-silhouette-trex-240.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

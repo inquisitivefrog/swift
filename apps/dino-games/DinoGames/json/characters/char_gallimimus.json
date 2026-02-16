@@ -52,7 +52,7 @@
     },
     "layer_3_action": {
       "subject": “Gallimimus",
-      "features": [“toothless beak", “long hind legs”, “long neck”, "large soulful eyes", "friendly expressive face"],
+      "features": [“long hind legs”, “long neck”, "large soulful eyes", "friendly expressive face"],
       "action": “striding across a floodplain"
     }
   } 

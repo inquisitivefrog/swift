@@ -1,0 +1,11 @@
+{
+  "formation_id": "MAEVARANO",
+  "base_habitat": "FLOODPLAINS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "dry cracked mudflats surrounded by hills",
+    "color_palette": ["Light-Grey", "White", "Red"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}

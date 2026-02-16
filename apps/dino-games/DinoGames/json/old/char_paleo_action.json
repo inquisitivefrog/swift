@@ -1,0 +1,9 @@
+{
+  "app_image_config": {
+    "layer_1_technical_style": "1024x1024 px, high-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures.",
+    "layer_2_character_ref": "Middle-aged male paleontologist from char_paleo_main, short beard, wearing signature khaki explorer outfit and fedora.",
+    "layer_3_environment": "Setting: [INSERT NEW SETTING HERE, e.g., Tropical Jungle or Museum Hallway].",
+    "layer_4_action": "[INSERT ACTION HERE, e.g., Holding a fossil or running from a raptor].",
+    "aspect_ratio": "1:1"
+  }
+}

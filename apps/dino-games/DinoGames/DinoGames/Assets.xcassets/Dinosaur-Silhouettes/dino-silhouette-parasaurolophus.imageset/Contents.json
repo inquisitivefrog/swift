@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "silhouette-parasaauralophus-80.png",
+      "filename" : "dino-silhouette-parasaurolophus-80.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "silhouette-parasaauralophus-160.png",
+      "filename" : "dino-silhouette-parasaurolophus-160.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "silhouette-parasaauralophus-240.png",
+      "filename" : "dino-silhouette-parasaurolophus-240.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

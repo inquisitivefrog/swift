@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "dino-triceratops-80.png",
+      "filename" : "dino-tricerators-80.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "dino-triceratops-160.png",
+      "filename" : "dino-tricerators-160.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "dino-triceratops-240.png",
+      "filename" : "dino-tricerators-240.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
