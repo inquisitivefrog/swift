@@ -1,0 +1,11 @@
+{
+  "formation_id": "SHAXIMIAO",
+  "base_habitat": "RIVER_VALLEYS",
+  "period": "LATE_JURASSIC",
+  "strata_specifics": {
+    "ground_texture": "Mudstone, siltstones, and sandstone.",
+    "color_palette": ["Gray", "Black", "Grayish-Green", "Yellowish-Gray"]
+  },
+  "flora_manifest": ["JURASSIC_BASE"], 
+  "fauna_manifest": ["JURASSIC_BASE"]
+}

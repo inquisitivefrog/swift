@@ -1,0 +1,14 @@
+{
+  "subject_id": "Tyrannosaurus Rex",
+  "game_ref": "WEIGH_THE_DINOSAUR",
+  "style_ref": "STYLE_ANIMATED_FEATURE",
+  "lighting_ref": "DRAMATIC_OUTDOOR",
+  "framing_ref": "WIDE_WEIGHT_STRIP_V2",
+  "pose": "Full side profile of a charismatic, high-detail animated T-Rex. Energetic expression with large, expressive eyes. Body, head, and tail held in a perfectly straight horizontal line. Mouth closed into a smirk. Both muscular legs visible with 30% empty ground space below feet to guarantee 17:7 crop safety.",
+  "technical_ref": "WIDE_WEIGHT_CARD",
+  "library_definitions": {
+    "framing_presets": {
+      "WIDE_WEIGHT_STRIP_V2": "Extreme wide shot. Small character silhouette centered vertically. Massive negative space buffers above and below to prevent clipping."
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "habitats": {
+    "DRY_FLOODPLAIN": {
+      "soil": "Cracked red mudstone",
+      "water": "Minimal"
+    },
+    "WET_RIVERBED": {
+      "soil": "Silt and green clay",
+      "water": "Braided streams"
+    }
+  },
+  "formations": {
+    "MORRISON": {
+      "base_habitat": "DRY_FLOODPLAIN",
+      "flora": ["Ginkgos", "Ferns"]
+    }
+  },
+  "asset_manifest": [
+    {
+      "species": "Apatosaurus",
+      "formation_ref": "MORRISON",
+      "habitat_override": "WET_RIVERBED" 
+    }
+  ]
+}

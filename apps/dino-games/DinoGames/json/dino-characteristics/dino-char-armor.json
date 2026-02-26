@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Ankylosaurid osteoderm morphology",
+      "features": [
+        "A close-up of a dinosaur's back covered in thick, protective clay armor plates (osteoderms)",
+        "The armor consists of various sized clay ovals and spikes, some with sharp ridges and others with weathered, cracked textures",
+        "Colors are a mix of deep forest green, muddy brown, and ochre highlights on the tips of the spikes",
+        "Small clay nodules fill the gaps between the larger armor plates for a complete 'shield' look",
+        "The clay skin visible beneath the armor is heavily wrinkled and textured like hand-pressed dough"
+      ],
+      "action": "A cinematic macro shot focusing on the texture and layering of the body armor. The lighting is directional, creating deep shadows that emphasize the height of the clay spikes. This serves as a 'Body Armor' morphology icon. No text."
+    }
+  }
+}

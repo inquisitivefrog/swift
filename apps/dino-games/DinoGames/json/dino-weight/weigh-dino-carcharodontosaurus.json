@@ -1,0 +1,14 @@
+{
+  "subject_id": "Carcharodontosaurus",
+  "game_ref": "WEIGH_THE_DINOSAUR",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V2",
+  "lighting_ref": "SUNNY_EXPOSED_DRAMATIC",
+  "framing_ref": "WIDE_WEIGHT_STRIP_V2",
+  "pose": "Full side profile. Rugged, animated appearance with distinct ridge above the eyes. Expressive, intelligent gaze. Perfectly horizontal posture. Head and tail held parallel to the ground. 30% negative space above the back and below the feet.",
+  "technical_ref": "WIDE_WEIGHT_CARD"
+  "library_definitions": {
+    "framing_presets": {
+      "WIDE_WEIGHT_STRIP_V2": "Extreme wide shot. Small character silhouette centered vertically. Massive negative space buffers above and below to prevent clipping."
+    }
+  }
+}

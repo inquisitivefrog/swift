@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Spinosaurid dorsal sail morphology",
+      "features": [
+        "A large, semicircular clay sail rising from the back of a theropod",
+        "The sail is supported by long, thin clay neural spines that create visible vertical ridges",
+        "The 'skin' of the sail is a vibrant orange-to-yellow gradient clay with dark, charred-looking tips at the top",
+        "The dinosaur's body is a reddish-brown clay with cream-colored horizontal stripes",
+        "The texture is smooth with fine scale details, giving it a high-quality collectible figurine look"
+      ],
+      "action": "A cinematic profile shot emphasizing the height and color of the dorsal sail. Professional studio lighting highlights the translucent quality of the thin clay sail edges. This serves as a 'Dorsal Sail' morphology icon. No text."
+    }
+  }
+}

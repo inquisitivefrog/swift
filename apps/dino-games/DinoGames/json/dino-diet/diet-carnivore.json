@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Carnivore diet symbolism",
+      "features": [
+        "A stylized, cartoonish T-bone steak made of smooth clay",
+        "The meat is a soft reddish-pink clay with a thick white clay border and a white T-shaped bone in the center",
+        "Smooth, rounded edges to maintain a toy-like, friendly aesthetic",
+        "Tactile 'handmade' clay sculpture appearance",
+        "Soft studio lighting with gentle highlights"
+      ],
+      "action": "A clean, centered shot of a clay T-bone steak sitting on a simple clay surface. The background is a soft, neutral out-of-focus color. The image is designed as a clear icon or symbol to indicate a meat-eating diet for a children's matching game. No text."
+    }
+  }
+}

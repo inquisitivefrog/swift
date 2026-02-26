@@ -1,0 +1,12 @@
+{
+  "formation_id": "ELRHAZ",
+  "base_habitat": "RIVER_DELTA_WETLANDS",
+  "period": "EARLY_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Point bars of gravel and coarse sand",
+    "color_palette": ["Grey", "Tan"]
+  },
+  "flora_manifest": ["EARLY_CRETACEOUS_BASE"],
+  "fauna_manifest": ["EARLY_CRETACEOUS_BASE"]
+}
+

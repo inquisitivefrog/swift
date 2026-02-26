@@ -1,0 +1,14 @@
+{
+  "subject_id": "Giganotosaurus",
+  "game_ref": "WEIGH_THE_DINOSAUR",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V2",
+  "lighting_ref": "SUNNY_EXPOSED_DRAMATIC",
+  "framing_ref": "WIDE_WEIGHT_STRIP_V2",
+  "pose": "Full side profile. Sleek, powerful animated predator. Large expressive eyes, colorful patterned scales. Balanced horizontal posture from snout to tail-tip. Snout and tail must remain far from image edges with 30% vertical safety buffer.",
+  "technical_ref": "WIDE_WEIGHT_CARD"
+  "library_definitions": {
+    "framing_presets": {
+      "WIDE_WEIGHT_STRIP_V2": "Extreme wide shot. Small character silhouette centered vertically. Vibrant blue sky background. Massive negative space buffers above and below."
+    }
+  }
+}

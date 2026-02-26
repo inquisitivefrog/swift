@@ -1,0 +1,17 @@
+{
+  "subject_id": "Brontosaurus",
+  "formation_ref": "MORRISON_FORMATION",
+  "style_ref": "STYLE_CLAY_MASTER",
+  "lighting_ref": "SUNNY_EXPOSED",
+  "framing_ref": "TALL_MEASURE",
+  "pose": "Majestic upright posture. Neck extended vertically. Massive, rounded body. Thicker neck than Diplodocus. NO bending of the neck.",
+  "technical_ref": "TALL_MEASUREMENT_CARD",
+  "library_definitions": {
+    "style_presets": {
+      "STYLE_CLAY_MASTER": "Soft-sculpted vinyl toy. Smooth matte clay surfaces. Rounded proportions. Glassy eyes. Set within a lush prehistoric jungle. No white backgrounds."
+    },
+    "framing_presets": {
+      "TALL_MEASURE": "Full vertical fill. Head positioned near the top of the frame for the center-crop pipeline."
+    }
+  }
+}

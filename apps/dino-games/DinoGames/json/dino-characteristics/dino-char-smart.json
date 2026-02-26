@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Troodon 'Smart Brain' morphology",
+      "features": [
+        "A friendly green clay Troodon head with a very tall, rounded forehead",
+        "The top of the head is made of translucent, glowing blue 'jelly clay'",
+        "Inside the glow are soft, spiraling clay 'thought swirls' representing a large brain",
+        "The dinosaur has a clever, knowing smile and one large, sparkly eye looking upward",
+        "Soft ambient occlusion shadows where the glowing brain meets the green clay skin"
+      ],
+      "action": "A centered, cinematic macro shot of the 'Smart' morphology. The glow from the head softly lights up the dinosaur's face. It looks magical and friendly, not scientific. No text."
+    }
+  }
+}

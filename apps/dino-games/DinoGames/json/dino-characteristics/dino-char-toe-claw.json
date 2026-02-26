@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "DESERT_DUNE_FIELDS",
+      "formation_id": "DJADOKHTA"
+    },
+    "layer_3_action": {
+      "subject": "Dromaeosaur foot claw",
+      "features": [
+        "Single oversized curved toe claw made of smooth yellow clay",
+        "Two smaller supporting toes tucked underneath",
+        "Tactile clay sculpture texture",
+        "Blunt rounded safety tips for children",
+        "Handmade toy aesthetic"
+      ],
+      "action": "An extreme close-up of a single upright dinosaur foot. A friendly cartoon bee is perched on the large, sickle-shaped toe claw. The foot is pointing toward a soft pink laurel flower at the edge of the frame. Focus is entirely on the unique shape of the claw. No background clutter."
+    }
+  }
+}

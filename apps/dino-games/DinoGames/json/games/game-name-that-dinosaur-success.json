@@ -1,0 +1,17 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{ 
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {“A conifer forest in the Morrison formation.”},
+    "layer_3_action": {
+      "subject": “Apatosaurus",
+      "features": [“long neck",, "friendly expressive face”, “sharp solid black silhouette”, “dynamic pose with clear limb separation"],
+      "action": “A sharp solid black silhouette of an Apatosaurus munching on a Paleopus in a damp crack at dusk. A caption in bright red mixed case letters that reads Name That Dinosaur! Another caption reads Player Wins!!!"
+    }
+  } 
+} 

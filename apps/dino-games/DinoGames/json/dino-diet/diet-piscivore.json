@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Piscivore diet symbolism",
+      "features": [
+        "A pair of prehistoric fish made from colorful, smooth clay",
+        "One fish is a saw-snouted Onchopristis with a long, serrated rostrum and blue-grey clay scales",
+        "The second fish is a generic, rounded prehistoric fish with bright orange and yellow clay stripes",
+        "Both fish have large, friendly 'googly' eyes and rounded, toy-like fins",
+        "The fish are resting on a small, circular puddle of bright blue clay representing water"
+      ],
+      "action": "A clean, centered studio shot of the clay fish arranged as a symbolic icon. The lighting is bright and soft, emphasizing the matte clay texture and playful shapes. This is designed as a clear indicator for a fish-eating diet in a children's game. No text."
+    }
+  }
+}

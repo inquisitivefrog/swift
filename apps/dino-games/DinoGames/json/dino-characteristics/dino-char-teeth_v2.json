@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "JUNGLE_FERN_FOREST",
+      "formation_id": "HELL_CREEK"
+    },
+    "layer_3_action": {
+      "subject": "Carnivore dental morphology side-profile",
+      "features": [
+        "Extreme close-up of a friendly red clay dinosaur snout",
+        "Mouth is closed in a 'crocodile smile' where the upper teeth overlap the lower jaw",
+        "Visible white clay teeth are conical and smooth with blunt, safe tips",
+        "A single, tiny specular glint of light on one tooth for a playful effect",
+        "Tactile clay surface with gentle, soft skin folds along the mouth line"
+      ],
+      "action": "A side-profile close-up focusing strictly on the interlocking teeth and the texture of the snout. The dinosaur is 'smiling' with a closed mouth, highlighting the distinct dental arrangement. The lighting is soft and warm, casting gentle shadows that emphasize the 3D clay shapes. The background is a soft-focus jungle green. No text."
+    }
+  }
+}

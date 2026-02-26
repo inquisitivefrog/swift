@@ -1,0 +1,49 @@
+{
+  "subject_id": "apat_juv_001",
+  "lookup": {
+    "style": "STYLE_CLAY_MASTER",
+    "formation": "MORRISON",
+    "habitat": "SEMI_ARID_FLOODPLAINS"
+  },
+  "pose_specs": {
+    "action": "Standing tall, head at top of frame, munching Paleopus",
+    "view": "Three-quarter"
+  }
+}
+
+{
+  "metadata": {
+    "project": "Dino-Measure Game",
+    "target_audience": "Age 4-6",
+    "version": "1.0"
+  },
+  "style_definitions": {
+    "STYLE_CLAY_MASTER": {
+      "render_engine": "Octane",
+      "visual_style": "High-poly 3D animation, cinematic CGI",
+      "texture": "Smooth clay, tactile handmade feel",
+      "lighting": "Soft studio lighting, ambient occlusion",
+      "colors": "Vibrant, saturated"
+    }
+  },
+  "geological_formations": {
+    "MORRISON": {
+      "period": "Late Jurassic",
+      "habitat": "Semi-arid floodplains",
+      "ground": "Siltstone, desiccation cracks, brown-grey palette",
+      "flora": ["Araucaria", "Ginkgos", "Fern Prairies"]
+    }
+  },
+  "asset_manifest": [
+    {
+      "id": "apat_juv_001",
+      "species": "Apatosaurus",
+      "age_stage": "Juvenile",
+      "style_ref": "STYLE_CLAY_MASTER",
+      "formation_ref": "MORRISON",
+      "pose": "Vertical, head at top, feet at bottom",
+      "dimensions_requested": "140x340",
+      "prompt_logic": "Friendly expressive face, three-quarter view, munching on Paleopus."
+    }
+  ]
+}

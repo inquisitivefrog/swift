@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Therizinosaurid proto-feather morphology",
+      "features": [
+        "A close-up of a dinosaur's shoulder and neck covered in shaggy clay proto-feathers",
+        "The feathers look like long, thick, hair-like filaments made of individual rolled clay strands",
+        "The texture is coarse and tactile, layered to look like a thick, insulating coat",
+        "Colors are a mix of deep umber and sienna clay, with some lighter cream-colored tips",
+        "The underlying skin is visible in small gaps, showing a pebbled clay texture"
+      ],
+      "action": "A cinematic macro shot focusing on the 'shaggy' texture of the proto-feathers. The lighting emphasizes the individual strands and the depth of the coat. This serves as a 'Proto-feathers' morphology icon. No text."
+    }
+  }
+}

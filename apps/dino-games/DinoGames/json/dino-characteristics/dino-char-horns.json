@@ -1,0 +1,24 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Ceratopsian horn morphology",
+      "features": [
+        "A dinosaur head featuring two exceptionally long, curved clay brow horns as the primary focus",
+        "The horns are made of light tan clay with realistic hand-sculpted ring textures at the base",
+        "A small, sharp clay nose horn sits above a thick parrot-like beak",
+        "The frill in the background is simple and perforated with large holes (fenestrae) to keep the focus on the horns",
+        "Earth-toned clay skin with intricate hand-pressed scale and node textures",
+        "Large, expressive brown clay eye and a gentle smile"
+      ],
+      "action": "A cinematic profile shot of a clay ceratopsian, specifically emphasizing the impressive length and curve of the brow horns. Professional studio lighting with soft shadows on a neutral background. No text."
+    }
+  }
+}

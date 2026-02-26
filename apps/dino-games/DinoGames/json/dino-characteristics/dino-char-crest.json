@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "LUSH_JUNGLE",
+      "formation_id": "DINOSAUR_PARK"
+    },
+    "layer_3_action": {
+      "subject": "Hadrosaur crest morphology",
+      "features": [
+        "A Parasaurolophus head with a long, iconic backward-curving clay crest",
+        "The crest has a smooth, solid clay texture with subtle decorative indentations",
+        "Soft green and teal clay skin with hand-pressed scale patterns along the neck and face",
+        "A warm, friendly expression with a large brown clay eye and a gentle smile",
+        "A rounded, matte-finish clay beak"
+      ],
+      "action": "A cinematic close-up profile shot of the Parasaurolophus. The lighting is warm and filtered, as if through a forest canopy, highlighting the smooth curves of the head crest. The background is a soft-focus prehistoric jungle. No text."
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "COASTAL_FLOODPLAINS",
+      "formation_id": "HORSESHOE_CANYON"
+    },
+    "layer_3_action": {
+      "subject": "Bipedal Theropod legs",
+      "features": [
+        "Two powerful bird-like legs made of smooth clay",
+        "Three-toed feet with blunt claws",
+        "Clear separation between the two legs to emphasize bipedalism",
+        "Tactile, rounded clay shapes"
+      ],
+      "action": "A low-angle, extreme close-up focusing only on the two feet of a friendly dinosaur as it walks through sticky black mud. One foot is firmly planted, and the other is slightly raised, showing droplets of wet clay falling. The upper body is out of frame. Lush Metasequoia trees are visible in the blurred background. No text."
+    }
+  }
+}

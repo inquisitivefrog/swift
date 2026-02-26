@@ -1,0 +1,22 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "FLOODPLAINS",
+      "formation_id": "MORRISON"
+    },
+    "layer_3_action": {
+      "subject": "Long Sauropod neck morphology",
+      "features": [
+        "Extraordinarily long, vertical neck made of smooth tan clay",
+        "Soft horizontal clay folds indicating flexibility",
+        "Tactile 'handmade' clay sculpture aesthetic",
+        "Friendly, soft-edged design for children"
+      ],
+      "action": "A low-angle shot looking straight up alongside a very long dinosaur neck. The neck extends from the bottom of the frame and reaches high into the canopy of clay-textured Araucaria trees. The head and the body are both out of frame to focus specifically on the length and scale of the neck. Soft sunlight filters through the leaves. No text."
+    }
+  }
+}

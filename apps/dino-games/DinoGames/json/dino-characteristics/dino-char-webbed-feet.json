@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Spinosaurus webbed foot morphology",
+      "features": [
+        "A large, three-toed clay foot with a smaller fourth toe (hallux) touching the ground",
+        "Thin, flexible clay membranes (webbing) connecting the long, flat toes",
+        "Toes tipped with blunt, friendly-looking dark clay claws",
+        "Tactile 'squishy' texture on the webbing, slightly translucent",
+        "The foot is pressing down into a small patch of soft clay mud to show the 'spread'"
+      ],
+      "action": "A centered, cinematic macro shot of the webbed foot. The lighting is warm and highlights the texture of the webbing. The rest of the leg fades into a soft blur. No text."
+    }
+  }
+}

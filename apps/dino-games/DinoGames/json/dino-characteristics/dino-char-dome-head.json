@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "COASTAL_FLOODPLAINS",
+      "formation_id": "HELL_CREEK"
+    },
+    "layer_3_action": {
+      "subject": "Pachycephalosaurus head morphology",
+      "features": [
+        "A large, smooth, rounded bone-colored clay dome on top of the head",
+        "The dome is surrounded by small, blunt clay spikes and nodes around the base and back of the skull",
+        "Soft teal or sandy-brown clay skin with subtle, hand-pressed scale textures",
+        "A friendly, toy-like face with large expressive eyes and a small, toothless beak",
+        "Cinematic macro shot focusing on the thickness and texture of the 'bone' dome"
+      ],
+      "action": "A profile macro shot of a Pachycephalosaurus head. The focus is on the massive, smooth clay dome that crowns its skull, emphasizing its density and rounded shape. The background features a soft, blurred lush forest in warm studio lighting. No text."
+    }
+  }
+}

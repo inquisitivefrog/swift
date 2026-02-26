@@ -1,0 +1,27 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "formation_id": "KEM_KEM",
+      "habitat_id": "DEEP_STEAMY_LAGOON",
+      "visuals": {
+        "water": "Clear turquoise water with sunlight rays filtering through",
+        "flora": ["Water lilies", "Early Sycamores at the shoreline"]
+      }
+    },
+    "layer_3_action": {
+      "subject": "Young Spinosaurus aegyptiacus",
+      "features": [
+        "Long, slender crocodilian snout with a friendly smile",
+        "Large, prominent sail with vibrant orange and red clay patterns",
+        "Paddle-like tail partially visible underwater",
+        "Large, gentle, expressive eyes",
+        "Webbed feet kicking gently"
+      ],
+      "action": "The Spinosaurus is swimming gracefully in deep water. Its body is mostly submerged with only the top of its head, its sail, and the tip of its tail breaking the surface. Tiny clay bubbles and water ripples surround it. It looks happy and at home in the water."
+    }
+  }
+}

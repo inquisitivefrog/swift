@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Spinosaurid piscivore snout morphology",
+      "features": [
+        "A long, slender clay snout resembling a gharial, designed for catching fish",
+        "The snout features numerous thin, interlocking white clay teeth that protrude slightly from the jaw",
+        "The end of the snout has a small bulbous 'boss' with visible nostrils",
+        "Textured olive-green clay skin with heavy scale patterns and a pale underbelly",
+        "A slight, confident curve to the mouth line and a focused, reptilian clay eye"
+      ],
+      "action": "A cinematic profile shot of the long, narrow snout. The lighting is crisp, highlighting the wet-look clay texture and the fine detail of the needle-like teeth. This serves as a 'Gharial Snout' morphology icon. No text."
+    }
+  }
+}

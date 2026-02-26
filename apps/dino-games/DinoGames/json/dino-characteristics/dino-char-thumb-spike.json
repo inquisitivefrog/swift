@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "OPEN_SAVANNA",
+      "formation_id": "WEALDEN_GROUP"
+    },
+    "layer_3_action": {
+      "subject": "Iguanodon thumb spike morphology",
+      "features": [
+        "A close-up of a sturdy clay Iguanodon forelimb and hand",
+        "A sharp, conical thumb spike made of off-white, bone-textured clay pointing upwards",
+        "The hand features three middle fingers pressed together and a flexible pinky finger",
+        "Skin made of olive-green clay with realistic hand-molded wrinkles and fold patterns",
+        "The thumb spike has a matte, slightly weathered texture compared to the smoother skin"
+      ],
+      "action": "A cinematic macro shot focusing on the unique defensive thumb spike. The hand is positioned as if resting on the ground in a quadrupedal stance. The background is a soft-focus prehistoric plain with scattered clay trees. No text."
+    }
+  }
+}

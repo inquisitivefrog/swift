@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "COASTAL_FLOODPLAINS",
+      "formation_id": "DJADOCHTA"
+    },
+    "layer_3_action": {
+      "subject": "Dinosaur beak morphology",
+      "features": [
+        "Extreme close-up profile of a dinosaur's snout",
+        "A prominent, curved 'parrot-like' beak made of smooth, hardened clay",
+        "The beak is toothless and has a sharp, clean edge for shearing plants or cracking eggs",
+        "Soft teal or orange clay skin texture with gentle creases near the beak base",
+        "Friendly, toy-like aesthetic with soft lighting"
+      ],
+      "action": "A side-profile macro shot focusing on the beak of an Oviraptor-style dinosaur. An extreme closeup of the beak is the central focus, showing its distinct hooked shape and smooth texture. The background is a soft, warm-toned desert landscape with blurred clay dunes. No text."
+    }
+  }
+}

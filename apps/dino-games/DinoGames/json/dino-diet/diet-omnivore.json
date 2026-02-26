@@ -1,0 +1,24 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Omnivore diet symbolism",
+      "features": [
+        "A collection of diverse food items made of smooth clay to represent an omnivorous diet",
+        "A small, friendly green clay lizard with large eyes and a smiling expression",
+        "A cluster of round purple and blue clay berries with tiny green stems",
+        "A single, large, smooth off-white clay egg with a matte finish",
+        "All items are arranged closely together on a flat clay base",
+        "Soft, even studio lighting highlighting the handmade textures"
+      ],
+      "action": "A centered, eye-level shot of the clay lizard, berries, and egg. The composition is clean and iconic, designed for a children's game to show a diet of both plants and small animals/eggs. The background is a soft, neutral gradient. No text."
+    }
+  }
+}

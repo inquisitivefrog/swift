@@ -1,0 +1,14 @@
+{
+  "subject_id": "Brontosaurus",
+  "game_ref": "WEIGH_THE_DINOSAUR",
+  "style_ref": "STYLE_CLAY_MASTER",
+  "lighting_ref": "SUNNY_EXPOSED",
+  "framing_ref": "WIDE_WEIGHT_STRIP_V2",
+  "pose": "Side profile. Heavy, muscular build with a notably thick neck. Neck and tail held level. All four feet visible with 20% ground clearance below.",
+  "technical_ref": "WIDE_WEIGHT_CARD",
+  "library_definitions": {
+    "framing_presets": {
+      "WIDE_WEIGHT_STRIP_V2": "Extreme wide shot. Dinosaur centered vertically. Large safety buffers (20%) above the back and below the feet for a 17:7 horizontal crop."
+    }
+  }
+}

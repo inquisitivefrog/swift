@@ -1,0 +1,9 @@
+{
+  "subject_id": "Deinocheirus",
+  "game_ref": "WEIGH_THE_DINOSAUR",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "pose": "Full body side profile in a square 1:1 frame. A bizarre, massive dinosaur with a duck-billed snout, a large sail-like hump on its back, and long feathered arms. It sits in a proud, slightly upright diagonal posture to show off both its belly mass and the height of its hump. 20% safety margin on all sides.",
+  "technical_ref": "SQUARE_ASPECT_RATIO"
+}

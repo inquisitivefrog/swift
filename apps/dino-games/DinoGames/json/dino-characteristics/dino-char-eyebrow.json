@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Theropod orbital ridge morphology",
+      "features": [
+        "A close-up of a theropod's eye deeply embedded within a heavy, recessed clay eye socket",
+        "The skull bone forms a thick, gnarled ridge (postorbital boss) over the top and back of the eye",
+        "The clay texture of the ridge is rough and 'pitted' like weathered stone, while the eyelid skin is softer and wrinkled",
+        "The eye is shaded by the overhanging brow ridge, creating a focused, menacing look",
+        "Muted earth tones: olive green skin transitioning into a dark, stony grey for the heavy brow bone"
+      ],
+      "action": "A cinematic macro shot focusing on the depth of the eye socket and the heavy bone structure of the brow. The lighting comes from above to cast a shadow over the eye, emphasizing the 'embedded' look. This serves as an 'Orbital Ridge' morphology icon. No text."
+    }
+  }
+}

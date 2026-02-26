@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Stegosaurid dorsal plate morphology",
+      "features": [
+        "A series of large, kite-shaped clay plates standing vertically",
+        "The plates are arranged in a staggered, alternating double row along a curved clay back",
+        "Each plate has a rough, tactile clay surface with subtle grooves suggesting blood vessels",
+        "Colors range from a warm sandy yellow to a dusty orange, contrasting with the dark green clay of the body",
+        "The edges of the plates are slightly thinned and translucent-looking, like rolled clay"
+      ],
+      "action": "A cinematic side-on macro shot of the dorsal plates. The lighting emphasizes the 'staggered' arrangement and the leaf-like shape of the plates. This serves as a 'Plates' morphology icon. No text."
+    }
+  }
+}

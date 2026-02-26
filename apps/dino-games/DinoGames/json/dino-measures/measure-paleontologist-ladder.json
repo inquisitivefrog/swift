@@ -1,0 +1,18 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{ 
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": "Setting: Coastal floodplain in Hell Creek formation, red sand, dinosaur dig site. Character: Middle-aged male paleontologist, short beard, khaki explorer outfit.",
+    "layer_3_action": {
+      "subject": “Paleontologist",
+      "features": [“ladder”, “measuring tape”, "friendly expressive face"],
+      "action": “A friendly Paleontologist has climbed a ladder in preparation for measuring two dinosaurs on either side. The dinosaurs are not here yet but he is standing on the ladder near the top and has opened his measuring tape until it has reached the ground.  He is looking at the measuring tape excitely."
+    }
+  } 
+} 
+

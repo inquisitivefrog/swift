@@ -1,0 +1,35 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{
+  "style_definitions": {
+    "STYLE_CLAY_MASTER": {
+      "texture": "Smooth high-poly clay",
+      "render": "Octane cinematic CGI"
+    }
+  },
+  "lighting_presets": {
+    "STUDIO_SOFT": "Soft studio lighting, ambient occlusion, gentle shadows",
+    "HIGH_SUN": "High-key direct sunlight, bright blue sky, crisp shadows, 12pm lighting",
+    "DAPPLED_OPEN": "Bright afternoon sun filtered through thin leaves, warm highlights"
+    "SUNNY_EXPOSED": "Direct midday sun, high-key exposure, no canopy cover, vibrant blue sky."
+    "DUSK_SILHOUETTE": "Sun positioned directly behind the subject on the horizon, high-contrast backlighting, subject is 100% black silhouette."
+  },
+  "lighting_config": {
+    "SKY": ""Open canopy, bright Cretaceous sun.",
+    "SHADOWS": "Crisp, short shadows (noon-day sun).",
+    "EXPOSURE": "High-key, vibrant, and airy."
+  }
+}
+{
+  "style_definitions": {
+    "STYLE_SILHOUETTE": {
+      "lighting": "High-contrast backlighting, sun on horizon at dusk",
+      "subject_appearance": "Solid black silhouette, zero internal detail, sharp edges",
+      "background": "Solid vibrant sunset orange or high-contrast sky",
+      "purpose": "Morphology study / silhouette recognition"
+    }
+  }
+}
+

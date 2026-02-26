@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Stiffened balance-tail morphology",
+      "features": [
+        "A long, straight dinosaur tail held perfectly horizontal",
+        "Visible 'bony rods' (ossified tendons) made of light-colored clay running along the sides",
+        "The tail looks strong and rigid, like a wooden plank or a balance beam",
+        "At the base of the tail, large 'muscle lumps' connect it to the hips",
+        "Soft, rounded clay edges to keep the friendly aesthetic"
+      ],
+      "action": "A cinematic side-view shot of the tail. To illustrate 'balance,' the dinosaur is standing on just one leg, using the stiff tail to stay perfectly level. The background is a soft, warm studio blur. No text."
+    }
+  }
+}

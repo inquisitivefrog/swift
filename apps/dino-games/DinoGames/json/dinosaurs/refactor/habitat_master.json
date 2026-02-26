@@ -1,0 +1,206 @@
+{
+  "habitat_id": "FORESTED_VOLCANIC_LAKE_SYSTEM",
+  "substrate": "Bentonite clay and shale",
+  "visuals": {
+    "ground": "Slippery, light-colored volcanic mud",
+    "water": "Deep blue-green caldera lake",
+  }
+}
+{
+  "habitat_id": "DESERT_DUNE_FIELDS",
+  "substrate": "Aeolian (wind-blown) quartz sandstone",
+  "visuals": {
+    "ground": "High-relief orange and red sand dunes with ripple marks",
+    "water": "None (Oasis only)",
+  }
+}
+{
+  "habitat_id": "SEMI_ARID_PLAINS",
+  "substrate": "Caliche (hardened calcium carbonate) and sandy silt",
+  "visuals": {
+    "ground": "Pale, dusty tan earth with white chalky nodules",
+    "water": "Rare ephemeral pools",
+  }
+}
+{
+  "habitat_id": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+  "substrate": "Siltstone with desiccation cracks",
+  "visuals": {
+    "ground": "Brown-grey silt with visible 'mud-crack' geometry",
+    "water": "Flash-flood channels, currently dry",
+  }
+}
+{
+  "habitat_id": "WARM_FLUVIAL_PLAINS",
+  "physics": { "altitude": "low", "water": "medium_constant" },
+  "visuals": {
+    "ground": "Reddish-brown clay soil (iron-rich)",
+    "water": "Shallow, sluggish stream networks",
+  }
+}
+{
+  "habitat_template": "COASTAL_PLAINS",
+  "physics": {
+    "altitude": "low_estuarine",
+    "water_type": "brackish_tidal",
+    "drainage": "poor"
+  },
+  "visual_logic": {
+    "water_features": "Meandering channels and stagnant oxbows",
+    "atmospheric_effects": ["Coastal haze", "Low-altitude humidity"]
+  }
+}
+{
+  "habitat_id": "SEMI_ARID_FLOODPLAINS",
+  "substrate": "Mottled red and green mudstone",
+  "visuals": {
+    "ground": "Deeply cracked clay with oxidized iron patches",
+    "water": "Seasonal braided streams",
+  } 
+} 
+{
+  "habitat_id": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+  "substrate": "Siltstone with desiccation cracks",
+  "visuals": {
+    "ground": "Brown-grey silt with visible 'mud-crack' geometry",
+    "water": "Flash-flood channels, currently dry",
+  }
+}
+{
+  "habitat_id": "COASTAL_FLOODPLAINS",
+  "substrate": "Peaty clay and lignite",
+  "visuals": {
+    "ground": "Sticky black mud with salt-marsh grasses (ferns)"
+  }
+}
+{
+  "habitat_id": "COASTAL_LOWLANDS",
+  "physics": { "altitude": "low", "water": "high" },
+  "visuals": {
+    "ground": "Dark, rich organic mud",
+    "water": "Steamy lagoons and slow estuaries",
+  }
+}
+{
+  "habitat_id": "LOWLAND_COASTAL_PLAINS",
+  "physics": { "altitude": "low", "water": "high" },
+  "visuals": {
+    "ground": "Dark, rich organic mud",
+    "water": "Steamy lagoons and slow estuaries",
+  }
+}
+{
+  "habitat_id": "COASTAL_WETLANDS",
+  "physics": { "altitude": "sea_level", "water": "saturated" },
+  "visuals": {
+  "ground": "Soft peat and black mud",
+  "water": "Deep marshland and reed-beds",
+  }
+
+
+{
+  "habitat_id": "SUBTROPICAL_COASTAL_PLAINS",
+  "physics": { "altitude": "low", "water": "high" },
+  "visuals": {
+    "ground": "Dark, rich organic mud",
+    "water": "Steamy lagoons and slow estuaries",
+  }
+}
+{
+  "habitat_id": "FLOODPLAINS",
+  "substrate": "Alluvial mudstone",
+  "visuals": {
+    "ground": "Dense fern-meadows",
+    "water": "Isolated puddles/wallows"
+  }
+}
+{
+  "habitat_id": "WOODLAND_FLOODPLAINS",
+  "substrate": "Mottled mudstone and volcanic ash (Bentonite)",
+  "visuals": {
+    "ground": "Light grey and greenish-grey clay-rich soil",
+    "canopy": "Open woodland (30% coverage)",
+  }
+}
+{
+  "habitat_id": "SEASONAL_RIVER_PLAINS",
+  "substrate": "Conglomerate and coarse sandstone",
+  "visuals": {
+    "ground": "Rocky soil with rounded river pebbles",
+    "water": "Receding waterlines, muddy banks",
+  }
+}
+{
+  "habitat_id": "RIVER_DELTA_WETLANDS",
+  "physics": { "altitude": "sea_level", "water": "very_high" },
+  "visuals": {
+    "ground": "Unstable waterlogged sand and peat",
+    "water": "Network of distributary channels",
+  }
+}
+{
+  "habitat_id": "RIVER_VALLEYS",
+  "substrate": "Siltstone and shale",
+  "visuals": {
+    "ground": "Lush green mossy banks",
+    "water": "Deep blue river with rocky bed"
+  },
+}
+{
+  "habitat_id": "LARGE_RIVER_SYSTEMS",
+  "physics": { "altitude": "low_to_mid", "water": "high_flow" },
+  "visuals": {
+    "ground": "Point bars of gravel and coarse sand",
+    "water": "Deep, wide, fast-moving channels",
+  }
+}
+{
+  "habitat_id": "RIVER_MARGINS",
+  "physics": { "altitude": "low", "water": "high_proximity" },
+  "visuals": {
+    "ground": "Slippery mud banks with leaf litter",
+    "water": "The very edge of a riverbank",
+  }
+}
+{
+  "habitat_id": "FORESTED_LAKE_ECOSYSTEM",
+  "substrate": "Fine-grained siltstone and limestone",
+  "visuals": {
+    "ground": "Moist soil with limestone pebbles",
+    "canopy": "High (70% coverage)",
+  }
+}
+{
+  "habitat_id": "FORESTED_VOLCANIC_LAKE_REGION",
+  "substrate": "Siliceous sinter and ash beds",
+  "visuals": {
+    "ground": "Crunchy grey ash-fall layers over soil",
+    "water": "Steam vents and marshy lake edges",
+  }
+}
+{
+  "habitat_id": "FORESTED_LACUSTRINE_SYSTEM",
+  "substrate": "Laminated organic-rich shale",
+  "visuals": {
+    "ground": "Dark, damp, leafy forest floor",
+    "canopy": "Dense forest (80% coverage)",
+  }
+}
+{
+  "habitat_id": "FORESTED_VOLCANIC_HIGHLANDS",
+  "substrate": "Tuff (compacted volcanic ash) and basalt",
+  "visuals": {
+    "ground": "Dark charcoal-grey rocky terrain with ash dusting",
+    "water": "High-velocity mountain brooks",
+  }
+}
+{
+  "habitat_id": "TROPICAL_ISLAND_LAGOONS",
+  "substrate": "White carbonate sand and coral-derived limestone",
+  "visuals": {
+    "ground": "Fine white sand and turquoise shallow water",
+    "flora": ["Early palm trees", "Pandanus-like shrubs"]
+  }
+}
+
+

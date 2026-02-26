@@ -1,0 +1,17 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{ 
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {“blank light green canvas, split into four frames.”},
+    "layer_3_action": {
+      "subject": “Tyrannosaurus Rex, Triceratops, Stegosaurus",
+      "features": ["large soulful eyes", "friendly expressive face"],
+      "action": “In the first and fourth frames, the Tyrannosaurus Rex is standing alert and sniffing the air on an open plain.  In the second frame, the Triceratops is munching on a tree fern.  In the third frame, the Stegosaurus is wading in a large puddle.  There is an overhead caption in bright red mixed case letters that reads Match the Dinosaur!"
+    }
+  } 
+} 

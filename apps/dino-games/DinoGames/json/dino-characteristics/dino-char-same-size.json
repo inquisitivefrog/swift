@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Pachycephalosaurus peer-size comparison",
+      "features": [
+        "A full-body side view of a Pachycephalosaurus made of green clay with a thick, dome-shaped red clay skull",
+        "Standing face-to-face with the dinosaur is a simple clay figure of a child in a blue jumpsuit",
+        "The dinosaur and the child are exactly the same height, showing an eye-to-eye comparison",
+        "The dinosaur has a thick tail and small arms, with a curious and friendly expression",
+        "Clean, minimalist clay sculpts with smooth surfaces on a seamless off-white background"
+      ],
+      "action": "A cinematic wide shot on a seamless off-white studio background. The focus is purely on the matched height of the two figures. Strictly no text or labels."
+    }
+  }
+}

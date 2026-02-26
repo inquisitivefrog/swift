@@ -1,0 +1,24 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Herbivore diet symbolism",
+      "features": [
+        "A charming collection of prehistoric plant foods made from colorful clay",
+        "A fan-shaped bright green Ginkgo leaf with a smooth surface",
+        "A textured brown pine cone with rounded clay scales",
+        "A cluster of thin green pine needles and a soft fern frond",
+        "A feathered Cycad leaf and a small bunch of round purple berries",
+        "All items have a soft, toy-like appearance with rounded edges"
+      ],
+      "action": "A centered, eye-level group shot of various clay prehistoric plants arranged neatly on a neutral clay surface. The lighting is soft and professional, highlighting the different textures of the clay foliage. This serves as a symbolic 'buffet' to represent an herbivorous diet. No text."
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Spinosaurus paddle-like tail morphology",
+      "features": [
+        "A wide, flat, fin-like tail made of textured orange and green clay",
+        "Visible vertical clay ridges resembling neural spines within the tail fin",
+        "Soft, rounded edges to look safe and friendly for children",
+        "The tail is vertically oriented like a tadpole or newt tail",
+        "Subtle clay 'scale' textures and damp sheen"
+      ],
+      "action": "A centered, cinematic macro shot focusing on the unique paddle shape of the tail. The background is a soft, out-of-focus neutral studio gradient to emphasize the morphology. No text."
+    }
+  }
+}

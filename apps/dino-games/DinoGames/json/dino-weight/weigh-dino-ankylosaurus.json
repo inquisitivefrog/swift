@@ -1,0 +1,14 @@
+{
+  "subject_id": "Ankylosaurus",
+  "game_ref": "WEIGH_THE_DINOSAUR",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "framing_ref": "WIDE_WEIGHT_STRIP_V2",
+  "pose": "Full side profile of a sturdy Ankylosaurus with a cheeky grin. Heavily armored back and tail club held in a straight horizontal line parallel to the ground. Rendered as a mid-ground character to ensure 34% empty sky above the armor and 34% empty ground below the feet. All four feet must be clearly visible on the desert floor.",
+  "technical_ref": "WIDE_WEIGHT_CARD",
+  "library_definitions": {
+    "framing_presets": {
+      "WIDE_WEIGHT_STRIP_V2": "Extreme wide shot. Small character silhouette centered vertically. Distant desert mountains and a clear blue sky to match the Stegosaurus v5 environment."
+    }
+  }
+}

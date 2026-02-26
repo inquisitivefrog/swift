@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Triceratops frill morphology",
+      "features": [
+        "A large, iconic clay fan-like frill as the central focus",
+        "The frill edge is lined with small, rounded clay nodes (epoccipitals)",
+        "Colorful vertical clay stripes in muted red and teal decorate the frill",
+        "A friendly dinosaur head with a thick clay beak and a single small nose horn, but no brow horns",
+        "Hand-molded clay texture with subtle wrinkles and fingerprint-like details"
+      ],
+      "action": "A clean 3/4 bust shot of the clay Triceratops head. The composition is focused on the shield-like frill to serve as a clear category icon. Soft studio lighting on a neutral grey background. No text."
+    }
+  }
+}

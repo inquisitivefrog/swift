@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Hadrosaurid tuberculate scale morphology",
+      "features": [
+        "A macro view of a clay dinosaur's flank showcasing a variety of scale sizes",
+        "The base layer consists of tiny, bead-like clay pebbles (basement scales) in a light tan color",
+        "Larger, raised hexagonal 'rosette' scales are scattered throughout, rendered in a darker clay with radial grooves",
+        "The clay looks slightly moist and rubbery, with visible creases and folds where the skin would move",
+        "The lighting highlights the 3D relief of each individual scale, creating deep micro-shadows"
+      ],
+      "action": "A cinematic macro shot of the skin texture. The lighting is angled low (rim lighting) to emphasize the height and texture of the scales. This serves as a 'Scales' morphology icon. No text."
+    }
+  }
+}

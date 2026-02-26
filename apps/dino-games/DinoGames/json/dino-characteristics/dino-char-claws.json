@@ -1,0 +1,24 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Theropod 'Gripping Claw' morphology",
+      "features": [
+        "A three-toed clay foot belonging to a medium-sized meat-eater",
+        "Each toe is tipped with a dark, curved, hook-shaped clay claw",
+        "The claws are sharp at the point but have soft, rounded 'clay-like' edges for safety",
+        "The foot is arched slightly, showing the claws ready to grip the ground",
+        "Subtle skin folds in the clay around the base of each claw for a realistic but toy-like look",
+        "A warm spotlight hitting the side of the claws to show their curved shape"
+      ],
+      "action": "A centered, cinematic macro shot of the claws. The lighting creates a clear silhouette of the 'hook' shape. The rest of the leg fades into a soft, blurry background. No text."
+    }
+  }
+}

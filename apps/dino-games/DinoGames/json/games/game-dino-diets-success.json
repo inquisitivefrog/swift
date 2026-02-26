@@ -1,0 +1,17 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{ 
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {“blank light blue canvas”},
+    "layer_3_action": {
+      "subject": “Hungry looking Triceratops head with big smile",
+      "features": [“large frill”, “three horns”, "large soulful eyes", "friendly expressive face"],
+      "action": “The Triceratops head in three quarter view is surrounded by a t-bone steak, pine needles, a bluish-green colored round dinosaur egg, a dragonfly and a sawfish, each at geometric positions that form an invisible five pointed star around the Triceratops head with an overhead caption in bright red mixed case letters that reads Dino Diets! and another caption below that reads Player Wins!!!"
+    }
+  } 
+} 

@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Therizinosaurus scythe-like claw morphology",
+      "features": [
+        "A clay dinosaur forelimb with three exceptionally long, gently curved scythe-like claws",
+        "The claws are made of a dark, charcoal-grey clay with a semi-matte finish and subtle longitudinal grooves",
+        "The hand and arm are covered in a mix of shaggy, feathered clay textures in earthy browns and mossy greens",
+        "The claws are tapered to a sharp point, emphasizing their extreme length (nearly half the length of the arm)",
+        "The joints of the fingers are thick and muscular, rendered in a tactile 'sculpted' style"
+      ],
+      "action": "A cinematic side-view shot of the three elongated claws. The lighting is positioned to create a strong silhouette against a neutral grey studio background, highlighting the 'Scythe' morphology icon. No text."
+    }
+  }
+}

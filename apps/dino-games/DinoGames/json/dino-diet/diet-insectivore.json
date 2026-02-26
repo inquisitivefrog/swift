@@ -1,0 +1,24 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Insectivore diet symbolism",
+      "features": [
+        "A playful assortment of clay insects to represent an insectivorous diet",
+        "A plump, metallic-blue clay beetle with a segmented shell",
+        "A bright red clay dragonfly with delicate, translucent-looking clay wings",
+        "A long-legged brown crane fly and a grey mosquito with a soft, rounded proboscis",
+        "All insects have large, friendly white-and-black clay eyes",
+        "The insects are resting on a large, vibrant green clay leaf with simple vein patterns"
+      ],
+      "action": "A centered, slightly overhead shot of the clay insects on a leaf. The lighting is bright and cheerful, highlighting the tactile, 'squishy' look of the clay. This serves as a clear indicator for an insect-eating diet in a children's game. No text."
+    }
+  }
+}

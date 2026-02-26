@@ -1,0 +1,14 @@
+{
+  "subject_id": "Triceratops",
+  "game_ref": "WEIGH_THE_DINOSAUR",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "framing_ref": "WIDE_WEIGHT_STRIP_V2",
+  "pose": "Full side profile. Friendly animated Triceratops with a confident smirk. Head, back, and tail held in a straight horizontal line. Character must be scaled down to ensure all four feet are clearly visible on the desert floor with 24% empty ground space below them. 24% negative space above the frill.",
+  "technical_ref": "WIDE_WEIGHT_CARD",
+  "library_definitions": {
+    "framing_presets": {
+      "WIDE_WEIGHT_STRIP_V2": "Extreme wide shot. Small character silhouette centered vertically. Distant mountains and blue sky. Significant empty space at the very top and very bottom of the frame."
+    }
+  }
+}

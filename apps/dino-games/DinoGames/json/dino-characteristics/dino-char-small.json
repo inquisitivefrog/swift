@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Tiny dinosaur size comparison",
+      "features": [
+        "A massive, towering clay figure of a child in a red jumpsuit, appearing like a giant",
+        "At the child's feet stands a tiny, yellow clay Compsognathus dinosaur",
+        "The dinosaur is extremely small, only reaching the child's ankle",
+        "The child is looking down at the tiny dinosaur with a friendly expression",
+        "Clean, minimalist clay sculpts with smooth surfaces and gentle rounded edges"
+      ],
+      "action": "A cinematic wide shot on a seamless off-white studio background. The composition mirrors the giant sauropod image, but this time the child is the giant and the dinosaur is the tiny subject. No text."
+    }
+  }
+}

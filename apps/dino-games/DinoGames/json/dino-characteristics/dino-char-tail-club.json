@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Ankylosaurid tail club morphology",
+      "features": [
+        "A large, heavy clay tail club made of two fused hemispherical bony masses",
+        "The club has a weathered, stone-like clay texture with realistic cracks and pockmarks",
+        "The tail leading up to the club is armored with sharp, triangular clay spikes (osteoderms)",
+        "The clay is colored in shades of dark charcoal and stony grey with hints of brown earth tones",
+        "The tail is held in a dynamic, mid-swing pose to showcase its weight and power"
+      ],
+      "action": "A cinematic side-view shot of the clay tail club. The lighting is dramatic, highlighting the heavy textures and the lethal-looking spikes on a dark, neutral studio background. This serves as a 'Tail Club' morphology icon. No text."
+    }
+  }
+}

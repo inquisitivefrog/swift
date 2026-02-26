@@ -1,0 +1,17 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{ 
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {“A conifer forest in the Morrison formation.”},
+    "layer_3_action": {
+      "subject": “Stegosaurus",
+      "features": [“platelets", “raised spiky tail", "friendly expressive face”, “sharp solid black silhouette”, “dynamic pose with clear limb separation"
+      "action": “A sharp solid black silhouette of a happy Stegosaurus is munching on a pine needle branch while standing under a conifer tree at dusk. A caption in bright red mixed case letters that reads Name That Dinosaur!"
+    }
+  } 
+} 

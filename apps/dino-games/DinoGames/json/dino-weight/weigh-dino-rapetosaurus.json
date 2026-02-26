@@ -1,0 +1,14 @@
+{
+  "subject_id": "Rapetosaurus",
+  "game_ref": "WEIGH_THE_DINOSAUR",
+  "style_ref": "STYLE_CLAY_MASTER",
+  "lighting_ref": "SUNNY_EXPOSED",
+  "framing_ref": "WIDE_WEIGHT_STRIP_V2",
+  "pose": "Full side profile. Distinct elongated snout and bumpy osteoderm skin texture. Neck and tail held perfectly horizontal to the ground. All four feet must be clearly visible with a 25% safety buffer of empty ground space beneath them.",
+  "technical_ref": "WIDE_WEIGHT_CARD",
+  "library_definitions": {
+    "framing_presets": {
+      "WIDE_WEIGHT_STRIP_V2": "Extreme wide shot. Small silhouette centered vertically. 25% negative space buffer above back and below feet to guarantee safety for a 17:7 crop."
+    }
+  }
+}

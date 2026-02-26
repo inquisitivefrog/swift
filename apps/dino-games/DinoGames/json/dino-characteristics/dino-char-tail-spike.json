@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Stegosaurid thagomizer morphology",
+      "features": [
+        "A long clay dinosaur tail ending in four large, sharp spikes (thagomizer)",
+        "The spikes are arranged in pairs and angled outwards, made of a light tan clay with subtle 'grain' textures",
+        "The tail itself is a deep forest green clay with heavy wrinkles and scale impressions",
+        "The base of each spike has a thicker 'socket' look where it meets the tail",
+        "In the background, the smaller dorsal plates are visible to provide context for the creature"
+      ],
+      "action": "A cinematic side-view shot focusing on the tail spikes. The lighting creates sharp highlights on the tips of the spikes to emphasize their defensive nature. This serves as a 'Tail Spikes' morphology icon. No text."
+    }
+  }
+}

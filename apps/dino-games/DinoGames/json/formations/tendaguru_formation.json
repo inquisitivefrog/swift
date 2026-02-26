@@ -1,0 +1,11 @@
+{
+  "formation_id": "TENDAGURU",
+  "base_habitat": "COASTAL_PLAINS",
+  "period": "LATE_JURASSIC",
+  "strata_specifics": {
+    "ground_texture": "Sandstones, shales, siltstones, and conglomerates.",
+    "color_palette": ["Tan", "white"]
+  },
+  "flora_manifest": ["JURASSIC_BASE"], 
+  "fauna_manifest": ["JURASSIC_BASE"]
+}

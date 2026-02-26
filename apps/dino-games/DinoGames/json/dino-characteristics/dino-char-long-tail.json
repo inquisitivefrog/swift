@@ -1,0 +1,22 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "FLOODPLAINS",
+      "formation_id": "MORRISON"
+    },
+    "layer_3_action": {
+      "subject": "Sauropod whip-like tail morphology",
+      "features": [
+        "Extraordinarily long, tapering tail made of smooth brown clay",
+        "Tail is held off the ground, curving gracefully upward",
+        "Tactile clay sculpture texture with rounded segments",
+        "Friendly, soft-edged design for children"
+      ],
+      "action": "A low-angle perspective looking down the length of a long dinosaur tail as it stretches away from the camera. The base of the tail is at the bottom of the frame, narrowing to a thin tip in the distance. The body and head are out of frame to emphasize the length of the tail. Background features lush clay-textured ferns and tall pine trees under a clear blue sky. No text."
+    }
+  }
+}

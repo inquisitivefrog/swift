@@ -1,0 +1,14 @@
+{
+  "subject_id": "Spinosaurus",
+  "game_ref": "WEIGH_THE_DINOSAUR",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "framing_ref": "WIDE_WEIGHT_STRIP_V2",
+  "pose": "Full side profile of a charismatic animated Spinosaurus. Large, expressive eyes and a slight, confident smirk. Vibrant orange skin with dark blue stripes. Large neural sail on back. Entire body, including neck and tail, held in a perfectly horizontal line parallel to the ground. 28% empty space above the sail and below the feet for 17:7 crop safety.",
+  "technical_ref": "WIDE_WEIGHT_CARD",
+  "library_definitions": {
+    "framing_presets": {
+      "WIDE_WEIGHT_STRIP_V2": "Extreme wide shot. Character is a small silhouette in the vertical center. Clear blue sky background. Massive negative space buffers."
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Hadrosaurid duck-bill morphology",
+      "features": [
+        "A dinosaur head with a wide, flat, duck-like clay beak at the front of the mouth",
+        "The beak is a pale tan clay with vertical ridges and a slightly worn texture",
+        "The head is slightly open, showing a simple clay tongue and a glimpse of grinding teeth further back in the jaw",
+        "The skin is made of pebbly, green and brown clay with a small fleshy crest on top of the head",
+        "Large, gentle dark eyes with realistic clay eyelids"
+      ],
+      "action": "A 3/4 profile bust shot of the clay hadrosaur. The lighting is bright and clear to showcase the unique 'duck-bill' shape as a morphology icon. Neutral grey background. No text."
+    }
+  }
+}

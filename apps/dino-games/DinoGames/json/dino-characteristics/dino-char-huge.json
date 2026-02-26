@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Giant sauropod size comparison",
+      "features": [
+        "A full-body side view of a massive, long-necked Brachiosaurus-style dinosaur made of teal-colored clay",
+        "Standing next to the dinosaur's front leg is a small, simple clay figure of a child in bright orange",
+        "The dinosaur is towering, with its head near the top of the frame to emphasize its gargantuan scale",
+        "Clean, minimalist clay sculpts with smooth surfaces and gentle rounded edges",
+        "The child figure is used as a scale bar to show how 'Big' the dinosaur is"
+      ],
+      "action": "A cinematic wide shot on a seamless off-white studio background. The composition is clean and focused on the contrast in height between the tiny child and the giant dinosaur. No text."
+    }
+  }
+}

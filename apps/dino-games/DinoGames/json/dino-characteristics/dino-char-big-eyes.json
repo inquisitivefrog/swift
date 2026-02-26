@@ -1,0 +1,24 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Troodon big eye morphology",
+      "features": [
+        "A close-up of a friendly green clay Troodon face",
+        "One very large, prominent, and glassy black clay eye with a soft amber iris",
+        "The eye is oversized to emphasize night vision, filling much of the upper head",
+        "Friendly, slight smile with rounded clay snout",
+        "Texture includes subtle clay 'fingerprint' swirls to enhance the handmade look",
+        "Soft, warm highlights on the surface of the eye to make it look kind and soulful"
+      ],
+      "action": "A centered, cinematic macro shot focusing on the large eye. The background is a soft, warm neutral gradient. The lighting is gentle, designed to be inviting for children ages 4-6. No text."
+    }
+  }
+}

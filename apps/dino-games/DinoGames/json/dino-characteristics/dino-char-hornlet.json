@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Theropod lacrimal horn morphology",
+      "features": [
+        "A close-up of a theropod's eye and brow area",
+        "A sharp, triangular clay hornlet sitting just above and in front of the eye",
+        "The horn has a different texture than the skin, looking slightly more fibrous or polished like a clay tool",
+        "The skin around the eye is detailed with deep clay 'fingerprint' textures and fine scales",
+        "A vibrant splash of red or blue clay on the horn to suggest its use as a display feature"
+      ],
+      "action": "A dramatic macro shot of the 'eyebrow' horn. The lighting is focused on the horn's texture and color, leaving the rest of the face in soft shadow. This serves as a 'Lacrimal Horn' morphology icon. No text."
+    }
+  }
+}

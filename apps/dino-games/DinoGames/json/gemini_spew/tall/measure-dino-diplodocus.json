@@ -1,0 +1,17 @@
+{
+  "subject_id": "Diplodocus",
+  "formation_ref": "MORRISON_FORMATION",
+  "style_ref": "STYLE_CLAY_MASTER",
+  "lighting_ref": "SUNNY_EXPOSED",
+  "framing_ref": "TALL_MEASURE",
+  "pose": "Upright posture. Extremely long, slender neck reaching for the canopy. Slender body. Tail is coiled safely at the feet. NO neck bending.",
+  "technical_ref": "TALL_MEASUREMENT_CARD",
+  "library_definitions": {
+    "style_presets": {
+      "STYLE_CLAY_MASTER": "Soft-sculpted vinyl toy. Smooth matte clay surfaces. Slender rounded proportions. Glassy eyes. Set within a lush prehistoric jungle. No white backgrounds."
+    },
+    "framing_presets": {
+      "TALL_MEASURE": "Full height focus. Head at the top, feet at the bottom. Wide-angle lens effect to capture full verticality."
+    }
+  }
+}

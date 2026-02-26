@@ -1,0 +1,31 @@
+"technical_specs": {
+    "final_render_px": "140x340",
+    "aspect_ratio": "9:16"
+  }
+{
+  "technical_specs": {
+    "default_aspect_ratio": "1:1",
+    "default_resolution": "1024x1024"
+  },
+  "asset_manifest": [
+    {
+      "id": "apat_square_01",
+      "species": "Apatosaurus",
+      "note": "Standard gameplay image, uses defaults"
+    },
+    {
+      "id": "apat_tall_card_01",
+      "species": "Apatosaurus",
+      "aspect_ratio": "9:16",
+      "target_size": "140x340",
+      "pose": "Full vertical height"
+    }
+  ]
+}
+"technical_specs": {
+    "resolution_px": {
+      "width": 140,
+      "height": 340
+    },
+    "aspect_ratio": "9:16"
+  }

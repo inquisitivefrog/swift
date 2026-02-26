@@ -1,0 +1,11 @@
+{
+  "formation_id": "TWO_MEDICINE",
+  "base_habitat": "FLOODPLAINS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Dark, rich organic mud",
+    "color_palette": ["Grey", "Ocher", "Brown"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}

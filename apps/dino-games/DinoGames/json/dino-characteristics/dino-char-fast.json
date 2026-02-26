@@ -1,0 +1,24 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "SUNNY_PREHISTORIC_SAVANNA",
+      "formation_id": "HELL_CREEK_PLAINS"
+    },
+    "layer_3_action": {
+      "subject": "Gallimimus speed morphology",
+      "features": [
+        "A slender, athletic clay Gallimimus in a full sprint",
+        "Extremely long, powerful drumstick-shaped hind legs",
+        "Standing on its tiptoes with elongated foot bones",
+        "Small, aerodynamic head and a long, stiff balancing tail",
+        "Wispy clay 'motion streaks' trailing behind the dinosaur to show fast movement",
+        "Puffs of clay 'dust' kicking up from the ground"
+      ],
+      "action": "A dynamic side-profile action shot. The dinosaur is mid-stride with both feet off the ground. The background has a slight motion blur to emphasize the 'Fast Runner' superpower. No text."
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Microraptor asymmetrical flight feather morphology",
+      "features": [
+        "A close-up of a single, long clay feather from a Microraptor wing",
+        "The feather is asymmetrical, with one side of the vane significantly narrower than the other",
+        "The clay has a deep, midnight-black color with a subtle pearlescent sheen (iridescence) showing hints of teal and purple",
+        "The central rachis (quill) is thick and sturdy-looking, made of a lighter grey clay",
+        "The edges of the feather show fine, needle-like clay 'barbs' interlocking perfectly"
+      ],
+      "action": "A dramatic macro shot of the asymmetrical feather. The lighting is designed to catch the iridescence of the clay surface, making it shimmer. This serves as an 'Asymmetrical Feather' morphology icon. No text."
+    }
+  }
+}

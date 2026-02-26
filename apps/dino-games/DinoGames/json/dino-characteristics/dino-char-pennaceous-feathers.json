@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Dromaeosaurid pennaceous feather morphology",
+      "features": [
+        "A close-up view of a dinosaur's wing-like forearm showcasing advanced pennaceous feathers",
+        "The feathers have a clear central clay rachis (quill) with flat, interlocking barbs creating a smooth blade-like surface",
+        "The clay feathers are arranged in neat, overlapping layers, colored in deep navy blue with black and white striped patterns",
+        "The dinosaur's body underneath shows dark, pebbled clay skin",
+        "The feathers have a slight sheen, as if sculpted from polished, high-quality clay"
+      ],
+      "action": "A cinematic profile shot of the fanned-out feathers on the arm. The lighting is crisp, highlighting the edges and the structured, symmetrical look of the 'true' feathers. This serves as a 'Pennaceous Feather' morphology icon. No text."
+    }
+  }
+}

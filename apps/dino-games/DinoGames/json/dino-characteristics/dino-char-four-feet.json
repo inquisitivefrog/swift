@@ -1,0 +1,22 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "FLOODPLAINS",
+      "formation_id": "MORRISON"
+    },
+    "layer_3_action": {
+      "subject": "Quadruped Sauropod legs",
+      "features": [
+        "Four thick, pillar-like legs made of smooth clay",
+        "Wide elephant-like feet with rounded blunt toes",
+        "Tactile clay sculpture texture with soft wrinkles at the joints",
+        "Clear view of all four legs to emphasize quadrupedalism"
+      ],
+      "action": "A low-angle extreme close-up focusing on the four feet of a large, friendly dinosaur. The front feet and back feet are all visible as they stand in a lush fern meadow with small muddy puddles. Deep, round footprints are visible in the clay-like earth. The background features soft-focus Araucaria and Ginkgo trees. No text."
+    }
+  }
+}

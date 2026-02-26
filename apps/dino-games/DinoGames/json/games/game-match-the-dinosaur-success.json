@@ -1,0 +1,17 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{ 
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {“blank light green canvas, split into four frames.”},
+    "layer_3_action": {
+      "subject": “Pachycephalosaurus, Apatosaurus, Microraptor",
+      "features": ["large soulful eyes", "friendly expressive face"],
+      "action": “In the first and fourth frames, the Pachycephalosaurus is tapping a cycad tree with his dome head hoping to shake loose a frond. In the second frame, the Apatosaurus is quietly munching on a pile of horsetails at the edge of a swamp.  In the third frame, the Microraptor is gliding down from a conifer tree.  There is an overhead caption in bright red mixed case letters that reads Match the Dinosaur! and another caption that reads Player Wins!!!"
+    }
+  } 
+} 

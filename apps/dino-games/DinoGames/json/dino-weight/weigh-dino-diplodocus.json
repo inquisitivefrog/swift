@@ -1,0 +1,14 @@
+{
+  "subject_id": "Diplodocus",
+  "game_ref": "WEIGH_THE_DINOSAUR",
+  "style_ref": "STYLE_CLAY_MASTER",
+  "lighting_ref": "SUNNY_EXPOSED",
+  "framing_ref": "WIDE_WEIGHT_STRIP_V2",
+  "pose": "Side profile. Extremely long whip-like tail extending straight back. Neck held horizontally. All four feet visible with ground clearance.",
+  "technical_ref": "WIDE_WEIGHT_CARD",
+  "library_definitions": {
+    "framing_presets": {
+      "WIDE_WEIGHT_STRIP_V2": "Extreme wide shot. The dinosaur is floating in the vertical center of the 1024px square. Ensure 20% negative space BOTH above the back and below the feet. This creates a safety buffer so the feet are not cut off by the 17:7 horizontal crop."
+    }
+  }
+}

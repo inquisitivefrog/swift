@@ -1,0 +1,14 @@
+{
+  "subject_id": "Camarasaurus",
+  "game_ref": "WEIGH_THE_DINOSAUR",
+  "style_ref": "STYLE_CLAY_MASTER",
+  "lighting_ref": "SUNNY_EXPOSED",
+  "framing_ref": "WIDE_WEIGHT_STRIP_V2",
+  "pose": "Full side profile. Deep, boxy torso. Neck and tail held perfectly horizontal. Head lowered to shoulder height. All four feet visible with 25% empty ground space below.",
+  "technical_ref": "WIDE_WEIGHT_CARD",
+  "library_definitions": {
+    "framing_presets": {
+      "WIDE_WEIGHT_STRIP_V2": "Extreme wide shot. Small silhouette centered vertically. 25% negative space buffer above back and below feet for 17:7 crop."
+    }
+  }
+}

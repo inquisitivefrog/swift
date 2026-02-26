@@ -1,0 +1,17 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{ 
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {“Coastal floodplain in Hell Creek formation.  Cycad trees in background.  Wooden seesaw balanced over wooden wheeled based.”},
+    "layer_3_action": {
+      "subject": “Tyrannosaurus Rex and young Triceratops",
+      "features": [“deep reinforced skull”, “banana-shaped thick teeth”, “two-fingered fore legs”, "large soulful eyes", "friendly expressive face"],
+      "action": “A friendly Tyrannosaurus Rex is seated on the left side of the seesaw while a young Triceratops is seated on the right side of the seesaw.  The saw is slightly tilted down on the left suggesting that the T-Rex weighs more.  A caption in bright red mixed case letters that reads Weigh the Dinosaur!"
+    }
+  } 
+} 

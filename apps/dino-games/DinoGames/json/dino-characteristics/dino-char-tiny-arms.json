@@ -1,0 +1,23 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Tyrannosaurid vestigial arm morphology",
+      "features": [
+        "Two tiny, comical clay arms positioned on the front of a large theropod torso",
+        "Each arm has two small, sharp white clay claws",
+        "The arms are made of textured reddish-brown clay with soft muscle definition",
+        "The hands are slightly curled in a playful, 'reaching' pose",
+        "The surrounding body is out of focus to keep the emphasis entirely on the small scale of the limbs"
+      ],
+      "action": "A centered, cinematic macro shot of the tiny clay arms. The lighting is soft and warm, highlighting the 'squishy' and tactile clay textures. This serves as a 'Tiny Arms' morphology icon for a children's game. No text."
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "libraries": {
+    "flora": {
+      "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos"],
+      "MORRISON_ADDITIONS": ["Ginkgoales (seasonal)", "Fern Prairies"],
+      "HELL_CREEK_ADDITIONS": ["Palms", "Platanites"]
+    }
+  },
+  "formations": {
+    "MORRISON": {
+      "period": "LATE_JURASSIC",
+      "flora_manifest": ["JURASSIC_BASE", "MORRISON_ADDITIONS"],
+      "fauna_manifest": ["JURASSIC_BASE"]
+    },
+    "HELL_CREEK": {
+      "period": "LATE_CRETACEOUS",
+      "flora_manifest": ["LATE_CRETACEOUS_BASE", "HELL_CREEK_ADDITIONS"],
+      "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+    }
+  }
+}
