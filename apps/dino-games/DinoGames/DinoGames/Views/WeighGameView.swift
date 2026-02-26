@@ -20,6 +20,8 @@ struct WeighableItem: Identifiable {
 }
 
 // MARK: - Game Configuration
+// TODO (future): Consider stacking items on the right with heaviest at bottom (tower like Measure the Dinosaur's height stack) to teach relative size/weight when balancing.
+// TODO (future): Make additional images 340×70 px for Weigh the Dinosaur to emphasize width as well as weight.
 
 struct WeighGameConfig {
     let id: String
@@ -55,6 +57,10 @@ struct WeighGameView: View {
     @State private var canSelectSecondDinosaur = false
     /// When true, "choose your first dinosaur" intro is playing; block all taps until it finishes.
     @State private var isChooseFirstAudioPlaying = false
+    /// Intro walk for weigh-dinosaur: highlight each of the 9 and play name before "choose your first". -1 = not started, 0..<count = current index.
+    @State private var introWalkStep: Int = -1
+    /// True when intro walk is done (or not used); then "choose your first" can play and taps allowed after that.
+    private var introWalkComplete: Bool { gameConfig.id != "weigh-dinosaur" || displayItems.isEmpty || introWalkStep >= displayItems.count }
     /// Running list of dinosaurs that played (left + right per round); we show unique dinos only (no repeats).
     @State private var dinosaursWeighed: [WeighableItem] = []
     /// Victory walk: -1 none, 1 = walking list (highlight + name), 2 = good-job + crowd then dismiss.
@@ -65,136 +71,226 @@ struct WeighGameView: View {
     
     private var isGameOver: Bool { roundsCompleted >= maxRounds }
     private var displayItems: [WeighableItem] { currentRoundItems.isEmpty ? gameConfig.items : currentRoundItems }
-    
+
+    /// Prefer weigh-dino-{slug} when available (340×340 or 140×340); else fall back to dino-{slug}.
+    private func weighImageName(for item: WeighableItem) -> String? {
+        guard gameConfig.id == "weigh-dinosaur" else { return item.imageName }
+        let base = item.imageName ?? item.name
+        let weighName = "weigh-\(base)"
+        let found = UIImage(named: weighName) != nil
+        #if DEBUG
+        if !found {
+            print("⚠️ Weigh image '\(weighName)' not found, using fallback '\(item.imageName ?? base)'")
+        }
+        #endif
+        return found ? weighName : item.imageName
+    }
+
+    /// Scale factor for seesaw image. When both selected: heavier gets full size (1.2), lighter scales down by weight ratio; min 0.55 keeps small dinos visible.
+    private func seesawImageScale(for item: WeighableItem, relativeTo other: WeighableItem?) -> CGFloat {
+        guard gameConfig.id == "weigh-dinosaur" else { return 1.0 }
+        guard let kg = dinosaurEstimatedWeightKgById[item.id] else { return 1.0 }
+        if let other = other, let otherKg = dinosaurEstimatedWeightKgById[other.id] {
+            let heavierKg = max(kg, otherKg)
+            let lighterKg = min(kg, otherKg)
+            if kg >= otherKg {
+                return 1.2 // Heavier dinosaur gets full size
+            } else {
+                let ratio = lighterKg / heavierKg
+                let t = sqrt(max(ratio, 0.001))
+                return CGFloat(max(0.55, 0.35 + 0.85 * t))
+            }
+        }
+        let logMin = log10(0.5)
+        let logMax = log10(70_000.0)
+        let logKg = log10(max(kg, 0.5))
+        let t = (logKg - logMin) / (logMax - logMin)
+        return CGFloat(0.35 + 0.85 * min(max(t, 0), 1))
+    }
+
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: 0) {
-                // Top padding to prevent truncation
-                Spacer()
-                    .frame(height: geometry.size.height * 0.05) // 5% padding at top
-                
-                // Top - Item grid or victory message (same as Match the Dinosaur: Good job! + row of dinos)
-                if isGameOver {
-                    weighVictoryView
-                } else {
-                    VStack(spacing: 10) {
+            ScrollView(.vertical, showsIndicators: true) {
+                VStack(spacing: 0) {
+                    Spacer()
+                        .frame(height: 12)
+                    
+                    // Top - Item grid or victory message (same as Match the Dinosaur: Good job! + row of dinos)
+                    if isGameOver {
+                        weighVictoryView
+                    } else {
+                    // Grid: 3 columns, fixed height so all 3 rows are visible (no scroll around grid)
+                    VStack(spacing: 6) {
                         Text("Round \(roundsCompleted + 1) of \(maxRounds)")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
-                        // Grid: 3 columns; row count depends on item count (9 → 3 rows, 6 → 2 rows)
-                        VStack(spacing: 10) {
+                        VStack(spacing: 6) {
                             ForEach(0..<((displayItems.count + 2) / 3), id: \.self) { row in
-                                HStack(spacing: 10) {
-                                    ForEach(Array(displayItems.dropFirst(row * 3).prefix(3))) { item in
-                                        ItemCard(
-                                            item: item,
-                                            isSelected: selectedLeftItem?.id == item.id || selectedRightItem?.id == item.id,
-                                            isDisabled: isWeighing || isGameOver || isChooseFirstAudioPlaying || (selectedLeftItem != nil && selectedRightItem != nil) || (selectedLeftItem != nil && selectedRightItem == nil && !canSelectSecondDinosaur)
-                                        ) {
-                                            handleItemTap(item)
+                                HStack(spacing: 6) {
+                                    ForEach(0..<3, id: \.self) { col in
+                                        let index = row * 3 + col
+                                        if index < displayItems.count {
+                                            let item = displayItems[index]
+                                            ItemCard(
+                                                item: item,
+                                                displayImageName: nil, // Grid: dino-* (square); seesaw: weigh-dino-* (wide poses)
+                                                isSelected: selectedLeftItem?.id == item.id || selectedRightItem?.id == item.id,
+                                                isDisabled: isWeighing || isGameOver || isChooseFirstAudioPlaying || (!introWalkComplete) || (selectedLeftItem != nil && selectedRightItem != nil) || (selectedLeftItem != nil && selectedRightItem == nil && !canSelectSecondDinosaur),
+                                                isIntroHighlighted: gameConfig.id == "weigh-dinosaur" && introWalkStep >= 0 && introWalkStep < displayItems.count && introWalkStep == index
+                                            ) {
+                                                handleItemTap(item)
+                                            }
+                                        } else {
+                                            Color.clear
+                                                .aspectRatio(1, contentMode: .fit)
                                         }
                                     }
                                 }
                             }
                         }
-                        .padding(.horizontal, 15)
+                        .padding(.horizontal, 10)
                     }
+                    .frame(height: 360) // Room for 3 full rows + label; compact so seesaw fits on screen
                     .frame(width: geometry.size.width)
                 }
                 
-                // Increased space between images and seesaw
-                Spacer()
-                    .frame(height: geometry.size.height * 0.15) // 15% space between images and seesaw
-                
-                // Bottom - Seesaw area (centered in remaining space)
-                VStack {
+                if !isGameOver {
+                    // Compact spacer between grid and seesaw so seesaw stays visible
                     Spacer()
-                        .frame(minHeight: 10) // Small spacer
+                        .frame(height: 16)
                     
-                    ZStack {
-                        // A-frame support (playground seesaw style)
-                        SeesawSupportView()
-                            .offset(y: 45)
+                    // Bottom - Seesaw area (fixed min height so seesaw never slides off screen)
+                    let beamW = max(geometry.size.width * 0.28, 100)
+                    let sideMargin: CGFloat = 12
+                    let maxDinoWidth = max(100, geometry.size.width - 2 * beamW - 2 * sideMargin) // Cap so wide sauropod images fit with margin
+                    VStack {
+                        Spacer()
+                            .frame(minHeight: 10) // Small spacer
                         
-                        // Pivot (fulcrum)
-                        Circle()
-                            .fill(Color.gray)
-                            .frame(width: 24, height: 24)
-                            .overlay(Circle().stroke(Color.brown, lineWidth: 2))
-                            .offset(y: 28)
-                        
-                        // Main beam (shorter than seat span so seats extend past the bar – seesaw look)
-                        RoundedRectangle(cornerRadius: 6)
-                            .fill(LinearGradient(colors: [Color.brown, Color.brown.opacity(0.85)], startPoint: .top, endPoint: .bottom))
-                            .frame(width: geometry.size.width * 0.38, height: 22)
-                            .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.brown.opacity(0.6), lineWidth: 1))
-                            .rotationEffect(.degrees(seesawAngle), anchor: .center)
-                            .offset(y: 28)
-                        
-                        // Left platform (sits past the end of the beam)
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(Color.brown.opacity(0.9))
-                            .frame(width: 56, height: 12)
-                            .rotationEffect(.degrees(seesawAngle), anchor: .center)
-                            .offset(x: -(geometry.size.width * 0.28), y: 14)
-                        
-                        // Right platform (sits past the end of the beam)
-                        RoundedRectangle(cornerRadius: 4)
-                            .fill(Color.brown.opacity(0.9))
-                            .frame(width: 56, height: 12)
-                            .rotationEffect(.degrees(seesawAngle), anchor: .center)
-                            .offset(x: geometry.size.width * 0.28, y: 14)
-                    
-                        // Left side item (on left seat)
-                        if let leftItem = selectedLeftItem {
-                            Group {
-                                if let imageName = leftItem.imageName {
-                                    Image(imageName)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 100, height: 100)
-                                } else {
-                                    Text(leftItem.emoji)
-                                        .font(.system(size: 80))
-                                }
-                            }
-                            .offset(x: -(geometry.size.width * 0.28), y: leftItemOffset - 70)
-                            .opacity(leftItemOpacity)
+                        ZStack {
+                            // A-frame support (playground seesaw style)
+                            SeesawSupportView()
+                                .offset(y: 45)
                             
-                            if showSpeedLines, lighterFlewFromLeft == false, selectedRightItem != nil {
-                                SpeedLinesView()
-                                    .offset(x: geometry.size.width * 0.28, y: rightItemOffset - 70)
+                            // Beam + seats rotate as one unit around fulcrum; fulcrum stays fixed
+                            ZStack {
+                                // Rotating assembly: beam and seats tilt together so seats stay on top of arm
+                                ZStack {
+                                    // Beam (arm)
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 6)
+                                            .fill(LinearGradient(colors: [Color.brown, Color.brown.opacity(0.85)], startPoint: .top, endPoint: .bottom))
+                                            .frame(width: beamW, height: 18)
+                                            .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.brown.opacity(0.6), lineWidth: 1))
+                                            .offset(x: -beamW / 2)
+                                        RoundedRectangle(cornerRadius: 6)
+                                            .fill(LinearGradient(colors: [Color.brown, Color.brown.opacity(0.85)], startPoint: .top, endPoint: .bottom))
+                                            .frame(width: beamW, height: 18)
+                                            .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.brown.opacity(0.6), lineWidth: 1))
+                                            .offset(x: beamW / 2)
+                                    }
+                                    // Seats (above beam center; seat bottom touches beam top)
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .fill(Color.brown.opacity(0.9))
+                                        .frame(width: 56, height: 12)
+                                        .offset(x: -beamW, y: -15)
+                                    RoundedRectangle(cornerRadius: 4)
+                                        .fill(Color.brown.opacity(0.9))
+                                        .frame(width: 56, height: 12)
+                                        .offset(x: beamW, y: -15)
+                                }
+                                .rotationEffect(.degrees(seesawAngle), anchor: .center)
+                                .offset(y: 28)
+                                // Fulcrum (fixed, does not rotate)
+                                Circle()
+                                    .fill(Color.gray)
+                                    .frame(width: 32, height: 32)
+                                    .overlay(Circle().stroke(Color.brown, lineWidth: 2))
+                                    .offset(y: 28)
                             }
-                            if showSpeedLines, lighterFlewFromLeft == true, selectedLeftItem != nil {
-                                SpeedLinesView()
-                                    .offset(x: -(geometry.size.width * 0.28), y: leftItemOffset - 70)
-                            }
-                        }
-                        
-                        // Right side item (on right seat)
-                        if let rightItem = selectedRightItem {
-                            Group {
-                                if let imageName = rightItem.imageName {
-                                    Image(imageName)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 100, height: 100)
-                                } else {
-                                    Text(rightItem.emoji)
-                                        .font(.system(size: 80))
+                            
+                            // Left side item (on left seat). Scale preserves size ratio; both scale down proportionally when capped.
+                            if let leftItem = selectedLeftItem {
+                                let scale = seesawImageScale(for: leftItem, relativeTo: selectedRightItem)
+                                let idealHeight = 130 * scale
+                                let idealWidth = idealHeight * 2
+                                let rightIdealW = selectedRightItem.map { 130 * seesawImageScale(for: $0, relativeTo: leftItem) * 2 } ?? idealWidth
+                                let maxIdealW = max(idealWidth, rightIdealW)
+                                let scaleFactor = maxIdealW > maxDinoWidth ? maxDinoWidth / maxIdealW : 1.0
+                                let (width, height) = (idealWidth * scaleFactor, idealHeight * scaleFactor)
+                                let seatTopY: CGFloat = 7
+                                let baseY = seatTopY - height / 2
+                                Group {
+                                    if let imageName = weighImageName(for: leftItem) {
+                                        Image(imageName)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: width, height: height, alignment: .bottom)
+                                    } else {
+                                        Text(leftItem.emoji)
+                                            .font(.system(size: 80))
+                                            .frame(width: width, height: height)
+                                    }
+                                }
+                                .frame(width: width, height: height, alignment: .bottom)
+                                .clipped()
+                                .offset(x: -beamW, y: leftItemOffset + baseY)
+                                .opacity(leftItemOpacity)
+                                .zIndex(10)
+                                
+                                if showSpeedLines, lighterFlewFromLeft == false, let rightItem = selectedRightItem {
+                                    let rightH = 130 * seesawImageScale(for: rightItem, relativeTo: selectedLeftItem) * scaleFactor
+                                    SpeedLinesView()
+                                        .offset(x: beamW, y: rightItemOffset + (seatTopY - rightH / 2))
+                                }
+                                if showSpeedLines, lighterFlewFromLeft == true, selectedLeftItem != nil {
+                                    SpeedLinesView()
+                                        .offset(x: -beamW, y: leftItemOffset + baseY)
                                 }
                             }
-                            .offset(x: geometry.size.width * 0.28, y: rightItemOffset - 70)
-                            .opacity(rightItemOpacity)
+                            
+                            // Right side item (on right seat). Scale preserves size ratio; both scale down proportionally when capped.
+                            if let rightItem = selectedRightItem {
+                                let scale = seesawImageScale(for: rightItem, relativeTo: selectedLeftItem)
+                                let idealHeight = 130 * scale
+                                let idealWidth = idealHeight * 2
+                                let leftIdealW = selectedLeftItem.map { 130 * seesawImageScale(for: $0, relativeTo: rightItem) * 2 } ?? idealWidth
+                                let maxIdealW = max(idealWidth, leftIdealW)
+                                let scaleFactor = maxIdealW > maxDinoWidth ? maxDinoWidth / maxIdealW : 1.0
+                                let (width, height) = (idealWidth * scaleFactor, idealHeight * scaleFactor)
+                                let seatTopY: CGFloat = 7
+                                let baseY = seatTopY - height / 2
+                                Group {
+                                    if let imageName = weighImageName(for: rightItem) {
+                                        Image(imageName)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: width, height: height, alignment: .bottom)
+                                    } else {
+                                        Text(rightItem.emoji)
+                                            .font(.system(size: 80))
+                                            .frame(width: width, height: height)
+                                    }
+                                }
+                                .frame(width: width, height: height, alignment: .bottom)
+                                .clipped()
+                                .offset(x: beamW, y: rightItemOffset + baseY)
+                                .opacity(rightItemOpacity)
+                                .zIndex(10)
+                            }
                         }
+                    .frame(width: geometry.size.width - 2 * sideMargin, height: 260) // Inset with margin so dinosaurs don't truncate at screen edge
+                    .clipped() // Keep rotated beam from affecting layout
+                        
+                        Spacer()
+                            .frame(minHeight: 8)
                     }
-                    .frame(height: 250) // Seesaw area height
-                    
-                    // Use remaining space at bottom (shifted down from top)
-                    Spacer()
+                    .frame(minHeight: 270)
+                    .frame(width: geometry.size.width)
                 }
-                .frame(width: geometry.size.width)
+                }
             }
+            .frame(maxHeight: geometry.size.height)
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -210,22 +306,16 @@ struct WeighGameView: View {
             if currentRoundItems.isEmpty {
                 currentRoundItems = gameConfig.items
             }
-            // Weigh the Dinosaur: play "choose your first dinosaur" and block taps until it finishes
-            if gameConfig.id == "weigh-dinosaur" {
-                isChooseFirstAudioPlaying = true
-                speechManager.onAudioFinished = {
-                    self.speechManager.onAudioFinished = nil
-                    self.isChooseFirstAudioPlaying = false
-                }
-                speechManager.speak("game-weigh-choose-your-first-dinosaur")
+            // Weigh the Dinosaur: walk the 9 dinosaurs (highlight + name audio), then play "choose your first dinosaur"
+            if gameConfig.id == "weigh-dinosaur", !displayItems.isEmpty {
+                introWalkStep = 0
+                startWeighIntroWalk()
             }
-            // Force landscape orientation immediately
+            // Force landscape orientation (use requestGeometryUpdate; UIDevice.setValue is deprecated)
             DispatchQueue.main.async {
                 if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                     windowScene.requestGeometryUpdate(.iOS(interfaceOrientations: .landscape))
                 }
-                // Fallback method - force rotation
-                UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
             }
         }
         .onDisappear {
@@ -233,7 +323,6 @@ struct WeighGameView: View {
             if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
                 windowScene.requestGeometryUpdate(.iOS(interfaceOrientations: .portrait))
             }
-            UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
         }
     }
     
@@ -251,7 +340,7 @@ struct WeighGameView: View {
                         self.canSelectSecondDinosaur = true
                         self.speechManager.onAudioFinished = nil
                     }
-                    self.speechManager.speak("game-weigh-choose-your-second-dinosaur")
+                    self.speechManager.speak("game-choose-your-second-dinosaur")
                 } else {
                     self.canSelectSecondDinosaur = true
                 }
@@ -272,6 +361,10 @@ struct WeighGameView: View {
     private func startWeighing() {
         guard let left = selectedLeftItem,
               let right = selectedRightItem else { return }
+        
+        // Add to victory list immediately so they display even if audio chain fails
+        if !dinosaursWeighed.contains(where: { $0.id == left.id }) { dinosaursWeighed.append(left) }
+        if !dinosaursWeighed.contains(where: { $0.id == right.id }) { dinosaursWeighed.append(right) }
         
         isWeighing = true
         let weightDiff = left.weight - right.weight
@@ -338,7 +431,7 @@ struct WeighGameView: View {
     
     /// Called when the result audio for this round has finished (so the winner is declared before we advance).
     private func finishWeighingRound() {
-        // Keep running list of dinosaurs that played (add only if not already present — no repeats)
+        // Dinosaurs already added at startWeighing; ensure no duplicates if called twice
         if let left = selectedLeftItem, let right = selectedRightItem {
             if !dinosaursWeighed.contains(where: { $0.id == left.id }) { dinosaursWeighed.append(left) }
             if !dinosaursWeighed.contains(where: { $0.id == right.id }) { dinosaursWeighed.append(right) }
@@ -350,8 +443,9 @@ struct WeighGameView: View {
             selectedRightItem = nil
             // Victory view will walk the list, then play good-job + crowd and dismiss
         } else {
-            // New round: shuffle pool again for the next round
-            let nextItems = WeighGameConfigs.randomizedItems(forId: gameConfig.id)
+            // New round: 9 new dinosaurs at random, excluding any already weighed this game (no repeat use)
+            let usedIds = Set(dinosaursWeighed.map(\.id))
+            let nextItems = WeighGameConfigs.randomizedItems(forId: gameConfig.id, excludingDinosaurIds: usedIds)
             if !nextItems.isEmpty {
                 currentRoundItems = nextItems
             }
@@ -359,50 +453,73 @@ struct WeighGameView: View {
         }
     }
 
-    /// Victory screen: walk list of dinosaurs (highlight + name), then good-job + crowd and dismiss.
+    /// Fixed row height and scroll height so exactly 4 full rows are visible (no 4.5 or 5). Includes top/bottom padding.
+    private let victoryRowHeight: CGFloat = 92
+    private var victoryListVisibleHeight: CGFloat { 16 + 4 * victoryRowHeight + 3 * 12 + 16 }
+
+    /// Victory screen: same as Dino Diets / Match the Dinosaur — top half list (highlight + name audio), bottom half success image (centered, no wrapper), then good-job + crowd and dismiss.
     private var weighVictoryView: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                VStack(spacing: 12) {
-                    Text("Good job!")
-                        .font(.title)
-                        .fontWeight(.semibold)
-                        .padding(.top, 8)
-                        .padding(.bottom, 8)
-                    ForEach(Array(dinosaursWeighed.enumerated()), id: \.offset) { index, item in
-                        let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                        HStack(spacing: 16) {
-                            weighVictoryImage(item: item, isHighlighted: isHighlighted)
-                            Text(item.name)
-                                .font(.title2)
-                                .fontWeight(isHighlighted ? .semibold : .regular)
-                                .foregroundColor(.primary)
-                                .multilineTextAlignment(.leading)
-                                .lineLimit(2)
-                                .minimumScaleFactor(0.8)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .opacity(isHighlighted ? 1.0 : 0.5)
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                // Top half: scrolling list of dinosaurs weighed, highlight + name audio, scroll to center — fixed height so ~4 visible (consistent across games)
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        VStack(spacing: 12) {
+                            ForEach(Array(dinosaursWeighed.enumerated()), id: \.offset) { index, item in
+                                let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                                HStack(spacing: 16) {
+                                    weighVictoryImage(item: item, isHighlighted: isHighlighted)
+                                    Text(item.name)
+                                        .font(.title2)
+                                        .fontWeight(isHighlighted ? .semibold : .regular)
+                                        .foregroundColor(.primary)
+                                        .multilineTextAlignment(.leading)
+                                        .lineLimit(2)
+                                        .minimumScaleFactor(0.8)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .opacity(isHighlighted ? 1.0 : 0.5)
+                                }
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                                .frame(height: victoryRowHeight)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                                )
+                                .id(index)
+                            }
                         }
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
-                        )
-                        .id(index)
+                        .padding(.horizontal)
+                        .padding(.vertical, 16)
+                    }
+                    .frame(height: victoryListVisibleHeight)
+                    .onChange(of: endHighlightIndex) { _, newIndex in
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            proxy.scrollTo(newIndex, anchor: .center)
+                        }
                     }
                 }
-                .padding(.horizontal)
-                .padding(.vertical, 16)
-            }
-            .onChange(of: endHighlightIndex) { _, newIndex in
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    proxy.scrollTo(newIndex, anchor: .center)
+                .frame(maxWidth: .infinity)
+
+                // Bottom half: during walk show empty space; after walk show success image only (centered, no wrapper)
+                Group {
+                    if endSequenceStep == 2 {
+                        weighSuccessImageView
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    playWeighGoodJobAndCrowdThenDismiss()
+                                }
+                            }
+                    } else {
+                        Spacer()
+                    }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -411,14 +528,44 @@ struct WeighGameView: View {
             endSequenceStep = 1
             endHighlightIndex = 0
             if dinosaursWeighed.isEmpty {
-                playWeighGoodJobAndCrowdThenDismiss()
+                endSequenceStep = 2
             } else {
                 speechManager.speak(audioKey: dinosaursWeighed[0].imageName ?? dinosaursWeighed[0].name, fallbackText: dinosaursWeighed[0].name)
                 speechManager.onAudioFinished = { advanceWeighEndHighlight() }
             }
         }
     }
+
+    /// Success image only (no card wrapper); centered in victory bottom half. Same pattern as Match the Dinosaur / Dino Diets.
+    private var weighSuccessImageView: some View {
+        ZStack {
+            weighSuccessImageContent
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var weighSuccessImageContent: some View {
+        Group {
+            let successName = "game-\(gameConfig.id)-success"
+            let fallbackName = "game-\(gameConfig.id)"
+            if UIImage(named: successName) != nil {
+                Image(successName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 280, height: 280)
+            } else if UIImage(named: fallbackName) != nil {
+                Image(fallbackName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 280, height: 280)
+            } else {
+                Text("🎉")
+                    .font(.system(size: 100))
+            }
+        }
+    }
     
+    /// Victory list: use dino-* (square poses); seesaw uses weigh-dino-* (wide poses).
     private func weighVictoryImage(item: WeighableItem, isHighlighted: Bool) -> some View {
         Group {
             if let name = item.imageName, UIImage(named: name) != nil {
@@ -448,7 +595,7 @@ struct WeighGameView: View {
             speechManager.speak(audioKey: dinosaursWeighed[endHighlightIndex].imageName ?? dinosaursWeighed[endHighlightIndex].name, fallbackText: dinosaursWeighed[endHighlightIndex].name)
             speechManager.onAudioFinished = { advanceWeighEndHighlight() }
         } else {
-            playWeighGoodJobAndCrowdThenDismiss()
+            endSequenceStep = 2
         }
     }
     
@@ -488,16 +635,39 @@ struct WeighGameView: View {
             selectedRightItem = nil
             isWeighing = false
             canSelectSecondDinosaur = false
-            // Weigh the Dinosaur: play "choose your first dinosaur" each round for young non-readers
-            if self.gameConfig.id == "weigh-dinosaur" {
-                self.isChooseFirstAudioPlaying = true
-                self.speechManager.onAudioFinished = {
-                    self.speechManager.onAudioFinished = nil
-                    self.isChooseFirstAudioPlaying = false
-                }
-                self.speechManager.speak("game-weigh-choose-your-first-dinosaur")
+            introWalkStep = -1
+            // Weigh the Dinosaur: walk the 9 dinosaurs (highlight + name audio), then play "choose your first dinosaur"
+            if self.gameConfig.id == "weigh-dinosaur", !self.displayItems.isEmpty {
+                self.introWalkStep = 0
+                self.startWeighIntroWalk()
             }
         }
+    }
+
+    /// Walk the current round's dinosaurs: speak name at introWalkStep, then advance; when done, play "choose your first dinosaur".
+    private func startWeighIntroWalk() {
+        guard introWalkStep >= 0, introWalkStep < displayItems.count else { return }
+        let item = displayItems[introWalkStep]
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.advanceWeighIntroWalk()
+        }
+        speechManager.speak(audioKey: item.imageName ?? item.name, fallbackText: item.name)
+    }
+
+    private func advanceWeighIntroWalk() {
+        speechManager.onAudioFinished = nil
+        introWalkStep += 1
+        if introWalkStep >= displayItems.count {
+            isChooseFirstAudioPlaying = true
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = nil
+                self.isChooseFirstAudioPlaying = false
+            }
+            speechManager.speak("game-choose-your-first-dinosaur")
+            return
+        }
+        startWeighIntroWalk()
     }
 }
 
@@ -505,41 +675,56 @@ struct WeighGameView: View {
 
 struct ItemCard: View {
     let item: WeighableItem
+    /// When set (e.g. weigh-dino-* for Weigh the Dinosaur), use this instead of item.imageName.
+    var displayImageName: String? = nil
     let isSelected: Bool
     let isDisabled: Bool
+    /// When true, show accent border for intro walk (e.g. weigh-dinosaur introducing each dinosaur).
+    var isIntroHighlighted: Bool = false
     let onTap: () -> Void
+    
+    /// Grid cell image size; compact so seesaw fits on screen.
+    private let imageSize: CGFloat = 96
     
     var body: some View {
         Button(action: onTap) {
             VStack(spacing: 6) {
-                if let imageName = item.imageName {
+                if let imageName = displayImageName ?? item.imageName {
                     Image(imageName)
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 88, height: 88)
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: imageSize, height: imageSize)
+                        .clipped()
                 } else {
                     Text(item.emoji)
                         .font(.system(size: 60))
+                        .frame(width: imageSize, height: imageSize)
                 }
                 if isSelected {
                     Text(item.name)
                         .font(.caption)
                         .foregroundColor(.primary)
                         .multilineTextAlignment(.center)
-                        .lineLimit(2)
+                        .lineLimit(3)
+                        .minimumScaleFactor(0.65)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
         }
-        .padding(10)
+        .padding(5)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(isSelected ? Color.blue.opacity(0.3) : Color.gray.opacity(0.1))
+                .fill(isSelected ? Color.blue.opacity(0.3) : (isIntroHighlighted ? Color.accentColor.opacity(0.08) : Color.clear))
         )
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 3)
+            Group {
+                if isSelected || isIntroHighlighted {
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(isSelected ? Color.blue : Color.accentColor, lineWidth: isIntroHighlighted ? 4 : 3)
+                }
+            }
         )
-        .opacity(isDisabled && !isSelected ? 0.5 : 1.0)
+        .opacity(isDisabled && !isSelected && !isIntroHighlighted ? 0.5 : 1.0)
         .disabled(isDisabled && !isSelected)
     }
 }
@@ -556,22 +741,20 @@ struct SpeedLinesView: View {
     }
 }
 
-// A-frame support under the seesaw (wider base, playground style)
+// A-frame support: legs meet at the pivot point (top) and diverge at the base, so the beam is clearly free to tip.
 struct SeesawSupportView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
-            // Left leg
+            // Left leg: pivots from top center, bottom sweeps left
             Rectangle()
                 .fill(Color.brown.opacity(0.9))
                 .frame(width: 12, height: 58)
-                .rotationEffect(.degrees(-22))
-                .offset(x: -48)
-            // Right leg
+                .rotationEffect(.degrees(-22), anchor: UnitPoint(x: 0.5, y: 0))
+            // Right leg: pivots from top center, bottom sweeps right
             Rectangle()
                 .fill(Color.brown.opacity(0.9))
                 .frame(width: 12, height: 58)
-                .rotationEffect(.degrees(22))
-                .offset(x: 48)
+                .rotationEffect(.degrees(22), anchor: UnitPoint(x: 0.5, y: 0))
             // Base bar (wider for stability)
             RoundedRectangle(cornerRadius: 3)
                 .fill(Color.brown)
@@ -580,48 +763,17 @@ struct SeesawSupportView: View {
     }
 }
 
-// MARK: - Dinosaur Weight Pool (for random selection)
-//
-// Weight chart — estimated adult body mass per species (for consistent seesaw ordering):
-// ┌─────────────────────┬──────────────────┬─────────────────────────────────────────┐
-// │ Species              │ Est. weight (kg) │ Notes (for future reference)             │
-// ├─────────────────────┼──────────────────┼─────────────────────────────────────────┤
-// │ Velociraptor         │ ~20              │ Small theropod; ~2 m long                │
-// │ Troodon              │ ~50              │ Small theropod; ~2.4 m long             │
-// │ Parasaurolophus      │ ~2,700           │ Hadrosaur; ~9–10 m long                  │
-// │ Corythosaurus        │ ~3,500           │ Hadrosaur; ~9–10 m long                    │
-// │ Iguanodon            │ ~4,500           │ Ornithopod; ~9–10 m (tie with Stegosaurus) │
-// │ Therizinosaurus      │ ~5,000           │ Therizinosaur; large; heavier than hadrosaurs │
-// │ Stegosaurus          │ ~4,500           │ Stegosaur; ~7–9 m (tie with Iguanodon)   │
-// │ Ankylosaurus         │ ~6,000           │ Ankylosaur; heavily armored               │
-// │ Spinosaurus          │ ~7,000           │ Spinosaurid; semi-aquatic; ~14–18 m      │
-// │ T-Rex                │ ~8,000           │ Large theropod; ~12 m long               │
-// │ Triceratops          │ ~9,000           │ Ceratopsian; ~8–9 m long                  │
-// │ Apatosaurus          │ ~25,000          │ Sauropod; ~21–23 m long                   │
-// └─────────────────────┴──────────────────┴─────────────────────────────────────────┘
+// MARK: - Dinosaur Weight (full catalog; estimated adult body mass kg for seesaw ordering)
 
-private struct WeighableDinosaurPoolEntry {
-    let name: String
-    let imageName: String
-    let emoji: String
-    /// Estimated adult body mass in kg (for ordering only; used to assign game weight 1–9).
-    let estimatedWeightKg: Double
-}
-
-private let allWeighableDinosaurs: [WeighableDinosaurPoolEntry] = [
-    WeighableDinosaurPoolEntry(name: "Velociraptor", imageName: "dino-velociraptor", emoji: "🦖", estimatedWeightKg: 20),
-    WeighableDinosaurPoolEntry(name: "Troodon", imageName: "dino-troodon", emoji: "🦉", estimatedWeightKg: 50),
-    WeighableDinosaurPoolEntry(name: "Parasaurolophus", imageName: "dino-parasaurolophus", emoji: "🦆", estimatedWeightKg: 2_700),
-    WeighableDinosaurPoolEntry(name: "Corythosaurus", imageName: "dino-corythosaurus", emoji: "🦆", estimatedWeightKg: 3_500),
-    WeighableDinosaurPoolEntry(name: "Edmontosaurus", imageName: "dino-edmontosaurus", emoji: "🦆", estimatedWeightKg: 4_000),
-    WeighableDinosaurPoolEntry(name: "Iguanodon", imageName: "dino-iguanodon", emoji: "🦎", estimatedWeightKg: 4_500),
-    WeighableDinosaurPoolEntry(name: "Therizinosaurus", imageName: "dino-therizinosaurus", emoji: "🦕", estimatedWeightKg: 5_000),
-    WeighableDinosaurPoolEntry(name: "Stegosaurus", imageName: "dino-stegosaurus", emoji: "🦎", estimatedWeightKg: 4_500),
-    WeighableDinosaurPoolEntry(name: "Ankylosaurus", imageName: "dino-ankylosaurus", emoji: "🛡️", estimatedWeightKg: 6_000),
-    WeighableDinosaurPoolEntry(name: "Spinosaurus", imageName: "dino-spinosaurus", emoji: "🦖", estimatedWeightKg: 7_000),
-    WeighableDinosaurPoolEntry(name: "T-Rex", imageName: "dino-trex", emoji: "🦖", estimatedWeightKg: 8_000),
-    WeighableDinosaurPoolEntry(name: "Triceratops", imageName: "dino-triceratops", emoji: "🦏", estimatedWeightKg: 9_000),
-    WeighableDinosaurPoolEntry(name: "Apatosaurus", imageName: "dino-apatosaurus", emoji: "🦕", estimatedWeightKg: 25_000),
+/// Estimated adult body mass in kg per dinosaur id (1–54). Used to order the 9 chosen dinosaurs by weight and assign rank.
+private let dinosaurEstimatedWeightKgById: [Int: Double] = [
+    1: 8_000,   2: 9_000,   3: 4_500,   4: 20,      5: 5_000,   6: 7_000,   7: 25_000,  8: 6_000,
+    9: 3_500,   10: 2_700,  11: 4_500,  12: 50,     13: 4_000,  14: 15_000, 15: 100,    16: 400,
+    17: 450,    18: 2_500,  19: 0.5,    20: 0.5,    21: 70_000, 22: 2_000,  23: 35_000, 24: 1_000,
+    25: 3_000,  26: 3,      27: 70,     28: 15_000, 29: 25,     30: 0.5,    31: 13_000, 32: 2_500,
+    33: 1,      34: 0.5,    35: 6_000,  36: 500,    37: 0.5,    38: 20,     39: 2_000,  40: 15_000,
+    41: 1_500,  42: 2_000,  43: 40,     44: 18_000, 45: 2_000,  46: 3_000,  47: 3_500,  48: 3_000,
+    49: 40,     50: 80,     51: 3_000,  52: 1_000,  53: 2_500,  54: 3_000,
 ]
 
 // MARK: - Pterosaur Weight Pool (for Weigh the Pterosaur)
@@ -658,30 +810,42 @@ struct WeighGameConfigs {
     )
 
     /// Returns randomized items for the given weigh game id (weigh-dinosaur or weigh-pterosaur), or [] for template configs. Used at game start and each new round.
-    static func randomizedItems(forId id: String) -> [WeighableItem] {
+    /// For weigh-dinosaur, pass excludingDinosaurIds (ids already weighed this game) so each round gets 9 new dinosaurs with no repeat use.
+    static func randomizedItems(forId id: String, excludingDinosaurIds: Set<Int> = []) -> [WeighableItem] {
         switch id {
-        case "weigh-dinosaur": return makeRandomDinosaurItems()
+        case "weigh-dinosaur": return makeRandomDinosaurItems(excluding: excludingDinosaurIds)
         case "weigh-pterosaur": return makeRandomPterosaurItems()
         default: return []
         }
     }
 
-    /// Returns 9 dinosaurs chosen at random from the pool, ordered by estimated weight. Used at game start and each new round.
-    static func makeRandomDinosaurItems() -> [WeighableItem] {
-        let chosen = allWeighableDinosaurs.shuffled().prefix(9).sorted { $0.estimatedWeightKg < $1.estimatedWeightKg }
-        var rank = 0
-        var prevKg: Double = -1
-        return chosen.enumerated().map { index, entry in
-            if entry.estimatedWeightKg > prevKg {
-                rank += 1
-                prevKg = entry.estimatedWeightKg
-            }
-            return WeighableItem(
-                id: index + 1,
-                name: entry.name,
-                imageName: entry.imageName,
-                emoji: entry.emoji,
-                weight: rank,
+    /// Returns 9 dinosaurs: one per clade (9 clades), shuffled for random grid order. Excludes ids already used this game.
+    static func makeRandomDinosaurItems(excluding alreadyUsedIds: Set<Int> = []) -> [WeighableItem] {
+        let cladeById = MatchingGameConfigs.dinosaurCladeById
+        let pool = MatchingGameConfigs.allDinosaurs.filter { d in
+            d.imageName != nil && d.imageName!.hasPrefix("dino-") && dinosaurEstimatedWeightKgById[d.id] != nil && !alreadyUsedIds.contains(d.id)
+        }
+        let byClade = Dictionary(grouping: pool) { cladeById[$0.id] ?? .theropod }
+        var chosen: [Dinosaur] = []
+        for clade in DinoClade.allCases {
+            guard let candidates = byClade[clade], !candidates.isEmpty else { continue }
+            chosen.append(candidates.randomElement()!)
+        }
+        while chosen.count < 9 {
+            let extras = pool.filter { d in !chosen.contains(where: { $0.id == d.id }) }
+            guard let one = extras.randomElement() else { break }
+            chosen.append(one)
+        }
+        // Assign ranks by weight order (lightest=1, heaviest=9), then shuffle for random grid display
+        let sortedByWeight = chosen.sorted { (dinosaurEstimatedWeightKgById[$0.id] ?? 0) < (dinosaurEstimatedWeightKgById[$1.id] ?? 0) }
+        let rankById = Dictionary(uniqueKeysWithValues: sortedByWeight.enumerated().map { ($0.element.id, $0.offset + 1) })
+        return chosen.shuffled().map { d in
+            WeighableItem(
+                id: d.id,
+                name: d.name,
+                imageName: d.imageName,
+                emoji: d.icon,
+                weight: rankById[d.id] ?? 1,
                 category: "dinosaur"
             )
         }

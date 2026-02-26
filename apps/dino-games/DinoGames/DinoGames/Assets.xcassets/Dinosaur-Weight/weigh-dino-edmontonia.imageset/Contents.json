@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "game-weigh-the-dinosaur-240.png",
+      "filename" : "weigh-dino-edmontonia-340.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "game-weigh-the-dinosaur-320.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
