@@ -15,8 +15,9 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | `Feedback/good-job-you-got-them-all.m4a` | Victory (multiple games) |
 | `Feedback/crowd-cheering.m4a` | Victory (multiple games) |
 | `Feedback/you-did-it.m4a` | Balance game: balanced / ran out |
-| `Feedback/pick-a-dinosaur-first.m4a` | Matching (Land): tap before selecting dinosaur |
+| `Feedback/pick-a-dinosaur-first.m4a` | Matching (Land): tap before selecting dinosaur; Measure the Dinosaur!: tap right before left |
 | `Feedback/pick-a-pterosaur-first.m4a` | Matching (Air): tap before selecting pterosaur |
+| `Feedback/you-cant-be-serious-that-will-take-forever.m4a` | Measure the Dinosaur!: adding a dinosaur would need >5 to fill remaining height (keeps round short) |
 | `Feedback/pick-another-one.m4a` | Matching: already-matched creature tapped |
 | `Feedback/is-heavier.m4a` | Weigh game: “X is heavier” |
 | `Feedback/they-both-weigh-about-the-same.m4a` | Weigh game: same weight |
@@ -66,6 +67,8 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | `Games/game-balance-choose-a-heavy-pterosaur.m4a` | Balance (Air): “Choose a heavy pterosaur” |
 | `Games/game-intro-weigh.m4a` | Weigh the Dinosaur intro |
 | `Games/game-intro-weigh-pterosaur.m4a` | Weigh the Pterosaur intro |
+| `Games/game-choose-your-first-dinosaur.m4a` | Weigh / Measure: “Choose your first dinosaur” (shared) |
+| `Games/game-choose-your-second-dinosaur.m4a` | Weigh / Measure: “Choose your second dinosaur” (shared) |
 | `Games/game-can-you-match-each-dinosaur.m4a` | Match the Dinosaur intro |
 | `Games/game-can-you-match-each-pterosaur.m4a` | Match the Pterosaur intro |
 | `Games/game-racer-choose-your-first-dinosaur-to-race.m4a` | Racing: first dino |

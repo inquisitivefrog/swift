@@ -18,6 +18,52 @@ struct RoundQuestion: Identifiable {
     let options: [Dinosaur] // 3 dinosaurs: 1 correct + 2 decoys (all unique)
 }
 
+// MARK: - Name That Dinosaur used-creature persistence (avoid repeat in future games, acknowledge in victory block)
+
+private enum NameThatDinosaurStorage {
+    static let usedCreatureIdsKey = "nameThatDinosaurUsedCreatureIds"
+    static let usedCladeRawValuesKey = "nameThatDinosaurUsedCladeRawValues"
+    static let cladeCount = 9 // DinoClade cases; reset after all used to maximize variety
+
+    static func loadUsedCreatureIds() -> Set<Int> {
+        guard let array = UserDefaults.standard.array(forKey: usedCreatureIdsKey) as? [Int] else { return [] }
+        return Set(array)
+    }
+
+    static func appendUsedCreatureIds(_ ids: [Int]) {
+        var current = loadUsedCreatureIds()
+        current.formUnion(ids)
+        UserDefaults.standard.set(Array(current), forKey: usedCreatureIdsKey)
+    }
+
+    static func clearIfNeeded(availableCount: Int) {
+        if availableCount < 3 {
+            UserDefaults.standard.removeObject(forKey: usedCreatureIdsKey)
+        }
+    }
+
+    /// Clades already used in recent games; not used again until all 9 have been used (then cleared).
+    static func loadUsedCladeRawValues() -> Set<String> {
+        guard let array = UserDefaults.standard.array(forKey: usedCladeRawValuesKey) as? [String] else { return [] }
+        return Set(array)
+    }
+
+    static func appendUsedCladeRawValues(_ rawValues: [String]) {
+        var current = loadUsedCladeRawValues()
+        current.formUnion(rawValues)
+        UserDefaults.standard.set(Array(current), forKey: usedCladeRawValuesKey)
+        if current.count >= cladeCount {
+            UserDefaults.standard.removeObject(forKey: usedCladeRawValuesKey)
+        }
+    }
+
+    static func clearUsedCladesIfAllUsed() {
+        if loadUsedCladeRawValues().count >= cladeCount {
+            UserDefaults.standard.removeObject(forKey: usedCladeRawValuesKey)
+        }
+    }
+}
+
 // MARK: - Game Configuration
 
 struct GuessGameConfig {
@@ -299,44 +345,80 @@ struct GuessGameView: View {
         }
     }
     
-    // MARK: - End sequence (3 rows: image left, name right → highlight each + name audio → good-job + crowd → dismiss)
-    
+    /// Fixed row height and scroll height so exactly 4 full rows are visible (no 4.5 or 5). Includes top/bottom padding.
+    private let victoryRowHeight: CGFloat = 92
+    private var victoryListVisibleHeight: CGFloat { 16 + 4 * victoryRowHeight + 3 * 12 + 16 }
+
+    // MARK: - End sequence: same as Dino Diets / Match the Dinosaur — top half list (highlight + name audio), bottom half "Good job!" then success image (centered, no wrapper), then good-job + crowd and dismiss
     private var guessGameEndSequenceView: some View {
-        VStack(spacing: 16) {
-            Text("Good job!")
-                .font(.title)
-                .fontWeight(.semibold)
-                .padding(.top, 8)
-                .padding(.bottom, 8)
-            VStack(spacing: 12) {
-                ForEach(Array(endSequenceDinosaurs.enumerated()), id: \.element.id) { index, dinosaur in
-                    let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                    HStack(spacing: 16) {
-                        guessGameEndSequenceImage(dinosaur: dinosaur, isHighlighted: isHighlighted)
-                        Text(dinosaur.name)
-                            .font(.title2)
-                            .fontWeight(isHighlighted ? .semibold : .regular)
-                            .foregroundColor(.primary)
-                            .multilineTextAlignment(.leading)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.8)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .opacity(isHighlighted ? 1.0 : 0.5)
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                // Top half: scrolling list of the 3 dinosaurs, highlight + name audio, scroll to center — fixed height so ~4 visible (consistent across games)
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        VStack(spacing: 12) {
+                            ForEach(Array(endSequenceDinosaurs.enumerated()), id: \.element.id) { index, dinosaur in
+                                let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                                HStack(spacing: 16) {
+                                    guessGameEndSequenceImage(dinosaur: dinosaur, isHighlighted: isHighlighted)
+                                    Text(dinosaur.name)
+                                        .font(.title2)
+                                        .fontWeight(isHighlighted ? .semibold : .regular)
+                                        .foregroundColor(.primary)
+                                        .multilineTextAlignment(.leading)
+                                        .lineLimit(2)
+                                        .minimumScaleFactor(0.8)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .opacity(isHighlighted ? 1.0 : 0.5)
+                                }
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                                .frame(height: victoryRowHeight)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                                )
+                                .id(index)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.vertical, 16)
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
-                    )
+                    .frame(height: victoryListVisibleHeight)
+                    .onChange(of: endHighlightIndex) { _, newIndex in
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            proxy.scrollTo(newIndex, anchor: .center)
+                        }
+                    }
                 }
+                .frame(maxWidth: .infinity)
+
+                // Bottom half: during walk show "Good job!"; after walk show success image only (centered, no wrapper)
+                Group {
+                    if endSequenceStep == 2 {
+                        guessGameSuccessImageView
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    playGoodJobAndCrowdThenDismiss()
+                                }
+                            }
+                    } else {
+                        Spacer()
+                            .frame(minHeight: 16)
+                        Text("Good job!")
+                            .font(.title)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.primary)
+                        Spacer()
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .padding(.horizontal)
-            Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
@@ -344,10 +426,39 @@ struct GuessGameView: View {
             endSequenceStep = 1
             endHighlightIndex = 0
             if endSequenceDinosaurs.isEmpty {
-                playGoodJobAndCrowdThenDismiss()
+                endSequenceStep = 2
             } else {
                 speechManager.speak(audioKey: endSequenceDinosaurs[0].imageName ?? endSequenceDinosaurs[0].name, fallbackText: endSequenceDinosaurs[0].name)
                 speechManager.onAudioFinished = { advanceEndHighlight() }
+            }
+        }
+    }
+
+    /// Success image only (no card wrapper); centered in victory bottom half. Same pattern as Match the Dinosaur / Dino Diets.
+    private var guessGameSuccessImageView: some View {
+        ZStack {
+            guessGameSuccessImageContent
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var guessGameSuccessImageContent: some View {
+        Group {
+            let successName = "game-\(gameConfig.id)-success"
+            let fallbackName = "game-\(gameConfig.id)"
+            if UIImage(named: successName) != nil {
+                Image(successName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 180, height: 180)
+            } else if UIImage(named: fallbackName) != nil {
+                Image(fallbackName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 180, height: 180)
+            } else {
+                Text("🎉")
+                    .font(.system(size: 100))
             }
         }
     }
@@ -381,12 +492,20 @@ struct GuessGameView: View {
             speechManager.speak(audioKey: endSequenceDinosaurs[endHighlightIndex].imageName ?? endSequenceDinosaurs[endHighlightIndex].name, fallbackText: endSequenceDinosaurs[endHighlightIndex].name)
             speechManager.onAudioFinished = { advanceEndHighlight() }
         } else {
-            playGoodJobAndCrowdThenDismiss()
+            endSequenceStep = 2
         }
     }
     
     private func playGoodJobAndCrowdThenDismiss() {
         endSequenceStep = 2
+        // Remember the 3 dinosaurs and their clades so they are not repeated in future games and are acknowledged in the victory block (already shown in end sequence).
+        if gameConfig.id == "name-that-dinosaur" {
+            let usedIds = gameConfig.rounds.map { $0.correctAnswerId }
+            NameThatDinosaurStorage.appendUsedCreatureIds(usedIds)
+            let cladeById = MatchingGameConfigs.dinosaurCladeById
+            let usedCladeRawValues = usedIds.compactMap { cladeById[$0]?.rawValue }
+            NameThatDinosaurStorage.appendUsedCladeRawValues(usedCladeRawValues)
+        }
         let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
         let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
         if let u1 = goodJobURL, let u2 = crowdURL {
@@ -562,7 +681,8 @@ struct SourceFootprintsHintsView: View {
 
 /// Footprint image sets: footprint-{clade}-{size} (scale: small, medium, large within each clade).
 /// Use imageNameForAsset for lookup; asset names use "therapod" (common misspelling) for theropod.
-private enum DinoClade: String, CaseIterable {
+/// Separate from MatchingGameView.DinoClade (9 clades for Match the Dinosaur); this is the 4-clade set for Dino Footprints.
+private enum FootprintClade: String, CaseIterable {
     case theropod
     case sauropod
     case hadrosaur
@@ -584,7 +704,7 @@ private enum DinoSize: String, CaseIterable {
 }
 
 /// Map of dinosaur slug (dino-* suffix) → (clade, presumed footprint size). Only dinosaurs listed here are playable in Dino Footprints. Add new species here when you add them to the app.
-private let footprintDinosaurMap: [String: (clade: DinoClade, size: DinoSize)] = [
+private let footprintDinosaurMap: [String: (clade: FootprintClade, size: DinoSize)] = [
     // Theropods
     "trex": (.theropod, .large),
     "velociraptor": (.theropod, .small),
@@ -621,7 +741,7 @@ private let footprintDinosaurMap: [String: (clade: DinoClade, size: DinoSize)] =
     "pachycephalosaurus": (.hadrosaur, .small),
 ]
 
-private func clade(forDinosaurSlug slug: String) -> DinoClade? {
+private func clade(forDinosaurSlug slug: String) -> FootprintClade? {
     footprintDinosaurMap[slug]?.clade
 }
 
@@ -632,31 +752,50 @@ private func size(forDinosaurSlug slug: String) -> DinoSize? {
 // MARK: - Game Configurations
 
 struct GuessGameConfigs {
-    // Create a random game configuration with 3 rounds (identify by silhouette = Name that Dinosaur)
+    // Create a random game configuration with 3 rounds (identify by silhouette = Name that Dinosaur).
+    // Rules: (1) choose 3 dinosaur clades at random; (2) choose 1 dinosaur from each clade; (3) exclude dinosaurs already used in previous games (persisted); victory block acknowledges the 3.
     static var nameThatDinosaur: GuessGameConfig {
-        // Get all available dinosaurs
         let allDinosaurs = MatchingGameConfigs.allDinosaurs
-        
-        // Ensure we have at least 3 dinosaurs
         guard allDinosaurs.count >= 3 else {
             fatalError("Need at least 3 dinosaurs for guess game, but only have \(allDinosaurs.count)")
         }
-        
-        // Pick 3 unique dinosaurs to use as questions (only those with silhouette assets so the question image displays).
-        // Use an explicit allowlist so every dinosaur with a silhouette asset (including Apatosaurus) is included.
-        let silhouetteSlugs: Set<String> = [
-            "ankylosaurus", "apatosaurus", "corythosaurus", "iguanodon", "pachycephalosaurus",
-            "parasaurolophus", "spinosaurus", "stegosaurus", "therizinosaurus", "trex",
-            "triceratops", "troodon", "velociraptor"
-        ]
-        let withSilhouette = allDinosaurs.filter { d in
+
+        // Pool: dinosaurs with dino- image (for silhouette asset name). Exclude previously used so they are not repeated in future games.
+        var usedIds = NameThatDinosaurStorage.loadUsedCreatureIds()
+        var pool = allDinosaurs.filter { d in
             guard let imageName = d.imageName, imageName.hasPrefix("dino-") else { return false }
-            let base = imageName.replacingOccurrences(of: "dino-", with: "").lowercased()
-            return silhouetteSlugs.contains(base)
+            return !usedIds.contains(d.id)
         }
-        let pool = withSilhouette.count >= 3 ? withSilhouette : allDinosaurs
-        let shuffledAll = pool.shuffled()
-        let questionDinosaurs = Array(shuffledAll.prefix(3))
+        if pool.count < 3 {
+            NameThatDinosaurStorage.clearIfNeeded(availableCount: pool.count)
+            usedIds = []
+            pool = allDinosaurs.filter { d in
+                guard let imageName = d.imageName, imageName.hasPrefix("dino-") else { return false }
+                return true
+            }
+        }
+        let questionPool = pool.count >= 3 ? pool : allDinosaurs
+
+        // Pick 3 clades at random; prefer clades not yet used in recent games (maximize variety across 9 clades).
+        let cladeById = MatchingGameConfigs.dinosaurCladeById
+        let byClade = Dictionary(grouping: questionPool) { cladeById[$0.id] ?? .theropod }
+        let allCladesWithDinos = byClade.keys.filter { !(byClade[$0] ?? []).isEmpty }
+        var usedClades = NameThatDinosaurStorage.loadUsedCladeRawValues()
+        if usedClades.count >= NameThatDinosaurStorage.cladeCount {
+            NameThatDinosaurStorage.clearUsedCladesIfAllUsed()
+            usedClades = []
+        }
+        let availableClades = allCladesWithDinos.filter { !usedClades.contains($0.rawValue) }
+        let cladesToUse = (availableClades.count >= 3 ? availableClades : allCladesWithDinos).shuffled()
+        let questionDinosaurs: [Dinosaur]
+        if cladesToUse.count >= 3 {
+            questionDinosaurs = (0..<3).compactMap { i in
+                let clade = cladesToUse[i]
+                return (byClade[clade] ?? []).shuffled().first
+            }
+        } else {
+            questionDinosaurs = Array(questionPool.shuffled().prefix(3))
+        }
         guard questionDinosaurs.count == 3,
               Set(questionDinosaurs.map { $0.id }).count == 3 else {
             fatalError("Need at least 3 unique dinosaurs for guess game")
@@ -767,11 +906,11 @@ struct GuessGameConfigs {
         guard all.count >= 3 else {
             fatalError("Need at least 3 dinosaurs in footprintDinosaurMap for Dino Footprints, but only have \(all.count)")
         }
-        let byClade: [DinoClade: [Dinosaur]] = Dictionary(grouping: all) { d -> DinoClade in
+        let byClade: [FootprintClade: [Dinosaur]] = Dictionary(grouping: all) { d -> FootprintClade in
             let slug = d.imageName?.replacingOccurrences(of: "dino-", with: "").lowercased() ?? ""
             return footprintDinosaurMap[slug]!.clade
         }
-        let cladesWithOneOrMore = DinoClade.allCases.filter { (byClade[$0] ?? []).count >= 1 }
+        let cladesWithOneOrMore = FootprintClade.allCases.filter { (byClade[$0] ?? []).count >= 1 }
         guard cladesWithOneOrMore.count >= 3 else {
             fatalError("Need at least 3 clades with 1+ dinosaur for Dino Footprints (have \(cladesWithOneOrMore.count))")
         }

@@ -159,6 +159,10 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         if normalized.hasPrefix("clue-") {
             return "Clues/\(normalized)"
         }
+        // Dino Diets!: diet trait audio (Audio/Diets/diet-{slug}.m4a), e.g. diet-herbivore, diet-carnivore
+        if normalized.hasPrefix("diet-") {
+            return "Diets/\(normalized)"
+        }
         
         // Map common phrases to file names (matching your recorded files)
         switch normalized {
@@ -233,18 +237,26 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Feedback/is-heavier"
         case "they-both-weigh-about-the-same", "they both weigh about the same":
             return "Feedback/they-both-weigh-about-the-same"
+        case "they-are-about-the-same-height", "they are about the same height":
+            return "Feedback/they-are-about-the-same-height"
+        case "you-cannot-choose-that-one-now", "you cannot choose that one now":
+            return "Feedback/you-cannot-choose-that-one-now"
+        case "thats-too-small-to-see", "that's too small to see", "too small to see":
+            return "Feedback/thats-too-small-to-see"
 
         // Dinosaur characteristics (Dino-Characteristics folder)
         case "teeth":
             return "\(characteristicSubfolder)/teeth"
-        case "footprints":
-            return "Dino-Characteristics/footprints"
         case "frill":
             return "Dino-Characteristics/frill"
         case "horns":
             return "Dino-Characteristics/horns"
-        case "spikes":
-            return "Dino-Characteristics/spikes"
+        case "spikes", "plates":
+            return "Dino-Characteristics/plates"
+        case "tail-spikes", "tail spikes":
+            return "Dino-Characteristics/tail-spikes"
+        case "club-tail", "club tail", "tail-club", "tail club":
+            return "Dino-Characteristics/tail-club"
         case "claws", "claw":
             return "Dino-Characteristics/claws"
         case "toe-claw", "toe claw", "toe-claws", "toe claws":
@@ -255,6 +267,8 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Dino-Characteristics/long-claws"
         case "feathers":
             return "Dino-Characteristics/feathers"
+        case "proto-feathers", "proto feathers":
+            return "Dino-Characteristics/proto-feathers"
         case "sail":
             return "Dino-Characteristics/sail"
         case "swims":
@@ -263,14 +277,28 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "\(characteristicSubfolder)/long-neck"
         case "big":
             return "\(characteristicSubfolder)/big"
+        case "huge":
+            return "\(characteristicSubfolder)/huge"
         case "armor":
             return "Dino-Characteristics/armor"
-        case "club-tail", "club tail":
-            return "Dino-Characteristics/club-tail"
         case "crest":
             return "\(characteristicSubfolder)/crest"
         case "duck-bill", "duck bill":
             return "Dino-Characteristics/duck-bill"
+        case "beak", "parrot beak", "parrot-beak":
+            return "Dino-Characteristics/beak"
+        case "same-size", "same size":
+            return "Dino-Characteristics/same-size"
+        case "herbivore":
+            return "Dino-Characteristics/herbivore"
+        case "carnivore":
+            return "Dino-Characteristics/carnivore"
+        case "piscivore":
+            return "Dino-Characteristics/piscivore"
+        case "insectivore":
+            return "Dino-Characteristics/insectivore"
+        case "omnivore":
+            return "Dino-Characteristics/omnivore"
         case "long-crest", "long crest":
             return "\(characteristicSubfolder)/crest"
         case "thumb-spikes", "thumb spikes", "thumb-spike", "thumb spike":
@@ -279,15 +307,25 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Dino-Characteristics/smart"
         case "big-eyes", "big eyes":
             return "Dino-Characteristics/big-eyes"
+        case "two-feet", "two feet":
+            return "\(characteristicSubfolder)/two-feet"
+        case "four-feet", "four feet":
+            return "\(characteristicSubfolder)/four-feet"
+        case "long-tail", "long tail":
+            return "\(characteristicSubfolder)/long-tail"
+        case "dome-head", "dome head":
+            return "\(characteristicSubfolder)/dome-head"
+        case "long-snout", "long snout":
+            return "\(characteristicSubfolder)/long-snout"
+        case "croc-snout", "croc snout":
+            return "\(characteristicSubfolder)/croc-snout"
+        case "small":
+            return characteristicSubfolder == "Ptero-Characteristics" ? "Ptero-Characteristics/ptero-char-small" : "Dino-Characteristics/small"
         // Pterosaur-only characteristics (Ptero-Characteristics folder)
         case "wings":
             return "Ptero-Characteristics/wings"
-        case "small":
-            return "Ptero-Characteristics/ptero-char-small"  // ptero-char-small.m4a (avoids matching Find Mama clue-egg-size-small.m4a)
         case "no-teeth", "no teeth":
             return "Ptero-Characteristics/no-teeth"
-        case "long-tail", "long tail":
-            return "Ptero-Characteristics/long-tail"
         case "big-head", "big head":
             return "Ptero-Characteristics/big-head"
             
@@ -348,6 +386,8 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Feedback/wow-that-was-tricky"
         case "you-have-to-select-a-dinosaur-first", "you have to select a dinosaur first", "pick-a-dinosaur-first", "pick a dinosaur first":
             return "Feedback/pick-a-dinosaur-first"
+        case "you-cant-be-serious-that-will-take-forever", "you can't be serious that will take forever":
+            return "Feedback/you-cant-be-serious-that-will-take-forever"
         case "pick-a-pterosaur-first", "pick a pterosaur first":
             return "Feedback/pick-a-pterosaur-first"
         case "you-cannot-use-me-twice", "you cannot use me twice", "already matched", "pick-another-one", "pick another one":
@@ -363,6 +403,8 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Feedback/good-job-you-did-it"
         case "congratulations", "congratulations!":
             return "Feedback/congratulations"
+        case "congratulations-you-did-it", "congratulations you did it":
+            return "Feedback/congratulations-you-did-it"
 
         // Categories (Land / Sea / Air)
         // You currently placed these files in `Assets/Audio/Games/`:
@@ -375,6 +417,8 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Cover/cover-pterosaurs"
         
         // Game intro audio files
+        case "game-match-choose":
+            return "Games/game-match-choose"
         case "can-you-match-each-dinosaur", "can you match each dinosaur":
             return "Games/game-can-you-match-each-dinosaur"
         case "can-you-match-each-pterosaur", "can you match each pterosaur":
@@ -467,7 +511,12 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         case _ where normalized.hasPrefix("formation-name-"):
             let slug = String(normalized.dropFirst("formation-name-".count))
             return "Formations/\(slug)-formation"
-        // Dinosaurs: Audio/Dinosaurs/{key}.m4a for any dino-* key (e.g. dino-camarasaurus) so all dinosaur name files are used when present
+        // Dino-Characteristics: when key is dino-char-* (characteristic imageName), use Dino-Characteristics/{suffix} so tail-spike.m4a / tail-club.m4a etc. are found
+        case _ where normalized.hasPrefix("dino-char-"):
+            var suffix = String(normalized.dropFirst("dino-char-".count))
+            if suffix == "tail-spikes" { suffix = "tail-spike" } // audio file is tail-spike.m4a
+            return "\(characteristicSubfolder)/\(suffix)"
+        // Dinosaurs: Audio/Dinosaurs/{key}.m4a for any other dino-* key (e.g. dino-camarasaurus) for dinosaur name audio
         case _ where normalized.hasPrefix("dino-"):
             return "Dinosaurs/\(normalized)"
         // Pterosaurs: Audio/Pterosaurs/{key}.m4a for any ptero-* key (e.g. ptero-pteranodon) so Match the Pterosaur uses recorded name audio
@@ -503,10 +552,7 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         // Stop any current audio with fade-out to prevent clicks
         stopCurrentAudio()
         
-        // Small delay to let stop complete and prevent HALC overload; shorter when chaining clips
-        let delay: TimeInterval = chainDelay ? 0.03 : 0.1
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-            // Try to play recorded audio first (use same resolution as urlForAudio, including subdirectory lookup)
+        let playBlock = {
             if let audioPath = self.audioFilePath(for: text) {
                 let foundURL = self.resolveURL(forPath: audioPath)
                 if let url = foundURL {
@@ -517,10 +563,14 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
                     self.startSpeaking(text)
                 }
             } else {
-                // No mapping found, use TTS
                 print("🔊 No mapping for '\(text)', using TTS")
                 self.startSpeaking(text)
             }
+        }
+        if chainDelay {
+            playBlock()
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { playBlock() }
         }
     }
     
@@ -533,13 +583,17 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         }
         lastPlayTime = now
         stopCurrentAudio()
-        let delay: TimeInterval = chainDelay ? 0.03 : 0.1
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+        let playBlock = {
             if let url = self.urlForAudio(key: audioKey) {
                 self.playAudioFile(url: url, fallbackSpeakText: fallbackText)
             } else {
                 self.startSpeaking(fallbackText)
             }
+        }
+        if chainDelay {
+            playBlock()
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { playBlock() }
         }
     }
     
@@ -765,7 +819,9 @@ struct MatchingGameView: View {
         // New random config each round; exclude creatures already used so no reuse across rounds
         currentConfig = (currentConfig.id == "match-the-pterosaur")
             ? MatchingGameConfigs.pterosaurFeatures(excluding: usedCreatureIds)
-            : MatchingGameConfigs.dinoFeatures(excluding: usedCreatureIds)
+            : (currentConfig.id == "match-the-diet"
+                ? MatchingGameConfigs.dinoDietFeatures(excluding: usedCreatureIds)
+                : MatchingGameConfigs.dinoFeatures(excluding: usedCreatureIds))
         speechManager.characteristicSubfolder = currentConfig.id == "match-the-pterosaur" ? "Ptero-Characteristics" : "Dino-Characteristics"
         resetGameState()
         // Run intro walk for this round (dinosaurs then traits). Delay so rate limiting doesn't skip the first speak and leave the first creature stuck highlighted.
@@ -778,7 +834,7 @@ struct MatchingGameView: View {
         NavigationView {
             Group {
                 if showVictory {
-                    // Victory: horizontal row of 3 creatures + good-job-you-got-them-all audio
+                    // Victory: top-half scrolling list of dinosaurs (same mechanism as Weigh the Dinosaurs), then good-job + crowd
                     victoryView
                 } else {
                     mainGameView
@@ -807,51 +863,73 @@ struct MatchingGameView: View {
         } // End NavigationView
     } // End body
     
-    // MARK: - Victory: vertical list of all 9 dinosaurs (3 per round × 3 rounds), scrollable; highlight each + name audio, then good-job + crowd
+    /// Fixed row height and scroll height so exactly 4 full rows are visible (no 4.5 or 5). Includes top/bottom padding.
+    private let victoryRowHeight: CGFloat = 92
+    private var victoryListVisibleHeight: CGFloat { 16 + 4 * victoryRowHeight + 3 * 12 + 16 }
+
+    // MARK: - Victory: scrolling list in top half (highlight + name audio); bottom half shows "Good job!" then success image (no clear, image centered, no wrapper); then audio and dismiss
     private var victoryView: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                VStack(spacing: 12) {
-                    ForEach(Array(victoryDinosaurs.enumerated()), id: \.offset) { index, dinosaur in
-                        let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                        HStack(spacing: 16) {
-                            matchingEndImage(dinosaur: dinosaur, isHighlighted: isHighlighted)
-                            Text(dinosaur.name)
-                                .font(.title2)
-                                .fontWeight(isHighlighted ? .semibold : .regular)
-                                .foregroundColor(.primary)
-                                .multilineTextAlignment(.leading)
-                                .lineLimit(2)
-                                .minimumScaleFactor(0.8)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .opacity(isHighlighted ? 1.0 : 0.5)
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                // Top half: scrolling list of dinosaurs (9 total), highlight + name audio, scroll to center — fixed height so ~4 visible (consistent across games)
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        VStack(spacing: 12) {
+                            ForEach(Array(victoryDinosaurs.enumerated()), id: \.offset) { index, dinosaur in
+                                let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                                HStack(spacing: 16) {
+                                    matchingEndImage(dinosaur: dinosaur, isHighlighted: isHighlighted)
+                                    Text(dinosaur.name)
+                                        .font(.title2)
+                                        .fontWeight(isHighlighted ? .semibold : .regular)
+                                        .foregroundColor(.primary)
+                                        .multilineTextAlignment(.leading)
+                                        .lineLimit(3)
+                                        .minimumScaleFactor(0.5)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .opacity(isHighlighted ? 1.0 : 0.5)
+                                }
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                                .frame(height: victoryRowHeight)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                                )
+                                .id(index)
+                            }
                         }
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
-                        )
-                        .id(index)
+                        .padding(.horizontal)
+                        .padding(.vertical, 16)
                     }
-                    // Good job! shown after the list so it stays visible when scrolling (9 dinosaurs)
-                    Text("Good job!")
-                        .font(.title)
-                        .fontWeight(.semibold)
-                        .padding(.top, 16)
-                        .padding(.bottom, 8)
+                    .frame(height: victoryListVisibleHeight)
+                    .onChange(of: endHighlightIndex) { _, newIndex in
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            proxy.scrollTo(newIndex, anchor: .center)
+                        }
+                    }
                 }
-                .padding(.horizontal)
-                .padding(.vertical, 16)
-            }
-            .onChange(of: endHighlightIndex) { _, newIndex in
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    proxy.scrollTo(newIndex, anchor: .center)
+                .frame(maxWidth: .infinity)
+
+                // Bottom half: during walk show empty space; after walk show success image only (centered, no wrapper)
+                Group {
+                    if endSequenceStep == 2 {
+                        successImageView
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    playMatchingGoodJobAndCrowdThenDismiss()
+                                }
+                            }
+                    } else {
+                        Spacer()
+                    }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -860,13 +938,54 @@ struct MatchingGameView: View {
             endSequenceStep = 1
             endHighlightIndex = 0
             if victoryDinosaurs.isEmpty {
-                playMatchingGoodJobAndCrowdThenDismiss()
+                endSequenceStep = 2 // Skip walk if no dinosaurs, go straight to success image
             } else {
                 let d = victoryDinosaurs[0]
                 speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
                 speechManager.onAudioFinished = { advanceMatchingEndHighlight() }
             }
         }
+    }
+
+    /// Success image only (no card wrapper); used in victory bottom half, centered.
+    private var successImageView: some View {
+        ZStack {
+            successImageContent
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var successImageContent: some View {
+        Group {
+            let successImageName = successImageNameForGame()
+            if let imageName = successImageName, UIImage(named: imageName) != nil {
+                Image(imageName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 280, height: 280)
+            } else {
+                let fallbackImageName = currentConfig.id == "match-the-diet" ? "game-dino-diets" : "game-\(currentConfig.id)"
+                if UIImage(named: fallbackImageName) != nil {
+                    Image(fallbackImageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 280, height: 280)
+                } else {
+                    Text("🎉")
+                        .font(.system(size: 100))
+                }
+            }
+        }
+    }
+    
+    // Get success image name for current game (e.g., "game-dino-diets-success")
+    private func successImageNameForGame() -> String? {
+        // Try game-specific success image (e.g., game-dino-diets-success)
+        if currentConfig.id == "match-the-diet" {
+            return "game-dino-diets-success"
+        }
+        // For other games, construct from config id (e.g., match-the-dinosaur -> game-match-the-dinosaur-success)
+        return "game-\(currentConfig.id)-success"
     }
 
     private func matchingEndImage(dinosaur: Dinosaur, isHighlighted: Bool) -> some View {
@@ -899,15 +1018,30 @@ struct MatchingGameView: View {
             speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
             speechManager.onAudioFinished = { advanceMatchingEndHighlight() }
         } else {
-            playMatchingGoodJobAndCrowdThenDismiss()
+            // Walk complete: transition to success card
+            endSequenceStep = 2
         }
     }
 
     private func playMatchingGoodJobAndCrowdThenDismiss() {
         endSequenceStep = 2
+        // Dino Diets!: after walking the list of dinosaurs used, play only crowd-cheering then return to level. Others: good-job + crowd.
+        let isDinoDiets = currentConfig.id == "match-the-diet"
         let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
         let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
-        if let u1 = goodJobURL, let u2 = crowdURL {
+        if isDinoDiets {
+            if let u = crowdURL {
+                speechManager.onAudioFinished = {
+                    self.speechManager.onAudioFinished = nil
+                    self.isAudioPlaying = false
+                    self.isPresented = false
+                }
+                speechManager.playAudioFile(url: u)
+            } else {
+                isAudioPlaying = false
+                isPresented = false
+            }
+        } else if let u1 = goodJobURL, let u2 = crowdURL {
             speechManager.playTogether(url1: u1, url2: u2) {
                 self.speechManager.onAudioFinished = nil
                 self.isAudioPlaying = false
@@ -928,9 +1062,9 @@ struct MatchingGameView: View {
     
     private var mainGameView: some View {
             VStack(spacing: 20) {
-                // Title
+                // Title (use gameConfig so Dino Diets! always shows "Dino Diets!" not config.title)
                 VStack(spacing: 4) {
-                    Text(currentConfig.title)
+                    Text(gameConfig.id == "match-the-diet" ? "Dino Diets!" : currentConfig.title)
                     .font(.title2)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
@@ -961,9 +1095,9 @@ struct MatchingGameView: View {
                         }
                     }
                     
-                    // Right: Special Features (Characteristics / Traits)
+                    // Right: Diets (for Dino Diets!) or Special Feature (Match the Dinosaur / Pterosaur)
                     VStack(spacing: 15) {
-                        Text("Special Feature")
+                        Text(currentConfig.id == "match-the-diet" ? "Diet" : "Special Feature")
                             .font(.headline)
                         
                         ForEach(Array(characteristics.enumerated()), id: \.element.id) { index, characteristic in
@@ -984,7 +1118,7 @@ struct MatchingGameView: View {
                 .padding(.horizontal, 40)
                 .padding(.vertical)
                 
-                // Feedback message
+                // Feedback message (padding from bottom so wrapper isn't truncated by screen edge)
                 if showFeedback {
                     Text(feedbackMessage)
                         .font(.headline)
@@ -995,6 +1129,7 @@ struct MatchingGameView: View {
                                 .fill(isCorrect ? Color.green.opacity(0.2) : Color.orange.opacity(0.2))
                         )
                         .transition(.scale)
+                        .padding(.bottom, 32)
                 }
             }
             .id(currentRound)
@@ -1006,7 +1141,7 @@ struct MatchingGameView: View {
             }
     }
     
-    /// Before gameplay each round: walk dinosaurs then characteristics (name/trait audio + highlight); then enable tapping.
+    /// Before gameplay each round: walk dinosaurs then characteristics (name/trait audio + highlight); then enable tapping. Dino Diets! plays instruction first (game-dino-diets-match-each-dinosaur), then dinosaurs, then diets.
     private func startIntroWalkIfNeeded() {
         guard !introWalkComplete, dinosaurs.count >= 3, characteristics.count >= 5 else {
             if !introWalkComplete && (dinosaurs.count < 3 || characteristics.count < 5) {
@@ -1017,11 +1152,29 @@ struct MatchingGameView: View {
         }
         introWalkStep = 0
         isAudioPlaying = true
-        speechManager.onAudioFinished = { advanceIntroWalk() }
-        let d0 = dinosaurs[0]
-        speechManager.speak(audioKey: d0.imageName ?? d0.name, fallbackText: d0.name)
+        if gameConfig.id == "match-the-diet" {
+            // Dino Diets!: play instruction (block tapping), then walk dinosaurs, then diets, then unblock
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = { self.advanceIntroWalk() }
+                let d0 = self.dinosaurs[0]
+                self.speechManager.speak(audioKey: d0.imageName ?? d0.name, fallbackText: d0.name)
+            }
+            speechManager.speak("game-dino-diets-match-each-dinosaur")
+        } else if gameConfig.id == "match-the-dinosaur" {
+            // Match the Dinosaur: play directions (game-match-choose) then walk dinosaurs and characteristics (each round)
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = { self.advanceIntroWalk() }
+                let d0 = self.dinosaurs[0]
+                self.speechManager.speak(audioKey: d0.imageName ?? d0.name, fallbackText: d0.name)
+            }
+            speechManager.speak("game-match-choose")
+        } else {
+            speechManager.onAudioFinished = { advanceIntroWalk() }
+            let d0 = dinosaurs[0]
+            speechManager.speak(audioKey: d0.imageName ?? d0.name, fallbackText: d0.name)
+        }
     }
-    
+
     private func advanceIntroWalk() {
         speechManager.onAudioFinished = nil
         introWalkStep += 1
@@ -1035,7 +1188,12 @@ struct MatchingGameView: View {
             let d = dinosaurs[introWalkStep]
             speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
         } else {
-            speechManager.speak(characteristics[introWalkStep - 3].type)
+            let c = characteristics[introWalkStep - 3]
+            if gameConfig.id == "match-the-diet" {
+                speechManager.speak("diet-\(c.type.lowercased())")
+            } else {
+                speechManager.speak(c.type)
+            }
         }
     }
     
@@ -1122,7 +1280,11 @@ struct MatchingGameView: View {
                 }
             }
         }
-        speechManager.speak(characteristic.type)
+        if gameConfig.id == "match-the-diet" {
+            speechManager.speak("diet-\(characteristic.type.lowercased())")
+        } else {
+            speechManager.speak(characteristic.type)
+        }
     }
     
     private func checkMatch() {
@@ -1150,9 +1312,14 @@ struct MatchingGameView: View {
             let matchCount = matchedPairs.count
             
             if matchCount == dinosaurs.count {
-                // Third match: play great-match (or wow-that-was-tricky) then advance round (or finish game on last round).
+                // Third match: Dino Diets! uses 10 s threshold and great-match / wow-that-was-tricky; others use 5 s and great-match / wow-that-was-tricky
                 matchChoiceStartTime = nil // Reset timer after choosing audio
-                let matchAudio = elapsed > 5 ? "wow-that-was-tricky" : "great-match"
+                let matchAudio: String
+                if gameConfig.id == "match-the-diet" {
+                    matchAudio = elapsed > 10 ? "wow-that-was-tricky" : "great-match"
+                } else {
+                    matchAudio = elapsed > 5 ? "wow-that-was-tricky" : "great-match"
+                }
                 speechManager.onAudioFinished = {
                     DispatchQueue.main.async {
                         // Accumulate this round's dinosaurs; keep list unique by id (first appearance order) so walk-the-list and ForEach work correctly
@@ -1178,8 +1345,13 @@ struct MatchingGameView: View {
                 }
                 speechManager.speak(matchAudio)
             } else {
-                // First or second match: play great-match if ≤ 5 s, wow-that-was-tricky if > 5 s
-                let matchAudio = elapsed > 5 ? "wow-that-was-tricky" : "great-match"
+                // First or second match: Dino Diets! uses 10 s and great-match / wow-that-was-tricky; others use 5 s and great-match / wow-that-was-tricky
+                let matchAudio: String
+                if gameConfig.id == "match-the-diet" {
+                    matchAudio = elapsed > 10 ? "wow-that-was-tricky" : "great-match"
+                } else {
+                    matchAudio = elapsed > 5 ? "wow-that-was-tricky" : "great-match"
+                }
                 matchChoiceStartTime = nil // Reset timer after choosing audio
                 speechManager.onAudioFinished = {
                     DispatchQueue.main.async {
@@ -1203,9 +1375,25 @@ struct MatchingGameView: View {
                     self.showFeedback = false
                 }
             }
-            speechManager.speak("not-that-one")
+            let wrongKey = gameConfig.id == "match-the-diet" ? "thats-not-right-try-again" : "not-that-one"
+            speechManager.speak(wrongKey)
         }
     }
+}
+
+// MARK: - Clade (for Match the Dinosaur round variety)
+
+/// Dinosaur clade for round selection. Each round picks one dinosaur per clade so the three choices look and behave differently (e.g. one theropod, one sauropod, one hadrosaur), avoiding "which theropod?" when art is simple.
+enum DinoClade: String, CaseIterable {
+    case theropod
+    case sauropod
+    case ceratopsian
+    case ankylosaurid
+    case hadrosaur
+    case spinosaurid
+    case stegosaur
+    case ornithopod
+    case pachycephalosaur
 }
 
 // MARK: - Game Configuration
@@ -1224,6 +1412,7 @@ struct MatchingGameConfig {
     
     // Create a random game configuration from the full pool.
     // excludingCreatureIds: creatures already used in earlier rounds this game (no reuse).
+    // Picks one dinosaur per clade per round so the three choices are from different groups (e.g. one theropod, one sauropod, one hadrosaur) for clearer matching when art is simple.
     // Ensures no duplicate characteristic types (e.g. only one "Crest") so labels are unique.
     static func createRandom(
         from allDinosaurs: [Dinosaur],
@@ -1238,18 +1427,45 @@ struct MatchingGameConfig {
             let available = allDinosaurs.filter { !excludingCreatureIds.contains($0.id) }
             return available.count >= 3 ? available : allDinosaurs
         }()
+        let cladeById = (id == "match-the-pterosaur") ? [:] : MatchingGameConfigs.dinosaurCladeById
         var selected: [Dinosaur] = []
         var gameCharacteristics: [Characteristic] = []
         var selectedIds: Set<Int> = []
         let maxAttempts = 15
 
         for _ in 0..<maxAttempts {
-            // Randomly select 3 unique dinosaurs from pool (excluding already-used this game)
+            if !cladeById.isEmpty {
+                // Match the Dinosaur: pick one dinosaur per clade so the three look distinct (no "which theropod?").
+                let playable = pool.filter { d in allCharacteristics.contains(where: { $0.dinosaurId == d.id }) }
+                let byClade = Dictionary(grouping: playable) { cladeById[$0.id] ?? .theropod }
+                let cladesWithDinos = byClade.keys.filter { !(byClade[$0] ?? []).isEmpty }.shuffled()
+                if cladesWithDinos.count >= 3 {
+                    selected = (0..<3).compactMap { i in
+                        let clade = cladesWithDinos[i]
+                        let candidates = (byClade[clade] ?? []).filter { !excludingCreatureIds.contains($0.id) }
+                        return candidates.shuffled().first
+                    }
+                    if selected.count == 3, Set(selected.map(\.id)).count == 3 {
+                        selectedIds = Set(selected.map(\.id))
+                        var seenTypes: Set<String> = []
+                        for dino in selected {
+                            let dinoChars = allCharacteristics.filter { $0.dinosaurId == dino.id }
+                            let available = dinoChars.filter { !seenTypes.contains($0.type) }
+                            guard let one = available.shuffled().first else { break }
+                            gameCharacteristics.append(one)
+                            seenTypes.insert(one.type)
+                        }
+                        if gameCharacteristics.count == 3 { break }
+                    }
+                }
+                selected = []
+                gameCharacteristics = []
+            }
+            // Fallback: random 3 (pterosaur or when too few clades)
             let shuffled = pool.shuffled()
             selected = Array(shuffled.prefix(3))
             selectedIds = Set(selected.map(\.id))
 
-            // From each selected dinosaur, pick exactly ONE characteristic with a type not yet used (no duplicate labels).
             gameCharacteristics = []
             var seenTypes: Set<String> = []
             for dino in selected {
@@ -1260,15 +1476,23 @@ struct MatchingGameConfig {
                 seenTypes.insert(one.type)
             }
 
-            // We need exactly 3 characteristics (one per dino) with distinct types to have 3 matches.
             if gameCharacteristics.count == 3 { break }
         }
+        selectedIds = Set(selected.map(\.id))
 
         var seenTypes = Set(gameCharacteristics.map(\.type))
 
-        // Pad to 5 using only characteristics from dinosaurs NOT in the selected 3 (unique types only)
+        // Types that any selected dinosaur has: decoys must not use these (so we don't show e.g. "Long Neck" when Argentinosaurus is in the round).
+        let selectedDinoTypeSet: Set<String> = {
+            let ids = Set(selected.map(\.id))
+            return Set(allCharacteristics.filter { ids.contains($0.dinosaurId) }.map(\.type))
+        }()
+
+        // Pad to 5 using characteristics from dinosaurs NOT in the selected 3, and whose type is not shared by any selected dinosaur (unique types only, no ambiguous decoys).
         if gameCharacteristics.count < 5 {
-            let paddingPool = allCharacteristics.filter { !selectedIds.contains($0.dinosaurId) }
+            let paddingPool = allCharacteristics.filter {
+                !selectedIds.contains($0.dinosaurId) && !selectedDinoTypeSet.contains($0.type)
+            }
             for c in paddingPool.shuffled() {
                 guard gameCharacteristics.count < 5 else { break }
                 if !seenTypes.contains(c.type) {
@@ -1282,6 +1506,128 @@ struct MatchingGameConfig {
         gameCharacteristics = Array(gameCharacteristics.prefix(5))
         gameCharacteristics.shuffle()
 
+        // Don't show Big and Huge in the same round — too confusing for children. Prefer Big; replace or remove Huge and refill.
+        // Important: each selected dinosaur must keep exactly one characteristic in the round. If we remove a selected dinosaur's only trait (Huge), they would have 0 and tapping them would incorrectly play "pick-another-one". So we replace selected-dino Huge with another trait from the same dinosaur when possible; only remove decoy Huge.
+        var typesInRound = Set(gameCharacteristics.map(\.type))
+        if typesInRound.contains("Big") && typesInRound.contains("Huge") {
+            // Only run removal if every selected-dino Huge has a replacement; otherwise round could be left uncompletable
+            var canSafelyRemoveHuge = true
+            for c in gameCharacteristics where c.type == "Huge" && selectedIds.contains(c.dinosaurId) {
+                let hasReplacement = allCharacteristics.contains { other in
+                    other.dinosaurId == c.dinosaurId && other.type != "Huge" && !typesInRound.contains(other.type)
+                }
+                if !hasReplacement { canSafelyRemoveHuge = false; break }
+            }
+            if canSafelyRemoveHuge {
+            for (index, c) in gameCharacteristics.enumerated() where c.type == "Huge" {
+                if selectedIds.contains(c.dinosaurId) {
+                    let replacement = allCharacteristics.first { other in
+                        other.dinosaurId == c.dinosaurId && other.type != "Huge" && !typesInRound.contains(other.type)
+                    }
+                    if let r = replacement {
+                        gameCharacteristics[index] = r
+                        typesInRound.insert(r.type)
+                    }
+                }
+            }
+            // Remove only Huge that are from non-selected dinosaurs (decoys)
+            gameCharacteristics.removeAll { $0.type == "Huge" && !selectedIds.contains($0.dinosaurId) }
+            var seenTypes = Set(gameCharacteristics.map(\.type))
+            let refillPool = allCharacteristics.filter {
+                !selectedIds.contains($0.dinosaurId) && !seenTypes.contains($0.type) && $0.type != "Big" && $0.type != "Huge"
+            }
+            for c in refillPool.shuffled() {
+                guard gameCharacteristics.count < 5 else { break }
+                seenTypes.insert(c.type)
+                gameCharacteristics.append(c)
+            }
+            // If still short of 5 (refill pool exhausted), add any unused type so round has exactly 5 and can complete
+            if gameCharacteristics.count < 5 {
+                let fallbackPool = allCharacteristics.filter {
+                    !selectedIds.contains($0.dinosaurId) && !seenTypes.contains($0.type)
+                }
+                for c in fallbackPool.shuffled() {
+                    guard gameCharacteristics.count < 5 else { break }
+                    seenTypes.insert(c.type)
+                    gameCharacteristics.append(c)
+                }
+            }
+            gameCharacteristics.shuffle()
+            }
+        }
+
+        return MatchingGameConfig(
+            id: id,
+            title: title,
+            introAudio: introAudio,
+            selectedDinosaurs: selected,
+            selectedCharacteristics: gameCharacteristics
+        )
+    }
+
+    /// Creates a config for Dino Diets!: 3 dinosaurs, 5 characteristics (always the 5 diets). Same gameplay as Match the Dinosaur but traits are Herbivore/Carnivore/Piscivore/Insectivore/Omnivore.
+    static func createRandomDiet(
+        from allDinosaurs: [Dinosaur],
+        allDietCharacteristics: [Characteristic],
+        id: String = "match-the-diet",
+        title: String = "Dino Diets!",
+        introAudio: String = "game-intro-dino-diets",
+        excludingCreatureIds: Set<Int> = []
+    ) -> MatchingGameConfig {
+        let pool: [Dinosaur] = {
+            if excludingCreatureIds.isEmpty { return allDinosaurs }
+            let available = allDinosaurs.filter { !excludingCreatureIds.contains($0.id) }
+            return available.count >= 3 ? available : allDinosaurs
+        }()
+        let cladeById = MatchingGameConfigs.dinosaurCladeById
+        let dietTypes = ["Herbivore", "Carnivore", "Piscivore", "Insectivore", "Omnivore"]
+        var selected: [Dinosaur] = []
+        var gameCharacteristics: [Characteristic] = []
+        let maxAttempts = 20
+
+        for _ in 0..<maxAttempts {
+            let playable = pool.filter { d in allDietCharacteristics.contains(where: { $0.dinosaurId == d.id }) }
+            let byClade = Dictionary(grouping: playable) { cladeById[$0.id] ?? .theropod }
+            let cladesWithDinos = byClade.keys.filter { !(byClade[$0] ?? []).isEmpty }.shuffled()
+            guard cladesWithDinos.count >= 3 else { continue }
+            selected = (0..<3).compactMap { i in
+                let clade = cladesWithDinos[i]
+                let candidates = (byClade[clade] ?? []).filter { !excludingCreatureIds.contains($0.id) }
+                return candidates.shuffled().first
+            }
+            guard selected.count == 3, Set(selected.map(\.id)).count == 3 else { continue }
+            // Require three distinct diets so we never get e.g. three herbivores in one round.
+            let selectedDiets = selected.compactMap { MatchingGameConfigs.dinosaurDietById[$0.id] }
+            guard Set(selectedDiets).count == 3 else { continue }
+            // All 5 diet types, each exactly once: use selected dinosaur’s characteristic when it matches that diet, else a decoy. Then shuffle for random order.
+            gameCharacteristics = dietTypes.compactMap { dietType in
+                if let match = selected.first(where: { d in allDietCharacteristics.contains(where: { $0.dinosaurId == d.id && $0.type == dietType }) }),
+                   let c = allDietCharacteristics.first(where: { $0.dinosaurId == match.id && $0.type == dietType }) {
+                    return c
+                }
+                return allDietCharacteristics.first(where: { $0.type == dietType })
+            }
+            guard gameCharacteristics.count == 5 else { continue }
+            break
+        }
+        if gameCharacteristics.count != 5 {
+            // Fallback: pick 3 from pool with 3 distinct diets (retry until satisfied)
+            for _ in 0..<maxAttempts {
+                let shuffled = pool.shuffled()
+                selected = Array(shuffled.prefix(3))
+                let diets = selected.compactMap { MatchingGameConfigs.dinosaurDietById[$0.id] }
+                guard Set(diets).count == 3 else { continue }
+                gameCharacteristics = dietTypes.compactMap { dietType in
+                    if let match = selected.first(where: { d in allDietCharacteristics.contains(where: { $0.dinosaurId == d.id && $0.type == dietType }) }),
+                       let c = allDietCharacteristics.first(where: { $0.dinosaurId == match.id && $0.type == dietType }) {
+                        return c
+                    }
+                    return allDietCharacteristics.first(where: { $0.type == dietType })
+                }
+                if gameCharacteristics.count == 5 { break }
+            }
+        }
+        gameCharacteristics.shuffle()
         return MatchingGameConfig(
             id: id,
             title: title,
@@ -1383,6 +1729,9 @@ struct DinosaurCard: View {
                             Text(dinosaur.name)
                                 .font(.headline)
                                 .foregroundColor(.primary)
+                                .multilineTextAlignment(.center)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.65)
                                 .transition(.opacity.combined(with: .move(edge: .bottom)))
                         }
                     }
@@ -1396,7 +1745,7 @@ struct DinosaurCard: View {
                         .transition(.opacity)
                 }
             }
-            .frame(width: 180, height: isSelected || isIntroHighlighted || isMatched ? 120 : 100)
+            .frame(width: 180, height: isSelected || isIntroHighlighted || isMatched ? 130 : 100)
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(backgroundColor)
@@ -1515,57 +1864,124 @@ struct CharacteristicCard: View {
 // MARK: - Game Configurations
 
 struct MatchingGameConfigs {
-    // Full pool of available dinosaurs (can be expanded)
+    // Full pool of available dinosaurs (54 total; matches app assets and docs/DINOSAUR_CHARACTERISTICS_4-6.md)
     static let allDinosaurs: [Dinosaur] = [
-        Dinosaur(id: 1, name: "T-Rex", icon: "🦖", imageName: "dino-trex", characteristicIds: [1, 2, 24]),
-        Dinosaur(id: 2, name: "Triceratops", icon: "🦏", imageName: "dino-triceratops", characteristicIds: [3, 4]),
-        Dinosaur(id: 3, name: "Stegosaurus", icon: "🦎", imageName: "dino-stegosaurus", characteristicIds: [5]),
-        Dinosaur(id: 4, name: "Velociraptor", icon: "🦖", imageName: "dino-velociraptor", characteristicIds: [6, 7, 23]),
-        Dinosaur(id: 5, name: "Therizinosaurus", icon: "🦕", imageName: "dino-therizinosaurus", characteristicIds: [8, 9]),
-        Dinosaur(id: 6, name: "Spinosaurus", icon: "🦖", imageName: "dino-spinosaurus", characteristicIds: [10, 11]),
-        Dinosaur(id: 7, name: "Apatosaurus", icon: "🦕", imageName: "dino-apatosaurus", characteristicIds: [12, 13]),
-        Dinosaur(id: 8, name: "Ankylosaurus", icon: "🛡️", imageName: "dino-ankylosaurus", characteristicIds: [14, 15]),
-        Dinosaur(id: 9, name: "Corythosaurus", icon: "🦆", imageName: "dino-corythosaurus", characteristicIds: [16, 17]),
-        Dinosaur(id: 10, name: "Parasaurolophus", icon: "🦆", imageName: "dino-parasaurolophus", characteristicIds: [18, 19]),
-        Dinosaur(id: 11, name: "Iguanodon", icon: "🦎", imageName: "dino-iguanodon", characteristicIds: [20]),
-        Dinosaur(id: 12, name: "Troodon", icon: "🦉", imageName: "dino-troodon", characteristicIds: [21, 22]),
-        Dinosaur(id: 13, name: "Edmontosaurus", icon: "🦆", imageName: "dino-edmontosaurus", characteristicIds: [25, 27]),
-        Dinosaur(id: 38, name: "Masiakasaurus", icon: "🦖", imageName: "dino-masiakasaurus", characteristicIds: []),
-        Dinosaur(id: 39, name: "Torvosaurus", icon: "🦖", imageName: "dino-torvosaurus", characteristicIds: []),
-        Dinosaur(id: 40, name: "Rapetosaurus", icon: "🦕", imageName: "dino-rapetosaurus", characteristicIds: []),
-        Dinosaur(id: 41, name: "Majungasaurus", icon: "🦖", imageName: "dino-majungasaurus", characteristicIds: []),
-        Dinosaur(id: 42, name: "Allosaurus", icon: "🦖", imageName: "dino-allosaurus", characteristicIds: []),
-        Dinosaur(id: 43, name: "Oviraptor", icon: "🦅", imageName: "dino-oviraptor", characteristicIds: []),
+        Dinosaur(id: 1, name: "T-Rex", icon: "🦖", imageName: "dino-trex", characteristicIds: [1, 24, 119, 120]),
+        Dinosaur(id: 2, name: "Triceratops", icon: "🦏", imageName: "dino-triceratops", characteristicIds: [3, 4, 117, 121, 122]),
+        Dinosaur(id: 3, name: "Stegosaurus", icon: "🦎", imageName: "dino-stegosaurus", characteristicIds: [5, 113, 114, 196]),
+        Dinosaur(id: 4, name: "Velociraptor", icon: "🦖", imageName: "dino-velociraptor", characteristicIds: [6, 7, 23, 123, 124]),
+        Dinosaur(id: 5, name: "Therizinosaurus", icon: "🦕", imageName: "dino-therizinosaurus", characteristicIds: [8, 9, 125, 126]),
+        Dinosaur(id: 6, name: "Spinosaurus", icon: "🦖", imageName: "dino-spinosaurus", characteristicIds: [10, 11, 115, 127, 128]),
+        Dinosaur(id: 7, name: "Apatosaurus", icon: "🦕", imageName: "dino-apatosaurus", characteristicIds: [12, 13, 116, 129]),
+        Dinosaur(id: 8, name: "Ankylosaurus", icon: "🛡️", imageName: "dino-ankylosaurus", characteristicIds: [14, 15, 130, 131]),
+        Dinosaur(id: 9, name: "Corythosaurus", icon: "🦆", imageName: "dino-corythosaurus", characteristicIds: [16, 17, 132, 133]),
+        Dinosaur(id: 10, name: "Parasaurolophus", icon: "🦆", imageName: "dino-parasaurolophus", characteristicIds: [18, 19, 134, 135]),
+        Dinosaur(id: 11, name: "Iguanodon", icon: "🦎", imageName: "dino-iguanodon", characteristicIds: [20, 118, 136, 137]),
+        Dinosaur(id: 12, name: "Troodon", icon: "🦉", imageName: "dino-troodon", characteristicIds: [21, 22, 138]),
+        Dinosaur(id: 13, name: "Edmontosaurus", icon: "🦆", imageName: "dino-edmontosaurus", characteristicIds: [25, 27, 139]),
+        Dinosaur(id: 14, name: "Camarasaurus", icon: "🦕", imageName: "dino-camarasaurus", characteristicIds: [45, 46, 140, 197]),
+        Dinosaur(id: 15, name: "Dryosaurus", icon: "🦎", imageName: "dino-dryosaurus", characteristicIds: [28, 41, 141, 142]),
+        Dinosaur(id: 16, name: "Gallimimus", icon: "🦖", imageName: "dino-gallimimus", characteristicIds: [47, 48, 143]),
+        Dinosaur(id: 17, name: "Pachycephalosaurus", icon: "🦎", imageName: "dino-pachycephalosaurus", characteristicIds: [49, 50, 144]),
+        Dinosaur(id: 18, name: "Albertosaurus", icon: "🦖", imageName: "dino-albertosaurus", characteristicIds: [51, 52, 145]),
+        Dinosaur(id: 19, name: "Anchiornis", icon: "🦅", imageName: "dino-anchiornis", characteristicIds: [53, 54, 146]),
+        Dinosaur(id: 20, name: "Archaeopteryx", icon: "🦅", imageName: "dino-archaeopteryx", characteristicIds: [55, 56, 147]),
+        Dinosaur(id: 21, name: "Argentinosaurus", icon: "🦕", imageName: "dino-argentinosaurus", characteristicIds: [57, 58, 148, 149]),
+        Dinosaur(id: 22, name: "Baryonyx", icon: "🦖", imageName: "dino-baryonyx", characteristicIds: [59, 60, 150, 151]),
+        Dinosaur(id: 23, name: "Brachiosaurus", icon: "🦕", imageName: "dino-brachiosaurus", characteristicIds: [61, 62, 152]),
+        Dinosaur(id: 24, name: "Ceratosaurus", icon: "🦖", imageName: "dino-ceratosaurus", characteristicIds: [63, 64, 153, 154]),
+        Dinosaur(id: 25, name: "Chasmosaurus", icon: "🦏", imageName: "dino-chasmosaurus", characteristicIds: [65, 66, 155, 156, 157]),
+        Dinosaur(id: 26, name: "Compsognathus", icon: "🦖", imageName: "dino-compsognathus", characteristicIds: [67, 68]),
+        Dinosaur(id: 27, name: "Deinonychus", icon: "🦖", imageName: "dino-deinonychus", characteristicIds: [69, 70, 158, 159]),
+        Dinosaur(id: 28, name: "Diplodocus", icon: "🦕", imageName: "dino-diplodocus", characteristicIds: [71, 72, 160]),
+        Dinosaur(id: 29, name: "Dromaeosaurus", icon: "🦖", imageName: "dino-dromaeosaurus", characteristicIds: [73, 74, 161]),
+        Dinosaur(id: 30, name: "Eosinopteryx", icon: "🦅", imageName: "dino-eosinopteryx", characteristicIds: [75, 76]),
+        Dinosaur(id: 31, name: "Giganotosaurus", icon: "🦖", imageName: "dino-giganotosaurus", characteristicIds: [77, 78, 162]),
+        Dinosaur(id: 32, name: "Kosmoceratops", icon: "🦏", imageName: "dino-kosmoceratops", characteristicIds: [79, 80, 163, 164, 165]),
+        Dinosaur(id: 33, name: "Microraptor", icon: "🦅", imageName: "dino-microraptor", characteristicIds: [81, 82, 166]),
+        Dinosaur(id: 34, name: "Pedopenna", icon: "🦅", imageName: "dino-pedopenna", characteristicIds: [83, 84, 167]),
+        Dinosaur(id: 35, name: "Torosaurus", icon: "🦏", imageName: "dino-torosaurus", characteristicIds: [85, 86, 168, 169, 170]),
+        Dinosaur(id: 36, name: "Utahraptor", icon: "🦖", imageName: "dino-utahraptor", characteristicIds: [87, 88, 171, 172]),
+        Dinosaur(id: 37, name: "Xiaotingia", icon: "🦅", imageName: "dino-xiaotingia", characteristicIds: [89, 90, 173]),
+        Dinosaur(id: 38, name: "Masiakasaurus", icon: "🦖", imageName: "dino-masiakasaurus", characteristicIds: [29, 42, 174]),
+        Dinosaur(id: 39, name: "Torvosaurus", icon: "🦖", imageName: "dino-torvosaurus", characteristicIds: [30, 43, 175]),
+        Dinosaur(id: 40, name: "Rapetosaurus", icon: "🦕", imageName: "dino-rapetosaurus", characteristicIds: [31, 32, 176, 195]),
+        Dinosaur(id: 41, name: "Majungasaurus", icon: "🦖", imageName: "dino-majungasaurus", characteristicIds: [33, 44, 177]),
+        Dinosaur(id: 42, name: "Allosaurus", icon: "🦖", imageName: "dino-allosaurus", characteristicIds: [34, 35, 178]),
+        Dinosaur(id: 43, name: "Oviraptor", icon: "🦅", imageName: "dino-oviraptor", characteristicIds: [36, 37, 179]),
+        Dinosaur(id: 44, name: "Brontosaurus", icon: "🦕", imageName: "dino-brontosaurus", characteristicIds: [91, 92, 180]),
+        Dinosaur(id: 45, name: "Kentrosaurus", icon: "🦎", imageName: "dino-kentrosaurus", characteristicIds: [93, 94, 181]),
+        Dinosaur(id: 46, name: "Edmontonia", icon: "🛡️", imageName: "dino-edmontonia", characteristicIds: [95, 96, 182]),
+        Dinosaur(id: 47, name: "Lambeosaurus", icon: "🦆", imageName: "dino-lambeosaurus", characteristicIds: [97, 98, 183, 184]),
+        Dinosaur(id: 48, name: "Maiasaura", icon: "🦆", imageName: "dino-maiasaura", characteristicIds: [99, 100, 185, 186]),
+        Dinosaur(id: 49, name: "Stegoceras", icon: "🦎", imageName: "dino-stegoceras", characteristicIds: [101, 102, 187]),
+        Dinosaur(id: 50, name: "Stygimoloch", icon: "🦎", imageName: "dino-stygimoloch", characteristicIds: [103, 104, 188]),
+        Dinosaur(id: 51, name: "Nodosaurus", icon: "🛡️", imageName: "dino-nodosaurus", characteristicIds: [105, 106, 189]),
+        Dinosaur(id: 52, name: "Huayangosaurus", icon: "🦎", imageName: "dino-huayangosaurus", characteristicIds: [107, 108, 190]),
+        Dinosaur(id: 53, name: "Ouranosaurus", icon: "🦎", imageName: "dino-ouranosaurus", characteristicIds: [109, 110, 191, 192]),
+        Dinosaur(id: 54, name: "Suchomimus", icon: "🦖", imageName: "dino-suchomimus", characteristicIds: [111, 112, 193, 194]),
+    ]
+    
+    /// Diet per dinosaur for Dino Diets! (Herbivore, Carnivore, Piscivore, Insectivore, Omnivore). Child-friendly; used only in match-the-diet game.
+    static let dinosaurDietById: [Int: String] = [
+        1: "Carnivore", 2: "Herbivore", 3: "Herbivore", 4: "Carnivore", 5: "Herbivore", 6: "Piscivore",
+        7: "Herbivore", 8: "Herbivore", 9: "Herbivore", 10: "Herbivore", 11: "Herbivore", 12: "Carnivore",
+        13: "Herbivore", 14: "Herbivore", 15: "Herbivore", 16: "Omnivore", 17: "Herbivore", 18: "Carnivore",
+        19: "Carnivore", 20: "Carnivore", 21: "Herbivore", 22: "Piscivore", 23: "Herbivore", 24: "Carnivore",
+        25: "Herbivore", 26: "Insectivore", 27: "Carnivore", 28: "Herbivore", 29: "Carnivore", 30: "Insectivore",
+        31: "Carnivore", 32: "Herbivore", 33: "Carnivore", 34: "Insectivore", 35: "Herbivore", 36: "Carnivore",
+        37: "Carnivore", 38: "Carnivore", 39: "Carnivore", 40: "Herbivore", 41: "Carnivore", 42: "Carnivore",
+        43: "Omnivore", 44: "Herbivore", 45: "Herbivore", 46: "Herbivore", 47: "Herbivore", 48: "Herbivore",
+        49: "Herbivore", 50: "Herbivore", 51: "Herbivore", 52: "Herbivore", 53: "Herbivore", 54: "Piscivore",
+    ]
+
+    /// Clade per dinosaur (for Match the Dinosaur). Used so each round picks one dinosaur per clade for clear, varied choices.
+    static let dinosaurCladeById: [Int: DinoClade] = [
+        1: .theropod, 2: .ceratopsian, 3: .stegosaur, 4: .theropod, 5: .theropod, 6: .spinosaurid,
+        7: .sauropod, 8: .ankylosaurid, 9: .hadrosaur, 10: .hadrosaur, 11: .ornithopod, 12: .theropod, 13: .hadrosaur,
+        14: .sauropod, 15: .ornithopod, 16: .theropod, 17: .pachycephalosaur, 18: .theropod, 19: .theropod, 20: .theropod,
+        21: .sauropod, 22: .spinosaurid, 23: .sauropod, 24: .theropod, 25: .ceratopsian, 26: .theropod, 27: .theropod,
+        28: .sauropod, 29: .theropod, 30: .theropod, 31: .theropod, 32: .ceratopsian, 33: .theropod, 34: .theropod,
+        35: .ceratopsian, 36: .theropod, 37: .theropod, 38: .theropod, 39: .theropod, 40: .sauropod, 41: .theropod,
+        42: .theropod, 43: .theropod, 44: .sauropod, 45: .stegosaur, 46: .ankylosaurid, 47: .hadrosaur, 48: .hadrosaur,
+        49: .pachycephalosaur, 50: .pachycephalosaur, 51: .ankylosaurid, 52: .stegosaur, 53: .ornithopod,
+        54: .spinosaurid,
     ]
     
     // Full pool of available characteristics (can be expanded)
     // Image sets: dino-char-<characteristic> (e.g. dino-char-teeth, dino-char-crest)
+    // Feathers: we use one type, "Feathers", with image dino-char-proto-feathers (proto-feathers). Diet traits (carnivore, herbivore, etc.) are not used here; reserved for a future game.
     static let allCharacteristics: [Characteristic] = [
-        // T-Rex characteristics (high EQ – Smart alongside Teeth/Footprints)
+        // T-Rex characteristics (Teeth, Smart; Footprints removed – use Two Feet / Four Feet for locomotion)
         Characteristic(id: 1, type: "Teeth", icon: "🦷", imageName: "dino-char-teeth", dinosaurId: 1),
-        Characteristic(id: 2, type: "Footprints", icon: "👣", imageName: "dino-char-footprints", dinosaurId: 1),
         Characteristic(id: 24, type: "Smart", icon: "🧠", imageName: "dino-char-smart", dinosaurId: 1),
         // Triceratops characteristics
         Characteristic(id: 3, type: "Frill", icon: "🦎", imageName: "dino-char-frill", dinosaurId: 2),
         Characteristic(id: 4, type: "Horns", icon: "🦏", imageName: "dino-char-horns", dinosaurId: 2),
+        Characteristic(id: 117, type: "Beak", icon: "🦜", imageName: "dino-char-beak", dinosaurId: 2),
         // Stegosaurus characteristics
-        Characteristic(id: 5, type: "Spikes", icon: "🔺", imageName: "dino-char-spikes", dinosaurId: 3),
+        Characteristic(id: 5, type: "Plates", icon: "🔺", imageName: "dino-char-plates", dinosaurId: 3),
+        Characteristic(id: 113, type: "Tail Spikes", icon: "🔺", imageName: "dino-char-tail-spikes", dinosaurId: 3),
+        Characteristic(id: 114, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 3),
+        Characteristic(id: 196, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 3),
         // Velociraptor characteristics
         Characteristic(id: 6, type: "Claws", icon: "🦅", imageName: "dino-char-claws", dinosaurId: 4),
         Characteristic(id: 7, type: "Fast", icon: "💨", imageName: "dino-char-fast", dinosaurId: 4),
         Characteristic(id: 23, type: "Toe Claw", icon: "🦅", imageName: "dino-char-toe-claw", dinosaurId: 4),
         // Therizinosaurus characteristics
         Characteristic(id: 8, type: "Long Claws", icon: "✂️", imageName: "dino-char-long-claws", dinosaurId: 5),
-        Characteristic(id: 9, type: "Feathers", icon: "🪶", imageName: "dino-char-feathers", dinosaurId: 5),
+        Characteristic(id: 9, type: "Feathers", icon: "🪶", imageName: "dino-char-proto-feathers", dinosaurId: 5),
         // Spinosaurus characteristics
         Characteristic(id: 10, type: "Sail", icon: "⛵", imageName: "dino-char-sail", dinosaurId: 6),
         Characteristic(id: 11, type: "Swims", icon: "🏊", imageName: "dino-char-swims", dinosaurId: 6),
+        Characteristic(id: 115, type: "Long Snout", icon: "🐊", imageName: "dino-char-long-snout", dinosaurId: 6),
         // Apatosaurus characteristics
         Characteristic(id: 12, type: "Long Neck", icon: "🦒", imageName: "dino-char-long-neck", dinosaurId: 7),
-        Characteristic(id: 13, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 7),
+        Characteristic(id: 13, type: "Huge", icon: "🐘", imageName: "dino-char-huge", dinosaurId: 7),
+        Characteristic(id: 116, type: "Long Tail", icon: "🦎", imageName: "dino-char-long-tail", dinosaurId: 7),
         // Ankylosaurus characteristics
         Characteristic(id: 14, type: "Armor", icon: "🛡️", imageName: "dino-char-armor", dinosaurId: 8),
-        Characteristic(id: 15, type: "Club Tail", icon: "🔨", imageName: "dino-char-club-tail", dinosaurId: 8),
+        Characteristic(id: 15, type: "Tail Club", icon: "🔨", imageName: "dino-char-tail-club", dinosaurId: 8),
         // Corythosaurus characteristics
         Characteristic(id: 16, type: "Crest", icon: "🪖", imageName: "dino-char-crest", dinosaurId: 9),
         Characteristic(id: 17, type: "Duck Bill", icon: "🦆", imageName: "dino-char-duck-bill", dinosaurId: 9),
@@ -1574,20 +1990,242 @@ struct MatchingGameConfigs {
         Characteristic(id: 19, type: "Duck Bill", icon: "🦆", imageName: "dino-char-duck-bill", dinosaurId: 10),
         // Iguanodon characteristics
         Characteristic(id: 20, type: "Thumb Spike", icon: "👍", imageName: "dino-char-thumb-spike", dinosaurId: 11),
+        Characteristic(id: 118, type: "Beak", icon: "🦜", imageName: "dino-char-beak", dinosaurId: 11),
         // Troodon characteristics
         Characteristic(id: 21, type: "Smart", icon: "🧠", imageName: "dino-char-smart", dinosaurId: 12),
         Characteristic(id: 22, type: "Big Eyes", icon: "👀", imageName: "dino-char-big-eyes", dinosaurId: 12),
         // Edmontosaurus characteristics (hadrosaur; no bony crest — flat head / soft-tissue comb)
         Characteristic(id: 25, type: "Duck Bill", icon: "🦆", imageName: "dino-char-duck-bill", dinosaurId: 13),
         Characteristic(id: 27, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 13),
+        // Dryosaurus (15)
+        Characteristic(id: 28, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 15),
+        Characteristic(id: 41, type: "Fast", icon: "💨", imageName: "dino-char-fast", dinosaurId: 15),
+        // Masiakasaurus (38)
+        Characteristic(id: 29, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 38),
+        Characteristic(id: 42, type: "Teeth", icon: "🦷", imageName: "dino-char-teeth", dinosaurId: 38),
+        // Torvosaurus (39)
+        Characteristic(id: 30, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 39),
+        Characteristic(id: 43, type: "Teeth", icon: "🦷", imageName: "dino-char-teeth", dinosaurId: 39),
+        // Rapetosaurus (40)
+        Characteristic(id: 31, type: "Long Neck", icon: "🦒", imageName: "dino-char-long-neck", dinosaurId: 40),
+        Characteristic(id: 32, type: "Long Tail", icon: "🦎", imageName: "dino-char-long-tail", dinosaurId: 40),
+        // Majungasaurus (41)
+        Characteristic(id: 33, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 41),
+        Characteristic(id: 44, type: "Teeth", icon: "🦷", imageName: "dino-char-teeth", dinosaurId: 41),
+        // Allosaurus (42)
+        Characteristic(id: 34, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 42),
+        Characteristic(id: 35, type: "Horns", icon: "🦏", imageName: "dino-char-horns", dinosaurId: 42),
+        // Oviraptor (43)
+        Characteristic(id: 36, type: "Crest", icon: "🪖", imageName: "dino-char-crest", dinosaurId: 43),
+        Characteristic(id: 37, type: "Feathers", icon: "🪶", imageName: "dino-char-proto-feathers", dinosaurId: 43),
+        // Camarasaurus (14) — classic sauropod: long neck, long tail, four feet, huge
+        Characteristic(id: 45, type: "Long Neck", icon: "🦒", imageName: "dino-char-long-neck", dinosaurId: 14),
+        Characteristic(id: 46, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 14),
+        Characteristic(id: 197, type: "Long Tail", icon: "🦎", imageName: "dino-char-long-tail", dinosaurId: 14),
+        // Gallimimus (16)
+        Characteristic(id: 47, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 16),
+        Characteristic(id: 48, type: "Fast", icon: "💨", imageName: "dino-char-fast", dinosaurId: 16),
+        // Pachycephalosaurus (17)
+        Characteristic(id: 49, type: "Dome Head", icon: "🦎", imageName: "dino-char-dome-head", dinosaurId: 17),
+        Characteristic(id: 50, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 17),
+        // Albertosaurus (18)
+        Characteristic(id: 51, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 18),
+        Characteristic(id: 52, type: "Teeth", icon: "🦷", imageName: "dino-char-teeth", dinosaurId: 18),
+        // Anchiornis (19)
+        Characteristic(id: 53, type: "Feathers", icon: "🪶", imageName: "dino-char-proto-feathers", dinosaurId: 19),
+        Characteristic(id: 54, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 19),
+        // Archaeopteryx (20)
+        Characteristic(id: 55, type: "Feathers", icon: "🪶", imageName: "dino-char-proto-feathers", dinosaurId: 20),
+        Characteristic(id: 56, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 20),
+        // Argentinosaurus (21)
+        Characteristic(id: 57, type: "Long Neck", icon: "🦒", imageName: "dino-char-long-neck", dinosaurId: 21),
+        Characteristic(id: 58, type: "Huge", icon: "🐘", imageName: "dino-char-huge", dinosaurId: 21),
+        // Baryonyx (22)
+        Characteristic(id: 59, type: "Long Snout", icon: "🐊", imageName: "dino-char-long-snout", dinosaurId: 22),
+        Characteristic(id: 60, type: "Claws", icon: "🦅", imageName: "dino-char-claws", dinosaurId: 22),
+        // Brachiosaurus (23)
+        Characteristic(id: 61, type: "Long Neck", icon: "🦒", imageName: "dino-char-long-neck", dinosaurId: 23),
+        Characteristic(id: 62, type: "Huge", icon: "🐘", imageName: "dino-char-huge", dinosaurId: 23),
+        // Ceratosaurus (24)
+        Characteristic(id: 63, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 24),
+        Characteristic(id: 64, type: "Horns", icon: "🦏", imageName: "dino-char-horns", dinosaurId: 24),
+        // Chasmosaurus (25)
+        Characteristic(id: 65, type: "Frill", icon: "🦎", imageName: "dino-char-frill", dinosaurId: 25),
+        Characteristic(id: 66, type: "Horns", icon: "🦏", imageName: "dino-char-horns", dinosaurId: 25),
+        // Compsognathus (26)
+        Characteristic(id: 67, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 26),
+        Characteristic(id: 68, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 26),
+        // Deinonychus (27)
+        Characteristic(id: 69, type: "Claws", icon: "🦅", imageName: "dino-char-claws", dinosaurId: 27),
+        Characteristic(id: 70, type: "Toe Claw", icon: "🦅", imageName: "dino-char-toe-claw", dinosaurId: 27),
+        // Diplodocus (28)
+        Characteristic(id: 71, type: "Long Neck", icon: "🦒", imageName: "dino-char-long-neck", dinosaurId: 28),
+        Characteristic(id: 72, type: "Long Tail", icon: "🦎", imageName: "dino-char-long-tail", dinosaurId: 28),
+        // Dromaeosaurus (29)
+        Characteristic(id: 73, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 29),
+        Characteristic(id: 74, type: "Claws", icon: "🦅", imageName: "dino-char-claws", dinosaurId: 29),
+        // Eosinopteryx (30)
+        Characteristic(id: 75, type: "Feathers", icon: "🪶", imageName: "dino-char-proto-feathers", dinosaurId: 30),
+        Characteristic(id: 76, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 30),
+        // Giganotosaurus (31)
+        Characteristic(id: 77, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 31),
+        Characteristic(id: 78, type: "Teeth", icon: "🦷", imageName: "dino-char-teeth", dinosaurId: 31),
+        // Kosmoceratops (32)
+        Characteristic(id: 79, type: "Frill", icon: "🦎", imageName: "dino-char-frill", dinosaurId: 32),
+        Characteristic(id: 80, type: "Horns", icon: "🦏", imageName: "dino-char-horns", dinosaurId: 32),
+        // Microraptor (33)
+        Characteristic(id: 81, type: "Feathers", icon: "🪶", imageName: "dino-char-proto-feathers", dinosaurId: 33),
+        Characteristic(id: 82, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 33),
+        // Pedopenna (34)
+        Characteristic(id: 83, type: "Feathers", icon: "🪶", imageName: "dino-char-proto-feathers", dinosaurId: 34),
+        Characteristic(id: 84, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 34),
+        // Torosaurus (35)
+        Characteristic(id: 85, type: "Frill", icon: "🦎", imageName: "dino-char-frill", dinosaurId: 35),
+        Characteristic(id: 86, type: "Horns", icon: "🦏", imageName: "dino-char-horns", dinosaurId: 35),
+        // Utahraptor (36)
+        Characteristic(id: 87, type: "Claws", icon: "🦅", imageName: "dino-char-claws", dinosaurId: 36),
+        Characteristic(id: 88, type: "Toe Claw", icon: "🦅", imageName: "dino-char-toe-claw", dinosaurId: 36),
+        // Xiaotingia (37)
+        Characteristic(id: 89, type: "Feathers", icon: "🪶", imageName: "dino-char-proto-feathers", dinosaurId: 37),
+        Characteristic(id: 90, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 37),
+        // Brontosaurus (44)
+        Characteristic(id: 91, type: "Long Neck", icon: "🦒", imageName: "dino-char-long-neck", dinosaurId: 44),
+        Characteristic(id: 92, type: "Long Tail", icon: "🦎", imageName: "dino-char-long-tail", dinosaurId: 44),
+        // Kentrosaurus (45) – stegosaur
+        Characteristic(id: 93, type: "Tail Spikes", icon: "🔺", imageName: "dino-char-tail-spikes", dinosaurId: 45),
+        Characteristic(id: 94, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 45),
+        // Edmontonia (46) – ankylosaurid (nodosaurid; armor, no club)
+        Characteristic(id: 95, type: "Armor", icon: "🛡️", imageName: "dino-char-armor", dinosaurId: 46),
+        Characteristic(id: 96, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 46),
+        // Lambeosaurus (47) – hadrosaur
+        Characteristic(id: 97, type: "Crest", icon: "🪖", imageName: "dino-char-crest", dinosaurId: 47),
+        Characteristic(id: 98, type: "Duck Bill", icon: "🦆", imageName: "dino-char-duck-bill", dinosaurId: 47),
+        // Maiasaura (48) – hadrosaur
+        Characteristic(id: 99, type: "Duck Bill", icon: "🦆", imageName: "dino-char-duck-bill", dinosaurId: 48),
+        Characteristic(id: 100, type: "Crest", icon: "🪖", imageName: "dino-char-crest", dinosaurId: 48),
+        // Stegoceras (49) – pachycephalosaur
+        Characteristic(id: 101, type: "Dome Head", icon: "🦎", imageName: "dino-char-dome-head", dinosaurId: 49),
+        Characteristic(id: 102, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 49),
+        // Stygimoloch (50) – pachycephalosaur
+        Characteristic(id: 103, type: "Dome Head", icon: "🦎", imageName: "dino-char-dome-head", dinosaurId: 50),
+        Characteristic(id: 104, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 50),
+        // Nodosaurus (51) – ankylosaurid (nodosaurid; armor, no club)
+        Characteristic(id: 105, type: "Armor", icon: "🛡️", imageName: "dino-char-armor", dinosaurId: 51),
+        Characteristic(id: 106, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 51),
+        // Huayangosaurus (52) – stegosaur
+        Characteristic(id: 107, type: "Plates", icon: "🔺", imageName: "dino-char-plates", dinosaurId: 52),
+        Characteristic(id: 108, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 52),
+        // Ouranosaurus (53) – ornithopod (sail-backed)
+        Characteristic(id: 109, type: "Sail", icon: "⛵", imageName: "dino-char-sail", dinosaurId: 53),
+        Characteristic(id: 110, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 53),
+        // Suchomimus (54) – spinosaurid
+        Characteristic(id: 111, type: "Long Snout", icon: "🐊", imageName: "dino-char-long-snout", dinosaurId: 54),
+        Characteristic(id: 112, type: "Swims", icon: "🏊", imageName: "dino-char-swims", dinosaurId: 54),
+        // One characteristic per dinosaur for feet/size/beak (so rounds can pick distinct traits)
+        Characteristic(id: 119, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 1),
+        Characteristic(id: 120, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 1),
+        Characteristic(id: 121, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 2),
+        Characteristic(id: 122, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 2),
+        Characteristic(id: 123, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 4),
+        Characteristic(id: 124, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 4),
+        Characteristic(id: 125, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 5),
+        Characteristic(id: 126, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 5),
+        Characteristic(id: 127, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 6),
+        Characteristic(id: 128, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 6),
+        Characteristic(id: 129, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 7),
+        Characteristic(id: 130, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 8),
+        Characteristic(id: 131, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 8),
+        Characteristic(id: 132, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 9),
+        Characteristic(id: 133, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 9),
+        Characteristic(id: 134, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 10),
+        Characteristic(id: 135, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 10),
+        Characteristic(id: 136, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 11),
+        Characteristic(id: 137, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 11),
+        Characteristic(id: 138, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 12),
+        Characteristic(id: 139, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 13),
+        Characteristic(id: 140, type: "Huge", icon: "🐘", imageName: "dino-char-huge", dinosaurId: 14),
+        Characteristic(id: 141, type: "Beak", icon: "🦜", imageName: "dino-char-beak", dinosaurId: 15),
+        Characteristic(id: 142, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 15),
+        Characteristic(id: 143, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 16),
+        Characteristic(id: 144, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 17),
+        Characteristic(id: 145, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 18),
+        Characteristic(id: 146, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 19),
+        Characteristic(id: 147, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 20),
+        Characteristic(id: 148, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 21),
+        Characteristic(id: 149, type: "Long Tail", icon: "🦎", imageName: "dino-char-long-tail", dinosaurId: 21),
+        Characteristic(id: 150, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 22),
+        Characteristic(id: 151, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 22),
+        Characteristic(id: 152, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 23),
+        Characteristic(id: 153, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 24),
+        Characteristic(id: 154, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 24),
+        Characteristic(id: 155, type: "Beak", icon: "🦜", imageName: "dino-char-beak", dinosaurId: 25),
+        Characteristic(id: 156, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 25),
+        Characteristic(id: 157, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 25),
+        Characteristic(id: 158, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 27),
+        Characteristic(id: 159, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 27),
+        Characteristic(id: 160, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 28),
+        Characteristic(id: 161, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 29),
+        Characteristic(id: 162, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 31),
+        Characteristic(id: 163, type: "Beak", icon: "🦜", imageName: "dino-char-beak", dinosaurId: 32),
+        Characteristic(id: 164, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 32),
+        Characteristic(id: 165, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 32),
+        Characteristic(id: 166, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 33),
+        Characteristic(id: 167, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 34),
+        Characteristic(id: 168, type: "Beak", icon: "🦜", imageName: "dino-char-beak", dinosaurId: 35),
+        Characteristic(id: 169, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 35),
+        Characteristic(id: 170, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 35),
+        Characteristic(id: 171, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 36),
+        Characteristic(id: 172, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 36),
+        Characteristic(id: 173, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 37),
+        Characteristic(id: 174, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 38),
+        Characteristic(id: 175, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 39),
+        Characteristic(id: 176, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 40),
+        Characteristic(id: 195, type: "Huge", icon: "🐘", imageName: "dino-char-huge", dinosaurId: 40),
+        Characteristic(id: 177, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 41),
+        Characteristic(id: 178, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 42),
+        Characteristic(id: 179, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 43),
+        Characteristic(id: 180, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 44),
+        Characteristic(id: 181, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 45),
+        Characteristic(id: 182, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 46),
+        Characteristic(id: 183, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 47),
+        Characteristic(id: 184, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 47),
+        Characteristic(id: 185, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 48),
+        Characteristic(id: 186, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 48),
+        Characteristic(id: 187, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 49),
+        Characteristic(id: 188, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 50),
+        Characteristic(id: 189, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 51),
+        Characteristic(id: 190, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 52),
+        Characteristic(id: 191, type: "Beak", icon: "🦜", imageName: "dino-char-beak", dinosaurId: 53),
+        Characteristic(id: 192, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 53),
+        Characteristic(id: 193, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 54),
+        Characteristic(id: 194, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 54),
     ]
     
+    /// Diet characteristics for Dino Diets!: one per dinosaur (type = Herbivore/Carnivore/etc.). Images from Assets/Dinosaur-Diets with prefix diet- (e.g. diet-herbivore).
+    static var allDietCharacteristics: [Characteristic] {
+        allDinosaurs.compactMap { d in
+            guard let diet = dinosaurDietById[d.id] else { return nil }
+            let imageName = "diet-\(diet.lowercased())"
+            let icon: String = {
+                switch diet {
+                case "Herbivore": return "🌿"
+                case "Carnivore": return "🥩"
+                case "Piscivore": return "🐟"
+                case "Insectivore": return "🦗"
+                case "Omnivore": return "🍎"
+                default: return "🍽️"
+                }
+            }()
+            return Characteristic(id: 200 + d.id - 1, type: diet, icon: icon, imageName: imageName, dinosaurId: d.id)
+        }
+    }
+
     // Create a random game configuration (3 dinosaurs, 5 characteristics)
     // Image: game-match-the-dinosaur.imageset
     static var dinoFeatures: MatchingGameConfig {
         dinoFeatures(excluding: [])
     }
-    
+
     static func dinoFeatures(excluding usedCreatureIds: Set<Int>) -> MatchingGameConfig {
         MatchingGameConfig.createRandom(
             from: allDinosaurs,
@@ -1595,6 +2233,22 @@ struct MatchingGameConfigs {
             id: "match-the-dinosaur",
             title: "Match the Dinosaur!",
             introAudio: "game-intro-matching",
+            excludingCreatureIds: usedCreatureIds
+        )
+    }
+
+    /// Dino Diets!: match 3 dinosaurs to the 5 diets (always all 5 shown). Same gameplay as Match the Dinosaur; easier because only 5 options.
+    static var dinoDietFeatures: MatchingGameConfig {
+        dinoDietFeatures(excluding: [])
+    }
+
+    static func dinoDietFeatures(excluding usedCreatureIds: Set<Int>) -> MatchingGameConfig {
+        MatchingGameConfig.createRandomDiet(
+            from: allDinosaurs,
+            allDietCharacteristics: allDietCharacteristics,
+            id: "match-the-diet",
+            title: "Dino Diets!",
+            introAudio: "game-intro-dino-diets",
             excludingCreatureIds: usedCreatureIds
         )
     }
@@ -1626,7 +2280,7 @@ struct MatchingGameConfigs {
         Characteristic(id: 106, type: "No Teeth", icon: "🦷", imageName: "ptero-char-no-teeth", dinosaurId: 102),
         // Quetzalcoatlus characteristics
         Characteristic(id: 107, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 103),
-        Characteristic(id: 108, type: "Big", icon: "🐘", imageName: "ptero-char-big", dinosaurId: 103),
+        Characteristic(id: 108, type: "Huge", icon: "🐘", imageName: "ptero-char-huge", dinosaurId: 103),
         Characteristic(id: 109, type: "Long Neck", icon: "🦒", imageName: "ptero-char-long-neck", dinosaurId: 103),
         // Rhamphorhynchus characteristics
         Characteristic(id: 110, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 104),

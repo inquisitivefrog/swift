@@ -50,6 +50,7 @@ Paths below are under `DinoGames/Assets/Audio/`. The app looks for `{path}.m4a` 
 | Success all matches | Feedback/success-all-matches | (Legacy; app uses good-job-you-got-them-all) |
 | Is heavier | Feedback/is-heavier | Weigh game |
 | They both weigh about the same | Feedback/they-both-weigh-about-the-same | Weigh game |
+| You can't be serious that will take forever | Feedback/you-cant-be-serious-that-will-take-forever | Measure the Dinosaur!: reject add when ratio > 1:5 |
 | Game intro pterosaur | Feedback/game-intro-pterosaur | Pterosaur matching (if used) |
 
 ### Dinosaurs/

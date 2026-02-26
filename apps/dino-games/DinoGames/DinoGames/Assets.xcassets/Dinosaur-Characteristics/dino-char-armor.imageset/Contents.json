@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "char-armor-80.png",
+      "filename" : "dino-char-armor-80.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "char-armor-160.png",
+      "filename" : "dino-char-armor-160.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "char-armor-240.png",
+      "filename" : "dino-char-armor-240.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

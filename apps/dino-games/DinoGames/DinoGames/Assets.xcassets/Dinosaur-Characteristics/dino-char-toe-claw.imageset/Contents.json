@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "char-toe-claw-80.png",
+      "filename" : "dino-char-toe-claw-80.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "char-toe-claw-160.png",
+      "filename" : "dino-char-toe-claw-160.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "char-toe-claw-240.png",
+      "filename" : "dino-char-toe-claw-240.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

@@ -84,18 +84,20 @@ enum DinosaurGameCatalog {
         case .level2:
             return [
                 .guess(GuessGameConfigs.nameThatDinosaur),      // Name That Dinosaur
-                .balance(BalanceGameConfigs.balanceDinosaur),   // Balance the Dinosaurs
-                .matrixMaterials(MatrixMaterialsGameConfigs.matrixMaterials), // Matrix Materials
+                .matching(MatchingGameConfigs.dinoDietFeatures), // Dino Diets!
+                .measure(MeasureGameConfigs.measureDinosaur),   // Measure the Dinosaur!
             ]
         case .level3:
             return [
                 .guess(GuessGameConfigs.dinoFootprints),        // Dino Footprints
                 .racing(RacingGameConfigs.racingDinosaurs),     // Racing Dinosaurs
+                .balance(BalanceGameConfigs.balanceDinosaur),   // Balance the Dinosaurs
             ]
         case .level4:
             return [
                 .dinoAges(DinoAgesGameConfigs.dinoAges),           // Dino Ages
                 .dinoFormations(DinoFormationsGameConfigs.dinoFormations), // Dino Formations
+                .matrixMaterials(MatrixMaterialsGameConfigs.matrixMaterials), // Matrix Materials
             ]
         case .level5:
             return [

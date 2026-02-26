@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "char-smart-80.png",
+      "filename" : "dino-char-smart-80.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "char-smart-160.png",
+      "filename" : "dino-char-smart-160.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "char-smart-240.png",
+      "filename" : "dino-char-smart-240.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

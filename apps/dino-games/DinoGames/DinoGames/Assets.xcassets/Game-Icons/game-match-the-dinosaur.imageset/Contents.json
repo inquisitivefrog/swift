@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "game-dino-habitat-240.png",
+      "filename" : "game-match-the-dinosaur-240.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "game-dino-habitat-320.png",
+      "filename" : "game-match-the-dinosaur-320.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
