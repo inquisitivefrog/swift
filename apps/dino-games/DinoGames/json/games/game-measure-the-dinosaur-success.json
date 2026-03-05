@@ -1,0 +1,33 @@
+{
+  "id": "measure_dino_v5_WIN_SCREEN_DUAL_CAP",
+  "game_title": "Measure The Dinosaur",
+  "image_purpose": "Celebrates a successful height match with both game branding and win message.",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": "LANDSCAPE_WIDESCREEN",
+  "scene_logic": {
+    "primary_subject": "A long-necked Diplodocus on the left, looking extremely impressed and wearing a big, toothy grin. Its tail is wagging happily in the background, creating a sense of joyous movement.",
+    "stack_composition": "A new, triumphant tower of 3 distinct dinosaurs, perfectly matched to the Diplodocus's height: A strong, purple Triceratops at the base, a bright yellow Parasaurolophus in the middle (with its crest proudly raised), and a tiny, fluffy blue Archaeopteryx perched perfectly on top, extending a wing in triumph to touch the target height.",
+    "character_vibe": "Pure, unadulterated celebration and joy. Dinosaurs are expressing delight; confetti-like leaves are gently falling around the stack."
+  },
+  "typography": {
+    "game_title_caption": {
+      "text_content": "Measure the Dinosaur",
+      "style": "3D playful, blocky font, slightly smaller scale than the 'Player Wins!' text.",
+      "color": "Vibrant fire-engine red with a thin white stroke.",
+      "casing": "Mixed Case ('Measure the Dinosaur')",
+      "placement": "Top-left corner, integrated into the sky or just above the Diplodocus's head, serving as branding."
+    },
+    "win_message_caption": {
+      "text_content": "Player Wins!",
+      "style": "Large, bold, 3D bubbly font with a high-gloss, metallic finish.",
+      "color": "Brilliant gold, fading slightly to orange at the bottom, with a thick white outline.",
+      "casing": "Mixed Case ('Player Wins!')",
+      "placement": "Prominently displayed in the upper-right quadrant, perhaps slightly angled for dynamic effect, with a celebratory 3D drop-shadow."
+    }
+  },
+  "technical_parameters": {
+    "lighting": "Ultra-bright, 'Victory' lighting with a subtle sunburst flare behind the triumphant stack. Sparkling highlights catch on the dinosaurs' surfaces.",
+    "surface_finish": "Clean, satin-matte digital character models. Absolutely no grit, no scales, no realism. Saturated and joyful colors.",
+    "negative_prompt": "scary, realistic, grit, scales, dark, muddy, blood, open mouths, angry, fighting, falling over, blurry text, all caps, all lowercase, dull red, brachiosaurus, ankylosaurus, edmontosaurus, allosaurus, compsognathus, velociraptor"
+  }
+}

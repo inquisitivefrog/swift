@@ -1,0 +1,33 @@
+[
+  {
+    "id": "micro_measure_v2_PERCH",
+    "species": "Microraptor",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "JIUFOTANG",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "TEMPERATE_FORESTS",
+    "pose_constraints": {
+      "posture": "Vertically perched on a thick, mossy tree branch or trunk; head slightly tilted, body upright.",
+      "orientation": "Direct 0-degree head-on frontal view. Wings (on both arms and legs) are folded tightly against the body.",
+      "camera_angle": "Eye-level or slightly low-angle to give a sense of its perch height.",
+      "body_logic": "Long, feathered tail hangs straight down, emphasizing verticality. Silhouette width max 200px.",
+      "framing_note": "The iridescent sheen of the black feathers should be highlighted with soft blues, purples, and greens, like a crow's plumage."
+    },
+    "character_details": {
+      "expression": "Intelligent, bird-like gaze; small, sharp teeth visible in a gentle smirk.",
+      "texture": "Soft, velvety down feathers on the body, transitioning to sleek, iridescent primary feathers on wings and tail.",
+      "features": [
+        "Four prominent, but folded, feathered wings (on forelimbs and hindlimbs).",
+        "Long, fan-tipped feathered tail.",
+        "Small, delicate head with sharp beak-like snout."
+      ]
+    },
+    "environmental_details": {
+      "ground": "The texture of a damp, moss-covered tree trunk or branch where it is perched.",
+      "flora": ["Vibrant green Ginkgo leaves and ferns in the soft-focus foreground and background, suggesting a dense forest."],
+      "sky": "Dappled light filtering through a dense canopy above, creating a serene, mystical forest atmosphere.",
+      "lighting": "Soft, diffused sunlight emphasizing the iridescent quality of the feathers, with subtle rim-lighting."
+    }
+  }
+]

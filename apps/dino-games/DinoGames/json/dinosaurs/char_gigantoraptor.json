@@ -1,0 +1,45 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {
+      "formation_id": "IREN_DABASU",
+      "habitat_id": "ARID_FLOODPLAIN"
+    },
+    "layer_3_action": {
+      "subject": "Young Gigantoraptor",
+      "features": [
+        "massive bird-like beak", 
+        "long slender neck", 
+        "vibrant tufts of clay-textured feathers on arms and tail", 
+        "long powerful legs", 
+        "large soulful eyes", 
+        "friendly expressive face"
+      ],
+      "action": "Striding gracefully across a sandy riverbank, looking back over its shoulder with a curious tilt of the head."
+    }
+  },
+  "flora_library": {
+    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
+    "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"]
+  },
+  "habitat_id": "ARID_FLOODPLAIN",
+  "physics": {
+    "altitude": "medium",
+    "water": "low"
+  },
+  "visuals": {
+    "ground": "Sandy soil with patches of dry, cracked mud",
+    "water": "A shallow, winding stream in the background",
+    "sky": "Warm, golden-hour light with a hazy horizon"
+  },
+  "formation_id": "IREN_DABASU",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Sandy with orange-tinted clay outcrops",
+    "color_palette": ["Golden Yellow", "Terracotta", "Muted Green"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "DJADOKHTA_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}

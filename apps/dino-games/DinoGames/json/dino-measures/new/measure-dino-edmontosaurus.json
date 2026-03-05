@@ -1,0 +1,23 @@
+{
+  "id": "edmontosaur_measure_v1_PROD",
+  "species": "edmontosaurus",
+  "tech_ref": "TALL_MEASURE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "LANCE_HELL_CREEK",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "COASTAL_SWAMP_FORESTS",
+  "pose": "Directly facing the camera in a symmetrical, upright 'pillar' stance. The head is perfectly centered at the top edge of the 1024px frame, and the feet are at the very bottom. The arms are tucked neatly against its sides and the tail is hidden directly behind the legs to keep the horizontal width under 300px, ensuring it remains perfectly centered for the 340x140px vertical crop.",
+  "character_details": {
+    "expression": "Signature friendly smirk with a gentle, patient look.",
+    "eyes": "Large, soulful, and expressive character eyes.",
+    "skin_texture": "Smooth, high-poly 3D surfaces with a subtle, rounded 'soft-scale' texture; appealing and tactile.",
+    "features": ["distinctive duck-bill snout", "soft fleshy crest on the head", "sturdy, thick-set body"]
+  },
+  "environmental_details": {
+    "ground": "Clean, light-colored silt and smooth river stones at the edge of a tidal inlet.",
+    "water": "A bright, sparkling tidal inlet behind the dinosaur, reflecting the midday sun and bouncing warm, clear light onto the subject to eliminate dark shadows.",
+    "flora": "Sparse Metasequoia and distant ferns kept strictly to the edges of the frame to ensure a clean, unobstructed central vertical corridor.",
+    "sky": "Vibrant, cloudless blue sky to provide a high-contrast background for the head and crest silhouette.",
+    "atmosphere": "Direct midday sun with high-key exposure. Warm golden rim-lighting defines the silhouette, making it pop from the background."
+  }
+}

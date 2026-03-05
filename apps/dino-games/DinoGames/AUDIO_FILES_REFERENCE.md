@@ -17,13 +17,16 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | `Feedback/you-did-it.m4a` | Balance game: balanced / ran out |
 | `Feedback/pick-a-dinosaur-first.m4a` | Matching (Land): tap before selecting dinosaur; Measure the Dinosaur!: tap right before left |
 | `Feedback/pick-a-pterosaur-first.m4a` | Matching (Air): tap before selecting pterosaur |
-| `Feedback/you-cant-be-serious-that-will-take-forever.m4a` | Measure the Dinosaur!: adding a dinosaur would need >5 to fill remaining height (keeps round short) |
+| `Feedback/you-cant-be-serious-that-will-take-forever.m4a` | Measure the Dinosaur!: stack has 6 dinosaurs, would take forever |
+| `Feedback/game-measure-stack-too-tall.m4a` | Measure the Dinosaur!: right stack is taller than left (overshot), round ends |
+| `Feedback/that-dinosaur-is-too-tall.m4a` | Measure the Dinosaur!: reject add when dinosaur would overshoot (too tall for remaining height) |
 | `Feedback/pick-another-one.m4a` | Matching: already-matched creature tapped |
 | `Feedback/is-heavier.m4a` | Weigh game: “X is heavier” |
+| `Feedback/is-as-tall-as.m4a` | Measure the Dinosaur!: "X is as tall as [stack]" (between left dino name and stack list) |
+| `Feedback/and.m4a` | Measure the Dinosaur!: "and" between stack items (e.g. "Compsognathus and Deinonychus") |
 | `Feedback/they-both-weigh-about-the-same.m4a` | Weigh game: same weight |
 | `Feedback/game-balance-pick-someone-heavier.m4a` | Balance: chose too light |
-| `Feedback/game-balance-good-job-keep-going.m4a` | Balance: good progress |
-| `Feedback/game-balance-this-game-will-end-quick.m4a` | Balance: only one left to add |
+| `Feedback/game-balance-good-job-keep-going.m4a` | Balance: good progress; Measure: heights don't match yet, keep trying (key: game-measure-good-job-keep-going) |
 | `Feedback/game-balance-see-I-told-you.m4a` | Balance: balanced with 1–2 items |
 | `Feedback/game-balance-almost-there.m4a` | Balance: nearly balanced |
 | `Feedback/starting-whistle.m4a` | Racing: start (if used) |
@@ -73,12 +76,20 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | `Games/game-can-you-match-each-pterosaur.m4a` | Match the Pterosaur intro |
 | `Games/game-racer-choose-your-first-dinosaur-to-race.m4a` | Racing: first dino |
 | `Games/game-racer-choose-your-second-dinosaur-to-race.m4a` | Racing: second dino |
-| `Games/racing-the-winner-is.m4a` | Racing: winner announcement |
+| `Games/game-racing-outside-track.m4a` | Racing pre-race: first dinosaur (outside track) |
+| `Games/game-racing-inside-track.m4a` | Racing pre-race: second dinosaur (inside track) |
+| `Games/game-racing-ready-set.m4a` | Racing pre-race: referee (ready, set) |
+| `Games/racing-the-winner-is.m4a` | Racing: winner announcement (legacy) |
+| `Games/game-racing-the-winner-is.m4a` | Racing: "The winner is…" before dino name |
 | `Games/game-matrix-which-one.m4a` | Matrix Materials in-game |
 | `Games/game-find-mama-return-the-egg.m4a` | Find Mama |
 | `Games/game-find-mama-help-the-paleontologist.m4a` | Find Mama |
 | `Games/game-give-this-nutritious-lunch.m4a` | Dino Lunch |
 | `Games/game-can-you-return-the-tooth.m4a` | Toothache |
+| `Games/game-dino-footprints-tap-the-footprint-to-hear-description.m4a` | Dino Footprints: Source Footprints hints intro (e.g. “Tap the footprint to hear its description”) |
+| `Games/game-dino-ages-tap-the-period-to-hear-description.m4a` | Dino Ages: Source Ages hints intro (e.g. “Tap the period to hear which dinosaurs lived there”) |
+| `Games/game-dino-ages-jurassic-dinosaurs.m4a` | Dino Ages: Source Ages — Jurassic period description (clades/dinosaurs found) |
+| `Games/game-dino-ages-cretaceous-dinosaurs.m4a` | Dino Ages: Source Ages — Cretaceous period description (clades/dinosaurs found) |
 
 ---
 

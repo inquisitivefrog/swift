@@ -1,0 +1,25 @@
+{
+  "id": "brachio_taller_v3_002",
+  "species": "brachiosaurus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "MORRISON_LJ",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "SEMI_ARID_PLAINS",
+  "pose": "Direct head-on 'hero' stance. The Brachiosaurus is facing the camera with its front legs centered and braced. The massive neck rises vertically through the exact center of the 1024px frame, with the head positioned at the very top edge. This creates a singular, concentrated pillar of content. The expression is friendly and majestic, looking slightly down toward the camera.",
+  "environmental_details": {
+    "ground": "Pale, sun-bleached tan earth with white caliche nodules. Kicked-up dust and fine sand particles around the massive front feet to add grounding and scale.",
+    "flora": "Sparse Fern Prairies kept to the far left and right edges of the 1024px square, ensuring the center 140px strip is 100% dinosaur and sky.",
+    "sky": "Vibrant, cloudless blue sky to provide a clean, high-contrast backdrop for the neck and head.",
+    "atmosphere": "Brilliant midday sun hitting the top of the head and shoulders, creating a sharp rim-light that emphasizes the 'leathery skin' textures and 3D volume."
+  }
+}
+
+{
+  "id": "brachio_taller_v3_RESET",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "pose": "Direct head-on 'hero' stance. The neck rises as a perfectly centered vertical pillar. The head is at the very top edge of the 1024px frame, tilted slightly down with a **distinctive friendly smirk** and **large, soulful eyes**. The massive front legs are centered at the bottom to ground the verticality.",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "WARM_SUNNY_EXPOSED",
+  "features": ["prominent friendly smirk", "smooth high-fidelity skin", "warm golden-hour rim light", "dust swirls at feet"]
+}

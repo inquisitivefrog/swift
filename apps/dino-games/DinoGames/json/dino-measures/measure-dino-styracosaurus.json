@@ -1,0 +1,34 @@
+[
+  {
+    "id": "styra_measure_v1_TOWER",
+    "species": "Styracosaurus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DINOSAUR_PARK",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_FLOODPLAINS",
+    "pose_constraints": {
+      "posture": "Sturdy, low-slung 'Pillar' stance; head tilted slightly upward to maximize the vertical display of the nasal horn and frill spikes.",
+      "orientation": "Direct 0-degree head-on frontal view. The massive nasal horn is the central vertical axis.",
+      "camera_angle": "Low-angle 'Hero' shot, looking slightly up to emphasize the height of the nasal horn and the surrounding frill spikes.",
+      "grounding": "Standing on flat, dark, damp soil; all four feet clustered tightly to avoid horizontal sprawl.",
+      "body_logic": "Torso, hips, and tail are completely occluded by the front chest and head. Silhouette must remain under 280px wide.",
+      "framing_note": "The nasal horn and the symmetrically arranged frill spikes must be fully visible and centered, forming the vertical 'crown' of the silhouette."
+    },
+    "character_details": {
+      "expression": "Stern but curious gaze; large, amber-colored eyes.",
+      "texture": "Thick, scaly hide with rough, battle-scarred texture around the frill and horns.",
+      "features": [
+        "Massive, prominent nasal horn pointing directly forward and slightly upward.",
+        "Six long, symmetrical spikes radiating from the frill's edge.",
+        "Small brow horns above the eyes."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Saturated dark brown soil mixed with fallen conifer needles and wet moss.",
+      "flora": ["Dense thickets of giant horsetails (Equisetum) and broad-leaved angiosperms (magnolias) in the soft-focus background"],
+      "sky": "Overcast, humid Late Cretaceous sky with soft, diffused lighting that highlights the texture of the horns.",
+      "lighting": "Subtle top-down light emphasizing the three-dimensional form of the horns and spikes, avoiding harsh shadows."
+    }
+  }
+]

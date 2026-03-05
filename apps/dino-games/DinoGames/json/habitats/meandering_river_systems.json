@@ -1,0 +1,13 @@
+{
+  "habitat_id": "MEANDERING_RIVER_SYSTEMS",
+  "physics": { 
+    "altitude": "low_altitude_plains", 
+    "water": "moderate_flow_winding",
+    "atmosphere": "high_humidity_haze"
+  },
+  "visuals": {
+    "ground": "Point bars of fine-grained light grey sand and silty clay",
+    "water": "Deep blue-green loops with stagnant, mirror-like oxbow lakes in the distance",
+    "features": ["Abandoned channels filled with dark organic mud", "Sandy point-bar beaches"]
+  }
+}

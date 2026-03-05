@@ -1,0 +1,34 @@
+[
+  {
+    "id": "troo_v3_ANIMATED_PILLAR",
+    "species": "Troodon",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "PRINCE_CREEK",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "ARCTIC_WOODLANDS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' orientation. Standing tall and slender with a light, agile poise.",
+      "orientation": "0-degree head-on frontal view. The neck is arched in a tight vertical 'S' so the head is centered above the chest.",
+      "camera_angle": "Eye-level. Focus on the binocular vision and the expressive, large eyes.",
+      "body_logic": "Width restricted to 280px. The long tail is held straight down or tucked behind the legs to stay within the narrow frame.",
+      "framing_note": "The snout is short and pointed directly forward, ensuring no horizontal clipping occurs in the 340px crop."
+    },
+    "character_details": {
+      "expression": "Intelligent and curious, with a friendly 'thinking' gaze. No bared teeth or aggression.",
+      "texture": "Smooth, sleek proto-feathers that look like soft velvet. The surfaces are clean with painterly highlights—no grit, no scales, no 'shrink-wrapped' muscle.",
+      "colors": "Midnight-teal feathers with a soft cream-colored underbelly. A striking 'mask' pattern around the eyes in warm amber.",
+      "features": [
+        "Extra-large, warm golden eyes with soft, round pupils.",
+        "Dainty, bird-like beak and slender neck.",
+        "Slim, athletic limbs that emphasize speed over bulk."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Soft, stylized snow with rounded, moss-covered stones (matching the stones in your Suchomimus image).",
+      "flora": ["Tall, slender, frozen reeds on the far edges to accentuate the verticality."],
+      "lighting": "Clear, crisp 'Magic Hour' lighting. A warm golden rim-light separates the cool teal feathers from the background.",
+      "sky": "Clear, vibrant twilight-purple sky."
+    }
+  }
+]

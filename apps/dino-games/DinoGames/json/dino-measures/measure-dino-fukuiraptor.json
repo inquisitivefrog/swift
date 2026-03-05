@@ -1,0 +1,28 @@
+[
+  {
+    "id": "fukui_measure_v2_KITADANI",
+    "species": "Fukuiraptor",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "KITADANI",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "MEANDERING_RIVER_SYSTEMS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' stance; arms held close to chest to highlight the hand-claws.",
+      "orientation": "Front-facing with a 5-degree head tilt to maintain the 300px horizontal center-zone.",
+      "grounding": "Standing on a flat, light-grey sandy point bar; level horizon line.",
+      "framing_note": "Ensure the tail is tucked directly behind the legs so no part of the body exceeds the 340px crop width."
+    },
+    "character_details": {
+      "expression": "Signature friendly smirk; inquisitive, bright eyes.",
+      "texture": "Smooth leathery skin with vibrant 'tiger-stripe' patterns for camouflage in river reeds.",
+      "features": ["Distinctive elongated hand claws", "Slender athletic frame"]
+    },
+    "environmental_details": {
+      "ground": "Fine-grained light grey sand with ripple marks.",
+      "background": "A mirror-like oxbow lake reflecting the blue sky, bordered by dark charcoal-colored shales.",
+      "flora": ["Stands of Brachyphyllum conifers and ferns at the river's edge"],
+      "sky": "Bright, high-key blue to make the vertical silhouette pop."
+    }
+  }
+]

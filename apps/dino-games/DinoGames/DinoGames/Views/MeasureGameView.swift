@@ -83,20 +83,70 @@ enum MeasureGameConfigs {
         }
     }
 
-    /// Dinosaurs: 9 clades, one dinosaur per clade. Uses MatchingGameConfigs.dinosaurCladeById and allDinosaurs.
+    /// Dinosaurs: 9 clades, one dinosaur per clade. Ensures round is winnable: at least one creature can be matched by a subset of the others (within 8%).
     private static func makeRoundDinosaurs(excluding usedIds: Set<Int>) -> [Dinosaur]? {
         let cladeById = MatchingGameConfigs.dinosaurCladeById
         let pool = MatchingGameConfigs.allDinosaurs.filter { d in
-            d.imageName != nil && d.imageName!.hasPrefix("dino-") && !usedIds.contains(d.id)
+            guard let imageName = d.imageName, imageName.hasPrefix("dino-"),
+                  !usedIds.contains(d.id) else { return false }
+            let measureName = "measure-\(imageName)"
+            return ImageAssetCache.imageExists(named: measureName)
         }
         let byClade = Dictionary(grouping: pool) { cladeById[$0.id] ?? .theropod }
         let clades = DinoClade.allCases
-        var chosen: [Dinosaur] = []
-        for clade in clades {
-            guard let candidates = byClade[clade], !candidates.isEmpty else { return nil }
-            chosen.append(candidates.randomElement()!)
+        var lastChosen: [Dinosaur] = []
+        for _ in 0..<30 {
+            var chosen: [Dinosaur] = []
+            for clade in clades {
+                guard let candidates = byClade[clade], !candidates.isEmpty else { return nil }
+                chosen.append(candidates.randomElement()!)
+            }
+            lastChosen = chosen
+            if isRoundWinnable(chosen) {
+                return chosen.shuffled()
+            }
         }
-        return chosen.shuffled()
+        return lastChosen.isEmpty ? nil : lastChosen.shuffled()
+    }
+
+    /// True if at least one creature in the round can be matched: some subset (1–5) of the others sums to within 8% of its height.
+    private static func isRoundWinnable(_ creatures: [Dinosaur]) -> Bool {
+        let heights = creatures.map { (id: $0.id, h: dinosaurEstimatedHeightMetersById[$0.id] ?? 1) }
+        for (refIdx, ref) in heights.enumerated() {
+            let others = heights.enumerated().filter { $0.offset != refIdx }.map { $0.element }
+            if canMatch(target: ref.h, from: others.map(\.h), threshold: sameHeightRelativeThreshold) {
+                return true
+            }
+        }
+        return false
+    }
+
+    /// True if some subset of `heights` (size 1–5) sums to within `threshold` of `target`.
+    private static func canMatch(target: Double, from heights: [Double], threshold: Double) -> Bool {
+        let maxCount = min(5, heights.count)
+        for count in 1...maxCount {
+            for combo in combinations(heights, count: count) {
+                let sum = combo.reduce(0, +)
+                let maxH = max(target, sum)
+                if maxH > 0, abs(target - sum) / maxH <= threshold {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    private static func combinations<T>(_ arr: [T], count: Int) -> [[T]] {
+        guard count <= arr.count, count > 0 else { return [] }
+        if count == 1 { return arr.map { [$0] } }
+        var result: [[T]] = []
+        for (i, x) in arr.enumerated() {
+            let rest = Array(arr[(i + 1)...])
+            for sub in combinations(rest, count: count - 1) {
+                result.append([x] + sub)
+            }
+        }
+        return result
     }
 
     /// Pterosaurs: one per group when grouping is defined (e.g. by family). Stub until pterosaur groups exist — returns nil so UI can show "not enough" or we add a simple shuffled take.
@@ -147,18 +197,22 @@ struct MeasureGameView: View {
 
     private var isGameOver: Bool { roundsCompleted >= maxRounds }
     private let gridColumns = 3
-    /// Measure comparison slot: 140×340 pt to match game-specific rectangular assets (140×340 px @1x). Fits on screen (2×140 + 70 + spacing).
+    /// Measure comparison slot: 140×340 pt to match game-specific rectangular assets (140×340 px @1x; some up to 200 wide).
     private let measureSlotWidth: CGFloat = 140
     private let measureAreaHeight: CGFloat = 340
-    private let measureCenterWidth: CGFloat = 70
+    /// Paleontologist ladder: increased from 70 to 110 pt width so it displays larger (room for 2×140 slots + center).
+    private let measureCenterWidth: CGFloat = 110
     private let measureHorizontalPadding: CGFloat = 24
-    private let measureSpacing: CGFloat = 2
+    /// Minimal spacing so dinosaurs almost touch the paleontologist (match Who Is Taller).
+    private let measureSpacing: CGFloat = 0
     /// Max dinosaurs on the right stack; after this we play "you can't be serious" and end the round.
-    private let measureRightStackMax = 5
+    private let measureRightStackMax = 6
     /// Left dinosaur never drawn smaller than this (pt) so it stays identifiable.
     private let measureMinLeftHeight: CGFloat = 80
     /// Each right-stack segment never smaller than this (pt); too-small choices are grayed out and rejected with audio.
+    /// Display floor is 48pt; rejection uses 32pt so small dinosaurs (e.g. Pedopenna 0.2m with Dryosaurus 2m) are allowed.
     private let measureMinSegmentHeight: CGFloat = 48
+    private let measureMinSegmentHeightForRejection: CGFloat = 32
     /// All creatures selected and played this game (left + right stack per round), for victory re-intro.
     @State private var victoryCreatures: [MeasureCreature] = []
     /// Victory sequence: -1 none, 1 = walking list (highlight + name), 2 = success image then good-job + crowd.
@@ -169,88 +223,72 @@ struct MeasureGameView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: 0) {
-                Spacer().frame(height: geometry.size.height * 0.05)
+            let safeHeight = max(geometry.size.height, 1)
+            let safeWidth = max(geometry.size.width, 1)
+            ScrollView(.vertical, showsIndicators: true) {
+                VStack(spacing: 0) {
+                    Spacer().frame(height: 8)
 
-                if isGameOver {
-                    measureVictoryView
-                } else {
-                    VStack(spacing: 16) {
-                        Text("Round \(roundsCompleted + 1) of \(maxRounds)")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
+                    if isGameOver {
+                        measureVictoryView
+                    } else {
+                        VStack(spacing: 8) {
+                            VStack(spacing: 4) {
+                                Text(gameConfig.title)
+                                    .font(.title2)
+                                    .multilineTextAlignment(.center)
+                                    .frame(maxWidth: .infinity)
+                                Text("Round \(roundsCompleted + 1) of \(maxRounds)")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
 
-                        if !currentRoundCreatures.isEmpty {
-                            // Grid: 3 columns, as many rows as needed (e.g. 9 → 3 rows, 6 → 2 rows)
-                            let rows = (currentRoundCreatures.count + gridColumns - 1) / gridColumns
-                            VStack(spacing: 12) {
-                                ForEach(0..<rows, id: \.self) { row in
-                                    HStack(spacing: 12) {
-                                        ForEach(0..<gridColumns, id: \.self) { col in
-                                            let index = row * gridColumns + col
-                                            if index < currentRoundCreatures.count {
-                                                creatureCard(currentRoundCreatures[index], index: index)
-                                            } else {
-                                                Color.clear
-                                                    .aspectRatio(1, contentMode: .fit)
-                                            }
+                            if !currentRoundCreatures.isEmpty {
+                                let columns = [GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6)]
+                                LazyVGrid(columns: columns, spacing: 6) {
+                                    ForEach(0..<currentRoundCreatures.count, id: \.self) { index in
+                                        let creature = currentRoundCreatures[index]
+                                        MeasureCreatureCard(
+                                            creature: creature,
+                                            displayImageName: creature.imageName,
+                                            isLeftReference: selectedFirst?.id == creature.id,
+                                            isInStack: selectedRightStack.contains(where: { $0.id == creature.id }),
+                                            isDisabled: !introWalkComplete || measureTapsBlocked,
+                                            isTooSmallToSee: isTooSmallToChoose(creature),
+                                            isIntroHighlighted: !introWalkComplete && introWalkStep == index
+                                        ) {
+                                            handleCreatureTap(creature)
                                         }
+                                        .aspectRatio(1, contentMode: .fit)
                                     }
                                 }
+                                .padding(.horizontal, 10)
+                                .frame(height: 330)
+
+                                // Bottom: left and right comparison (match Who Is Taller layout)
+                                measureComparisonArea(geometry: geometry)
+                                    .padding(.top, 8)
+                                    .padding(.horizontal, 24)
+                            } else {
+                                Text("Not enough creatures for this round.")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                    .multilineTextAlignment(.center)
+                                    .padding()
                             }
-                            .padding(.horizontal, 15)
-                            .padding(.top, 8)
-
-                            // Bottom: left and right comparison (320pt full size; one side scaled when heights differ)
-                            measureComparisonArea(geometry: geometry)
-                                .padding(.top, 12)
-                        } else {
-                            Text("Not enough creatures for this round.")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                                .multilineTextAlignment(.center)
-                                .padding()
                         }
+                        .frame(width: safeWidth)
                     }
-                    .frame(width: geometry.size.width)
-                }
 
-                Spacer(minLength: 20)
+                    Spacer(minLength: 8)
+                }
             }
+            .frame(minHeight: safeHeight)
         }
         .onAppear {
             startRound()
         }
-    }
-
-    /// Grid card: always uses shared square image (dino-{slug}). Grayed out when too small to compare with left.
-    private func creatureCard(_ creature: MeasureCreature, index: Int) -> some View {
-        let isIntroHighlighted = !introWalkComplete && introWalkStep == index
-        let tooSmall = selectedFirst != nil && isTooSmallToChoose(creature)
-        return Group {
-            if let name = creature.imageName, UIImage(named: name) != nil {
-                Image(name)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            } else {
-                Text(creature.icon)
-                    .font(.largeTitle)
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .aspectRatio(1, contentMode: .fit)
-        .background(Color(.systemGray6))
-        .cornerRadius(10)
-        .overlay(
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(isIntroHighlighted ? Color.accentColor : Color.clear, lineWidth: 4)
-        )
-        .opacity(tooSmall ? 0.4 : (isIntroHighlighted ? 1.0 : 0.9))
-        .contentShape(Rectangle())
-        .onTapGesture {
-            handleCreatureTap(creature)
-        }
-        .allowsHitTesting(introWalkComplete && !measureTapsBlocked && !tooSmall)
     }
 
     /// Bottom area: left creature | center | right tower (stack tallest-at-bottom). Tight spacing; slot content aligned toward center.
@@ -279,11 +317,12 @@ struct MeasureGameView: View {
         return max(rawScale, minScale)
     }
 
-    /// Center image: paleontologist on ladder holding tape measure. Use asset "measure-paleontologist-ladder" (e.g. 70×340 pt).
+    /// Center image: paleontologist on ladder holding tape measure. Use asset "measure-paleontologist-ladder" (110×340 pt for larger display).
+    /// Bottom-aligned so it lines up with left/right dinosaurs for height comparison.
     private var measureCenterImage: some View {
         let name = "measure-paleontologist-ladder"
         return Group {
-            if UIImage(named: name) != nil {
+            if ImageAssetCache.imageExists(named: name) {
                 Image(name)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -292,15 +331,15 @@ struct MeasureGameView: View {
                     .fill(Color.accentColor.opacity(0.5))
             }
         }
-        .frame(width: measureCenterWidth, height: measureAreaHeight)
+        .frame(width: measureCenterWidth, height: measureAreaHeight, alignment: .bottom)
     }
 
     /// Image for left/right of paleontologist only: prefer measure-dino-{slug} (140×340), else fall back to shared square.
     private static func measureImageName(for creature: MeasureCreature) -> String? {
         let base = creature.imageName ?? creature.name
         let measureName = "measure-\(base)"
-        if UIImage(named: measureName) != nil { return measureName }
-        if UIImage(named: base) != nil { return base }
+        if ImageAssetCache.imageExists(named: measureName) { return measureName }
+        if ImageAssetCache.imageExists(named: base) { return base }
         return nil
     }
 
@@ -322,7 +361,7 @@ struct MeasureGameView: View {
                             .font(.system(size: 120))
                     }
                 }
-                .frame(width: contentW, height: contentH)
+                .frame(width: contentW, height: contentH, alignment: .bottom)
             } else {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color(.systemGray5))
@@ -357,7 +396,8 @@ struct MeasureGameView: View {
                     VStack(spacing: 0) {
                         ForEach(Array(sorted.reversed().enumerated()), id: \.offset) { revIdx, c in
                             let sortedIdx = sorted.count - 1 - revIdx
-                            let alignBottom = (revIdx == 0 || revIdx == sorted.count - 1)
+                            // Bottom segment (touching ground) = last in VStack = revIdx == count-1; use .bottom so feet align
+                            let alignBottom = (revIdx == sorted.count - 1)
                             measureTowerCell(creature: c, width: measureSlotWidth, height: cellHeights[sortedIdx], alignBottom: alignBottom)
                         }
                     }
@@ -369,6 +409,7 @@ struct MeasureGameView: View {
     }
 
     /// Each cell: alignBottom = true for the bottom segment only so images stack flush (no gap between segments).
+    /// Tower cell: bottom segment uses .bottomLeading so feet touch ground and image sits next to paleontologist; upper segments use .topLeading.
     private func measureTowerCell(creature: MeasureCreature, width: CGFloat, height: CGFloat, alignBottom: Bool = true) -> some View {
         Group {
             if let name = Self.measureImageName(for: creature) {
@@ -380,7 +421,7 @@ struct MeasureGameView: View {
                     .font(.system(size: 60))
             }
         }
-        .frame(width: width, height: height, alignment: alignBottom ? .bottom : .top)
+        .frame(width: width, height: height, alignment: alignBottom ? .bottomLeading : .topLeading)
     }
 
     private func handleCreatureTap(_ creature: MeasureCreature) {
@@ -401,13 +442,13 @@ struct MeasureGameView: View {
             return
         }
         if creature.id == selectedFirst?.id {
-            if selectedRightStack.isEmpty {
+            if selectedRightStack.isEmpty, let first = selectedFirst {
+                // Same dinosaur tapped twice with empty stack: "X is as tall as X"
                 measureTapsBlocked = true
-                speechManager.onAudioFinished = {
+                playMeasureSameHeightSequence(left: first, stack: [creature]) {
                     self.speechManager.onAudioFinished = nil
                     self.advanceRound()
                 }
-                speechManager.speak("they-are-about-the-same-height")
             } else {
                 measureTapsBlocked = true
                 speechManager.onAudioFinished = {
@@ -436,11 +477,27 @@ struct MeasureGameView: View {
             speechManager.speak("thats-too-small-to-see")
             return
         }
+        if wouldOvershoot(creature) {
+            measureTapsBlocked = true
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = nil
+                self.measureTapsBlocked = false
+            }
+            speechManager.speak(audioKey: "that-dinosaur-is-too-tall", fallbackText: "That dinosaur is too tall.")
+            return
+        }
         selectedRightStack.append(creature)
-        compareHeightsAndContinue()
+        // Announce the creature just added before comparison feedback (e.g. good-job-keep-going)
+        measureTapsBlocked = true
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.compareHeightsAndContinue()
+        }
+        speechManager.speak(audioKey: creature.imageName ?? creature.name, fallbackText: creature.name)
     }
 
-    /// True if adding this creature to the right stack would give it a segment height < measureMinSegmentHeight.
+    /// True if adding this creature to the right stack would give it a segment height < measureMinSegmentHeightForRejection.
+    /// Uses a lower threshold than display floor so small dinosaurs (e.g. Pedopenna with Dryosaurus) are allowed.
     private func wouldSegmentBeTooSmall(_ creature: MeasureCreature) -> Bool {
         guard let first = selectedFirst else { return false }
         let leftH = dinosaurEstimatedHeightMetersById[first.id] ?? 1
@@ -448,7 +505,16 @@ struct MeasureGameView: View {
         let newStackTotal = selectedRightStack.reduce(0.0) { $0 + (dinosaurEstimatedHeightMetersById[$1.id] ?? 1) } + creatureH
         let towerH = leftH > 0 ? min(measureAreaHeight, measureAreaHeight * CGFloat(newStackTotal / leftH)) : measureAreaHeight
         let segmentH = newStackTotal > 0 ? towerH * CGFloat(creatureH / newStackTotal) : 0
-        return segmentH < measureMinSegmentHeight
+        return segmentH < measureMinSegmentHeightForRejection
+    }
+
+    /// True if adding this creature would make the right stack taller than the left reference (overshoot). Reject before adding so the user can try smaller dinosaurs.
+    private func wouldOvershoot(_ creature: MeasureCreature) -> Bool {
+        guard let first = selectedFirst else { return false }
+        let leftH = dinosaurEstimatedHeightMetersById[first.id] ?? 1
+        let creatureH = dinosaurEstimatedHeightMetersById[creature.id] ?? 1
+        let currentSum = selectedRightStack.reduce(0.0) { $0 + (dinosaurEstimatedHeightMetersById[$1.id] ?? 1) }
+        return currentSum + creatureH > leftH
     }
 
     /// True when first is chosen and this creature would be too small to display (gray out in grid).
@@ -458,10 +524,54 @@ struct MeasureGameView: View {
         let creatureH = dinosaurEstimatedHeightMetersById[creature.id] ?? 1
         if leftH <= 0 { return false }
         let segmentIfAlone = measureAreaHeight * CGFloat(creatureH / leftH)
-        return segmentIfAlone < measureMinSegmentHeight
+        return segmentIfAlone < measureMinSegmentHeightForRejection
     }
 
-    /// Compare sum of right-stack heights to left dinosaur: if about same → advance round; else play good-job, keep stack, allow another pick.
+    /// Plays "X is as tall as [stack]": left dino name → is-as-tall-as → stack (grouped by creature, count before name when > 1, "and" between groups).
+    private func playMeasureSameHeightSequence(left: MeasureCreature, stack: [MeasureCreature], onComplete: @escaping () -> Void) {
+        enum SeqItem {
+            case dino(key: String, fallback: String)
+            case phrase(String)
+        }
+        var sequence: [SeqItem] = []
+        sequence.append(.dino(key: left.imageName ?? left.name, fallback: left.name))
+        sequence.append(.phrase("is-as-tall-as"))
+
+        var seen = Set<Int>()
+        var groups: [(creature: MeasureCreature, count: Int)] = []
+        for c in stack {
+            if !seen.contains(c.id) {
+                seen.insert(c.id)
+                let count = stack.filter { $0.id == c.id }.count
+                groups.append((c, count))
+            }
+        }
+        for (i, (c, count)) in groups.enumerated() {
+            if i > 0 { sequence.append(.phrase("and")) }
+            if count > 1 { sequence.append(.phrase("\(count)")) }
+            sequence.append(.dino(key: c.imageName ?? c.name, fallback: c.name))
+        }
+
+        var index = 0
+        func playNext() {
+            guard index < sequence.count else {
+                onComplete()
+                return
+            }
+            let item = sequence[index]
+            index += 1
+            speechManager.onAudioFinished = { playNext() }
+            switch item {
+            case .dino(let key, let fallback):
+                speechManager.speak(audioKey: key, fallbackText: fallback)
+            case .phrase(let text):
+                speechManager.speak(text)
+            }
+        }
+        playNext()
+    }
+
+    /// Compare sum of right-stack heights to left dinosaur: if about same → advance round; if right > left (overshot) → advance round (can't recover); else play good-job, keep stack, allow another pick.
     private func compareHeightsAndContinue() {
         guard let first = selectedFirst else { return }
         let hLeft = dinosaurEstimatedHeightMetersById[first.id] ?? 1
@@ -470,18 +580,35 @@ struct MeasureGameView: View {
         let relDiff = maxH > 0 ? abs(hLeft - stackSum) / maxH : 0
         if relDiff <= sameHeightRelativeThreshold {
             measureTapsBlocked = true
-            speechManager.onAudioFinished = {
+            playMeasureSameHeightSequence(left: first, stack: selectedRightStack) {
                 self.speechManager.onAudioFinished = nil
                 self.advanceRound()
             }
-            speechManager.speak("they-are-about-the-same-height")
+        } else if stackSum > hLeft {
+            // Overshot: remove the last dinosaur so the player can try a smaller one instead of ending the round.
+            guard !selectedRightStack.isEmpty else {
+                measureTapsBlocked = true
+                speechManager.onAudioFinished = {
+                    self.speechManager.onAudioFinished = nil
+                    self.advanceRound()
+                }
+                speechManager.speak("game-measure-stack-too-tall")
+                return
+            }
+            _ = selectedRightStack.removeLast()
+            measureTapsBlocked = true
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = nil
+                self.measureTapsBlocked = false
+            }
+            speechManager.speak(audioKey: "that-dinosaur-is-too-tall", fallbackText: "That dinosaur is too tall. Try a smaller one.")
         } else {
             measureTapsBlocked = true
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 self.measureTapsBlocked = false
             }
-            speechManager.speak("game-balance-good-job-keep-going")
+            speechManager.speak("game-measure-good-job-keep-going")
         }
     }
 
@@ -531,9 +658,13 @@ struct MeasureGameView: View {
 
     private func advanceRound() {
         if let first = selectedFirst {
-            victoryCreatures.append(first)
+            if !victoryCreatures.contains(where: { $0.id == first.id }) {
+                victoryCreatures.append(first)
+            }
             for c in selectedRightStack {
-                victoryCreatures.append(c)
+                if !victoryCreatures.contains(where: { $0.id == c.id }) {
+                    victoryCreatures.append(c)
+                }
             }
         }
         selectedFirst = nil
@@ -625,7 +756,7 @@ struct MeasureGameView: View {
 
     private func measureVictoryRowImage(creature: MeasureCreature, isHighlighted: Bool) -> some View {
         Group {
-            if let name = creature.imageName, UIImage(named: name) != nil {
+            if let name = creature.imageName, ImageAssetCache.imageExists(named: name) {
                 Image(name)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -659,12 +790,12 @@ struct MeasureGameView: View {
 
     private var measureSuccessImageView: some View {
         Group {
-            if UIImage(named: "game-measure-the-dinosaur-success") != nil {
+            if ImageAssetCache.imageExists(named: "game-measure-the-dinosaur-success") {
                 Image("game-measure-the-dinosaur-success")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 280, height: 280)
-            } else if UIImage(named: "game-measure-the-dinosaur") != nil {
+            } else if ImageAssetCache.imageExists(named: "game-measure-the-dinosaur") {
                 Image("game-measure-the-dinosaur")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -694,6 +825,71 @@ struct MeasureGameView: View {
         } else {
             isPresented = false
         }
+    }
+}
+
+// MARK: - Creature Card (match Who Is Taller layout: image + text, compact grid cell)
+
+private struct MeasureCreatureCard: View {
+    let creature: MeasureCreature
+    let displayImageName: String?
+    /// True when this creature is the left reference (encircled; cannot add to stack again).
+    let isLeftReference: Bool
+    /// True when this creature is in the right stack (no encircling; can add again).
+    let isInStack: Bool
+    let isDisabled: Bool
+    /// True when this creature would be "too small to see" with the current left selection; card is grayed but tappable for feedback.
+    let isTooSmallToSee: Bool
+    let isIntroHighlighted: Bool
+    let onTap: () -> Void
+
+    private let imageSize: CGFloat = 72
+
+    var body: some View {
+        Button(action: onTap) {
+            VStack(spacing: 6) {
+                Group {
+                    if let name = displayImageName ?? creature.imageName, ImageAssetCache.imageExists(named: name) {
+                        Image(name)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: imageSize, height: imageSize)
+                            .clipped()
+                    } else {
+                        Text(creature.icon)
+                            .font(.system(size: 60))
+                            .frame(width: imageSize, height: imageSize)
+                    }
+                }
+                Text(creature.name)
+                    .font(.caption2)
+                    .foregroundColor(.primary)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+            }
+        }
+        .padding(5)
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(
+                    isLeftReference ? Color.blue.opacity(0.3) :
+                    isInStack ? Color.green.opacity(0.12) :
+                    (isIntroHighlighted ? Color.accentColor.opacity(0.08) : Color.clear)
+                )
+        )
+        .overlay(
+            Group {
+                if isLeftReference || isIntroHighlighted {
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(isLeftReference ? Color.blue : Color.accentColor, lineWidth: isIntroHighlighted ? 4 : 3)
+                } else if isInStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.green.opacity(0.5), lineWidth: 2)
+                }
+            }
+        )
+        .opacity((isDisabled || isTooSmallToSee) && !isLeftReference && !isIntroHighlighted ? 0.5 : 1.0)
+        .disabled(isDisabled && !isLeftReference)
     }
 }
 

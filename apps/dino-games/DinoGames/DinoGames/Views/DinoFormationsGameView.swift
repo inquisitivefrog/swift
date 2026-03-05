@@ -3,7 +3,7 @@
 //  DinoGames
 //
 //  Dino Formations: Pick a named formation. Three rounds; each round: 5 dinos (3 from formation, 2 from elsewhere).
-//  Player selects the 3 that are found in the formation shown. No repeat dinosaurs across rounds. Victory: walk 9 selected, then crowd-cheering.
+//  Player selects the 3 that are found in the formation shown. No repeat dinosaurs across rounds. Victory: walk 9 selected (~4 visible), then game card + good-job + crowd-cheering.
 //
 
 import SwiftUI
@@ -232,22 +232,23 @@ struct DinoFormationsGameView: View {
     @ViewBuilder
     private var gameBody: some View {
         if let f = formation, !isGameComplete {
-            formationImage(f)
-            Text(f.name)
-                .font(.title2)
-                .fontWeight(.semibold)
-                .foregroundColor(.primary)
-            Text("Round \(currentRound) of \(totalRounds)")
-                .font(.headline)
-                .foregroundColor(.secondary)
-                .padding(.vertical, 4)
-            if let name = displayedDinoName {
-                Text(name)
-                    .font(.title3)
+            VStack(spacing: 6) {
+                formationImage(f)
+                Text(f.name)
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.primary)
+                Text("Round \(currentRound) of \(totalRounds)")
+                    .font(.headline)
                     .foregroundColor(.secondary)
-                    .padding(.horizontal)
+                if let name = displayedDinoName {
+                    Text(name)
+                        .font(.title3)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal)
+                }
+                fiveStarLayout
             }
-            fiveStarLayout
         } else if isGameComplete {
             endSequenceView
         } else {
@@ -258,15 +259,15 @@ struct DinoFormationsGameView: View {
 
     private func formationImage(_ f: DinoFormation) -> some View {
         Group {
-            if UIImage(named: f.imageName) != nil {
+            if ImageAssetCache.imageExists(named: f.imageName) {
                 Image(f.imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 280, maxHeight: 140)
+                    .frame(maxWidth: 340, maxHeight: 220)
             } else {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color.brown.opacity(0.2))
-                    .frame(width: 200, height: 80)
+                    .frame(width: 260, height: 130)
                     .overlay(Text(f.name).font(.title2))
             }
         }
@@ -471,34 +472,53 @@ struct DinoFormationsGameView: View {
         playFormationsHintThenFindInFormation()
     }
 
-    // MARK: - End sequence (victory list with scrollbar; scroll highlighted row into view like Dino Ages)
+    // MARK: - End sequence (victory list ~3–4 rows visible, then game card + good-job + crowd-cheering)
+
+    private let victoryRowHeight: CGFloat = 100
+    private var victoryListVisibleHeight: CGFloat { 16 + 4 * victoryRowHeight + 3 * 12 + 16 }
 
     private var endSequenceView: some View {
-        VStack(spacing: 16) {
-            ScrollViewReader { proxy in
-                ScrollView {
-                    VStack(spacing: 12) {
-                        ForEach(Array(uniqueVictoryDinosaurs.enumerated()), id: \.element.id) { index, dino in
-                            DinoFormationsEndRowView(dino: dino, isHighlighted: endSequenceStep >= 1 && index == endHighlightIndex)
-                                .id(dino.id)
+        GeometryReader { _ in
+            VStack(spacing: 0) {
+                // Top: scrolling list (fixed height ~4 rows)
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        VStack(spacing: 12) {
+                            ForEach(Array(uniqueVictoryDinosaurs.enumerated()), id: \.element.id) { index, dino in
+                                DinoFormationsEndRowView(dino: dino, isHighlighted: endSequenceStep >= 1 && index == endHighlightIndex)
+                                    .id(index)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.vertical, 16)
+                    }
+                    .scrollIndicators(.visible)
+                    .frame(height: victoryListVisibleHeight)
+                    .onChange(of: endHighlightIndex) { _, newValue in
+                        guard newValue < uniqueVictoryDinosaurs.count else { return }
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            proxy.scrollTo(newValue, anchor: .center)
                         }
                     }
-                    .padding(.horizontal)
                 }
-                .scrollIndicators(.visible)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .onChange(of: endHighlightIndex) { _, newValue in
-                    guard newValue < uniqueVictoryDinosaurs.count else { return }
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        proxy.scrollTo(uniqueVictoryDinosaurs[newValue].id, anchor: .center)
+                .frame(maxWidth: .infinity)
+
+                // Bottom: after walk, show game card (success image if exists, else main game card)
+                Group {
+                    if endSequenceStep == 2 {
+                        dinoFormationsSuccessImageView
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    playGoodJobAndCrowdThenDismiss()
+                                }
+                            }
+                    } else {
+                        Spacer()
                     }
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            Text("Good job!")
-                .font(.title)
-                .fontWeight(.semibold)
-                .padding(.top, 8)
-                .padding(.bottom, 8)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
@@ -506,13 +526,34 @@ struct DinoFormationsGameView: View {
             endSequenceStep = 1
             endHighlightIndex = 0
             if uniqueVictoryDinosaurs.isEmpty {
-                playCrowdThenDismiss()
+                endSequenceStep = 2
             } else {
                 let d = uniqueVictoryDinosaurs[0]
                 speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
                 speechManager.onAudioFinished = { advanceEndHighlight() }
             }
         }
+    }
+
+    /// Game card at end: prefer game-dino-formations-success; fall back to game-dino-formations until success image is added.
+    private var dinoFormationsSuccessImageView: some View {
+        Group {
+            if ImageAssetCache.imageExists(named: "game-dino-formations-success") {
+                Image("game-dino-formations-success")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 280, height: 280)
+            } else if ImageAssetCache.imageExists(named: "game-dino-formations") {
+                Image("game-dino-formations")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 280, height: 280)
+            } else {
+                Text("🎉")
+                    .font(.system(size: 100))
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     /// Victory list with duplicates removed by id (first occurrence kept) so we don't show the same dinosaur twice.
@@ -529,24 +570,26 @@ struct DinoFormationsGameView: View {
             speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
             speechManager.onAudioFinished = { advanceEndHighlight() }
         } else {
-            playCrowdThenDismiss()
+            endSequenceStep = 2
         }
     }
 
-    private func playCrowdThenDismiss() {
-        endSequenceStep = 2
-        if let crowdURL = speechManager.urlForAudio(key: "crowd-cheering") {
+    private func playGoodJobAndCrowdThenDismiss() {
+        let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
+        let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
+        if let u1 = goodJobURL, let u2 = crowdURL {
+            speechManager.playTogether(url1: u1, url2: u2) {
+                self.speechManager.onAudioFinished = nil
+                self.isPresented = false
+            }
+        } else if let u = goodJobURL ?? crowdURL {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 self.isPresented = false
             }
-            speechManager.playAudioFile(url: crowdURL)
+            speechManager.playAudioFile(url: u)
         } else {
-            speechManager.speak("crowd-cheering")
-            speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                self.isPresented = false
-            }
+            isPresented = false
         }
     }
 }
@@ -588,7 +631,7 @@ private struct DinoFormationsCircleView: View {
 
     var body: some View {
         Group {
-            if let name = dino.imageName, UIImage(named: name) != nil {
+            if let name = dino.imageName, ImageAssetCache.imageExists(named: name) {
                 Image(name)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -615,6 +658,7 @@ private struct DinoFormationsCircleView: View {
 private struct DinoFormationsEndRowView: View {
     let dino: Dinosaur
     let isHighlighted: Bool
+    private let rowHeight: CGFloat = 100
 
     var body: some View {
         HStack(spacing: 16) {
@@ -630,6 +674,7 @@ private struct DinoFormationsEndRowView: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
+        .frame(height: rowHeight)
         .background(RoundedRectangle(cornerRadius: 12).fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear))
         .overlay(RoundedRectangle(cornerRadius: 12).stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2))
     }

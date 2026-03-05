@@ -1,0 +1,27 @@
+[
+  {
+    "id": "spino_v2_STYLE_SAFE",
+    "species": "Spinosaurus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "BAHARIYA",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "MANGROVE_SWAMPS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' orientation; chest forward, head tilted up with a friendly grin.",
+      "orientation": "0-degree head-on view to keep the width narrow (max 260px).",
+      "camera_angle": "Low-angle looking up, making the sail look like a big, colorful fan.",
+      "body_logic": "Snout is rounded and shortened for a 'cute' profile. Tail and legs are hidden behind the bulk of the torso."
+    },
+    "character_details": {
+      "expression": "Big, happy, curious eyes; a gentle closed-mouth smile (no scary teeth).",
+      "texture": "Clean, 'vinyl-toy' skin texture. Color: Vibrant teal body with a sunset-gradient sail (yellow to pink).",
+      "features": ["Large, rounded sail", "Thick, sturdy neck", "Friendly, soft-edged snout"]
+    },
+    "environmental_details": {
+      "ground": "Stylized 'blue-glass' water with chunky, bright green mangrove leaves.",
+      "lighting": "Warm 'Golden Hour' glow; soft purple ambient fill in the shadows to keep it looking 'sweet'.",
+      "sky": "Bright, cloudless turquoise sky."
+    }
+  }
+]

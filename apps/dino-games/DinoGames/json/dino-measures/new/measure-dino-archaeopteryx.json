@@ -1,0 +1,16 @@
+{
+  "id": "archaeo_taller_v3_002",
+  "species": "archaeopteryx",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "SOLNHOFEN",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "COASTAL_LAGOONS",
+  "pose": "Extremely compact vertical perch on a slender, sharp limestone pinnacle. The Archaeopteryx is facing the camera, with its wings **folded tightly against its body**, forming a narrow, streamlined silhouette. Its long, feathered tail hangs perfectly straight down, serving as a vertical extension. The head is held high, looking slightly up and positioned at the very top of the 1024px frame. This creates a single, unbroken vertical line of content.",
+  "environmental_details": {
+    "ground": "A sharp, narrow pinnacle of cream-colored Solnhofen limestone, reflecting maximum light. The pinnacle is perfectly centered to support the verticality.",
+    "flora": "Absolutely no flora in the immediate foreground or mid-ground. Only tiny, distant scrub visible on the horizon, well outside the crop zones.",
+    "sky": "Expansive, brilliant blue sky directly behind the Archaeopteryx, providing high contrast for its silhouette.",
+    "atmosphere": "Sharp, direct midday sun to highlight the detailed 'soft downy feathers' and the contours of its body, emphasizing its compact form."
+  }
+}

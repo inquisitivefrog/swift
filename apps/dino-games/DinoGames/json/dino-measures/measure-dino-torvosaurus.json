@@ -1,0 +1,34 @@
+[
+  {
+    "id": "torvo_v1_SAVAGE_PILLAR",
+    "species": "Torvosaurus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MORRISON",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "FERN_SAVANNAS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' orientation. Standing on powerful hind legs with the chest puffed forward.",
+      "orientation": "0-degree head-on frontal view. The head is tilted slightly down (10 degrees) to show the top of the broad skull.",
+      "camera_angle": "Low-angle 'Hero' shot to emphasize the bulk and power of the chest and neck.",
+      "body_logic": "Width is kept under 320px by keeping the arms tucked tight to the ribs and the tail hidden directly behind the torso. The deep skull is the focal point.",
+      "framing_note": "The snout is centered and pointing toward the camera, ensuring the length doesn't break the horizontal bounds."
+    },
+    "character_details": {
+      "expression": "Grumpy and imposing; a heavy brow ridge over large, glowing orange eyes. A 'tough guy' personality.",
+      "texture": "Clean, matte-finish skin with a heavy, 'armored' feel on the shoulders. Soft, painterly shadows define the muscle without adding grit.",
+      "colors": "Charcoal-grey body with a bold, burnt-sienna 'war paint' pattern over the eyes and down the snout. Light tan underbelly.",
+      "features": [
+        "Deep, robust megalosaurid skull with a heavy, squared-off snout.",
+        "Thick, powerful neck muscles.",
+        "Short, muscular arms with large, simplified claws tucked close."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Dry, cracked earth with a few low-lying, bright green Jurassic ferns.",
+      "flora": ["Oversized, simplified cycad trees in the distant background to add verticality."],
+      "lighting": "Harsh, high-contrast afternoon sun. Strong rim-lighting on the top of the head and shoulders to separate the dark body from the sky.",
+      "sky": "Bright, clear cobalt-blue sky."
+    }
+  }
+]

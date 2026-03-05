@@ -1,0 +1,27 @@
+{
+  "id": "morrison_v2_STYLE_RESET",
+  "scene_name": "The Golden Morrison Horizon",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "period": "LATE_JURASSIC",
+  "dimensions": "LANDSCAPE_WIDESCREEN",
+  "pose_constraints": {
+    "composition": "Layered depth. Foreground: Allosaurus and Dryosaurus in a sleek 'stealth' profile. Midground: Stegosaurus standing tall. Background: The Sauropod cluster (Brachiosaurus, Brontosaurus, Apatosaurus, Camarasaurus).",
+    "allosaurus_logic": "Foreshortened stalking pose, low to the ground. Sleek, athletic silhouette—no chunky or lumpy skin.",
+    "sauropod_logic": "Vertical orientation for necks. The Brachiosaurus should be the highest peak in the background."
+  },
+  "character_details": {
+    "texture": "Ultra-clean, satin-finish skin and velvety proto-feathers. Surfaces should have smooth light falloff, looking like a high-budget 3D animated film render. ZERO scales, ZERO grit.",
+    "expression": "Intelligent and dignified. Soft, warm golden eyes for all herbivores. The Allosaurus has a focused, cunning (not scary) gaze.",
+    "colors": {
+      "sauropods": "Palettes of warm terracotta, slate blue, and cream.",
+      "stegosaurus": "Emerald green body with vibrant, 'painted' sunrise-orange plates.",
+      "allosaurus": "Deep charcoal with a striking red crest above the eyes."
+    }
+  },
+  "environmental_details": {
+    "lighting": "Extreme 'Magic Hour' lighting. A powerful, warm golden rim-light must trace every dinosaur to separate them from the environment.",
+    "atmosphere": "Vibrant and saturated. The 'Morrison' earth should be a rich burnt-sienna, not a dull brown.",
+    "flora": "Stylized, broad-leafed prehistoric plants and towering araucaria trees with a 'painted' feel."
+  },
+  "negative_prompt": "photorealistic, hyper-detailed skin, scales, bumps, grit, dirt, dull colors, grey skies, scary, horror, 1990s CGI, plastic toy, museum replica, sharp teeth, blood, aggression"
+}

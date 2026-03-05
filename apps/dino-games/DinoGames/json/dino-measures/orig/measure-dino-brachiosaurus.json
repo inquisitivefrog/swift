@@ -1,0 +1,16 @@
+{
+  "id": "brachio_taller_001",
+  "species": "Brachiosaurus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "SUNNY_EXPOSED",
+  "formation_ref": "MORRISON_LJ",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "SEMI_ARID_PLAINS",
+  "pose": "Full vertical pose, head reaching high into the sky. The Brachiosaurus stands on pale, dusty tan earth, with its forelegs slightly splayed for stability. The long neck should stretch the full height of the 1024px frame, with a clear view of its head against the bright sky.",
+  "environmental_details": {
+    "ground": "Light tan, dusty earth with sparse, short scrub vegetation.",
+    "flora": "Distant, scattered cycads and low-lying ferns.",
+    "sky": "Clear, vibrant blue sky with minimal cloud cover to emphasize sunlight.",
+    "atmosphere": "Bright, open canopy with crisp, short shadows under the midday sun."
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "id": "lambeo_measure_v1_TOWER",
+  "species": "Lambeosaurus",
+  "tech_ref": "TALL_MEASURE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "DINOSAUR_PARK",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "COASTAL_FLOODPLAINS",
+  "pose_constraints": {
+    "posture": "Strictly vertical 'Pillar' stance; standing tall on hind legs (bipedal browsing pose).",
+    "orientation": "Direct 0-degree head-on frontal view. The beak is centered.",
+    "camera_angle": "Low-angle 'Hero' shot looking up, making the crest the vertical peak of the image.",
+    "grounding": "Hind feet planted on soft, sandy riverbank soil; tail is tucked straight back/unseen.",
+    "body_logic": "The long torso and tail are completely occluded by the chest and upright neck. Silhouette width max 280px.",
+    "framing_note": "The 'hatchet' crest must be fully visible and centered, catching the primary light source."
+  },
+  "character_details": {
+    "expression": "Gentle, inquisitive smirk; large, friendly 'cow-like' eyes.",
+    "texture": "Fine, pebbly scales with a vibrant, sunset-colored gradient on the crest (reds and yellows).",
+    "features": [
+      "Large, hatchet-shaped hollow crest",
+      "Broad, duck-like bill",
+      "Tall, slender neck"
+    ]
+  },
+  "environmental_details": {
+    "ground": "Light tan sand with scattered redwood needles and small ferns.",
+    "flora": ["Tall Metasequoia (Dawn Redwood) trunks in the background to emphasize height"],
+    "sky": "Clear, bright Late Cretaceous afternoon; golden hour light hitting the crest.",
+    "lighting": "Strong rim-lighting to separate the green body from the forest background."
+  }
+}

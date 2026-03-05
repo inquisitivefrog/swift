@@ -1,0 +1,34 @@
+[
+  {
+    "id": "trex_v4_APEX_STRIDE",
+    "species": "Tyrannosaurus Rex",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "HELL_CREEK",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "WOODLAND_FLOODPLAINS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' orientation. Captured mid-stride, leaning forward dynamically. One powerful hind leg is taking a step, creating vertical motion.",
+      "orientation": "Three-quarter profile view (20-degree angle). This reveals the powerful musculature of the neck and thigh without making the body too wide.",
+      "camera_angle": "Low-angle 'Hero' shot to emphasize its towering height and raw power. The camera is slightly behind and below, looking up and forward.",
+      "body_logic": "Width strictly capped at 320px. The head is held level with the body, mouth closed, showing a powerful jawline. The tail arcs slightly upward for balance, staying within the frame.",
+      "framing_note": "The massive head and powerful leading leg are the key focal points, creating a strong diagonal and vertical line."
+    },
+    "character_details": {
+      "expression": "Fiercely focused and determined; a confident gaze. Eyes are bright, intelligent, and amber-gold with a soft spec-glint.",
+      "texture": "Sleek, matte-satin skin with sophisticated, smooth muscle definition. No scales, no grit, no 'shrink-wrapped' look. The skin should look strong but smooth, like polished stone.",
+      "colors": "Deep emerald-green body with subtle, darker pine-green stripes (like camouflage) along the back. A clean, warm beige underbelly.",
+      "features": [
+        "Iconic, powerful, and sleek skull with a strong jawline (mouth closed).",
+        "Thick, muscular neck flowing into a streamlined, athletic body.",
+        "Small, dynamic forelimbs held close to the chest, but clearly visible."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Forest floor with soft, dappled sunlight, featuring stylized, broad-leafed ferns and smooth, river-worn rocks.",
+      "flora": ["Tall, slender, elegant prehistoric trees in the blurred background, reinforcing vertical lines."],
+      "lighting": "Bright, natural 'Mid-morning Sun' lighting. Strong, clean rim-lighting on the top of its head, back, and the leading leg highlights its dynamic form.",
+      "sky": "Clear, vibrant cerulean-blue sky with a soft, warm glow near the horizon."
+    }
+  }
+]

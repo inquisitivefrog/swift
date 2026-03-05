@@ -1,0 +1,38 @@
+{
+  "id": "measure_dino_v2_SILLY_STACK_CAPTION",
+  "game_title": "Measure The Dinosaur",
+  "image_purpose": "Introduces the height-matching game with a humorous tone, featuring game title.",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": "LANDSCAPE_WIDESCREEN",
+  "composition": {
+    "primary_dinosaur": "A colossal, friendly-looking Brachiosaurus (or Apatosaurus) filling the left two-thirds of the frame. Its head is tilted in exaggerated confusion, with a large, expressive eye looking down at the stack.",
+    "stacked_dinosaurs": "On the right, a comically precarious, leaning tower of 4-5 smaller, distinct dinosaurs, stacked vertically. Each dinosaur in the stack has a slightly bewildered, straining, or comically determined expression. The stack should appear wobbly but stable enough for the image.",
+    "stack_order_suggestion": [
+      "Base: A sturdy Ankylosaurus (annoyed).",
+      "Middle: An Edmontosaurus (surprised).",
+      "Upper Middle: An Allosaurus (begrudgingly cooperative).",
+      "Top: A Velociraptor (determined but dizzy)."
+    ],
+    "perspective": "Slightly low-angle to emphasize height difference and the towering Brachiosaurus.",
+    "text_overlay": {
+      "caption": "Measure the Dinosaur",
+      "font_style": "Bold, playful, animated 3D font.",
+      "text_case": "Mixed case (e.g., 'Measure the Dinosaur').",
+      "color": "Bright, vivid red with a subtle white or light outline for contrast.",
+      "position": "Upper center, integrated naturally into the sky or above the stacked dinosaurs, not obscuring any dinosaur faces. It should look like part of the scene, not just pasted on.",
+      "effect": "Subtle 3D depth, casting a soft, playful shadow."
+    },
+    "overall_mood": "Whimsical, humorous, slightly absurd, and very friendly."
+  },
+  "character_details": {
+    "expressions": "Exaggerated confusion, determination, mild discomfort, or bewilderment on all dinosaurs' faces. Big, cartoonish eyes.",
+    "texture": "Smooth, vibrant, clean animated-style textures. Soft, matte skin/feathers. No scales, no grit, no scary elements.",
+    "colors": "Bright, playful color palette. Contrast between the large dinosaur and the stacked ones. Think vibrant greens, blues, oranges, and yellows."
+  },
+  "environmental_details": {
+    "background": "Simple, bright, stylized prehistoric landscape. Rolling green hills, a few cartoonish palm trees, and a clear, happy blue sky with fluffy white clouds.",
+    "lighting": "Bright, even, cheerful daylight. Soft, friendly shadows.",
+    "ground": "Clean, stylized green grass."
+  },
+  "negative_prompt": "serious, aggressive, scary, realistic, hyper-detailed, grim, dull colors, dark, muddy, violent, sharp teeth, blood, fighting, falling, collapsing stack (should look precarious but stable for the image)"
+}

@@ -1,0 +1,22 @@
+{
+  "id": "corytho_taller_v3_RESET",
+  "species": "corythosaurus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "WARM_SUNNY_EXPOSED",
+  "formation_ref": "DINOSAUR_PARK",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "COASTAL_LOWLANDS",
+  "pose": "Directly facing the camera in a tall, bipedal 'alert' stance. The iconic semi-circular crest is positioned at the very top of the 1024px frame, perfectly centered. The neck and chest are stacked vertically below it. The front limbs are held up and tucked toward the center-line to ensure they remain visible in the 140px narrow crop.",
+  "character_details": {
+    "expression": "Warm, curious, and friendly smirk.",
+    "eyes": "Large, soulful 'character' eyes that convey intelligence.",
+    "skin_texture": "Smooth, high-poly 3D surfaces with a subtle, pebbled texture on the crest; avoiding any hyper-realistic grain.",
+    "features": ["tall helmet-like crest", "duck-billed snout", "slender forelimbs", "powerful bipedal legs"]
+  },
+  "environmental_details": {
+    "ground": "Light-colored 'popcorn' clay and sun-bleached silt. A 'nice touch' of warm golden dust kicked up around the three-toed feet.",
+    "flora": "Sparse ferns and distant conifers kept strictly to the far edges of the 1024px square.",
+    "sky": "Deep, vibrant blue sky to highlight the silhouette of the crest.",
+    "atmosphere": "Warm, high-key midday sun with golden rim-lighting to emphasize the 3D volume and separate the crest from the sky."
+  }
+}

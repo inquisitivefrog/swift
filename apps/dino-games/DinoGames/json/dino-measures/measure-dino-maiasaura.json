@@ -1,0 +1,34 @@
+[
+  {
+    "id": "maiasaura_measure_v1_TOWER",
+    "species": "Maiasaura",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TWO_MEDICINE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "VOLCANIC_FLOODPLAINS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' stance; standing tall on hind legs (bipedal browsing/alert pose), head held high.",
+      "orientation": "Direct 0-degree head-on frontal view. The beak is centered and prominent.",
+      "camera_angle": "Low-angle 'Hero' shot, looking slightly up to emphasize the height and presence.",
+      "grounding": "Hind feet planted on coarse, volcanic ash-rich soil; tail tucked straight back/unseen.",
+      "body_logic": "The long torso and tail are completely occluded by the chest and upright neck. Silhouette width max 280px.",
+      "framing_note": "The small, solid crest between the eyes must be clearly visible and centered at the top of the head."
+    },
+    "character_details": {
+      "expression": "Gentle, alert, and nurturing gaze; large, expressive 'cow-like' eyes.",
+      "texture": "Fine, pebbly scales with soft, earthy tones (grey-greens and browns); subtle light scarring on the snout from foraging.",
+      "features": [
+        "Small, solid bony crest between the eyes (more pronounced in males).",
+        "Broad, duck-like bill for cropping vegetation.",
+        "Sturdy, pillar-like hind legs."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Light grey-brown soil, representing volcanic ash deposits, with sparse, tough-looking ferns.",
+      "flora": ["Scattered conifer trees (like pines or cedars) and smaller flowering plants in the distant background."],
+      "sky": "Clear, bright Late Cretaceous sky with a hint of atmospheric haze, characteristic of a volcanic region.",
+      "lighting": "Warm, diffused sunlight from a high angle, casting soft shadows and highlighting textures without harshness."
+    }
+  }
+]

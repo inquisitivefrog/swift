@@ -43,9 +43,11 @@ struct WeighGameView: View {
     @State private var selectedLeftItem: WeighableItem?
     @State private var selectedRightItem: WeighableItem?
     @State private var isWeighing = false
-    @State private var seesawAngle: Double = 0 // -15 to +15 degrees
+    @State private var seesawAngle: Double = 0 // negative = left down, positive = right down
     @State private var leftItemOffset: CGFloat = 0
+    @State private var leftItemOffsetX: CGFloat = 0 // for fly arc when light on left (parabola to the right)
     @State private var rightItemOffset: CGFloat = 0
+    @State private var rightItemOffsetX: CGFloat = 0 // for slide-down-the-arm effect (heavy left, light right)
     @State private var leftItemOpacity: Double = 1.0
     @State private var rightItemOpacity: Double = 1.0
     @State private var showSpeedLines = false
@@ -77,7 +79,7 @@ struct WeighGameView: View {
         guard gameConfig.id == "weigh-dinosaur" else { return item.imageName }
         let base = item.imageName ?? item.name
         let weighName = "weigh-\(base)"
-        let found = UIImage(named: weighName) != nil
+        let found = ImageAssetCache.imageExists(named: weighName)
         #if DEBUG
         if !found {
             print("⚠️ Weigh image '\(weighName)' not found, using fallback '\(item.imageName ?? base)'")
@@ -89,8 +91,8 @@ struct WeighGameView: View {
     /// Scale factor for seesaw image. When both selected: heavier gets full size (1.2), lighter scales down by weight ratio; min 0.55 keeps small dinos visible.
     private func seesawImageScale(for item: WeighableItem, relativeTo other: WeighableItem?) -> CGFloat {
         guard gameConfig.id == "weigh-dinosaur" else { return 1.0 }
-        guard let kg = dinosaurEstimatedWeightKgById[item.id] else { return 1.0 }
-        if let other = other, let otherKg = dinosaurEstimatedWeightKgById[other.id] {
+        guard let kg = MatchingGameConfigs.dinosaurEstimatedWeightKgById[item.id] else { return 1.0 }
+        if let other = other, let otherKg = MatchingGameConfigs.dinosaurEstimatedWeightKgById[other.id] {
             let heavierKg = max(kg, otherKg)
             let lighterKg = min(kg, otherKg)
             if kg >= otherKg {
@@ -110,10 +112,12 @@ struct WeighGameView: View {
 
     var body: some View {
         GeometryReader { geometry in
+            let safeWidth = max(geometry.size.width, 1)
+            let safeHeight = max(geometry.size.height, 1)
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(spacing: 0) {
                     Spacer()
-                        .frame(height: 12)
+                        .frame(height: 32)
                     
                     // Top - Item grid or victory message (same as Match the Dinosaur: Good job! + row of dinos)
                     if isGameOver {
@@ -121,9 +125,17 @@ struct WeighGameView: View {
                     } else {
                     // Grid: 3 columns, fixed height so all 3 rows are visible (no scroll around grid)
                     VStack(spacing: 6) {
-                        Text("Round \(roundsCompleted + 1) of \(maxRounds)")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
+                        VStack(spacing: 4) {
+                            Text(gameConfig.title)
+                                .font(.title2)
+                                .multilineTextAlignment(.center)
+                                .frame(maxWidth: .infinity)
+                            Text("Round \(roundsCompleted + 1) of \(maxRounds)")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .frame(height: 56)
                         VStack(spacing: 6) {
                             ForEach(0..<((displayItems.count + 2) / 3), id: \.self) { row in
                                 HStack(spacing: 6) {
@@ -150,19 +162,22 @@ struct WeighGameView: View {
                         }
                         .padding(.horizontal, 10)
                     }
-                    .frame(height: 360) // Room for 3 full rows + label; compact so seesaw fits on screen
-                    .frame(width: geometry.size.width)
+                    .frame(height: 422) // Room for game title + Round label + 3 full rows; compact so seesaw fits on screen
+                    .frame(width: safeWidth)
                 }
                 
                 if !isGameOver {
-                    // Compact spacer between grid and seesaw so seesaw stays visible
+                    // Expandable spacer: pushes seesaw toward bottom, ensures no collision with grid
                     Spacer()
-                        .frame(height: 16)
+                        .frame(minHeight: 36)
                     
                     // Bottom - Seesaw area (fixed min height so seesaw never slides off screen)
-                    let beamW = max(geometry.size.width * 0.28, 100)
+                    let beamW = max(safeWidth * 0.28, 100)
                     let sideMargin: CGFloat = 12
-                    let maxDinoWidth = max(100, geometry.size.width - 2 * beamW - 2 * sideMargin) // Cap so wide sauropod images fit with margin
+                    let beamTopY: CGFloat = -9       // Beam height 18, center 0 → top at -9
+                    let seesawSeatHeight: CGFloat = 12
+                    let seatTopY = beamTopY - seesawSeatHeight  // Dinosaur bottom aligns with top of seat (sitting surface)
+                    let maxDinoWidth = max(100, safeWidth - 2 * beamW - 2 * sideMargin) // Cap so wide sauropod images fit with margin
                     VStack {
                         Spacer()
                             .frame(minHeight: 10) // Small spacer
@@ -172,9 +187,9 @@ struct WeighGameView: View {
                             SeesawSupportView()
                                 .offset(y: 45)
                             
-                            // Beam + seats rotate as one unit around fulcrum; fulcrum stays fixed
+                            // Beam + seats + dinosaurs rotate as one unit around fulcrum; fulcrum stays fixed
                             ZStack {
-                                // Rotating assembly: beam and seats tilt together so seats stay on top of arm
+                                // Rotating assembly: beam, seats, and dinosaur images tilt together
                                 ZStack {
                                     // Beam (arm)
                                     ZStack {
@@ -189,15 +204,91 @@ struct WeighGameView: View {
                                             .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.brown.opacity(0.6), lineWidth: 1))
                                             .offset(x: beamW / 2)
                                     }
-                                    // Seats (above beam center; seat bottom touches beam top)
+                                    // Seats (above beam; center y=-15, height seesawSeatHeight → seat top at beamTopY - seesawSeatHeight; drawn on top so both dinosaur images remain visible)
                                     RoundedRectangle(cornerRadius: 4)
                                         .fill(Color.brown.opacity(0.9))
-                                        .frame(width: 56, height: 12)
+                                        .frame(width: 56, height: seesawSeatHeight)
                                         .offset(x: -beamW, y: -15)
+                                        .zIndex(10)
                                     RoundedRectangle(cornerRadius: 4)
                                         .fill(Color.brown.opacity(0.9))
-                                        .frame(width: 56, height: 12)
+                                        .frame(width: 56, height: seesawSeatHeight)
                                         .offset(x: beamW, y: -15)
+                                        .zIndex(10)
+                                    
+                                    // Left side item (on left seat) — inside rotating assembly so it tilts with seesaw
+                                    if let leftItem = selectedLeftItem {
+                                        let scale = seesawImageScale(for: leftItem, relativeTo: selectedRightItem)
+                                        let idealHeight = 130 * scale
+                                        let idealWidth = idealHeight * 2
+                                        let rightIdealW = selectedRightItem.map { 130 * seesawImageScale(for: $0, relativeTo: leftItem) * 2 } ?? idealWidth
+                                        let maxIdealW = max(idealWidth, rightIdealW)
+                                        let scaleFactor = maxIdealW > maxDinoWidth ? maxDinoWidth / maxIdealW : 1.0
+                                        let (width, height) = (idealWidth * scaleFactor, idealHeight * scaleFactor)
+                                        let baseY = seatTopY - height / 2 // Group is centered in ZStack; offset so bottom lands on seat top
+                                        Group {
+                                            if let imageName = weighImageName(for: leftItem) {
+                                                ZStack(alignment: .bottom) {
+                                                    Color.clear.frame(width: width, height: height)
+                                                    Image(imageName)
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .frame(maxWidth: width, maxHeight: height, alignment: .bottom)
+                                                }
+                                            } else {
+                                                Text(leftItem.emoji)
+                                                    .font(.system(size: 80))
+                                                    .frame(width: width, height: height)
+                                            }
+                                        }
+                                        .frame(width: width, height: height, alignment: .bottom)
+                                        .clipped()
+                                        .offset(x: -beamW + leftItemOffsetX, y: leftItemOffset + baseY)
+                                        .opacity(leftItemOpacity)
+                                        .zIndex(5)
+                                        
+                                        if showSpeedLines, lighterFlewFromLeft == false, let rightItem = selectedRightItem {
+                                            let rightH = 130 * seesawImageScale(for: rightItem, relativeTo: selectedLeftItem) * scaleFactor
+                                            SpeedLinesView()
+                                                .offset(x: beamW, y: rightItemOffset + (seatTopY - rightH / 2))
+                                        }
+                                        if showSpeedLines, lighterFlewFromLeft == true, selectedLeftItem != nil {
+                                            SpeedLinesView()
+                                                .offset(x: -beamW + leftItemOffsetX, y: leftItemOffset + baseY)
+                                        }
+                                    }
+                                    
+                                    // Right side item (on right seat) — inside rotating assembly so it tilts with seesaw
+                                    if let rightItem = selectedRightItem {
+                                        let scale = seesawImageScale(for: rightItem, relativeTo: selectedLeftItem)
+                                        let idealHeight = 130 * scale
+                                        let idealWidth = idealHeight * 2
+                                        let leftIdealW = selectedLeftItem.map { 130 * seesawImageScale(for: $0, relativeTo: rightItem) * 2 } ?? idealWidth
+                                        let maxIdealW = max(idealWidth, leftIdealW)
+                                        let scaleFactor = maxIdealW > maxDinoWidth ? maxDinoWidth / maxIdealW : 1.0
+                                        let (width, height) = (idealWidth * scaleFactor, idealHeight * scaleFactor)
+                                        let baseY = seatTopY - height / 2 // Group is centered in ZStack; offset so bottom lands on seat top
+                                        Group {
+                                            if let imageName = weighImageName(for: rightItem) {
+                                                ZStack(alignment: .bottom) {
+                                                    Color.clear.frame(width: width, height: height)
+                                                    Image(imageName)
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .frame(maxWidth: width, maxHeight: height, alignment: .bottom)
+                                                }
+                                            } else {
+                                                Text(rightItem.emoji)
+                                                    .font(.system(size: 80))
+                                                    .frame(width: width, height: height)
+                                            }
+                                        }
+                                        .frame(width: width, height: height, alignment: .bottom)
+                                        .clipped()
+                                        .offset(x: beamW + rightItemOffsetX, y: rightItemOffset + baseY)
+                                        .opacity(rightItemOpacity)
+                                        .zIndex(5)
+                                    }
                                 }
                                 .rotationEffect(.degrees(seesawAngle), anchor: .center)
                                 .offset(y: 28)
@@ -208,89 +299,20 @@ struct WeighGameView: View {
                                     .overlay(Circle().stroke(Color.brown, lineWidth: 2))
                                     .offset(y: 28)
                             }
-                            
-                            // Left side item (on left seat). Scale preserves size ratio; both scale down proportionally when capped.
-                            if let leftItem = selectedLeftItem {
-                                let scale = seesawImageScale(for: leftItem, relativeTo: selectedRightItem)
-                                let idealHeight = 130 * scale
-                                let idealWidth = idealHeight * 2
-                                let rightIdealW = selectedRightItem.map { 130 * seesawImageScale(for: $0, relativeTo: leftItem) * 2 } ?? idealWidth
-                                let maxIdealW = max(idealWidth, rightIdealW)
-                                let scaleFactor = maxIdealW > maxDinoWidth ? maxDinoWidth / maxIdealW : 1.0
-                                let (width, height) = (idealWidth * scaleFactor, idealHeight * scaleFactor)
-                                let seatTopY: CGFloat = 7
-                                let baseY = seatTopY - height / 2
-                                Group {
-                                    if let imageName = weighImageName(for: leftItem) {
-                                        Image(imageName)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: width, height: height, alignment: .bottom)
-                                    } else {
-                                        Text(leftItem.emoji)
-                                            .font(.system(size: 80))
-                                            .frame(width: width, height: height)
-                                    }
-                                }
-                                .frame(width: width, height: height, alignment: .bottom)
-                                .clipped()
-                                .offset(x: -beamW, y: leftItemOffset + baseY)
-                                .opacity(leftItemOpacity)
-                                .zIndex(10)
-                                
-                                if showSpeedLines, lighterFlewFromLeft == false, let rightItem = selectedRightItem {
-                                    let rightH = 130 * seesawImageScale(for: rightItem, relativeTo: selectedLeftItem) * scaleFactor
-                                    SpeedLinesView()
-                                        .offset(x: beamW, y: rightItemOffset + (seatTopY - rightH / 2))
-                                }
-                                if showSpeedLines, lighterFlewFromLeft == true, selectedLeftItem != nil {
-                                    SpeedLinesView()
-                                        .offset(x: -beamW, y: leftItemOffset + baseY)
-                                }
-                            }
-                            
-                            // Right side item (on right seat). Scale preserves size ratio; both scale down proportionally when capped.
-                            if let rightItem = selectedRightItem {
-                                let scale = seesawImageScale(for: rightItem, relativeTo: selectedLeftItem)
-                                let idealHeight = 130 * scale
-                                let idealWidth = idealHeight * 2
-                                let leftIdealW = selectedLeftItem.map { 130 * seesawImageScale(for: $0, relativeTo: rightItem) * 2 } ?? idealWidth
-                                let maxIdealW = max(idealWidth, leftIdealW)
-                                let scaleFactor = maxIdealW > maxDinoWidth ? maxDinoWidth / maxIdealW : 1.0
-                                let (width, height) = (idealWidth * scaleFactor, idealHeight * scaleFactor)
-                                let seatTopY: CGFloat = 7
-                                let baseY = seatTopY - height / 2
-                                Group {
-                                    if let imageName = weighImageName(for: rightItem) {
-                                        Image(imageName)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: width, height: height, alignment: .bottom)
-                                    } else {
-                                        Text(rightItem.emoji)
-                                            .font(.system(size: 80))
-                                            .frame(width: width, height: height)
-                                    }
-                                }
-                                .frame(width: width, height: height, alignment: .bottom)
-                                .clipped()
-                                .offset(x: beamW, y: rightItemOffset + baseY)
-                                .opacity(rightItemOpacity)
-                                .zIndex(10)
-                            }
                         }
-                    .frame(width: geometry.size.width - 2 * sideMargin, height: 260) // Inset with margin so dinosaurs don't truncate at screen edge
+                    .frame(width: max(1, safeWidth - 2 * sideMargin), height: 260) // Inset with margin so dinosaurs don't truncate at screen edge
                     .clipped() // Keep rotated beam from affecting layout
                         
                         Spacer()
                             .frame(minHeight: 8)
                     }
                     .frame(minHeight: 270)
-                    .frame(width: geometry.size.width)
+                    .frame(width: safeWidth)
                 }
                 }
             }
-            .frame(maxHeight: geometry.size.height)
+            .frame(minHeight: safeHeight)
+            .frame(maxHeight: safeHeight)
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -330,9 +352,14 @@ struct WeighGameView: View {
         guard !isWeighing else { return }
         
         if selectedLeftItem == nil {
-            // First selection: show on scale, play name, then (Weigh Dinosaur) "choose your second dinosaur", then allow second tap
+            // First selection: show on left, tilt seesaw left (left has weight), play name, then "choose your second dinosaur"
             selectedLeftItem = item
             canSelectSecondDinosaur = false
+            // Tilt seesaw left based on weight: light (1–3) → -6°, medium (4–6) → -10°, heavy (7–9) → -14°
+            let tilt: Double = item.weight <= 3 ? -6 : (item.weight <= 6 ? -10 : -14)
+            withAnimation(.easeOut(duration: 0.5)) {
+                seesawAngle = tilt
+            }
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 if self.gameConfig.id == "weigh-dinosaur" {
@@ -358,6 +385,19 @@ struct WeighGameView: View {
         }
     }
     
+    /// "Nearly same weight" for announcement: dinosaurs use actual kg (within 15%); pterosaurs use rank.
+    /// Prevents sauropods vs ceratopsians (e.g. Camarasaurus 15t vs Triceratops 9t) from being called "same".
+    private func isNearlySameWeight(left: WeighableItem, right: WeighableItem) -> Bool {
+        if gameConfig.id == "weigh-dinosaur",
+           let leftKg = MatchingGameConfigs.dinosaurEstimatedWeightKgById[left.id],
+           let rightKg = MatchingGameConfigs.dinosaurEstimatedWeightKgById[right.id] {
+            let heavier = max(leftKg, rightKg)
+            let lighter = min(leftKg, rightKg)
+            return lighter >= heavier * 0.85
+        }
+        return abs(left.weight - right.weight) <= gameConfig.similarWeightThreshold
+    }
+
     private func startWeighing() {
         guard let left = selectedLeftItem,
               let right = selectedRightItem else { return }
@@ -369,35 +409,39 @@ struct WeighGameView: View {
         isWeighing = true
         let weightDiff = left.weight - right.weight
         let absDiff = abs(weightDiff)
+        let isNearlySame = isNearlySameWeight(left: left, right: right)
         // Sauropod-sized difference (e.g. Apatosaurus vs Iguanodon): rank diff often 5+; use bigger tilt and launch
         let isMassiveDifference = absDiff >= 4
 
-        // Pause 0.2 seconds before adjusting seesaw
+        // Pause 0.2 seconds before adjusting seesaw (seesaw may already be tilted left from first selection)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             withAnimation(.easeInOut(duration: 1.5)) {
-                if absDiff <= gameConfig.similarWeightThreshold {
-                    // Similar weight - slight tilt, one higher
+                if isNearlySame {
+                    // Nearly same weight: reposition to balanced (or slight tilt) while audio plays
                     if weightDiff > 0 {
-                        seesawAngle = -3 // Slight tilt left (reversed)
-                        rightItemOffset = -20 // Right item higher
+                        seesawAngle = -2
+                        rightItemOffset = 0
+                    } else if weightDiff < 0 {
+                        seesawAngle = 2
+                        leftItemOffset = 0
                     } else {
-                        seesawAngle = 3 // Slight tilt right (reversed)
-                        leftItemOffset = -20 // Left item higher
+                        seesawAngle = 0
                     }
                 } else if weightDiff > 0 {
-                    // Left is heavier - left side goes down; lighter (right) gets sent flying
-                    lighterFlewFromLeft = false
-                    seesawAngle = isMassiveDifference ? -22 : -15
-                    leftItemOffset = 20
-                    rightItemOffset = isMassiveDifference ? -220 : -150 // Lighter dinosaur launched up and off
-                    rightItemOpacity = 0
-                    showSpeedLines = true
+                    // Left heavy, right light: right dino slides along the beam toward the left seat (no fly)
+                    lighterFlewFromLeft = nil
+                    seesawAngle = isMassiveDifference ? -20 : -14
+                    leftItemOffset = 0 // No vertical fall; dinosaurs stay on seats
+                    rightItemOffset = 0 // No vertical offset; slide follows the beam
+                    rightItemOffsetX = -80 // Slides inward along the arm toward fulcrum (beam is horizontal in assembly coords; rotation makes it appear along the tilt)
+                    showSpeedLines = false
                 } else {
-                    // Right is heavier - right side goes down; lighter (left) gets sent flying
+                    // Right heavy, left light: left dino flies in parabola up and to the right
                     lighterFlewFromLeft = true
                     seesawAngle = isMassiveDifference ? 22 : 15
-                    rightItemOffset = 20
+                    rightItemOffset = 0 // No vertical fall; right dino stays on seat
                     leftItemOffset = isMassiveDifference ? -220 : -150
+                    leftItemOffsetX = isMassiveDifference ? 140 : 100 // Parabola arc to the right
                     leftItemOpacity = 0
                     showSpeedLines = true
                 }
@@ -405,7 +449,6 @@ struct WeighGameView: View {
             
             // After tilt: announce result — either "they both weigh about the same" or "[name] is heavier".
             // Only after that audio finishes do we count the round and show game over or reset.
-            let isNearlySame = abs(weightDiff) <= self.gameConfig.similarWeightThreshold
             if isNearlySame {
                 self.speechManager.onAudioFinished = {
                     self.speechManager.onAudioFinished = nil
@@ -548,12 +591,12 @@ struct WeighGameView: View {
         Group {
             let successName = "game-\(gameConfig.id)-success"
             let fallbackName = "game-\(gameConfig.id)"
-            if UIImage(named: successName) != nil {
+            if ImageAssetCache.imageExists(named: successName) {
                 Image(successName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 280, height: 280)
-            } else if UIImage(named: fallbackName) != nil {
+            } else if ImageAssetCache.imageExists(named: fallbackName) {
                 Image(fallbackName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -568,7 +611,7 @@ struct WeighGameView: View {
     /// Victory list: use dino-* (square poses); seesaw uses weigh-dino-* (wide poses).
     private func weighVictoryImage(item: WeighableItem, isHighlighted: Bool) -> some View {
         Group {
-            if let name = item.imageName, UIImage(named: name) != nil {
+            if let name = item.imageName, ImageAssetCache.imageExists(named: name) {
                 Image(name)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -623,7 +666,9 @@ struct WeighGameView: View {
         withAnimation {
             seesawAngle = 0
             leftItemOffset = 0
+            leftItemOffsetX = 0
             rightItemOffset = 0
+            rightItemOffsetX = 0
             leftItemOpacity = 1.0
             rightItemOpacity = 1.0
             showSpeedLines = false
@@ -700,15 +745,11 @@ struct ItemCard: View {
                         .font(.system(size: 60))
                         .frame(width: imageSize, height: imageSize)
                 }
-                if isSelected {
-                    Text(item.name)
-                        .font(.caption)
-                        .foregroundColor(.primary)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(3)
-                        .minimumScaleFactor(0.65)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
+                Text(item.name)
+                    .font(.caption2)
+                    .foregroundColor(.primary)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
             }
         }
         .padding(5)
@@ -763,19 +804,6 @@ struct SeesawSupportView: View {
     }
 }
 
-// MARK: - Dinosaur Weight (full catalog; estimated adult body mass kg for seesaw ordering)
-
-/// Estimated adult body mass in kg per dinosaur id (1–54). Used to order the 9 chosen dinosaurs by weight and assign rank.
-private let dinosaurEstimatedWeightKgById: [Int: Double] = [
-    1: 8_000,   2: 9_000,   3: 4_500,   4: 20,      5: 5_000,   6: 7_000,   7: 25_000,  8: 6_000,
-    9: 3_500,   10: 2_700,  11: 4_500,  12: 50,     13: 4_000,  14: 15_000, 15: 100,    16: 400,
-    17: 450,    18: 2_500,  19: 0.5,    20: 0.5,    21: 70_000, 22: 2_000,  23: 35_000, 24: 1_000,
-    25: 3_000,  26: 3,      27: 70,     28: 15_000, 29: 25,     30: 0.5,    31: 13_000, 32: 2_500,
-    33: 1,      34: 0.5,    35: 6_000,  36: 500,    37: 0.5,    38: 20,     39: 2_000,  40: 15_000,
-    41: 1_500,  42: 2_000,  43: 40,     44: 18_000, 45: 2_000,  46: 3_000,  47: 3_500,  48: 3_000,
-    49: 40,     50: 80,     51: 3_000,  52: 1_000,  53: 2_500,  54: 3_000,
-]
-
 // MARK: - Pterosaur Weight Pool (for Weigh the Pterosaur)
 
 private struct WeighablePterosaurPoolEntry {
@@ -823,7 +851,7 @@ struct WeighGameConfigs {
     static func makeRandomDinosaurItems(excluding alreadyUsedIds: Set<Int> = []) -> [WeighableItem] {
         let cladeById = MatchingGameConfigs.dinosaurCladeById
         let pool = MatchingGameConfigs.allDinosaurs.filter { d in
-            d.imageName != nil && d.imageName!.hasPrefix("dino-") && dinosaurEstimatedWeightKgById[d.id] != nil && !alreadyUsedIds.contains(d.id)
+            d.imageName != nil && d.imageName!.hasPrefix("dino-") && MatchingGameConfigs.dinosaurEstimatedWeightKgById[d.id] != nil && !alreadyUsedIds.contains(d.id)
         }
         let byClade = Dictionary(grouping: pool) { cladeById[$0.id] ?? .theropod }
         var chosen: [Dinosaur] = []
@@ -837,7 +865,7 @@ struct WeighGameConfigs {
             chosen.append(one)
         }
         // Assign ranks by weight order (lightest=1, heaviest=9), then shuffle for random grid display
-        let sortedByWeight = chosen.sorted { (dinosaurEstimatedWeightKgById[$0.id] ?? 0) < (dinosaurEstimatedWeightKgById[$1.id] ?? 0) }
+        let sortedByWeight = chosen.sorted { (MatchingGameConfigs.dinosaurEstimatedWeightKgById[$0.id] ?? 0) < (MatchingGameConfigs.dinosaurEstimatedWeightKgById[$1.id] ?? 0) }
         let rankById = Dictionary(uniqueKeysWithValues: sortedByWeight.enumerated().map { ($0.element.id, $0.offset + 1) })
         return chosen.shuffled().map { d in
             WeighableItem(

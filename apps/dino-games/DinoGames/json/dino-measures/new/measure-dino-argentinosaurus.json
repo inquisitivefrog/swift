@@ -1,0 +1,16 @@
+{
+  "id": "argentino_taller_v3_001",
+  "species": "argentinosaurus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "HUINCUL",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "OPEN_PATAGONIAN_PLAINS",
+  "pose": "Grand, symmetrical front-facing stance. The Argentinosaurus is standing with its massive front legs together in the center of the frame. The neck rises straight up, perfectly centered, with the head at the very top of the 1024px frame. The tail is tucked behind the body to keep the silhouette narrow. This 'totem' posture ensures the head-to-toe verticality is preserved in the narrowest center crop.",
+  "environmental_details": {
+    "ground": "Sun-scorched, light-colored red clay and dry earth with high-albedo dust to bounce light up onto the belly.",
+    "flora": "Only tiny, low-lying scrub ferns in the far distance. No trees or tall bushes, keeping the 1024px vertical strip entirely clear.",
+    "sky": "Deep, clear blue sky with a high-key midday sun.",
+    "atmosphere": "Brilliant, direct sunlight that creates sharp highlights on the leathery skin and emphasizes the sheer mountain-like volume of the dinosaur."
+  }
+}

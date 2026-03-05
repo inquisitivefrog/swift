@@ -1,0 +1,29 @@
+[
+  {
+    "id": "kentro_measure_v1_FRONT",
+    "species": "Kentrosaurus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TENDAGURU",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_LOWLANDS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' stance; head held alert and forward.",
+      "orientation": "Direct head-on, front-facing view. The snout is the closest point to the camera.",
+      "grounding": "Standing on flat, sun-bleached coastal sand with scattered shell fragments.",
+      "body_logic": "The entire back and spike-covered tail are hidden directly behind the chest and head. Silhouette width must stay within 280px.",
+      "framing_note": "The long shoulder spines (parascapular spines) should extend symmetrically to the left and right, framing the chest without exceeding the horizontal safe zone."
+    },
+    "character_details": {
+      "expression": "Friendly, inquisitive smirk; large, soulful eyes looking directly forward.",
+      "texture": "Tactile, leathery skin with soft tan and cream 'counter-shading' patterns.",
+      "features": ["Large, outward-pointing shoulder spines", "Neck plates visible stacking upwards", "Small, narrow head"]
+    },
+    "environmental_details": {
+      "ground": "Pale tan sand and silt with subtle ripple marks from a retreating tide.",
+      "flora": ["Cycads and small tree ferns positioned far in the background to maintain scale"],
+      "background": "A distant glimpse of a calm, turquoise lagoon under a bright Jurassic sun.",
+      "sky": "Vibrant, cloudless sky to provide high-contrast rim lighting on the spikes."
+    }
+  }
+]

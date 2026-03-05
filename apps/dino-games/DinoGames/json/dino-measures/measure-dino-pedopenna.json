@@ -1,0 +1,28 @@
+[
+  {
+    "id": "pedopenna_measure_v2_VERTICAL",
+    "species": "Pedopenna",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DAOHUGOU",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "ANCIENT_FOREST",
+    "pose_constraints": {
+      "posture": "Clinging vertically to a textured tree trunk; head turned 0-degrees to face the camera.",
+      "orientation": "Direct frontal view of the chest and head.",
+      "body_logic": "The long tail and the unique long feathers on the metatarsus (feet) hang straight down, creating a tall, thin vertical line. Width max 180px.",
+      "framing_note": "Focus on the 'four-winged' look where both arm and leg feathers are visible but tucked in to fit the narrow crop."
+    },
+    "character_details": {
+      "expression": "Wide-eyed, bird-like curiosity; head tilted slightly to the side.",
+      "texture": "Ultra-soft, fluffy 'down' feathers. Color: Iridescent forest-green and cream with soft lavender highlights.",
+      "features": ["Elongated feathers on hind legs", "Tiny, delicate grasping claws", "Large, intelligent golden eyes"]
+    },
+    "environmental_details": {
+      "ground": "The background is the vertical, mossy bark of a prehistoric tree.",
+      "flora": ["Tiny, detailed moss spores and small fern fronds growing from the bark."],
+      "lighting": "Dappled sunlight hitting the feathers to create a 'magical forest' glow.",
+      "sky": "Soft-focus misty forest canopy in the far distance."
+    }
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "id": "bronto_taller_v3_002",
+  "species": "brontosaurus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "MORRISON_LJ",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "SEMI_ARID_PLAINS",
+  "pose": "Powerful, symmetrical front-facing stance. The Brontosaurus is positioned with its massive front legs centered and slightly braced. The thick, muscular neck rises vertically with a very slight, natural S-curve to keep the head perfectly centered at the top of the 1024px frame. This creates a narrow 'pillar' of content that fills the vertical space without being too wide for the 140px crop.",
+  "environmental_details": {
+    "ground": "Pale, sun-drenched tan earth. A heavy cloud of 'thunder' dust and fine sand is kicked up around the massive feet, suggesting a recent heavy step.",
+    "flora": "Sparse, low-lying Fern Prairies in the far distance, providing a clean horizon line that emphasizes the dinosaur's height.",
+    "sky": "Bright, high-key blue sky with no clouds, allowing the neck to pop against the background.",
+    "atmosphere": "Direct midday sunlight with high-albedo ground reflection to illuminate the under-neck and chest, ensuring zero dark 'dead zones'."
+  }
+}
+{
+  "id": "bronto_taller_v3_RESET",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "pose": "Symmetrical front-facing 'Thunder' pose. The thick, muscular neck rises vertically through the center. The head is centered at the top, featuring a **warm, intelligent expression and a clear smirk**. The chest and front legs form the base of the central column to survive the 140px crop.",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "WARM_SUNNY_EXPOSED",
+  "features": ["signature friendly smirk", "massive grounded stance", "warm cinematic lighting", "heavy kicked-up dust at feet"]
+}

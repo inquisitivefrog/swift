@@ -235,10 +235,17 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         // Weigh game: "X is heavier" (one phrase file after dinosaur name)
         case "is-heavier", "is heavier":
             return "Feedback/is-heavier"
+        // Who Is Taller: "X is taller" (one phrase file after dinosaur name)
+        case "is-taller", "is taller":
+            return "Feedback/is-taller"
         case "they-both-weigh-about-the-same", "they both weigh about the same":
             return "Feedback/they-both-weigh-about-the-same"
         case "they-are-about-the-same-height", "they are about the same height":
             return "Feedback/they-are-about-the-same-height"
+        case "is-as-tall-as", "is as tall as":
+            return "Feedback/is-as-tall-as"
+        case "and":
+            return "Feedback/and"
         case "you-cannot-choose-that-one-now", "you cannot choose that one now":
             return "Feedback/you-cannot-choose-that-one-now"
         case "thats-too-small-to-see", "that's too small to see", "too small to see":
@@ -254,7 +261,7 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         case "spikes", "plates":
             return "Dino-Characteristics/plates"
         case "tail-spikes", "tail spikes":
-            return "Dino-Characteristics/tail-spikes"
+            return "Dino-Characteristics/tail-spike"
         case "club-tail", "club tail", "tail-club", "tail club":
             return "Dino-Characteristics/tail-club"
         case "claws", "claw":
@@ -388,6 +395,10 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Feedback/pick-a-dinosaur-first"
         case "you-cant-be-serious-that-will-take-forever", "you can't be serious that will take forever":
             return "Feedback/you-cant-be-serious-that-will-take-forever"
+        case "game-measure-stack-too-tall", "that stack is too tall", "stack too tall":
+            return "Feedback/game-measure-stack-too-tall"
+        case "that-dinosaur-is-too-tall", "that dinosaur is too tall":
+            return "Feedback/that-dinosaur-is-too-tall"
         case "pick-a-pterosaur-first", "pick a pterosaur first":
             return "Feedback/pick-a-pterosaur-first"
         case "you-cannot-use-me-twice", "you cannot use me twice", "already matched", "pick-another-one", "pick another one":
@@ -447,11 +458,15 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Games/game-can-you-balance-the-dinosaurs"
         case "game-balance-choose-a-heavy-dinosaur", "choose a heavy dinosaur":
             return "Games/game-balance-choose-a-heavy-dinosaur"
+        case "game-balance-now-choose-dinosaurs", "now choose dinosaurs":
+            return "Games/game-balance-now-choose-dinosaurs"
+        case "game-balance-now-choose-pterosaurs", "now choose pterosaurs":
+            return "Games/game-balance-now-choose-pterosaurs"
         case "game-balance-this-game-will-end-quick", "this game will end quick":
-            return "Feedback/game-balance-this-game-will-end-quick"
+            return "Games/game-balance-this-game-will-end-quick"
         case "game-balance-see-i-told-you", "game-balance-see-I-told-you", "see I told you", "see i told you":
             return "Feedback/game-balance-see-I-told-you"
-        case "game-balance-good-job-keep-going", "good job keep going":
+        case "game-balance-good-job-keep-going", "game-measure-good-job-keep-going", "good job keep going":
             return "Feedback/game-balance-good-job-keep-going"
         case "game-balance-almost-there", "almost there":
             return "Feedback/game-balance-almost-there"
@@ -465,8 +480,16 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Games/game-racer-choose-your-first-pterosaur-to-race"
         case "game-racer-choose-your-second-pterosaur-to-race", "choose your second pterosaur to race":
             return "Games/game-racer-choose-your-second-pterosaur-to-race"
+        case "game-racing-outside-track", "racing outside track":
+            return "Games/game-racing-outside-track"
+        case "game-racing-inside-track", "racing inside track":
+            return "Games/game-racing-inside-track"
+        case "game-racing-ready-set", "racing ready set":
+            return "Games/game-racing-ready-set"
         case "racing-the-winner-is", "the winner is":
             return "Games/racing-the-winner-is"
+        case "game-racing-the-winner-is":
+            return "Games/game-racing-the-winner-is"
         case "game-matrix-materials", "matrix materials":
             return "Games/game-matrix-materials"
         case "game-matrix-which-one", "which one is it", "tap the one":
@@ -599,12 +622,12 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     
     func playAudioFile(url: URL, fallbackSpeakText: String? = nil) {
         do {
-            // Stop any current player immediately (volume to 0 first to reduce click) before starting next
-            if let old = currentPlayer {
+            // Stop any current player (only if still playing—e.g. interrupted) to avoid click when chaining
+            if let old = currentPlayer, old.isPlaying {
                 old.volume = 0
                 old.stop()
-                currentPlayer = nil
             }
+            currentPlayer = nil
             
             let player = try AVAudioPlayer(contentsOf: url)
             player.volume = 0 // Start at 0 to avoid click at start
@@ -624,8 +647,8 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
                 return
             }
             
-            let fadeInDuration: TimeInterval = 0.12
-            let fadeOutDuration: TimeInterval = 0.2
+            let fadeInDuration: TimeInterval = 0.2
+            let fadeOutDuration: TimeInterval = 0.5
             let targetID = ObjectIdentifier(player)
             let duration = player.duration
             Task { @MainActor in
@@ -639,7 +662,6 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
                 }
             }
             
-            print("🔊 Playing at volume: \(player.volume)")
         } catch {
             print("❌ Error playing audio file: \(error)")
             isPlaying = false
@@ -650,8 +672,9 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     }
     
     // Fade in the current player (only if it still matches) to prevent click at start.
+    // Uses quadratic ease-in so we ramp up gradually from silence.
     private func fadeInPlayerIfMatches(targetID: ObjectIdentifier, duration: TimeInterval) async {
-        let fadeSteps = 15
+        let fadeSteps = 20
         let fadeInterval = duration / Double(fadeSteps)
         
         for step in 1...fadeSteps {
@@ -660,9 +683,9 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
                   player.isPlaying else {
                 return
             }
-            
-            let newVolume = Double(step) / Double(fadeSteps)
-            player.volume = min(1.0, Float(newVolume))
+            let t = Double(step) / Double(fadeSteps)
+            let eased = t * t // Ease-in: start slow to avoid click
+            player.volume = min(1.0, Float(eased))
             try? await Task.sleep(nanoseconds: UInt64(fadeInterval * 1_000_000_000))
         }
         
@@ -672,8 +695,9 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     }
     
     // Fade out the current player (only if it still matches) to prevent clicks.
+    // Uses easing: slower near the end (quadratic) for a smoother tail.
     private func fadeCurrentPlayerIfMatches(targetID: ObjectIdentifier, duration: TimeInterval) async {
-        let fadeSteps = 25
+        let fadeSteps = 45
         let fadeInterval = duration / Double(fadeSteps)
         
         for step in 1...fadeSteps {
@@ -682,9 +706,10 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
                   player.isPlaying else {
                 return
             }
-            
-            let newVolume = 1.0 - (Double(step) / Double(fadeSteps))
-            player.volume = max(0.0, Float(newVolume))
+            // Quadratic ease-out: (1-t)^2 so we approach 0 more gradually at the end
+            let t = Double(step) / Double(fadeSteps)
+            let eased = (1.0 - t) * (1.0 - t)
+            player.volume = max(0.0, Float(eased))
             try? await Task.sleep(nanoseconds: UInt64(fadeInterval * 1_000_000_000))
         }
         
@@ -719,12 +744,24 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     
     // AVAudioPlayerDelegate method - called when audio finishes
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        // Clear currentPlayer before callback so chained playback doesn't call stop() on a finished player (reduces clicks)
+        if currentPlayer === player {
+            currentPlayer = nil
+        }
         isPlaying = false
-        onAudioFinished?()
+        // Brief delay before next clip lets the output buffer drain (reduces click when chaining)
+        let callback = onAudioFinished
+        onAudioFinished = nil
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
+            callback?()
+        }
     }
     
     // Handle audio interruption
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if currentPlayer === player {
+            currentPlayer = nil
+        }
         isPlaying = false
         onAudioFinished?()
     }
@@ -1915,7 +1952,7 @@ struct MatchingGameConfigs {
         Dinosaur(id: 47, name: "Lambeosaurus", icon: "🦆", imageName: "dino-lambeosaurus", characteristicIds: [97, 98, 183, 184]),
         Dinosaur(id: 48, name: "Maiasaura", icon: "🦆", imageName: "dino-maiasaura", characteristicIds: [99, 100, 185, 186]),
         Dinosaur(id: 49, name: "Stegoceras", icon: "🦎", imageName: "dino-stegoceras", characteristicIds: [101, 102, 187]),
-        Dinosaur(id: 50, name: "Stygimoloch", icon: "🦎", imageName: "dino-stygimoloch", characteristicIds: [103, 104, 188]),
+        Dinosaur(id: 50, name: "Stygimoloch", icon: "🦎", imageName: "dino-stygimoloch", characteristicIds: [103, 104]),
         Dinosaur(id: 51, name: "Nodosaurus", icon: "🛡️", imageName: "dino-nodosaurus", characteristicIds: [105, 106, 189]),
         Dinosaur(id: 52, name: "Huayangosaurus", icon: "🦎", imageName: "dino-huayangosaurus", characteristicIds: [107, 108, 190]),
         Dinosaur(id: 53, name: "Ouranosaurus", icon: "🦎", imageName: "dino-ouranosaurus", characteristicIds: [109, 110, 191, 192]),
@@ -1933,6 +1970,17 @@ struct MatchingGameConfigs {
         37: "Carnivore", 38: "Carnivore", 39: "Carnivore", 40: "Herbivore", 41: "Carnivore", 42: "Carnivore",
         43: "Omnivore", 44: "Herbivore", 45: "Herbivore", 46: "Herbivore", 47: "Herbivore", 48: "Herbivore",
         49: "Herbivore", 50: "Herbivore", 51: "Herbivore", 52: "Herbivore", 53: "Herbivore", 54: "Piscivore",
+    ]
+
+    /// Estimated adult body mass in kg per dinosaur id (1–54). Used by Weigh and Balance games for seesaw ordering.
+    static let dinosaurEstimatedWeightKgById: [Int: Double] = [
+        1: 8_000,   2: 9_000,   3: 4_500,   4: 20,      5: 5_000,   6: 7_000,   7: 25_000,  8: 6_000,
+        9: 3_500,   10: 2_700,  11: 4_500,  12: 50,     13: 4_000,  14: 15_000, 15: 100,    16: 400,
+        17: 450,    18: 2_500,  19: 0.5,    20: 0.5,    21: 70_000, 22: 2_000,  23: 35_000, 24: 1_000,
+        25: 3_000,  26: 3,      27: 70,     28: 15_000, 29: 25,     30: 0.5,    31: 13_000, 32: 2_500,
+        33: 1,      34: 0.5,    35: 6_000,  36: 500,    37: 0.5,    38: 20,     39: 2_000,  40: 15_000,
+        41: 1_500,  42: 2_000,  43: 40,     44: 18_000, 45: 2_000,  46: 3_000,  47: 3_500,  48: 3_000,
+        49: 40,     50: 80,     51: 3_000,  52: 1_000,  53: 2_500,  54: 3_000,
     ]
 
     /// Clade per dinosaur (for Match the Dinosaur). Used so each round picks one dinosaur per clade for clear, varied choices.
@@ -2192,7 +2240,6 @@ struct MatchingGameConfigs {
         Characteristic(id: 185, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 48),
         Characteristic(id: 186, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 48),
         Characteristic(id: 187, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 49),
-        Characteristic(id: 188, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 50),
         Characteristic(id: 189, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 51),
         Characteristic(id: 190, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 52),
         Characteristic(id: 191, type: "Beak", icon: "🦜", imageName: "dino-char-beak", dinosaurId: 53),

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "pola_v3_WESSEX_CORE",
+    "species": "Polacanthus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "WESSEX",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_WOODLAND",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' orientation. Standing on all fours but angled 0-degrees toward the camera.",
+      "orientation": "Head-on frontal view. The body is foreshortened to fit the horizontal constraint.",
+      "camera_angle": "High-angle 'down-shot' to compress the wide hips behind the front shoulders. This narrows the silhouette.",
+      "body_logic": "Width is strictly capped at 240px within the 340px frame to allow for UI padding. Spikes point 'up' to add verticality.",
+      "framing_note": "The dinosaur should look like a sturdy, armored 'totem' shape."
+    },
+    "character_details": {
+      "expression": "Placid and friendly; large, round, dark eyes with a bright white spec-glint.",
+      "texture": "Smooth, 'vinyl-toy' skin with rounded, chunky armor plates. No grit or dirt.",
+      "colors": "Deep terracotta-orange skin with contrasting slate-blue armor plates and cream-colored spikes.",
+      "features": [
+        "Symmetrical V-shaped shoulder spikes.",
+        "A rounded, beak-like snout.",
+        "Sturdy, pillar-like legs with simplified toes."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Vibrant, 'turf-like' green moss and a few smooth, grey river stones.",
+      "flora": ["Bright, simplified fern fronds in the lower corners, rendered with thick edges."],
+      "lighting": "Clear, bright afternoon sun. Soft purple ambient light in the shadows to maintain the 'animated' feel.",
+      "sky": "Solid, bright turquoise-blue sky to provide high contrast for the terracotta skin."
+    }
+  }
+]

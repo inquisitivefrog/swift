@@ -1,0 +1,33 @@
+[
+  {
+    "id": "ourano_measure_v1_TOWER",
+    "species": "Ouranosaurus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "ELRHAZ",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "RIVER_DELTA_FLATS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' stance; standing on hind legs with the neck held straight up.",
+      "orientation": "0-degree dead-on frontal view. The sail is centered and rises vertically behind the neck.",
+      "camera_angle": "Low-angle 'Hero' shot, looking up to maximize the visual height of the dorsal sail.",
+      "body_logic": "Torso and tail are hidden behind the chest. Forelimbs are held close to the body. Silhouette width max 260px.",
+      "framing_note": "The sail should have a smooth, arched top edge that creates the highest point of the silhouette."
+    },
+    "character_details": {
+      "expression": "Friendly and calm; large, warm eyes with a soft spec-glint.",
+      "texture": "Clean, tactile skin with subtle 'wrinkle' details around the joints. Color: Pale teal with a sun-burnt orange and yellow sunburst pattern on the sail.",
+      "features": [
+        "High dorsal sail supported by long neural spines.",
+        "Broad, flat duck-like beak.",
+        "Small thumb spikes on the hands."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Soft, sun-bleached river sand with small patches of succulent-like plants.",
+      "flora": ["Broad-leafed ferns and simplified 'play-set' conifers in the distant background."],
+      "sky": "Bright, high-noon blue sky to provide a high-contrast background for the colorful sail.",
+      "lighting": "High-key 'Sunny Exposed' lighting with a warm glow through the thin skin of the sail (subsurface scattering effect)."
+    }
+  }
+]

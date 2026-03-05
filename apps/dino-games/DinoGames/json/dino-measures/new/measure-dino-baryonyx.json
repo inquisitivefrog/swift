@@ -1,0 +1,16 @@
+{
+  "id": "bary_taller_v3_001",
+  "species": "baryonyx",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "WEALDEN_GROUP",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "RIVER_DELTA_WETLANDS",
+  "pose": "Directly facing the camera in a tall, alert stance. The body is angled slightly, but the neck and head are pulled into a tight vertical S-curve, centered perfectly in the 1024px frame. The head is positioned at the top edge. The long snout is pointed slightly downward toward the viewer to create depth without spreading wide. One large thumb claw is visible and tucked toward the center line to stay within the 140px crop.",
+  "environmental_details": {
+    "ground": "Sun-bleached, light-colored river sand and dried grey clay with the 'nice touch' of kicked-up dust and sand particles around the feet.",
+    "flora": "Sparse, distant horsetails and ferns. No overhead canopy, ensuring 100% sunlight saturation on the leathery skin.",
+    "sky": "Bright, high-key blue sky with a midday sun that creates a strong rim-light on the snout and spine.",
+    "atmosphere": "Vibrant, airy exposure with warm highlights on the specular skin surfaces."
+  }
+}

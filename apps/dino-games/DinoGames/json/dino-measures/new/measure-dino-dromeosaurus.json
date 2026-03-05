@@ -1,0 +1,28 @@
+[
+  {
+    "id": "dromaeo_taller_v4_CLAW",
+    "species": "Dromaeosaurus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DINOSAUR_PARK",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_LOWLANDS",
+    "pose_constraints": {
+      "posture": "Playful 'Center-Pillar' stance; balanced upright on one leg in a 'karate' pose.",
+      "orientation": "Front-facing; lifted leg and body angled inward to stay within a 300px horizontal corridor.",
+      "grounding": "Single foot centered on flat, sun-bleached silt; no elevation props or hills.",
+      "framing_note": "Head centered at top of 1024px frame; 25% safety buffer on sides for 340px width cropping."
+    },
+    "character_details": {
+      "expression": "Friendly smirk; soulful eyes observing the iconic sickle-claw.",
+      "texture": "Soft, high-fidelity downy feathers with subtle specular highlights.",
+      "features": ["Rounded sickle-claw", "Tucked feathered arms", "Slender vertical silhouette"]
+    },
+    "environmental_details": {
+      "ground": "Olive and pale grey mud with siltstone textures.",
+      "flora": ["Metasequoia", "Cycad Palms"],
+      "water": "Meandering channel with low-altitude humidity and steamy lagoon vibes.",
+      "sky": "Vibrant blue sky with warm midday sun and golden rim-lighting."
+    }
+  }
+]

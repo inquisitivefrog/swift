@@ -1,0 +1,35 @@
+{
+  "id": "FORMATION_ANACLETO",
+  "name": "Anacleto Formation",
+  "location": "Patagonia, Argentina",
+  "period": "LATE_CRETACEOUS",
+  "tech_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": {
+    "palette": {
+      "primary_ground": "Deep Purple-Red / Maroon",
+      "secondary_soil": "Silty Grey / Pale Ochre",
+      "vegetation": "Emerald Green / Mint / Moss",
+      "sky": "Pale Humid Blue / Soft Lavender Horizon"
+    },
+    "geology": {
+      "description": "Low-energy meandering river system with heavy mudstone deposits.",
+      "textures": ["Polished river pebbles", "Cracked purple clay", "Wet silty riverbanks"],
+      "rendering_note": "The ground should have a slight satin sheen to represent damp, clay-rich soil typical of the Neuquén Basin."
+    },
+    "flora": {
+      "canopy": ["Podocarp Conifers", "Early Araucaria"],
+      "ground_cover": ["Liverworts", "Dense Mosses", "Broad-leafed Angiosperms"],
+      "focal_elements": ["Oversized clover-like ground plants to emphasize small dinosaur scale"]
+    },
+    "atmosphere": {
+      "lighting": "SUNNY_EXPOSED_CINEMATIC",
+      "effects": ["Dappled forest light", "Soft morning mist", "Warm golden-hour rim lighting"],
+      "description": "A humid, 'soft' atmosphere that makes colors feel saturated and character-friendly."
+    }
+  },
+  "asset_constraints": {
+    "shadow_type": "Soft-diffused (Ambient Occlusion heavy)",
+    "depth_of_field": "Shallow (Background blurred to maintain focus on the 'Pillar' dinosaur)",
+    "color_grading": "High-vibrancy 'Toy-Box' aesthetic"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "chasmo_taller_v3_RESET",
+  "species": "chasmosaurus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "WARM_SUNNY_EXPOSED",
+  "formation_ref": "DINOSAUR_PARK",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "COASTAL_FLOODPLAINS",
+  "pose": "Directly facing the camera with the head lowered slightly to present the massive rectangular frill vertically. The frill and head are perfectly centered at the top of the 1024px frame. The stocky front legs are centered at the bottom. This 'totem' alignment ensures the head-to-toe verticality is preserved in the 140px center-crop.",
+  "character_details": {
+    "expression": "Friendly, inquisitive smirk with bright, intelligent eyes.",
+    "eyes": "Large, soulful 'character' eyes that break the fourth wall.",
+    "skin_texture": "Smooth, high-poly 3D surfaces with stylized large scales on the frill; avoiding hyper-realistic grain.",
+    "features": ["massive rectangular frill with ornate patterns", "short brow horns", "prominent nasal horn", "friendly beak-like mouth"]
+  },
+  "environmental_details": {
+    "ground": "Light-colored 'popcorn' clay with hints of sun-bleached sandstone. A 'nice touch' of warm golden dust kicked up around the heavy feet for grounding.",
+    "flora": "Sparse, low-lying ferns kept to the far edges; the central vertical strip remains clear for the subject.",
+    "sky": "Vibrant, cloudless blue sky to provide high-contrast for the edges of the frill.",
+    "atmosphere": "Warm, high-key midday sun with golden rim-lighting to define the 3D volume of the frill and body."
+  }
+}

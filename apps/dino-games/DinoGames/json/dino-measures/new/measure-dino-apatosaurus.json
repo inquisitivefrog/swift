@@ -1,0 +1,16 @@
+{
+  "id": "apato_taller_v3_002",
+  "species": "apatosaurus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "MORRISON_LJ",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "SEMI_ARID_PLAINS",
+  "pose": "Extreme low-angle 'hero' shot looking up. The massive front legs and chest are centered at the bottom. The thick, powerful neck rises straight up through the center of the 1024px frame, with the head at the very top. This 'pillar' composition ensures that when you crop to 140x340 px, the neck and head stay perfectly centered and fill the entire slot.",
+  "environmental_details": {
+    "ground": "High-albedo white mineral crust and tan dust to bounce light up into the underbelly and neck.",
+    "flora": "Zero foreground obstructions. Only small, flat Fern Prairies in the far distance.",
+    "sky": "Vibrant blue sky spanning the entire background behind the neck.",
+    "atmosphere": "Brilliant midday sun hitting the top of the head and shoulders, creating a clear rim-light effect that separates the dinosaur from the sky."
+  }
+}

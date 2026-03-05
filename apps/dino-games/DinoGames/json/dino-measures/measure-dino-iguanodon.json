@@ -1,0 +1,28 @@
+[
+  {
+    "id": "iguanodon_measure_v1_FRONT",
+    "species": "Iguanodon",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "WEALDEN",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "RIVER_DELTA_WETLANDS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' stance; head held high and forward.",
+      "orientation": "Direct head-on, front-facing view. Snout pointed directly at the camera.",
+      "grounding": "All four feet visible on flat, damp mud; the front limbs are slightly bent, showing their sturdy nature.",
+      "body_logic": "The entire length of the body and tail is compressed directly behind the chest and head, ensuring the silhouette remains within a 280px horizontal width.",
+      "framing_note": "The iconic thumb spikes should be clearly visible on each hand, positioned close to the body, and symmetrically aligned for measurement consistency."
+    },
+    "character_details": {
+      "expression": "Friendly, symmetrical smirk; large, soulful eyes looking straight forward.",
+      "texture": "Smooth, leathery skin with subtle, rounded scales for a soft appearance.",
+      "features": ["Distinctive thumb spikes on each hand", "Broad, duck-like bill", "Sturdy, pillar-like legs"]
+    },
+    "environmental_details": {
+      "ground": "Flat, dark grey-green mud with standing shallow water reflections at the very base of the feet.",
+      "flora": ["Floating aquatic plants (like early water lilies) in the soft-focus foreground water", "Willow-like shrubs in the distant background"],
+      "sky": "Bright, hazy Early Cretaceous sky with soft, diffused sunlight typical of a wetland environment."
+    }
+  }
+]

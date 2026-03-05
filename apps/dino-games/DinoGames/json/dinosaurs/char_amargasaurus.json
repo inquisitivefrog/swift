@@ -1,0 +1,66 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {
+      "formation_id": "LA_AMARGA",
+      "habitat_id": "SEMI_ARID_PLAINS"
+    },
+    "layer_3_action": {
+      "subject": "Young Amargasaurus",
+      "features": ["distinctive double row of tall, backward-pointing neural spines along its neck and back", "long neck and tail", "stocky body", "friendly expressive face", "large soulful eyes"],
+      "action": "Grazing gently on small flowering herbs in a vast, semi-arid plain, with a few sparse conifer clusters in the background."
+    }
+  },
+  "flora_library": {
+    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
+    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
+    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
+    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
+    "TIAOJISHAN_ADDITIONS": ["Giant Horsetails", "Dense Conifer forest"],
+    "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
+    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
+    "LANCE_HELL_CREEK_ADDITIONS": ["Palm-like Bennettitales", "Tree ferns", "Lush canopy"],
+    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
+    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
+    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"],
+    "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"],
+    "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
+    "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
+    "CEDAR_MOUNTAIN_ADDITIONS": ["Paleopus in damp cracks", "Shrubby angiosperms"],
+    "JEHOL_BIOTA_ADDITIONS": ["Water lilies at the edge", "Dense hardwoods"],
+    "CANDELEROS_ADDITIONS": ["Paleopus", "Early flowering reeds"],
+    "KAIPAROWITS_ADDITIONS": ["Giant horsetails", "Mosses", "Dense fern thickets"],
+    "DAOHUGOU_BEDS_ADDITIONS": ["Evergreen conifers", "Alpine ferns"],
+    "KEM_KEM_ADDITIONS": ["Early Sycamores", "Willow-like shrubs", "Horsetail banks"]
+  },
+  "fauna_library": {
+    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
+    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
+    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
+    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates)"],
+    "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
+    "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)", "Cicadas"],
+    "HELL_CREEK_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (fast-running lizards)", "Cicadas", "Early wasps"]
+  },
+  "habitat_id": "SEMI_ARID_PLAINS",
+  "physics": {
+    "altitude": "medium",
+    "water": "low"
+  },
+  "visuals": {
+    "ground": "Dry, sandy soil with patches of scrub",
+    "water": "Distant small ponds or seasonal streams",
+    "sky": "Bright, clear blue sky with sparse clouds"
+  },
+  "formation_id": "LA_AMARGA",
+  "base_habitat": "SEMI_ARID_PLAINS",
+  "period": "EARLY_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Dry, sandy soil with rocky outcrops",
+    "color_palette": ["Light browns", "Yellows", "Pale greens"]
+  },
+  "flora_manifest": ["EARLY_CRETACEOUS_BASE", "HUINCUL_ADDITIONS"],
+  "fauna_manifest": ["EARLY_CRETACEOUS_BASE"]
+}

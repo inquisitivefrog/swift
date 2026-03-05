@@ -1,0 +1,27 @@
+[
+  {
+    "id": "masiaka_v2_STYLE_SAFE",
+    "species": "Masiakasaurus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MAEVARANO",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "SEMI_ARID_FLOODPLAINS",
+    "pose_constraints": {
+      "posture": "Upright 'Pillar' stance; head tilted slightly, making it look curious rather than aggressive.",
+      "orientation": "Direct 0-degree frontal view. Neck is a vertical column.",
+      "body_logic": "Slender limbs tucked in. The silhouette is narrow and tall, fitting a 280px width limit.",
+      "framing_note": "The 'buck teeth' are rendered as smooth, polished ivory-like pegs, not sharp needles."
+    },
+    "character_details": {
+      "expression": "A wide-eyed, goofy 'derp' expression; friendly smile that shows the teeth in a non-threatening way.",
+      "texture": "Clean, 'squishy' silicone skin texture. Saturated colors: mango orange with soft charcoal stripes.",
+      "features": ["Rounded procumbent front teeth", "Large, expressive pupils", "Slender, elegant neck"]
+    },
+    "environmental_details": {
+      "ground": "Soft-focus reddish sand; simplified for a 'play-set' look.",
+      "lighting": "High-key, warm 'studio' lighting with soft purple ambient fill in the shadows to keep the look 'sweet' and appealing.",
+      "sky": "Bright, clear pastel blue."
+    }
+  }
+]

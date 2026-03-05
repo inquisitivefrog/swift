@@ -1,0 +1,34 @@
+[
+  {
+    "id": "ovi_measure_v1_TOWER",
+    "species": "Oviraptor",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DJADOKHTA",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "SEMI_ARID_DUNES",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' stance; standing tall on hind legs, neck slightly curved and head held high.",
+      "orientation": "Direct 0-degree head-on frontal view. The crest is centered and prominent.",
+      "camera_angle": "Low-angle 'Hero' shot, looking up to emphasize the height of the crest and the elegant neck.",
+      "body_logic": "Slender torso and long feathered tail are completely occluded by the chest and neck. Silhouette width max 220px.",
+      "framing_note": "The distinctive cranial crest must be clearly visible and form the highest point of the silhouette."
+    },
+    "character_details": {
+      "expression": "Intelligent, alert, and curious gaze; large, round, bird-like eyes.",
+      "texture": "Soft, fluffy proto-feathers on the body, transitioning to sleek, fine feathers on the neck and crest. Color: Vibrant terracotta orange with a sunny yellow crest.",
+      "features": [
+        "Prominent, rounded cranial crest.",
+        "Toothless, parrot-like beak.",
+        "Long, slender neck.",
+        "Delicate, grasping hands."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Fine, reddish-orange desert sand, forming subtle dunes, characteristic of the Djadokhta Formation.",
+      "flora": ["Sparse, tough desert scrub and small, hardy succulents in the distant, soft-focus background."],
+      "sky": "Bright, clear, sun-baked desert sky with a warm, hazy horizon, emphasizing the arid environment.",
+      "lighting": "High-key 'Sunny Exposed Cinematic' lighting, with warm, direct sunlight highlighting the crest and feathers, giving a soft, inviting glow."
+    }
+  }
+]

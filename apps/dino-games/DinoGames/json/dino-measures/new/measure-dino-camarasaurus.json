@@ -1,0 +1,16 @@
+{
+  "id": "camara_taller_v3_001",
+  "species": "camarasaurus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "MORRISON_LJ",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "SEMI_ARID_PLAINS",
+  "pose": "Directly facing the camera with a sturdy, symmetrical stance. The Camarasaurus has its thick, muscular neck rising vertically through the center of the 1024px frame. The distinctive boxy head is positioned at the top edge, looking slightly down with a friendly, soulful expression. The body is foreshortened behind the chest to keep the silhouette narrow enough for the 140px crop.",
+  "environmental_details": {
+    "ground": "Sun-bleached tan earth and white caliche. A subtle, swirling 'dust devil' effect around the front feet to add movement and ground the massive weight.",
+    "flora": "Low-lying, sparse Fern Prairies at the very bottom corners of the frame. No tall trees to ensure the vertical path to the sky is clear.",
+    "sky": "Vibrant blue sky that provides a high-contrast background for the dark, leathery skin of the neck.",
+    "atmosphere": "High-key midday sun providing strong rim-lighting along the spine and neck, highlighting the high-fidelity skin textures."
+  }
+}

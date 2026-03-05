@@ -3,7 +3,7 @@
 //  DinoGames
 //
 //  Dino Ages: Pick Jurassic or Cretaceous. Three rounds; each round: 5 dinos (3 from period, 2 from other).
-//  User selects the 3 that match the period. No repeat dinosaurs across rounds. Victory: walk 9 selected, then crowd-cheering.
+//  User selects the 3 that match the period. No repeat dinosaurs across rounds. Victory: walk 9 selected (scroll list), then success image + good-job + crowd-cheering.
 //
 
 import SwiftUI
@@ -152,6 +152,8 @@ struct DinoAgesGameView: View {
     @State private var introWalkIndex: Int? = nil
     /// Dinosaur name shown after tap (before feedback).
     @State private var displayedDinoName: String? = nil
+    /// When true, show the Source Ages hints overlay.
+    @State private var showSourceAgesHints = false
 
     /// Matched dinosaurs this round in the order they were tapped (for adding to victory walk).
     private var matchedDinosaursThisRoundInTapOrder: [Dinosaur] {
@@ -170,6 +172,26 @@ struct DinoAgesGameView: View {
                 }
                 .allowsHitTesting(!isAudioPlaying)
                 .opacity(isAudioPlaying ? 0.85 : 1.0)
+                .overlay(alignment: .topTrailing) {
+                    if period != nil, !isGameComplete {
+                        Button {
+                            showSourceAgesHints = true
+                        } label: {
+                            Text("Hints")
+                                .font(.caption.weight(.semibold))
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 10)
+                                .background(Circle().fill(Color.blue))
+                                .frame(width: 72, height: 72)
+                        }
+                        .padding(.top, 8)
+                        .padding(.trailing, 16)
+                    }
+                }
+                .fullScreenCover(isPresented: $showSourceAgesHints) {
+                    SourceAgesHintsView(onDismiss: { showSourceAgesHints = false })
+                }
         }
     }
 
@@ -212,11 +234,11 @@ struct DinoAgesGameView: View {
 
     private func periodImage(_ p: DinoAgesPeriod) -> some View {
         Group {
-            if UIImage(named: p.imageName) != nil {
+            if ImageAssetCache.imageExists(named: p.imageName) {
                 Image(p.imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 280, maxHeight: 140)
+                    .frame(maxWidth: 340, maxHeight: 180)
             } else {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color.orange.opacity(0.2))
@@ -416,27 +438,54 @@ struct DinoAgesGameView: View {
         speechManager.speak(p.coverAudioKey)
     }
 
-    // MARK: - End sequence (victory: walk 9 selected dinosaurs, then crowd-cheering)
+    // MARK: - End sequence (victory: walk 9 selected dinosaurs, then success image + good-job + crowd-cheering)
+
+    private let victoryRowHeight: CGFloat = 92
+    private var victoryListVisibleHeight: CGFloat { 16 + 4 * victoryRowHeight + 3 * 12 + 16 }
 
     private var dinoAgesEndSequenceView: some View {
-        VStack(spacing: 16) {
-            ScrollView {
-                VStack(spacing: 12) {
-                    ForEach(Array(victoryWalkDinosaurs.enumerated()), id: \.element.id) { index, dino in
-                        DinoAgesEndRowView(
-                            dino: dino,
-                            isHighlighted: endSequenceStep >= 1 && index == endHighlightIndex
-                        )
+        GeometryReader { geometry in
+            VStack(spacing: 0) {
+                // Top half: scrolling list (fixed height ~4 rows), highlight + name audio, scroll to center
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        VStack(spacing: 12) {
+                            ForEach(Array(victoryWalkDinosaurs.enumerated()), id: \.element.id) { index, dino in
+                                DinoAgesEndRowView(
+                                    dino: dino,
+                                    isHighlighted: endSequenceStep >= 1 && index == endHighlightIndex
+                                )
+                                .id(index)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.vertical, 16)
+                    }
+                    .frame(height: victoryListVisibleHeight)
+                    .onChange(of: endHighlightIndex) { _, newIndex in
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            proxy.scrollTo(newIndex, anchor: .center)
+                        }
                     }
                 }
-                .padding(.horizontal)
+                .frame(maxWidth: .infinity)
+
+                // Bottom half: during walk show empty space; after walk show success image
+                Group {
+                    if endSequenceStep == 2 {
+                        dinoAgesSuccessImageView
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    playGoodJobAndCrowdThenDismiss()
+                                }
+                            }
+                    } else {
+                        Spacer()
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            Text("Good job!")
-                .font(.title)
-                .fontWeight(.semibold)
-                .padding(.top, 8)
-                .padding(.bottom, 8)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
@@ -444,13 +493,28 @@ struct DinoAgesGameView: View {
             endSequenceStep = 1
             endHighlightIndex = 0
             if victoryWalkDinosaurs.isEmpty {
-                playCrowdThenDismiss()
+                endSequenceStep = 2
             } else {
                 let d = victoryWalkDinosaurs[0]
                 speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
                 speechManager.onAudioFinished = { advanceEndHighlight() }
             }
         }
+    }
+
+    private var dinoAgesSuccessImageView: some View {
+        Group {
+            if ImageAssetCache.imageExists(named: "game-dino-ages-success") {
+                Image("game-dino-ages-success")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 280, height: 280)
+            } else {
+                Text("🎉")
+                    .font(.system(size: 100))
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private func advanceEndHighlight() {
@@ -461,24 +525,26 @@ struct DinoAgesGameView: View {
             speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
             speechManager.onAudioFinished = { advanceEndHighlight() }
         } else {
-            playCrowdThenDismiss()
+            endSequenceStep = 2
         }
     }
 
-    private func playCrowdThenDismiss() {
-        endSequenceStep = 2
-        if let crowdURL = speechManager.urlForAudio(key: "crowd-cheering") {
+    private func playGoodJobAndCrowdThenDismiss() {
+        let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
+        let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
+        if let u1 = goodJobURL, let u2 = crowdURL {
+            speechManager.playTogether(url1: u1, url2: u2) {
+                self.speechManager.onAudioFinished = nil
+                self.isPresented = false
+            }
+        } else if let u = goodJobURL ?? crowdURL {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 self.isPresented = false
             }
-            speechManager.playAudioFile(url: crowdURL)
+            speechManager.playAudioFile(url: u)
         } else {
-            speechManager.speak("crowd-cheering")
-            speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                self.isPresented = false
-            }
+            isPresented = false
         }
     }
 }
@@ -556,17 +622,22 @@ private struct DinoAgesCircleView: View {
 
     @ViewBuilder
     private var circleContent: some View {
-        if let name = dino.imageName, UIImage(named: name) != nil {
-            Image(name)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: dinoAgesCircleSize, height: dinoAgesCircleSize)
-                .clipShape(Circle())
+        let fallback = Circle()
+            .fill(Color.gray.opacity(0.4))
+            .frame(width: dinoAgesCircleSize, height: dinoAgesCircleSize)
+            .overlay(Text(dino.icon).font(.system(size: 32)))
+            .overlay(Circle().stroke(Color.gray.opacity(0.6), lineWidth: 2))
+        if let name = dino.imageName, ImageAssetCache.imageExists(named: name) {
+            ZStack {
+                fallback
+                Image(name)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: dinoAgesCircleSize, height: dinoAgesCircleSize)
+                    .clipShape(Circle())
+            }
         } else {
-            Circle()
-                .fill(Color.gray.opacity(0.3))
-                .frame(width: dinoAgesCircleSize, height: dinoAgesCircleSize)
-                .overlay(Text(dino.icon).font(.system(size: 32)))
+            fallback
         }
     }
 
@@ -591,6 +662,7 @@ private struct DinoAgesCircleView: View {
 private struct DinoAgesEndRowView: View {
     let dino: Dinosaur
     let isHighlighted: Bool
+    private let rowHeight: CGFloat = 92
 
     var body: some View {
         HStack(spacing: 16) {
@@ -606,6 +678,7 @@ private struct DinoAgesEndRowView: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
+        .frame(height: rowHeight)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
@@ -614,6 +687,128 @@ private struct DinoAgesEndRowView: View {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
         )
+    }
+}
+
+// MARK: - Source Ages Hints (Dino Ages)
+
+private struct SourceAgesPeriodHint: Identifiable {
+    let id: String
+    let imageName: String
+    let displayName: String
+    let audioKey: String
+}
+
+private let sourceAgesHintPeriods: [SourceAgesPeriodHint] = [
+    SourceAgesPeriodHint(id: "jurassic", imageName: "dino-ages-jurassic", displayName: "Jurassic", audioKey: "game-dino-ages-jurassic-dinosaurs"),
+    SourceAgesPeriodHint(id: "cretaceous", imageName: "dino-ages-cretaceous", displayName: "Cretaceous", audioKey: "game-dino-ages-cretaceous-dinosaurs"),
+]
+
+struct SourceAgesHintsView: View {
+    let onDismiss: () -> Void
+    @State private var speechManager = SpeechManager()
+    @State private var selectedPeriod: SourceAgesPeriodHint?
+    @State private var introPlayed = false
+
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            if selectedPeriod == nil {
+                gridView
+            } else {
+                detailView
+            }
+
+            Button {
+                onDismiss()
+            } label: {
+                Text("<")
+                    .font(.system(size: 28, weight: .medium))
+                    .foregroundColor(.blue)
+                    .frame(width: 44, height: 44)
+            }
+            .padding(.leading, 8)
+            .padding(.top, 8)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(.systemBackground))
+        .onAppear { playIntroOnce() }
+    }
+
+    private var gridView: some View {
+        VStack(spacing: 20) {
+            Text("Source Ages")
+                .font(.title2.weight(.semibold))
+                .padding(.top, 44)
+            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
+                ForEach(sourceAgesHintPeriods) { period in
+                    Button {
+                        showPeriodDetail(period)
+                    } label: {
+                        if UIImage(named: period.imageName) != nil {
+                            Image(period.imageName)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 140)
+                                .clipped()
+                        } else {
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.gray.opacity(0.3))
+                                .frame(height: 140)
+                                .overlay(Text(period.displayName).font(.title3).foregroundColor(.secondary))
+                        }
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding(.horizontal, 24)
+            Spacer()
+        }
+    }
+
+    @ViewBuilder
+    private var detailView: some View {
+        if let period = selectedPeriod {
+            VStack(spacing: 20) {
+                Spacer()
+                if UIImage(named: period.imageName) != nil {
+                    Image(period.imageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 340, maxHeight: 220)
+                }
+                Text(period.displayName)
+                    .font(.title2.weight(.semibold))
+                    .foregroundColor(.primary)
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+
+    private func playIntroOnce() {
+        guard !introPlayed else { return }
+        introPlayed = true
+        if let url = speechManager.urlForAudio(key: "game-dino-ages-tap-the-period-to-hear-description") {
+            speechManager.onAudioFinished = nil
+            speechManager.playAudioFile(url: url)
+        }
+    }
+
+    private func showPeriodDetail(_ period: SourceAgesPeriodHint) {
+        selectedPeriod = period
+        speechManager.onAudioFinished = nil
+        speechManager.onAudioFinished = {
+            speechManager.onAudioFinished = nil
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                selectedPeriod = nil
+            }
+        }
+        if let url = speechManager.urlForAudio(key: period.audioKey) {
+            speechManager.playAudioFile(url: url)
+        } else {
+            speechManager.speak(period.displayName)
+        }
     }
 }
 

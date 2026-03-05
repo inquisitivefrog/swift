@@ -1,0 +1,23 @@
+{
+  "id": "dryo_measure_v1_PROD",
+  "species": "dryosaurus",
+  "tech_ref": "TALL_MEASURE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "MORRISON_LJ",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "SEMI_ARID_PLAINS",
+  "pose": "Directly facing the camera in a perfectly symmetrical, upright 'pillar' stance. The head is positioned at the very top edge of the 1024px frame and the feet touch the very bottom edge to maximize vertical scale. The arms are tucked tightly against the chest and the tail is hidden directly behind the legs to maintain a narrow horizontal profile, ensuring the subject remains perfectly centered for a 140px wide crop.",
+  "character_details": {
+    "expression": "Signature friendly smirk with an alert and curious expression.",
+    "eyes": "Large, soulful, and expressive character eyes.",
+    "skin_texture": "Smooth, high-poly 3D surfaces with a subtle leathery texture; avoiding hyper-realistic grain.",
+    "features": ["large eye orbits", "slender beak-like mouth", "long, powerful hind limbs"]
+  },
+  "environmental_details": {
+    "ground": "Pale, dusty tan earth with white chalky nodules, characteristic of the semi-arid plains.",
+    "water": "A bright, clear ephemeral pool at the feet, reflecting the vibrant blue sky and bouncing high-key sunlight onto the dinosaur's chest and neck.",
+    "flora": "Sparse Fern Prairies and a few fallen Ginkgo leaves at the far edges of the frame to keep the central vertical corridor clear for the tape measure.",
+    "sky": "Clear, vibrant blue sky to provide maximum silhouette contrast.",
+    "atmosphere": "Direct midday sun with high-key exposure. Warm, natural highlights emphasize the 3D volume while maintaining a bright, airy feel."
+  }
+}

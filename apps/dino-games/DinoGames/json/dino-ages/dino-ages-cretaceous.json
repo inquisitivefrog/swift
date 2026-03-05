@@ -1,0 +1,19 @@
+{
+  "project": "Dino Ages Game Assets",
+  "period": "LATE_CRETACEOUS",
+  "location": "HELL_CREEK_FORMATION",
+  "final_style_anchor": "STYLE_ANIMATED_FEATURE_V3",
+  "prompt": {
+    "composition": "Widescreen cinematic tableau. Groups organized into 'visual islands'. Left: Hadrosaur family (Edmontosaurus, Anatotitan). Center: Ceratopsian duo (Triceratops, Torosaurus) in a sturdy pose. Right: Ankylosaurus in mid-walk. Background: T-Rex head and torso emerging from high canopy. Foreground: Small, feathered Dakotaraptor darting through ferns.",
+    "lighting": "Cinematic 'Magic Hour' with brilliant god-rays filtering through tropical leaves. Strong golden rim-lighting on every character silhouette.",
+    "texture_standard": "High-end 3D character groom. Satin-matte skin, velvety feathers, and polished ivory horns. Zero grit, zero scales, zero realistic skin-folds.",
+    "color_palette": {
+      "hadrosaurs": "Vibrant sunset-orange with cream stripes.",
+      "ceratopsians": "Saturated teal and slate-blue with orange 'painted' decorative frill patterns.",
+      "ankylosaurus": "Deep bronze armor with bright ivory spikes.",
+      "t_rex": "Forest-green body, subtle dark stripes, glowing amber eyes."
+    },
+    "environment": "Lush tropical jungle clearing with flowering magnolias and oversized fan palms. Clean, painterly mossy ground.",
+    "negative_prompt": "photorealistic, grainy, lumpy, grit, scary, horror, blood, open mouths, aggressive, 90s CGI, plastic toy, museum model, grey sky, muddy"
+  }
+}

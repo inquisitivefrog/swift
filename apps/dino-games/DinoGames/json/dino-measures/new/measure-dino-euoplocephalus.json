@@ -1,0 +1,23 @@
+{
+  "id": "euoplo_measure_v1_PROD",
+  "species": "euoplocephalus",
+  "tech_ref": "TALL_MEASURE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "DINOSAUR_PARK",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "COASTAL_LOWLANDS",
+  "pose": "The dinosaur is reared up slightly on its hind legs in a 'begging' or 'reaching' stance to maximize its vertical height for the measurement. The head is at the very top of the 1024px frame. The wide, armored body is tilted vertically so the tail club is visible near the bottom feet. The entire character is centered in a narrow vertical corridor to ensure the armor spikes stay within the 340x140px crop.",
+  "character_details": {
+    "expression": "Signature friendly smirk; a happy, stout character look.",
+    "eyes": "Large, soulful, and expressive character eyes with armored 'eyebrow' ridges.",
+    "skin_texture": "Smooth 3D surfaces with rounded, pebble-like armor studs; the tail club has a polished, heavy stone-like appearance.",
+    "features": ["broad beak-like mouth", "heavy bony tail club", "rows of rounded armor plates"]
+  },
+  "environmental_details": {
+    "ground": "Light-colored, sun-bleached river silt and mossy stones.",
+    "water": "A bright, sparkling lagoon in the background, bouncing light up to illuminate the underside of the heavy armor.",
+    "flora": "Sparse ferns at the very edges of the square frame.",
+    "sky": "Vibrant, cloudless blue sky for a clean silhouette.",
+    "atmosphere": "Direct midday sun. High-key exposure to ensure the green/brown armor tones don't look too dark or muddy."
+  }
+}

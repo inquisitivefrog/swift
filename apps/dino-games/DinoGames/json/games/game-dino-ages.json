@@ -1,0 +1,29 @@
+{
+  "id": "dino_ages_v3_JURASSIC_CRETACEOUS_ONLY",
+  "game_title": "Dino Ages!",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": "SQUARE_1024",
+  "scene_logic": {
+    "composition": "Two massive, stylized stone archways side-by-side. No humans, no wooden doors. The background is split into two distinct, vibrant climates.",
+    "left_side_jurassic": "Inside the left archway: A friendly Brachiosaurus peeks its head out from a golden-hour coniferous forest. The archway is labeled with a 3D stone sign: 'JURASSIC'.",
+    "right_side_cretaceous": "Inside the right archway: A colorful Triceratops steps forward from a lush, flowering tropical jungle. The archway is labeled with a 3D stone sign: 'CRETACEOUS'.",
+    "center_foreground": "A small, feathery, and very excited raptor sits between the two arches, looking directly at the player and pointing one way or the other with a wing."
+  },
+  "typography": {
+    "main_title": {
+      "text_content": "DINO AGES!",
+      "style": "Extra-thick 3D red block letters with a glossy 'candy' finish.",
+      "color": "Bright Red with a white outline.",
+      "placement": "Top center, arched over both portals."
+    }
+  },
+  "character_details": {
+    "finish": "High-budget animation quality. Satiny-smooth skin, vibrant color patterns (teals, oranges, and purples), and big, friendly, expressive eyes. Zero grit, zero scary teeth.",
+    "expressions": "The dinosaurs look like they are inviting the player to come play, not just standing there."
+  },
+  "environmental_details": {
+    "lighting": "Hyper-saturated and sunny. The Jurassic side is warm and golden; the Cretaceous side is lush and emerald green.",
+    "atmosphere": "Magical 'adventure' vibe. Very clean, bright, and high-contrast."
+  },
+  "negative_prompt": "Triassic, humans, park ranger, realistic textures, scales, grit, muddy colors, scary, museum, 90s CGI, grainy, blurry text, 'Jur asic', 'Crete cous'"
+}

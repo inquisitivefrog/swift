@@ -1,0 +1,16 @@
+{
+  "id": "ankylo_taller_v3_002",
+  "species": "ankylosaurus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "LANCE_HELL_CREEK",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "COASTAL_LOWLANDS",
+  "pose": "Direct head-on 'straight-at-camera' perspective. The Ankylosaurus is crouched slightly at the rear but has its head and chest lifted high. The head is perfectly centered horizontally in the 1024px frame and positioned near the top edge. This creates a narrow vertical silhouette where the head, neck, and front legs form a singular pillar of content that survives a 140px wide center crop.",
+  "environmental_details": {
+    "ground": "Flat, sun-bleached light grey siltstone. The dinosaur is centered on a clear path to avoid any side-clutter bleeding into the crop.",
+    "flora": "Low-lying, sparse ferns positioned only at the far left and right edges of the 1024px frame, ensuring the center 140px vertical strip is 100% dinosaur and sky.",
+    "sky": "Bright, high-key blue sky directly behind the head to provide maximum silhouette contrast.",
+    "atmosphere": "Hard midday sun coming from slightly above to highlight the top-down textures of the armor plates (osteoderms)."
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "fukui_measure_v1_PROD",
+  "species": "fukuiraptor",
+  "tech_ref": "TALL_MEASURE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "KITADANI",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "RIVER_VALLEY_SYSTEMS",
+  "pose": "Directly facing the camera in a tall, upright 'pillar' stance. The snout is pointed forward with a friendly smirk, reaching the top edge of the 1024px frame. Its powerful arms are tucked slightly, showing off the large hand claws within the 300px horizontal safety zone. The tail is hidden directly behind the legs to keep the silhouette narrow for the 340x140px crop.",
+  "character_details": {
+    "expression": "Signature friendly smirk; looks energetic and playful.",
+    "eyes": "Large, soulful, and expressive character eyes.",
+    "skin_texture": "Smooth 3D surfaces with very fine, soft pebbled scales; polished finish.",
+    "features": ["large sickle-shaped hand claws", "slender, athletic build", "long, narrow snout"]
+  },
+  "environmental_details": {
+    "ground": "Lush green moss and light-colored river stones.",
+    "water": "A bright, babbling river in the background reflecting a clear blue sky, providing high-key ambient light.",
+    "flora": "Sparse ferns and young Ginkgo trees at the far edges of the frame to maintain a clean vertical center.",
+    "sky": "Vibrant blue sky with high-key midday sun.",
+    "atmosphere": "Direct midday sun with warm highlights on the dinosaur's shoulders and head to define the 3D volume."
+  }
+}

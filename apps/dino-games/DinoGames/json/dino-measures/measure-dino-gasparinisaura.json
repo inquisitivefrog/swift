@@ -1,0 +1,28 @@
+[
+  {
+    "id": "gaspar_measure_v1_FRONT",
+    "species": "Gasparinisaura",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "ANACLETO",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "OPEN_WOODLANDS",
+    "pose_constraints": {
+      "posture": "Alert, upright 'Pillar' stance on hind legs; front paws tucked neatly against the chest.",
+      "orientation": "Direct 0-degree head-on view. Symmetrical and centered.",
+      "camera_angle": "High-angle 'downward' shot to emphasize its small, pet-like stature.",
+      "body_logic": "Long tail is hidden directly behind the legs. Horizontal width kept under 220px to ensure it looks small in the frame.",
+      "framing_note": "The head should be slightly oversized in the animated style to enhance the 'cute' factor."
+    },
+    "character_details": {
+      "expression": "Wide-eyed, cheerful curiosity; a soft, closed-mouth smile.",
+      "texture": "Squishy, velvety skin texture with warm peach and mint-green patterns.",
+      "features": ["Large, soulful dark eyes", "Small, rounded beak", "Slender, delicate limbs"]
+    },
+    "environmental_details": {
+      "ground": "Soft, sun-dappled forest floor with oversized clover and moss to emphasize the dinosaur's small size.",
+      "lighting": "Bright, 'morning-sun' aesthetic with soft lens flares and warm golden highlights.",
+      "sky": "Bright blue seen through a canopy of soft-focus leaves."
+    }
+  }
+]

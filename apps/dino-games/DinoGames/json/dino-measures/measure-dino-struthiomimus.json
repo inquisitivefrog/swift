@@ -1,0 +1,34 @@
+[
+  {
+    "id": "struthio_v1_PILLAR",
+    "species": "Struthiomimus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DINOSAUR_PARK",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_WOODLAND",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' orientation; standing tall on hind legs with the neck extended to maximum height.",
+      "orientation": "0-degree head-on frontal view. Symmetrical.",
+      "camera_angle": "Low-angle 'Hero' shot to make the neck look even longer and more majestic.",
+      "body_logic": "The torso and tail are hidden directly behind the chest. The arms are tucked neatly against the ribs to keep the width under 200px.",
+      "framing_note": "The small head with its large eyes should be the top-most point of the vertical silhouette."
+    },
+    "character_details": {
+      "expression": "Alert and wide-eyed; a tiny, curious tilt to the head.",
+      "texture": "Soft, downy proto-feathers (fuzz) on the body, with smooth, 'vinyl-like' skin on the legs and beak.",
+      "colors": "Pale lavender-grey body with creamy white 'racing stripes' down the neck and a soft yellow beak.",
+      "features": [
+        "Long, slender S-curved neck.",
+        "Toothless, bird-like beak.",
+        "Large, expressive, dark eyes."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Rich, dark soil with a few vibrant green ferns for color pop.",
+      "flora": ["Tall, stylized 'horsetail' plants in the background to reinforce the vertical lines."],
+      "lighting": "Bright, high-key sunlight; soft rim-lighting on the neck feathers to make them look 'glowy' and soft.",
+      "sky": "Bright, warm afternoon sky (pale orange/gold)."
+    }
+  }
+]

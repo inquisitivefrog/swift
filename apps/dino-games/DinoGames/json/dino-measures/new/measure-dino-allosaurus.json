@@ -1,0 +1,16 @@
+{
+  "id": "allo_taller_v3_002",
+  "species": "allosaurus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "MORRISON_LJ",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "SEMI_ARID_PLAINS",
+  "pose": "Natural, athletic upright posture. The Allosaurus stands tall on its powerful hind legs with its torso slightly more vertical to fit the tall frame. The neck maintains its natural, powerful S-curve—not elongated or stretched. The head is positioned near the top edge, and the full body length from head to tail-tip (diagonally) fills the vertical 1024px span. Friendly, alert expression.",
+  "environmental_details": {
+    "ground": "Pale, dusty tan earth with scattered white caliche nodules to maximize light bounce.",
+    "flora": "Sparse, low-lying Fern Prairies in the background, keeping the mid-ground open and sun-drenched.",
+    "sky": "Clear, vibrant blue sky with high-key midday sunlight.",
+    "atmosphere": "Direct sun with warm highlights on leathery skin textures and soft-edged cinematic shadows."
+  }
+}

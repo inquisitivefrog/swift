@@ -1,0 +1,28 @@
+[
+  {
+    "id": "amarga_measure_v2_3QTR",
+    "species": "Amargasaurus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "LA_AMARGA",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "BRAIDED_RIVER_SYSTEMS",
+    "pose_constraints": {
+      "posture": "Steep 15-degree three-quarter stance; neck held at a mid-height 'S' curve.",
+      "orientation": "Subject is nearly head-on to compress the body length into a narrow vertical 'pillar' shape.",
+      "grounding": "Standing in ankle-deep, crystal clear water on a bed of light river gravel.",
+      "framing_note": "Spines must form a clear 'V' silhouette against the sky, centered within the 300px horizontal 'safe zone'."
+    },
+    "character_details": {
+      "expression": "Friendly, inquisitive smirk; head tilted to show off the spine symmetry.",
+      "texture": "Smooth, toy-like skin; vibrant 'skin sails' connecting the lower halves of the spines (soft-tissue theory).",
+      "features": ["Double row of long neck spines", "Short, sturdy 'elephantine' legs", "Small, friendly head"]
+    },
+    "environmental_details": {
+      "ground": "Light grey river sand and sun-bleached pebbles.",
+      "flora": ["Clumps of Equisetites (horsetails) emerging from the water"],
+      "fauna": ["A small Vincelestes (mammal) watching from a nearby rock for scale"],
+      "sky": "High-contrast blue sky with a golden rim-light tracing the edges of the neck sails."
+    }
+  }
+]

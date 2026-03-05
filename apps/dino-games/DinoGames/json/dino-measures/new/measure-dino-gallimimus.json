@@ -1,0 +1,22 @@
+[
+  {
+    "id": "gallimimus_measure_v2_FRONT",
+    "species": "Gallimimus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "NEMEGT",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "RIVER_VALLEYS",
+    "pose_constraints": {
+      "posture": "Strictly vertical; neck fully extended to emphasize maximum height.",
+      "orientation": "Direct front-facing to maintain a narrow 300px width.",
+      "grounding": "Symmetrical stance on flat riverbed silt.",
+      "framing_note": "Ensures head-to-toe vertical span for accurate stacking math in 'Measure the Dinosaur'."
+    },
+    "environmental_details": {
+      "ground": "Yellowish-orange and light gray sandstone.",
+      "fauna": ["Freshwater crabs", "Shrimp"],
+      "flora": ["Early deciduous hardwoods"]
+    }
+  }
+]

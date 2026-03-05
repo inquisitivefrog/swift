@@ -79,7 +79,7 @@ enum DinosaurGameCatalog {
             return [
                 .matching(MatchingGameConfigs.dinoFeatures),   // Match the Dinosaur
                 .weigh(WeighGameConfigs.weighDinosaur),        // Weigh the Dinosaur
-                .wacky(WackyGameConfigs.wackyDinosaurs),       // Wack Dinosaurs
+                .whoIsTaller(WhoIsTallerGameConfigs.whoIsTaller), // Who Is Taller?
             ]
         case .level2:
             return [
@@ -106,7 +106,9 @@ enum DinosaurGameCatalog {
                 .dinoLunch(DinoLunchConfigs.dinoLunch),        // Dino Lunch
             ]
         case .level6:
-            return []  // empty
+            return [
+                .wacky(WackyGameConfigs.wackyDinosaurs),       // Wacky Dinosaurs
+            ]
         }
     }
 }

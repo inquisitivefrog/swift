@@ -1,0 +1,33 @@
+[
+  {
+    "id": "ornitho_measure_v1_TOWER",
+    "species": "Ornithomimus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DINOSAUR_PARK",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_FLOODPLAINS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' stance; standing tall on long hind legs, head held high and forward.",
+      "orientation": "Direct 0-degree head-on frontal view. Symmetrical and centered.",
+      "camera_angle": "Low-angle 'Hero' shot, looking slightly up to emphasize its elegant height and neck length.",
+      "body_logic": "The slender torso and long tail are completely occluded by the chest and upright neck. Silhouette width max 220px.",
+      "framing_note": "The long, slender neck and small, bird-like head must be perfectly centered and extend vertically, with the beak clearly visible."
+    },
+    "character_details": {
+      "expression": "Alert, curious, and gentle gaze; large, round, bird-like eyes.",
+      "texture": "Smooth, downy feathers covering most of the body, with sleek, tighter feathers on the neck and head. Color: Soft tawny brown with cream underparts.",
+      "features": [
+        "Long, slender neck.",
+        "Small, toothless, pointed beak.",
+        "Long, powerful hind legs with small, delicate forelimbs tucked against the chest."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Damp, dark soil mixed with rich leaf litter and fern fronds, characteristic of the Dinosaur Park Formation.",
+      "flora": ["Tall, lush horsetails and broad-leaved flowering plants (magnolias) in the soft-focus background, suggesting dense vegetation."],
+      "sky": "Bright, humid Late Cretaceous sky with a soft, diffused glow that highlights the texture of the feathers.",
+      "lighting": "High-key 'Sunny Exposed Cinematic' lighting, ensuring bright, clean surfaces with soft, inviting shadows."
+    }
+  }
+]

@@ -1,0 +1,35 @@
+[
+  {
+    "id": "utra_v2_CRANE_KICK_PILLAR",
+    "species": "Utahraptor",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "CEDAR_MOUNTAIN",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "WOODLAND_FLOODPLAINS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' orientation. Standing on one powerful hind leg in a classic 'Crane Kick' pose, with the other leg lifted high and bent, showcasing the prominent sickle claw.",
+      "orientation": "Three-quarter profile view (20-degree angle). This highlights the sleek feathering and athletic build.",
+      "camera_angle": "Low-angle 'Hero' shot, looking up at the Utahraptor to emphasize its agility and the dramatic presentation of the elevated sickle claw.",
+      "body_logic": "Width strictly capped at 300px. The head is held level, eyes focused. The tail arcs gracefully downward for balance, providing a counterweight to the raised leg and staying within the frame.",
+      "framing_note": "The raised foot with its large sickle claw is the absolute central and highest focal point. The body is streamlined to fit the narrow pillar."
+    },
+    "character_details": {
+      "expression": "Focused, calm, and balanced; a sense of quiet power. Intelligent, gleaming golden eyes with a sharp, determined glint. Mouth is closed.",
+      "texture": "Dense, sleek, and perfectly groomed proto-feathers with a soft, iridescent sheen (like a modern bird of prey). Exposed skin on the face is smooth and refined.",
+      "colors": "Vibrant emerald-green feathers with deep sapphire-blue tips on the wings and tail. A clean, bright golden-yellow underbelly. The sickle claw is a polished obsidian-black.",
+      "features": [
+        "Sleek, bird-like head with a sharp, pointed snout.",
+        "The prominently displayed, oversized sickle claw on the raised foot.",
+        "Lean, powerful, and impeccably balanced feathered body.",
+        "Feathered forelimbs held close to the chest, like folded wings."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Flat, smooth, stylized rock surface (like a dojo floor), with subtle texture. Minimal ground cover to avoid distraction.",
+      "flora": ["A few sparse, stylized desert succulents (like agave) in the blurred background to hint at its environment."],
+      "lighting": "Clear, crisp 'Zen Morning' sunlight. Strong rim-lighting on the raised leg and feathers to emphasize the dynamic pose and sleek form.",
+      "sky": "Serene, pale-blue to soft-peach gradient sky, conveying a sense of calm strength."
+    }
+  }
+]

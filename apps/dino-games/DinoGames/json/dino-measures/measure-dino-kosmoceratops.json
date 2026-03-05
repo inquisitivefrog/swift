@@ -1,0 +1,34 @@
+[
+  {
+    "id": "kosmo_measure_v2_TOWER",
+    "species": "Kosmoceratops",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "KAIPAROWITS",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_FLOODPLAINS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' stance; head tilted slightly upward to maximize verticality.",
+      "orientation": "Direct 0-degree head-on frontal view. The nose horn is the center point.",
+      "camera_angle": "Low-angle 'Hero' shot, looking slightly up to emphasize the height of the frill.",
+      "grounding": "Standing on flat, dark green-grey mud; all four feet clustered tightly to avoid horizontal sprawl.",
+      "body_logic": "Torso, hips, and tail are completely occluded by the front chest and head. Silhouette must remain under 280px wide.",
+      "framing_note": "The forward-curling frill hooks must be symmetrical, forming the top edge of the 'pillar' silhouette."
+    },
+    "character_details": {
+      "expression": "Signature inquisitive smirk; large, soulful eyes looking down toward the camera.",
+      "texture": "Tactile leathery skin with vibrant, contrasting 'display colors' on the frill (oranges and teals).",
+      "features": [
+        "Ornate frill with ten forward-curling hooks",
+        "Two forward-curving brow horns",
+        "Short, thick neck"
+      ]
+    },
+    "environmental_details": {
+      "ground": "Saturated green-grey mud with subtle footprints and light-catching puddles.",
+      "flora": ["Tall giant horsetails (Equisetum) positioned directly behind the dinosaur to reinforce the vertical axis"],
+      "sky": "Warm, hazy afternoon sky providing a bright backlight to separate the frill hooks from the background.",
+      "lighting": "High-key golden rim-lighting on the top edge of the frill."
+    }
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "id": "cerato_taller_v3_RESET",
+  "species": "ceratosaurus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "WARM_SUNNY_EXPOSED",
+  "formation_ref": "MORRISON_LJ",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "SEMI_ARID_PLAINS",
+  "pose": "Directly facing the camera in a proud, upright stance. The head is perfectly centered at the top of the 1024px frame, tilted slightly to the side to showcase the iconic nasal horn and brow ridges in silhouette. The neck and deep chest are stacked vertically in the center 140px. The tail is tucked behind the legs to keep the profile narrow and focused.",
+  "character_details": {
+    "expression": "Signature friendly smirk with an alert, curious look.",
+    "eyes": "Large, soulful, and expressive 'character' eyes.",
+    "skin_texture": "Smooth, high-poly 3D surfaces with a row of stylized, rounded osteoderms running down the spine; avoiding hyper-realistic grain.",
+    "features": ["prominent blade-like nasal horn", "two smaller hornlets over the eyes", "four-fingered hands"]
+  },
+  "environmental_details": {
+    "ground": "Pale tan earth and white caliche nodules. A 'nice touch' of warm, golden dust kicked up around the three-toed feet to ground the character.",
+    "flora": "Sparse Fern Prairies kept to the far edges of the square; the central vertical corridor is clear of obstructions.",
+    "sky": "Clear, vibrant blue sky to provide maximum contrast for the horn and head silhouette.",
+    "atmosphere": "Warm, cinematic midday sun with golden rim-lighting to define the 3D form and ensure high visibility."
+  }
+}

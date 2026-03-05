@@ -32,6 +32,7 @@ struct GameSelectionView: View {
     @State private var showDinoAgesGame = false
     @State private var showDinoFormationsGame = false
     @State private var showMeasureGame = false
+    @State private var showWhoIsTallerGame = false
     @State private var currentGameConfig: MatchingGameConfig?
     @State private var currentWeighConfig: WeighGameConfig?
     @State private var currentBalanceConfig: BalanceGameConfig?
@@ -45,6 +46,7 @@ struct GameSelectionView: View {
     @State private var currentDinoAgesConfig: DinoAgesGameConfig?
     @State private var currentDinoFormationsConfig: DinoFormationsGameConfig?
     @State private var currentMeasureConfig: MeasureGameConfig?
+    @State private var currentWhoIsTallerConfig: WhoIsTallerGameConfig?
     @State private var speechManager = SpeechManager()
     /// true from first frame when category intro will play, so the list is disabled until intro + game walk finish.
     @State private var isAudioPlaying = false
@@ -106,7 +108,9 @@ struct GameSelectionView: View {
                 currentRacingConfig = RacingGameConfigs.racingPterosaursRandomized()
                 showRacingGame = true
             } else {
-                showRacingPeriodSelection = true
+                // Racing Dinosaurs: embed period selection in RacingGameView to avoid sheet dismiss/present flash
+                currentRacingConfig = RacingGameConfigs.racingDinosaursNeedsPeriod
+                showRacingGame = true
             }
         } else if gameType.matrixMaterialsConfig != nil {
             showMatrixMaterialsGame = true
@@ -116,6 +120,8 @@ struct GameSelectionView: View {
             showDinoFormationsGame = true
         } else if gameType.measureConfig != nil {
             showMeasureGame = true
+        } else if gameType.whoIsTallerConfig != nil {
+            showWhoIsTallerGame = true
         }
     }
 
@@ -197,6 +203,7 @@ struct GameSelectionView: View {
             showDinoAgesGame: $showDinoAgesGame,
             showDinoFormationsGame: $showDinoFormationsGame,
             showMeasureGame: $showMeasureGame,
+            showWhoIsTallerGame: $showWhoIsTallerGame,
             showWackyGame: $showWackyGame,
             showToothacheGame: $showToothacheGame,
             showRacingPeriodSelection: $showRacingPeriodSelection,
@@ -212,6 +219,7 @@ struct GameSelectionView: View {
             currentDinoAgesConfig: $currentDinoAgesConfig,
             currentDinoFormationsConfig: $currentDinoFormationsConfig,
             currentMeasureConfig: $currentMeasureConfig,
+            currentWhoIsTallerConfig: $currentWhoIsTallerConfig,
             currentWackyConfig: $currentWackyConfig,
             currentToothacheConfig: $currentToothacheConfig,
             currentRacingConfig: $currentRacingConfig,
@@ -233,7 +241,7 @@ struct GameSelectionView: View {
                     .id("levelHeader")
             }
             if hasNoGames {
-                if UIImage(named: "game-coming-soon") != nil {
+                if ImageAssetCache.imageExists(named: "game-coming-soon") {
                     Image("game-coming-soon")
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -264,7 +272,7 @@ struct GameSelectionView: View {
     /// Level header shown at top of game list (image + title); kept compact so all three game cards fit without scrolling.
     private func levelHeaderView(level: GameLevel) -> some View {
         VStack(spacing: 8) {
-            if UIImage(named: level.imageName) != nil {
+            if ImageAssetCache.imageExists(named: level.imageName) {
                 Image(level.imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -349,6 +357,7 @@ struct GameSelectionView: View {
         currentDinoAgesConfig = gameType.dinoAgesConfig
         currentDinoFormationsConfig = gameType.dinoFormationsConfig
         currentMeasureConfig = gameType.measureConfig
+        currentWhoIsTallerConfig = gameType.whoIsTallerConfig != nil ? WhoIsTallerGameConfigs.whoIsTallerRandomized() : nil
 
         // Use game-{slug} for transition intro (same as walk)
         transitionGameImage = gameType.imageName
@@ -381,6 +390,7 @@ private struct GameSelectionNavigationContent: View {
     @Binding var showDinoAgesGame: Bool
     @Binding var showDinoFormationsGame: Bool
     @Binding var showMeasureGame: Bool
+    @Binding var showWhoIsTallerGame: Bool
     @Binding var showWackyGame: Bool
     @Binding var showToothacheGame: Bool
     @Binding var showRacingPeriodSelection: Bool
@@ -396,6 +406,7 @@ private struct GameSelectionNavigationContent: View {
     @Binding var currentDinoAgesConfig: DinoAgesGameConfig?
     @Binding var currentDinoFormationsConfig: DinoFormationsGameConfig?
     @Binding var currentMeasureConfig: MeasureGameConfig?
+    @Binding var currentWhoIsTallerConfig: WhoIsTallerGameConfig?
     @Binding var currentWackyConfig: WackyGameConfig?
     @Binding var currentToothacheConfig: ToothacheGameConfig?
     @Binding var currentRacingConfig: RacingGameConfig?
@@ -407,7 +418,7 @@ private struct GameSelectionNavigationContent: View {
 
     private var noOtherGameShowing: Bool {
         !showMatchingGame && !showWeighGame && !showBalanceGame && !showGuessGame &&
-        !showFindMamaGame && !showDinoLunchGame && !showMatrixMaterialsGame && !showDinoAgesGame && !showDinoFormationsGame && !showMeasureGame && !showWackyGame && !showToothacheGame &&
+        !showFindMamaGame && !showDinoLunchGame && !showMatrixMaterialsGame && !showDinoAgesGame && !showDinoFormationsGame && !showMeasureGame && !showWhoIsTallerGame && !showWackyGame && !showToothacheGame &&
         !showRacingGame && !showRacingPeriodSelection
     }
 
@@ -504,13 +515,13 @@ private struct GameSelectionNavigationContent: View {
                 }
             }
             .sheet(isPresented: $showRacingPeriodSelection) {
-                RacingPeriodSelectionView(isPresented: $showRacingPeriodSelection) { config in
+                RacingPeriodSelectionView(isPresented: $showRacingPeriodSelection, onSelectPeriod: { config in
                     currentRacingConfig = config
                     showRacingPeriodSelection = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                         showRacingGame = true
                     }
-                }
+                })
             }
             .sheet(isPresented: $showRacingGame) {
                 if let config = currentRacingConfig {
@@ -543,6 +554,13 @@ private struct GameSelectionNavigationContent: View {
                     MeasureGameView(isPresented: $showMeasureGame, gameConfig: config)
                 } else {
                     MeasureGameView(isPresented: $showMeasureGame, gameConfig: MeasureGameConfigs.measureDinosaur)
+                }
+            }
+            .sheet(isPresented: $showWhoIsTallerGame) {
+                if let config = currentWhoIsTallerConfig {
+                    WhoIsTallerGameView(isPresented: $showWhoIsTallerGame, gameConfig: config)
+                } else {
+                    WhoIsTallerGameView(isPresented: $showWhoIsTallerGame, gameConfig: WhoIsTallerGameConfigs.whoIsTallerRandomized())
                 }
             }
     }
@@ -751,6 +769,20 @@ private struct GameSelectionNavigationContent: View {
                     currentMeasureConfig = MeasureGameConfigs.measureDinosaur
                 }
             }
+            .onChange(of: showWhoIsTallerGame) { _, newValue in
+                if !newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        if noOtherGameShowing {
+                            selectedGame = nil
+                            showGameName = false
+                            currentWhoIsTallerConfig = nil
+                            hasPlayedWelcome = false
+                        }
+                    }
+                } else {
+                    currentWhoIsTallerConfig = WhoIsTallerGameConfigs.whoIsTallerRandomized()
+                }
+            }
     }
 
     private var contentWithOnChange: some View {
@@ -847,6 +879,7 @@ enum GameType {
     case dinoAges(DinoAgesGameConfig) // Dino Ages: when dinosaurs lived
     case dinoFormations(DinoFormationsGameConfig) // Dino Formations: dinosaurs found in named formation
     case measure(MeasureGameConfig) // Measure the Dinosaur!: stack to match height
+    case whoIsTaller(WhoIsTallerGameConfig) // Who Is Taller?: compare two dinosaurs by height
 
     var name: String {
         switch self {
@@ -875,6 +908,8 @@ enum GameType {
         case .dinoFormations(let config):
             return config.title
         case .measure(let config):
+            return config.title
+        case .whoIsTaller(let config):
             return config.title
         }
     }
@@ -907,97 +942,106 @@ enum GameType {
             return "Pick dinosaurs found in the formation shown"
         case .measure:
             return "Stack dinosaurs to match the reference height"
+        case .whoIsTaller:
+            return "Compare two dinosaurs to see who is taller"
         }
     }
 
     var gameConfig: MatchingGameConfig? {
         switch self {
         case .matching(let config): return config
-        case .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure: return nil
+        case .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure, .whoIsTaller: return nil
         }
     }
 
     var weighConfig: WeighGameConfig? {
         switch self {
         case .weigh(let config): return config
-        case .matching, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure: return nil
+        case .matching, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure, .whoIsTaller: return nil
         }
     }
 
     var balanceConfig: BalanceGameConfig? {
         switch self {
         case .balance(let config): return config
-        case .matching, .weigh, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure: return nil
+        case .matching, .weigh, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure, .whoIsTaller: return nil
         }
     }
 
     var guessConfig: GuessGameConfig? {
         switch self {
         case .guess(let config): return config
-        case .matching, .weigh, .balance, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure: return nil
+        case .matching, .weigh, .balance, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure, .whoIsTaller: return nil
         }
     }
 
     var findMamaConfig: FindMamaConfig? {
         switch self {
         case .findMama(let config): return config
-        case .matching, .weigh, .balance, .guess, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure: return nil
+        case .matching, .weigh, .balance, .guess, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure, .whoIsTaller: return nil
         }
     }
 
     var dinoLunchConfig: DinoLunchConfig? {
         switch self {
         case .dinoLunch(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure, .whoIsTaller: return nil
         }
     }
 
     var wackyConfig: WackyGameConfig? {
         switch self {
         case .wacky(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure, .whoIsTaller: return nil
         }
     }
 
     var toothacheConfig: ToothacheGameConfig? {
         switch self {
         case .toothache(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure, .whoIsTaller: return nil
         }
     }
 
     var racingConfig: RacingGameConfig? {
         switch self {
         case .racing(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .matrixMaterials, .dinoAges, .dinoFormations, .measure: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .matrixMaterials, .dinoAges, .dinoFormations, .measure, .whoIsTaller: return nil
         }
     }
 
     var matrixMaterialsConfig: MatrixMaterialsGameConfig? {
         switch self {
         case .matrixMaterials(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoAges, .dinoFormations, .measure: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoAges, .dinoFormations, .measure, .whoIsTaller: return nil
         }
     }
 
     var dinoAgesConfig: DinoAgesGameConfig? {
         switch self {
         case .dinoAges(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoFormations, .measure: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoFormations, .measure, .whoIsTaller: return nil
         }
     }
 
     var dinoFormationsConfig: DinoFormationsGameConfig? {
         switch self {
         case .dinoFormations(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .measure: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .measure, .whoIsTaller: return nil
         }
     }
 
     var measureConfig: MeasureGameConfig? {
         switch self {
         case .measure(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .whoIsTaller: return nil
+        }
+    }
+
+    var whoIsTallerConfig: WhoIsTallerGameConfig? {
+        switch self {
+        case .whoIsTaller(let config): return config
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .measure: return nil
         }
     }
 
@@ -1017,6 +1061,7 @@ enum GameType {
         case .dinoAges(let config): return config.id
         case .dinoFormations(let config): return config.id
         case .measure(let config): return config.id
+        case .whoIsTaller(let config): return config.id
         }
     }
 
@@ -1049,6 +1094,8 @@ enum GameType {
             return "game-\(config.id)"
         case .measure(let config):
             return "game-\(config.id)"
+        case .whoIsTaller(let config):
+            return "game-\(config.id)"
         }
     }
 
@@ -1068,6 +1115,7 @@ enum GameType {
         case .dinoAges: return "🕐"
         case .dinoFormations: return "🪨"
         case .measure: return "📏"
+        case .whoIsTaller: return "📏"
         }
     }
 
@@ -1087,6 +1135,7 @@ enum GameType {
         case .dinoAges(let config): return config.introAudio
         case .dinoFormations(let config): return config.introAudio
         case .measure(let config): return config.introAudio
+        case .whoIsTaller(let config): return config.introAudio
         }
     }
 }
@@ -1101,7 +1150,7 @@ private struct LevelCard: View {
         Button(action: onTap) {
             HStack(spacing: 12) {
                 // Label-style image: wide and short so all six levels fit on screen; size progression (small→big dino) still reads.
-                if UIImage(named: level.imageName) != nil {
+                if ImageAssetCache.imageExists(named: level.imageName) {
                     Image(level.imageName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -1150,11 +1199,12 @@ struct GameCard: View {
         Button(action: onTap) {
             VStack(spacing: 15) {
                 // Large icon/image - use image if available, otherwise emoji
-                if let imageName = imageName, UIImage(named: imageName) != nil {
+                if let imageName = imageName, ImageAssetCache.imageExists(named: imageName) {
                     Image(imageName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 180, height: 180)
+                        .brightness(imageName == "game-name-that-dinosaur" ? 0.2 : 0)
                 } else {
                     Text(icon)
                         .font(.system(size: 100))
@@ -1212,7 +1262,7 @@ struct GameTransitionView: View {
                 Spacer()
 
                 // Full-size game image
-                if UIImage(named: imageName) != nil {
+                if ImageAssetCache.imageExists(named: imageName) {
                     Image(imageName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)

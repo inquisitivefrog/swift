@@ -1,0 +1,510 @@
+{
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "metadata": {
+    "total_formations": 25,
+  "libraries": {
+    "style_presets": {
+      "STYLE_CLAY_MASTER": {
+        "description": "Chibi-style 3D animation; chunky, toy-like proportions; large expressive eyes; rounded snouts; smooth matte clay/vinyl textures; vibrant saturated colors; friendly and approachable for small children.",
+        "base_lighting": "Soft studio lighting with ambient occlusion to emphasize the physical toy feel.",
+        "negative_constraints": "No organic skin textures, no scales, no realistic eye anatomy, no sharp predatory features, no naturalistic lighting."
+      },
+      "STYLE_SILHOUETTE": {
+        "lighting": "High-contrast backlighting, sun on horizon at dusk",
+        "subject_appearance": "Solid black silhouette, zero internal detail, sharp edges",
+        "background": "Solid vibrant sunset orange or high-contrast sky",
+        "purpose": "Morphology study / silhouette recognition",
+        "negative_constraints": "No internal shading, no transparency, no feathered or fuzzy edges, no gradient fills within the subject."
+      },
+      "STYLE_ANIMATED_FEATURE_V3": "High-fidelity 3D animated feature film aesthetic. Character-driven design with soulful, expressive eyes and a signature friendly smirk. Surfaces feature tactile, high-quality textures like soft downy feathers or leathery skin with subtle specular highlights. Avoids sharp, aggressive angles in favor of appealing, rounded 'toy-like' forms."
+    },
+    "lighting_presets": {
+      "STUDIO_SOFT": "Soft studio lighting, ambient occlusion, gentle shadows",
+      "HIGH_SUN": "High-key direct sunlight, bright blue sky, crisp shadows, 12pm lighting",
+      "DAPPLED_OPEN": "Bright afternoon sun filtered through thin leaves, warm highlights",
+      "SUNNY_EXPOSED": "Direct midday sun, high-key exposure, vibrant blue sky, high albedo ground reflection.",
+      "DUSK_SILHOUETTE": "Sun positioned directly behind the subject on the horizon, high-contrast backlighting, subject is 100% black silhouette.",
+      "STUDIO_GROUNDED": "Neutral studio lighting, high-contrast contact shadows for weight, 50% grey floor plane.",
+      "DAPPLED_EXCAVATION": "Bright sun filtered through temporary dig-site tarps, warm highlights on stone texture.",
+      "SUNNY_EXPOSED_CINEMATIC": "Bright, direct midday sunlight with high-key exposure. Features warm, natural highlights and soft-edged cinematic shadows that emphasize the 3D volume of the dinosaur's body. Maintains a clear, atmospheric perspective with a slight hazy glow in the distant horizon to create depth."
+    },
+    "lighting_config_defaults": {
+      "SKY": "Open canopy, bright Cretaceous sun.",
+      "SHADOWS": "Crisp, short shadows (noon-day sun).",
+      "EXPOSURE": "High-key, vibrant, and airy."
+    },
+    "technical_specs": {
+      "DEFAULT_SQUARE": { "aspect_ratio": "1:1", "resolution": "1024x1024" },
+      "SQUARE_ASPECT_RATIO": "Aspect ratio 1:1. Minimum resolution 1024x1024. Designed to support vertical and horizontal elements simultaneously, ideal for dinosaurs with upright postures or dynamic, raised-limb poses like the Karate Kid crane stance.",
+      "FOSSIL_SITE_SQUARE": { "aspect_ratio": "1:1", "resolution": "1024x1024" },
+      "TALL_MEASUREMENT_CARD": { 
+        "aspect_ratio": "7:17", 
+        "resolution_px": { "width": 140, "height": 340 },
+        "framing_note": "Vertical orientation; subject centered with 15% negative space at bottom for UI ladder overlap."
+      },
+      "WIDE_WEIGHT_CARD": { 
+        "aspect_ratio": "17:7", 
+        "resolution_px": { "width": 340, "height": 140 },
+        "framing_note": "Horizontal orientation; full lateral profile; feet must touch bottom of frame for seesaw grounding."
+      }
+    },
+    "framing_presets": {
+      "WIDE_HERO": "Extreme wide panoramic shot. The dinosaur's body fills the entire horizontal width. The nose must touch the left frame edge and the tail must touch the right frame edge. Centered vertically.",
+      "TALL_MEASURE": "Extreme vertical scale. The distance from the top of the head to the bottom of the feet spans the entire 1024 vertical pixels. High-angle or wide-angle view to ensure the face is not cut off by the top edge.",
+      "SQUARE_HERO_CARD": "Perfectly centered 1:1 square composition. The character is scaled to occupy the central power-zone, ensuring a strict 25% negative space buffer on all four sides. This safety margin prevents any portion of the head, tail, or raised limbs from touching the edges of the frame."
+    },
+    "asset_manifest_template": [
+      {
+        "id": "example_id",
+        "species": "Name",
+        "tech_ref": "TALL_MEASUREMENT_CARD",
+        "lighting_ref": "SUNNY_EXPOSED",
+        "formation_ref": "MORRISON",
+        "pose": "Description"
+      }
+    ],
+    "flora": {
+      "CANDELEROS_ADDITIONS": ["Paleopus", "Early flowering reeds"],
+      "CEDAR_MOUNTAIN_ADDITIONS": ["Paleopus in damp cracks", "Shrubby angiosperms"],
+      "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
+      "DAOHUGOU_BEDS_ADDITIONS": ["Evergreen conifers", "Alpine ferns"],
+      "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
+      "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
+      "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
+      "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"],
+      "IREN_DABASU_ADDITIONS": ["Early Walnut-like trees", "Mistletoe-like shrubs", "Charophytes (aquatic stoneworts)", "Broadleaf hardwoods"],
+      "JEHOL_BIOTA_ADDITIONS": ["Water lilies at the edge", "Dense hardwoods"],
+      "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
+      "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
+      "KAIPAROWITS_ADDITIONS": ["Giant horsetails", "Mosses", "Dense fern thickets"],
+      "KEM_KEM_ADDITIONS": ["Early Sycamores", "Willow-like shrubs", "Horsetail banks"],
+      "LANCE_HELL_CREEK_ADDITIONS": ["Palm-like Bennettitales", "Tree ferns", "Lush canopy"],
+      "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
+      "LA_AMARGA_ADDITIONS": ["Equisetites (Giant Horsetails)", "Charophytes (Aquatic stoneworts)", "Early Podocarp Conifers"],
+      "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
+      "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
+      "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
+      "TIAOJISHAN_ADDITIONS": ["Giant Horsetails", "Dense Conifer forest"],
+      "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"]
+    },
+    "fauna": {
+      "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
+      "HELL_CREEK_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (fast-running lizards)", "Cicadas", "Early wasps"],
+      "IREN_DABASU_ADDITIONS": ["Ostracods", "Freshwater turtles", "Hybodont sharks (in river channels)", "Small lizards"],
+      "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
+      "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
+      "LA_AMARGA_ADDITIONS": ["Amargasuchus (small, friendly crocodylomorph)", "Vincelestes (opossum-sized early mammal)", "Freshwater turtles"],
+      "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizards)", "Cicadas"],
+      "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
+      "NEMEGT_ADDITIONS": ["Freshwater crabs", "Shrimp", "Gar-like predators", "Champsosaurus"],
+      "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates"]
+    },
+    "era_manifests": {
+      "JURASSIC_BASE": {
+        "flora": ["Conifers", "Cycas", "Ginkgos", "Ferns", "Horsetails", "Mosses"],
+        "fauna": ["Dragonflies", "Beetles", "Small Mammals", "Pterosaurs"]
+      },
+      "EARLY_CRETACEOUS_BASE": {
+        "flora": ["Early Flowering Plants", "Conifers", "Ferns", "Cycads"],
+        "fauna": ["Advanced Pterosaurs", "Crocodylomorphs", "Early Birds"]
+      },
+      "LATE_CRETACEOUS_BASE": {
+        "flora": ["Magnolias", "Palms", "Laurels", "Oak-like trees", "Grass-like groundcover"],
+        "fauna": ["Modernized Insects", "Diverse Mammals", "Bird-like Theropods"]
+      }
+    },
+    "habitats": {
+      "COASTAL_LOWLANDS": {
+        "physics": { "altitude": "low", "water": "high" },
+        "visual_logic": { "water_features": "Meandering channels and stagnant oxbows", "atmospheric_effects": ["Coastal haze", "Low-altitude humidity"] },
+        "visuals": { "ground": "Dark, rich organic mud", "water": "Steamy lagoons and slow estuaries" }
+      },
+      "COASTAL_FLOODPLAINS": {
+        "substrate": "Peaty clay and lignite",
+        "visuals": { "ground": "Sticky black mud with salt-marsh grasses" }
+      },
+      "DESERT_DUNE_FIELDS": {
+        "substrate": "Aeolian quartz sandstone",
+        "visuals": { "ground": "High-relief orange and red sand dunes with ripple marks", "water": "None (Oasis only)" }
+      },
+      "FORESTED_LACUSTRINE_SYSTEM": {
+        "substrate": "Laminated organic-rich shale",
+        "visuals": { "ground": "Dark, damp, leafy forest floor", "canopy": "Dense forest (80% coverage)" }
+      },
+      "FORESTED_VOLCANIC_HIGHLANDS": {
+        "substrate": "Tuff and basalt",
+        "visuals": { "ground": "Dark charcoal-grey rocky terrain with ash dusting", "water": "High-velocity mountain brooks" }
+      },
+      "FORESTED_VOLCANIC_LAKE_SYSTEM": {
+        "substrate": "Bentonite clay and shale",
+        "visuals": { "ground": "Slippery, light-colored volcanic mud", "water": "Deep blue-green caldera lake" }
+      },
+      "RIVER_DELTA_WETLANDS": {
+        "physics": { "altitude": "sea_level", "water": "very_high" },
+        "visuals": { "ground": "Point bars of gravel and coarse sand", "water": "Network of distributary channels" }
+      },
+      "RIVER_VALLEYS": {
+        "substrate": "Siltstone and shale",
+        "visuals": { "ground": "Lush green mossy banks", "water": "Deep blue river with rocky bed" }
+      },
+      "SEASONAL_RIVER_PLAINS": {
+        "substrate": "Conglomerate and coarse sandstone",
+        "visuals": { "ground": "Rocky soil with rounded river pebbles", "water": "Receding waterlines, muddy banks" }
+      },
+      "SEMI_ARID_PLAINS": {
+        "substrate": "Caliche and sandy silt",
+        "visuals": { "ground": "Pale, dusty tan earth with white chalky nodules", "water": "Rare ephemeral pools" }
+      },
+      "SEMI_ARID_SEASONAL_FLOODPLAINS": {
+        "substrate": "Siltstone with desiccation cracks",
+        "visuals": { "ground": "Brown-grey silt with visible mud-crack geometry", "water": "Flash-flood channels, currently dry" }
+      },
+      "TROPICAL_ISLAND_LAGOONS": {
+        "substrate": "White carbonate sand and limestone",
+        "visuals": { "ground": "Fine white sand and turquoise shallow water" }
+      },
+      "WARM_FLUVIAL_PLAINS": {
+        "physics": { "altitude": "low", "water": "medium_constant" },
+        "visuals": { "ground": "Reddish-brown iron-rich clay soil", "water": "Shallow, sluggish stream networks" }
+      },
+      "WOODLAND_FLOODPLAINS": {
+        "substrate": "Mottled mudstone and volcanic ash",
+        "visuals": { "ground": "Light grey and greenish-grey clay-rich soil", "canopy": "Open woodland (30% coverage)" }
+      }
+    },
+    "habitat_logic": {
+      "RIVER_DELTA_WETLANDS": { "lighting_bias": "High", "surface": "Reflective water and light sandbars" },
+      "SEMI_ARID_FLOODPLAINS": { "lighting_bias": "High", "surface": "Cracked silt and low-lying scrub" },
+      "FORESTED_VOLCANIC_LAKE_SYSTEM": { "lighting_bias": "Medium-Low", "surface": "Dark volcanic ash and dense canopy" },
+      "COASTAL_LOWLANDS": { "lighting_bias": "Medium-High", "surface": "Sandy mud and brackish water" },
+      "DESERT_DUNE_FIELDS": { "lighting_bias": "Extreme", "surface": "High-albedo sand and minimal shadow" }
+    },
+    "formation_logic": {
+      "CANDELEROS": {
+        "period": "EARLY_CRETACEOUS",
+        "flora": ["EARLY_CRETACEOUS_BASE", "CANDELEROS_ADDITIONS"],
+        "fauna": ["EARLY_CRETACEOUS_BASE"],
+        "habitat_default": "WARM_FLUVIAL_PLAINS",
+        "palette": ["Brick red", "Deep ochre", "Purple-grey"],
+        "manifest": "EARLY_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Sandstone", "Conglomerate", "Mudstone"],
+          "mineral_palette": ["Brick red", "Deep ochre", "Purple-grey", "Terracotta", "Rusty orange"]
+        }
+      },
+      "CEDAR_MOUNTAIN": {
+        "period": "EARLY_CRETACEOUS",
+        "flora": ["EARLY_CRETACEOUS_BASE", "CEDAR_MOUNTAIN_ADDITIONS"],
+        "fauna": ["EARLY_CRETACEOUS_BASE"],
+        "habitat_default": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+        "palette": ["Pale lavender", "Chalky white", "Maroon"],
+        "manifest": "EARLY_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Limestone", "Mudstone", "Carbonate nodules"],
+          "mineral_palette": ["Pale lavender", "Dull green", "Chalky white", "Light tan", "Maroon"]
+        }
+      },
+      "CLOVERLY": {
+        "period": "EARLY_CRETACEOUS",
+        "flora": ["EARLY_CRETACEOUS_BASE", "CLOVERLY_ADDITIONS"],
+        "habitat_default": "SEMI_ARID_FLOODPLAINS",
+        "palette": ["Bright red", "Purplish-grey", "Buff"],
+        "manifest": "EARLY_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Variegated mudstone", "Sandstone"],
+          "mineral_palette": ["Bright red", "Purplish-grey", "Lilac", "Sandy buff", "Light grey"]
+        }
+      },
+      "DAOHUGOU_BEDS": {
+        "period": "JURASSIC",
+        "flora": ["JURASSIC_BASE", "DAOHUGOU_BEDS_ADDITIONS"],
+        "fauna": ["JURASSIC_BASE"],
+        "habitat_default": "FORESTED_VOLCANIC_LAKE_SYSTEM",
+        "palette": ["Silver-grey", "Cool grey", "Creamy ash"],
+        "manifest": "JURASSIC_BASE",
+        "geology": {
+          "primary_rocks": ["Laminated siltstone", "Volcanic ash"],
+          "mineral_palette": ["Silver-grey", "Cool grey", "Black carbonaceous shale", "Creamy ash"]
+        }
+      },
+      "DINOSAUR_PARK": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE", "CYCAD_PALMS"],
+        "fauna": ["LATE_CRETACEOUS_BASE", "HADROSAUR_SPECIFIC_INSECTS"],
+        "habitat_default": "COASTAL_LOWLANDS",
+        "palette": ["Grey", "Black", "Dark Green"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Sandstone", "Mudstone", "Siltstone"],
+          "mineral_palette": ["Olive Gray", "Pale Gray", "Brownish-Gray", "Dark Gray"]
+        }
+      },
+      "DJADOKHTA": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE", "DJADOKHTA_ADDITIONS"],
+        "fauna": ["LATE_CRETACEOUS_BASE"],
+        "habitat_default": "DESERT_DUNE_FIELDS",
+        "palette": ["Flame orange", "Tan", "White"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Aeolian sandstone", "Caliche"],
+          "mineral_palette": ["Flame orange", "Light tan", "Sunset red", "White calcium-carbonate"]
+        }
+      },
+      "ELRHAZ": {
+        "period": "EARLY_CRETACEOUS",
+        "flora": ["EARLY_CRETACEOUS_BASE"],
+        "fauna": ["EARLY_CRETACEOUS_BASE", "SUCHOMIMUS_SPECIFIC_FISH"],
+        "habitat_default": "RIVER_DELTA_WETLANDS",
+        "palette": ["Grey", "Tan"],
+        "manifest": "EARLY_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Cross-bedded sandstone", "Fluvial silts"],
+          "mineral_palette": ["Golden yellow", "Pale tan", "Iron-oxide red", "Light beige"]
+        }
+      },
+      "FRONTIER_MOUNTAIN": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE"],
+        "fauna": ["LATE_CRETACEOUS_BASE"],
+        "habitat_default": "COASTAL_LOWLANDS",
+        "palette": ["Red", "Green", "Gray", "Black"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Thick sandstone", "Shale", "Siltstone"],
+          "mineral_palette": ["Red", "Green", "Grey", "Black"]
+        }
+      },
+      "HORSESHOE_CANYON": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE", "HORSESHOE_CANYON_ADDITIONS"],
+        "fauna": ["LATE_CRETACEOUS_BASE"],
+        "habitat_default": "COASTAL_LOWLANDS",
+        "palette": ["Coal black", "Rusty brown", "Dark grey"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Coal", "Siltstone", "Ironstone"],
+          "mineral_palette": ["Coal black", "Rusty brown", "Dark grey", "Siderite orange"]
+        }
+      },
+      "HUINCUL": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE", "HUINCUL_ADDITIONS"],
+        "fauna": ["LATE_CRETACEOUS_BASE"],
+        "habitat_default": "SEMI_ARID_PLAINS",
+        "palette": ["Ochre", "Terracotta", "Tan"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Fine-grained fluvial sandstone", "mudstone"],
+          "mineral_palette": ["Reddish-brown"]
+        }
+      },
+      "IREN_DABASU": {
+        "period": "LATE_CRETACEOUS",
+        "flora_manifest": ["LATE_CRETACEOUS_BASE", "IREN_DABASU_ADDITIONS"],
+        "fauna_manifest": ["LATE_CRETACEOUS_BASE", "IREN_DABASU_ADDITIONS"],
+        "habitat_habitat": "BRAIDED_RIVER_SYSTEMS",
+        "palette": ["Ochre", "Terracotta", "Tan"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Fine-grained fluvial sandstone", "claystone", "mudstone"],
+          "mineral_palette": ["Light Grey", "Yellowish-orange", "Mottled Red", "Dusty Tan"]
+        }
+      },
+      "JEHOL_BIOTA": {
+        "period": "EARLY_CRETACEOUS",
+        "flora": ["EARLY_CRETACEOUS_BASE", "JEHOL_BIOTA_ADDITIONS"],
+        "fauna": ["EARLY_CRETACEOUS_BASE"],
+        "habitat_default": "FORESTED_LACUSTRINE_SYSTEM",
+        "palette": ["Light ash grey", "Buff", "Whitish tuff"],
+        "manifest": "EARLY_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Tuffaceous siltstone", "Shale"],
+          "mineral_palette": ["Light ash grey", "Buff", "Dark olive-grey", "Whitish tuff"]
+        }
+      },
+      "JIUFOTANG": {
+        "period": "EARLY_CRETACEOUS",
+        "flora": ["EARLY_CRETACEOUS_BASE", "JIUFOTANG_ADDITIONS"],
+        "fauna": ["EARLY_CRETACEOUS_BASE"],
+        "habitat_default": "FORESTED_VOLCANIC_LAKE_SYSTEM",
+        "palette": ["Light ash grey", "Buff", "Whitish tuff"],
+        "manifest": "EARLY_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["mudstone", "Shale", "siltstone", "sandstone", "conglomerate"],
+          "mineral_palette": ["Yellow-green", "Gray-green", "Purple-gray", "Gray", "Dark Gray", "Blue-Gray"]
+        }
+      },
+      "KAIPAROWITS": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE", "KAIPAROWITS_ADDITIONS"],
+        "fauna": ["LATE_CRETACEOUS_BASE"],
+        "habitat_default": "RIVER_DELTA_WETLANDS",
+        "palette": ["Tan-grey", "Forest green", "Black"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["mudstone", "sandstone"],
+          "mineral_palette": ["Gray-green", "Yellowish-gray", "Dark Gray", "Blue-Gray"]
+        }
+      },
+      "KEM_KEM": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE", "KEM_KEM_ADDITIONS"],
+        "fauna": ["LATE_CRETACEOUS_BASE"],
+        "habitat_default": "RIVER_DELTA_WETLANDS",
+        "palette": ["Vibrant red", "Golden yellow", "Pink"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Cross-bedded sandstone", "Red mudstone"],
+          "mineral_palette": ["Vibrant red", "Golden yellow", "Pale pink", "Dark mahogany"]
+        }
+      },
+      "LANCE_HELL_CREEK": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+        "fauna": ["LATE_CRETACEOUS_BASE", "HELL_CREEK_ADDITIONS"],
+        "habitat_default": "COASTAL_LOWLANDS",
+        "palette": ["Tan-grey", "Forest green", "Brown"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Fluvial sandstone", "Lignite", "Mudstone"],
+          "mineral_palette": ["Tan-grey", "Forest green-grey", "Brownish-black", "Yellowish-grey"]
+        }
+      },
+      "LA_AMARGA": {
+        "period": "EARLY_CRETACEOUS",
+        "flora_manifest": ["EARLY_CRETACEOUS_BASE", "LA_AMARGA_ADDITIONS"],
+        "fauna_manifest": ["EARLY_CRETACEOUS_BASE", "LA_AMARGA_ADDITIONS"]
+        "habitat_habitat": "BRAIDED_RIVER_SYSTEMS",
+        "palette": ["Light-Grey", "Dusty Tan", "Pale Yellow"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": "Conglomerate", "Sandstone"",
+          "mineral_palette": ["Light Grey", "Dusty Tan", "Pale Yellow", "Soft Terracotta"]
+        },
+      }
+      "MAEVARANO": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE"],
+        "fauna": ["LATE_CRETACEOUS_BASE"],
+        "habitat_default": "SEMI_ARID_PLAINS",
+        "palette": ["Light-Grey", "White", "Red"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Dry cracked mudflats", "Sandstone"],
+          "mineral_palette": ["Light-Grey", "White", "Red", "Pale Buff"]
+        }
+      },
+      "MORRISON_EJ": {
+        "period": "JURASSIC",
+        "flora": ["JURASSIC_BASE", "MORRISON_ADDITIONS"],
+        "fauna": ["JURASSIC_BASE", "MORRISON_ADDITIONS", "MORRISON2_ADDITIONS"],
+        "habitat_default": "SEMI_ARID_PLAINS",
+        "palette": ["Variegated red", "Pinkish grey", "Greenish-grey"],
+        "manifest": "JURASSIC_BASE",
+        "geology": {
+          "primary_rocks": ["Mudstone", "Claystone", "Sandstone"],
+          "mineral_palette": ["Tan", "White"]
+        }
+      },
+      "MORRISON_LJ": {
+        "period": "LATE_JURASSIC",
+        "flora": ["JURASSIC_BASE", "MORRISON_ADDITIONS"],
+        "fauna": ["JURASSIC_BASE", "MORRISON_ADDITIONS"],
+        "habitat_default": "SEMI_ARID_PLAINS",
+        "palette": ["Variegated red", "Pinkish grey", "Greenish-grey"],
+        "manifest": "JURASSIC_BASE",
+        "geology": {
+          "primary_rocks": ["Mudstone", "Claystone", "Sandstone"],
+          "mineral_palette": ["Tan", "White"]
+        }
+      },
+      "NEMEGT": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"],
+        "fauna": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"],
+        "habitat_default": "RIVER_VALLEYS",
+        "palette": ["Tan", "Light brown", "Grey-white"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Sandstone", "Mudstone", "Shale"],
+          "mineral_palette": ["Light gray", "Tan", "Yellowish-orange", "Yellowish-grey"]
+        }
+      },
+      "SHAXIMIAO": {
+        "period": "JURASSIC",
+        "flora": ["JURASSIC_BASE"],
+        "fauna": ["JURASSIC_BASE"],
+        "habitat_default": "RIVER_VALLEYS",
+        "palette": ["Gray", "Black", "Grayish-Green"],
+        "manifest": "JURASSIC_BASE",
+        "geology": {
+          "primary_rocks": ["Mudstone", "Siltstone", "Sandstone"],
+          "mineral_palette": ["Grey", "Black", "Grayish-Green", "Yellowish-Gray"]
+        }
+      },
+      "SOLNHOFEN": {
+        "period": "JURASSIC",
+        "flora": ["JURASSIC_BASE", "SOLNHOFEN_ADDITIONS"],
+        "fauna": ["JURASSIC_BASE", "SOLNHOFEN_ADDITIONS"],
+        "habitat_default": "TROPICAL_ISLAND_LAGOONS",
+        "palette": ["Cream white", "Ivory", "Pale yellow"],
+        "manifest": "JURASSIC_BASE",
+        "geology": {
+          "primary_rocks": ["Plattenkalk (fine-grained limestone)"],
+          "mineral_palette": ["Cream white", "Ivory", "Pale yellow", "Soft beige", "Light grey"]
+        }
+      },
+      "TENDAGURU": {
+        "period": "JURASSIC",
+        "flora": ["JURASSIC_BASE"],
+        "fauna": ["JURASSIC_BASE"],
+        "habitat_default": "COASTAL_LOWLANDS",
+        "palette": ["Tan", "White"],
+        "manifest": "JURASSIC_BASE",
+        "geology": {
+          "primary_rocks": ["Sandstone", "Shale", "Siltstone", "Conglomerate"],
+          "mineral_palette": ["Tan", "White", "Cream", "Light Brown"]
+        }
+      },
+      "TIAOJISHAN": {
+        "period": "JURASSIC",
+        "flora": ["JURASSIC_BASE", "TIAOJISHAN_ADDITIONS"],
+        "fauna": ["JURASSIC_BASE"],
+        "habitat_default": "FORESTED_VOLCANIC_HIGHLANDS",
+        "palette": ["Ash grey", "Charcoal", "Silver"],
+        "manifest": "JURASSIC_BASE",
+        "geology": {
+          "primary_rocks": ["Volcanic Tuff", "Shale", "Mudstone", "Siltstone"],
+          "mineral_palette": ["Gray", "Dark Gray", "Brownish Gray", "Red"]
+        }
+      },
+      "TWO_MEDICINE": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE"],
+        "fauna": ["LATE_CRETACEOUS_BASE"],
+        "habitat_default": "WOODLAND_FLOODPLAINS",
+        "palette": ["Grey", "Ocher", "Brown"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Dark organic mudstone", "Siltstone"],
+          "mineral_palette": ["Grey", "Ochre", "Brown", "Dark Green-Grey"]
+        }
+      },
+      "WEALDEN": {
+        "period": "EARLY_CRETACEOUS",
+        "flora": ["EARLY_CRETACEOUS_BASE", "WEALDEN_ADDITIONS"],
+        "fauna": ["EARLY_CRETACEOUS_BASE"],
+        "habitat_default": "COASTAL_LOWLANDS",
+        "palette": ["Mottled red", "Green-grey", "Blue-grey"],
+        "manifest": "EARLY_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Clay", "Siltstone", "Sandstone"],
+          "mineral_palette": ["Mottled red", "Green-grey", "Ochre yellow", "Blue-grey clay"]
+        }
+      }
+    }
+   }
+  }
+}

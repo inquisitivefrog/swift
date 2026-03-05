@@ -1,0 +1,34 @@
+[
+  {
+    "id": "stegoc_measure_v1_DOME",
+    "species": "Stegoceras",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DINOSAUR_PARK",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "WOODLAND_FLOODPLAINS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' stance; standing tall on agile hind legs, head slightly lowered to present the dome prominently.",
+      "orientation": "Direct 0-degree head-on frontal view. The dome is the central, highest point.",
+      "camera_angle": "Low-angle 'Hero' shot, looking up to emphasize the domed skull and the spiky fringe around it.",
+      "body_logic": "Slender torso and short tail are completely occluded by the chest and neck. Forelimbs tucked close. Silhouette width max 220px.",
+      "framing_note": "The entire dome and the surrounding bony fringe must be clearly visible and form a distinct, rounded silhouette."
+    },
+    "character_details": {
+      "expression": "Alert and energetic; large, curious eyes looking forward.",
+      "texture": "Smooth, pebbly skin with clean, defined bony elements. Color: Vibrant moss-green body with a bright, clean white dome, ringed by small, sharp, crimson-red spikes.",
+      "features": [
+        "Pronounced, rounded cranial dome.",
+        "Fringe of small, spiky osteoderms around the back of the dome.",
+        "Small, pointed beak.",
+        "Agile, bird-like hind legs."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Lush, damp soil with scattered broad-leafed plants and small river stones, characteristic of the Dinosaur Park Formation.",
+      "flora": ["Dense undergrowth of stylized ferns and large, bright green flowering plants in the soft-focus background."],
+      "sky": "Bright, humid Late Cretaceous sky with a soft, diffused glow, suggesting a warm, verdant environment.",
+      "lighting": "High-key 'Sunny Exposed Cinematic' lighting, with top-down light emphasizing the curvature and texture of the dome and highlighting the red spikes."
+    }
+  }
+]

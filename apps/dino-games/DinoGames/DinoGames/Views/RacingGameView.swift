@@ -73,7 +73,10 @@ private let stepPerTick: Double = 0.1 // Progress per tick; faster dino gains mo
 struct RacingGameView: View {
     @Binding var isPresented: Bool
     let gameConfig: RacingGameConfig
-    
+
+    /// When gameConfig has empty racers (racing-dinosaurs needs period), we show period selection first; effectiveConfig updates when period is chosen.
+    @State private var effectiveConfig: RacingGameConfig?
+
     @State private var speechManager = SpeechManager()
     @State private var selectedLane1: RacingRacer?
     @State private var selectedLane2: RacingRacer?
@@ -86,7 +89,7 @@ struct RacingGameView: View {
     @State private var raceTimer: Timer?
     @State private var winner: RacingRacer?
     @State private var isAudioPlaying = false
-    /// Pre-race: 0 = racer1 image 2s, 1 = racer2 image 2s, 2 = referee-start image 2s then starting-whistle
+    /// Pre-race: 0 = outside track dino (name + outside-track audio), 1 = inside track dino (name + inside-track audio), 2 = referee + ready-set + whistle
     @State private var preRaceStep: Int? = nil
     /// Post-race: "referee" = dino-racer-referee-finish image, "winner" = dino-winner-race-{slug}
     @State private var postRaceStep: String? = nil
@@ -95,6 +98,16 @@ struct RacingGameView: View {
     /// When non-nil, show large image + name and play racer name audio; on finish apply selection and return to grid.
     @State private var showingExpandedRacer: RacingRacer? = nil
     @State private var hasPlayedFirstRacerPrompt = false
+
+    /// Config used for play: either period-specific (when chosen) or initial (when racers already set).
+    private var config: RacingGameConfig {
+        effectiveConfig ?? gameConfig
+    }
+
+    /// True when we need to show period selection first (racing-dinosaurs with empty racers).
+    private var needsPeriodSelection: Bool {
+        gameConfig.racers.isEmpty && gameConfig.id == "racing-dinosaurs"
+    }
 
     private var showSelection: Bool {
         selectedLane1 == nil || ((selectedLane2 == nil && pendingRacer2 == nil) && !isRacing && preRaceStep == nil)
@@ -110,11 +123,13 @@ struct RacingGameView: View {
         NavigationView {
             GeometryReader { geometry in
                 VStack(spacing: 16) {
-                    Text(gameConfig.title)
+                    Text(config.title)
                         .font(.title2)
                         .padding(.top, 8)
                     
-                    if showSelection {
+                    if needsPeriodSelection && effectiveConfig == nil {
+                        embeddedPeriodSelectionView(geometry: geometry)
+                    } else if showSelection {
                         if let racer = showingExpandedRacer {
                             expandedRacerView(geometry: geometry, racer: racer)
                         } else {
@@ -122,7 +137,7 @@ struct RacingGameView: View {
                                 .onAppear {
                                     if selectedLane1 == nil && !hasPlayedFirstRacerPrompt {
                                         hasPlayedFirstRacerPrompt = true
-                                        let firstPrompt = gameConfig.assetPrefix == "ptero" ? "game-racer-choose-your-first-pterosaur-to-race" : "game-racer-choose-your-first-dinosaur-to-race"
+                                        let firstPrompt = config.assetPrefix == "ptero" ? "game-racer-choose-your-first-pterosaur-to-race" : "game-racer-choose-your-first-dinosaur-to-race"
                                         speechManager.speak(firstPrompt)
                                     }
                                 }
@@ -146,6 +161,13 @@ struct RacingGameView: View {
             }
         }
     }
+
+    /// Period selection shown when gameConfig has empty racers (racing-dinosaurs from catalog). No sheet dismiss/present.
+    private func embeddedPeriodSelectionView(geometry: GeometryProxy) -> some View {
+        RacingPeriodSelectionView(isPresented: $isPresented, onSelectPeriod: { config in
+            effectiveConfig = config
+        }, embedMode: true)
+    }
     
     // MARK: - Selection (2×4 grid, emoji only)
     
@@ -163,10 +185,10 @@ struct RacingGameView: View {
             VStack(spacing: 10) {
                 ForEach(0..<2, id: \.self) { row in
                     HStack(spacing: 10) {
-                        ForEach(Array(gameConfig.racers.dropFirst(row * 2).prefix(2))) { racer in
+                        ForEach(Array(config.racers.dropFirst(row * 2).prefix(2))) { racer in
                             RacingRacerCard(
                                 racer: racer,
-                                gameConfig: gameConfig,
+                                gameConfig: config,
                                 isSelected: selectedLane1?.id == racer.id || selectedLane2?.id == racer.id || pendingRacer2?.id == racer.id,
                                 isDisabled: (selectedLane1 != nil && selectedLane2 == nil && pendingRacer2 == nil && !canSelectSecond) || (selectedLane1 != nil && (selectedLane2 != nil || pendingRacer2 != nil))
                             ) {
@@ -186,22 +208,26 @@ struct RacingGameView: View {
             showingExpandedRacer = racer
             canSelectSecond = false
             speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                self.showingExpandedRacer = nil
-                self.selectedLane1 = racer
-                self.canSelectSecond = true
-                let secondPrompt = self.gameConfig.assetPrefix == "ptero" ? "game-racer-choose-your-second-pterosaur-to-race" : "game-racer-choose-your-second-dinosaur-to-race"
-                self.speechManager.speak(secondPrompt)
+                Task { @MainActor in
+                    self.speechManager.onAudioFinished = nil
+                    self.showingExpandedRacer = nil
+                    self.selectedLane1 = racer
+                    self.canSelectSecond = true
+                    let secondPrompt = self.config.assetPrefix == "ptero" ? "game-racer-choose-your-second-pterosaur-to-race" : "game-racer-choose-your-second-dinosaur-to-race"
+                    self.speechManager.speak(secondPrompt)
+                }
             }
             speechManager.speak(racer.name)
         } else if selectedLane2 == nil && pendingRacer2 == nil && selectedLane1?.id != racer.id && canSelectSecond {
             showingExpandedRacer = racer
             canSelectSecond = false
             speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                self.showingExpandedRacer = nil
-                self.selectedLane2 = racer
-                self.beginPreRaceSequence()
+                Task { @MainActor in
+                    self.speechManager.onAudioFinished = nil
+                    self.showingExpandedRacer = nil
+                    self.selectedLane2 = racer
+                    self.beginPreRaceSequence()
+                }
             }
             speechManager.speak(racer.name)
         }
@@ -211,7 +237,7 @@ struct RacingGameView: View {
     private func expandedRacerView(geometry: GeometryProxy, racer: RacingRacer) -> some View {
         let size = min(geometry.size.width, geometry.size.height) * 0.45
         return VStack(spacing: 20) {
-            if let imageName = racerDisplayImageName(for: racer, config: gameConfig) {
+            if let imageName = racerDisplayImageName(for: racer, config: config) {
                 Image(imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -230,7 +256,7 @@ struct RacingGameView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    // MARK: - Pre-race (racer1 2s → racer2 2s → referee-start 2s → starting-whistle → track)
+    // MARK: - Pre-race (racer1 + outside-track audio → racer2 + inside-track audio → referee + ready-set → starting-whistle → track)
 
     private func beginPreRaceSequence() {
         progress1 = 0
@@ -244,31 +270,84 @@ struct RacingGameView: View {
             if step == 0 {
                 racerImageFullView(racer: racer1, size: min(geometry.size.width, geometry.size.height) * 0.5)
                     .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                            preRaceStep = 1
+                        // Display and announce outside track dinosaur: name then "on the outside track"
+                        speechManager.onAudioFinished = {
+                            Task { @MainActor in
+                                self.speechManager.onAudioFinished = nil
+                                self.speechManager.onAudioFinished = {
+                                    Task { @MainActor in
+                                        self.speechManager.onAudioFinished = nil
+                                        self.preRaceStep = 1
+                                    }
+                                }
+                                if let url = self.speechManager.urlForAudio(key: "game-racing-outside-track") {
+                                    self.speechManager.playAudioFile(url: url)
+                                } else {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                        self.preRaceStep = 1
+                                    }
+                                }
+                            }
                         }
+                        speechManager.speak(audioKey: racer1.effectiveFallbackImageName(prefix: config.assetPrefix), fallbackText: racer1.name, chainDelay: true)
                     }
             } else if step == 1 {
                 racerImageFullView(racer: racer2, size: min(geometry.size.width, geometry.size.height) * 0.5)
                     .onAppear {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                            preRaceStep = 2
+                        // Display and announce inside track dinosaur: name then "on the inside track"
+                        speechManager.onAudioFinished = {
+                            Task { @MainActor in
+                                self.speechManager.onAudioFinished = nil
+                                self.speechManager.onAudioFinished = {
+                                    Task { @MainActor in
+                                        self.speechManager.onAudioFinished = nil
+                                        self.preRaceStep = 2
+                                    }
+                                }
+                                if let url = self.speechManager.urlForAudio(key: "game-racing-inside-track") {
+                                    self.speechManager.playAudioFile(url: url)
+                                } else {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                        self.preRaceStep = 2
+                                    }
+                                }
+                            }
                         }
+                        speechManager.speak(audioKey: racer2.effectiveFallbackImageName(prefix: config.assetPrefix), fallbackText: racer2.name, chainDelay: true)
                     }
             } else {
-                refereeImageView("\(gameConfig.assetPrefix)-racer-referee-start")
+                Group {
+                    if config.assetPrefix == "ptero" {
+                        refereeImageView(ImageAssetCache.imageExists(named: "game-referee-start") ? "game-referee-start" : "\(config.assetPrefix)-racer-referee-start")
+                    } else {
+                        preRaceRefereeTrackView(geometry: geometry, racer1: racer1, racer2: racer2)
+                    }
+                }
                     .onAppear {
                         guard !hasPlayedStartingGun else { return }
                         hasPlayedStartingGun = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                            speechManager.speak("starting-whistle")
-                            // Show track shortly after whistle starts so the gap feels short (whistle continues in background)
+                        func playWhistleThenRace() {
+                            Task { @MainActor in
+                                self.speechManager.speak("starting-whistle")
+                            }
+                            // Start race 0.35s after whistle begins (whistle continues in background)
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                                 self.speechManager.onAudioFinished = nil
                                 self.preRaceStep = nil
                                 self.isRacing = true
                                 self.fireRaceTimer(r1: racer1, r2: racer2)
                             }
+                        }
+                        if let url = speechManager.urlForAudio(key: "game-racing-ready-set") {
+                            speechManager.onAudioFinished = {
+                                Task { @MainActor in
+                                    self.speechManager.onAudioFinished = nil
+                                    playWhistleThenRace()
+                                }
+                            }
+                            speechManager.playAudioFile(url: url)
+                        } else {
+                            playWhistleThenRace()
                         }
                     }
             }
@@ -278,7 +357,7 @@ struct RacingGameView: View {
 
     private func racerImageFullView(racer: RacingRacer, size: CGFloat) -> some View {
         Group {
-            if let imageName = racerDisplayImageName(for: racer, config: gameConfig) {
+            if let imageName = racerDisplayImageName(for: racer, config: config) {
                 Image(imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -288,6 +367,84 @@ struct RacingGameView: View {
                     .font(.system(size: size * 0.8))
             }
         }
+    }
+
+    /// Track with dinosaurs at start and referee just outside the outer lane. Referee stays until race starts.
+    private func preRaceRefereeTrackView(geometry: GeometryProxy, racer1: RacingRacer, racer2: RacingRacer) -> some View {
+        let padding: CGFloat = 24
+        let trackInset: CGFloat = 44
+        let ovalWidth = max(trackInset * 2 + 4, geometry.size.width - padding * 2)
+        let ovalHeight = max(120, geometry.size.height - 140)
+        let racerSize: CGFloat = 48
+        let cornerRadius = min(min(ovalWidth, ovalHeight) * 0.18, min(ovalWidth, ovalHeight) / 4)
+        let innerW = ovalWidth - trackInset * 2
+        let innerH = ovalHeight - trackInset * 2
+        let innerCornerRadius = max(0, cornerRadius - trackInset / 2)
+        let refereeSize: CGFloat = 64
+        // Referee-start on inner field (infield) ahead of the two racers so they can see him when he blows the whistle
+        let refereeStartX = ovalWidth / 2 + 24
+        let refereeStartY = ovalHeight - refereeSize - 16
+        let outerPath = RoundedRectangle(cornerRadius: cornerRadius).path(in: CGRect(x: 0, y: 0, width: ovalWidth, height: ovalHeight))
+        let innerPath = RoundedRectangle(cornerRadius: innerCornerRadius).path(in: CGRect(x: 0, y: 0, width: innerW, height: innerH))
+        let outerStart = ovalPathStartOffset(width: ovalWidth, height: ovalHeight)
+        let innerStart = ovalPathStartOffset(width: innerW, height: innerH)
+        let pt1Outer = pointOnRoundedRect(progress: outerStart, width: ovalWidth, height: ovalHeight)
+        let pt2Outer = pointOnRoundedRect(progress: outerStart, width: ovalWidth, height: ovalHeight)
+        let pt1InnerRaw = pointOnRoundedRect(progress: innerStart, width: innerW, height: innerH)
+        let pt2InnerRaw = pointOnRoundedRect(progress: innerStart, width: innerW, height: innerH)
+        let pt1Inner = CGPoint(x: pt1InnerRaw.x + trackInset, y: pt1InnerRaw.y + trackInset)
+        let pt2Inner = CGPoint(x: pt2InnerRaw.x + trackInset, y: pt2InnerRaw.y + trackInset)
+        let racer1OnInner = racer1.speed <= racer2.speed
+        let pos1 = racer1OnInner ? pt1Inner : pt1Outer
+        let pos2 = racer1OnInner ? pt2Outer : pt2Inner
+        let half = racerSize / 2
+        let finishLineWidth: CGFloat = 4
+        let finishLineRowHeight: CGFloat = 10
+        let finishLineX = ovalWidth / 2 - finishLineWidth / 2
+        return VStack(spacing: 8) {
+            Text("Get set!")
+                .font(.headline)
+            ZStack(alignment: .topLeading) {
+                outerPath
+                    .stroke(Color.gray.opacity(0.5), lineWidth: 6)
+                    .frame(width: ovalWidth, height: ovalHeight)
+                innerPath
+                    .stroke(Color.gray.opacity(0.35), lineWidth: 6)
+                    .frame(width: innerW, height: innerH)
+                    .offset(x: trackInset, y: trackInset)
+                Rectangle()
+                    .fill(Color.white.opacity(0.95))
+                    .frame(width: finishLineWidth, height: finishLineRowHeight)
+                    .offset(x: finishLineX, y: ovalHeight - finishLineRowHeight)
+                Rectangle()
+                    .fill(Color.white.opacity(0.95))
+                    .frame(width: finishLineWidth, height: finishLineRowHeight)
+                    .offset(x: finishLineX, y: trackInset + innerH - finishLineRowHeight)
+                racerView(racer: racer1, size: racerSize)
+                    .offset(x: pos1.x - half, y: pos1.y - half)
+                racerView(racer: racer2, size: racerSize)
+                    .offset(x: pos2.x - half, y: pos2.y - half)
+                refereeImageViewSmall(ImageAssetCache.imageExists(named: "game-referee-start") ? "game-referee-start" : "\(config.assetPrefix)-racer-referee-start", size: refereeSize)
+                    .offset(x: refereeStartX, y: refereeStartY)
+            }
+            .frame(width: ovalWidth, height: ovalHeight)
+        }
+        .padding(.horizontal, padding)
+    }
+
+    private func refereeImageViewSmall(_ imageName: String, size: CGFloat) -> some View {
+        Group {
+            if UIImage(named: imageName) != nil {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: size, height: size)
+            } else {
+                Text("🏁")
+                    .font(.system(size: size * 0.6))
+            }
+        }
+        .frame(width: size, height: size)
     }
 
     private func refereeImageView(_ imageName: String) -> some View {
@@ -306,10 +463,13 @@ struct RacingGameView: View {
 
     private func refereeFinishView(geometry: GeometryProxy) -> some View {
         Group {
+            // Use large referee-finish image when available (both dino and ptero) so both paleontologist images are prominently displayed
             if UIImage(named: "game-referee-finish") != nil {
                 refereeImageView("game-referee-finish")
+            } else if UIImage(named: "\(config.assetPrefix)-racer-referee-finish") != nil {
+                refereeImageView("\(config.assetPrefix)-racer-referee-finish")
             } else {
-                refereeImageView("\(gameConfig.assetPrefix)-racer-referee-finish")
+                refereeFinishTrackView(geometry: geometry)
             }
         }
             .onAppear {
@@ -321,12 +481,75 @@ struct RacingGameView: View {
                 }
             }
     }
+
+    /// Track with dinosaurs at finish and referee-finish on grass ahead of the finish line.
+    private func refereeFinishTrackView(geometry: GeometryProxy) -> some View {
+        guard let r1 = selectedLane1, let r2 = selectedLane2 else { return AnyView(EmptyView()) }
+        let cfg = config
+        let padding: CGFloat = 24
+        let trackInset: CGFloat = 44
+        let ovalWidth = max(trackInset * 2 + 4, geometry.size.width - padding * 2)
+        let ovalHeight = max(120, geometry.size.height - 140)
+        let racerSize: CGFloat = 48
+        let cornerRadius = min(min(ovalWidth, ovalHeight) * 0.18, min(ovalWidth, ovalHeight) / 4)
+        let innerW = ovalWidth - trackInset * 2
+        let innerH = ovalHeight - trackInset * 2
+        let innerCornerRadius = max(0, cornerRadius - trackInset / 2)
+        let refereeSize: CGFloat = 64
+        let outerPath = RoundedRectangle(cornerRadius: cornerRadius).path(in: CGRect(x: 0, y: 0, width: ovalWidth, height: ovalHeight))
+        let innerPath = RoundedRectangle(cornerRadius: innerCornerRadius).path(in: CGRect(x: 0, y: 0, width: innerW, height: innerH))
+        let pt1Outer = pointOnRoundedRect(progress: 1.0, width: ovalWidth, height: ovalHeight)
+        let pt2Outer = pointOnRoundedRect(progress: 1.0, width: ovalWidth, height: ovalHeight)
+        let pt1InnerRaw = pointOnRoundedRect(progress: 1.0, width: innerW, height: innerH)
+        let pt2InnerRaw = pointOnRoundedRect(progress: 1.0, width: innerW, height: innerH)
+        let pt1Inner = CGPoint(x: pt1InnerRaw.x + trackInset, y: pt1InnerRaw.y + trackInset)
+        let pt2Inner = CGPoint(x: pt2InnerRaw.x + trackInset, y: pt2InnerRaw.y + trackInset)
+        let racer1OnInner = r1.speed <= r2.speed
+        let pos1 = racer1OnInner ? pt1Inner : pt1Outer
+        let pos2 = racer1OnInner ? pt2Outer : pt2Inner
+        let half = racerSize / 2
+        let finishLineWidth: CGFloat = 4
+        let finishLineRowHeight: CGFloat = 10
+        let finishLineX = ovalWidth / 2 - finishLineWidth / 2
+        // Referee-finish on inner field just past the finish line
+        let refereeFinishX = ovalWidth / 2 + 24
+        let refereeFinishY = ovalHeight - refereeSize - 16
+        return AnyView(VStack(spacing: 8) {
+            Text("We have a winner!")
+                .font(.headline)
+            ZStack(alignment: .topLeading) {
+                outerPath
+                    .stroke(Color.gray.opacity(0.5), lineWidth: 6)
+                    .frame(width: ovalWidth, height: ovalHeight)
+                innerPath
+                    .stroke(Color.gray.opacity(0.35), lineWidth: 6)
+                    .frame(width: innerW, height: innerH)
+                    .offset(x: trackInset, y: trackInset)
+                Rectangle()
+                    .fill(Color.white.opacity(0.95))
+                    .frame(width: finishLineWidth, height: finishLineRowHeight)
+                    .offset(x: finishLineX, y: ovalHeight - finishLineRowHeight)
+                Rectangle()
+                    .fill(Color.white.opacity(0.95))
+                    .frame(width: finishLineWidth, height: finishLineRowHeight)
+                    .offset(x: finishLineX, y: trackInset + innerH - finishLineRowHeight)
+                racerView(racer: r1, size: racerSize)
+                    .offset(x: pos1.x - half, y: pos1.y - half)
+                racerView(racer: r2, size: racerSize)
+                    .offset(x: pos2.x - half, y: pos2.y - half)
+                refereeImageViewSmall(UIImage(named: "game-referee-finish") != nil ? "game-referee-finish" : "\(cfg.assetPrefix)-racer-referee-finish", size: refereeSize)
+                    .offset(x: refereeFinishX, y: refereeFinishY)
+            }
+            .frame(width: ovalWidth, height: ovalHeight)
+        }
+        .padding(.horizontal, padding))
+    }
     
     // MARK: - Race (oval for dinosaurs; airport A→B→C→D for pterosaurs)
 
     private func raceTrack(geometry: GeometryProxy) -> some View {
         guard let r1 = selectedLane1, let r2 = selectedLane2 else { return AnyView(EmptyView()) }
-        if gameConfig.assetPrefix == "ptero" {
+        if config.assetPrefix == "ptero" {
             return AnyView(airportTrackView(geometry: geometry, progress1: progress1, progress2: progress2, racer1: r1, racer2: r2))
         }
         return AnyView(ovalTrackView(geometry: geometry, progress1: progress1, progress2: progress2, racer1: r1, racer2: r2))
@@ -384,7 +607,7 @@ struct RacingGameView: View {
 
     private func airportTrackView(geometry: GeometryProxy, progress1: Double, progress2: Double, racer1: RacingRacer, racer2: RacingRacer) -> some View {
         let padding: CGFloat = 24
-        let trackWidth = geometry.size.width - padding * 2
+        let trackWidth = max(1, geometry.size.width - padding * 2)
         let trackHeight = max(120, geometry.size.height - 140)
         let racerSize: CGFloat = 48
         let trackInset: CGFloat = 36
@@ -433,6 +656,25 @@ struct RacingGameView: View {
             .frame(width: trackWidth, height: trackHeight)
         }
         .padding(.horizontal, padding)
+    }
+
+    /// Total path length for oval (rounded rect). Same formula as pointOnRoundedRect.
+    private func ovalPathLength(width: CGFloat, height: CGFloat) -> CGFloat {
+        let w = width
+        let h = height
+        let cx = w / 2
+        let r = min(min(w, h) * 0.18, min(w, h) / 4)
+        let arcLen = .pi * r / 2
+        let L1 = (w - r) - cx
+        let L2 = h - 2 * r
+        let L3 = w - 2 * r
+        let L4 = cx - r
+        return L1 + arcLen + L2 + arcLen + L3 + arcLen + L2 + arcLen + L4
+    }
+
+    /// Progress offset so race progress 0 = finish line (center bottom). Path starts at center; both lanes start on the same line.
+    private func ovalPathStartOffset(width: CGFloat, height: CGFloat) -> Double {
+        return 0  // Start at path origin = center bottom = finish line; no head start for inner lane
     }
 
     /// Rounded-rectangle path: start/finish at center bottom; clockwise lap (right → up → left → down → right to center).
@@ -489,10 +731,10 @@ struct RacingGameView: View {
 
     private func ovalTrackView(geometry: GeometryProxy, progress1: Double, progress2: Double, racer1: RacingRacer, racer2: RacingRacer) -> some View {
         let padding: CGFloat = 24
-        let ovalWidth = geometry.size.width - padding * 2
+        let trackInset: CGFloat = 44
+        let ovalWidth = max(trackInset * 2 + 4, geometry.size.width - padding * 2)
         let ovalHeight = max(120, geometry.size.height - 140)
         let racerSize: CGFloat = 48
-        let trackInset: CGFloat = 44 // Inner track inset so both racers stay visible (no overlay when neck-and-neck)
         let cornerRadius = min(min(ovalWidth, ovalHeight) * 0.18, min(ovalWidth, ovalHeight) / 4)
 
         // Rounded-rectangle tracks (outer and inner)
@@ -502,11 +744,20 @@ struct RacingGameView: View {
         let innerCornerRadius = max(0, cornerRadius - trackInset / 2)
         let innerPath = RoundedRectangle(cornerRadius: innerCornerRadius).path(in: CGRect(x: 0, y: 0, width: innerW, height: innerH))
 
-        // Outer and inner positions for each racer's progress (inner track is shorter)
-        let pt1Outer = pointOnRoundedRect(progress: progress1, width: ovalWidth, height: ovalHeight)
-        let pt2Outer = pointOnRoundedRect(progress: progress2, width: ovalWidth, height: ovalHeight)
-        let pt1InnerRaw = pointOnRoundedRect(progress: progress1, width: innerW, height: innerH)
-        let pt2InnerRaw = pointOnRoundedRect(progress: progress2, width: innerW, height: innerH)
+        // Outer and inner positions: progress 0 = finish line (center bottom), progress 1 = finish line after one lap.
+        // Both use same progress so they start on the same line; inner lane has shorter path so no head start.
+        let outerStart = ovalPathStartOffset(width: ovalWidth, height: ovalHeight)
+        let innerStart = ovalPathStartOffset(width: innerW, height: innerH)
+        let outerSpan = 1.0 - outerStart
+        let innerSpan = 1.0 - innerStart
+        let p1Outer = outerStart + progress1 * outerSpan
+        let p2Outer = outerStart + progress2 * outerSpan
+        let p1Inner = innerStart + progress1 * innerSpan
+        let p2Inner = innerStart + progress2 * innerSpan
+        let pt1Outer = pointOnRoundedRect(progress: p1Outer, width: ovalWidth, height: ovalHeight)
+        let pt2Outer = pointOnRoundedRect(progress: p2Outer, width: ovalWidth, height: ovalHeight)
+        let pt1InnerRaw = pointOnRoundedRect(progress: p1Inner, width: innerW, height: innerH)
+        let pt2InnerRaw = pointOnRoundedRect(progress: p2Inner, width: innerW, height: innerH)
         let pt1Inner = CGPoint(x: pt1InnerRaw.x + trackInset, y: pt1InnerRaw.y + trackInset)
         let pt2Inner = CGPoint(x: pt2InnerRaw.x + trackInset, y: pt2InnerRaw.y + trackInset)
 
@@ -519,6 +770,7 @@ struct RacingGameView: View {
         let finishLineWidth: CGFloat = 4
         let finishLineRowHeight: CGFloat = 10 // One row at center bottom
         let finishLineX = ovalWidth / 2 - finishLineWidth / 2
+        let refereeSize: CGFloat = 64
         return VStack(spacing: 8) {
             Text("Race!")
                 .font(.headline)
@@ -544,6 +796,9 @@ struct RacingGameView: View {
                     .offset(x: pos1.x - half, y: pos1.y - half)
                 racerView(racer: racer2, size: racerSize)
                     .offset(x: pos2.x - half, y: pos2.y - half)
+                // Referee-start on inner field ahead of racers so they can see him when he blows the whistle
+                refereeImageViewSmall(ImageAssetCache.imageExists(named: "game-referee-start") ? "game-referee-start" : "\(config.assetPrefix)-racer-referee-start", size: refereeSize)
+                    .offset(x: ovalWidth / 2 + 24, y: ovalHeight - refereeSize - 16)
             }
             .frame(width: ovalWidth, height: ovalHeight)
         }
@@ -552,7 +807,7 @@ struct RacingGameView: View {
 
     private func racerView(racer: RacingRacer, size: CGFloat) -> some View {
         Group {
-            if let imageName = racerDisplayImageName(for: racer, config: gameConfig) {
+            if let imageName = racerDisplayImageName(for: racer, config: config) {
                 Image(imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -579,7 +834,7 @@ struct RacingGameView: View {
                 .frame(maxWidth: .infinity, alignment: .trailing)
             // Racer: left-justified at start (progress 0 = x 0), same formula for both lanes
             Group {
-                if let imageName = racerDisplayImageName(for: racer, config: gameConfig) {
+                if let imageName = racerDisplayImageName(for: racer, config: config) {
                     Image(imageName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -602,8 +857,10 @@ struct RacingGameView: View {
         progress2 = 0
         speechManager.speak("starting-whistle")
         speechManager.onAudioFinished = {
-            self.speechManager.onAudioFinished = nil
-            self.fireRaceTimer(r1: r1, r2: r2)
+            Task { @MainActor in
+                self.speechManager.onAudioFinished = nil
+                self.fireRaceTimer(r1: r1, r2: r2)
+            }
         }
     }
 
@@ -622,6 +879,12 @@ struct RacingGameView: View {
                     // Use raw progress to break ties: when both hit 1.0 in same tick, higher raw value crossed first
                     winner = rawP1 >= rawP2 ? r1 : r2
                     postRaceStep = "referee"
+                    // Cheering when first dinosaur crosses the finish line
+                    if let url = speechManager.urlForAudio(key: "crowd-cheering") {
+                        speechManager.playAudioFile(url: url)
+                    } else {
+                        speechManager.speak("crowd-cheering")
+                    }
                 }
             }
         }
@@ -633,7 +896,7 @@ struct RacingGameView: View {
         raceTimer = nil
     }
     
-    // MARK: - Winner (announce by text + audio: optional "racing-the-winner-is", then crowd-cheering + dino name)
+    // MARK: - Winner (announce by text + audio: game-racing-the-winner-is, then dino name, then crowd-cheering)
     private func winnerView(winner w: RacingRacer) -> some View {
         VStack(spacing: 20) {
             Text("🏆")
@@ -641,7 +904,7 @@ struct RacingGameView: View {
             Text("The winner is")
                 .font(.title3)
                 .foregroundColor(.secondary)
-            if let imageName = winnerDisplayImageName(for: w, config: gameConfig) {
+            if let imageName = winnerDisplayImageName(for: w, config: config) {
                 Image(imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -662,16 +925,18 @@ struct RacingGameView: View {
     }
 
     private func playWinnerAnnouncement(winner w: RacingRacer) {
-        let announceURL = speechManager.urlForAudio(key: "racing-the-winner-is")
+        let announceURL = speechManager.urlForAudio(key: "game-racing-the-winner-is")
         let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
 
         func playCrowdThenDismiss() {
             if let url = crowdURL {
                 speechManager.playAudioFile(url: url)
                 speechManager.onAudioFinished = {
-                    self.speechManager.onAudioFinished = nil
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        self.isPresented = false
+                    Task { @MainActor in
+                        self.speechManager.onAudioFinished = nil
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            self.isPresented = false
+                        }
                     }
                 }
             } else {
@@ -683,17 +948,21 @@ struct RacingGameView: View {
 
         func playWinnerNameThenCrowd() {
             speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                playCrowdThenDismiss()
+                Task { @MainActor in
+                    self.speechManager.onAudioFinished = nil
+                    playCrowdThenDismiss()
+                }
             }
-            speechManager.speak(audioKey: w.effectiveFallbackImageName(prefix: gameConfig.assetPrefix), fallbackText: w.name)
+            speechManager.speak(audioKey: w.effectiveFallbackImageName(prefix: config.assetPrefix), fallbackText: w.name)
         }
 
         if let url = announceURL {
             speechManager.playAudioFile(url: url)
             speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                playWinnerNameThenCrowd()
+                Task { @MainActor in
+                    self.speechManager.onAudioFinished = nil
+                    playWinnerNameThenCrowd()
+                }
             }
         } else {
             playWinnerNameThenCrowd()
@@ -802,6 +1071,15 @@ struct RacingGameConfigs {
         makeConfig(for: .cretaceous)
     }()
 
+    /// Config with empty racers: RacingGameView shows period selection first, then dinosaur selection. Avoids sheet dismiss/present flash.
+    static let racingDinosaursNeedsPeriod: RacingGameConfig = RacingGameConfig(
+        id: "racing-dinosaurs",
+        title: "Racing Dinosaurs!",
+        introAudio: "racing-dinosaurs",
+        assetPrefix: "dino",
+        racers: []
+    )
+
     /// Card config for Racing Pterosaurs! (id used for image/audio; actual play uses racingPterosaursRandomized()).
     static var racingPterosaursCardConfig: RacingGameConfig {
         racingPterosaursRandomized()
@@ -860,6 +1138,8 @@ struct RacingGameConfigs {
 struct RacingPeriodSelectionView: View {
     @Binding var isPresented: Bool
     var onSelectPeriod: (RacingGameConfig) -> Void
+    /// When true, period selection is embedded in RacingGameView; selecting a period does not dismiss.
+    var embedMode: Bool = false
 
     @State private var speechManager = SpeechManager()
     @State private var enabledJurassic = false
@@ -923,7 +1203,7 @@ struct RacingPeriodSelectionView: View {
     private func periodCard(name: String, imageAssetName: String, emoji: String, period: RacingPeriod, isEnabled: Bool) -> some View {
         Button {
             onSelectPeriod(RacingGameConfigs.makeConfig(for: period))
-            isPresented = false
+            if !embedMode { isPresented = false }
         } label: {
             VStack(spacing: 8) {
                 if UIImage(named: imageAssetName) != nil {
@@ -952,8 +1232,10 @@ struct RacingPeriodSelectionView: View {
     /// Three-step sequence: cover-choose-a-period → enable Jurassic + cover-jurassic → enable Cretaceous + cover-cretaceous. Then show text.
     private func startPeriodSequence() {
         speechManager.onAudioFinished = {
-            self.speechManager.onAudioFinished = nil
-            self.periodIntroDone()
+            Task { @MainActor in
+                self.speechManager.onAudioFinished = nil
+                self.periodIntroDone()
+            }
         }
         speechManager.speak("cover-choose-a-period")
     }
@@ -961,8 +1243,10 @@ struct RacingPeriodSelectionView: View {
     private func periodIntroDone() {
         enabledJurassic = true
         speechManager.onAudioFinished = {
-            self.speechManager.onAudioFinished = nil
-            self.jurassicDone()
+            Task { @MainActor in
+                self.speechManager.onAudioFinished = nil
+                self.jurassicDone()
+            }
         }
         speechManager.speak("cover-jurassic", chainDelay: true)
     }
@@ -970,7 +1254,9 @@ struct RacingPeriodSelectionView: View {
     private func jurassicDone() {
         enabledCretaceous = true
         speechManager.onAudioFinished = {
-            self.speechManager.onAudioFinished = nil
+            Task { @MainActor in
+                self.speechManager.onAudioFinished = nil
+            }
         }
         speechManager.speak("cover-cretaceous", chainDelay: true)
     }

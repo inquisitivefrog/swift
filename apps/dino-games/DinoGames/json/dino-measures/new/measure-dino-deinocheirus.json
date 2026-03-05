@@ -1,0 +1,19 @@
+{
+  "id": "deino_taller_v4_NARROW",
+  "species": "deinocheirus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "WARM_SUNNY_EXPOSED",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "pose": "Strictly vertical and 'skinnier' bipedal stance. The torso is angled directly forward to minimize width. The massive arms are tucked tight to the chest, with the large claws pointing upward near the base of the neck. This keeps the entire arm span within the central 300px zone of the 1024px square, ensuring the 340x140 px wide crop captures both the face and the claws.",
+  "character_details": {
+    "expression": "Signature friendly smirk.",
+    "eyes": "Large, soulful character eyes.",
+    "skin_texture": "Smooth, high-poly 3D surfaces; no grain.",
+    "features": ["duck-like beak", "tall back hump", "tucked arms with long claws"]
+  },
+  "environmental_details": {
+    "ground": "Sun-bleached river clay with warm golden dust.",
+    "sky": "Vibrant blue, cloudless.",
+    "atmosphere": "High-key midday sun with warm golden rim-lighting."
+  }
+}

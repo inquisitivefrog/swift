@@ -209,7 +209,7 @@ struct GuessGameView: View {
                 isAudioPlaying = false
             }
             .allowsHitTesting(!isAudioPlaying && !isProcessingAnswer && optionsWalkIndex == nil)
-            .opacity((isAudioPlaying || isProcessingAnswer) ? 0.7 : 1.0)
+            // No dimming when audio plays — keep full brightness so dinosaurs are easy to see during intro walk
             .overlay(alignment: .topTrailing) {
                 if gameConfig.id == "dino-footprints", currentQuestion != nil, !isGameComplete {
                     Button {
@@ -397,7 +397,7 @@ struct GuessGameView: View {
                 }
                 .frame(maxWidth: .infinity)
 
-                // Bottom half: during walk show "Good job!"; after walk show success image only (centered, no wrapper)
+                // Bottom half: during walk show empty; after walk show success image only (centered, no wrapper)
                 Group {
                     if endSequenceStep == 2 {
                         guessGameSuccessImageView
@@ -408,12 +408,6 @@ struct GuessGameView: View {
                                 }
                             }
                     } else {
-                        Spacer()
-                            .frame(minHeight: 16)
-                        Text("Good job!")
-                            .font(.title)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.primary)
                         Spacer()
                     }
                 }
@@ -572,7 +566,7 @@ struct DinosaurOptionCard: View {
                 RoundedRectangle(cornerRadius: 15)
                     .stroke(showHighlight ? Color.blue : Color.clear, lineWidth: 3)
             )
-            .opacity(isDisabled ? 0.5 : 1.0)
+            // Full brightness during intro walk (no dim) so dinosaurs are easy to see when introduced
         }
         .buttonStyle(PlainButtonStyle())
         .disabled(isDisabled)
@@ -601,45 +595,16 @@ struct SourceFootprintsHintsView: View {
     let onDismiss: () -> Void
     @State private var speechManager = SpeechManager()
     @State private var selectedClade: SourceFootprintCladeHint?
+    @State private var introPlayed = false
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            VStack(spacing: 20) {
-                Text("Source Footprints")
-                    .font(.title2.weight(.semibold))
-                    .padding(.top, 44)
-                LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                    ForEach(sourceFootprintsHintClades) { clade in
-                        Button {
-                            selectedClade = clade
-                            if let url = speechManager.urlForAudio(key: clade.audioKey) {
-                                speechManager.playAudioFile(url: url)
-                            } else {
-                                speechManager.speak(clade.displayName)
-                            }
-                        } label: {
-                            if UIImage(named: clade.imageName) != nil {
-                                Image(clade.imageName)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 120)
-                                    .clipped()
-                            } else {
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color.gray.opacity(0.3))
-                                    .frame(height: 120)
-                                    .overlay(Text(clade.displayName).font(.caption).foregroundColor(.secondary))
-                            }
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
-                .padding(.horizontal, 24)
-                Spacer()
+            // Show either grid or full-screen detail (no overlay — avoids jarring partial visibility)
+            if selectedClade == nil {
+                gridView
+            } else {
+                detailView
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(.systemBackground))
 
             // Back to game: < in upper left
             Button {
@@ -652,27 +617,90 @@ struct SourceFootprintsHintsView: View {
             }
             .padding(.leading, 8)
             .padding(.top, 8)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(.systemBackground))
+        .onAppear {
+            playIntroOnce()
+        }
+    }
 
-            // Enlarged + name overlay when a grid item was tapped
-            if let clade = selectedClade {
-                Color.black.opacity(0.4)
-                    .ignoresSafeArea()
-                    .onTapGesture { selectedClade = nil }
-                VStack(spacing: 16) {
-                    if UIImage(named: clade.imageName) != nil {
-                        Image(clade.imageName)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: 280, maxHeight: 280)
+    private var gridView: some View {
+        VStack(spacing: 20) {
+            Text("Source Footprints")
+                .font(.title2.weight(.semibold))
+                .padding(.top, 44)
+            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
+                ForEach(sourceFootprintsHintClades) { clade in
+                    Button {
+                        showCladeDetail(clade)
+                    } label: {
+                        if UIImage(named: clade.imageName) != nil {
+                            Image(clade.imageName)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 120)
+                                .clipped()
+                        } else {
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.gray.opacity(0.3))
+                                .frame(height: 120)
+                                .overlay(Text(clade.displayName).font(.caption).foregroundColor(.secondary))
+                        }
                     }
-                    Text(clade.displayName)
-                        .font(.title2.weight(.semibold))
-                        .foregroundColor(.primary)
+                    .buttonStyle(.plain)
                 }
-                .padding(24)
-                .background(RoundedRectangle(cornerRadius: 16).fill(Color(.systemBackground)))
-                .onTapGesture { selectedClade = nil }
             }
+            .padding(.horizontal, 24)
+            Spacer()
+        }
+    }
+
+    @ViewBuilder
+    private var detailView: some View {
+        if let clade = selectedClade {
+            VStack(spacing: 20) {
+                Spacer()
+                if UIImage(named: clade.imageName) != nil {
+                    Image(clade.imageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 320, maxHeight: 320)
+                }
+                Text(clade.displayName)
+                    .font(.title2.weight(.semibold))
+                    .foregroundColor(.primary)
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+
+    private func playIntroOnce() {
+        guard !introPlayed else { return }
+        introPlayed = true
+        if let url = speechManager.urlForAudio(key: "game-dino-footprints-tap-the-footprint-to-hear-description") {
+            speechManager.onAudioFinished = nil
+            speechManager.playAudioFile(url: url)
+        }
+    }
+
+    private func showCladeDetail(_ clade: SourceFootprintCladeHint) {
+        selectedClade = clade
+        speechManager.onAudioFinished = nil
+        speechManager.onAudioFinished = {
+            speechManager.onAudioFinished = nil
+            // Auto-return to grid after clade audio finishes
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                selectedClade = nil
+            }
+        }
+        if let url = speechManager.urlForAudio(key: clade.audioKey) {
+            speechManager.playAudioFile(url: url)
+        } else {
+            speechManager.speak(clade.displayName)
+            // TTS completion triggers onAudioFinished via AVSpeechSynthesizerDelegate
         }
     }
 }

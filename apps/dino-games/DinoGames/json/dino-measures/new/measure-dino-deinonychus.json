@@ -1,0 +1,21 @@
+{
+  "id": "deino_taller_v3_KARATE",
+  "species": "deinonychus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "WARM_SUNNY_EXPOSED",
+  "formation_ref": "CLOVERLY",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "pose": "A playful 3/4 'Center-Pillar' stance. The dinosaur is balanced on one leg, with the other hind leg raised in a 'karate' pose, pointing the toe-claw toward the center-line. The head is at the top of the 1024px frame, looking down at its foot with a friendly smirk. The body is angled slightly inward so the raised leg and the torso stay within a narrow 300px horizontal zone, preventing truncation in the 340px wide crop.",
+  "character_details": {
+    "expression": "Signature friendly smirk, looking playfully at a small bee.",
+    "eyes": "Large, soulful character eyes.",
+    "skin_texture": "Smooth, high-poly 3D surfaces; no grain or sharp edges.",
+    "features": ["softened, rounded sickle-claw", "tucked arms", "slender vertical silhouette"]
+  },
+  "environmental_details": {
+    "ground": "Sun-bleached clay with a single Magnolia flower near the standing foot.",
+    "interaction": "A small, fuzzy bee is perched on the 'softened' toe-claw; the dinosaur is gently urging it toward the flower.",
+    "sky": "Vibrant, cloudless blue sky.",
+    "atmosphere": "Warm cinematic midday sun with golden rim-lighting to define the pose."
+  }
+}

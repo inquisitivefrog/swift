@@ -1,0 +1,34 @@
+[
+  {
+    "id": "toro_v4_VERTICAL_PILLAR",
+    "species": "Torosaurus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "HELL_CREEK",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "WOODLAND_FLOODPLAINS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' orientation. The dinosaur is bowing its head low, tilting the massive frill forward so it stands vertically in the frame.",
+      "orientation": "0-degree head-on frontal view. The frill is the primary vertical element, filling the height of the frame.",
+      "camera_angle": "High-angle shot looking down at the face, which forces the frill to stand up tall behind the head. This minimizes horizontal spread.",
+      "body_logic": "The body and legs are completely tucked behind the head and frill. Total width is restricted to 320px by 'angling' the frill peaks upward.",
+      "framing_note": "The snout is at the bottom-center; the frill extends to the top-center. This creates a tall, oval-shaped silhouette perfect for a narrow crop."
+    },
+    "character_details": {
+      "expression": "Noble and sturdy; eyes looking upward toward the camera from the bowed-head position.",
+      "texture": "Clean, semi-matte 'studio-lighting' finish. Smooth surfaces with bold, graphic color sections.",
+      "colors": "Deep charcoal-blue body. The frill is a bright parchment-white with two large, perfectly circular 'eye-spots' in vibrant sunset-orange.",
+      "features": [
+        "Massive, elongated frill acting as a vertical backdrop.",
+        "Brow horns pointing directly at the camera/viewer, foreshortened to save width.",
+        "Simplified, powerful beak at the bottom of the pillar."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Simple, clean river sand with a few high-contrast green ferns at the very base.",
+      "flora": ["Tall, thin prehistoric trees in the far background to emphasize the vertical composition."],
+      "lighting": "Strong top-down 'Stage' lighting that hits the top edge of the frill and the tips of the horns.",
+      "sky": "Deep, solid cyan sky to make the white and orange frill 'pop'."
+    }
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "theriz_v1_CLAW_PILLAR",
+    "species": "Therizinosaurus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "NEMEGT",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "WOODLAND_SWAMPS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' orientation. Standing on robust hind legs, body upright, with both long forelimbs extended high and slightly forward.",
+      "orientation": "0-degree head-on frontal view. The body is symmetrical, and the extended arms/claws create a central vertical line.",
+      "camera_angle": "Low-angle 'Hero' shot, looking up to emphasize the impressive length of the arms and the menacing size of the claws.",
+      "body_logic": "The long, curved claws are the highest and most prominent features, forming a clear 'crown' or 'rake' at the top of the pillar. Body width is compressed to fit the 340px constraint by foreshortening.",
+      "framing_note": "The entire length of at least one pair of the massive claws must be visible without being cut off. They should look like powerful, elegant tools."
+    },
+    "character_details": {
+      "expression": "Calm and contemplative, almost gentle, despite the formidable claws; small, intelligent dark eyes.",
+      "texture": "Soft, downy proto-feathers cover the body, with smooth, almost waxy skin on the exposed arms and face. No harsh scales or grit.",
+      "colors": "Earthy rust-red body with a creamy white belly. The enormous claws are a striking jet-black with subtle purple-blue highlights.",
+      "features": [
+        "Unmistakably long, scythe-like claws (stylized, not overly sharp).",
+        "Small head on a long, slender neck.",
+        "Pot-bellied torso, bipedal stance."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Damp, dark soil with a few stylized, broad-leafed swamp plants and scattered pebbles.",
+      "flora": ["Tall, thin, stylized reeds or cattails in the background, reinforcing the vertical lines."],
+      "lighting": "Bright, diffused sunlight with strong rim-lighting on the top edges of the claws and neck to highlight their form.",
+      "sky": "Soft, hazy, light-blue sky, suggesting a humid, warm day."
+    }
+  }
+]

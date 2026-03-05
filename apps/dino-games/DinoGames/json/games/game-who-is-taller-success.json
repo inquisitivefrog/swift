@@ -1,0 +1,28 @@
+{
+  "id": "dino_who_is_taller_WIN_V2",
+  "game_title": "Dino: Who is Taller?",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": "SQUARE_1024",
+  "scene_logic": {
+    "composition": "A celebratory swap of the previous scene. The smaller dinosaur (e.g., a Compsognathus) is now standing on a small, colorful wooden crate or a smooth stone to be eye-level with the larger dinosaur (e.g., a slouching T-Rex).",
+    "action": "The smaller dinosaur is wearing a tiny gold medal around its neck and holding a trophy made of a large prehistoric shell. The larger dinosaur is clapping its small hands and smiling proudly at its friend.",
+    "environment": "A bright, sunny Cretaceous clearing with lush green ferns and a clear blue sky. Multi-colored confetti made of tropical flower petals is falling through the air."
+  },
+  "typography": {
+    "main_title": {
+      "text_content": "Player Wins!",
+      "style": "Large, bright red 3D bubbly letters with a soft white outline and gentle glow, mixed case.",
+      "placement": "Top center"
+    },
+    "sub_caption": {
+      "text_content": "Dino: Who is Taller?",
+      "style": "Smaller, bright red 3D bubbly letters with a soft white outline and gentle glow, mixed case.",
+      "placement": "Bottom right corner"
+    }
+  },
+  "technical_parameters": {
+    "lighting": "High-key, vibrant midday sun. Sparkling 'victory' glints on the trophy and the dinosaurs' eyes.",
+    "surface_finish": "Soft, clean, 'satin' skin textures. Friendly and non-threatening.",
+    "negative_prompt": "scary, realistic, grit, humans, darkness, blood, sharp teeth, anger, sadness, fossils, museum"
+  }
+}

@@ -304,11 +304,6 @@ struct DinoLunchGameView: View {
 
     private var dinoLunchEndSequenceView: some View {
         VStack(spacing: 16) {
-            Text("Good job!")
-                .font(.title)
-                .fontWeight(.semibold)
-                .padding(.top, 8)
-                .padding(.bottom, 8)
             VStack(spacing: 12) {
                 ForEach(Array(endSequenceDinosaurs.enumerated()), id: \.element.id) { index, dinosaur in
                     let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex

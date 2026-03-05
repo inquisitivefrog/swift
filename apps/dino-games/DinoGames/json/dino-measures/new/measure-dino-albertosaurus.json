@@ -1,0 +1,16 @@
+{
+  "id": "alberto_taller_v3_002",
+  "species": "albertosaurus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "HORSESHOE_CANYON",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "COASTAL_LOWLANDS",
+  "pose": "Sleek and balanced upright stance. The dinosaur is standing tall on its hind legs with its head naturally positioned; the neck is muscular and proportional to the body, strictly avoiding any stretching. One foot is slightly forward for grounding. The head features the signature smirk and soulful eyes. The verticality is achieved through a slight upward tilt of the torso and head to fill the frame.",
+  "environmental_details": {
+    "ground": "Sun-drenched flats of rusty orange ironstone and dark grey clay, providing high light reflection.",
+    "flora": "A few distant Metasequoia trees; no overhead canopy to ensure 100% sunlight exposure on the subject.",
+    "sky": "Bright blue sky with a hazy coastal glow on the horizon for depth.",
+    "atmosphere": "High-key, airy, and vibrant exposure typical of a clear day."
+  }
+}

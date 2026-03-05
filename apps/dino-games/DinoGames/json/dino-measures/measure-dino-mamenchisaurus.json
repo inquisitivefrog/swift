@@ -1,0 +1,34 @@
+[
+  {
+    "id": "mamen_measure_v1_TOWER",
+    "species": "Mamenchisaurus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SHAXIMIAO",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "WOODLAND_FLOODPLAINS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' stance; head held high and level, looking directly forward.",
+      "orientation": "Direct 0-degree head-on frontal view. The entire neck is stacked vertically.",
+      "camera_angle": "Low-angle 'Tower' shot, looking significantly up the length of the neck to emphasize its extreme height.",
+      "grounding": "All four massive feet firmly planted on flat, grey-green silty soil; body entirely obscured by the neck and chest.",
+      "body_logic": "The entire torso and tail are hidden behind the chest and the extremely long, vertical neck. Silhouette width max 280px.",
+      "framing_note": "The small head must be perfectly centered at the top of the very tall, straight neck, with the nostrils clearly visible."
+    },
+    "character_details": {
+      "expression": "Gentle, serene gaze; small, bright eyes with a friendly, curious expression.",
+      "texture": "Smooth, elephantine skin with subtle, rounded scales. Soft grey-green tones with light-catching highlights.",
+      "features": [
+        "Incredibly long, vertical neck dominating the frame.",
+        "Small, delicate head relative to body size.",
+        "Nostrils positioned at the top of the head."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Flat, grey-green siltstone with subtle damp textures, characteristic of the Shaximiao floodplains.",
+      "flora": ["Jurassic conifers (e.g., Araucaria, Ginkgos) in the soft-focus, low-lying background to provide scale without obscuring the neck"],
+      "sky": "Clear, bright Jurassic sky with a warm, hazy horizon; emphasizing the towering height of the dinosaur.",
+      "lighting": "High-key 'Sunny Exposed Cinematic' lighting with warm rim-light on the sides of the neck, maintaining the friendly animated feature style."
+    }
+  }
+]

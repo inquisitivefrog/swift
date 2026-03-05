@@ -1,0 +1,23 @@
+{
+  "id": "eosine_taller_v1_PROD",
+  "species": "eosinopteryx",
+  "tech_ref": "TALL_MEASURE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "TIAOJIASHAN",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "TEMPERATE_FOREST_SYSTEMS",
+  "pose": "Directly facing the camera, perched delicately upright on a thin, straight, vertical branch that rises from the bottom to the top of the 1024px frame. The Eosinopteryx is perfectly centered, with its head at the very top edge and its small feet gripping the branch at the bottom. Its wings are tucked neatly, and its long tail feathers extend directly downwards, aligned with the branch, to maintain a slender, vertical 'pillar' silhouette for the 340x140px crop.",
+  "character_details": {
+    "expression": "Signature friendly smirk with a bright, inquisitive look.",
+    "eyes": "Large, soulful, and expressive character eyes that convey intelligence.",
+    "skin_texture": "Soft, high-fidelity downy proto-feathers with subtle iridescence and specular highlights; no rough textures or hyper-realism.",
+    "features": ["delicate, slender body", "long, filamentous tail feathers", "small, tucked wings", "sharp, agile claws gripping the branch"]
+  },
+  "environmental_details": {
+    "ground": "Sun-dappled forest floor with bright moss and smooth, light-colored river stones.",
+    "water": "A clear, tranquil pond surface behind and below the dinosaur, reflecting high-key sunlight and vibrant blue sky onto the Eosinopteryx.",
+    "flora": "Sparse, slender ginkgo-like trees and ferns framing the central vertical branch, kept away from the immediate silhouette to ensure clarity.",
+    "sky": "Patches of vibrant, cloudless blue sky visible through the light canopy, contributing to the bright atmosphere.",
+    "atmosphere": "Direct midday sun dappling through a light tree canopy, creating soft shadows and bright highlights. The air is clear and crisp, with a warm glow."
+  }
+}

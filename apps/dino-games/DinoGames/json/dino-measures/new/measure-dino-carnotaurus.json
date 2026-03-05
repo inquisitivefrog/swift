@@ -1,0 +1,22 @@
+{
+  "id": "carno_taller_v3_RESET",
+  "species": "carnotaurus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "WARM_SUNNY_EXPOSED",
+  "formation_ref": "LA_COLONIA",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "COASTAL_LOWLANDS",
+  "pose": "Directly facing the camera in a tall, symmetrical 'hero' stance. The head is perfectly centered at the top edge of the 1024px frame, tilted slightly down to emphasize the horns. The muscular neck leads straight down to a deep, narrow chest. The tiny, vestigial arms are tucked tightly to the body to stay within the 140px center-crop zone. This creates a singular, powerful vertical silhouette.",
+  "character_details": {
+    "expression": "Signature prominent friendly smirk with a touch of mischievous wit.",
+    "eyes": "Large, soulful, and highly expressive eyes that look directly at the viewer.",
+    "skin_texture": "Smooth, high-poly 3D surfaces with stylized 'bumpy' osteoderms; avoiding hyper-realistic grain or noise.",
+    "features": ["distinctive bull-like brow horns", "extremely short four-fingered hands", "thick powerful neck"]
+  },
+  "environmental_details": {
+    "ground": "Sun-bleached, light-grey silty clay. A warm, golden dust cloud is kicked up around the bird-like feet to provide tactile grounding.",
+    "flora": "Sparse, low-lying coastal ferns kept to the far left and right edges of the 1024px frame; the center 140px vertical strip remains 100% dinosaur and sky.",
+    "sky": "Vibrant, deep blue sky providing maximum contrast for the horned silhouette.",
+    "atmosphere": "Cinematic midday sun with warm golden rim-lighting to highlight the 3D volume and separate the subject from the background."
+  }
+}

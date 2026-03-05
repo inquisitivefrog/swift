@@ -1,0 +1,34 @@
+[
+  {
+    "id": "majun_measure_v1_TOWER",
+    "species": "Majungasaurus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MAEVARANO",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "SEMI_ARID_FLOODPLAINS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' stance; standing firmly on hind legs, head held slightly forward and high.",
+      "orientation": "Direct 0-degree head-on frontal view. The single nasal horn is the central vertical axis.",
+      "camera_angle": "Slightly low-angle 'Hero' shot, looking up just enough to emphasize the head and neck.",
+      "grounding": "Hind feet planted on cracked, reddish-brown clay/silt; tail tucked directly behind the legs.",
+      "body_logic": "The robust torso and tail are completely occluded by the chest and thick neck. Silhouette width max 280px.",
+      "framing_note": "The distinctive single nasal horn and brow ridges must be clearly visible and centered at the top of the head."
+    },
+    "character_details": {
+      "expression": "Intense, focused gaze; powerful, slightly downturned mouth.",
+      "texture": "Rough, pebbly scales with a mottled camouflage pattern of browns, ochres, and dark reds; subtle battle scars.",
+      "features": [
+        "Single, blunt nasal horn atop the snout.",
+        "Prominent brow ridges over the eyes.",
+        "Short, robust skull with powerful jaws."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Dry, cracked reddish-brown clay or silt, characteristic of Madagascar's semi-arid regions, with sparse, tough grasses.",
+      "flora": ["Scattered hardy cycads and low-lying ferns in the far background, blurred to maintain focus on the dinosaur."],
+      "sky": "Bright, sun-drenched Late Cretaceous sky, slightly hazy with heat, casting strong, defined shadows.",
+      "lighting": "Harsh, direct overhead sunlight creating strong contrasts, highlighting the rugged texture of the skin and horns."
+    }
+  }
+]

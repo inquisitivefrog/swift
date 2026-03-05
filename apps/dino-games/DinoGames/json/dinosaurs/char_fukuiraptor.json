@@ -1,0 +1,66 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {
+      "formation_id": "KITADANI",
+      "habitat_id": "LUSH_FLOODPLAIN"
+    },
+    "layer_3_action": {
+      "subject": "Young Fukuiraptor",
+      "features": ["slender, agile build", "sharp, curved claws on three-fingered hands (rounded and friendly)", "long tail for balance", "large soulful eyes", "friendly expressive face", "lightly feathered texture (soft, clay feel)"],
+      "action": "Standing alert and curious on a riverbank, gently sniffing the air amidst dense ferns and cycads, with a clear stream flowing nearby."
+    }
+  },
+  "flora_library": {
+    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
+    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
+    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
+    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
+    "TIAOJISHAN_ADDITIONS": ["Giant Horsetails", "Dense Conifer forest"],
+    "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
+    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
+    "LANCE_HELL_CREEK_ADDITIONS": ["Palm-like Bennettitales", "Tree ferns", "Lush canopy"],
+    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
+    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
+    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"],
+    "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"],
+    "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
+    "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
+    "CEDAR_MOUNTAIN_ADDITIONS": ["Paleopus in damp cracks", "Shrubby angiosperms"],
+    "JEHOL_BIOTA_ADDITIONS": ["Water lilies at the edge", "Dense hardwoods"],
+    "CANDELEROS_ADDITIONS": ["Paleopus", "Early flowering reeds"],
+    "KAIPAROWITS_ADDITIONS": ["Giant horsetails", "Mosses", "Dense fern thickets"],
+    "DAOHUGOU_BEDS_ADDITIONS": ["Evergreen conifers", "Alpine ferns"],
+    "KEM_KEM_ADDITIONS": ["Early Sycamores", "Willow-like shrubs", "Horsetail banks"]
+  },
+  "fauna_library": {
+    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
+    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
+    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
+    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates)"],
+    "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
+    "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)", "Cicadas"],
+    "HELL_CREEK_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (fast-running lizards)", "Cicadas", "Early wasps"]
+  },
+  "habitat_id": "LUSH_FLOODPLAIN",
+  "physics": {
+    "altitude": "low",
+    "water": "medium"
+  },
+  "visuals": {
+    "ground": "Damp, rich soil with pebbles and scattered vegetation",
+    "water": "Clear, shallow river or stream, with gentle ripples",
+    "sky": "Bright and partly cloudy, indicating a warm, humid day"
+  },
+  "formation_id": "KITADANI",
+  "base_habitat": "LUSH_FLOODPLAIN",
+  "period": "EARLY_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Wet, fertile soil with leaf litter and small stones",
+    "color_palette": ["Vibrant greens", "Earthy browns", "Clear blues"]
+  },
+  "flora_manifest": ["EARLY_CRETACEOUS_BASE"],
+  "fauna_manifest": ["EARLY_CRETACEOUS_BASE"]
+}

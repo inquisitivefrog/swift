@@ -1,0 +1,23 @@
+{
+  "id": "edmont_taller_v1_PROD",
+  "species": "edmontonia",
+  "tech_ref": "TALL_MEASURE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "HORSESHOE_CANYON",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "COASTAL_WOODLANDS",
+  "pose": "Directly facing the camera in a symmetrical, upright 'pillar' stance. Despite its natural low-slung tank-like build, the head is raised and positioned at the very top edge of the 1024px frame, with the front feet at the very bottom. The large forward-pointing shoulder spikes are angled inward toward the neck to stay within the 300px horizontal central corridor, ensuring no part of the armor is lost in the 340x140px crop.",
+  "character_details": {
+    "expression": "Signature friendly smirk; a gentle giant look.",
+    "eyes": "Large, soulful, and expressive character eyes.",
+    "skin_texture": "Smooth 3D surfaces with rounded, tactile armor plates (osteoderms); polished look with no grit.",
+    "features": ["prominent forward-pointing shoulder spikes", "wide pear-shaped body", "heavily armored back"]
+  },
+  "environmental_details": {
+    "ground": "Light-colored, sun-bleached river sand and smooth pebbles at a river-bend.",
+    "water": "A bright, sparkling coastal estuary channel in the background, bouncing high-key light onto the dinosaur's underbelly and face.",
+    "flora": "Sparse Metasequoia and ferns positioned only at the far edges of the 1024px square to maintain a clean vertical silhouette.",
+    "sky": "Clear, vibrant blue sky for sharp contrast against the armored silhouette.",
+    "atmosphere": "Direct midday sun with high-key exposure. Warm highlights glint off the smooth armor plates to define the 3D volume."
+  }
+}

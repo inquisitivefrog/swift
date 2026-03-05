@@ -1,0 +1,21 @@
+{
+  "id": "diplo_taller_v3_RESET",
+  "species": "diplodocus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "WARM_SUNNY_EXPOSED",
+  "formation_ref": "MORRISON_LJ",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "SEMI_ARID_PLAINS",
+  "pose": "Directly facing the camera in a symmetrical 'pillar' stance. The incredibly long neck rises perfectly straight through the center of the 1024px frame. The head is at the very top, tilted slightly down. The tail and rear of the body are hidden directly behind the front legs and chest to keep the horizontal width as thin as possible for the 140px crop.",
+  "character_details": {
+    "expression": "Signature friendly smirk.",
+    "eyes": "Large, soulful, expressive character eyes.",
+    "skin_texture": "Smooth, high-poly 3D surfaces; no grain.",
+    "features": ["extremely long neck", "peg-like teeth visible in smirk", "small head relative to body"]
+  },
+  "environmental_details": {
+    "ground": "Pale tan earth and white caliche. Warm golden dust swirls at the feet for grounding.",
+    "sky": "Vibrant blue, cloudless.",
+    "atmosphere": "High-key midday sun with warm golden rim-lighting along the entire length of the neck."
+  }
+}

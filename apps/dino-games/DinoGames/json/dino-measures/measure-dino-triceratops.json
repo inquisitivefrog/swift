@@ -1,0 +1,34 @@
+[
+  {
+    "id": "trike_v1_ELITE_PILLAR",
+    "species": "Triceratops",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "HELL_CREEK",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "WOODLAND_FLOODPLAINS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' orientation. Standing firmly with the head tilted slightly up to present the horns.",
+      "orientation": "0-degree head-on frontal view. Symmetrical and centered.",
+      "camera_angle": "Medium-low angle. This makes the two brow horns the highest vertical points, stretching the silhouette upward.",
+      "body_logic": "Width is kept to 310px. The round frill acts as the background for the face. The front legs are positioned close together to keep the base narrow.",
+      "framing_note": "The three horns (two long brow horns, one short nose horn) must be fully in-frame and clearly defined against the sky."
+    },
+    "character_details": {
+      "expression": "Brave and steadfast; a determined but friendly 'guardian' look. Large, clear eyes.",
+      "texture": "Clean, matte-satin skin with subtle, large-scale pebble textures (graphic, not gritty). No 'fat' folds—just solid, heroic muscle.",
+      "colors": "Slate-blue body with a vibrant sunset-orange gradient on the top of the frill. The horns are a polished, light-ivory color.",
+      "features": [
+        "Classic solid, rounded cranial frill.",
+        "Three distinct, elegantly curved horns.",
+        "Powerful, parrot-like beak with clean edges."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Simple, lush green grass with a few stylized, oversized clover leaves.",
+      "flora": ["Tall, thin prehistoric conifers in the distant background to reinforce the vertical pillar shape."],
+      "lighting": "Clear, bright 'Hero' lighting from the front-left. Deep, clean blue shadows to give the head 3D volume.",
+      "sky": "Bright, optimistic pale-yellow gradient sky."
+    }
+  }
+]

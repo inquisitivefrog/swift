@@ -1,0 +1,11 @@
+{
+  "formation_id": "IREN_DABASU",
+  "base_habitat": "BRAIDED_RIVER_SYSTEMS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Light grey fine-grained sandstone with mottled claystone and caliche nodules.",
+    "color_palette": ["Light Grey", "Yellowish-orange", "Mottled Red", "Dusty Tan"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "IREN_DABASU_ADDITIONS"], 
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE", "IREN_DABASU_ADDITIONS"]
+}

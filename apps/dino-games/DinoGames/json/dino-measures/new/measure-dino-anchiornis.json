@@ -1,0 +1,16 @@
+{
+  "id": "anchi_taller_v3_001",
+  "species": "anchiornis",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "TIAOJISHAN",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "FORESTED_VOLCANIC_HIGHLANDS",
+  "pose": "Climbing a vertical volcanic rock face. The Anchiornis is oriented vertically, using its clawed wings and legs to grip the stone. The long, feathered tail hangs straight down, and the head is tilted upward toward the top of the 1024px frame. This posture naturally fills the tall aspect ratio while maintaining accurate bird-like proportions. Friendly, bright-eyed expression.",
+  "environmental_details": {
+    "ground": "Light grey and silver volcanic tuff (rock) with high-key sun reflections.",
+    "flora": "Sparse, distant giant horsetails visible at the base of the cliff; no overhead trees to block the sunlight.",
+    "sky": "Bright, clear blue sky with a slight atmospheric silver-grey haze characteristic of the formation.",
+    "atmosphere": "Direct midday sun emphasizing the tactile, soft downy feather textures and vibrant crest colors."
+  }
+}

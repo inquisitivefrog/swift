@@ -1,0 +1,33 @@
+[
+  {
+    "id": "pola_v2_NARROW_COMPRESSION",
+    "species": "Polacanthus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "WESSEX",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_WOODLANDS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' orientation. The dinosaur is standing at a 0-degree frontal angle to the camera.",
+      "orientation": "Directly facing the viewer, but with the head slightly lowered to compress the body length.",
+      "camera_angle": "High-angle 'Down-Shot'. The camera is backed away and positioned higher, looking down at the snout and the rows of back spikes.",
+      "body_logic": "Perspective 'foreshortening' is used to make the wide hips appear narrower than the front shoulders. Final silhouette width max 220px.",
+      "framing_note": "By backing away, we capture the full vertical height of the shoulder spikes without the body spilling over the horizontal crop edges."
+    },
+    "character_details": {
+      "expression": "A peaceful, stoic 'giant tortoise' vibe. Eyes are soft and friendly.",
+      "texture": "Clean, stylized armor plates with rounded edges to look tactile and 'toy-like'. Color: Warm terracotta red with cream-colored spikes.",
+      "features": [
+        "Symmetrical pairs of long triangular spikes on the shoulders.",
+        "Rows of smaller, blunt spines leading back toward the hips.",
+        "A thick, armored snout with a small, rounded beak."
+      ]
+    },
+    "environmental_details": {
+      "ground": "A simple, clean patch of soft green moss and grey river stones to ground the character.",
+      "flora": ["A single stylized fern frond in the bottom corner for scale."],
+      "lighting": "Bright, high-key noon-day sun. Strong highlights on the tops of the spikes to pull the eye upward.",
+      "sky": "Bright, clear blue sky visible at the top of the frame."
+    }
+  }
+]

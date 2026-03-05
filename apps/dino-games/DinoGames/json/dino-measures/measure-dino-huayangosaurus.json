@@ -1,0 +1,28 @@
+[
+  {
+    "id": "huayango_measure_v2_FRONT",
+    "species": "Huayangosaurus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SHAXIMIAO",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "WOODLAND_FLOODPLAINS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' stance; head held high and level.",
+      "orientation": "Direct head-on, front-facing view. The snout is pointed directly at the camera lens.",
+      "grounding": "All four feet visible but clustered closely together on flat, grey-green siltstone.",
+      "body_logic": "The entire length of the back, body, and tail is hidden directly behind the chest and head, ensuring the silhouette does not exceed a 280px horizontal width.",
+      "framing_note": "The shoulder spikes should extend symmetrically to the left and right, like 'ears', staying within the horizontal safe zone."
+    },
+    "character_details": {
+      "expression": "Friendly, symmetrical smirk; large, soulful eyes looking straight forward.",
+      "texture": "Pebbly skin with vibrant, heart-shaped plates visible 'stacking' upwards behind the head.",
+      "features": ["Symmetrical shoulder spikes", "Broad front-facing snout", "Front-facing eyes"]
+    },
+    "environmental_details": {
+      "ground": "Flat grey-green siltstone with light-colored mudcracks; no foliage near the feet.",
+      "flora": ["Jurassic conifers (Araucaria) framing the character on the far left and right edges only"],
+      "sky": "Bright, high-key Jurassic sky to create a crisp vertical silhouette edge."
+    }
+  }
+]

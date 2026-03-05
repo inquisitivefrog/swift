@@ -1,0 +1,22 @@
+{
+  "id": "comp_taller_v3_GROUNDED",
+  "species": "compsognathus",
+  "tech_ref": "TALL_MEASUREMENT_CARD",
+  "lighting_ref": "WARM_SUNNY_EXPOSED",
+  "formation_ref": "SOLNHOFEN",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "COASTAL_LAGOONS",
+  "pose": "Standing naturally on its hind legs on the flat, light-colored limestone ground. The body is upright and alert, with the neck curved naturally upward. It is facing the camera directly to keep its slender profile centered within the 140px vertical crop zone. The tail rests behind it, providing a grounded anchor.",
+  "character_details": {
+    "expression": "Signature mischievous friendly smirk.",
+    "eyes": "Large, soulful, and highly expressive character eyes.",
+    "skin_texture": "Smooth, high-poly 3D surfaces with soft-form rendering; zero grainy noise.",
+    "features": ["delicate two-fingered hands", "slender bird-like proportions", "long, fine tail"]
+  },
+  "environmental_details": {
+    "ground": "Flat, fine-grained cream-colored Solnhofen limestone. A subtle, warm dust effect at the feet for tactile grounding.",
+    "flora": "Distant, low-lying coastal shrubs at the very edges of the frame to keep the center clear.",
+    "sky": "Vibrant tropical blue sky providing high contrast for the small silhouette.",
+    "atmosphere": "Warm cinematic midday sun with golden rim-lighting to define the small 3D form against the bright background."
+  }
+}

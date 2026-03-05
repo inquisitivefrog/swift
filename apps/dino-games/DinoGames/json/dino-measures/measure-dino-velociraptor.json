@@ -1,0 +1,36 @@
+{
+  "id": "velo_v4_FINAL_CORRECTION",
+  "species": "Velociraptor",
+  "tech_ref": "TALL_MEASURE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": {
+    "width_constraint": "340px",
+    "height_constraint": "140px",
+    "target_character_width": "240px"
+  },
+  "pose_constraints": {
+    "posture": "Strictly vertical 'Pillar' orientation. Standing on one leg in a poised, balanced 'Crane' pose.",
+    "leg_logic": "The standing leg is centered. The other leg is tucked high, displaying a single, clean, ivory-colored sickle claw.",
+    "tail_logic": "The tail is held horizontally behind the body, extending into the depth of the image. It must NOT touch the ground or act as a support leg.",
+    "orientation": "0-degree head-on frontal view. The body is slender, athletic, and centered.",
+    "camera_angle": "Low-angle 'Hero' shot looking up to emphasize importance and remove 'toy' proportions."
+  },
+  "character_details": {
+    "expression": "Intelligent, serene, and bird-like. Large amber eyes with a sharp spec-glint. No human-like features.",
+    "texture": "Ultra-clean, satin-finish proto-feathers. Soft-touch digital character groom. Smooth surfaces, zero scales, zero grit.",
+    "colors": "Warm sandstone-beige with elegant, painted charcoal stripes on the neck. Soft white underbelly.",
+    "features": [
+      "Refined, narrow 'animated' skull with a clean beak-line.",
+      "One prominent, beautifully curved ivory sickle claw on the raised foot.",
+      "Sleek, feathered arms held in a balanced, wing-like symmetry."
+    ]
+  },
+  "environmental_details": {
+    "ground": "Minimalist red desert sand with soft-focus wind ripples. No complex clutter.",
+    "flora": ["Two thin, vertical desert reeds framing the dinosaur to define the pillar width."],
+    "lighting": "Golden-hour morning light with a crisp, bright rim-light tracing the silhouette.",
+    "sky": "Solid, vibrant turquoise-blue sky for high character contrast."
+  },
+  "negative_prompt": "tripod tail, tail touching ground, third leg tail, human eyes, batman claw, batarang, jagged edges, lumpy skin, chunky body, scary, horror, gritty, 3D toy, plastic texture"
+}

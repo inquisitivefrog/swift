@@ -1,0 +1,33 @@
+[
+  {
+    "id": "pachy_measure_v1_DOME",
+    "species": "Pachycephalosaurus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "HELL_CREEK",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "WOODLAND_FLOODPLAINS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' stance; standing stoutly on hind legs, head tilted slightly downward to present the dome prominently.",
+      "orientation": "Direct 0-degree head-on frontal view. The dome is the central, highest point.",
+      "camera_angle": "Low-angle 'Hero' shot, looking up to emphasize the thickness and mass of the dome-shaped skull.",
+      "body_logic": "Robust torso and short tail are completely occluded by the chest and thick neck. Silhouette width max 280px.",
+      "framing_note": "The entire dome and the surrounding bony knobs must be clearly visible and form a distinct, rounded silhouette."
+    },
+    "character_details": {
+      "expression": "Determined and stoic; small, focused eyes looking forward.",
+      "texture": "Thick, pebbly, leathery skin. Color: Earthy greens and browns on the body, with the dome a striking, smooth bone-white or pale grey, edged with vibrant red bony knobs.",
+      "features": [
+        "Massive, domed skull surrounded by bony knobs and spikes.",
+        "Short, thick neck.",
+        "Robust, powerful hind legs."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Damp, dark soil with scattered fallen leaves and woody debris, typical of the Hell Creek floodplains.",
+      "flora": ["Dense undergrowth of ferns and large-leafed flowering plants in the soft-focus background, suggesting a temperate forest."],
+      "sky": "Overcast, humid Late Cretaceous sky with soft, diffused light, highlighting the dome's texture.",
+      "lighting": "High-key 'Sunny Exposed Cinematic' lighting, with top-down light emphasizing the curvature and texture of the dome, creating soft, inviting highlights."
+    }
+  }
+]

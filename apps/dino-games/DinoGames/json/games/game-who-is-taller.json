@@ -1,0 +1,23 @@
+{
+  "id": "who_is_taller_v1_SILLY_INTRO",
+  "game_title": "Who Is Taller?",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": "SQUARE_1024",
+  "scene_logic": {
+    "composition": "Two very different dinosaurs standing back-to-back on a small, stylized grassy mound to see who is taller.",
+    "character_left": "A tiny, bright-green Compsognathus standing on its tiptoes, stretching its neck as high as possible with a determined, funny expression.",
+    "character_right": "A massive, friendly T-Rex sitting down or slouching comically to get closer to the tiny dino's level, looking over its shoulder with a curious, playful smile.",
+    "background": "A simple, bright prehistoric park with soft rolling hills and a few 'bouncy' looking palm trees under a sunny sky."
+  },
+  "typography": {
+    "text_content": "Who Is Taller?",
+    "style": "3D thick, rounded block letters with a soft 'clay' texture.",
+    "color": "Bright fire-engine red (matching the branding of your other games).",
+    "placement": "Centered at the top, casting a soft shadow on the sky."
+  },
+  "technical_parameters": {
+    "lighting": "Cheerful, even daylight with soft specular highlights on the dinosaurs' eyes.",
+    "surface_finish": "High-end 3D groom; satin-matte skin; no scales, no grit. Vibrant, saturated colors.",
+    "negative_prompt": "white background, realistic, scary, sharp teeth, grit, museum, humans, 90s CGI, grainy, all caps, blurry text."
+  }
+}

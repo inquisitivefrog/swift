@@ -1,0 +1,11 @@
+{
+  "formation_id": "LA_AMARGA",
+  "base_habitat": "BRAIDED_RIVER_SYSTEMS",
+  "period": "EARLY_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Sun-bleached river gravel, light-grey sandstone channels, and caliche soil nodules.",
+    "color_palette": ["Light Grey", "Dusty Tan", "Pale Yellow", "Soft Terracotta"]
+  },
+  "flora_manifest": ["EARLY_CRETACEOUS_BASE", "LA_AMARGA_ADDITIONS"], 
+  "fauna_manifest": ["EARLY_CRETACEOUS_BASE", "LA_AMARGA_ADDITIONS"]
+}

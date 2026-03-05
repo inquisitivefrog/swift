@@ -1,0 +1,27 @@
+[
+  {
+    "id": "acro_v2_STYLE_SAFE",
+    "species": "Acrocanthosaurus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "ANTLERS",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "DELTAIC_FLOODPLAINS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' stance; chest out, head held high with a curious tilt.",
+      "orientation": "Direct 0-degree head-on view to compress the body width into a 280px vertical column.",
+      "body_logic": "Arms are tucked neatly at the sides. The tail is hidden directly behind the legs.",
+      "framing_note": "The high-spined hump peaks at the top of the silhouette."
+    },
+    "character_details": {
+      "expression": "Big, soulful eyes with a gentle 'what's that?' look; a soft, rounded snout with a tiny closed-mouth smile.",
+      "texture": "Clean, 'squishy' pebbled skin. Saturated colors: Deep forest green with a bright sunny-orange gradient on the hump.",
+      "features": ["Rounded high-spine ridge", "Large expressive pupils", "Sturdy but stylized legs"]
+    },
+    "environmental_details": {
+      "ground": "Soft-focus damp silt with a few stylized, bright green ferns.",
+      "lighting": "High-key 'Golden Hour' rim-lighting; a soft lavender fill in the shadows to keep the character looking 'sweet'.",
+      "sky": "Bright, hazy teal-blue sky."
+    }
+  }
+]

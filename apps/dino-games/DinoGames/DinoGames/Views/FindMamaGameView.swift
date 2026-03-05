@@ -418,11 +418,6 @@ struct FindMamaGameView: View {
 
     private var findMamaEndSequenceView: some View {
         VStack(spacing: 16) {
-            Text("Good job!")
-                .font(.title)
-                .fontWeight(.semibold)
-                .padding(.top, 8)
-                .padding(.bottom, 8)
             VStack(spacing: 12) {
                 ForEach(Array(endSequenceMothers.enumerated()), id: \.element.id) { index, dinosaur in
                     let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex

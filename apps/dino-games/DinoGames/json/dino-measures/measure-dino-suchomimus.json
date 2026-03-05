@@ -1,0 +1,34 @@
+[
+  {
+    "id": "sucho_v8_CENTERED_MORPHOLOGY",
+    "species": "Suchomimus",
+    "tech_ref": "TALL_MEASURE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "ELRHAZ",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "RIVERINE_FORESTS",
+    "pose_constraints": {
+      "posture": "Strictly vertical 'Pillar' orientation. The dinosaur is standing tall on its hind legs to utilize the 140px vertical height.",
+      "orientation": "The body faces the camera, but the neck is arched in a tight 'S-curve' so the snout points downward and slightly toward the center-frame.",
+      "camera_angle": "Wide-angle, full-body shot from a medium distance. This ensures the entire snout, head, neck, and dorsal sail are within the 340px width.",
+      "body_logic": "The snout does not extend past the shoulders. By curving the neck, we keep the most horizontal feature (the snout) contained within the vertical silhouette of the body.",
+      "framing_note": "Ensure a 20px 'safe zone' of empty space on the left and right sides of the image to prevent any clipping of the snout or tail."
+    },
+    "character_details": {
+      "expression": "Dignified and calm; the large eye is positioned at the top-center of the frame.",
+      "texture": "Clean, high-end animated matte skin. Soft highlights on the snout and sail.",
+      "colors": "Deep teal body. The dorsal sail is a contrasting burnt-sienna, and the snout has a matching amber glow.",
+      "features": [
+        "Unmistakable long, slender crocodilian snout, fully visible and in-frame.",
+        "Clear dorsal ridge/sail peaking behind the curved neck.",
+        "Compact body profile to fit the horizontal constraint."
+      ]
+    },
+    "environmental_details": {
+      "ground": "Riverbank with smooth, blue-grey stones.",
+      "flora": ["Minimalist reeds on the far edges to frame the dinosaur."],
+      "lighting": "Top-down cinematic sun, highlighting the top of the snout and the ridge of the sail simultaneously.",
+      "sky": "Clear, solid pale-blue sky."
+    }
+  }
+]

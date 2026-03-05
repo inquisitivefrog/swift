@@ -1,0 +1,11 @@
+{
+  "formation_id": "KITADANI",
+  "base_habitat": "MEANDERING_RIVER_SYSTEMS",
+  "period": "EARLY_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Alternating fine light-grey sandstones and blackish organic shales.",
+    "color_palette": ["Light Grey", "Charcoal", "Reddish-Brown (Tuff)", "Deep Water Blue"]
+  },
+  "flora_manifest": ["EARLY_CRETACEOUS_BASE", "KITADANI_ADDITIONS"], 
+  "fauna_manifest": ["EARLY_CRETACEOUS_BASE", "KITADANI_ADDITIONS"]
+}

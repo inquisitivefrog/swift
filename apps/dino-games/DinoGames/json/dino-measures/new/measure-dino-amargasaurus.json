@@ -1,0 +1,22 @@
+{
+  "id": "amarga_measure_v2_3QTR",
+  "species": "amargasaurus",
+  "tech_ref": "TALL_MEASURE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "LA_AMARGA",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat": "BRAIDED_RIVER_SYSTEMS",
+  "pose": "A shallow 15-degree three-quarter stance to the left. This angle ensures both rows of neck spines are visible as a distinct 'V' shape against the sky. The head remains the highest point at the top of the 1024px frame. The body is angled so the tail and rear are hidden behind the front legs, maintaining a tight vertical 'pillar' shape that fits within a 300px horizontal center-zone.",
+  "character_details": {
+    "expression": "Signature friendly smirk, head tilted slightly to catch the 'V' of the spines in the light.",
+    "eyes": "Large, soulful character eyes looking toward the camera.",
+    "skin_texture": "Smooth 3D surfaces; vibrant, rounded skin flaps connecting the base of the twin spines.",
+    "features": ["distinctive double row of long neck spines", "tall vertical silhouette", "sturdy legs"]
+  },
+  "environmental_details": {
+    "ground": "Sun-bleached river gravel and sand; very light palette to bounce light upward.",
+    "water": "Sparkling, shallow braided stream at the feet, providing high-key reflections on the neck and spines.",
+    "sky": "Vibrant, cloudless blue sky to ensure the 'V' silhouette of the spines is sharp and clear.",
+    "atmosphere": "Warm midday sun with golden rim-lighting hitting the edges of both rows of spines."
+  }
+}
