@@ -1,8 +1,0 @@
-{
-  "habitat_id": "LARGE_RIVER_SYSTEMS",
-  "physics": { "altitude": "low_to_mid", "water": "high_flow" },
-  "visuals": {
-    "ground": "Point bars of gravel and coarse sand",
-    "water": "Deep, wide, fast-moving channels",
-  }
-}

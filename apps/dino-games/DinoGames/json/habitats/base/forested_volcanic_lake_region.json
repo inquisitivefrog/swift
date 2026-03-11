@@ -1,0 +1,45 @@
+{
+  "id": "habitat_forested_volcanic_lake_region_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "FORESTED_VOLCANIC_LAKE_REGION", 
+      "formation_id": "JEHOL_BIOTA_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of a volcanic lake region",
+      "features": [
+        "A cluster of interconnected clear lakes",
+        "Sloping hills covered in Ginkgo and Araucaria groves",
+        "Ground blanketed in bright green liverworts and mosses",
+        "Distant jagged volcanic peaks under a clear blue sky",
+        "Visible layers of grey volcanic ash in the soil banks"
+      ],
+      "action": "A wide, bright landscape showing the diversity of a volcanic lake district at noon. The ground is a lush, non-grass carpet of ancient spore-plants."
+    }
+  },
+  "visuals": {
+    "ground": "Nutrient-rich dark soil with visible ash layers, completely covered in a sponge of green moss and low-lying ferns. No grass.",
+    "water": "Sparkling blue lake water with clear, shallow edges showing submerged volcanic stones.",
+    "sky": "Bright, saturated blue with high-noon clarity and thin, wispy clouds."
+  },
+  "habitat_id": "FORESTED_VOLCANIC_LAKE_REGION",
+  "physics": {
+    "altitude": "medium_high",
+    "water": "multiple_freshwater_bodies",
+    "humidity": "moderate_high"
+  },
+  "strata_specifics": {
+    "ground_texture": "Soft mosses punctuated by the geometric patterns of horsetails and the rough texture of volcanic pumice.",
+    "color_palette": ["Deep Forest Green", "Ash Grey", "Sparkling Teal", "Warm Brown"]
+  },
+  "flora_manifest": [
+    "Araucaria",
+    "Ginkgoales",
+    "Giant Horsetails",
+    "Liverworts",
+    "Moss mats"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, lawn, prairie, dark shadows, gloom, sunset, scary, 90s CGI, grainy, humans"
+}

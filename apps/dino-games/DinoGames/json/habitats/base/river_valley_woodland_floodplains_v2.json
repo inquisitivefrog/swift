@@ -1,0 +1,46 @@
+{
+  "id": "habitat_river_valley_woodland_floodplains_v2_midday",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "RIVER_VALLEY_WOODLAND_FLOODPLAINS", 
+      "formation_id": "MUDSTONE_BASIN" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of wooded river valley floodplains",
+      "features": [
+        "Reddish-brown mottled mudstone soil",
+        "Numerous large fallen logs covered in moss",
+        "Early planes and sycamore-like trees",
+        "Thick undergrowth of vibrant green ferns",
+        "Clear river channels cutting through ironstone banks",
+        "Bright mid-day sun illuminating the forest floor"
+      ],
+      "action": "A bright, high-noon view of a fertile woodland. The ground is a rich reddish-brown, textured with decaying logs and a sea of green ferns. No grass is present."
+    }
+  },
+  "visuals": {
+    "ground": "Rich reddish-brown mottled soil. The floor is cluttered with ancient fallen logs acting as nurseries for moss and ferns. Absolutely no grass.",
+    "water": "Slow-moving river water with clear reflections of the overhanging sycamore-like canopy.",
+    "sky": "Bright blue sky with high-noon sun filtering through a lush, green Cretaceous canopy."
+  },
+  "habitat_id": "RIVER_VALLEY_WOODLAND_FLOODPLAINS",
+  "physics": {
+    "altitude": "lowland_floodplain",
+    "water": "high_seasonal",
+    "substrate": "ironstone_and_mottled_mudstone"
+  },
+  "strata_specifics": {
+    "ground_texture": "Damp mottled mudstone, mossy bark textures, and dense fern-brakes.",
+    "color_palette": ["Reddish-Brown", "Deep Emerald", "Sycamore Green", "Sky Blue"]
+  },
+  "flora_manifest": [
+    "Early Planes",
+    "Sycamores",
+    "Fern undergrowth",
+    "Mosses",
+    "Lycophytes"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, lawn, park, flowers, gloom, night, dark forest, 90s CGI, grainy, humans"
+}

@@ -1,0 +1,11 @@
+{
+  "formation_id": "LA_COLONIA",
+  "base_habitat": "COASTAL_LOWLANDS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Light-grey silty clay and sun-bleached sandstone with marine-influenced mudstone.",
+    "color_palette": ["Silt grey", "Sandstone tan", "Vibrant blue", "Pale ochre"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}

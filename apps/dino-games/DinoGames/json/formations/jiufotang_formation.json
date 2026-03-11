@@ -1,0 +1,11 @@
+{
+  "formation_id": "JIUFOTANG",
+  "base_habitat": "FORESTED_VOLCANIC_LAKE_SYSTEM",
+  "period": "EARLY_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Fine-grained mudstone, shale, siltstone and volcanic tuff.",
+    "color_palette": ["Yellow-green", "Gray-green", "Purple-gray", "Light ash grey", "Buff"]
+  },
+  "flora_manifest": ["EARLY_CRETACEOUS_BASE", "JIUFOTANG_ADDITIONS"],
+  "fauna_manifest": ["EARLY_CRETACEOUS_BASE"]
+}

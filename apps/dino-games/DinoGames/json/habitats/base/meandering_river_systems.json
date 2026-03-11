@@ -1,0 +1,47 @@
+{
+  "id": "habitat_meandering_river_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "MEANDERING_RIVER_SYSTEMS", 
+      "formation_id": "MORRISON_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of a meandering river system",
+      "features": [
+        "Wide curving river channels with clear blue-green water",
+        "Lush sandbars covered in feathery ferns",
+        "Steep banks of soft mud carpeted in vibrant green moss",
+        "Clusters of palm-like Bennettitales and low Cycads",
+        "Sparkling sunlight reflecting off the water's surface"
+      ],
+      "action": "A cinematic view of a winding river at noon. The ground is a sea of low ferns and mosses, with the river snaking toward the horizon."
+    }
+  },
+  "visuals": {
+    "ground": "Sandy and silty riverbanks thick with low-spreading ferns and moss hummocks. Moist soil textures near the water. No grass.",
+    "water": "Slow-moving, clear water showing the riverbed in shallow areas, reflecting the bright sky overhead.",
+    "sky": "Wide, bright blue sky with high visibility and a brilliant noon sun."
+  },
+  "habitat_id": "MEANDERING_RIVER_SYSTEMS",
+  "physics": {
+    "altitude": "lowland_valley",
+    "water": "dynamic_freshwater",
+    "humidity": "moderate"
+  },
+  "strata_specifics": {
+    "ground_texture": "Fine river silt, layered clay banks, and soft mossy mounds.",
+    "color_palette": ["River Teal", "Vibrant Fern Green", "Sandy Gold", "Muddy Brown"]
+  },
+  "flora_manifest": [
+    "Low-spreading ferns",
+    "Bryophyte mosses",
+    "Bennettitales",
+    "Cycads",
+    "Horsetails"
+  ],
+  "fauna_manifest": [
+    "NO_FAUNA_DEPICTED"
+  ],
+  "negative_prompt": "grass, meadows, prairies, dark shadows, gloom, night, scary, 90s CGI, grainy, humans, buildings"
+}

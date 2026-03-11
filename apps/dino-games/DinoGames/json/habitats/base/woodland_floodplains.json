@@ -1,0 +1,45 @@
+{
+  "id": "habitat_woodland_floodplains_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "WOODLAND_FLOODPLAINS", 
+      "formation_id": "GENERIC_WOODED_BASIN" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of woodland floodplains",
+      "features": [
+        "A sun-dappled woodland with clear river channels",
+        "Moderately dense canopy of conifers and ginkgo trees",
+        "Ground completely carpeted in feathery ferns and soft moss",
+        "Sunlight streaming through gaps in the trees to highlight the forest floor",
+        "No grass; ground is a lush prehistoric forest floor"
+      ],
+      "action": "A cinematic landscape showing a bright, sun-lit woodland. The ground is a vibrant textured carpet of green ferns and mosses. The atmosphere is warm and peaceful."
+    }
+  },
+  "visuals": {
+    "ground": "A deep, textured carpet of vibrant green ferns, bryophytes, and liverworts. No grass. Fallen logs and branches are covered in thick moss.",
+    "water": "Slow-moving, clear water channels catching sunbeams and reflecting the green canopy.",
+    "sky": "Bright blue sky visible through the feathery branches of the trees overhead."
+  },
+  "habitat_id": "WOODLAND_FLOODPLAINS",
+  "physics": {
+    "altitude": "lowland",
+    "water": "medium_seasonal",
+    "humidity": "moderate"
+  },
+  "strata_specifics": {
+    "ground_texture": "Spongy moss, fern-root mats, and moist leaf-litter from ancient gymnosperms.",
+    "color_palette": ["Vibrant Spring Green", "Deep Forest Green", "Sunlight Gold", "Bark Brown"]
+  },
+  "flora_manifest": [
+    "Conifers",
+    "Ginkgoales",
+    "Tree ferns",
+    "Ground ferns",
+    "Moss mats"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, lawns, meadows, flower gardens, gloom, night, scary, 90s CGI, grainy, humans"
+}

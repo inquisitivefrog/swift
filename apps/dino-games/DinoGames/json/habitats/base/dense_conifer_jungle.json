@@ -1,0 +1,46 @@
+{
+  "id": "habitat_dense_conifer_jungle_boundary_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "DENSE_CONIFER_JUNGLE", 
+      "formation_id": "SHAXIMIAO_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of an ancient conifer jungle boundary",
+      "features": [
+        "A wide, sun-drenched river channel in the foreground with clear water",
+        "A massive, vertical wall of ancient jungle rising from the far bank",
+        "Individual 'Emergent' Araucaria trees towering significantly higher than the main canopy",
+        "Thick curtains of lianas and climbing ferns draped over the forest edge",
+        "Horizontal boughs of giant trees reaching out over the water, covered in moss",
+        "Brilliant white sun at high-noon, saturating the greens and reflecting off the river"
+      ],
+      "action": "A cinematic, wide-angle shot from a low-bank river looking toward a primary forest. The scale is immense; the trees look like ancient skyscrapers. The sky is a brilliant, clear blue above the canopy line."
+    }
+  },
+  "visuals": {
+    "ground": "Silty riverbank with clusters of horsetails (Equisetum) and low-lying ferns. No grass. The forest interior beyond the edge is deep and complex.",
+    "canopy": "Uneven and 'lumpy' roof of feathery green foliage, with giant emergent trees breaking the horizon line at irregular intervals.",
+    "atmosphere": "Crisp, bright, and humid; the sunlight is powerful and direct, making the water sparkle and the foliage glow."
+  },
+  "habitat_id": "DENSE_CONIFER_JUNGLE",
+  "physics": {
+    "altitude": "lowland_river_valley",
+    "water": "adjacent_flowing",
+    "humidity": "high"
+  },
+  "strata_specifics": {
+    "ground_texture": "Wet river silt, mossy logs at the water's edge, and massive, gnarled bark textures.",
+    "color_palette": ["Vibrant Jungle Green", "Deep Cerulean", "Sandy Ochre", "Bright White Sunlight"]
+  },
+  "flora_manifest": [
+    "Emergent Araucaria trees",
+    "Podocarps",
+    "Tree ferns",
+    "Climbing lianas",
+    "Giant Horsetails"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "orchard, rows of trees, thin trunks, modern park, grass, lawn, Halloween, dark forest, Jason, spooky, fog, night"
+}

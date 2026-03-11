@@ -74,8 +74,8 @@ enum MeasureGameConfigs {
     static func makeRoundCreatures(poolKind: MeasurePoolKind, excluding usedIds: Set<Int>) -> [MeasureCreature]? {
         switch poolKind {
         case .dinosaurs:
-            guard let dinos = makeRoundDinosaurs(excluding: usedIds) else { return nil }
-            return dinos.map { d in MeasureCreature(id: d.id, name: d.name, imageName: d.imageName, icon: d.icon) }
+            guard let slots = makeRoundSlotsForDinosaurs(excluding: usedIds) else { return nil }
+            return slots.map { $0.creature }
         case .pterosaurs:
             return makeRoundPterosaurs(excluding: usedIds)
         case .marineReptiles:
@@ -83,8 +83,9 @@ enum MeasureGameConfigs {
         }
     }
 
-    /// Dinosaurs: 9 clades, one dinosaur per clade. Ensures round is winnable: at least one creature can be matched by a subset of the others (within 8%).
-    private static func makeRoundDinosaurs(excluding usedIds: Set<Int>) -> [Dinosaur]? {
+    /// Grid slots: one per clade, clade tracked for replacement. Shuffled for random grid order.
+    /// When `preferringSmallEnough` is set, for each clade we prefer creatures with height <= that value (ensures some choices fit the remaining stack height).
+    static func makeRoundSlotsForDinosaurs(excluding usedIds: Set<Int>, preferringSmallEnough remainingHeight: Double? = nil) -> [(clade: DinoClade, creature: MeasureCreature)]? {
         let cladeById = MatchingGameConfigs.dinosaurCladeById
         let pool = MatchingGameConfigs.allDinosaurs.filter { d in
             guard let imageName = d.imageName, imageName.hasPrefix("dino-"),
@@ -94,19 +95,47 @@ enum MeasureGameConfigs {
         }
         let byClade = Dictionary(grouping: pool) { cladeById[$0.id] ?? .theropod }
         let clades = DinoClade.allCases
-        var lastChosen: [Dinosaur] = []
+        var lastSlots: [(DinoClade, MeasureCreature)] = []
         for _ in 0..<30 {
             var chosen: [Dinosaur] = []
+            var slotClades: [DinoClade] = []
             for clade in clades {
                 guard let candidates = byClade[clade], !candidates.isEmpty else { return nil }
-                chosen.append(candidates.randomElement()!)
+                let d: Dinosaur
+                if let maxH = remainingHeight, maxH > 0 {
+                    let smallEnough = candidates.filter { (dinosaurEstimatedHeightMetersById[$0.id] ?? 0) <= maxH }
+                    d = (smallEnough.isEmpty ? candidates : smallEnough).randomElement()!
+                } else {
+                    d = candidates.randomElement()!
+                }
+                chosen.append(d)
+                slotClades.append(clade)
             }
-            lastChosen = chosen
             if isRoundWinnable(chosen) {
-                return chosen.shuffled()
+                let slots = zip(slotClades, chosen).map { (clade, d) in
+                    (clade, MeasureCreature(id: d.id, name: d.name, imageName: d.imageName, icon: d.icon))
+                }
+                return slots.shuffled()
+            }
+            lastSlots = zip(slotClades, chosen).map { (clade, d) in
+                (clade, MeasureCreature(id: d.id, name: d.name, imageName: d.imageName, icon: d.icon))
             }
         }
-        return lastChosen.isEmpty ? nil : lastChosen.shuffled()
+        return lastSlots.isEmpty ? nil : lastSlots.shuffled()
+    }
+
+    /// Replacement creature from clade, excluding current grid ids. Nil if none available.
+    static func replacementMeasureCreature(clade: DinoClade, excluding gridCreatureIds: Set<Int>) -> MeasureCreature? {
+        let cladeById = MatchingGameConfigs.dinosaurCladeById
+        let pool = MatchingGameConfigs.allDinosaurs.filter { d in
+            guard let imageName = d.imageName, imageName.hasPrefix("dino-"),
+                  !gridCreatureIds.contains(d.id) else { return false }
+            let measureName = "measure-\(imageName)"
+            return ImageAssetCache.imageExists(named: measureName)
+        }
+        let candidates = pool.filter { (cladeById[$0.id] ?? .theropod) == clade }
+        guard let d = candidates.randomElement() else { return nil }
+        return MeasureCreature(id: d.id, name: d.name, imageName: d.imageName, icon: d.icon)
     }
 
     /// True if at least one creature in the round can be matched: some subset (1–5) of the others sums to within 8% of its height.
@@ -180,14 +209,14 @@ struct MeasureGameView: View {
 
     @State private var speechManager = SpeechManager()
     @State private var roundsCompleted = 0
-    private let maxRounds = 3
+    private let maxRounds = 5
     /// Creatures used in any completed round this game; never reuse in a future round.
     @State private var usedCreatureIds: Set<Int> = []
-    /// The N creatures for the current round (one per group), displayed in a 3-column grid.
-    @State private var currentRoundCreatures: [MeasureCreature] = []
+    /// Grid slots: one per clade (dinosaurs) or creature-only (pterosaurs). Clade tracked for replacement when creature is used.
+    @State private var measureGridSlots: [(clade: DinoClade?, creature: MeasureCreature)] = []
     /// Intro walk: highlight each creature and play name audio before taps are enabled. -1 = not started, 0..<count = current index, count = done.
     @State private var introWalkStep: Int = -1
-    private var introWalkComplete: Bool { introWalkStep >= 0 && (currentRoundCreatures.isEmpty || introWalkStep >= currentRoundCreatures.count) }
+    private var introWalkComplete: Bool { introWalkStep >= 0 && (measureGridSlots.isEmpty || introWalkStep >= measureGridSlots.count) }
 
     /// When true, grid taps are disabled (playing choose-first, choose-second, same-height, or good-job audio).
     @State private var measureTapsBlocked = false
@@ -244,11 +273,12 @@ struct MeasureGameView: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
 
-                            if !currentRoundCreatures.isEmpty {
+                            if !measureGridSlots.isEmpty {
                                 let columns = [GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6)]
                                 LazyVGrid(columns: columns, spacing: 6) {
-                                    ForEach(0..<currentRoundCreatures.count, id: \.self) { index in
-                                        let creature = currentRoundCreatures[index]
+                                    ForEach(0..<measureGridSlots.count, id: \.self) { index in
+                                        let slot = measureGridSlots[index]
+                                        let creature = slot.creature
                                         MeasureCreatureCard(
                                             creature: creature,
                                             displayImageName: creature.imageName,
@@ -258,7 +288,7 @@ struct MeasureGameView: View {
                                             isTooSmallToSee: isTooSmallToChoose(creature),
                                             isIntroHighlighted: !introWalkComplete && introWalkStep == index
                                         ) {
-                                            handleCreatureTap(creature)
+                                            handleCreatureTap(index: index, creature: creature)
                                         }
                                         .aspectRatio(1, contentMode: .fit)
                                     }
@@ -372,12 +402,15 @@ struct MeasureGameView: View {
     }
 
     /// Right side: tower scaled by (stack total / left height) with head room; each segment at least measureMinSegmentHeight, then fit in 340pt.
+    /// When left >= stack, right tower is scaled down by 8% so the left reference is always visually dominant (avoids image aspect-ratio mismatch).
     private var measureRightTowerView: some View {
         let sorted = selectedRightStack.sorted { (dinosaurEstimatedHeightMetersById[$0.id] ?? 0) > (dinosaurEstimatedHeightMetersById[$1.id] ?? 0) }
         let stackTotalH = sorted.reduce(0.0) { $0 + (dinosaurEstimatedHeightMetersById[$1.id] ?? 1) }
         let leftH = selectedFirst.flatMap { dinosaurEstimatedHeightMetersById[$0.id] } ?? 1
         let maxH = max(leftH, stackTotalH)
-        let rawTowerHeight: CGFloat = maxH > 0 ? min(measureAreaHeight, measureAreaHeight * CGFloat(stackTotalH / maxH)) : 0
+        let proportional: CGFloat = maxH > 0 ? CGFloat(stackTotalH / maxH) : 0
+        let buffer: CGFloat = leftH >= stackTotalH ? 0.92 : 1.0  // right 8% smaller when left is reference
+        let rawTowerHeight: CGFloat = min(measureAreaHeight, measureAreaHeight * proportional * buffer)
         let rawHeights: [CGFloat] = sorted.map { c in
             let h = dinosaurEstimatedHeightMetersById[c.id] ?? 1
             let portion = stackTotalH > 0 ? (h / stackTotalH) : (1.0 / Double(sorted.count))
@@ -424,10 +457,11 @@ struct MeasureGameView: View {
         .frame(width: width, height: height, alignment: alignBottom ? .bottomLeading : .topLeading)
     }
 
-    private func handleCreatureTap(_ creature: MeasureCreature) {
+    private func handleCreatureTap(index: Int, creature: MeasureCreature) {
         guard introWalkComplete, !measureTapsBlocked else { return }
         if selectedFirst == nil {
             selectedFirst = creature
+            replaceGridSlotAfterUse(index: index)
             speechManager.onAudioFinished = nil
             measureTapsBlocked = true
             speechManager.onAudioFinished = {
@@ -444,6 +478,7 @@ struct MeasureGameView: View {
         if creature.id == selectedFirst?.id {
             if selectedRightStack.isEmpty, let first = selectedFirst {
                 // Same dinosaur tapped twice with empty stack: "X is as tall as X"
+                replaceGridSlotAfterUse(index: index)
                 measureTapsBlocked = true
                 playMeasureSameHeightSequence(left: first, stack: [creature]) {
                     self.speechManager.onAudioFinished = nil
@@ -472,7 +507,11 @@ struct MeasureGameView: View {
             measureTapsBlocked = true
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
-                self.measureTapsBlocked = false
+                if !self.hasAnyValidChoice() {
+                    self.playCloseEnoughFailsafe()
+                } else {
+                    self.measureTapsBlocked = false
+                }
             }
             speechManager.speak("thats-too-small-to-see")
             return
@@ -481,12 +520,17 @@ struct MeasureGameView: View {
             measureTapsBlocked = true
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
-                self.measureTapsBlocked = false
+                if !self.hasAnyValidChoice() {
+                    self.playCloseEnoughFailsafe()
+                } else {
+                    self.measureTapsBlocked = false
+                }
             }
             speechManager.speak(audioKey: "that-dinosaur-is-too-tall", fallbackText: "That dinosaur is too tall.")
             return
         }
         selectedRightStack.append(creature)
+        refreshGridWithSmallEnoughOptions()
         // Announce the creature just added before comparison feedback (e.g. good-job-keep-going)
         measureTapsBlocked = true
         speechManager.onAudioFinished = {
@@ -515,6 +559,54 @@ struct MeasureGameView: View {
         let creatureH = dinosaurEstimatedHeightMetersById[creature.id] ?? 1
         let currentSum = selectedRightStack.reduce(0.0) { $0 + (dinosaurEstimatedHeightMetersById[$1.id] ?? 1) }
         return currentSum + creatureH > leftH
+    }
+
+    /// When a creature is used (reference or added to stack), replace its grid slot with another from the same clade.
+    /// Call only after the creature has been captured in selectedFirst or selectedRightStack so the victory sequence has the reference.
+    private func replaceGridSlotAfterUse(index: Int) {
+        guard index >= 0, index < measureGridSlots.count else { return }
+        guard let clade = measureGridSlots[index].clade else { return }  // Pterosaurs: no replacement
+        let gridIds = Set(measureGridSlots.map { $0.creature.id })
+        guard let replacement = MeasureGameConfigs.replacementMeasureCreature(clade: clade, excluding: gridIds) else { return }
+        measureGridSlots[index] = (clade, replacement)
+    }
+
+    /// Refresh the entire grid after the second dinosaur is selected (and each turn after) so some choices are small enough to add to the stack.
+    private func refreshGridWithSmallEnoughOptions() {
+        guard gameConfig.poolKind == .dinosaurs,
+              let first = selectedFirst else { return }
+        let leftH = dinosaurEstimatedHeightMetersById[first.id] ?? 1
+        let stackSum = selectedRightStack.reduce(0.0) { $0 + (dinosaurEstimatedHeightMetersById[$1.id] ?? 1) }
+        let remainingHeight = leftH - stackSum
+        guard remainingHeight > 0 else { return }
+        var excludeIds = usedCreatureIds
+        excludeIds.insert(first.id)
+        for c in selectedRightStack { excludeIds.insert(c.id) }
+        guard let slots = MeasureGameConfigs.makeRoundSlotsForDinosaurs(excluding: excludeIds, preferringSmallEnough: remainingHeight) else { return }
+        measureGridSlots = slots.map { (clade: Optional($0.clade), creature: $0.creature) }
+    }
+
+    /// True if any creature in the grid can be added to the stack (not too tall, not too small to see).
+    private func hasAnyValidChoice() -> Bool {
+        measureGridSlots.contains { slot in
+            let c = slot.creature
+            return !wouldOvershoot(c) && !wouldSegmentBeTooSmall(c)
+        }
+    }
+
+    /// Failsafe: no valid choices left — end round gracefully with "Close enough for government work!" then read comparison list.
+    private func playCloseEnoughFailsafe() {
+        guard let first = selectedFirst else { return }
+        measureTapsBlocked = true
+        speechManager.onAudioFinished = nil
+        speechManager.speak(audioKey: "game-measure-close-enough-for-government-work", fallbackText: "Close enough for government work!")
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.playMeasureSameHeightSequence(left: first, stack: self.selectedRightStack) {
+                self.speechManager.onAudioFinished = nil
+                self.advanceRound()
+            }
+        }
     }
 
     /// True when first is chosen and this creature would be too small to display (gray out in grid).
@@ -574,6 +666,11 @@ struct MeasureGameView: View {
     /// Compare sum of right-stack heights to left dinosaur: if about same → advance round; if right > left (overshot) → advance round (can't recover); else play good-job, keep stack, allow another pick.
     private func compareHeightsAndContinue() {
         guard let first = selectedFirst else { return }
+        // Failsafe: if no creature in the grid can be added (all too tall or too small), end round gracefully.
+        if !hasAnyValidChoice() {
+            playCloseEnoughFailsafe()
+            return
+        }
         let hLeft = dinosaurEstimatedHeightMetersById[first.id] ?? 1
         let stackSum = selectedRightStack.reduce(0.0) { $0 + (dinosaurEstimatedHeightMetersById[$1.id] ?? 1) }
         let maxH = max(hLeft, stackSum)
@@ -596,27 +693,47 @@ struct MeasureGameView: View {
                 return
             }
             _ = selectedRightStack.removeLast()
+            refreshGridWithSmallEnoughOptions()
             measureTapsBlocked = true
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
-                self.measureTapsBlocked = false
+                if !self.hasAnyValidChoice() {
+                    self.playCloseEnoughFailsafe()
+                } else {
+                    self.measureTapsBlocked = false
+                }
             }
             speechManager.speak(audioKey: "that-dinosaur-is-too-tall", fallbackText: "That dinosaur is too tall. Try a smaller one.")
         } else {
             measureTapsBlocked = true
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
-                self.measureTapsBlocked = false
+                if !self.hasAnyValidChoice() {
+                    self.playCloseEnoughFailsafe()
+                } else {
+                    self.measureTapsBlocked = false
+                }
             }
             speechManager.speak("game-measure-good-job-keep-going")
         }
     }
 
     private func startRound() {
-        let next = MeasureGameConfigs.makeRoundCreatures(poolKind: gameConfig.poolKind, excluding: usedCreatureIds)
-        currentRoundCreatures = next ?? []
+        switch gameConfig.poolKind {
+        case .dinosaurs:
+            var slots = MeasureGameConfigs.makeRoundSlotsForDinosaurs(excluding: usedCreatureIds)?.map { (clade: Optional($0.clade), creature: $0.creature) }
+            if slots == nil || slots!.isEmpty {
+                slots = MeasureGameConfigs.makeRoundSlotsForDinosaurs(excluding: [])?.map { (clade: Optional($0.clade), creature: $0.creature) }
+            }
+            measureGridSlots = slots ?? []
+        case .pterosaurs:
+            let creatures = MeasureGameConfigs.makeRoundCreatures(poolKind: .pterosaurs, excluding: usedCreatureIds) ?? []
+            measureGridSlots = creatures.map { (clade: nil as DinoClade?, creature: $0) }
+        case .marineReptiles:
+            measureGridSlots = []
+        }
         introWalkStep = -1
-        if !currentRoundCreatures.isEmpty {
+        if !measureGridSlots.isEmpty {
             startIntroWalk()
         }
     }
@@ -632,12 +749,12 @@ struct MeasureGameView: View {
 
     /// Speaks creature at introWalkStep, then when finished increments and speaks next (or starts measure flow).
     private func speakCurrentIntroCreatureAndAdvance() {
-        guard introWalkStep < currentRoundCreatures.count else { return }
-        let creature = currentRoundCreatures[introWalkStep]
+        guard introWalkStep < measureGridSlots.count else { return }
+        let creature = measureGridSlots[introWalkStep].creature
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
             self.introWalkStep += 1
-            if self.introWalkStep >= self.currentRoundCreatures.count {
+            if self.introWalkStep >= self.measureGridSlots.count {
                 self.startChooseFirstDinosaur()
                 return
             }
@@ -657,6 +774,7 @@ struct MeasureGameView: View {
     }
 
     private func advanceRound() {
+        // Preserve used creatures for victory sequence before clearing; grid replacement already happened at tap time.
         if let first = selectedFirst {
             if !victoryCreatures.contains(where: { $0.id == first.id }) {
                 victoryCreatures.append(first)
@@ -667,9 +785,10 @@ struct MeasureGameView: View {
                 }
             }
         }
+        let idsUsedThisRound = [selectedFirst?.id].compactMap { $0 } + selectedRightStack.map(\.id)
+        usedCreatureIds.formUnion(idsUsedThisRound)
         selectedFirst = nil
         selectedRightStack = []
-        usedCreatureIds.formUnion(currentRoundCreatures.map(\.id))
         roundsCompleted += 1
         if roundsCompleted < maxRounds {
             startRound()
@@ -862,10 +981,12 @@ private struct MeasureCreatureCard: View {
                     }
                 }
                 Text(creature.name)
-                    .font(.caption2)
+                    .font(.subheadline)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
+                    .minimumScaleFactor(0.65)
+                    .allowsTightening(true)
             }
         }
         .padding(5)

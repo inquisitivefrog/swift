@@ -1,0 +1,43 @@
+{
+  "id": "habitat_large_river_systems_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "LARGE_RIVER_SYSTEMS", 
+      "formation_id": "BRAIDED_RIVER_COMPLEX" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of a massive large river system",
+      "features": [
+        "A vast, wide river with multiple deep blue channels",
+        "Large sandy islands covered in dense thickets of vertical horsetails",
+        "Powerful, sparkling water surface reflecting a bright white sun",
+        "Expansive gravel bars glinting with wet textures",
+        "Distant, low-lying fern-covered banks"
+      ],
+      "action": "A cinematic, high-angle landscape of a mighty river. The scale is immense, with the water dominating the scene. The ground is a mix of sand, gravel, and ancient green horsetails. No grass."
+    }
+  },
+  "visuals": {
+    "ground": "Wide sandy point bars and gravel islands glinting in the sun. Thickets of tall Equisetum (horsetails) provide the primary greenery. No grass lawns.",
+    "water": "Deep, powerful river water with visible currents and white-capped ripples under the high-noon sun.",
+    "sky": "Clear, expansive bright blue sky reflecting intensely on the water surface."
+  },
+  "habitat_id": "LARGE_RIVER_SYSTEMS",
+  "physics": {
+    "altitude": "lowland_basin",
+    "water": "very_high_flow",
+    "humidity": "moderate"
+  },
+  "strata_specifics": {
+    "ground_texture": "Coarse river sand, smooth water-worn pebbles, and segmented plant stalks.",
+    "color_palette": ["Deep Cerulean", "Sandy Gold", "Bright Equisetum Green", "Silver Reflection"]
+  },
+  "flora_manifest": [
+    "Giant Horsetails (Equisetum)",
+    "Water-tolerant ferns",
+    "Scrubby Conifer saplings"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, meadows, small streams, dry desert, gloom, sunset, night, 90s CGI, grainy, humans"
+}

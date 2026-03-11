@@ -1,0 +1,46 @@
+{
+  "id": "habitat_tropical_island_lagoons_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "TROPICAL_ISLAND_LAGOONS", 
+      "formation_id": "SOLNHOFEN_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of tropical island lagoons",
+      "features": [
+        "Bright white carbonate sand beaches",
+        "Shallow, neon-clear turquoise water",
+        "Low cliffs of pale limestone rock",
+        "Salt-tolerant palms (Bennettitales) and scrubby ferns",
+        "Sunlight illuminating the rippled sandy floor through the water"
+      ],
+      "action": "A bright tropical paradise at noon. The water is so clear it looks like glass, and the sun highlights the white sand and grey rock."
+    }
+  },
+  "visuals": {
+    "ground": "Pure white sand and pale grey limestone. Vegetation is sparse, consisting of small, tough ferns and Cycads. No grass.",
+    "water": "Extremely clear turquoise water with gentle white-capped ripples, reflecting the brilliant white sun.",
+    "sky": "Brilliant, cloudless blue sky; high-noon clarity."
+  },
+  "habitat_id": "TROPICAL_ISLAND_LAGOONS",
+  "physics": {
+    "altitude": "sea_level_island",
+    "water": "marine_shallow",
+    "humidity": "high_tropical"
+  },
+  "strata_specifics": {
+    "ground_texture": "Coarse carbonate sand and sun-bleached limestone edges.",
+    "color_palette": ["Neon Turquoise", "Bright White", "Pale Grey", "Deep Palm Green"]
+  },
+  "flora_manifest": [
+    "Salt-tolerant palms",
+    "Bennettitales",
+    "Scrubby ferns",
+    "Sparse Cycads"
+  ],
+  "fauna_manifest": [
+    "NO_FAUNA_DEPICTED"
+  ],
+  "negative_prompt": "grass, lawns, dense forest, gloom, swamp, night, 90s CGI, grainy, humans, buildings"
+}

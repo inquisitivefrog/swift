@@ -1,0 +1,7 @@
+{
+  "image_prompts": [
+    {
+      "prompt": "A character-consistent Allosaurus in a 'Ready-Set' starting pose. SUBJECT ANCHOR: The dinosaur is a warm ochre-orange color with a pale cream-colored underbelly and throat. It features dark chocolate-brown 'tiger stripes' starting from the back of the neck and running down to the tip of the tail. EYES: Large, soulful, wide-set amber eyes with a friendly, determined expression. ANATOMY: Three-toed forelegs with small, rounded claws held in a tensed 'sprinter' position. ACTION: Crouched low to the ground in a 'coiled spring' pose, hind legs bent and powerful, tail extended perfectly straight and horizontal for biomechanical balance. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3' with chunky, rounded, toy-like forms and a soft, tactile leathery skin texture. LIGHTING: 'SUNNY_EXPOSED_CINEMATIC' direct midday sun with soft-edged shadows emphasizing 3D volume. FRAMING: 'SQUARE_HERO_CARD' with a strict 25% negative space buffer on all sides to ensure no part of the head or tail touches the frame edges."
+    }
+  ]
+}

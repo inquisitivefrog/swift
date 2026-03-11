@@ -52,6 +52,8 @@ struct BalanceGameView: View {
     @State private var showSpeedLines = false
     @State private var lighterFlewFromLeft: Bool? = nil
     @State private var canSelectNext = false
+    /// Fallback: if audio callback never fires, re-enable selection after delay so game doesn't get stuck
+    @State private var canSelectFallbackWorkItem: DispatchWorkItem?
 
     /// End sequence: -1 none, 0 ranOut playing you-did-it, 1 highlighting each dino, 2 playing crowd-cheering
     @State private var endSequenceStep: Int = -1
@@ -234,12 +236,23 @@ struct BalanceGameView: View {
         phase = .adding
         speechManager.speak(audioKey: item.imageName ?? item.name, fallbackText: item.name)
         let nowChooseKey = gameConfig.id == "balance-the-pterosaur" ? "game-balance-now-choose-pterosaurs" : "game-balance-now-choose-dinosaurs"
+
+        canSelectFallbackWorkItem?.cancel()
+        let fallback = DispatchWorkItem {
+            canSelectFallbackWorkItem = nil
+            canSelectNext = true
+        }
+        canSelectFallbackWorkItem = fallback
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0, execute: fallback)
+
         if isHeavy(item) {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 self.speechManager.speak(nowChooseKey)
                 self.speechManager.onAudioFinished = {
                     self.speechManager.onAudioFinished = nil
+                    self.canSelectFallbackWorkItem?.cancel()
+                    self.canSelectFallbackWorkItem = nil
                     self.canSelectNext = true
                 }
             }
@@ -252,6 +265,8 @@ struct BalanceGameView: View {
                     self.speechManager.speak(nowChooseKey)
                     self.speechManager.onAudioFinished = {
                         self.speechManager.onAudioFinished = nil
+                        self.canSelectFallbackWorkItem?.cancel()
+                        self.canSelectFallbackWorkItem = nil
                         self.canSelectNext = true
                     }
                 }
@@ -269,7 +284,7 @@ struct BalanceGameView: View {
                 .foregroundColor(.secondary)
             LazyVGrid(columns: columns, spacing: 12) {
                 ForEach(availableToAdd) { item in
-                    BalanceItemCard(item: item, displayImageName: gridImageName(for: item)) {
+                    BalanceItemCard(item: item, displayImageName: gridImageName(for: item), isDisabled: !canSelectNext) {
                         handleAddToRight(item)
                     }
                 }
@@ -280,13 +295,30 @@ struct BalanceGameView: View {
     }
 
     private func handleAddToRight(_ item: BalanceItem) {
-        guard phase == .adding, canSelectNext, availableToAdd.contains(where: { $0.id == item.id }) else { return }
+        guard phase == .adding, availableToAdd.contains(where: { $0.id == item.id }) else {
+            if phase == .adding && !availableToAdd.contains(where: { $0.id == item.id }) {
+                speechManager.speak("pick-another-one")
+            }
+            return
+        }
+        guard canSelectNext else {
+            speechManager.speak("you-cannot-choose-that-one-now")
+            return
+        }
         canSelectNext = false
         rightItems.append(item)
         availableToAdd.removeAll { $0.id == item.id }
 
         let newRightMass = rightMass
         updateSeesawTilt()
+
+        canSelectFallbackWorkItem?.cancel()
+        let fallback = DispatchWorkItem {
+            canSelectFallbackWorkItem = nil
+            canSelectNext = true
+        }
+        canSelectFallbackWorkItem = fallback
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5, execute: fallback)
 
         speechManager.speak(audioKey: item.imageName ?? item.name, fallbackText: item.name)
         speechManager.onAudioFinished = {
@@ -326,9 +358,13 @@ struct BalanceGameView: View {
                     self.startEndSequence()
                 }
             }
+            canSelectFallbackWorkItem?.cancel()
+            canSelectFallbackWorkItem = nil
             return
         }
         if availableToAdd.isEmpty && newRightMass < leftMass {
+            canSelectFallbackWorkItem?.cancel()
+            canSelectFallbackWorkItem = nil
             phase = .ranOut
             endSequenceStep = 0
             return
@@ -344,6 +380,8 @@ struct BalanceGameView: View {
         }
         speechManager.onAudioFinished = {
             speechManager.onAudioFinished = nil
+            canSelectFallbackWorkItem?.cancel()
+            canSelectFallbackWorkItem = nil
             canSelectNext = true
         }
     }
@@ -670,6 +708,7 @@ struct BalanceGameView: View {
                                 .foregroundColor(.primary)
                                 .multilineTextAlignment(.center)
                                 .lineLimit(2)
+                                .minimumScaleFactor(0.65)
                         }
                     }
                 }
@@ -707,7 +746,7 @@ struct BalanceGameView: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 88, height: 88)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .opacity(isHighlighted ? 1.0 : 0.35)
+                    .opacity(isHighlighted ? 1.0 : 0.4)
                     .overlay(
                         RoundedRectangle(cornerRadius: 12)
                             .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 4)
@@ -716,7 +755,7 @@ struct BalanceGameView: View {
                 Text(item.emoji)
                     .font(.system(size: 44))
                     .frame(width: 88, height: 88)
-                    .opacity(isHighlighted ? 1.0 : 0.35)
+                    .opacity(isHighlighted ? 1.0 : 0.4)
             }
         }
     }
@@ -746,10 +785,12 @@ struct BalanceItemCard: View {
                     Text(item.emoji).font(.system(size: 50))
                 }
                 Text(item.name)
-                    .font(.caption2)
+                    .font(.subheadline)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
+                    .minimumScaleFactor(0.65)
+                    .allowsTightening(true)
             }
         }
         .disabled(isDisabled)

@@ -54,7 +54,7 @@ struct WeighGameView: View {
     /// When the lighter dino is sent flying: true = left flew, false = right flew (used for speed lines).
     @State private var lighterFlewFromLeft: Bool? = nil
     @State private var roundsCompleted = 0
-    private let maxRounds = 3
+    private let maxRounds = 5
     /// When true, the user can tap a second dinosaur; stays false until the first dinosaur's name audio (and "choose second" prompt for dinosaur game) has finished.
     @State private var canSelectSecondDinosaur = false
     /// When true, "choose your first dinosaur" intro is playing; block all taps until it finishes.
@@ -746,10 +746,12 @@ struct ItemCard: View {
                         .frame(width: imageSize, height: imageSize)
                 }
                 Text(item.name)
-                    .font(.caption2)
+                    .font(.subheadline)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
+                    .minimumScaleFactor(0.65)
+                    .allowsTightening(true)
             }
         }
         .padding(5)

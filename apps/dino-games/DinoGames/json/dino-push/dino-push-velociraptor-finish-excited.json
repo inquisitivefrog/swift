@@ -1,0 +1,7 @@
+{
+  "image_prompts": [
+    {
+      "prompt": "The Velociraptor (OVERRIDE CONFIG) standing on a wooden victory podium. SUBJECT ANCHOR: Dark slate-grey pebbled skin, charcoal-grey vertical camouflage stripes, crimson red feather crest, yellow slit-pupil eyes. ANATOMY STRICT ENFORCEMENT: Each hand MUST have exactly TWO long, slender fingers and one thumb with sharp black talons. The claw grasping the trophy handle must show only two distinct digits and a thumb. ACTION: He is standing on the '1st' place wooden step, holding a polished gold two-handled trophy cup. He is squinting at the gold with a smug, arrogant smirk. One hand is on his hip, the other holds the trophy handle. FACIAL EXPRESSION: Smug and superior. SETTING: Prehistoric finish line with wooden podium steps; background features a lush jungle canopy and active volcanoes. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'. LIGHTING: 'SUNNY_EXPOSED_CINEMATIC'. FRAMING: 'SQUARE_HERO_CARD' low-angle shot. NEGATIVE_PROMPT: 'four fingers, five fingers, extra digits, human hands, blurry claws, sand dunes, desert, dry scrub'."
+    }
+  ]
+}

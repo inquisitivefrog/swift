@@ -1,0 +1,9 @@
+{
+  "image_generation_request": {
+    "prompt": "A square hero card, high-fidelity 3D animated scene in 'STYLE_ANIMATED_FEATURE_V3' with exaggerated joy and motion. The character-consistent Gallimimus is standing on the '1st' place step of a wooden victory stand. The Gallimimus has amber-orange skin, three horizontal white 'speed streaks' on its sides, and a cream throat. Its long legs are bent slightly, as if it's about to spring off, practically bouncing with nervous energy and joy. Each forelimb ends in exactly THREE long, slender, bird-like claws, and its three-fingered hands are held high in the air, open and splayed out in a 'Hooray!' gesture, with the three claws clearly visible. Its long neck is arched back in an 'S' curve, and its head is tilted slightly, displaying a wide, ecstatic grin with its beak open in a joyful, high-pitched squawk. Its glassy eyes are wide and sparkling with happy, but still slightly frantic, energy. Tiny, comical 'speed lines' or 'vibration blurs' emanate from its feet and hands. In the background, there is a prehistoric finish line victory stand with a golden trophy, and a slightly nervous-looking referee. The lighting is 'SUNNY_EXPOSED_CINEMATIC', capturing its full, bouncing form.",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1"
+  }
+}

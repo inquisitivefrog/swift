@@ -1,0 +1,49 @@
+{
+  "id": "habitat_coastal_floodplains_midday_v2",
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_ANIMATED_FEATURE_V3"
+    },
+    "layer_2_setting": {
+      "habitat_id": "COASTAL_FLOODPLAINS",
+      "formation_id": "WESSEX_EQUIVALENT"
+    },
+    "layer_3_action": {
+      "subject": "Bright, sunny view of a prehistoric coastal floodplain",
+      "features": [
+        "flat, expansive terrain under clear skies",
+        "vibrant green salt-marsh ferns and thick mats of moss",
+        "shallow pools of sparkling, clear water reflecting the bright sky",
+        "distinct patches of peaty clay and lignite visible in the sun",
+        "distant, sun-drenched tree line of conifers and cycads"
+      ],
+      "action": "Depict a cheerful and clear coastal floodplain at mid-day, emphasizing the bright sunlight, vibrant low-lying vegetation (ferns and moss, no grass), and the unique substrate made invitingly visible."
+    }
+  },
+  "visuals": {
+    "ground": "Sticky black mud covered in a vibrant carpet of low-lying salt-marsh ferns and thick bryophyte mosses. Exposed patches of peaty clay and lignite clearly visible under direct sunlight. Absolutely no grass.",
+    "water": "Numerous shallow, sparkling pools of clear water, brightly reflecting the blue sky, hinting at gentle tidal influence.",
+    "sky": "Vibrant, clear blue sky with fluffy white clouds, strong, direct mid-day sun casting crisp but friendly shadows."
+  },
+  "habitat_id": "COASTAL_FLOODPLAINS",
+  "physics": {
+    "altitude": "low",
+    "water": "high_seasonal",
+    "wind": "light_breeze"
+  },
+  "strata_specifics": {
+    "ground_texture": "Visibly wet, but sunlit, rich soil with prominent organic matter. Lignite fragments glisten under the sun. Dominated by fern fronds and moss textures.",
+    "color_palette": ["Bright Greens", "Warm Browns", "Blue (sky reflection)", "Pale Yellows (sunlight)"]
+  },
+  "flora_manifest": [
+    "SALT_MARSH_FERNS",
+    "THICK_BRYOPHYTE_MOSSES",
+    "WATER_TOLERANT_SHRUBS",
+    "CYCADS_AND_CONIFERS_IN_DISTANCE"
+  ],
+  "fauna_manifest": [
+    "NO_FAUNA_DEPICTED"
+  ],
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "mood": "Bright, clear, inviting, serene, scientifically accurate (no grass)"
+}

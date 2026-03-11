@@ -1,0 +1,7 @@
+{
+  "image_prompts": [
+    {
+      "prompt": "The character-consistent Brontosaurus from the config library looking utterly exhausted after a race. SUBJECT ANCHOR: Pale mint-green skin, lavender spots, cream underbelly. ACTION: The dinosaur has 'parked' its massive body on the dirt track at the base of the victory stand. It is resting on its belly, legs folded beneath it like a giant cow. The long neck is draped heavily along the ground, resting its chin on the dirt. FACIAL EXPRESSION: Heavy-lidded eyes, tongue lolling out slightly from the corner of its mouth, and large 'steam puffs' coming from its nostrils. The pink flush on its cheeks is very prominent. It looks comically 'spent' but peaceful. SETTING: Next to the wooden victory stand at the finish line. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3' with grounded physical comedy. LIGHTING: 'SUNNY_EXPOSED_CINEMATIC'. FRAMING: 'SQUARE_HERO_CARD' centered, showing the full length of the resting giant."
+    }
+  ]
+}

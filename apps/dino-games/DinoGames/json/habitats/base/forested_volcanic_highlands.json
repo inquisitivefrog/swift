@@ -1,0 +1,47 @@
+{
+  "id": "habitat_forested_volcanic_highlands_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "FORESTED_VOLCANIC_HIGHLANDS", 
+      "formation_id": "TIAOJISHAN_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of forested volcanic highlands",
+      "features": [
+        "Dark basaltic rock outcrops and black volcanic ash soil",
+        "Towering Araucaria and Ginkgo trees with feathery leaves",
+        "Lush understory of giant, sun-drenched ferns",
+        "Vibrant green moss-covered lava rocks",
+        "Distant volcanic peak venting a small, white steam plume into a blue sky"
+      ],
+      "action": "A cinematic landscape of a bright mountain slope where the ground is a textured, soft green carpet of mosses and ferns clinging to dark volcanic stone."
+    }
+  },
+  "visuals": {
+    "ground": "Rich, dark volcanic soil and basalt rocks, completely carpeted in thick, emerald-green mosses and liverworts. Fern glades fill the spaces between ancient trees. No grass blades.",
+    "sky": "Deep, clear mountain-air blue; brilliant high sun creates sharp, clean shadows across the ash-beds.",
+    "atmosphere": "Crisp and clear; high-noon clarity with light shimmering off obsidian glass fragments in the soil."
+  },
+  "habitat_id": "FORESTED_VOLCANIC_HIGHLANDS",
+  "physics": {
+    "altitude": "high_mountainous",
+    "water": "low_drainage",
+    "humidity": "moderate_crisp"
+  },
+  "strata_specifics": {
+    "ground_texture": "Spongy bryophyte mats over hard, craggy basalt and silty volcanic ash.",
+    "color_palette": ["Obsidian Black", "Vibrant Emerald", "Sky Blue", "Ash Grey"]
+  },
+  "flora_manifest": [
+    "Araucaria trees",
+    "Ginkgoales",
+    "Giant feathery ferns",
+    "Emerald bryophyte mosses",
+    "Liverworts"
+  ],
+  "fauna_manifest": [
+    "NO_FAUNA_DEPICTED"
+  ],
+  "negative_prompt": "grass, lawns, meadows, prairies, dark shadows, gloom, sunset, scary atmosphere, 90s CGI, grainy, humans, buildings"
+}

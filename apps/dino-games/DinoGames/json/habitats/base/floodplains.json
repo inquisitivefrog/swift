@@ -1,0 +1,44 @@
+{
+  "id": "habitat_floodplains_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "FLOODPLAINS", 
+      "formation_id": "INLAND_FLOOD_BASIN" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of expansive floodplains",
+      "features": [
+        "Endless flat horizon under a massive bright sky",
+        "A carpet of vibrant green low-lying ferns and ancient mosses",
+        "Scattered clusters of ginkgos and conifers providing rare verticality",
+        "Warm sunlight creating a golden glow over the vegetation",
+        "No grass; ground cover is entirely ancient spore-plants"
+      ],
+      "action": "A cinematic, wide-angle landscape of an open, sunny floodplain. The ground is a soft-looking textured green carpet. The lighting is bright and cheerful."
+    }
+  },
+  "visuals": {
+    "ground": "A rich, textured carpet of vibrant green bryophytes and low-growing ferns. No grass blades present. Soil is rich and dark where visible.",
+    "water": "Distant glints of water from seasonal pools or slow-moving streams.",
+    "sky": "Bright, saturated blue sky with high-altitude wispy clouds and a brilliant noon sun."
+  },
+  "habitat_id": "FLOODPLAINS",
+  "physics": {
+    "altitude": "lowland_inland",
+    "water": "medium_seasonal",
+    "humidity": "moderate"
+  },
+  "strata_specifics": {
+    "ground_texture": "Spongy moss layers and the repeating patterns of feathery fern fronds.",
+    "color_palette": ["Vibrant Emerald", "Soft Ochre", "Deep Sky Blue", "Warm Brown"]
+  },
+  "flora_manifest": [
+    "Ground-hugging ferns",
+    "Thick moss mats",
+    "Lycophytes",
+    "Scattered Ginkgos"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, lawns, prairies, cows, buildings, dark shadows, gloom, 90s CGI, grainy, humans"
+}

@@ -1,0 +1,9 @@
+{
+"image_generation_request": {
+"prompt": "A high-fidelity 3D animated scene of a T-Rex and an Albertosaurus standing back-to-back to determine who is taller. The T-Rex has deep forest-green skin, a rugged pebbled texture, and tiny comical two-fingered hands held close to its chest. The Albertosaurus is slightly more slender with slate-blue skin and distinctive deep navy blue 'racing stripes' running from its eyes down its neck, and accurately has three-fingered hands. Both dinosaurs have rounded, toy-like proportions and expressive eyes. They are standing on a dry, sandy ground reminiscent of the LANCE_HELL_CREEK (Late Cretaceous) formation, with sparse vegetation and a clear sky. A caption in bright red 3D mixed case letters reads 'Which Dino Is Taller?'",
+"art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+"lighting": "SUNNY_EXPOSED_CINEMATIC",
+"framing": "Close-up",
+"aspect_ratio": "1:1"
+}
+}

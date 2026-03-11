@@ -4,6 +4,117 @@
   "metadata": {
     "total_formations": 25,
   "libraries": {
+    "characters": {
+      "dino_bones_preparator": {
+        "description": "A younger male museum preparator, short dark hair, tanned skin.",
+        "eyewear": "Signature thin-rimmed BLACK RECTANGULAR lens glasses. These glasses are consistent in every scene.",
+        "uniform": "A light blue tee shirt worn UNDER a white lab coat, blue jean slacks and black dress shoes.",
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+      },
+      "dino_bones_paleontologist_1": {
+        "description": "A younger female paleontologist, long blonde hair, tanned skin, wearing a white sun hat.",
+        "uniform": "A light pink blouse worn UNDER a khaki safari vest, white shorts and pink hiking boots.",
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+      },
+      "dino_bones_paleontologist_2": {
+        "description": "A younger female paleontologist, short black hair, tanned skin, wearing a green sun hat.",
+        "uniform": "A light green blouse worn UNDER a khaki safari vest, green skirt and black hiking boots.",
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+      },
+      "dino_bones_paleontologist_3": {
+        "description": "A younger male paleontologist, curly black hair, Black race, wearing a white sun hat.",
+        "uniform": "A light purple tee shirt worn UNDER a khaki safari vest, white shorts and black hiking boots.",
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+      },
+      "dino_bones_paleontologist_4": {
+        "description": "A younger male paleontologist, short brown hair, Latino ethnicity.",
+        "eyewear": "Signature thin-rimmed BLACK aviator lens glasses. These glasses are consistent in every scene.",
+        "uniform": "A light white tee shirt worn UNDER a khaki safari vest, khaki shorts and brown hiking boots.",
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+      },
+      "dino_bones_paleontologist_5": {
+        "description": "A younger female paleontologist, short black hair, Asian ethnicity.",
+        "uniform": "A light red tee shirt worn UNDER a khaki safari vest, red shorts and black hiking boots.",
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+      },
+      "dino_push_referee_1": {
+        "description": "A younger male paleontologist, dark short hair, clean-shaven, wearing a tan safari pith helmet.",
+        "eyewear": "Signature thin-rimmed BLACK CIRCULAR glasses (perfectly round lenses). These glasses are consistent in every scene.",
+        "uniform": "A black-and-white vertical striped referee jersey worn UNDER a white silk komono.",
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+      },
+      "dino_racer_referee_1": {
+        "description": "A younger male paleontologist, dark short hair, clean-shaven, wearing a tan safari pith helmet.",
+        "eyewear": "Signature thin-rimmed BLACK CIRCULAR glasses (perfectly round lenses). These glasses are consistent in every scene.",
+        "uniform": "A black-and-white vertical striped referee jersey worn UNDER a khaki safari vest.",
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+      },
+      "dino_racer_allosaurus": {
+        "species": "Allosaurus",
+        "visual_identity": "Vibrant ochre-orange skin with distinct chocolate-brown tiger stripes along the back and tail; smooth cream-colored underbelly.",
+        "anatomy_constraints": "Exactly THREE forward-facing claws on each hand; no opposable thumb; tail is long and used as a rigid horizontal counterweight; two-toed feet.",
+        "personality": "High-energy, intense focus, comically expressive; prone to extreme physical exhaustion (Tex Avery style).",
+        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
+      },
+      "dino_racer_brontosaurus": {
+        "species": "Brontosaurus",
+        "visual_identity": "Pale mint-green skin with soft lavender-purple dappled spots concentrated along the neck and upper back. Smooth cream-colored underbelly.",
+        "anatomy_constraints": "Massive pillar-like legs with thick, rounded feet; a very long, gracefully curving neck; a small, friendly head with large expressive eyes; an extremely long whip-like tail held in a gentle curve off the ground.",
+        "personality": "Gentle, calm, and immensely powerful. Moves with a rhythmic, thundering pace. Unlike the Allosaurus, the Brontosaurus is an endurance racer who stays composed.",
+        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
+      },
+      "dino_racer_albertosaurus": {
+        "species": "Albertosaurus",
+        "visual_identity": "Slate-blue skin with pale silvery-grey underbelly. Distinctive 'racing stripes' of deep navy blue running from the eyes down the length of the neck. Small, boney 'horns' or crests above the eyes are tipped in dull red.",
+        "anatomy_constraints": "Slightly more slender and long-legged than the Allosaurus. Two-fingered hands (unlike the Allosaurus's three). A long, stiff tail held perfectly horizontal for balance.",
+        "personality": "Arrogant, sleek, and highly competitive. He views himself as the 'professional' athlete of the group. Very disciplined posture.",
+        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
+      },
+      "dino_racer_ankylosaurus": {
+        "species": "Ankylosaurus magniventris",
+        "visual_identity": {
+          "color_palette": "Base skin is deep moss-green; dorsal armor is a stony slate-grey; lateral spikes (scutes) are pale cream-colored.",
+          "texture": "Armor plates (osteoderms) have a rugged, weathered rock texture; under-skin is leathery and pebbly.",
+          "distinguishing_marks": "A massive, heavy tail club made of slate-grey bone, showing minor chips and battle-scars; amber-colored eyes with a sharp, focused glint."
+        },
+        "anatomy_constraints": {
+          "frame": "Extremely wide, squat, and low-slung quadrupedal body; center of gravity is very close to the ground.",
+          "head": "Broad, triangular skull with a reinforced beak; exactly four backward-pointing horns (two at the top corners, two at the cheeks).",
+          "tail": "Thick, muscular tail that is rigid toward the end, terminating in a large, symmetrical bone club.",
+          "armor": "Continuous interlocking plates covering the entire back and top of the head; a row of cream spikes protruding horizontally from the sides."
+        },
+        "personality": "The 'Ironclad'—stoic, immovable, and cautious. He relies on momentum and defensive stability rather than raw speed.",
+        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
+      },
+      "dino_racer_triceratops": {
+        "species": "Triceratops",
+        "visual_identity": "Earth-toned, dusty ochre skin with thick, leathery texture. His massive head frill is edged with blunt, bony ossicles. Three polished, off-white horns (two long brow horns, one shorter nose horn).",
+        "anatomy_constraints": "Heavily muscled, stocky quadrupedal frame. Thick, pillar-like legs. A short, pointed tail. Deep-set, soulful but determined brown eyes. Solid, heavy-set beak.",
+        "personality": "The 'Powerhouse.' Stoic, stubborn, and determined. He doesn't swerve; he just plows through. He has a 'slow and steady' but high-momentum vibe.",
+        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
+      },
+      "dino_racer_velociraptor": {
+        "species": "Velociraptor",
+        "visual_identity": "Slate-grey skin with dark, charcoal-grey vertical 'shattered' stripes that provide natural camouflage. A streak of crimson red feathers running from the top of the head down the neck like a mohawk.",
+        "anatomy_constraints": "Lean, aerodynamic frame. Large, curved 'sickle claws' on each foot. Three-fingered hands with long, dexterous fingers and sharp black talons. Slit-pupil yellow eyes.",
+        "personality": "Calculating and opportunistic. Uses agility and intelligence over raw power.",
+        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
+      },
+      "dino_racer_gallimimus": {
+        "species": "Gallimimus",
+        "visual_identity": "Bright amber-orange skin. Three thin, horizontal white 'speed streaks' running from the mid-neck all the way to the tip of the tail. Cream-colored underbelly and throat. Large, dark, glassy bird-like eyes.",
+        "anatomy_constraints": "Long, slender 'S-curve' neck. Small, toothless beak. Very long, thin legs with three-toed bird-like feet. Long arms with three slender fingers held in a tight tuck.",
+         "personality": "High-strung, twitchy, and lightning-fast. Always looks like he's about to bolt.",
+        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
+      },
+      "dino_racer_trex": {
+        "species": "Tyrannosaurus Rex",
+        "visual_identity": "Deep forest-green skin with a rugged, pebbled texture. Thick, dark charcoal-grey 'armor' plates along the spine. A pale sulfur-yellow underbelly. One small, vertical 'battle scar' notch in his left ear-flap area.",
+        "anatomy_constraints": "Massive, blocky head with a heavy jaw. Extremely thick, muscular neck and powerful thighs. Tiny, comical two-fingered hands held close to the chest. Huge, three-toed feet that leave deep impressions.",
+        "personality": "The 'Powerhouse.' Grumpy, loud, and uses sheer intimidation. He doesn't run around obstacles; he runs THROUGH them. Constant 'tough guy' scowl.",
+        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
+      }
+    }
     "style_presets": {
       "STYLE_CLAY_MASTER": {
         "description": "Chibi-style 3D animation; chunky, toy-like proportions; large expressive eyes; rounded snouts; smooth matte clay/vinyl textures; vibrant saturated colors; friendly and approachable for small children.",
@@ -358,6 +469,18 @@
         "geology": {
           "primary_rocks": ["Cross-bedded sandstone", "Red mudstone"],
           "mineral_palette": ["Vibrant red", "Golden yellow", "Pale pink", "Dark mahogany"]
+        }
+      },
+      "LA_COLONIA": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE"],
+        "fauna": ["LATE_CRETACEOUS_BASE"],
+        "habitat_default": "COASTAL_LOWLANDS",
+        "palette": ["Silt grey", "Sandstone tan", "Vibrant blue", "Pale ochre"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Silty clay", "Sandstone", "Marine-influenced mudstone"],
+          "mineral_palette": ["Silt grey", "Sandstone tan", "Vibrant blue", "Pale ochre"]
         }
       },
       "LANCE_HELL_CREEK": {

@@ -1,0 +1,54 @@
+{
+  "id": "habitat_lowland_coastal_plains_midday_v2",
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_ANIMATED_FEATURE_V3"
+    },
+    "layer_2_setting": {
+      "habitat_id": "LOWLAND_COASTAL_PLAINS",
+      "formation_id": "DINOSAUR_PARK_EQUIVALENT"
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of prehistoric lowland coastal plains",
+      "features": [
+        "wide, flat plains blanketed in soft green moss and liverworts",
+        "scattered groves of feathery ferns and low cycads",
+        "slow, clear river channels reflecting the bright sun",
+        "sandy mudbanks with glistening wet textures",
+        "no grass; ground cover is entirely ancient non-flowering plants"
+      ],
+      "action": "A cinematic, wide-angle landscape of a sun-drenched lowland plain where the ground is a textured, soft green carpet of mosses and ferns, leading toward a bright, sparkling horizon."
+    }
+  },
+  "visuals": {
+    "ground": "A rich, textured carpet of vibrant green bryophytes, liverworts, and low-growing ferns. No grass blades present. Soil is a mix of sun-warmed dark mud and pale river sand.",
+    "water": "Slow-moving, clear river channels with gentle ripples, sparkling intensely under the direct mid-day sun.",
+    "sky": "Bright, saturated blue sky with a few wispy, high-altitude clouds. The sun is at its zenith, providing high-contrast, cheerful lighting."
+  },
+  "habitat_id": "LOWLAND_COASTAL_PLAINS",
+  "physics": {
+    "altitude": "low_coastal",
+    "water": "medium_flowing",
+    "humidity": "low_haze"
+  },
+  "strata_specifics": {
+    "ground_texture": "Soft, spongy moss layers punctuated by the delicate, repeating patterns of fern fronds and the flat, waxy textures of liverworts.",
+    "color_palette": [
+      "Vibrant Spring Green",
+      "Golden Sand",
+      "Deep Sky Blue",
+      "Warm Terracotta"
+    ]
+  },
+  "flora_manifest": [
+    "Ground-hugging ferns",
+    "Thick moss mats",
+    "Liverworts",
+    "Stunted Conifer shrubs",
+    "Cycads"
+  ],
+  "fauna_manifest": [
+    "NO_FAUNA_DEPICTED"
+  ],
+  "negative_prompt": "grass, lawns, prairies, dark shadows, gloom, sunset, night, scary atmosphere, grit, realistic photos, 90s CGI, grainy, humans"
+}

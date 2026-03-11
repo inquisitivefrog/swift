@@ -1,0 +1,11 @@
+{
+  "description": "Template for dino-bones-{slug} round images. Replace {dinosaur} and {slug} with the dinosaur name and image slug (e.g. trex, triceratops).",
+  "clue_options": [
+    "1. The scene itself (preparator, paleontologist, tarp, skeleton)",
+    "2. Nearly fully articulated skeleton on tarp, one bone missing",
+    "3. Gift fossil bone partially encased in matrix rock—enough visible to identify, clearly missing from skeleton",
+    "4. Skeleton skull unmounted but clearly visible on tarp",
+    "5. Obvious missing bone: skull (small dino), foreleg (small/medium), femur (big dino)"
+  ],
+  "template_prompt": "Museum preparator office. Light tarp on floor. Preparator sitting to one side. Paleontologist with gift fossil (partially in matrix). Nearly complete {dinosaur} skeleton on tarp. One obvious bone missing—[choose: skull / foreleg / femur / etc. based on dinosaur size]. Enough of the skeleton and/or gift fossil visible for a child to identify the dinosaur."
+}

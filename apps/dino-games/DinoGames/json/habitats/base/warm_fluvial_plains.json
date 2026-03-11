@@ -1,0 +1,45 @@
+{
+  "id": "habitat_warm_fluvial_plains_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "WARM_FLUVIAL_PLAINS", 
+      "formation_id": "TROPICAL_RIVER_BASIN" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of warm fluvial plains",
+      "features": [
+        "A wide, sun-lit plain fed by multiple clear river branches",
+        "Dense thickets of giant horsetails and tree ferns",
+        "Ground covered in a lush patchwork of liverworts and club mosses",
+        "Sunlight reflecting off clear, calm water surfaces",
+        "No grass; a vibrant green prehistoric landscape of ancient plants"
+      ],
+      "action": "A bright, inviting landscape at noon. The ground looks like a soft, textured green sponge of mosses and ferns, winding between sparkling river channels."
+    }
+  },
+  "visuals": {
+    "ground": "Rich, loamy soil support a dense undergrowth of diverse ferns and lycophytes. No grass. The ground is a patchwork of emerald and olive greens.",
+    "water": "Clear freshwater rivers with sandy bottoms visible in the sunlit shallows.",
+    "sky": "Saturated blue sky with high-noon clarity and warm, bright lighting."
+  },
+  "habitat_id": "WARM_FLUVIAL_PLAINS",
+  "physics": {
+    "altitude": "lowland",
+    "water": "high_flowing",
+    "humidity": "moderate_high"
+  },
+  "strata_specifics": {
+    "ground_texture": "Soft moss hummocks and the intricate repeating patterns of feathery fern fronds.",
+    "color_palette": ["Bright Forest Green", "Teal Water", "Warm Brown Earth", "Golden Sunlight"]
+  },
+  "flora_manifest": [
+    "Giant Horsetails",
+    "Tree ferns",
+    "Lycophytes (Club mosses)",
+    "Liverworts",
+    "Mosses"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, lawn, meadow, ice, gloom, night, scary atmosphere, 90s CGI, grainy, humans"
+}

@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "dino-habitats-seasonal-tropical-scrub-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "dino-habitats-seasonal-tropical-scrub-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "dino-habitats-seasonal-tropical-scrub-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

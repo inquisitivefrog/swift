@@ -1,0 +1,45 @@
+{
+  "id": "habitat_river_valley_woodland_floodplains_v1_midday",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "RIVER_VALLEY_WOODLAND_FLOODPLAINS", 
+      "formation_id": "SANDSTONE_CORRIDOR" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of sandy river valley floodplains",
+      "features": [
+        "Buff-colored sandy soil floor",
+        "Occasional rusty-orange ironstone rock outcrops",
+        "Groves of Ginkgo biloba and towering tree ferns",
+        "40% canopy coverage allowing bright sunbeams to hit the ground",
+        "A clear river winding through cross-bedded sandstone banks",
+        "No grass; ground is a mix of sand, moss, and fern-mats"
+      ],
+      "action": "A cinematic landscape of a bright, sun-drenched valley. The ground is a warm buff color with striking orange rock formations. Light filters through a moderate canopy of ancient trees."
+    }
+  },
+  "visuals": {
+    "ground": "Buff-colored sandy soil punctuated by rusty-orange ironstone nodules and outcrops. The surface is textured with low-growing ferns and moss patches. Absolutely no grass.",
+    "water": "Sparkling, clear river water reflecting the bright blue sky and the warm tones of the sandstone banks.",
+    "sky": "Bright, saturated blue sky visible through the 40% tree canopy; direct mid-day sunlight."
+  },
+  "habitat_id": "RIVER_VALLEY_WOODLAND_FLOODPLAINS",
+  "physics": {
+    "altitude": "lowland_valley",
+    "water": "medium_flow",
+    "substrate": "cross_bedded_sandstone_with_ironstone"
+  },
+  "strata_specifics": {
+    "ground_texture": "Granular sand, smooth ironstone nodules, and soft bryophyte mats.",
+    "color_palette": ["Buff Beige", "Rusty Orange", "Ginkgo Green", "Sky Blue"]
+  },
+  "flora_manifest": [
+    "Ginkgo biloba",
+    "Tree ferns",
+    "Low-lying ferns",
+    "Mosses"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, lawns, modern meadows, dense jungle, dark shadows, gloom, 90s CGI, grainy, humans"
+}

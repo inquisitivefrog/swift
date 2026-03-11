@@ -1,0 +1,28 @@
+{
+  "id": "habitat_shaximiao_jungle_L2_v1",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "DENSE_CONIFER_JUNGLE", 
+      "formation_id": "SHAXIMIAO_FORMATION" 
+    },
+    "layer_3_action": {
+      "subject": "Detailed Layer 2 overlook of the Shaximiao Ancient Jungle",
+      "features": [
+        "High-altitude overlook of a vast green canopy with giant emergent Araucaria",
+        "Large Kalligrammatid lacewings (moth-like) fluttering in the foreground sun-shafts",
+        "Small gliding mammals (Volaticotherium) silhouetted against the bright foliage",
+        "Pterosaurs (Angustinaripterus) perched on thick horizontal boughs, wings spread to the sun",
+        "Visible patches of pale mycelium webbing on shadowed nurse-logs in the mid-ground",
+        "Brilliant mid-day sun creating high-contrast 'Daggers of Light' through the 'Green Roof'"
+      ],
+      "action": "A cinematic, wide-angle data-collection shot. The scale is massive, but the 'Web of Life' is visible in the small details of insects and gliders. The image is bright, crisp, and scientifically dense."
+    }
+  },
+  "visuals": {
+    "perspective": "High cliff-edge overlook (v1 style)",
+    "lighting": "Intense mid-day sun, clear atmosphere",
+    "fauna_focus": "Insects and pterosaurs as ecological indicators"
+  },
+  "negative_prompt": "humans, Raquel Welch, fur bikini, Nova, Hollywood, 60s cinema, grass, lawn, orchard, man-made paths, spooky"
+}

@@ -1,0 +1,61 @@
+{
+  "id": "habitat_coastal_wetlands_midday_v2",
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_ANIMATED_FEATURE_V3"
+    },
+    "layer_2_setting": {
+      "habitat_id": "COASTAL_WETLANDS",
+      "formation_id": "WESSEX_OR_HELL_CREEK_EQUIVALENT"
+    },
+    "layer_3_action": {
+      "subject": "Bright, sunny landscape of a prehistoric coastal wetland",
+      "features": [
+        "expansive, sun-drenched marshlands",
+        "dense, towering, vibrant green reed-like horsetails and other tall marsh plants",
+        "clearly visible soft peat and glistening black mud paths",
+        "deep, sparkling water reflecting the blue sky",
+        "clear, open skies above"
+      ],
+      "action": "A wide-angle, cheerful view showing a sunlit wetland at sea level, where bright green reed-like horsetails and other appropriate marsh vegetation dominate, and the ground is a vivid patchwork of soft peat and glistening mud under a clear, inviting sky. No grass present."
+    }
+  },
+  "habitat_id": "COASTAL_WETLANDS",
+  "physics": {
+    "altitude": "sea_level",
+    "water": "saturated",
+    "humidity": "moderate"
+  },
+  "visuals": {
+    "ground": "Soft peat and black mud, brightly lit, showing clear texture and supporting dense thickets of ferns, mosses, and other low-lying marsh plants. No grass.",
+    "water": "Deep marshland with sparkling, clear water visible between reed-like horsetails and other aquatic vegetation, reflecting the sky.",
+    "sky": "Bright, clear blue sky with fluffy white clouds, strong mid-day sun illuminating the entire scene."
+  },
+  "strata_specifics": {
+    "ground_texture": "Spongy, water-logged peat and slick, dark organic mud, vividly highlighted by sunlight, covered in dense non-grass vegetation.",
+    "color_palette": [
+      "Bright Emerald Greens",
+      "Deep Sky Blues",
+      "Glossy Blacks (for mud contrast)",
+      "Warm Yellows (sunlight)"
+    ]
+  },
+  "flora_manifest": [
+    "Dense prehistoric reed-like horsetails",
+    "Tall marsh ferns",
+    "Water-lilies",
+    "Submerged peat moss",
+    "Low-lying cycads and bennettitales"
+  ],
+  "fauna_manifest": [
+    "NO_FAUNA_DEPICTED"
+  ],
+  "associated_dinosaurs": [
+    "dino-spinosaurus",
+    "dino-baryonyx",
+    "dino-edmontosaurus",
+    "dino-parasaurolophus",
+    "dino-iguanodon"
+  ],
+  "negative_prompt": "dark, gloomy, heavy fog, dense mist, night, dusk, gritty, dull colors, scary, grass, modern plants, 90s CGI, grainy"
+}

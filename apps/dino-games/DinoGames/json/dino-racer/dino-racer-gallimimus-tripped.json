@@ -1,0 +1,7 @@
+{
+  "image_prompts": [
+    {
+      "prompt": "The character-consistent Gallimimus from the config library mid-air during a clumsy trip. SUBJECT ANCHOR: Amber-orange skin, horizontal white speed streaks, cream throat. ANATOMY ENFORCEMENT: Each forelimb ends in exactly THREE long, slender, bird-like claws. ACTION: He is flailing in mid-air after tripping. HANDS: His hands are held like a raptor, with the THREE claws clearly separated and distinct, appearing like long thin spikes. No extra fingers or thumbs. NECK: Long neck bent in a panicked 'S' curve. FACIAL EXPRESSION: Bug-eyed terror, beak wide open. SETTING: Prehistoric dirt track. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'. LIGHTING: 'SUNNY_EXPOSED_CINEMATIC'. FRAMING: 'SQUARE_HERO_CARD' full-body shot to verify the three-claw count."
+    }
+  ]
+}

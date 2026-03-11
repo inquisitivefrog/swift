@@ -1,0 +1,45 @@
+{
+  "id": "habitat_desert_dune_fields_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "DESERT_DUNE_FIELDS", 
+      "formation_id": "DJADOKHTA_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of prehistoric desert dune fields",
+      "features": [
+        "Giant rolling dunes of orange-red sand with wind-sculpted ripples",
+        "Hardy, low-lying xerophytic ferns in the sheltered dune valleys",
+        "Clumps of squat, tough Cycads with leathery leaves",
+        "Pale sandstone outcrops jutting through the sand",
+        "Brilliant white sun casting high-contrast shadows"
+      ],
+      "action": "A wide, bright view of an expansive desert at noon, emphasizing the vibrant oranges of the sand and the cloudless turquoise sky."
+    }
+  },
+  "visuals": {
+    "ground": "Deeply textured orange-gold sand with intricate ripple patterns. Tiny, tough ferns and Cycads are tucked into the swales. Absolutely no grass.",
+    "sky": "Bright, clear turquoise sky; cloudless and vast. The sun is a brilliant white circle directly overhead.",
+    "atmosphere": "Dry, hot, and crystal clear; slight heat shimmer on the distant horizon."
+  },
+  "habitat_id": "DESERT_DUNE_FIELDS",
+  "physics": {
+    "altitude": "high_plateau",
+    "water": "very_low",
+    "humidity": "arid"
+  },
+  "strata_specifics": {
+    "ground_texture": "Loose, fine-grained sand and parched, wind-eroded sandstone.",
+    "color_palette": ["Burnt Orange", "Golden Ochre", "Turquoise Blue", "Deep Shadow Umber"]
+  },
+  "flora_manifest": [
+    "Xerophytic ferns",
+    "Leathery Cycads",
+    "Tough scrubby Bennettitales"
+  ],
+  "fauna_manifest": [
+    "NO_FAUNA_DEPICTED"
+  ],
+  "negative_prompt": "grass, green fields, forests, water, rain, gloom, clouds, 90s CGI, grainy, humans, buildings"
+}

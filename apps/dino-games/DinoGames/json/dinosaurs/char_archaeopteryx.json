@@ -38,7 +38,7 @@
   }
 }
 {
-  "formation_id": "SOLNHOFEN_LIMESTONE",
+  "formation_id": "SOLNHOFEN",
   "base_habitat": "TROPICAL_ISLAND_LAGOONS",
   "period": "LATE_JURASSIC",
   "strata_specifics": {
@@ -51,7 +51,7 @@
 {
   "app_image_config": {
     "layer_1_style": "[REF: STYLE_CLAY_MASTER]",
-    "layer_2_setting": “[REF: SOLNHOFEN_LIMESTONE]",
+    "layer_2_setting": “[REF: SOLNHOFEN]",
     "layer_3_action": {
       "subject": “Archaeopteryx",
       "features": [“long bony tail", “asymmetrical feathers", "friendly expressive face"],

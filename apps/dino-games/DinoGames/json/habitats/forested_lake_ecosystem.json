@@ -1,8 +1,0 @@
-{
-  "habitat_id": "FORESTED_LAKE_ECOSYSTEM",
-  "substrate": "Fine-grained siltstone and limestone",
-  "visuals": {
-    "ground": "Moist soil with limestone pebbles",
-    "canopy": "High (70% coverage)",
-  }
-}

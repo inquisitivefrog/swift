@@ -1,0 +1,40 @@
+{
+  "id": "habitat_cool_temperate_forested_floodplain_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "COOL_TEMPERATE_FORESTED_FLOODPLAIN", 
+      "formation_id": "HORSESHOE_CANYON_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of a cool temperate forest",
+      "features": [
+        "Forest of deciduous-like Ginkgos and tall Conifers",
+        "Ground carpeted in thick, pale green moss and cold-tolerant ferns",
+        "Wide, clear river winding through a valley",
+        "Sharp, clear sunlight hitting the forest floor",
+        "Distant snow-capped mountains on the horizon",
+        "No grass; ground cover is entirely moss and ferns"
+      ],
+      "action": "A bright, crisp forest scene at noon. The air looks clear and cool. The ground is a lush, textured green carpet under a brilliant sky."
+    }
+  },
+  "visuals": {
+    "ground": "Spongy, pale green mosses and thick mats of low-growing ferns. No grass. Soil is damp and dark.",
+    "water": "Crisp, clear river water with ripples catching the sun.",
+    "sky": "Bright, high-altitude blue with scattered thin clouds."
+  },
+  "habitat_id": "COOL_TEMPERATE_FORESTED_FLOODPLAIN",
+  "physics": {
+    "altitude": "lowland_high_latitude",
+    "water": "medium",
+    "humidity": "moderate"
+  },
+  "strata_specifics": {
+    "ground_texture": "Damp moss, leaf litter, and silty soil. No grass.",
+    "color_palette": ["Pale Sage Green", "Cool Blue", "Frosty Grey", "Rich Brown"]
+  },
+  "flora_manifest": [ "Deciduous Ginkgos", "Cold-tolerant Conifers", "Hardy ferns", "Moss mats" ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, lawn, flowers, tropical palms, volcano, smoke, night, 90s CGI, grainy, humans"
+}

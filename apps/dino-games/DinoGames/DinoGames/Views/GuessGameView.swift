@@ -100,6 +100,9 @@ struct GuessGameView: View {
     /// When true, show the Source Footprints hints overlay (Dino Footprints only).
     @State private var showSourceFootprintsHints = false
 
+    /// Tracks first appearance so we only reset on initial load, not when advancing rounds (avoids resetting currentRound when SwiftUI re-invokes onAppear).
+    @State private var hasInitiallyAppeared = false
+
     /// The 3 correct dinosaurs in round order (for end-sequence row)
     private var endSequenceDinosaurs: [Dinosaur] {
         gameConfig.rounds.map { r in r.options.first(where: { $0.id == r.correctAnswerId })! }
@@ -187,7 +190,10 @@ struct GuessGameView: View {
             }
             .padding()
             .onAppear {
-                resetGameState()
+                if !hasInitiallyAppeared {
+                    hasInitiallyAppeared = true
+                    resetGameState()
+                }
                 speechManager.isPlaying = false
                 speechManager.onAudioFinished = nil
                 speechManager.onAudioFinished = {
@@ -244,6 +250,13 @@ struct GuessGameView: View {
                 self.playFootprintsHintThenStartOptionsWalk()
             }
             speechManager.speak("game-dino-footprints-identify-the-footprint")
+        } else if gameConfig.id == "dino-bones" {
+            isAudioPlaying = true
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = nil
+                self.playDinoBonesHintThenStartOptionsWalk()
+            }
+            speechManager.speak("game-dino-bones-identify-the-skeleton")
         } else {
             startOptionsWalkIfNeeded()
         }
@@ -260,6 +273,10 @@ struct GuessGameView: View {
         } else {
             startOptionsWalkIfNeeded()
         }
+    }
+
+    private func playDinoBonesHintThenStartOptionsWalk() {
+        startOptionsWalkIfNeeded()
     }
 
     private func startOptionsWalkIfNeeded() {
@@ -707,14 +724,15 @@ struct SourceFootprintsHintsView: View {
 
 // MARK: - Dino Footprints (clade + size)
 
-/// Footprint image sets: footprint-{clade}-{size} (scale: small, medium, large within each clade).
+/// Footprint image sets: footprint-{clade}-{size} or footprint-{clade}-{variant}-{size}. For variety, use up to 3 variants per clade (e.g. footprint-therapod-1-medium, footprint-therapod-2-medium, footprint-therapod-3-medium); the game randomly picks one to reduce memorization.
 /// Use imageNameForAsset for lookup; asset names use "therapod" (common misspelling) for theropod.
-/// Separate from MatchingGameView.DinoClade (9 clades for Match the Dinosaur); this is the 4-clade set for Dino Footprints.
+/// Separate from MatchingGameView.DinoClade (9 clades for Match the Dinosaur); this is the 5-clade set for Dino Footprints.
 private enum FootprintClade: String, CaseIterable {
     case theropod
     case sauropod
     case hadrosaur
     case ceratopsian
+    case ankylosaur
 
     /// Name used in footprint image set names (footprint-{this}-{size}). Matches Assets.xcassets spelling.
     var imageNameForAsset: String {
@@ -759,14 +777,19 @@ private let footprintDinosaurMap: [String: (clade: FootprintClade, size: DinoSiz
     "chasmosaurus": (.ceratopsian, .medium),
     "torosaurus": (.ceratopsian, .large),
     "kosmoceratops": (.ceratopsian, .medium),
-    // Hadrosaurs and other ornithischians (stegosaurs, ankylosaurs, etc.)
+    // Hadrosaurs and other ornithopods
     "stegosaurus": (.hadrosaur, .medium),
-    "ankylosaurus": (.hadrosaur, .medium),
     "corythosaurus": (.hadrosaur, .medium),
     "parasaurolophus": (.hadrosaur, .medium),
     "iguanodon": (.hadrosaur, .medium),
     "edmontosaurus": (.hadrosaur, .large),
     "pachycephalosaurus": (.hadrosaur, .small),
+    // Ankylosaurs
+    "ankylosaurus": (.ankylosaur, .large),
+    "euoplocephalus": (.ankylosaur, .medium),
+    "edmontonia": (.ankylosaur, .medium),
+    "nodosaurus": (.ankylosaur, .medium),
+    "polacanthus": (.ankylosaur, .medium),
 ]
 
 private func clade(forDinosaurSlug slug: String) -> FootprintClade? {
@@ -777,6 +800,16 @@ private func size(forDinosaurSlug slug: String) -> DinoSize? {
     footprintDinosaurMap[slug]?.size
 }
 
+/// Returns a random footprint image name for the clade. Supports 3 variants per clade (footprint-{clade}-1-medium, -2-, -3-) to reduce memorization; falls back to footprint-{clade}-medium when variants are missing.
+private func footprintImageNameForClade(_ clade: FootprintClade) -> String {
+    let base = clade.imageNameForAsset
+    let fallback = "footprint-\(base)-medium"
+    let variants = (1...3).map { "footprint-\(base)-\($0)-medium" }
+    let available = variants.filter { UIImage(named: $0) != nil }
+    if available.isEmpty { return fallback }
+    return available.randomElement() ?? fallback
+}
+
 // MARK: - Game Configurations
 
 struct GuessGameConfigs {
@@ -784,8 +817,8 @@ struct GuessGameConfigs {
     // Rules: (1) choose 3 dinosaur clades at random; (2) choose 1 dinosaur from each clade; (3) exclude dinosaurs already used in previous games (persisted); victory block acknowledges the 3.
     static var nameThatDinosaur: GuessGameConfig {
         let allDinosaurs = MatchingGameConfigs.allDinosaurs
-        guard allDinosaurs.count >= 3 else {
-            fatalError("Need at least 3 dinosaurs for guess game, but only have \(allDinosaurs.count)")
+        guard allDinosaurs.count >= 5 else {
+            fatalError("Need at least 5 dinosaurs for guess game, but only have \(allDinosaurs.count)")
         }
 
         // Pool: dinosaurs with dino- image (for silhouette asset name). Exclude previously used so they are not repeated in future games.
@@ -794,7 +827,7 @@ struct GuessGameConfigs {
             guard let imageName = d.imageName, imageName.hasPrefix("dino-") else { return false }
             return !usedIds.contains(d.id)
         }
-        if pool.count < 3 {
+        if pool.count < 5 {
             NameThatDinosaurStorage.clearIfNeeded(availableCount: pool.count)
             usedIds = []
             pool = allDinosaurs.filter { d in
@@ -802,7 +835,7 @@ struct GuessGameConfigs {
                 return true
             }
         }
-        let questionPool = pool.count >= 3 ? pool : allDinosaurs
+        let questionPool = pool.count >= 5 ? pool : allDinosaurs
 
         // Pick 3 clades at random; prefer clades not yet used in recent games (maximize variety across 9 clades).
         let cladeById = MatchingGameConfigs.dinosaurCladeById
@@ -814,19 +847,19 @@ struct GuessGameConfigs {
             usedClades = []
         }
         let availableClades = allCladesWithDinos.filter { !usedClades.contains($0.rawValue) }
-        let cladesToUse = (availableClades.count >= 3 ? availableClades : allCladesWithDinos).shuffled()
+        let cladesToUse = (availableClades.count >= 5 ? availableClades : allCladesWithDinos).shuffled()
         let questionDinosaurs: [Dinosaur]
-        if cladesToUse.count >= 3 {
-            questionDinosaurs = (0..<3).compactMap { i in
+        if cladesToUse.count >= 5 {
+            questionDinosaurs = (0..<5).compactMap { i in
                 let clade = cladesToUse[i]
                 return (byClade[clade] ?? []).shuffled().first
             }
         } else {
-            questionDinosaurs = Array(questionPool.shuffled().prefix(3))
+            questionDinosaurs = Array(questionPool.shuffled().prefix(5))
         }
-        guard questionDinosaurs.count == 3,
-              Set(questionDinosaurs.map { $0.id }).count == 3 else {
-            fatalError("Need at least 3 unique dinosaurs for guess game")
+        guard questionDinosaurs.count == 5,
+              Set(questionDinosaurs.map { $0.id }).count == 5 else {
+            fatalError("Need at least 5 unique dinosaurs for guess game")
         }
         
         var rounds: [RoundQuestion] = []
@@ -834,12 +867,32 @@ struct GuessGameConfigs {
         for (roundNumber, questionDinosaur) in questionDinosaurs.enumerated() {
             let roundId = roundNumber + 1
             
-            // Get 2 unique decoys (any dinosaurs other than this round's question)
-            let decoyCandidates = allDinosaurs.filter { $0.id != questionDinosaur.id }
-            guard decoyCandidates.count >= 2 else {
-                fatalError("Not enough dinosaurs for decoys in round \(roundId)")
+            // Decoys must be from different clades than the question so silhouettes are visually distinct (e.g. avoid Argentinosaurus vs Brachiosaurus — both sauropods look similar).
+            let questionClade = cladeById[questionDinosaur.id] ?? .theropod
+            let decoyCandidates = questionPool.filter { d in
+                d.id != questionDinosaur.id && (cladeById[d.id] ?? .theropod) != questionClade
             }
-            let decoys = Array(decoyCandidates.shuffled().prefix(2))
+            // Prefer 2 decoys from 2 different clades for maximum visual variety
+            var decoys: [Dinosaur]
+            if decoyCandidates.count >= 2 {
+                let byCladeForDecoys = Dictionary(grouping: decoyCandidates) { cladeById[$0.id] ?? .theropod }
+                let otherClades = byCladeForDecoys.keys.filter { $0 != questionClade }.shuffled()
+                if otherClades.count >= 2 {
+                    let firstDecoy = (byCladeForDecoys[otherClades[0]] ?? []).shuffled().first!
+                    let secondCladeCandidates = decoyCandidates.filter { (cladeById[$0.id] ?? .theropod) != otherClades[0] }
+                    let secondDecoy = secondCladeCandidates.shuffled().first!
+                    decoys = [firstDecoy, secondDecoy]
+                } else {
+                    decoys = Array(decoyCandidates.shuffled().prefix(2))
+                }
+            } else {
+                // Fallback: allow same-clade decoys only if we have too few from other clades
+                let fallbackCandidates = questionPool.filter { $0.id != questionDinosaur.id }
+                guard fallbackCandidates.count >= 2 else {
+                    fatalError("Not enough dinosaurs for decoys in round \(roundId)")
+                }
+                decoys = Array(fallbackCandidates.shuffled().prefix(2))
+            }
             
             // Verify decoys are unique
             let decoyIds = Set(decoys.map { $0.id })
@@ -871,7 +924,7 @@ struct GuessGameConfigs {
         
         // Verify all rounds have unique question dinosaurs (no duplicate silhouettes)
         let questionIds = Set(rounds.map { $0.correctAnswerId })
-        assert(questionIds.count == 3, "All 3 rounds must have unique question dinosaurs")
+        assert(questionIds.count == 5, "All 5 rounds must have unique question dinosaurs")
         
         return GuessGameConfig(
             id: "name-that-dinosaur",
@@ -885,14 +938,14 @@ struct GuessGameConfigs {
     // Name That Pterosaur!: identify by silhouette (same structure as Name That Dinosaur, using ptero-silhouette-* assets).
     static var nameThatPterosaur: GuessGameConfig {
         let allPterosaurs = MatchingGameConfigs.allPterosaurs
-        guard allPterosaurs.count >= 3 else {
-            fatalError("Need at least 3 pterosaurs for guess game, but only have \(allPterosaurs.count)")
+        guard allPterosaurs.count >= 5 else {
+            fatalError("Need at least 5 pterosaurs for guess game, but only have \(allPterosaurs.count)")
         }
         let shuffledAll = allPterosaurs.shuffled()
-        let questionPterosaurs = Array(shuffledAll.prefix(3))
-        guard questionPterosaurs.count == 3,
-              Set(questionPterosaurs.map { $0.id }).count == 3 else {
-            fatalError("Need at least 3 unique pterosaurs for guess game")
+        let questionPterosaurs = Array(shuffledAll.prefix(5))
+        guard questionPterosaurs.count == 5,
+              Set(questionPterosaurs.map { $0.id }).count == 5 else {
+            fatalError("Need at least 5 unique pterosaurs for guess game")
         }
         var rounds: [RoundQuestion] = []
         for (roundNumber, questionCreature) in questionPterosaurs.enumerated() {
@@ -931,22 +984,22 @@ struct GuessGameConfigs {
             let slug = d.imageName?.replacingOccurrences(of: "dino-", with: "").lowercased() ?? ""
             return footprintDinosaurMap[slug] != nil
         }
-        guard all.count >= 3 else {
-            fatalError("Need at least 3 dinosaurs in footprintDinosaurMap for Dino Footprints, but only have \(all.count)")
+        guard all.count >= 5 else {
+            fatalError("Need at least 5 dinosaurs in footprintDinosaurMap for Dino Footprints, but only have \(all.count)")
         }
         let byClade: [FootprintClade: [Dinosaur]] = Dictionary(grouping: all) { d -> FootprintClade in
             let slug = d.imageName?.replacingOccurrences(of: "dino-", with: "").lowercased() ?? ""
             return footprintDinosaurMap[slug]!.clade
         }
         let cladesWithOneOrMore = FootprintClade.allCases.filter { (byClade[$0] ?? []).count >= 1 }
-        guard cladesWithOneOrMore.count >= 3 else {
-            fatalError("Need at least 3 clades with 1+ dinosaur for Dino Footprints (have \(cladesWithOneOrMore.count))")
+        guard cladesWithOneOrMore.count >= 5 else {
+            fatalError("Need at least 5 clades with 1+ dinosaur for Dino Footprints (have \(cladesWithOneOrMore.count))")
         }
-        // One clade per round; show one footprint image per clade (canonical size: medium) so player matches morphology only.
-        let cladesForRounds = Array(cladesWithOneOrMore.shuffled().prefix(3))
+        // One clade per round; show one footprint image per clade. Randomly picks from up to 3 variants per clade to reduce memorization.
+        let cladesForRounds = Array(cladesWithOneOrMore.shuffled().prefix(5))
         var usedQuestionIds: Set<Int> = []
         var rounds: [RoundQuestion] = []
-        for roundId in 1...3 {
+        for roundId in 1...5 {
             let clade = cladesForRounds[roundId - 1]
             let sameClade = byClade[clade] ?? []
             let correct = sameClade.shuffled().first { !usedQuestionIds.contains($0.id) } ?? sameClade.first!
@@ -958,7 +1011,7 @@ struct GuessGameConfigs {
             let decoy2 = (byClade[decoyClade2] ?? []).randomElement()!
             var options = [correct, decoy1, decoy2]
             options.shuffle()
-            let footprintImageName = "footprint-\(clade.imageNameForAsset)-medium"
+            let footprintImageName = footprintImageNameForClade(clade)
             rounds.append(RoundQuestion(
                 id: roundId,
                 questionImageName: footprintImageName,
@@ -976,9 +1029,69 @@ struct GuessGameConfigs {
         )
     }
     
-    // Future: Add a more sophisticated "Guess the Dinosaur!" game; this one is identify-by-silhouette (Name that Dinosaur).
-    // Example:
-    // static var dinosaurExperts: GuessGameConfig {
-    //     // Similar structure but with different question types
-    // }
+    // Dino Bones!: identify dinosaur from museum preparator scene—skeleton on tarp, paleontologist with gift fossil, one bone missing.
+    // Clue: nearly articulated skeleton, gift fossil (partially in matrix), skull, or obvious missing bone (skull/foreleg/femur).
+    // 3 rounds, 3 options per round. Images: dino-bones-{slug} (e.g. dino-bones-trex).
+    static var dinoBones: GuessGameConfig {
+        let allDinosaurs = MatchingGameConfigs.allDinosaurs
+        guard allDinosaurs.count >= 5 else {
+            fatalError("Need at least 5 dinosaurs for Dino Bones, but only have \(allDinosaurs.count)")
+        }
+        let pool = allDinosaurs.filter { d in
+            guard let imageName = d.imageName, imageName.hasPrefix("dino-") else { return false }
+            return true
+        }
+        guard pool.count >= 3 else {
+            fatalError("Need at least 3 dinosaurs with dino- images for Dino Bones")
+        }
+        let cladeById = MatchingGameConfigs.dinosaurCladeById
+        let byClade = Dictionary(grouping: pool) { cladeById[$0.id] ?? .theropod }
+        let allCladesWithDinos = byClade.keys.filter { !(byClade[$0] ?? []).isEmpty }
+        let finalQuestionDinosaurs: [Dinosaur]
+        if allCladesWithDinos.count >= 3 {
+            let cladesToUse = Array(allCladesWithDinos.shuffled().prefix(3))
+            finalQuestionDinosaurs = cladesToUse.compactMap { (byClade[$0] ?? []).shuffled().first }
+        } else {
+            finalQuestionDinosaurs = Array(pool.shuffled().prefix(3))
+        }
+        guard finalQuestionDinosaurs.count == 3, Set(finalQuestionDinosaurs.map { $0.id }).count == 3 else {
+            fatalError("Need 3 unique dinosaurs for Dino Bones")
+        }
+        var rounds: [RoundQuestion] = []
+        for (roundNumber, questionDinosaur) in finalQuestionDinosaurs.enumerated() {
+            let roundId = roundNumber + 1
+            let questionClade = cladeById[questionDinosaur.id] ?? .theropod
+            let decoyCandidates = pool.filter { d in
+                d.id != questionDinosaur.id && (cladeById[d.id] ?? .theropod) != questionClade
+            }
+            let decoys: [Dinosaur]
+            if decoyCandidates.count >= 2 {
+                decoys = Array(decoyCandidates.shuffled().prefix(2))
+            } else {
+                let fallback = pool.filter { $0.id != questionDinosaur.id }
+                decoys = Array(fallback.shuffled().prefix(2))
+            }
+            guard decoys.count == 2 else {
+                fatalError("Not enough decoys for Dino Bones round \(roundId)")
+            }
+            var options = [questionDinosaur] + decoys
+            options.shuffle()
+            let baseName = questionDinosaur.imageName?.replacingOccurrences(of: "dino-", with: "") ?? ""
+            let bonesImageName = "dino-bones-\(baseName)"
+            rounds.append(RoundQuestion(
+                id: roundId,
+                questionImageName: bonesImageName,
+                questionImageFallback: questionDinosaur.imageName,
+                correctAnswerId: questionDinosaur.id,
+                options: options
+            ))
+        }
+        return GuessGameConfig(
+            id: "dino-bones",
+            title: "Dino Bones!",
+            introAudio: "game-dino-bones",
+            rounds: rounds,
+            availableDinosaurs: allDinosaurs
+        )
+    }
 }

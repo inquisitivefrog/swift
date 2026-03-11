@@ -1,0 +1,9 @@
+{ 
+  "image_generation_request": { 
+    "prompt": "A temporary Sumo Wrestling ring on a track field. The referee is a young male paleontologist with short dark hair and a clean-shaven face, wearing thin-rimmed black circular glasses and a tan safari pith helmet. He is wearing a black-and-white striped referee jersey under a white silk kimono. The opponents are a full-sized Edmontosaurus and a young adult Utahraptor. A caption in bright red 3D mixed case letters reads 'Dino Push!' and 'Player Wins!'", 
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"], 
+    "lighting": "SUNNY_EXPOSED_CINEMATIC", 
+    "framing": "Close-up", 
+    "aspect_ratio": "1:1" 
+  } 
+}

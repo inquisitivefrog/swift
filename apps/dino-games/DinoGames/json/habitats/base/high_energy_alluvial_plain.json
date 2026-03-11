@@ -1,0 +1,39 @@
+{
+  "id": "habitat_high_energy_alluvial_plain_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "HIGH_ENERGY_ALLUVIAL_PLAIN", 
+      "formation_id": "HELL_CREEK_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of a high-energy alluvial plain",
+      "features": [
+        "Vast, open 'fern-savanna' stretching to the horizon",
+        "Braided river channels with coarse gravel and sand bars",
+        "Waist-high thickets of hardy ferns and club mosses",
+        "Strong, direct sunlight creating high-contrast shadows",
+        "Scattered, wind-swept conifers standing alone in the distance",
+        "No grass; ground is a textured carpet of ancient spore-plants"
+      ],
+      "action": "A cinematic, wide-angle landscape of an expansive, sun-drenched plain. The ground is a sea of green ferns under a massive, clear blue sky."
+    }
+  },
+  "visuals": {
+    "ground": "Coarse sand and gravel substrate covered in a dense, uniform layer of low-growing ferns and lycophytes. No grass. Soil is well-drained and pale.",
+    "sky": "Bright, saturated blue with high visibility and a brilliant noon sun."
+  },
+  "habitat_id": "HIGH_ENERGY_ALLUVIAL_PLAIN",
+  "physics": {
+    "altitude": "lowland_inland",
+    "water": "high_energy_seasonal",
+    "humidity": "moderate"
+  },
+  "strata_specifics": {
+    "ground_texture": "Sandy loam, rounded river cobbles, and dense fern-mats.",
+    "color_palette": ["Golden Sand", "Vibrant Fern Green", "Deep Sky Blue", "Pale Grey"]
+  },
+  "flora_manifest": [ "Hardy ground ferns", "Lycophytes", "Isolated Conifers", "Cycads" ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, lawns, prairies, meadows, cows, buildings, gloom, 90s CGI, grainy, humans"
+}

@@ -1,0 +1,55 @@
+{
+  "id": "habitat_coastal_plains_midday_v2",
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_ANIMATED_FEATURE_V3"
+    },
+    "layer_2_setting": {
+      "habitat_id": "COASTAL_PLAINS",
+      "formation_id": "WESSEX_EQUIVALENT"
+    },
+    "layer_3_action": {
+      "subject": "Bright, sunny landscape of a prehistoric coastal plain",
+      "features": [
+        "clearly defined meandering brackish channels sparkling in the sun",
+        "stagnant oxbow lakes with vibrant green algae visible under sunlight",
+        "bright, well-lit marshy ground covered in club mosses and ferns",
+        "minimal, ethereal mist rising from water in the distance",
+        "clear, bright coastal air, with a soft haze only on the far horizon",
+        "peaty soil textures highlighted by sunlight"
+      ],
+      "action": "A wide, eye-level view of a sun-drenched estuarine environment, where sparkling water features wind through brightly lit, fertile plains covered in a variety of low-lying Mesozoic plants (no grass) under a clear, open sky."
+    }
+  },
+  "habitat_id": "COASTAL_PLAINS",
+  "physics": {
+    "altitude": "low_estuarine",
+    "water_type": "brackish_tidal",
+    "drainage": "poor",
+    "humidity": "moderate"
+  },
+  "visuals": {
+    "ground": "Brightly lit, dark peaty clay and sticky black mud, with abundant, vibrant green club mosses and ferns. Absolutely no grass.",
+    "water": "Clear, sparkling brackish water in meandering channels and still oxbows, reflecting the bright blue sky.",
+    "sky": "Vibrant, clear blue sky with fluffy white clouds, bright mid-day sun, with any coastal haze pushed to the distant horizon."
+  },
+  "strata_specifics": {
+    "ground_texture": "Wet, but sunlit and clearly textured mud, with vivid green club mosses and fern fronds dominating the ground cover. No grass.",
+    "color_palette": [
+      "Vibrant Greens",
+      "Deep Blues",
+      "Warm Browns",
+      "Bright Yellows (sunlight)"
+    ]
+  },
+  "flora_manifest": [
+    "SALT_MARSH_FERNS",
+    "LOW_LYING_CLUB_MOSSES",
+    "WATER_LOGGED_CONIFERS",
+    "EARLY_FLOWERING_REEDS"
+  ],
+  "fauna_manifest": [
+    "NO_FAUNA_DEPICTED"
+  ],
+  "negative_prompt": "dark, gloomy, heavy fog, dense mist, night, dusk, gritty, dull colors, scary, grass, modern plants, 90s CGI, grainy"
+}

@@ -37,7 +37,7 @@
   }
 }
 {
-  "formation_id": "WEALDEN_GROUP",
+  "formation_id": "WEALDEN",
   "base_habitat": "RIVER_DELTA_WETLANDS",
   "period": "LATE_CRETACEOUS",
   "strata_specifics": {
@@ -50,7 +50,7 @@
 {
   "app_image_config": {
     "layer_1_style": "[REF: STYLE_CLAY_MASTER]",
-    "layer_2_setting": “[REF: WEALDEN_GROUP]",
+    "layer_2_setting": “[REF: WEALDEN]",
     "layer_3_action": {
       "subject": “Baryonyx",
       "features": [“thumb hook claw", “crocodilian snout", "friendly expressive face"],

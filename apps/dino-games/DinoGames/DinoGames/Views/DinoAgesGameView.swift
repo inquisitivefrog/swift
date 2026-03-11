@@ -38,7 +38,7 @@ private let dinoAgesJurassicImageNames: Set<String> = [
 /// Dino image set names (dino-*) that are Cretaceous period. Used to filter the pool.
 private let dinoAgesCretaceousImageNames: Set<String> = [
     "dino-albertosaurus", "dino-ankylosaurus", "dino-argentinosaurus", "dino-baryonyx", "dino-chasmosaurus",
-    "dino-corythosaurus", "dino-deinonychus", "dino-dromeosaurus", "dino-edmontosaurus", "dino-gallimimus",
+    "dino-corythosaurus", "dino-deinonychus", "dino-dromaeosaurus", "dino-edmontosaurus", "dino-gallimimus",
     "dino-giganotosaurus", "dino-iguanodon", "dino-kosmoceratops", "dino-majungasaurus", "dino-masiakasaurus",
     "dino-microraptor", "dino-pachycephalosaurus", "dino-parasaurolophus", "dino-rapetosaurus", "dino-spinosaurus",
     "dino-therizinosaurus", "dino-torosaurus", "dino-trex", "dino-triceratops", "dino-troodon",
@@ -64,7 +64,7 @@ private let dinoAgesPool: [Dinosaur] = {
         Dinosaur(id: 26, name: "Compsognathus", icon: "🦎", imageName: "dino-compsognathus", characteristicIds: []),
         Dinosaur(id: 27, name: "Deinonychus", icon: "🦖", imageName: "dino-deinonychus", characteristicIds: []),
         Dinosaur(id: 28, name: "Diplodocus", icon: "🦕", imageName: "dino-diplodocus", characteristicIds: []),
-        Dinosaur(id: 29, name: "Dromaeosaurus", icon: "🦖", imageName: "dino-dromeosaurus", characteristicIds: []),
+        Dinosaur(id: 29, name: "Dromaeosaurus", icon: "🦖", imageName: "dino-dromaeosaurus", characteristicIds: []),
         Dinosaur(id: 30, name: "Eosinopteryx", icon: "🦅", imageName: "dino-eosinopteryx", characteristicIds: []),
         Dinosaur(id: 31, name: "Giganotosaurus", icon: "🦖", imageName: "dino-giganotosaurus", characteristicIds: []),
         Dinosaur(id: 32, name: "Kosmoceratops", icon: "🦏", imageName: "dino-kosmoceratops", characteristicIds: []),
@@ -80,7 +80,9 @@ private let dinoAgesPool: [Dinosaur] = {
         Dinosaur(id: 42, name: "Allosaurus", icon: "🦖", imageName: "dino-allosaurus", characteristicIds: []),
         Dinosaur(id: 43, name: "Oviraptor", icon: "🦅", imageName: "dino-oviraptor", characteristicIds: []),
     ]
-    return fromCatalog + extras
+    let combined = fromCatalog + extras
+    var seen: Set<Int> = []
+    return combined.filter { seen.insert($0.id).inserted }
 }()
 
 /// Dinosaur id → period. Derived from Jurassic/Cretaceous image-name sets.
@@ -142,7 +144,7 @@ struct DinoAgesGameView: View {
     /// All 9 correctly selected dinosaurs in order (3 per round) for victory walk.
     @State private var victoryWalkDinosaurs: [Dinosaur] = []
 
-    private let totalRounds = 3
+    private let totalRounds = 5
     private let matchesNeededPerRound = 3
 
     /// Order in which correct dinosaurs were tapped this round (ids). Used to build victory walk order.
@@ -440,8 +442,9 @@ struct DinoAgesGameView: View {
 
     // MARK: - End sequence (victory: walk 9 selected dinosaurs, then success image + good-job + crowd-cheering)
 
-    private let victoryRowHeight: CGFloat = 92
-    private var victoryListVisibleHeight: CGFloat { 16 + 4 * victoryRowHeight + 3 * 12 + 16 }
+    private let victoryRowHeight: CGFloat = 72
+    /// Show 3 rows to leave room for success card (was 4; smaller rows + fewer visible = less crowding).
+    private var victoryListVisibleHeight: CGFloat { 16 + 3 * victoryRowHeight + 2 * 12 + 16 }
 
     private var dinoAgesEndSequenceView: some View {
         GeometryReader { geometry in
@@ -592,7 +595,7 @@ private struct DinoAgesStarLayoutContent: View {
 
     var body: some View {
         ZStack(alignment: .center) {
-            ForEach(Array(slots.enumerated()), id: \.element.id) { index, dino in
+            ForEach(Array(slots.enumerated()), id: \.offset) { index, dino in
                 DinoAgesCircleView(
                     dino: dino,
                     isMatched: matchedIds.contains(dino.id),
@@ -613,6 +616,7 @@ private struct DinoAgesCircleView: View {
     let dino: Dinosaur
     let isMatched: Bool
     var isIntroHighlighted: Bool = false
+    var size: CGFloat = dinoAgesCircleSize
 
     var body: some View {
         circleContent
@@ -624,8 +628,8 @@ private struct DinoAgesCircleView: View {
     private var circleContent: some View {
         let fallback = Circle()
             .fill(Color.gray.opacity(0.4))
-            .frame(width: dinoAgesCircleSize, height: dinoAgesCircleSize)
-            .overlay(Text(dino.icon).font(.system(size: 32)))
+            .frame(width: size, height: size)
+            .overlay(Text(dino.icon).font(.system(size: size > 80 ? 32 : 24)))
             .overlay(Circle().stroke(Color.gray.opacity(0.6), lineWidth: 2))
         if let name = dino.imageName, ImageAssetCache.imageExists(named: name) {
             ZStack {
@@ -633,7 +637,7 @@ private struct DinoAgesCircleView: View {
                 Image(name)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: dinoAgesCircleSize, height: dinoAgesCircleSize)
+                    .frame(width: size, height: size)
                     .clipShape(Circle())
             }
         } else {
@@ -644,7 +648,7 @@ private struct DinoAgesCircleView: View {
     private var circleStroke: some View {
         Circle()
             .stroke(strokeColor, lineWidth: strokeLineWidth)
-            .frame(width: dinoAgesCircleSize, height: dinoAgesCircleSize)
+            .frame(width: size, height: size)
     }
 
     private var strokeColor: Color {
@@ -659,20 +663,42 @@ private struct DinoAgesCircleView: View {
     }
 }
 
+/// Victory list: square images (72×72) like Match the Dinosaur, not circles — consistent across all games.
+private let dinoAgesVictoryImageSize: CGFloat = 72
+
 private struct DinoAgesEndRowView: View {
     let dino: Dinosaur
     let isHighlighted: Bool
-    private let rowHeight: CGFloat = 92
+    private let rowHeight: CGFloat = 72
 
     var body: some View {
         HStack(spacing: 16) {
-            DinoAgesCircleView(dino: dino, isMatched: true)
-                .frame(width: dinoAgesCircleSize, height: dinoAgesCircleSize)
-                .opacity(isHighlighted ? 1.0 : 0.4)
+            Group {
+                if let name = dino.imageName, ImageAssetCache.imageExists(named: name) {
+                    Image(name)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: dinoAgesVictoryImageSize, height: dinoAgesVictoryImageSize)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .opacity(isHighlighted ? 1.0 : 0.4)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
+                        )
+                } else {
+                    Text(dino.icon)
+                        .font(.system(size: 40))
+                        .frame(width: dinoAgesVictoryImageSize, height: dinoAgesVictoryImageSize)
+                        .opacity(isHighlighted ? 1.0 : 0.4)
+                }
+            }
             Text(dino.name)
                 .font(.title2)
                 .fontWeight(isHighlighted ? .semibold : .regular)
                 .foregroundColor(.primary)
+                .multilineTextAlignment(.leading)
+                .lineLimit(2)
+                .minimumScaleFactor(0.65)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .opacity(isHighlighted ? 1.0 : 0.5)
         }

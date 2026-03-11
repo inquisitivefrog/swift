@@ -1,0 +1,55 @@
+{
+  "id": "habitat_river_valleys_midday_v2",
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_ANIMATED_FEATURE_V3"
+    },
+    "layer_2_setting": {
+      "habitat_id": "RIVER_VALLEYS",
+      "formation_id": "SHELTERED_RIPARIAN_CORRIDOR"
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of a sheltered river valley",
+      "features": [
+        "Rising slopes or low cliffs flanking a sparkling river",
+        "Dense thickets of tree ferns and cycads on the valley floor",
+        "Ground completely covered in soft emerald moss and liverworts",
+        "Sunlight streaming down the center of the valley, illuminating the water",
+        "Small waterfalls or trickling seeps on the valley walls",
+        "No grass; ground cover is entirely ancient spore-bearing plants"
+      ],
+      "action": "A cinematic, eye-level view looking down a lush green valley corridor. The terrain rises on both sides, creating a sense of a hidden prehistoric paradise. The lighting is bright and warm, making the water and moss glisten."
+    }
+  },
+  "visuals": {
+    "ground": "A deep, spongy carpet of vibrant green mosses, club mosses, and liverworts. The floor is textured with fallen fern fronds and damp stones. Absolutely no grass blades.",
+    "water": "A clear, lively river winding through the center, with small rapids and sun-drenched pools reflecting the sky.",
+    "sky": "A bright blue strip of sky visible between the valley crests; the sun is high and directly overhead, filling the valley with light."
+  },
+  "habitat_id": "RIVER_VALLEYS",
+  "physics": {
+    "altitude": "lowland_to_upland_transition",
+    "water": "high_flowing",
+    "humidity": "high_trapped"
+  },
+  "strata_specifics": {
+    "ground_texture": "Saturated soil, moss hummocks, and smooth river-worn boulders. No grass.",
+    "color_palette": [
+      "Vibrant Forest Green",
+      "Deep Sky Blue",
+      "Warm Stone Grey",
+      "Rich Earth Brown"
+    ]
+  },
+  "flora_manifest": [
+    "Tree ferns",
+    "Cycads",
+    "Equisetum (Horsetails)",
+    "Bryophyte moss mats",
+    "Liverworts"
+  ],
+  "fauna_manifest": [
+    "NO_FAUNA_DEPICTED"
+  ],
+  "negative_prompt": "grass, lawns, meadows, open prairies, desert, gloom, night, sunset, scary atmosphere, 90s CGI, grainy, humans, buildings"
+}

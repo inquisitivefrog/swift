@@ -1,0 +1,45 @@
+{
+  "id": "habitat_forested_lacustrine_system_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "FORESTED_LACUSTRINE_SYSTEM", 
+      "formation_id": "MORRISON_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Sunny mid-day view of a lacustrine forest",
+      "features": [
+        "Large, calm lake with clear water",
+        "Dense forest of conifers and cycads reaching the water's edge",
+        "Ground cover of thick, wet moss and sprawling ferns",
+        "No grass; only primitive ground-hugging plants",
+        "Floating aquatic ferns (Azolla) near the shore"
+      ],
+      "action": "A serene, bright lakeside scene at mid-day. The focus is on the crystal-clear water and the lush, ancient greenery of the forest floor."
+    }
+  },
+  "visuals": {
+    "ground": "Moist, dark earth covered in a thick, textured carpet of moss and liverworts. Ferns grow in dense clusters near the tree trunks. No grass.",
+    "water": "Clear lake water reflecting the bright sun; gentle ripples on the surface.",
+    "sky": "Bright blue sky with a brilliant sun at its zenith."
+  },
+  "habitat_id": "FORESTED_LACUSTRINE_SYSTEM",
+  "physics": {
+    "altitude": "lowland",
+    "water": "static_freshwater",
+    "humidity": "high"
+  },
+  "strata_specifics": {
+    "ground_texture": "Saturated organic peat and spongy bryophyte mats.",
+    "color_palette": ["Vibrant Moss Green", "Deep Water Blue", "Sky Blue", "Bark Brown"]
+  },
+  "flora_manifest": [
+    "Conifers",
+    "Cycads",
+    "Water ferns",
+    "Moss",
+    "Liverworts"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, meadow, field, volcano, fire, gloom, night, 90s CGI, grainy, humans"
+}

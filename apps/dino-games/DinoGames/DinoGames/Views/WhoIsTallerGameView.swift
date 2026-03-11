@@ -39,8 +39,8 @@ private let whoIsTallerHeightMetersById: [Int: Double] = [
 ]
 
 private let sameHeightRelativeThreshold = 0.08
-/// Minimum scale for smaller dinosaur (e.g. 0.2 = 20% of full size). Below this, combination is "too small to see".
-private let minVisibleScale: CGFloat = 0.2
+/// Minimum scale for smaller dinosaur (e.g. 0.1 = 10% of full size). Below this, combination is "too small to see". Relaxed from 0.2 so small dinosaurs can compare with more options.
+private let minVisibleScale: CGFloat = 0.1
 /// Paleontologist on ladder: total height in meters (ladder + person reaching up) for scaling. ~4.5m so the ladder setup stays visible next to large dinosaurs.
 private let paleontologistHeightMeters: Double = 4.5
 
@@ -52,7 +52,7 @@ struct WhoIsTallerGameView: View {
 
     @State private var speechManager = SpeechManager()
     @State private var roundsCompleted = 0
-    private let maxRounds = 3
+    private let maxRounds = 5
     @State private var currentRoundItems: [WhoIsTallerItem] = []
     @State private var selectedFirst: WhoIsTallerItem?
     @State private var selectedSecond: WhoIsTallerItem?
@@ -159,26 +159,37 @@ struct WhoIsTallerGameView: View {
         let scales = whoIsTallerSlotScales()
         return HStack(alignment: .bottom, spacing: measureSpacing) {
             whoIsTallerSlotOptional(item: selectedFirst, scale: scales.left, alignTowardCenter: true)
+                .id("left-\(selectedFirst?.id ?? 0)")
             whoIsTallerCenterImage(scale: scales.center)
             whoIsTallerSlotOptional(item: selectedSecond, scale: scales.right, alignTowardCenter: false)
+                .id("right-\(selectedSecond?.id ?? 0)")
         }
         .frame(maxWidth: .infinity)
         .frame(height: measureAreaHeight + 20)
         .padding(.horizontal, 24)
     }
 
-    /// Scale for left, right, and paleontologist: all relative to max(dino heights, human). Small dinos appear smaller than paleontologist.
+    /// Scale for left, right, and paleontologist: all relative to max(dino heights, human). When both dinos are small (< human), use the larger dino as reference so they fill the slot and detail is visible (e.g. Archaeopteryx vs Eosinopteryx).
     private func whoIsTallerSlotScales() -> (left: CGFloat, right: CGFloat, center: CGFloat) {
         let humanH = paleontologistHeightMeters
         guard let first = selectedFirst else { return (1.0, 1.0, 1.0) }
         let h1 = first.heightMeters
         if let second = selectedSecond {
             let h2 = second.heightMeters
-            let ref = max(h1, h2, humanH)
+            let maxDino = max(h1, h2)
+            // When both dinosaurs are smaller than the paleontologist, use the larger dino as reference so both are visible (not ~4% of slot)
+            let ref: Double
+            let centerS: CGFloat
+            if maxDino < humanH {
+                ref = maxDino
+                centerS = 1.0 // Paleontologist at full size for reference
+            } else {
+                ref = max(h1, h2, humanH)
+                centerS = CGFloat(humanH / ref)
+            }
             guard ref > 0 else { return (1.0, 1.0, 1.0) }
             let leftS = CGFloat(h1 / ref)
             let rightS = CGFloat(h2 / ref)
-            let centerS = CGFloat(humanH / ref)
             return (leftS, rightS, centerS)
         }
         // Only first selected: scale relative to human so small dinos appear smaller than paleontologist
@@ -576,10 +587,12 @@ private struct WhoIsTallerItemCard: View {
                     }
                 }
                 Text(item.name)
-                    .font(.caption2)
+                    .font(.subheadline)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
+                    .minimumScaleFactor(0.65)
+                    .allowsTightening(true)
             }
         }
         .padding(5)
@@ -604,9 +617,9 @@ private struct WhoIsTallerItemCard: View {
 
 enum WhoIsTallerGameConfigs {
     static let whoIsTaller = WhoIsTallerGameConfig(
-        id: "who-is-taller",
-        title: "Who Is Taller?",
-        introAudio: "game-who-is-taller",
+        id: "which-dino-is-taller",
+        title: "Which Dino Is Taller",
+        introAudio: "game-which-dino-is-taller",
         items: []
     )
 
@@ -643,9 +656,9 @@ enum WhoIsTallerGameConfigs {
 
     static func whoIsTallerRandomized() -> WhoIsTallerGameConfig {
         WhoIsTallerGameConfig(
-            id: "who-is-taller",
-            title: "Who Is Taller?",
-            introAudio: "game-who-is-taller",
+            id: "which-dino-is-taller",
+            title: "Which Dino Is Taller",
+            introAudio: "game-which-dino-is-taller",
             items: makeRoundItems()
         )
     }

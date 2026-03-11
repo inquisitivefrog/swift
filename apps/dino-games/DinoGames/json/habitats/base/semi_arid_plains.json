@@ -1,0 +1,45 @@
+{
+  "id": "habitat_semi_arid_plains_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "SEMI_ARID_PLAINS", 
+      "formation_id": "CLYDE_PARK_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of expansive semi-arid plains",
+      "features": [
+        "Flat, sun-baked earth with fine polygon crack patterns",
+        "Scattered thickets of scrubby Bennettitales and low-lying Cycads",
+        "Ground cover of dry, golden-brown moss and hardy liverworts",
+        "Brilliant, washed-out blue sky with high-noon clarity",
+        "Heat shimmer visible on the distant, flat horizon",
+        "No grass; ground is a mosaic of crusts and prehistoric scrub"
+      ],
+      "action": "A cinematic, wide-angle view of an open, dry plain at noon. The ground is a patchwork of earthy reds and browns, accented by hardy green scrub. The lighting is intense and bright."
+    }
+  },
+  "visuals": {
+    "ground": "Sun-baked silt and clay with a thin biological crust of dry mosses and liverworts. Clumps of leathery-leaved cycads grow in depressions. Absolutely no grass blades.",
+    "sky": "Bright, pale blue sky; the sun is a brilliant white disk directly overhead, creating short, sharp shadows.",
+    "atmosphere": "Dry and crystal clear; vibrant colors with a slight heat shimmer in the distance."
+  },
+  "habitat_id": "SEMI_ARID_PLAINS",
+  "physics": {
+    "altitude": "high_inland_plateau",
+    "water": "low_seasonal",
+    "humidity": "low"
+  },
+  "strata_specifics": {
+    "ground_texture": "Crisp, flaky mud crusts and granular, parched soil. No grass.",
+    "color_palette": ["Dull Terracotta", "Sandy Beige", "Dusty Olive", "Pale Sky Blue"]
+  },
+  "flora_manifest": [
+    "Scrubby Bennettitales",
+    "Hardy Cycads",
+    "Dry-climate mosses",
+    "Xerophytic ferns"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, lawns, meadows, flowers, rain, gloom, night, 90s CGI, grainy, humans, buildings"
+}

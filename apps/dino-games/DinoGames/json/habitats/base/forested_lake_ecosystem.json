@@ -1,0 +1,55 @@
+{
+  "id": "habitat_forested_lake_ecosystem_midday_v2",
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_ANIMATED_FEATURE_V3"
+    },
+    "layer_2_setting": {
+      "habitat_id": "FORESTED_LAKE_ECOSYSTEM",
+      "formation_id": "STABLE_INLAND_BASIN"
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of a stable forested lake ecosystem",
+      "features": [
+        "A large, pristine lake with crystal-clear, deep blue water",
+        "Dense, ancient forest of Araucaria and Ginkgo trees",
+        "Low-lying banks covered in a thick, spongy carpet of moss and liverworts",
+        "Large fern glades catching dappled sunlight",
+        "Floating aquatic ferns (Azolla) creating green patches on the water surface",
+        "Distant, non-volcanic blue mountains on a clear horizon"
+      ],
+      "action": "A cinematic, wide-angle view of a tranquil lake at noon. The ground is a lush, textured green carpet of mosses and ferns. The atmosphere is bright, clear, and peaceful, with no volcanoes present."
+    }
+  },
+  "visuals": {
+    "ground": "A soft, deep carpet of vibrant emerald moss and liverworts. Ferns grow in organized clusters near the water's edge. No grass. Soil is rich, moist, and dark where visible.",
+    "water": "Still, mirror-like freshwater, sparkling under the mid-day sun. Clear visibility into the shallow edges showing smooth river stones.",
+    "sky": "Bright, saturated blue sky with scattered white 'cotton' clouds. The sun is high, providing high-contrast, cheerful lighting."
+  },
+  "habitat_id": "FORESTED_LAKE_ECOSYSTEM",
+  "physics": {
+    "altitude": "medium_low",
+    "water": "static_freshwater",
+    "humidity": "moderate"
+  },
+  "strata_specifics": {
+    "ground_texture": "Spongy bryophyte layers and the intricate, repeating patterns of feathery fern fronds. No grass blades.",
+    "color_palette": [
+      "Deep Lake Blue",
+      "Vibrant Moss Green",
+      "Ginkgo Yellow-Green",
+      "Soft Bark Brown"
+    ]
+  },
+  "flora_manifest": [
+    "Conifers (Araucaria)",
+    "Ginkgoales",
+    "Tree ferns",
+    "Aquatic ferns (Azolla)",
+    "Thick moss mats"
+  ],
+  "fauna_manifest": [
+    "NO_FAUNA_DEPICTED"
+  ],
+  "negative_prompt": "volcano, smoke, lava, ash, grass, lawns, meadows, gloom, sunset, scary atmosphere, 90s CGI, grainy, humans"
+}

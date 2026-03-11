@@ -1,0 +1,47 @@
+{
+  "id": "habitat_forested_lake_system_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "FORESTED_LAKE_SYSTEM", 
+      "formation_id": "JEHOL_BIOTA_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of a forested lake ecosystem",
+      "features": [
+        "Crystal clear lake mirroring the bright blue sky",
+        "Sandy beach transitions into a soft, mossy forest floor",
+        "Dense groves of Ginkgo and primitive Conifers",
+        "Vertical giant horsetails (Equisetum) lining the water's edge",
+        "Floating aquatic ferns on the shimmering water surface"
+      ],
+      "action": "A peaceful lakeside glade at noon. The ground is a vibrant green carpet of moss and liverworts under the shade of ancient trees."
+    }
+  },
+  "visuals": {
+    "ground": "A rich, textured carpet of mosses, fallen needles, and low ferns. The water's edge is lined with segmented, vertical horsetails. No grass blades.",
+    "water": "Sparkling, mirror-like lake surface with bright high-noon sun glints and clear visibility into the shallows.",
+    "sky": "Bright, saturated blue sky with a few fluffy white fair-weather clouds."
+  },
+  "habitat_id": "FORESTED_LAKE_SYSTEM",
+  "physics": {
+    "altitude": "medium_low",
+    "water": "static_freshwater",
+    "humidity": "moderate"
+  },
+  "strata_specifics": {
+    "ground_texture": "Damp lakeside silt and spongy, thick bryophyte mats.",
+    "color_palette": ["Leaf Green", "Bright Blue", "Bark Brown", "Sandy Beige"]
+  },
+  "flora_manifest": [
+    "Ginkgoales",
+    "Early Conifers",
+    "Equisetum (Horsetails)",
+    "Azolla (Aquatic ferns)",
+    "Moss and Liverworts"
+  ],
+  "fauna_manifest": [
+    "NO_FAUNA_DEPICTED"
+  ],
+  "negative_prompt": "grass, lawns, reeds, dark swamp, gloom, night, 90s CGI, grainy, humans, buildings"
+}

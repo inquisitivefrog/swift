@@ -1,0 +1,9 @@
+{
+  "image_generation_request": {
+    "prompt": "A fossilized Parasaurolophus skull is lying on the ground, clearly showing damage from a fight with an Albertosaurus. A large bite mark has removed a significant section of the crest. The bone around the bite mark shows signs of ancient trauma and breakage. Oddly, there are no other bones from this Parasaurolophus skeleton nearby as if scavengers successfully ate everything else.   The fossil is embedded in a landscape reminiscent of the LANCE_HELL_CREEK (Late Cretaceous) formation, with dry, sandy ground, sparse vegetation, and a clear sky.   A caption in bright red 3D mixed case letters reads, Dino Bones!  A second caption reads Player Wins!",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "Close-up",
+    "aspect_ratio": "1:1"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "id": "habitat_semi_arid_floodplains_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "SEMI_ARID_FLOODPLAINS", 
+      "formation_id": "TEMPORARY_ALLUVIAL_CHANNEL" 
+    },
+    "layer_3_action": {
+      "subject": "Bright mid-day view of a semi-arid seasonal floodplain",
+      "features": [
+        "A wide, mostly dry riverbed of pale gravel and light-colored silt",
+        "Isolated, sparkling blue pools of water remaining in deep bends",
+        "Resilient, vertical horsetails (Equisetum) clustered near water",
+        "Deep-rooted conifer shrubs and hardy ferns on the higher banks",
+        "Strong mid-day sunlight reflecting off the pale stones"
+      ],
+      "action": "A bright, sun-soaked view of a dry river system. The 'green' is concentrated along the dry channel edges. The ground is textured with pebbles and hardy prehistoric plants. No grass."
+    }
+  },
+  "visuals": {
+    "ground": "Pale river gravel and sun-bleached silt. The vegetation consists of tough, scrubby ferns and specialized mosses that survive dry spells. No grass.",
+    "water": "Small, crystal-clear pools reflecting the deep blue sky, acting as focal points in the dry landscape.",
+    "sky": "Clear, vibrant blue with high visibility."
+  },
+  "habitat_id": "SEMI_ARID_FLOODPLAINS",
+  "physics": {
+    "altitude": "lowland_basin",
+    "water": "ephemeral_seasonal",
+    "humidity": "low_moderate"
+  },
+  "strata_specifics": {
+    "ground_texture": "Smooth water-worn gravel, sun-bleached silt, and tough plant fibers.",
+    "color_palette": ["Pale Grey", "Warm Ochre", "Vibrant Teal (pools)", "Deep Green (scrub)"]
+  },
+  "flora_manifest": [
+    "Equisetum (Horsetails)",
+    "Hardy riparian ferns",
+    "Conifer shrubs",
+    "Desiccation-tolerant mosses"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, green fields, dense jungle, swamp, gloom, night, 90s CGI, grainy, humans"
+}

@@ -1,0 +1,55 @@
+{
+  "id": "habitat_seasonal_river_plains_midday_v2",
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_ANIMATED_FEATURE_V3"
+    },
+    "layer_2_setting": {
+      "habitat_id": "SEASONAL_RIVER_PLAINS",
+      "formation_id": "EPHEMERAL_FLUVIAL_SYSTEM"
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of seasonal river plains",
+      "features": [
+        "Wide, shallow river channels with clear, slow-moving water",
+        "Expansive areas of drying mud with intricate sun-baked crack patterns",
+        "Thickets of resilient, vertical horsetails (Equisetum) along the water banks",
+        "Ground blanketed in low-growing, hardy ferns and dry moss mats",
+        "Brilliant sunlight creating a shimmering heat haze on the horizon",
+        "No grass; ground cover is entirely ancient spore-bearing plants"
+      ],
+      "action": "A cinematic, wide-angle landscape of a sun-drenched plain. The scene highlights the contrast between the sparkling blue water in shallow beds and the surrounding textured, green-and-brown earth. The lighting is bright and cheerful."
+    }
+  },
+  "visuals": {
+    "ground": "A mix of sun-baked, cracked mud and sandy silt. The 'green' comes from hardy, low-lying ferns and mats of moss that thrive in the moisture of the seasonal flood. Absolutely no grass blades.",
+    "water": "Shallow, clear river channels reflecting a saturated blue sky. The water is calm, with ripples catching the direct overhead sunlight.",
+    "sky": "Bright, clear blue sky with a high, brilliant sun. Minimal cloud cover to emphasize the warmth and clarity of the day."
+  },
+  "habitat_id": "SEASONAL_RIVER_PLAINS",
+  "physics": {
+    "altitude": "lowland_inland",
+    "water": "variable_seasonal_flow",
+    "humidity": "low_to_moderate"
+  },
+  "strata_specifics": {
+    "ground_texture": "Crisp, desiccated mud flakes and granular river sand. Soft moss hummocks near the water's edge. No grass.",
+    "color_palette": [
+      "Golden Ochre",
+      "Vibrant Olive Green",
+      "Sky Blue",
+      "Dusty Terracotta"
+    ]
+  },
+  "flora_manifest": [
+    "Resilient low-lying ferns",
+    "Equisetum (Horsetails)",
+    "Hardy moss mats",
+    "Small Cycad clusters",
+    "Bennettitales"
+  ],
+  "fauna_manifest": [
+    "NO_FAUNA_DEPICTED"
+  ],
+  "negative_prompt": "grass, lawns, meadows, dense forests, deep oceans, gloom, sunset, night, scary atmosphere, 90s CGI, grainy, humans, buildings"
+}

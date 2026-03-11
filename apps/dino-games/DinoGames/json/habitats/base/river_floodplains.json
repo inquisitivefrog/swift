@@ -1,0 +1,44 @@
+{
+  "id": "habitat_river_floodplains_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "RIVER_FLOODPLAINS", 
+      "formation_id": "ALLUVIAL_PLAINS" 
+    },
+    "layer_3_action": {
+      "subject": "Sunny mid-day view of fertile river floodplains",
+      "features": [
+        "A wide plain with a winding river in the middle distance",
+        "Ground covered in a mosaic of ferns, mosses, and low-lying shrubs",
+        "Small, sun-lit oxbow ponds scattered across the plain",
+        "Rich, silty soil textures highlighted by the bright sun",
+        "No grass; a vibrant green prehistoric 'meadow' of ferns"
+      ],
+      "action": "A wide-angle landscape of a sun-drenched floodplain. The ground is a sea of green textures from different fern species and mosses. The air is clear and bright."
+    }
+  },
+  "visuals": {
+    "ground": "Silty, loamy soil blanketed in a diverse carpet of low-growing ferns and lycophytes. No grass. Patches of drying mud show detailed cracks.",
+    "water": "Sparkling river channels and still oxbow pools reflecting the blue sky.",
+    "sky": "Bright, saturated blue with high-noon clarity and fluffy clouds."
+  },
+  "habitat_id": "RIVER_FLOODPLAINS",
+  "physics": {
+    "altitude": "lowland",
+    "water": "seasonal_high",
+    "humidity": "moderate_high"
+  },
+  "strata_specifics": {
+    "ground_texture": "Silty alluvium and dense fern-root mats.",
+    "color_palette": ["Spring Green", "Rich Silt Brown", "Blue Reflection", "Golden Sunlight"]
+  },
+  "flora_manifest": [
+    "Diversified ferns",
+    "Lycophytes",
+    "Bennettitales",
+    "Moss hummocks"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, lawns, modern meadows, mountains, gloom, 90s CGI, grainy, humans"
+}

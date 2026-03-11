@@ -1,0 +1,45 @@
+{
+  "id": "habitat_subtropical_coastal_plains_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "SUBTROPICAL_COASTAL_PLAINS", 
+      "formation_id": "ESTUARINE_LOWLANDS" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of subtropical coastal plains",
+      "features": [
+        "Flat, expansive coastal plains under a brilliant white sun",
+        "Lush carpets of salt-tolerant ferns and thick bryophyte mosses",
+        "Scattered palm-like Bennettitales and clusters of Cycads",
+        "Clear, shallow tidal channels reflecting a saturated blue sky",
+        "Bright, humid atmosphere with high visibility to the horizon",
+        "No grass; ground is a textured sea of green fronds and moss"
+      ],
+      "action": "A cinematic, wide-angle view of a sun-drenched coastal plain. The lighting is cheerful and bright, highlighting the deep greens of the prehistoric flora against the blue water."
+    }
+  },
+  "visuals": {
+    "ground": "Silty, salt-rich soil completely blanketed in a vibrant carpet of low-lying ferns and thick moss mats. No grass blades present. Soil is moist and dark where exposed.",
+    "water": "Sparkling tidal pools and slow channels reflecting the zenith sun with high-contrast glints.",
+    "sky": "Vibrant, deep blue sky with a few fluffy white clouds; strong, direct mid-day light."
+  },
+  "habitat_id": "SUBTROPICAL_COASTAL_PLAINS",
+  "physics": {
+    "altitude": "sea_level",
+    "water": "high_tidal",
+    "humidity": "high"
+  },
+  "strata_specifics": {
+    "ground_texture": "Silty alluvium and spongy moss layers punctuated by leathery Cycad leaves.",
+    "color_palette": ["Vibrant Emerald", "Deep Sky Blue", "Sandy Grey", "Warm Ochre"]
+  },
+  "flora_manifest": [
+    "Salt-tolerant ferns",
+    "Bennettitales (Palm-like)",
+    "Cycads",
+    "Thick bryophyte mosses"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, lawns, meadows, prairies, snow, gloom, sunset, night, 90s CGI, grainy, humans, buildings"
+}

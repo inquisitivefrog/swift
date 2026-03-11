@@ -1,0 +1,9 @@
+{
+  "image_generation_request": {
+    "prompt": "A high-fidelity 3D animated scene, rendered in a **distinctive STYLE_ANIMATED_FEATURE_V3 art style with strong rounded, toy-like proportions and expressive physical comedy**. Two dinosaurs, a Parasaurolophus and a Corythosaurus, are standing back-to-back to determine who is taller. The Parasaurolophus has vibrant lime-green skin with dark emerald green stripes, a long, elegant head crest, and strong, stocky legs. The Corythosaurus has warm sandy-brown skin with rich reddish-brown markings, a tall, helmet-like head crest, and expressive eyes. Both dinosaurs have prominent, rounded features and exaggerated, friendly expressions. They are standing on a dry, sandy ground reminiscent of the LANCE_HELL_CREEK (Late Cretaceous) formation, with sparse vegetation and a clear sky. A caption in bright red 3D mixed case letters reads 'Which Dino Is Taller?' A second caption, also in bright red 3D mixed case letters, reads 'Player Wins!'",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "Close-up",
+    "aspect_ratio": "1:1"
+  }
+}

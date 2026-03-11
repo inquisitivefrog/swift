@@ -1,0 +1,32 @@
+{
+  "id": "dino_habitats_v1_THE_BIG_MAP",
+  "game_title": "Dino Habitats!",
+  "image_purpose": "Introduces the environment-matching game, showing a stylized 'world' of different biomes.",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": "SQUARE_1024",
+  "scene_logic": {
+    "composition": "A high-angle, 'pop-up book' view of a vibrant prehistoric island. The island is divided into three clear zones: a steamy volcanic lagoon (Hell Creek style), a dry sandy desert with scrub (Djadokhta style), and a lush, misty conifer forest (Morrison style).",
+    "primary_character": "In the center foreground, a friendly, brightly-colored Edmontosaurus stands holding a large, rolled-up stone 'map'. It is looking at the player with an inviting smile.",
+    "interactive_element": "Floating above each biome is a semi-transparent, glowing 'empty' slot shaped like a dinosaur footprint, suggesting where the player needs to place the right friend.",
+    "perspective": "A slightly tilted, 'god-view' perspective that makes the world look like a playable toy set."
+  },
+  "typography": {
+    "main_title": {
+      "text_content": "Dino Habitats!",
+      "style": "Extra-thick 3D red block letters with a glossy 'candy' finish.",
+      "color": "Bright Red with a white outline.",
+      "placement": "Top center, following a slight curve."
+    }
+  },
+  "character_details": {
+    "expressions": "The Edmontosaurus looks like a helpful guide. Big, sparkling eyes and a cheerful, open posture. No 'wild' or aggressive traits.",
+    "texture": "Clean, satin-finished clay style. Soft peach and sunset-orange color patterns on its back.",
+    "finish": "Octane render quality with high-poly smoothness."
+  },
+  "environmental_details": {
+    "lighting": "Bright, multi-directional 'studio' lighting to make each zone pop. Vibrant saturations: deep emeralds, fiery oranges, and golden sands.",
+    "atmosphere": "Cheerful, organized, and adventurous. Clean air with tiny floating 'magic' sparkles over the biomes.",
+    "ground": "Clearly defined textures: 'Dark rich organic mud' for the lagoon, 'Dry sandy soil' for the desert, and 'Lush green moss' for the forest."
+  },
+  "negative_prompt": "messy, realistic, scary, humans, text errors, blurry, flat 2D, dark, muddy colors, 90s CGI, 'Habitats' misspelled"
+}

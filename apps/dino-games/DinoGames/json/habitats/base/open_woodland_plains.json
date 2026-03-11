@@ -1,0 +1,43 @@
+{
+  "id": "habitat_open_woodland_plains_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "OPEN_WOODLAND_PLAINS", 
+      "formation_id": "HELL_CREEK_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of open woodland plains",
+      "features": [
+        "Wide, flat plains with scattered groves of conifers and ginkgos",
+        "Ground blanketed in low-growing ferns and lycophytes",
+        "Clear, bright horizon with distant blue hills",
+        "No grass; a 'fern-savanna' appearance",
+        "Warm, golden sunlight illuminating the open spaces"
+      ],
+      "action": "A cinematic, wide-angle view of an open plain at noon. The ground is a vibrant green sea of ferns rather than grass, creating a unique prehistoric look."
+    }
+  },
+  "visuals": {
+    "ground": "Sun-warmed soil covered in a dense, uniform layer of low-growing ferns and club mosses. Small patches of dry earth visible. No grass.",
+    "sky": "Expansive, bright blue sky with high visibility."
+  },
+  "habitat_id": "OPEN_WOODLAND_PLAINS",
+  "physics": {
+    "altitude": "low_inland",
+    "water": "low_seasonal",
+    "humidity": "moderate_low"
+  },
+  "strata_specifics": {
+    "ground_texture": "Sandy loam and fern-root mats.",
+    "color_palette": ["Spring Green", "Golden Tan", "Sky Blue", "Soft Brown"]
+  },
+  "flora_manifest": [
+    "Low-growing ferns",
+    "Lycophytes (Club mosses)",
+    "Scattered Conifers",
+    "Ginkgo trees"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, lawn, prairie, savanna, cows, buildings, gloom, 90s CGI, grainy, humans"
+}

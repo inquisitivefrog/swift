@@ -1,0 +1,7 @@
+{
+  "image_prompts": [
+    {
+      "prompt": "The character-consistent Albertosaurus from the config library at the starting line. SUBJECT ANCHOR: Slate-blue skin, deep navy racing stripes, red-tipped eye crests. ANATOMY CORRECTION: Each hand MUST have exactly TWO long, sharp claws (two fingers total). No thumb, no extra toes on the forelimbs. ACTION: He is in a sleek, athletic crouch. His small two-fingered hands are held up near his chest in a 'ready' position, clearly showing only two claws per hand. FACIAL EXPRESSION: Looking directly at the starting line with an arrogant, half-lidded 'I've already won' smirk. SETTING: Prehistoric dirt track. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'. LIGHTING: 'SUNNY_EXPOSED_CINEMATIC'. FRAMING: 'SQUARE_HERO_CARD' side-profile to highlight the two-fingered hands and long legs."
+    }
+  ]
+}

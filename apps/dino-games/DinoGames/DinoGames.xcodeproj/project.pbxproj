@@ -64,6 +64,11 @@
 			path = DinoGamesUITests;
 			sourceTree = "<group>";
 		};
+		22F873C12F24A12300406D2B /* json */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = json;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +101,7 @@
 			children = (
 				22F873BF2F24942700406D2B /* Audio */,
 				22F873402F244A4000406D2B /* DinoGames */,
+				22F873C12F24A12300406D2B /* json */,
 				22F873532F244A4100406D2B /* DinoGamesTests */,
 				22F8735D2F244A4100406D2B /* DinoGamesUITests */,
 				22F8733F2F244A4000406D2B /* Products */,
@@ -129,6 +135,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				22F873402F244A4000406D2B /* DinoGames */,
+				22F873C12F24A12300406D2B /* json */,
 			);
 			name = DinoGames;
 			packageProductDependencies = (
@@ -416,6 +423,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DinoGames/DinoGames.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4XJNBSJ5AQ;
@@ -449,6 +457,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DinoGames/DinoGames.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4XJNBSJ5AQ;

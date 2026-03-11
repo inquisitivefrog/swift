@@ -96,7 +96,7 @@ struct ToothacheGameView: View {
                                             .foregroundColor(.secondary)
                                     )
                             }
-                            Text("Round \(currentRound) of 3")
+                            Text("Round \(currentRound) of \(gameConfig.rounds.count)")
                                 .font(.headline)
                                 .foregroundColor(.secondary)
                         }
@@ -125,7 +125,7 @@ struct ToothacheGameView: View {
                         Text(errorCount == 0 ? "Perfect! All rounds completed!" : "Game Over")
                             .font(.title)
                             .foregroundColor(errorCount == 0 ? .green : .red)
-                        Text("Rounds: \(successCount) / 3")
+                        Text("Rounds: \(successCount) / \(gameConfig.rounds.count)")
                             .font(.headline)
                     }
                     .padding()
@@ -210,7 +210,7 @@ struct ToothacheGameView: View {
                 self.speechManager.onAudioFinished = nil
                 DispatchQueue.main.async {
                     self.selectedDinosaur = nil
-                    if self.currentRound < 3 {
+                    if self.currentRound < self.gameConfig.rounds.count {
                         self.currentRound += 1
                         self.wrongGuessesThisRound = 0
                         self.isProcessingAnswer = false
@@ -222,7 +222,7 @@ struct ToothacheGameView: View {
                     } else {
                         self.isGameComplete = true
                         // Use successCount (just incremented) as source of truth: 3 correct = win. Auto-return after audio + pause (no button for 4–6 year olds).
-                        if self.successCount == 3 {
+                        if self.successCount == self.gameConfig.rounds.count {
                             self.speechManager.speak("good-job-you-got-them-all")
                             DispatchQueue.main.asyncAfter(deadline: .now() + autoReturnDelay) {
                                 self.isPresented = false
@@ -325,15 +325,15 @@ struct ToothacheGameConfigs {
     /// Toothache: match the tooth to the correct grumpy dinosaur. Uses only dinosaurs that have tooth-* and grumpy-* imagesets.
     static var toothache: ToothacheGameConfig {
         let pool = dinosaursWithToothAndGrumpyImages
-        guard pool.count >= 3 else {
-            fatalError("Need at least 3 dinosaurs with tooth+grumpy images for Toothache, but only have \(pool.count). Add tooth-* and grumpy-* imagesets for more dinosaurs.")
+        guard pool.count >= 5 else {
+            fatalError("Need at least 5 dinosaurs with tooth+grumpy images for Toothache, but only have \(pool.count). Add tooth-* and grumpy-* imagesets for more dinosaurs.")
         }
         
         let shuffledAll = pool.shuffled()
-        let questionDinosaurs = Array(shuffledAll.prefix(3))
-        guard questionDinosaurs.count == 3,
-              Set(questionDinosaurs.map { $0.id }).count == 3 else {
-            fatalError("Need at least 3 unique dinosaurs for Toothache")
+        let questionDinosaurs = Array(shuffledAll.prefix(5))
+        guard questionDinosaurs.count == 5,
+              Set(questionDinosaurs.map { $0.id }).count == 5 else {
+            fatalError("Need at least 5 unique dinosaurs for Toothache")
         }
         
         var rounds: [ToothacheRound] = []

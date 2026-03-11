@@ -246,6 +246,12 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Feedback/is-as-tall-as"
         case "and":
             return "Feedback/and"
+        // Measure the Dinosaur: count before dinosaur name when stack has multiple (e.g. "3 T-Rex"); keys "1"–"5" → Feedback/1.m4a etc.
+        case "1": return "Feedback/1"
+        case "2": return "Feedback/2"
+        case "3": return "Feedback/3"
+        case "4": return "Feedback/4"
+        case "5": return "Feedback/5"
         case "you-cannot-choose-that-one-now", "you cannot choose that one now":
             return "Feedback/you-cannot-choose-that-one-now"
         case "thats-too-small-to-see", "that's too small to see", "too small to see":
@@ -371,6 +377,8 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Cover/cover-jurassic"
         case "cover-cretaceous", "cover cretaceous":
             return "Cover/cover-cretaceous"
+        case "cover-both", "cover both":
+            return "Cover/cover-both"
         case "choose-a-dinosaur-game", "choose a dinosaur game", "choose game":
             return "Cover/cover-choose-a-dinosaur-game"
         case "choose-a-pterosaur-game", "choose a pterosaur game":
@@ -397,6 +405,8 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Feedback/you-cant-be-serious-that-will-take-forever"
         case "game-measure-stack-too-tall", "that stack is too tall", "stack too tall":
             return "Feedback/game-measure-stack-too-tall"
+        case "game-measure-close-enough-for-government-work", "close enough for government work":
+            return "Feedback/game-measure-close-enough-for-government-work"
         case "that-dinosaur-is-too-tall", "that dinosaur is too tall":
             return "Feedback/that-dinosaur-is-too-tall"
         case "pick-a-pterosaur-first", "pick a pterosaur first":
@@ -490,6 +500,8 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Games/racing-the-winner-is"
         case "game-racing-the-winner-is":
             return "Games/game-racing-the-winner-is"
+        case "game-racing-its-a-tie", "its a tie":
+            return "Games/game-racing-its-a-tie"
         case "game-matrix-materials", "matrix materials":
             return "Games/game-matrix-materials"
         case "game-matrix-which-one", "which one is it", "tap the one":
@@ -508,6 +520,32 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Games/game-dino-footprints"
         case "game-dino-footprints-identify-the-footprint", "identify the footprint":
             return "Games/game-dino-footprints-identify-the-footprint"
+        case "game-dino-bones", "dino bones":
+            return "Games/game-dino-bones"
+        case "game-dino-bones-identify-the-skeleton", "identify the skeleton":
+            return "Games/game-dino-bones-identify-the-skeleton"
+        case "game-dino-push", "dino push":
+            return "Games/game-dino-push"
+        case "game-dino-push-choose-two-dinosaurs", "choose two dinosaurs":
+            return "Games/game-dino-push-choose-two-dinosaurs"
+        case "game-push-choose-your-first-strong-dinosaur", "choose your first strong dinosaur":
+            return "Games/game-push-choose-your-first-strong-dinosaur"
+        case "game-push-choose-your-second-strong-dinosaur", "choose your second strong dinosaur":
+            return "Games/game-push-choose-your-second-strong-dinosaur"
+        case "game-dino-push-choose-period", "choose a period":
+            return "Games/game-dino-push-choose-period"
+        case "game-dino-push-jurassic":
+            return "Games/game-dino-push-jurassic"
+        case "game-dino-push-cretaceous":
+            return "Games/game-dino-push-cretaceous"
+        case "game-dino-push-both":
+            return "Games/game-dino-push-both"
+        case "game-dino-push-its-a-tie":
+            return "Games/game-dino-push-its-a-tie"
+        case "game-dino-push-choose-first", "choose your first dinosaur to push":
+            return "Games/game-dino-push-choose-first"
+        case "game-dino-push-choose-second", "choose your second dinosaur to push":
+            return "Games/game-dino-push-choose-second"
         case "game-hint", "game dino footprints hint", "dino footprints hint":
             return "Games/game-hint"
         case "footprint-therapod", "therapod":
@@ -534,6 +572,14 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         case _ where normalized.hasPrefix("formation-name-"):
             let slug = String(normalized.dropFirst("formation-name-".count))
             return "Formations/\(slug)-formation"
+        // Dino Habitats: habitat name from Audio/Habitats/{slug}.m4a. Key: habitat-name-{slug}
+        case _ where normalized.hasPrefix("habitat-name-"):
+            let slug = String(normalized.dropFirst("habitat-name-".count))
+            return "Habitats/\(slug)"
+        // Dino Habitats: kid-friendly nickname from Audio/Habitats/nickname-{slug}.m4a. Prefer when exists.
+        case _ where normalized.hasPrefix("habitat-nickname-"):
+            let slug = String(normalized.dropFirst("habitat-nickname-".count))
+            return "Habitats/nickname-\(slug)"
         // Dino-Characteristics: when key is dino-char-* (characteristic imageName), use Dino-Characteristics/{suffix} so tail-spike.m4a / tail-club.m4a etc. are found
         case _ where normalized.hasPrefix("dino-char-"):
             var suffix = String(normalized.dropFirst("dino-char-".count))
@@ -780,16 +826,55 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             onAudioFinished?()
         }
     }
-    
+
+    /// Preferred TTS voice: enhanced en-US if available (more natural), else default. Cached for performance.
+    private static var _preferredVoice: AVSpeechSynthesisVoice?
+    private static var preferredVoice: AVSpeechSynthesisVoice? {
+        if let v = _preferredVoice { return v }
+        let voices = AVSpeechSynthesisVoice.speechVoices()
+        let enUS = voices.filter { $0.language.hasPrefix("en-US") }
+        let enhanced = enUS.first { $0.quality == .enhanced }
+        let premium = enUS.first { $0.quality == .premium }
+        _preferredVoice = premium ?? enhanced ?? enUS.first
+        return _preferredVoice
+    }
+
+    /// IPA pronunciations for dinosaur names and other tricky words. Add entries as needed.
+    private static let ttsPronunciationIPA: [String: String] = [
+        "Parasaurolophus": "ˌpɛ.rə.sɔ.ˈrɑ.lə.fəs",
+    ]
+
     func startSpeaking(_ text: String) {
-        let utterance = AVSpeechUtterance(string: text)
-        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        let utterance: AVSpeechUtterance
+        if let attributed = buildAttributedStringWithIPA(text) {
+            utterance = AVSpeechUtterance(attributedString: attributed)
+        } else {
+            utterance = AVSpeechUtterance(string: text)
+        }
+        utterance.voice = Self.preferredVoice ?? AVSpeechSynthesisVoice(language: "en-US")
         utterance.rate = 0.5 // Slower for children
         utterance.volume = 1.0 // Full volume
-        
-        // Delegate is set in init
+
         isPlaying = true
         synthesizer.speak(utterance)
+    }
+
+    /// Builds attributed string with IPA for known words. Returns nil if no IPA mappings apply.
+    private func buildAttributedStringWithIPA(_ text: String) -> NSAttributedString? {
+        let lower = text.lowercased()
+        var attributed: NSMutableAttributedString?
+        for (word, ipa) in Self.ttsPronunciationIPA {
+            let search = word.lowercased()
+            guard lower.contains(search) else { continue }
+            if attributed == nil {
+                attributed = NSMutableAttributedString(string: text)
+            }
+            let range = (text as NSString).range(of: word, options: .caseInsensitive)
+            if range.location != NSNotFound {
+                attributed?.addAttribute(NSAttributedString.Key(rawValue: AVSpeechSynthesisIPANotationAttribute), value: ipa, range: range)
+            }
+        }
+        return attributed
     }
 }
 
@@ -800,7 +885,7 @@ struct MatchingGameView: View {
     @State private var speechManager = SpeechManager()
     @State private var currentConfig: MatchingGameConfig
     @State private var currentRound: Int = 1
-    private let totalRounds: Int = 3
+    private let totalRounds: Int = 5
     @State private var selectedDinosaur: Dinosaur?
     @State private var selectedCharacteristic: Characteristic?
     @State private var matchedPairs: Set<MatchedPair> = [] // Track specific matched pairs
@@ -921,8 +1006,8 @@ struct MatchingGameView: View {
                                         .fontWeight(isHighlighted ? .semibold : .regular)
                                         .foregroundColor(.primary)
                                         .multilineTextAlignment(.leading)
-                                        .lineLimit(3)
-                                        .minimumScaleFactor(0.5)
+                                        .lineLimit(2)
+                                        .minimumScaleFactor(0.65)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .opacity(isHighlighted ? 1.0 : 0.5)
                                 }

@@ -1,0 +1,11 @@
+{
+  "formation_id": "LANCE_HELL_CREEK",
+  "base_habitat": "COASTAL_LOWLANDS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Fluvial sandstone, lignite, mudstone and dark organic-rich sediment.",
+    "color_palette": ["Tan-grey", "Forest green-grey", "Brownish-black", "Yellowish-grey"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE", "HELL_CREEK_ADDITIONS"]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "habitat_river_delta_wetlands_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "RIVER_DELTA_WETLANDS", 
+      "formation_id": "WESSEX_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Bright mid-day view of river delta wetlands",
+      "features": [
+        "A network of slow-moving clear water channels",
+        "Muddy islands covered in towering horsetails (Equisetum)",
+        "Banks of soft, wet peat and moss",
+        "Brilliant sunlight reflecting off the intricate waterways",
+        "Dense thickets of water-tolerant ferns"
+      ],
+      "action": "A bright, intricate wetland scene at noon. The water is clear and sparkling, winding through a world of green horsetails and mud. No grass."
+    }
+  },
+  "visuals": {
+    "ground": "Saturated black mud and soft peat islands, dominated by vertical horsetails and spreading ferns. No grass.",
+    "water": "Sparkling, clear channels with visible sandy bottoms in shallow spots.",
+    "sky": "Humid but bright blue sky with soft, white clouds."
+  },
+  "habitat_id": "RIVER_DELTA_WETLANDS",
+  "physics": {
+    "altitude": "sea_level_delta",
+    "water": "high_dynamic",
+    "humidity": "high"
+  },
+  "strata_specifics": {
+    "ground_texture": "Slick mud and spongy peat mounds.",
+    "color_palette": ["Teal", "Dark Mud", "Vibrant Green", "Reflective Silver"]
+  },
+  "flora_manifest": [
+    "Giant Horsetails",
+    "Water ferns",
+    "Peat moss",
+    "Early reeds"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, dry land, desert, mountains, gloom, 90s CGI, grainy, humans"
+}

@@ -94,7 +94,7 @@ private let dinoFormationsPool: [Dinosaur] = {
         Dinosaur(id: 26, name: "Compsognathus", icon: "🦎", imageName: "dino-compsognathus", characteristicIds: []),
         Dinosaur(id: 27, name: "Deinonychus", icon: "🦖", imageName: "dino-deinonychus", characteristicIds: []),
         Dinosaur(id: 28, name: "Diplodocus", icon: "🦕", imageName: "dino-diplodocus", characteristicIds: []),
-        Dinosaur(id: 29, name: "Dromaeosaurus", icon: "🦖", imageName: "dino-dromeosaurus", characteristicIds: []),
+        Dinosaur(id: 29, name: "Dromaeosaurus", icon: "🦖", imageName: "dino-dromaeosaurus", characteristicIds: []),
         Dinosaur(id: 30, name: "Eosinopteryx", icon: "🦅", imageName: "dino-eosinopteryx", characteristicIds: []),
         Dinosaur(id: 31, name: "Giganotosaurus", icon: "🦖", imageName: "dino-giganotosaurus", characteristicIds: []),
         Dinosaur(id: 32, name: "Kosmoceratops", icon: "🦏", imageName: "dino-kosmoceratops", characteristicIds: []),
@@ -110,7 +110,9 @@ private let dinoFormationsPool: [Dinosaur] = {
         Dinosaur(id: 42, name: "Allosaurus", icon: "🦖", imageName: "dino-allosaurus", characteristicIds: []),
         Dinosaur(id: 43, name: "Oviraptor", icon: "🦅", imageName: "dino-oviraptor", characteristicIds: []),
     ]
-    return fromCatalog + extras
+    let combined = fromCatalog + extras
+    var seen: Set<Int> = []
+    return combined.filter { seen.insert($0.id).inserted }
 }()
 
 /// Dinosaur belongs to formation if its imageName is in that formation's set.
@@ -170,7 +172,7 @@ struct DinoFormationsGameView: View {
     /// When true, show the formation hints overlay (location + period).
     @State private var showFormationHints = false
 
-    private let totalRounds = 3
+    private let totalRounds = 5
     private let matchesNeededPerRound = 3
 
     private var matchedDinosaursThisRoundInTapOrder: [Dinosaur] {
@@ -251,6 +253,7 @@ struct DinoFormationsGameView: View {
             }
         } else if isGameComplete {
             endSequenceView
+                .id("dino-formations-victory")
         } else {
             ProgressView("Loading…")
                 .padding()
@@ -530,7 +533,7 @@ struct DinoFormationsGameView: View {
             } else {
                 let d = uniqueVictoryDinosaurs[0]
                 speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
-                speechManager.onAudioFinished = { advanceEndHighlight() }
+                speechManager.onAudioFinished = { self.advanceEndHighlight() }
             }
         }
     }
@@ -610,7 +613,7 @@ private struct DinoFormationsStarLayoutView: View {
     var body: some View {
         GeometryReader { geo in
             ZStack(alignment: .center) {
-                ForEach(Array(slots.enumerated()), id: \.element.id) { index, dino in
+                ForEach(Array(slots.enumerated()), id: \.offset) { index, dino in
                     DinoFormationsCircleView(dino: dino, isMatched: matchedIds.contains(dino.id), isIntroHighlighted: introHighlightIndex == index)
                         .position(
                             x: geo.size.width / 2 + radius * CGFloat(cos(dinoFormationsStarAngles[index])),
@@ -644,6 +647,8 @@ private struct DinoFormationsCircleView: View {
                     .overlay(Text(dino.icon).font(.system(size: 32)))
             }
         }
+        .scaleEffect(isIntroHighlighted ? 1.08 : 1.0)
+        .animation(.easeInOut(duration: 0.25), value: isIntroHighlighted)
         .overlay(Circle().stroke(strokeColor, lineWidth: isMatched || isIntroHighlighted ? 4 : 2).frame(width: dinoFormationsCircleSize, height: dinoFormationsCircleSize))
         .opacity(isMatched ? 0.9 : 1.0)
     }
@@ -655,20 +660,42 @@ private struct DinoFormationsCircleView: View {
     }
 }
 
+/// Victory list: square images (72×72) like Match the Dinosaur, not circles — consistent across all games.
+private let dinoFormationsVictoryImageSize: CGFloat = 72
+
 private struct DinoFormationsEndRowView: View {
     let dino: Dinosaur
     let isHighlighted: Bool
-    private let rowHeight: CGFloat = 100
+    private let rowHeight: CGFloat = 92
 
     var body: some View {
         HStack(spacing: 16) {
-            DinoFormationsCircleView(dino: dino, isMatched: true)
-                .frame(width: dinoFormationsCircleSize, height: dinoFormationsCircleSize)
-                .opacity(isHighlighted ? 1.0 : 0.4)
+            Group {
+                if let name = dino.imageName, ImageAssetCache.imageExists(named: name) {
+                    Image(name)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: dinoFormationsVictoryImageSize, height: dinoFormationsVictoryImageSize)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .opacity(isHighlighted ? 1.0 : 0.4)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
+                        )
+                } else {
+                    Text(dino.icon)
+                        .font(.system(size: 40))
+                        .frame(width: dinoFormationsVictoryImageSize, height: dinoFormationsVictoryImageSize)
+                        .opacity(isHighlighted ? 1.0 : 0.4)
+                }
+            }
             Text(dino.name)
                 .font(.title2)
                 .fontWeight(isHighlighted ? .semibold : .regular)
                 .foregroundColor(.primary)
+                .multilineTextAlignment(.leading)
+                .lineLimit(2)
+                .minimumScaleFactor(0.65)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .opacity(isHighlighted ? 1.0 : 0.5)
         }

@@ -1,0 +1,44 @@
+{
+  "id": "habitat_river_margins_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "RIVER_MARGINS", 
+      "formation_id": "RIPARIAN_INTERFACE" 
+    },
+    "layer_3_action": {
+      "subject": "Bright mid-day view of lush river margins",
+      "features": [
+        "The saturated edge of a clear river with gentle lapping water",
+        "Muddy banks carpeted in vibrant green liverworts and mosses",
+        "Dense overhanging fern fronds and low-lying cycads",
+        "Exposed tree roots of water-logged conifers at the water's edge",
+        "Brilliant sunlight filtering through feathery leaves"
+      ],
+      "action": "A detailed, close-up landscape of the river's edge. The ground is a wet, textured sponge of moss and ferns. The water is clear enough to see submerged mossy rocks."
+    }
+  },
+  "visuals": {
+    "ground": "Glistening dark mud and soft peat mounds at the immediate water-line, covered in liverworts. No grass. Ferns lean over the water.",
+    "water": "Clear, shallow water edges reflecting the bright blue sky and green foliage.",
+    "sky": "Bright blue, partially visible through the canopy of riparian trees."
+  },
+  "habitat_id": "RIVER_MARGINS",
+  "physics": {
+    "altitude": "lowland",
+    "water": "saturated_edge",
+    "humidity": "high"
+  },
+  "strata_specifics": {
+    "ground_texture": "Slick, wet mud and spongy bryophyte mats with protruding roots.",
+    "color_palette": ["Vibrant Moss Green", "Dark Earth Brown", "Clear Teal", "Golden Sun-flecks"]
+  },
+  "flora_manifest": [
+    "Liverworts",
+    "Bryophyte moss",
+    "Riparian ferns",
+    "Exposed Conifer roots"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, lawns, dry plains, desert, gloom, night, 90s CGI, grainy, humans"
+}

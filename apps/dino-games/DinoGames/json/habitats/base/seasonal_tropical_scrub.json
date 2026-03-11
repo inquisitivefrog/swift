@@ -1,0 +1,39 @@
+{
+  "id": "habitat_seasonal_tropical_scrub_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "SEASONAL_TROPICAL_SCRUB", 
+      "formation_id": "MAEVARANO_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant mid-day view of seasonal tropical scrub",
+      "features": [
+        "Stunted, leathery-leaved trees and thorny shrubs",
+        "Dry, reddish sandy soil with occasional rock outcrops",
+        "Patches of hardy, low-lying ferns and dry moss crusts",
+        "Brilliant, harsh sunlight with intense clarity",
+        "A distant, dry riverbed with pale sand",
+        "No grass; only specialized, drought-tolerant prehistoric flora"
+      ],
+      "action": "A bright, sun-baked island landscape at noon. The colors are warm and earthy, with the green of the scrub looking tough and resilient."
+    }
+  },
+  "visuals": {
+    "ground": "Reddish sandy soil and iron-rich rocks. Ground cover is sparse, consisting of dry bryophyte crusts and low, scrubby ferns. No grass.",
+    "sky": "Blazing blue sky, completely clear, reflecting intense tropical heat."
+  },
+  "habitat_id": "SEASONAL_TROPICAL_SCRUB",
+  "physics": {
+    "altitude": "island_interior",
+    "water": "very_low_seasonal",
+    "humidity": "low_seasonal"
+  },
+  "strata_specifics": {
+    "ground_texture": "Coarse red sand and sun-cracked silt.",
+    "color_palette": ["Terracotta Red", "Dusty Olive", "Golden Ochre", "Vibrant Blue"]
+  },
+  "flora_manifest": [ "Thorny Bennettitales", "Hardy Cycads", "Xerophytic ferns", "Biological soil crusts" ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, lawns, lush jungle, swamp, gloom, night, 90s CGI, grainy, humans"
+}

@@ -1,8 +1,0 @@
-{
-  "habitat_id": "COASTAL_WETLANDS",
-  "physics": { "altitude": "sea_level", "water": "saturated" },
-  "visuals": {
-    "ground": "Soft peat and black mud",
-    "water": "Deep marshland and reed-beds",
-  }
-}

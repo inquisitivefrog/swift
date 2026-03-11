@@ -1,0 +1,52 @@
+{
+  "id": "habitat_coastal_lowlands_midday_v2",
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_ANIMATED_FEATURE_V3"
+    },
+    "layer_2_setting": {
+      "habitat_id": "COASTAL_LOWLANDS"
+    },
+    "layer_3_action": {
+      "subject": "Bright, sunny view of lush prehistoric coastal lowlands",
+      "features": [
+        "dense, vibrant green water-tolerant vegetation, including large ferns and early mangrove-like trees",
+        "sparkling lagoons with clear, warm water",
+        "slow-moving estuaries winding gracefully",
+        "bright sunlight illuminating ethereal mist rising from water in patches",
+        "clearly visible banks of dark, rich organic mud covered in liverworts and moss",
+        "clusters of horsetails (Equisetum) along the water's edge"
+      ],
+      "action": "Depict a cheerfully bright and warm coastal lowland environment at mid-day, focusing on the vivid plant life (ferns, mosses, horsetails, no grass), sunlit water features, and clear skies, with any mist appearing magical."
+    }
+  },
+  "visuals": {
+    "ground": "Expansive areas of clearly visible dark, rich organic mud, highlighted by sunlight along the banks of lagoons and estuaries, supporting dense, vibrant green ferns, liverworts, and mosses. No grass.",
+    "water": "Numerous sparkling lagoons and slow, winding estuaries with clear, warm water, brightly reflecting the blue sky, with gentle, wispy mist rising in sunlit patches.",
+    "sky": "Bright, clear blue sky with fluffy white clouds, strong, direct mid-day sun creating a warm and inviting atmosphere."
+  },
+  "habitat_id": "COASTAL_LOWLANDS",
+  "physics": {
+    "altitude": "low",
+    "water": "high",
+    "humidity": "moderate_humid",
+    "temperature": "warm"
+  },
+  "strata_specifics": {
+    "ground_texture": "Wet, deeply organic mud, clearly visible with texture, supporting lush, vibrant ferns, mosses, and horsetails. No grass.",
+    "color_palette": ["Vibrant Emerald Greens", "Rich Chocolate Browns", "Sky Blues", "Golden Yellows (sunlight)"]
+  },
+  "flora_manifest": [
+    "WATER_TOLERANT_TREES",
+    "LARGE_FERNS",
+    "EARLY_MANGROVE_LIKE_PLANTS",
+    "AQUATIC_PLANTS",
+    "LIVERWORTS_AND_MOSS",
+    "EQUISETUM_HORSETAILS"
+  ],
+  "fauna_manifest": [
+    "NO_FAUNA_DEPICTED"
+  ],
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "mood": "Lush, bright, inviting, vibrant, scientifically accurate (no grass)"
+}

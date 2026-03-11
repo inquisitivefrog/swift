@@ -1,0 +1,43 @@
+{
+  "id": "habitat_semi_arid_seasonal_floodplains_midday_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "SEMI_ARID_SEASONAL_FLOODPLAINS", 
+      "formation_id": "FLASH_FLOOD_DISTRICT" 
+    },
+    "layer_3_action": {
+      "subject": "Sun-drenched seasonal semi-arid floodplain",
+      "features": [
+        "A landscape of drying mudflats and sandy rises",
+        "Vibrant green carpets of moss and ferns appearing in low-lying tracks",
+        "Stunted Ginkgos and leathery Cycads providing sparse shade",
+        "Deeply textured mud-cracks illuminated by the high sun",
+        "No grass; only primitive, fast-growing ground cover"
+      ],
+      "action": "A cinematic landscape at noon showing a wide plain in transition. The lighting is warm and golden, highlighting the textures of the parched earth and the pockets of prehistoric greenery."
+    }
+  },
+  "visuals": {
+    "ground": "Vividly cracked mud and sandy silt. The green life is comprised of low-lying, ancient spore-bearing plants that grow quickly after rain. Absolutely no grass.",
+    "sky": "Brilliant blue sky, wide and open, with no clouds."
+  },
+  "habitat_id": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+  "physics": {
+    "altitude": "inland_basin",
+    "water": "flash_flood_variable",
+    "humidity": "variable"
+  },
+  "strata_specifics": {
+    "ground_texture": "Hard-baked mud plates and wind-blown silt.",
+    "color_palette": ["Clay Red", "Desert Gold", "Deep Olive", "Bright Blue"]
+  },
+  "flora_manifest": [
+    "Fast-growing ferns",
+    "Ephemeral moss mats",
+    "Stunted Ginkgos",
+    "Leathery Cycads"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, lawn, meadow, forest, ocean, gloom, 90s CGI, grainy, humans"
+}

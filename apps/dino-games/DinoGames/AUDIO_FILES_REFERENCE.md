@@ -19,17 +19,23 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | `Feedback/pick-a-pterosaur-first.m4a` | Matching (Air): tap before selecting pterosaur |
 | `Feedback/you-cant-be-serious-that-will-take-forever.m4a` | Measure the Dinosaur!: stack has 6 dinosaurs, would take forever |
 | `Feedback/game-measure-stack-too-tall.m4a` | Measure the Dinosaur!: right stack is taller than left (overshot), round ends |
+| `Feedback/game-measure-close-enough-for-government-work.m4a` | Measure the Dinosaur!: failsafe when no valid choices left — "Close enough for government work!" then read comparison |
 | `Feedback/that-dinosaur-is-too-tall.m4a` | Measure the Dinosaur!: reject add when dinosaur would overshoot (too tall for remaining height) |
 | `Feedback/pick-another-one.m4a` | Matching: already-matched creature tapped |
 | `Feedback/is-heavier.m4a` | Weigh game: “X is heavier” |
 | `Feedback/is-as-tall-as.m4a` | Measure the Dinosaur!: "X is as tall as [stack]" (between left dino name and stack list) |
 | `Feedback/and.m4a` | Measure the Dinosaur!: "and" between stack items (e.g. "Compsognathus and Deinonychus") |
+| `Feedback/1.m4a` | Measure the Dinosaur!: count "one" when stack has multiple of same dinosaur (e.g. "3 T-Rex" → "three" + "T-Rex") |
+| `Feedback/2.m4a` | Measure the Dinosaur!: count "two" |
+| `Feedback/3.m4a` | Measure the Dinosaur!: count "three" |
+| `Feedback/4.m4a` | Measure the Dinosaur!: count "four" |
+| `Feedback/5.m4a` | Measure the Dinosaur!: count "five" |
 | `Feedback/they-both-weigh-about-the-same.m4a` | Weigh game: same weight |
 | `Feedback/game-balance-pick-someone-heavier.m4a` | Balance: chose too light |
 | `Feedback/game-balance-good-job-keep-going.m4a` | Balance: good progress; Measure: heights don't match yet, keep trying (key: game-measure-good-job-keep-going) |
 | `Feedback/game-balance-see-I-told-you.m4a` | Balance: balanced with 1–2 items |
 | `Feedback/game-balance-almost-there.m4a` | Balance: nearly balanced |
-| `Feedback/starting-whistle.m4a` | Racing: start (if used) |
+| `Feedback/starting-whistle.m4a` | Racing: start; Dino Push: referee blows whistle before each round |
 | `Feedback/game-intro-pterosaur.m4a` | Match the Pterosaur intro (if used) |
 
 ---
@@ -49,6 +55,7 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | `Games/game-name-that-dinosaur.m4a` | Name That Dinosaur |
 | `Games/game-name-that-pterosaur.m4a` | Name That Pterosaur |
 | `Games/game-dino-footprints.m4a` | Dino Footprints |
+| `Games/game-dino-bones.m4a` | Dino Bones |
 | `Games/game-racing-dinosaurs.m4a` | Racing Dinosaurs |
 | `Games/game-matrix-materials.m4a` | Matrix Materials |
 | `Games/game-find-mama.m4a` | Find Mama |
@@ -90,6 +97,12 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | `Games/game-dino-ages-tap-the-period-to-hear-description.m4a` | Dino Ages: Source Ages hints intro (e.g. “Tap the period to hear which dinosaurs lived there”) |
 | `Games/game-dino-ages-jurassic-dinosaurs.m4a` | Dino Ages: Source Ages — Jurassic period description (clades/dinosaurs found) |
 | `Games/game-dino-ages-cretaceous-dinosaurs.m4a` | Dino Ages: Source Ages — Cretaceous period description (clades/dinosaurs found) |
+| `Games/game-dino-habitats.m4a` | Dino Habitats: game intro / transition |
+| `Games/game-dino-habitats-choose-dinosaur.m4a` | Dino Habitats: "Which dinosaur prefers this habitat?" |
+| `Games/game-dino-push-choose-period.m4a` | Dino Push: period selection prompt (copied from Cover) |
+| `Games/game-dino-push-jurassic.m4a` | Dino Push: Jurassic option (copied from Cover) |
+| `Games/game-dino-push-cretaceous.m4a` | Dino Push: Cretaceous option (copied from Cover) |
+| `Games/game-dino-push-both.m4a` | Dino Push: Both option (copied from Cover) |
 
 ---
 
@@ -157,6 +170,8 @@ Examples: `Ptero-Characteristics/wings.m4a`, `Ptero-Characteristics/crest.m4a`, 
 | **Trays** | `Trays/contents-{slug}.m4a` | Dino Lunch: tray contents |
 | **Clues** | `Clues/clue-{dinosaur}-{hint}.m4a` | Find Mama: egg clues |
 | **Formations** | `Formations/{slug}-formation.m4a` | Dino Formations: formation name (key `formation-name-{slug}`) |
+| **Habitats** | `Habitats/{slug}.m4a` | Dino Habitats: scientific habitat name (key `habitat-name-{slug}`). Example: `Habitats/seasonal-river-plains.m4a`. |
+| **Habitats** | `Habitats/nickname-{slug}.m4a` | Dino Habitats: kid-friendly nickname (key `habitat-nickname-{slug}`). **Prefer when present** — e.g. `Habitats/nickname-meadow.m4a`, `nickname-marsh.m4a`, `nickname-swamp.m4a`, `nickname-savannah.m4a`, `nickname-lakeshore.m4a`, `nickname-rainforest.m4a`. Falls back to scientific name if missing. |
 | **Materials** | `Materials/{slug}.m4a` | Matrix Materials: limestone, sandstone, etc. |
 
 ---
