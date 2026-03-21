@@ -1,0 +1,27 @@
+{
+  "id": "tree_fern_grove_008",
+  "species": "Tree Fern (Dicksonia/Cyathea type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAPPLED_FOREST_SUNLIGHT",
+  "formation_ref": "MORRISON_LJ",
+  "environment_details": {
+    "habitat": "HUMID_VALLEY_FOREST",
+    "flora": [
+      "Multiple Mature Tree Ferns (slender, dark, fibrous trunks; huge spreading crowns of lacy fronds)",
+      "Ground ferns and mosses (forming a lush carpet)",
+      "Ancient fallen logs covered in moss",
+      "Soft mist in the background"
+    ],
+    "ground_palette": [
+      "Deep forest green",
+      "Rich humus brown",
+      "Shadowy grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; tactile textures; emphasis on the height and the delicate canopy; lush, humid atmosphere with high visual density of greenery."
+  },
+  "visual_logic": {
+    "composition": "An eye-level view looking into a misty, lush grove of tree ferns. The trunks should be staggered to show depth, with their wide fronds overlapping to create a soft 'roof' of greenery over a mossy floor.",
+    "ground": "A rich, damp forest floor with a thick carpet of green moss and small ground-dwelling ferns.",
+    "lighting": "Beams of sunlight filtering through a misty canopy (god rays), creating bright highlights on the green fronds and leaving the forest floor in soft, cool shadows."
+  }
+}

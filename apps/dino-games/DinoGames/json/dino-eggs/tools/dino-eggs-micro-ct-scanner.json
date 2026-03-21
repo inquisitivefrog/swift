@@ -1,0 +1,8 @@
+{
+    "id": "ui_dino_egg_micro_ct_scanner",
+    "morphology": "dinosaur_egg_micro_ct_scanner",
+    "prompt": "High-fidelity 3D render of a compact, desktop micro-CT scanner, meticulously designed for scanning dinosaur eggs and other small paleontological specimens. The scanner is a sleek, rectangular unit, about 60-80 cm wide and 50-60 cm deep, and 70-80 cm tall, designed to sit on a laboratory workbench. It features a prominent, front-loading access door (perhaps with a small, clear viewing window) that opens to reveal a compact internal scanning chamber. Inside the chamber, a specialized rotating sample stage holds a single, large, fossilized dinosaur egg (e.g., a hadrosaur egg), clearly demonstrating the unit's capacity. The exterior is a clean, minimalist design in white and dark gray, with subtle blue LED indicators. A separate, high-resolution monitor displaying a simulated CT scan of an egg (showing internal structures) sits adjacent to the unit. Background: A clean, well-organized paleontological research lab with specialized equipment and fossil diagrams in the soft-focus background. Focus on the scanner's desktop size, precision aesthetic, the visible egg in its internal chamber, and the integrated scientific workstation feel.",
+    "visual_logic": "Generates a sleek, desktop-sized micro-CT scanner, showing an enclosed chamber with a dinosaur egg on a rotating stage, emphasizing precision and lab use.",
+    "style_notes": "No scale bar. Emphasize desktop size, precision, enclosed chamber, and a clean lab aesthetic. Visible egg in chamber.",
+    "definition_match": "Desktop micro CT scanner, Small enough for a desk, Precision instrument, Scans dinosaur eggs, Enclosed chamber."
+}

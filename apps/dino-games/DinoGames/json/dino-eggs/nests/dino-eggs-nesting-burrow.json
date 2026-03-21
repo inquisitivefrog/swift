@@ -1,0 +1,8 @@
+{
+    "id": "ui_oryctodromeus_den_nest",
+    "morphology": "oryctodromeus_den",
+    "prompt": "High-fidelity 3D render of a paleontological excavation site revealing a fossilized Oryctodromeus burrow. The image is a cross-section of the earth, cleanly cut to expose a subterranean tunnel, approximately 2.5 meters long and 40 cm in diameter, leading to a widened end chamber (the den/nest space) about 1 meter in diameter. The burrow's walls show clear scratch marks and compaction from digging. Within the end chamber, the fossilized skeletons or clear imprints of an adult Oryctodromeus and two smaller juveniles are visible, arranged as if resting together. No eggs are explicitly visible, but the arrangement strongly suggests a family living space. The surrounding geology is stable, layered sedimentary rock. The scene is lit by harsh, artificial excavation lighting (like work lamps), highlighting the excavated features. Focus on the internal structure of the burrow, the fossilized occupants, and the geological context of the find.",
+    "visual_logic": "Creates a detailed cross-section of a fossilized burrow with a tunnel and an enlarged end chamber, containing adult and juvenile skeletons/imprints, emphasizing a subterranean protective den.",
+    "style_notes": "No scale bar. Cross-section view. Fossilized skeletons/imprints. Geological layers. Excavation lighting. Den-like, not open-air.",
+    "definition_match": "Fossil burrow (tunnel + chamber), Adult + juveniles together, Tunnel length/diameter (~2-3m, ~30-50cm), End chamber widened (nest space), Used for raising young/protection."
+}

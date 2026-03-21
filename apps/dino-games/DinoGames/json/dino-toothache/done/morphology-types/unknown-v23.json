@@ -1,0 +1,11 @@
+{
+  "id": "finding_iguanodon_ridged_leaf_paleo4",
+  "subject": "dino_bones_paleontologist_4 discovering an Iguanodon tooth",
+  "visual_logic": {
+    "character_specs": "Paleontologist 4: White male, blonde hair, blue field shirt.",
+    "action": "He is holding a large, robust teardrop-shaped tooth in his palm, brushing away sand from the vertical ridges on its surface.",
+    "morphology_priority": "THE RIDGED LEAF: The tooth is thick and leaf-shaped with very distinct vertical ridges (pleats) running down the face. The top edge is jagged. It looks significantly larger and more 'industrial' than the Stegosaurus spade.",
+    "color": "Warm amber-brown or rust-orange, looking like it was found in iron-rich soil.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Emphasize the vertical 'pleats' on the tooth surface as this is the primary way players will identify it."
+  }
+}

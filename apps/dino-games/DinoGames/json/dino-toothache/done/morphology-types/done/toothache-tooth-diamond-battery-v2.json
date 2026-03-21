@@ -1,0 +1,11 @@
+{
+  "id": "finding_hadrosaur_pavement_paleo2",
+  "subject": "dino_bones_paleontologist_2 discovering a fossilized Hadrosaur dental pavement",
+  "visual_logic": {
+    "character_specs": "Paleontologist 2: Hispanic female, brunette hair in a ponytail, wearing a red field shirt and a utility belt.",
+    "action": "She is holding a **flat, rectangular fossilized block** in her palm. She is using a small brush to clear away sand from the top surface.",
+    "morphology_priority": "THE GRINDING MILL: The top of the fossil shows a **dense, interlocking pattern of small, diamond-shaped teeth**. It looks like a section of a cobblestone street or a very rough, organic washboard. There are NO long prongs like the Triceratops tooth; this is a flat, heavy grinding plate.",
+    "color": "Dusty tan and charcoal grey, looking like ancient, mineralized stone.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Ensure the 'diamond' pattern on the surface is the focal point, making it clearly different from the blocky Ceratopsian shears."
+  }
+}

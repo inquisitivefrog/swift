@@ -1,0 +1,19 @@
+[
+  {
+    "id": "compsognathus_tooth_search_005",
+    "species": "Compsognathus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SOLNHOFEN",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Compsognathus is in a frantic, high-speed 'stop-and-search' pose on a white sand beach. Its body is tilted forward, snout nearly touching the sand, while its tail is arched high for balance. One tiny, two-fingered hand is clutched to its cheek in a classic 'home alone' pained expression. Its large, dark eyes are wide and watery, scanning the fine ivory sand for its lost tooth. Tiny puffs of sand are kicked up by its feet, emphasizing its twitchy, nervous energy.",
+    "visual_logic": {
+      "palette": ["Cream white", "Ivory", "Pale yellow", "Soft beige", "Light grey"],
+      "flora": ["Early palm trees", "Pandanus-like shrubs", "Cycads"],
+      "fauna": ["Flies", "Allodaposuchus", "Dragonflies"],
+      "substrate": "Fine white carbonate sand and Plattenkalk limestone outcrops"
+    },
+    "behavioral_intent": "High-fidelity expressive physical comedy conveying: 'My mouth hurts and I think I dropped a tooth around here somewhere'."
+  }
+]

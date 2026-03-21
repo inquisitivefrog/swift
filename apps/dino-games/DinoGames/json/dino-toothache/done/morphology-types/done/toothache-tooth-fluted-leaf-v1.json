@@ -1,0 +1,11 @@
+{
+  "id": "toothache-ankylosaurus-tooth-find-ACTION",
+  "subject": "dino_bones_paleontologist_3 discovering a small tooth in matrix",
+  "character_ref": "dino_bones_paleontologist_3",
+  "visual_logic": {
+    "composition": "Medium close-up. Paleontologist_3 (curly black hair, white sun hat) is hunched over a wooden sifting screen resting over a bucket.",
+    "action": "He has just spotted the tiny, leaf-shaped tooth among a pile of grey river pebbles and mudstone. He is using a pair of stainless steel tweezers to carefully lift the 'grinder' tooth out of the sifter. A magnifying loupe is hanging around his neck.",
+    "details": "The dappled light of the Two Medicine woodland hits the wet pebbles in the tray, making the fossil tooth stand out. His purple tee shows a few damp mud splatters from the work.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; emphasize the 'treasure hunt' aspect of finding small teeth."
+  }
+}

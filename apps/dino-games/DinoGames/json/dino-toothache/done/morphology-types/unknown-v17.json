@@ -1,0 +1,12 @@
+{
+  "id": "finding_baryonyx_paleo3_hooked_needle_REVISED_FINAL",
+  "subject": "dino_bones_paleontologist_3 discovering a Baryonyx tooth",
+  "visual_logic": {
+    "composition": "A crisp, bright close-up at a sunlit riverbank dig site. **dino_bones_paleontologist_3** is in the foreground, focused on a specimen.",
+    "character_specs": "Younger male paleontologist, curly black hair, Black race. He wears a khaki safari vest over a neutral shirt. His expression is one of keen scientific interest and gentle discovery.",
+    "action": "He is holding a pair of silver tweezers. The tweezers are carefully gripping a **single, fossilized Baryonyx tooth**. The tooth should be prominently displayed, perfectly centered in the shot, as he lifts it from a small, wet sifting screen or a patch of damp, reddish-brown clay.",
+    "morphology_priority": "THE HOOKED NEEDLE: The tooth is long, slender, and slightly curved, like a dark, polished sewing needle. It has a smooth, conical shape with very fine, almost imperceptible serrations. It should look like a delicate but robust fish-gripping tool.",
+    "details": "The background shows blurred, vibrant green swamp vegetation and sparkling water, consistent with a clear, sunny day. The focus is entirely on the paleontologist's hands and the tooth.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; maintain exact character details and 'toy-like' proportions. Use bright, high-contrast lighting. Emphasize clean lines and saturated colors. Avoid any moody lighting, aggressive angles, or 'stuck in the ground' compositions."
+  }
+}

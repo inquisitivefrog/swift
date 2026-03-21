@@ -1,0 +1,19 @@
+[
+  {
+    "id": "amargasaurus_toothache_puzzle_024",
+    "species": "Amargasaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "LA AMARGA",
+    "habitat_ref": "BRAIDED_RIVER_CHANNELS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Amargasaurus is standing knee-depth in a clear, shallow river channel, its neck elegantly arched so its head is close to a sandy bank. One front foot is gingerly pawing at the wet sand, uncovering a cluster of river stones. Its iconic double-row of neck spines are fanned out slightly, vibrating with a soft 'clatter' of discomfort. The dinosaur has its mouth tilted open, one hand hovering near its jaw, and its eyes are squeezed in a focused 'searching' squint. It looks up at the player, its nostrils bubbling slightly in the water, as it waits for help identifying the missing tooth among the pebbles.",
+    "visual_logic": {
+      "palette": ["Terracotta red", "Sandstone yellow", "Deep teal", "Emerald green", "Pearl white"],
+      "flora": ["Araucaria trees", "Ferns", "Clubmosses"],
+      "fauna": ["Small crocodylomorphs", "Early birds", "Fish"],
+      "substrate": "Clean river sand mixed with rounded, colorful jasper and agate pebbles"
+    },
+    "behavioral_intent": "Vibrant and slightly rhythmic distress. The rattling of the spines and the splashing in the water create a lively but clear signal that the patient needs attention."
+  }
+]

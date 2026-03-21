@@ -1,0 +1,14 @@
+{
+  "id": "searching_spinosaurus_01",
+  "subject": "dino_racer_spinosaurus searching for a lost tooth",
+  "character_ref": "dino_racer_spinosaurus",
+  "tech_ref": "FOSSIL_SITE_SQUARE",
+  "lighting_ref": "CLOUDY_RIVER_DAY",
+  "formation_ref": "BAHARAIYA_OASIS",
+  "visual_logic": {
+    "composition": "A dynamic, medium-wide shot of the **dino_racer_spinosaurus** in a shallow, murky river or swamp. He has muted green-brown skin, a very long, crocodile-like snout, and his distinctive giant sail on his back. He is lunging slightly, trying to snap at a prehistoric fish (e.g., *Onchopristis* - a giant sawfish) in the water.",
+    "action": "He has an annoyed, splashing expression, as if his missing tooth is making it hard to grip the fish. He's looking around the Bahariya Oasis formation.",
+    "environment_details": "The background shows lush, humid swamp foliage, ancient ferns, and cloudy skies, characteristic of a Cretaceous river delta.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded, toy-like proportions; emphasize his unique sail and long snout, and his frustrated fishing attempt."
+  }
+}

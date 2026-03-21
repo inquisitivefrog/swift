@@ -1,0 +1,29 @@
+{
+  "id": "dino_toothache_win_screen_spino_01",
+  "project_name": "Dino Toothache! Player Wins!",
+  "style_ref": "STYLE_3D_ANIMATED_FEATURE_V4_HIGH_FIDELITY",
+  "subject": "A triumphant Spinosaurus standing in a shallow, sparkling river delta.",
+  "pose": "The Spinosaurus is letting out a joyous, wide-mouthed 'roar' (but it looks like a happy laugh). Its long jaw is perfectly healed, with all teeth present and gleaming white. It is splashing water playfully with one foot. The large sail on its back is vibrant and translucent, catching the morning sun like stained glass.",
+  "typography": {
+    "primary_title": {
+      "text": "Dino Toothache",
+      "style": "3D thick block letters, bright red glossy finish, soft beveled edges",
+      "placement": "Top-left corner, slightly tilted",
+      "lighting": "Reflecting the warm environment light"
+    },
+    "secondary_title": {
+      "text": "Player Wins!",
+      "style": "3D bold rounded letters, bright golden-yellow with a white glow outline",
+      "placement": "Lower-center, anchored just below the dinosaur's smiling jaw",
+      "animation_hint": "Floating slightly with a 'bouncy' physical weight"
+    }
+  },
+  "lighting_ref": "VIBRANT_DAPPLED_WATER_REFLECTIONS",
+  "formation_ref": "BAHARIYA_FORMATION",
+  "visual_logic": {
+    "palette": ["Bright red (Title)", "Golden yellow (Win text)", "Teal and Emerald scales", "Sunset orange sail"],
+    "anatomical_priority": "Signature neural spine sail; long, narrow gharial-like snout; three-fingered hands with large thumb claws; aquatic-leaning body proportions.",
+    "cleanliness_factor": "Water is stylized and crystal clear; river stones are large and smooth; the 'victory' atmosphere is achieved through sparkle effects and high-saturation colors."
+  },
+  "behavioral_intent": "Pure relief and celebration. The dinosaur's eyes are crinkled in a 'smile,' creating a rewarding emotional connection for the player after a successful 'surgery'."
+}

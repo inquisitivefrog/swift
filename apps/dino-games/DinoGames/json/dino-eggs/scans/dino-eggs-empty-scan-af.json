@@ -1,0 +1,7 @@
+{
+    "id": "ui_ct_scan_egg_unknown_animated",
+    "morphology": "dinosaur_egg_ct_scan_result",
+    "style": "STYLE_ANIMATED_FEATURE_V3",
+    "state": "baby_unknown_outline_inside",
+    "prompt": "A simulated CT scan image of a dinosaur egg, rendered in a vibrant and clear animated feature film style, as if displayed on a scanner screen. The egg is an ovoid shape, consistent with Stegosaurids (roughly orange-sized as previously established). The external shell of the egg is depicted with a subtle transparency or in a crisp, glowing grayscale. Inside, the space is empty as if the embryo hasn’t developed yet . The internal image uses a clean, high-contrast grayscale or a cool, scientific blue-white color palette, providing a clear X-ray-like view. A subtle digital grid overlay reinforces the scanner screen effect."
+}

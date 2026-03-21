@@ -166,7 +166,7 @@ struct RacingGameView: View {
     @State private var showingExpandedRacer: RacingRacer? = nil
     @State private var hasPlayedFirstRacerPrompt = false
     @State private var roundsCompleted = 0
-    private let maxRounds = 5
+    private let maxRounds = 3
     @State private var winners: [RacingRacer] = []
     @State private var showVictory = false
     @State private var endSequenceStep: Int = -1  // -1 none, 1 = walk winners, 2 = success image
@@ -299,6 +299,8 @@ struct RacingGameView: View {
                 }
             }
             speechManager.speak(audioKey: racer.effectiveFallbackImageName(prefix: config.assetPrefix), fallbackText: racer.name)
+        } else if selectedLane2 == nil && pendingRacer2 == nil && selectedLane1?.id == racer.id {
+            speechManager.speak("you-cannot-choose-that-one-now")
         } else if selectedLane2 == nil && pendingRacer2 == nil && selectedLane1?.id != racer.id && canSelectSecond {
             showingExpandedRacer = racer
             canSelectSecond = false
@@ -372,53 +374,53 @@ struct RacingGameView: View {
         let step = preRaceStep ?? 0
         let (outsideRacer, insideRacer) = racer1.speed >= racer2.speed ? (racer1, racer2) : (racer2, racer1)
         return Group {
-            if step == 0 {
-                racerImageFullView(racer: outsideRacer, size: min(geometry.size.width, geometry.size.height) * 0.5)
+            if step == 0 || step == 1 {
+                preRaceContestantsView(geometry: geometry, outsideRacer: outsideRacer, insideRacer: insideRacer, highlightedRacer: step == 0 ? outsideRacer : insideRacer)
                     .onAppear {
-                        // Display and announce outside track dinosaur (faster): name then "on the outside track"
-                        speechManager.onAudioFinished = {
-                            Task { @MainActor in
-                                self.speechManager.onAudioFinished = nil
-                                self.speechManager.onAudioFinished = {
-                                    Task { @MainActor in
-                                        self.speechManager.onAudioFinished = nil
-                                        self.preRaceStep = 1
-                                    }
-                                }
-                                if let url = self.speechManager.urlForAudio(key: "game-racing-outside-track") {
-                                    self.speechManager.playAudioFile(url: url)
-                                } else {
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        if step == 0 {
+                            // Step 0: outside racer highlighted — name then "on the outside track"
+                            speechManager.onAudioFinished = {
+                                Task { @MainActor in
+                                    self.speechManager.onAudioFinished = nil
+                                    if let url = self.speechManager.urlForAudio(key: "game-racing-outside-track") {
+                                        self.speechManager.onAudioFinished = {
+                                            Task { @MainActor in
+                                                self.speechManager.onAudioFinished = nil
+                                                self.preRaceStep = 1
+                                            }
+                                        }
+                                        self.speechManager.playAudioFile(url: url)
+                                    } else {
                                         self.preRaceStep = 1
                                     }
                                 }
                             }
-                        }
-                        speechManager.speak(audioKey: outsideRacer.effectiveFallbackImageName(prefix: config.assetPrefix), fallbackText: outsideRacer.name, chainDelay: true)
-                    }
-            } else if step == 1 {
-                racerImageFullView(racer: insideRacer, size: min(geometry.size.width, geometry.size.height) * 0.5)
-                    .onAppear {
-                        // Display and announce inside track dinosaur (slower): name then "on the inside track"
-                        speechManager.onAudioFinished = {
-                            Task { @MainActor in
-                                self.speechManager.onAudioFinished = nil
-                                self.speechManager.onAudioFinished = {
-                                    Task { @MainActor in
-                                        self.speechManager.onAudioFinished = nil
-                                        self.preRaceStep = 2
-                                    }
-                                }
-                                if let url = self.speechManager.urlForAudio(key: "game-racing-inside-track") {
-                                    self.speechManager.playAudioFile(url: url)
-                                } else {
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                                        self.preRaceStep = 2
+                            speechManager.speak(audioKey: outsideRacer.effectiveFallbackImageName(prefix: config.assetPrefix), fallbackText: outsideRacer.name, chainDelay: true)
+                        } else {
+                            // Step 1: inside racer highlighted — name then "on the inside track"
+                            speechManager.onAudioFinished = {
+                                Task { @MainActor in
+                                    self.speechManager.onAudioFinished = nil
+                                    if let url = self.speechManager.urlForAudio(key: "game-racing-inside-track") {
+                                        self.speechManager.onAudioFinished = {
+                                            Task { @MainActor in
+                                                self.speechManager.onAudioFinished = nil
+                                                // Slight pause before shifting to referee view
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                                    self.preRaceStep = 2
+                                                }
+                                            }
+                                        }
+                                        self.speechManager.playAudioFile(url: url)
+                                    } else {
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                            self.preRaceStep = 2
+                                        }
                                     }
                                 }
                             }
+                            speechManager.speak(audioKey: insideRacer.effectiveFallbackImageName(prefix: config.assetPrefix), fallbackText: insideRacer.name, chainDelay: true)
                         }
-                        speechManager.speak(audioKey: insideRacer.effectiveFallbackImageName(prefix: config.assetPrefix), fallbackText: insideRacer.name, chainDelay: true)
                     }
             } else {
                 Group {
@@ -443,21 +445,65 @@ struct RacingGameView: View {
                                 self.fireRaceTimer(r1: racer1, r2: racer2)
                             }
                         }
-                        if let url = speechManager.urlForAudio(key: "game-racing-ready-set") {
-                            speechManager.onAudioFinished = {
-                                Task { @MainActor in
-                                    self.speechManager.onAudioFinished = nil
-                                    playWhistleThenRace()
+                        // Brief pause so referee view is visible before ready-set + whistle
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                            if let url = speechManager.urlForAudio(key: "game-racing-ready-set") {
+                                speechManager.onAudioFinished = {
+                                    Task { @MainActor in
+                                        self.speechManager.onAudioFinished = nil
+                                        playWhistleThenRace()
+                                    }
                                 }
+                                speechManager.playAudioFile(url: url)
+                            } else {
+                                playWhistleThenRace()
                             }
-                            speechManager.playAudioFile(url: url)
-                        } else {
-                            playWhistleThenRace()
                         }
                     }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    /// Both contestants in one view, labeled "Contestants"; highlight the one whose audio is playing.
+    private func preRaceContestantsView(geometry: GeometryProxy, outsideRacer: RacingRacer, insideRacer: RacingRacer, highlightedRacer: RacingRacer) -> some View {
+        let size = min(geometry.size.width, geometry.size.height) * 0.35
+        return VStack(spacing: 16) {
+            Text("Contestants")
+                .font(.title2)
+                .fontWeight(.semibold)
+                .foregroundColor(.primary)
+            HStack(spacing: 24) {
+                contestantCell(racer: outsideRacer, size: size, isHighlighted: highlightedRacer.id == outsideRacer.id)
+                contestantCell(racer: insideRacer, size: size, isHighlighted: highlightedRacer.id == insideRacer.id)
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private func contestantCell(racer: RacingRacer, size: CGFloat, isHighlighted: Bool) -> some View {
+        VStack(spacing: 8) {
+            Group {
+                if let imageName = racerDisplayImageName(for: racer, config: config) {
+                    Image(imageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                } else {
+                    Text(racer.icon)
+                        .font(.system(size: size * 0.8))
+                }
+            }
+            .frame(width: size, height: size)
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 4)
+            )
+            .background(
+                RoundedRectangle(cornerRadius: 12)
+                    .fill(isHighlighted ? Color.accentColor.opacity(0.15) : Color.clear)
+            )
+            .opacity(isHighlighted ? 1.0 : 0.6)
+        }
     }
 
     private func racerImageFullView(racer: RacingRacer, size: CGFloat) -> some View {

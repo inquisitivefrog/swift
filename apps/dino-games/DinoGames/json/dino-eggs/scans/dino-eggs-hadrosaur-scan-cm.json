@@ -1,0 +1,7 @@
+{
+    "id": "ui_ct_scan_egg_hadrosaur_clay",
+    "morphology": "dinosaur_egg_ct_scan_result",
+    "style": "STYLE_CLAY_MASTER",
+    "state": "baby_hadrosaur_outline_inside",
+    "prompt": "A simulated CT scan image of a dinosaur egg, rendered in a charming, child-friendly claymation style, as if displayed on a scanner screen. The egg is an ovoid shape, consistent with Hadrosaurs (not spherical, roughly mango-sized as previously established). The external shell of the egg is depicted as a simple, soft-textured clay outline. Inside, a clear, simplified, and adorable outline of a baby Hadrosaur embryo is visible. Key Hadrosaur features like the distinctive duck-bill snout and a robust, herbivore-like body are subtly indicated with smoothed clay shapes. The body is curled in an embryonic posture. The entire image should have a soft, muted grayscale or a very light, desaturated clay-like color palette, giving the impression of an internal, X-ray-like view. A subtle grid pattern on the background further suggests a digital display. Focus on the distinct Hadrosaur features, particularly the beak, in an endearing clay style."
+}

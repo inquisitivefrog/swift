@@ -1,0 +1,15 @@
+{
+  "id": "utahraptor_toothache_puzzle_056_stylized",
+  "species": "Utahraptor ostrommaysi",
+  "tech_ref": "FEATHERED_HEAVY_BUILD_MASSIVE_SICKLE_CLAW_THREE_FINGERED_HANDS",
+  "lighting_ref": "VIBRANT_GOLDEN_HOUR_SIDE_LIGHT",
+  "formation_ref": "CEDAR_MOUNTAIN_FORMATION",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3_CLEAN",
+  "pose": "The Utahraptor is standing over a shattered, stylized sandstone rock. Its body is thick and muscular, covered in sleek golden-brown feathers. It is holding its face with one heavily feathered hand (medial palm orientation), while the other hand is braced against a smooth log for support. Its mouth is slightly agape, showing a puffy, red gumline where a large tooth is missing. Its massive toe claw is dug deep into the orange sand. The ground is a clean, bright canvas of sand and a few scattered blue feathers. NO TOOTH IS VISIBLE. The dinosaur looks at the player with a heavy, pained expression and a slumped posture.",
+  "visual_logic": {
+    "palette": ["Dusty gold", "Electric blue", "Sandstone orange", "Gum-pink"],
+    "anatomical_priority": "Broad, deep chest; thick legs; exceptionally large sickle claw; full feathering with 'wing' feathers on the arms; three fingers.",
+    "cleanliness_factor": "Sand is a smooth, gradient texture; shattered rock pieces are large and distinct; high contrast between the blue feathers and orange ground."
+  },
+  "behavioral_intent": "Physically exhausted. The dinosaur has 'fought' the rocks out of pain, and now it's too tired to search for the tooth it knocked out during the struggle."
+}

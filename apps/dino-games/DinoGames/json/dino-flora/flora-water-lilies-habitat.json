@@ -1,0 +1,26 @@
+{
+  "id": "water_lilies_habitat_mature_002",
+  "species": "Water Lilies (Early Angiosperms)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SERENE_LAKE_ATMOSPHERIC",
+  "formation_ref": "JIUFOTANG",
+  "environment_details": {
+    "habitat": "FORESTED_VOLCANIC_LAKE_SYSTEM",
+    "flora": [
+      "Colonies of floating water lilies (covering large patches of the lake surface)",
+      "Shoreline horsetails (Equisetites)",
+      "Ancient ginkgo trees (in the misty background)"
+    ],
+    "ground_palette": [
+      "Light ash grey",
+      "Buff",
+      "Whitish tuff"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; serene and peaceful mood; emphasizing the plant's floating nature; no sharp or aggressive geometry; soft volcanic color palette."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view of a calm, clear volcanic lake. Patches of water lilies form a green 'carpet' across the water. The surrounding shore consists of light ash grey tuff cliffs and soft buff-colored rocks.",
+    "ground": "The bottom of the shallow lake is visible through clear water, showing light grey ash and silt.",
+    "lighting": "Soft morning sunlight with a hazy atmospheric depth over the water, creating a calm and inviting educational scene."
+  }
+}

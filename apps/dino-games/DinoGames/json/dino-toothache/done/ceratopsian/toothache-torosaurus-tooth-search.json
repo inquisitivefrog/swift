@@ -1,0 +1,19 @@
+[
+  {
+    "id": "torosaurus_toothache_puzzle_038_no_tooth",
+    "species": "Torosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "LANCE",
+    "habitat_ref": "COASTAL_WOODLAND_SWAMP",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Torosaurus is in the middle of a destructive search. It has lowered its massive, two-holed frill like a shield, using the tip of its long snout-horn to plow a deep furrow through a bed of wet ferns and soft shale. Mud and uprooted plants are flying into the air as it tosses its head in frustration. One side of its jaw is visibly distended, and its eyes are wide, blinking back moisture from the pain. It is exhaling a heavy, misty breath that stirs the dust in the foreground. The area it has already plowed is a chaotic mess of black soil and grey stones, but the tooth is completely absent from the frame. The dinosaur looks toward the player with a low, vibrating huff, exhausted by its own strength.",
+    "visual_logic": {
+      "palette": ["Slate grey", "Charcoal", "Deep forest green", "Burnt orange", "Mud-black"],
+      "flora": ["Cypress-like conifers", "Massive tree ferns", "Horsetail thickets"],
+      "fauna": ["Small birds taking flight from the noise", "Insects"],
+      "substrate": "Slippery carbonaceous shale and wet, sandy loam"
+    },
+    "behavioral_intent": "High-effort, low-result searching. The dinosaur’s 'plowing' action suggests the tooth has been deeply buried or tossed far away, necessitating a specialized scanning phase."
+  }
+]

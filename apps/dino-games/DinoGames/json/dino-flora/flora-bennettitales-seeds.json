@@ -1,0 +1,29 @@
+[
+  {
+    "id": "bennettitales_lifecycle_closeup_001",
+    "species": "Bennettitales (Cycadeoids)",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "LANCE_HELL_CREEK",
+    "environment_details": {
+      "habitat": "COASTAL_LOWLANDS_FLOODPLAINS",
+      "flora": [
+        "Bennettitales 'flower' (large, flower-like reproductive cone emerging from the trunk)",
+        "Bennettitales seeds (small, clustered on a central receptacle)",
+        "Bennettitales sapling (squat, rounded trunk with emerging pinnate fronds)",
+        "Bennettitales leaf (close-up of pinnate frond showing parallel venation)"
+      ],
+      "ground_palette": [
+        "Muddy Grey",
+        "Tan",
+        "Dark Brown"
+      ],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; focus on the unique 'flower' structure to differentiate from cycads; tactile textures like bumpy 'pineapple' bark and leathery leaves; clear quadrant separation for educational study."
+    },
+    "visual_logic": {
+      "composition": "A quadrant tiled composition: Top-Left: The distinct flower-like cone; Top-Right: Detail of the seeds; Bottom-Left: A young sapling; Bottom-Right: A high-detail close-up of a leaf section.",
+      "ground": "Damp, muddy grey silt with scattered organic debris and small pebbles.",
+      "lighting": "Even, bright, diffused laboratory-style lighting to highlight botanical morphology."
+    }
+  }
+]

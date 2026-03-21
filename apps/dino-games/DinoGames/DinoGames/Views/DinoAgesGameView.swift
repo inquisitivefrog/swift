@@ -144,7 +144,7 @@ struct DinoAgesGameView: View {
     /// All 9 correctly selected dinosaurs in order (3 per round) for victory walk.
     @State private var victoryWalkDinosaurs: [Dinosaur] = []
 
-    private let totalRounds = 5
+    private let totalRounds = 3
     private let matchesNeededPerRound = 3
 
     /// Order in which correct dinosaurs were tapped this round (ids). Used to build victory walk order.
@@ -219,12 +219,17 @@ struct DinoAgesGameView: View {
                 .font(.headline)
                 .foregroundColor(.secondary)
                 .padding(.vertical, 4)
-            if let name = displayedDinoName {
-                Text(name)
-                    .font(.title3)
-                    .foregroundColor(.secondary)
-                    .padding(.horizontal)
+            // Fixed-height slot for dinosaur name to prevent layout stretch/shrink when name appears
+            ZStack {
+                if let name = displayedDinoName {
+                    Text(name)
+                        .font(.title3)
+                        .foregroundColor(.secondary)
+                        .padding(.horizontal)
+                        .lineLimit(1)
+                }
             }
+            .frame(height: 28)
             fiveStarLayout
         } else if isGameComplete {
             dinoAgesEndSequenceView
@@ -311,10 +316,10 @@ struct DinoAgesGameView: View {
                 speechManager.speak("great-match")
             }
         } else {
-            if let url = speechManager.urlForAudio(key: "not-that-one") {
+            if let url = speechManager.urlForAudio(key: "try-again") {
                 speechManager.playAudioFile(url: url)
             } else {
-                speechManager.speak("not-that-one")
+                speechManager.speak("try-again")
             }
         }
     }

@@ -1,0 +1,10 @@
+{
+  "id": "search_australo_allosaurus",
+  "subject": "dino_racer_allosaurus searching for a tooth",
+  "character_ref": "dino_racer_allosaurus",
+  "formation_ref": "TAHORA",
+  "visual_logic": {
+    "composition": "Wide-angle view of the coastal lagoon. The Allosaurus is leaning down, nudging reeds with his snout. He looks annoyed and grumpy.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; bright coastal lighting; matching the 'Grove/Forest' scale from Dino Flora."
+  }
+}

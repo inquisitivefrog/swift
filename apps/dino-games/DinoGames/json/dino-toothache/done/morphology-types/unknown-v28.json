@@ -1,0 +1,10 @@
+{
+  "id": "find_troodon_v5_paleo4",
+  "subject": "Paleontologist 4 holding the wavy scalloped tooth",
+  "visual_logic": {
+    "character_specs": "Paleontologist 4: Latino male, friendly smile, signature black aviator glasses.",
+    "action": "He is holding a large, **bright white wavy-edged tooth** (like a scalloped cookie). He is winking at the camera and giving a thumbs up.",
+    "morphology_priority": "THE SCALLOPED TOOTH: Clearly matches the wavy teeth in the dinosaur's mouth. It looks like a fun toy part.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Sunny, flat lighting. No scary shadows."
+  }
+}

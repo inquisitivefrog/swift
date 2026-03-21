@@ -1,0 +1,19 @@
+[
+  {
+    "id": "suchomimus_toothache_puzzle_018",
+    "species": "Suchomimus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "ELRHAZ",
+    "habitat_ref": "TROPICAL_RIVER_SYSTEMS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Suchomimus is crouched low on a sun-drenched sandbar. Its long, crocodilian snout is held inches above the sand, and it uses one heavily-clawed thumb (its signature 'hook') to gently sift through a pile of river-washed gravel. Its other hand is pressed flat against the side of its long jaw. The eyes are bright and focused, scanning the sand with an anxious intensity. Its mouth is slightly parted, showing the long row of conical teeth with one clear gap near the front. It looks up at the player with a hopeful 'Is this the one?' head-tilt, inviting the diagnostic matching game.",
+    "visual_logic": {
+      "palette": ["Golden sand", "Tropical green", "Sky blue", "Terracotta", "Deep Teal"],
+      "flora": ["Early flowering plants", "Ferns", "Large conifers"],
+      "fauna": ["Nigersaurus (distant)", "Sarcosuchus (distant silhouette)", "Ancient lungfish"],
+      "substrate": "Coarse river sand mixed with colorful smooth pebbles"
+    },
+    "behavioral_intent": "Attentive and cautious search. The dinosaur uses its specialized claws to help the player identify the search area, creating a clear 'Call to Action' for the paleontologist."
+  }
+]

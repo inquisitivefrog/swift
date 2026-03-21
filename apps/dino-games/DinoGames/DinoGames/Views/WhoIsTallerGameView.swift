@@ -52,7 +52,7 @@ struct WhoIsTallerGameView: View {
 
     @State private var speechManager = SpeechManager()
     @State private var roundsCompleted = 0
-    private let maxRounds = 5
+    private let maxRounds = 3
     @State private var currentRoundItems: [WhoIsTallerItem] = []
     @State private var selectedFirst: WhoIsTallerItem?
     @State private var selectedSecond: WhoIsTallerItem?

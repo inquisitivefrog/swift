@@ -1,0 +1,11 @@
+{
+  "id": "find_troodon_hooked_jagged_tooth_paleo4",
+  "subject": "Paleontologist 4 discovering a uniquely serrated Troodon tooth",
+  "visual_logic": {
+    "character_specs": "Paleontologist 4: Younger Latino male, short brown hair, signature thin-rimmed BLACK aviator glasses, khaki safari vest over a white tee.",
+    "action": "He is holding a **small but robust, sharply triangular tooth** between his thumb and forefinger. He is holding a small magnifying glass or loupe to his other eye, intently examining the **very large, distinctive, hook-like serrations** along the edges of the tooth, with a look of impressed discovery.",
+    "morphology_priority": "THE HOOKED JAGGED TOOTH: Small, but with exaggerated, individual serrations that look like tiny hooks. The tooth itself is triangular and flat, but the edge is the key. It is a dark, flint-like grey or black.",
+    "color": "Dark grey or black, hinting at a very tough, mineralized tooth.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Emphasize the unique, prominent serrations. The character's expression should convey he's found something special and specific."
+  }
+}

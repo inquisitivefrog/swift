@@ -1,0 +1,26 @@
+{
+  "id": "ginkgo_lifecycle_closeup_005",
+  "species": "Ginkgo (Maidenhair Tree)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "MORRISON_LJ",
+  "environment_details": {
+    "habitat": "SEMI_ARID_PLAINS",
+    "flora": [
+      "Ginkgo seed (small, fleshy outer layer, distinctive central pit/scar, often yellow-orange)",
+      "Ginkgo branch (close-up, showing distinctive fan-shaped leaves, often lobed, on short shoots)",
+      "Ginkgo sapling (small, slender trunk, few branches, characteristic fan-shaped leaves)"
+    ],
+    "ground_palette": [
+      "Variegated red",
+      "Pinkish grey",
+      "Greenish-grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; tactile, high-quality textures like smooth seeds, delicate yet firm fan-shaped leaves, and subtle bark; clear emphasis on individual components for educational identification."
+  },
+  "visual_logic": {
+    "composition": "A quadrant or tiled composition showcasing distinct elements: one or two small seeds, a detailed close-up of a branch with its unique fan-shaped leaves, and a small, elegant sapling.",
+    "ground": "Pale, dusty tan earth with scattered chalky nodules, providing a clean backdrop for the botanical elements.",
+    "lighting": "Even, bright, diffused light to ensure all details are clearly visible without harsh shadows."
+  }
+}

@@ -1,0 +1,7 @@
+{
+    "id": "ui_ct_scan_egg_sauropod_clay",
+    "morphology": "dinosaur_egg_ct_scan_result",
+    "style": "STYLE_CLAY_MASTER",
+    "state": "baby_sauropod_outline_inside",
+    "prompt": "A simulated CT scan image of a dinosaur egg, rendered in a charming, child-friendly claymation style, as if displayed on a scanner screen. The egg is large and perfectly spherical, consistent with Sauropods (roughly grapefruit-sized as previously established). The external shell of the egg is depicted as a simple, soft-textured clay outline. Inside, a clear, simplified, and adorable outline of a baby Sauropod embryo is visible. Key Sauropod features like a very long neck and tail are depicted as smooth, elongated clay forms, tightly curled around the central body. The overall impression is a gentle, almost coiled shape. The entire image should have a soft, muted grayscale or a very light, desaturated clay-like color palette, giving the impression of an internal, X-ray-like view. A subtle grid pattern on the background further suggests a digital display. Focus on the distinct long neck and tail curled within the spherical egg in an endearing clay style."
+}

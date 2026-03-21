@@ -1,0 +1,27 @@
+{
+  "id": "brachyphyllum_lifecycle_closeup_001",
+  "species": "Brachyphyllum (Scale-leaf Conifer)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "SHAXIMIAO",
+  "environment_details": {
+    "habitat": "FORESTED_RIVER_SYSTEM",
+    "flora": [
+      "Brachyphyllum cone (small, globose woody cone with overlapping scales)",
+      "Scale-leaves (close-up of short, triangular leaves overlapping like lizard scales)",
+      "Brachyphyllum sapling (bushy, dense growth with thick, rope-like branches)",
+      "Bark detail (rough, brownish-grey bark with diamond-shaped patterns from old leaf scars)"
+    ],
+    "ground_palette": [
+      "Red-brown",
+      "Ochre",
+      "Dark Gray"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the 'braided' or 'rope-like' appearance of the branches; tactile, scaly textures; clear quadrant separation."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A single small globose cone; Top-Right: A close-up of the overlapping scale-leaves; Bottom-Left: A young, bushy sapling; Bottom-Right: A high-detail view of the rough, patterned bark.",
+    "ground": "Dry red-brown mudstone with ochre-colored silt patches.",
+    "lighting": "Clear, even, bright diffused daylight to highlight the geometric precision of the overlapping scales."
+  }
+}

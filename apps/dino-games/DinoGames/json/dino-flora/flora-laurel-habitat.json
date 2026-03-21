@@ -1,0 +1,26 @@
+{
+  "id": "laurel_forest_mature_002",
+  "species": "Early Hardwood (Laurel-like)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "HUMID_SUNLIT_CANOPY",
+  "formation_ref": "LANCE_HELL_CREEK",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS_FLOODPLAINS",
+    "flora": [
+      "Mature Laurel trees (medium-sized, dense rounded crowns, glossy foliage)",
+      "Magnolia-like trees (in the background)",
+      "Ground ferns and leafy undergrowth"
+    ],
+    "ground_palette": [
+      "Forest green",
+      "Brown",
+      "Muddy Grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; dense, lush, and verdant atmosphere; trees forming a soft, green 'wall' of vegetation; reflecting a humid, subtropical climate."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view inside a humid, leafy forest. The laurel trees form a thick mid-canopy. The ground is a carpet of forest-green moss and dark brown leaf litter. Shafts of sunlight filter through the glossy leaves, creating bright highlights.",
+    "ground": "Damp, dark brown soil mostly obscured by a lush layer of low-growing ferns and moss.",
+    "lighting": "Warm, humid sunlight filtering through thick leaves, creating a high-contrast environment with bright 'specular' highlights on the waxy foliage."
+  }
+}

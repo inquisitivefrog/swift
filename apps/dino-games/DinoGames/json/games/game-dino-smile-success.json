@@ -1,0 +1,29 @@
+{
+  "id": "game_card_02_player_wins",
+  "project_name": "Dino Toothache",
+  "style_ref": "STYLE_3D_ANIMATED_FEATURE_ORGANIC_TEXTURES",
+  "subject": "Three different friendly dinosaurs grouped in a natural habitat, all smiling triumphantly.",
+  "composition": {
+    "foreground": {
+      "dinosaur_1": "Apatosaurus: Three-quarter view, gentle happy smile, smooth blue-grey skin, positioned prominently.",
+      "dinosaur_2": "Triceratops: Three-quarter view, cheerful smile, leathery skin, positioned beside Apatosaurus.",
+      "dinosaur_3": "Ankylosaurus: Three-quarter view, brave happy smile, bone-textured armor plates, in the background looking contented."
+    },
+    "background": "Open, sunny prehistoric grassland with distant volcanoes and a clear blue sky. Celebratory, light atmosphere.",
+    "grouping": "Dinosaurs are posed in a way that conveys happiness and success, looking out at the player."
+  },
+  "typography": {
+    "caption_1": {
+      "text": "Dino Smile!",
+      "style": "Bright red, thick 3D mixed-case block letters, positioned top-center."
+    },
+    "caption_2": {
+      "text": "Player Wins!",
+      "style": "Shiny gold, bold 3D mixed-case block letters, positioned clearly below 'Dino Smile!', possibly with a subtle celebratory sparkle effect. Text is slightly textured, like polished gold."
+    }
+  },
+  "visual_logic": {
+    "overall_mood": "Celebratory, rewarding, successful. Emphasizes the positive outcome of the game.",
+    "color_palette": "Bright yellows, lush greens, clear blues, with the red and gold captions standing out."
+  }
+}

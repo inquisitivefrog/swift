@@ -1,0 +1,15 @@
+{
+  "id": "deinonychus_toothache_puzzle_054_v3_feature",
+  "species": "Deinonychus antirrhopus",
+  "tech_ref": "FULL_FEATHER_VOLUMES_SICKLE_CLAW_THREE_FINGERED_HANDS_MEDIAL_PALMS",
+  "lighting_ref": "CINEMATIC_DAPPLED_FOREST_SUNLIGHT_WITH_RIM_LIGHT",
+  "formation_ref": "CLOVERLY_FORMATION",
+  "style_ref": "STYLE_3D_ANIMATED_FEATURE_V4_HIGH_FIDELITY",
+  "pose": "The Deinonychus is sitting in a 'bird-of-prey' nest pose among oversized, vibrant green ferns. Its body is covered in soft, slate-blue downy feathers with subtle iridescent highlights. It has its head tilted sharply, one eye narrowed in a pained wince. It is gingerly touching the side of its snout with a three-fingered hand (palms facing inward). The ground is a clean, intentional arrangement of large, smooth river stones and broad, flat clover leaves. NO TOOTH IS VISIBLE. The camera angle is low and intimate, emphasizing the dinosaur's expressive, intelligent eyes and the puffiness of its jaw.",
+  "visual_logic": {
+    "palette": ["Slate blue", "Deep emerald", "Iridescent violet", "Warm amber"],
+    "anatomical_priority": "Sophisticated feather grooming (not shaggy); distinct sickle claw on the retracted toe; three fingers with medial orientation; bird-like but powerful skull structure.",
+    "cleanliness_factor": "Foreground elements (leaves and stones) have clear, soft edges and smooth surfaces; no chaotic debris or 'comic-style' outlines; lighting separates the character clearly from the background."
+  },
+  "behavioral_intent": "Vulnerable and dignified. The dinosaur isn't thrashing; it's waiting for help, making the search feel like a focused medical exam rather than a chaotic scavenger hunt."
+}

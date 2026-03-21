@@ -44,6 +44,15 @@ struct BalanceGameView: View {
     @State private var rightItems: [BalanceItem] = []
     @State private var availableToAdd: [BalanceItem] = []
 
+    /// Balance the Dinosaurs: 5 rounds; Balance the Pterosaurs: 1 round.
+    private var maxRounds: Int { gameConfig.id == "balance-the-dinosaur" ? 3 : 1 }
+    @State private var roundsCompleted = 0
+    @State private var currentRound = 1
+    /// Items for the current round (9 dinos or 6 pterosaurs). Round 1 uses config; rounds 2+ use new random set for dinosaur game.
+    @State private var roundItems: [BalanceItem] = []
+    /// All dinosaurs used across rounds (for victory walk). Deduplicated by first appearance.
+    @State private var allRoundParticipants: [BalanceItem] = []
+
     @State private var seesawAngle: Double = 0
     @State private var leftItemOffset: CGFloat = 0
     @State private var rightItemOffset: CGFloat = 0
@@ -64,8 +73,12 @@ struct BalanceGameView: View {
 
     /// Intro walk: -1 none, 0..<count = current index (highlight + name). When done, play "choose a heavy dinosaur".
     @State private var introWalkStep: Int = -1
+    /// Items for the current round (roundItems when set, else gameConfig.items for initial load).
+    private var currentRoundItems: [BalanceItem] {
+        roundItems.isEmpty ? gameConfig.items : roundItems
+    }
     private var introWalkComplete: Bool {
-        gameConfig.items.isEmpty || introWalkStep >= gameConfig.items.count
+        currentRoundItems.isEmpty || introWalkStep >= currentRoundItems.count
     }
 
     private var leftMass: Double { leftItem?.estimatedWeightKg ?? 0 }
@@ -81,7 +94,7 @@ struct BalanceGameView: View {
 
     /// Heavy = in top half of game's items by weight; light = bottom half. Works for 9 (dinosaur) or 6 (pterosaur) items.
     private func isHeavy(_ item: BalanceItem) -> Bool {
-        let sorted = gameConfig.items.sorted { $0.estimatedWeightKg < $1.estimatedWeightKg }
+        let sorted = currentRoundItems.sorted { $0.estimatedWeightKg < $1.estimatedWeightKg }
         let half = sorted.count / 2
         guard let threshold = sorted.dropFirst(half).first?.estimatedWeightKg else { return true }
         return item.estimatedWeightKg >= threshold
@@ -121,6 +134,10 @@ struct BalanceGameView: View {
         return CGFloat(max(0.55, 0.35 + 0.85 * min(max(t, 0), 1)))
     }
 
+    /// Victory list row height and visible area (show ~4 rows).
+    private let victoryRowHeight: CGFloat = 92
+    private var victoryListVisibleHeight: CGFloat { 16 + 4 * victoryRowHeight + 3 * 12 + 16 }
+
     /// Extra vertical space between "available to add" and scale when 3rd, 5th, or 7th dinosaur on right.
     private var addingPhaseExtraSpacing: CGFloat {
         guard phase == .adding else { return 0 }
@@ -151,7 +168,6 @@ struct BalanceGameView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            // No Done button; end sequence plays you-did-it → highlight each → crowd-cheering → auto-dismiss
             if phase != .victory && phase != .ranOut {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") { isPresented = false }
@@ -159,8 +175,12 @@ struct BalanceGameView: View {
             }
         }
         .onAppear {
+            // Init round items on first load
+            if roundItems.isEmpty && !gameConfig.items.isEmpty {
+                roundItems = gameConfig.items
+            }
             // Intro walk: introduce all dinosaurs in grid, then play "choose a heavy dinosaur"
-            if phase == .selectHeavy, !gameConfig.items.isEmpty {
+            if phase == .selectHeavy, !currentRoundItems.isEmpty {
                 introWalkStep = 0
                 startBalanceIntroWalk()
             }
@@ -180,8 +200,13 @@ struct BalanceGameView: View {
     // MARK: - Select heavy (phase 1)
 
     private func selectHeavyView(geometry: GeometryProxy) -> some View {
-        let rows = (gameConfig.items.count + 2) / 3
+        let rows = (currentRoundItems.count + 2) / 3
         return VStack(spacing: 12) {
+            if maxRounds > 1 {
+                Text("Round \(currentRound) of \(maxRounds)")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+            }
             Text(gameConfig.id == "balance-the-pterosaur" ? "Choose a heavy pterosaur" : "Choose a heavy dinosaur")
                 .font(.headline)
                 .foregroundColor(.secondary)
@@ -190,8 +215,8 @@ struct BalanceGameView: View {
                     HStack(spacing: 10) {
                         ForEach(0..<3, id: \.self) { col in
                             let index = row * 3 + col
-                            if index < gameConfig.items.count {
-                                let item = gameConfig.items[index]
+                            if index < currentRoundItems.count {
+                                let item = currentRoundItems[index]
                                 BalanceItemCard(item: item, displayImageName: gridImageName(for: item), isIntroHighlighted: introWalkStep == index, isDisabled: !introWalkComplete) {
                                     handleSelectHeavy(item)
                                 }
@@ -207,8 +232,8 @@ struct BalanceGameView: View {
 
     /// Walk the 9 (or 6) dinosaurs: speak name at introWalkStep, then advance; when done, play "choose a heavy dinosaur".
     private func startBalanceIntroWalk() {
-        guard introWalkStep >= 0, introWalkStep < gameConfig.items.count else { return }
-        let item = gameConfig.items[introWalkStep]
+        guard introWalkStep >= 0, introWalkStep < currentRoundItems.count else { return }
+        let item = currentRoundItems[introWalkStep]
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
             self.advanceBalanceIntroWalk()
@@ -219,7 +244,7 @@ struct BalanceGameView: View {
     private func advanceBalanceIntroWalk() {
         speechManager.onAudioFinished = nil
         introWalkStep += 1
-        if introWalkStep >= gameConfig.items.count {
+        if introWalkStep >= currentRoundItems.count {
             let chooseHeavyKey = gameConfig.id == "balance-the-pterosaur" ? "game-balance-choose-a-heavy-pterosaur" : "game-balance-choose-a-heavy-dinosaur"
             speechManager.onAudioFinished = { self.speechManager.onAudioFinished = nil }
             speechManager.speak(chooseHeavyKey)
@@ -232,7 +257,7 @@ struct BalanceGameView: View {
         guard phase == .selectHeavy, introWalkComplete else { return }
         canSelectNext = false
         leftItem = item
-        availableToAdd = gameConfig.items.filter { $0.id != item.id }
+        availableToAdd = currentRoundItems.filter { $0.id != item.id }
         phase = .adding
         speechManager.speak(audioKey: item.imageName ?? item.name, fallbackText: item.name)
         let nowChooseKey = gameConfig.id == "balance-the-pterosaur" ? "game-balance-now-choose-pterosaurs" : "game-balance-now-choose-dinosaurs"
@@ -279,6 +304,11 @@ struct BalanceGameView: View {
     private func addingView(geometry: GeometryProxy) -> some View {
         let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
         return VStack(spacing: 10) {
+            if maxRounds > 1 {
+                Text("Round \(currentRound) of \(maxRounds)")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+            }
             Text("Add dinosaurs to balance")
                 .font(.headline)
                 .foregroundColor(.secondary)
@@ -347,15 +377,13 @@ struct BalanceGameView: View {
                 }
                 speechManager.onAudioFinished = {
                     self.speechManager.onAudioFinished = nil
-                    self.phase = .victory
-                    self.startEndSequence()
+                    self.finishRoundAndEitherAdvanceOrShowVictory(isVictory: true)
                 }
             } else {
                 speechManager.speak("you-did-it")
                 speechManager.onAudioFinished = {
                     self.speechManager.onAudioFinished = nil
-                    self.phase = .victory
-                    self.startEndSequence()
+                    self.finishRoundAndEitherAdvanceOrShowVictory(isVictory: true)
                 }
             }
             canSelectFallbackWorkItem?.cancel()
@@ -365,8 +393,7 @@ struct BalanceGameView: View {
         if availableToAdd.isEmpty && newRightMass < leftMass {
             canSelectFallbackWorkItem?.cancel()
             canSelectFallbackWorkItem = nil
-            phase = .ranOut
-            endSequenceStep = 0
+            finishRoundAndEitherAdvanceOrShowVictory(isVictory: false)
             return
         }
         if newRightMass >= leftMass * 0.9 && newRightMass < leftMass {
@@ -382,6 +409,68 @@ struct BalanceGameView: View {
             speechManager.onAudioFinished = nil
             canSelectFallbackWorkItem?.cancel()
             canSelectFallbackWorkItem = nil
+            canSelectNext = true
+        }
+    }
+
+    /// Called when round ends (balanced or ran out). Accumulates participants; advances to next round or shows final victory.
+    private func finishRoundAndEitherAdvanceOrShowVictory(isVictory: Bool) {
+        var seen: Set<Int> = []
+        for item in allDinosaursUsed {
+            if seen.insert(item.id).inserted {
+                allRoundParticipants.append(item)
+            }
+        }
+        roundsCompleted += 1
+        if roundsCompleted >= maxRounds {
+            phase = isVictory ? .victory : .ranOut
+            if isVictory {
+                startEndSequence()
+            } else {
+                endSequenceStep = 0
+            }
+        } else {
+            advanceToNextRound()
+        }
+    }
+
+    /// Reset state and load new items for the next round.
+    private func advanceToNextRound() {
+        currentRound += 1
+        leftItem = nil
+        rightItems = []
+        availableToAdd = []
+        seesawAngle = 0
+        leftItemOffset = 0
+        rightItemOffset = 0
+        leftItemOpacity = 1.0
+        rightItemOpacity = 1.0
+        showSpeedLines = false
+        lighterFlewFromLeft = nil
+        hasPlayedSeeIToldYou = false
+        if gameConfig.id == "balance-the-dinosaur" {
+            roundItems = BalanceGameConfigs.makeRandomBalanceDinosaurItems()
+        }
+        phase = .selectHeavy
+        introWalkStep = maxRounds > 1 ? currentRoundItems.count : 0  // Skip intro walk for rounds 2+
+        canSelectNext = false
+        canSelectFallbackWorkItem?.cancel()
+        let fallback = DispatchWorkItem {
+            self.canSelectFallbackWorkItem = nil
+            self.canSelectNext = true
+        }
+        canSelectFallbackWorkItem = fallback
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: fallback)
+        if maxRounds > 1 {
+            let chooseHeavyKey = gameConfig.id == "balance-the-pterosaur" ? "game-balance-choose-a-heavy-pterosaur" : "game-balance-choose-a-heavy-dinosaur"
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = nil
+                self.canSelectFallbackWorkItem?.cancel()
+                self.canSelectFallbackWorkItem = nil
+                self.canSelectNext = true
+            }
+            speechManager.speak(chooseHeavyKey)
+        } else {
             canSelectNext = true
         }
     }
@@ -655,14 +744,14 @@ struct BalanceGameView: View {
         .frame(width: size, height: size)
     }
 
-    // MARK: - End sequence (you-did-it → darkened row → highlight each with name+audio → crowd-cheering → dismiss)
+    // MARK: - End sequence (scroll list → highlight each + name audio → success image → good-job/you-did-it + crowd → dismiss)
 
     private func startEndSequence() {
         endSequenceStep = 1
         endHighlightIndex = 0
-        let participants = allDinosaursUsed
+        let participants = allRoundParticipants.isEmpty ? allDinosaursUsed : allRoundParticipants
         if participants.isEmpty {
-            playWeHaveWinnerAndDismiss()
+            endSequenceStep = 2
         } else {
             let p = participants[0]
             speechManager.speak(audioKey: p.imageName ?? p.name, fallbackText: p.name)
@@ -673,88 +762,157 @@ struct BalanceGameView: View {
     private func advanceEndHighlight() {
         speechManager.onAudioFinished = nil
         endHighlightIndex += 1
-        let participants = allDinosaursUsed
+        let participants = allRoundParticipants.isEmpty ? allDinosaursUsed : allRoundParticipants
         if endHighlightIndex < participants.count {
             let p = participants[endHighlightIndex]
             speechManager.speak(audioKey: p.imageName ?? p.name, fallbackText: p.name)
             speechManager.onAudioFinished = { advanceEndHighlight() }
         } else {
-            playWeHaveWinnerAndDismiss()
+            endSequenceStep = 2
         }
     }
 
-    private func playWeHaveWinnerAndDismiss() {
-        endSequenceStep = 2
-        speechManager.speak("crowd-cheering")
-        speechManager.onAudioFinished = {
-            self.speechManager.onAudioFinished = nil
-            self.isPresented = false
+    /// Standard victory flow: scroll list → success image → good-job/you-did-it + crowd → dismiss.
+    private func playCelebrationAndDismiss(useGoodJob: Bool) {
+        let key = useGoodJob ? "good-job-you-got-them-all" : "you-did-it"
+        let goodJobURL = speechManager.urlForAudio(key: key)
+        let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
+        if let u1 = goodJobURL, let u2 = crowdURL {
+            speechManager.playTogether(url1: u1, url2: u2) {
+                self.speechManager.onAudioFinished = nil
+                self.isPresented = false
+            }
+        } else if let u = goodJobURL ?? crowdURL {
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = nil
+                self.isPresented = false
+            }
+            speechManager.playAudioFile(url: u)
+        } else {
+            isPresented = false
         }
+    }
+
+    /// Success image for end sequence: game-balance-the-dinosaur-success or game-balance-the-pterosaur-success.
+    private var balanceSuccessImageView: some View {
+        Group {
+            let successName = "game-\(gameConfig.id)-success"
+            let fallbackName = "game-\(gameConfig.id)"
+            if ImageAssetCache.imageExists(named: successName) {
+                Image(successName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 280, height: 280)
+            } else if ImageAssetCache.imageExists(named: fallbackName) {
+                Image(fallbackName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 280, height: 280)
+            } else {
+                Text("🎉")
+                    .font(.system(size: 100))
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private var victoryOrRanOutView: some View {
-        let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-        return VStack(spacing: 20) {
-            Spacer()
-            // Grid: max 3 per row so images and names stay readable (multiple rows when needed)
-            LazyVGrid(columns: columns, spacing: 16) {
-                ForEach(Array(allDinosaursUsed.enumerated()), id: \.element.id) { index, item in
-                    let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                    VStack(spacing: 8) {
-                        endSequenceParticipantImage(item: item, isHighlighted: isHighlighted)
-                        if isHighlighted {
-                            Text(item.name)
-                                .font(.headline)
-                                .foregroundColor(.primary)
-                                .multilineTextAlignment(.center)
-                                .lineLimit(2)
-                                .minimumScaleFactor(0.65)
+        let participants = allRoundParticipants.isEmpty ? allDinosaursUsed : allRoundParticipants
+        return VStack(spacing: 0) {
+                Text(gameConfig.title)
+                    .font(.largeTitle)
+                    .padding(.top, 8)
+                    .padding(.bottom, 8)
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        VStack(spacing: 12) {
+                            ForEach(Array(participants.enumerated()), id: \.element.id) { index, item in
+                                let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                                HStack(spacing: 16) {
+                                    balanceVictoryImage(item: item, isHighlighted: isHighlighted)
+                                    Text(item.name)
+                                        .font(.title2)
+                                        .fontWeight(isHighlighted ? .semibold : .regular)
+                                        .foregroundColor(.primary)
+                                        .multilineTextAlignment(.leading)
+                                        .lineLimit(2)
+                                        .minimumScaleFactor(0.8)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .opacity(isHighlighted ? 1.0 : 0.5)
+                                }
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                                .frame(height: victoryRowHeight)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                                )
+                                .id(index)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.vertical, 16)
+                    }
+                    .frame(height: victoryListVisibleHeight)
+                    .onChange(of: endHighlightIndex) { _, newIndex in
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            proxy.scrollTo(newIndex, anchor: .center)
                         }
                     }
                 }
-            }
-            .padding(.horizontal)
-            Spacer()
+                .frame(maxWidth: .infinity)
+                Group {
+                    if endSequenceStep == 2 {
+                        balanceSuccessImageView
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    playCelebrationAndDismiss(useGoodJob: phase == .victory)
+                                }
+                            }
+                    } else {
+                        Spacer()
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             if phase == .ranOut && endSequenceStep == 0 && !hasStartedRanOutEndAudio {
                 hasStartedRanOutEndAudio = true
-                speechManager.speak("you-did-it")
-                speechManager.onAudioFinished = {
-                    self.speechManager.onAudioFinished = nil
-                    endSequenceStep = 1
-                    endHighlightIndex = 0
-                    let participants = allDinosaursUsed
-                    if participants.isEmpty {
-                        playWeHaveWinnerAndDismiss()
-                    } else {
-                        let p = participants[0]
-                        speechManager.speak(audioKey: p.imageName ?? p.name, fallbackText: p.name)
-                        speechManager.onAudioFinished = { advanceEndHighlight() }
-                    }
+                endSequenceStep = 1
+                endHighlightIndex = 0
+                if participants.isEmpty {
+                    endSequenceStep = 2
+                } else {
+                    let p = participants[0]
+                    speechManager.speak(audioKey: p.imageName ?? p.name, fallbackText: p.name)
+                    speechManager.onAudioFinished = { advanceEndHighlight() }
                 }
             }
         }
     }
 
-    private func endSequenceParticipantImage(item: BalanceItem, isHighlighted: Bool) -> some View {
+    private func balanceVictoryImage(item: BalanceItem, isHighlighted: Bool) -> some View {
         Group {
             if let name = gridImageName(for: item) ?? item.imageName, ImageAssetCache.imageExists(named: name) {
                 Image(name)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 88, height: 88)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .frame(width: 72, height: 72)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
                     .opacity(isHighlighted ? 1.0 : 0.4)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 4)
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
                     )
             } else {
                 Text(item.emoji)
-                    .font(.system(size: 44))
-                    .frame(width: 88, height: 88)
+                    .font(.system(size: 40))
+                    .frame(width: 72, height: 72)
                     .opacity(isHighlighted ? 1.0 : 0.4)
             }
         }

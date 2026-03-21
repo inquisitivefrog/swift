@@ -1,0 +1,8 @@
+{
+    "id": "ui_citipati_nest",
+    "morphology": "citipati_nest",
+    "prompt": "High-fidelity 3D render of a meticulously organized prehistoric Citipati nesting site. The nest is a prominent, large, circular structure, approximately 1.8 meters in diameter, exhibiting a clear, empty central opening, creating a distinct donut-shaped layout. The nest's outer perimeter features a slightly raised rim, about 10-15 cm high, composed primarily of fine, reddish-orange sand and minimal scattered plant debris. Within this structure, elongated, pale blue-green eggs are laid in symmetrical pairs, meticulously organized into two to three distinct concentric rings around the central void. Each egg is tilted distinctly inward towards the center of the nest and partially buried at its base in the sand, with the upper portion clearly exposed. The overall arrangement is extremely symmetrical and deliberate. Background: arid, windswept badlands of the Gobi Desert, with sparse, tough desert flora. Harsh, clear sunlight casting sharp, defined shadows that accentuate the nest's structure and the inward angle of the eggs. Focus on the deliberate, geometric perfection and the central open space.",
+    "visual_logic": "Generates a highly structured, donut-shaped nest with precise concentric rings of paired, inward-tilted, partially buried eggs and a clear central opening, based on the iconic Citipati fossils.",
+    "style_notes": "No scale bar. Extreme symmetry and deliberate arrangement. Elongated, blue-green eggs. Arid desert environment. Sand dominant material.",
+    "definition_match": "Large circular/central opening/donut shape, Slightly raised rim, Paired/concentric rings (2-3 layers), Elongated/tilted inward/partially buried, Sand/fine sediment."
+}

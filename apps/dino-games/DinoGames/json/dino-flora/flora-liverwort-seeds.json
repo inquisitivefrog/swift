@@ -1,0 +1,23 @@
+{
+  "id": "liverwort_closeup_001",
+  "species": "Marchantiophyte (Liverwort)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAMP_SHADOW_DETAIL",
+  "formation_ref": "JIUFOTANG",
+  "environment_details": {
+    "habitat": "FORESTED_VOLCANIC_LAKE",
+    "flora": [
+      "Thallus (flat, lobed green body that looks like a fleshy tongue)",
+      "Gemma Cups (tiny splash-cups on the surface that hold green clones)",
+      "Antheridiophore (umbrella-like structures that rise up for reproduction)",
+      "Rhizoids (clear, hair-like anchors on the underside)"
+    ],
+    "ground_palette": ["Dark Brown", "Vibrant Green", "Slate Grey"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the 'slick' and 'rubbery' texture; tiny umbrella shapes add a whimsical, toy-like feel."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: The flat, lobed green thallus; Top-Right: A macro of the tiny 'cups' on the surface; Bottom-Left: The little green umbrellas rising up; Bottom-Right: The underside showing white hair-like anchors.",
+    "ground": "Wet, dark volcanic rock or saturated mud.",
+    "lighting": "Cool, dim light with highlights reflecting off the wet, waxy surface of the plant."
+  }
+}

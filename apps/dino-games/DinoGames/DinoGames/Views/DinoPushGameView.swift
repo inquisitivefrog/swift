@@ -5,9 +5,8 @@
 //  Dino Push!: Sumo-style face-off. Two dinosaurs in a circular arena; stronger pushes weaker out.
 //  Images: dino-push-{slug}-ready (face-off), dino-push-{slug}-finish-excited/exhausted.
 //
-//  Asset naming: Uses game-dino-push-* prefix for all audio/images (period selection, tie, etc).
-//  Intentional duplication with Racing (cover-*, period-*) for clarity during development;
-//  can refactor to shared assets later if desired.
+//  Asset naming: Uses game-dino-push-* prefix for audio. Period selection uses shared period-jurassic,
+//  period-cretaceous (same as Racing Dinosaurs).
 //
 
 import SwiftUI
@@ -60,7 +59,7 @@ struct DinoPushGameConfig {
 
 // MARK: - Constants
 
-private let phaseInterval: TimeInterval = 0.38  // Tick rate (slower = longer matches, ~15–20s typical)
+private let phaseInterval: TimeInterval = 0.76  // Tick rate (2× slower for more drama; was 0.38)
 private let matchDurationSeconds = 90
 private let strengthDeltaThreshold = 0.15 // Below this ratio, coin flip
 private let approachStep: Double = 0.035  // Radius decrease when approaching (slightly slower for longer buildup)
@@ -101,7 +100,7 @@ struct DinoPushGameView: View {
     @State private var isTie = false
     @State private var showResult = false
     @State private var roundsCompleted = 0
-    private let maxRounds = 5
+    private let maxRounds = 3
     @State private var winners: [DinoPushRacer] = []
     @State private var showVictory = false
     @State private var endSequenceStep: Int = -1
@@ -593,7 +592,13 @@ struct DinoPushGameView: View {
                 speechManager.onAudioFinished = {
                     Task { @MainActor in
                         self.speechManager.onAudioFinished = nil
-                        finishRoundAndAdvance()
+                        self.speechManager.speak("game-dino-push-wins", chainDelay: true)
+                        self.speechManager.onAudioFinished = {
+                            Task { @MainActor in
+                                self.speechManager.onAudioFinished = nil
+                                finishRoundAndAdvance()
+                            }
+                        }
                     }
                 }
             }
@@ -936,8 +941,8 @@ struct DinoPushPeriodSelectionView: View {
     @State private var showText = false
 
     private let periods: [(name: String, imageAssetName: String, emoji: String, period: DinoPushPeriod)] = [
-        ("Jurassic", "game-dino-push-period-jurassic", "🦕", .jurassic),
-        ("Cretaceous", "game-dino-push-period-cretaceous", "🦖", .cretaceous),
+        ("Jurassic", "period-jurassic", "🦕", .jurassic),
+        ("Cretaceous", "period-cretaceous", "🦖", .cretaceous),
     ]
 
     var body: some View {
@@ -989,8 +994,8 @@ struct DinoPushPeriodSelectionView: View {
         } label: {
             VStack(spacing: 8) {
                 HStack(spacing: 12) {
-                    if UIImage(named: "game-dino-push-period-jurassic") != nil {
-                        Image("game-dino-push-period-jurassic")
+                    if UIImage(named: "period-jurassic") != nil {
+                        Image("period-jurassic")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 60)
@@ -999,8 +1004,8 @@ struct DinoPushPeriodSelectionView: View {
                             .font(.system(size: 40))
                             .frame(height: 60)
                     }
-                    if UIImage(named: "game-dino-push-period-cretaceous") != nil {
-                        Image("game-dino-push-period-cretaceous")
+                    if UIImage(named: "period-cretaceous") != nil {
+                        Image("period-cretaceous")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 60)

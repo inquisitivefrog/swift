@@ -1,0 +1,19 @@
+[
+  {
+    "id": "struthiomimus_tooth_search_010",
+    "species": "Struthiomimus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "HORSESHOE_CANYON",
+    "habitat_ref": "WOODLAND_FLOODPLAINS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Struthiomimus is hunched low to the muddy ground, its long neck coiled tightly as it peers intensely into the silt. One clawed hand is clamped firmly over its jaw, pressing into the cheek to soothe a sharp ache. Its eyes are narrowed and watering with genuine discomfort. The other hand is desperately patting the wet mud, feeling for the lost object. There is no irony here; the character is in visible pain and deeply worried about the loss.",
+    "visual_logic": {
+      "palette": ["Grey", "Tan", "Rusty Orange", "Olive", "Deep Brown"],
+      "flora": ["Metasequoia", "Horsetails", "Ferns"],
+      "fauna": ["Albertosaurus", "Edmontosaurus"],
+      "substrate": "Heavy, dark organic mud with iron-oxide staining"
+    },
+    "behavioral_intent": "High-fidelity physical expression of acute dental pain and desperate searching."
+  }
+]

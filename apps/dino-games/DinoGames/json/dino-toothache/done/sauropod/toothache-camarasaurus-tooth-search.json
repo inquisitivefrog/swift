@@ -1,0 +1,19 @@
+[
+  {
+    "id": "camarasaurus_toothache_puzzle_019",
+    "species": "Camarasaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MORRISON",
+    "habitat_ref": "SEMI_ARID_SAVANNA_WOODLAND",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Camarasaurus has lowered its long neck so its boxy head is hovering just above a patch of ferns. One thick, pillared front leg is lifted slightly, with the foot gently 'patting' a mound of soft grey silt. The dinosaur’s head is tilted, and it is using its tongue to gingerly feel a gap in its upper jaw. Its large, dark eyes are focused on the ground, blinking with a look of mild, patient frustration. It periodically glances up at the player, its nostrils flaring softly, as if asking for a professional opinion on the scattered white stones below.",
+    "visual_logic": {
+      "palette": ["Ash-grey", "Sage green", "Pastel red", "Dusty purple", "Ivory"],
+      "flora": ["Tree ferns", "Conifers", "Cyads", "Horsetails"],
+      "fauna": ["Stegosaurus (distant)", "Small ornithopods", "Dragonflies"],
+      "substrate": "Variegated mudstone with a dusty, silty texture"
+    },
+    "behavioral_intent": "Calm, deliberate search. The dinosaur’s slow movements and lowered head create a 'safe' space for the player to enter the diagnostic phase of the game."
+  }
+]

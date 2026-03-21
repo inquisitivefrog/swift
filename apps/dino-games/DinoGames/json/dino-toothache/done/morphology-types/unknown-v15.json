@@ -1,0 +1,11 @@
+{
+  "id": "finding_edmontosaurus_paleo3_honeycomb_FINAL",
+  "subject": "dino_bones_paleontologist_3 discovering an Edmontosaurus dental battery",
+  "visual_logic": {
+    "composition": "A close-up at a dig site. **dino_bones_paleontologist_3** is sifting through grey and ocher siltstone.",
+    "character_specs": "Younger male paleontologist, curly black hair, Black race, wearing a khaki safari vest over a neutral shirt.",
+    "action": "He is holding a pair of tweezers, lifting a **rectangular block of fossilized teeth**. The top surface of the block should look exactly like a **honeycomb** or a **cob of corn**, with dozens of small, interlocking diamond-shaped teeth forming a perfect geometric grid.",
+    "morphology_priority": "THE HONEYCOMB: Do not show a single tooth. Show a 'battery block' where the diamond shapes are tightly packed together. This emphasizes the grinding surface used for tough plants.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; maintain exact character details. Ensure the 'honeycomb' pattern is the focal point of the discovery."
+  }
+}

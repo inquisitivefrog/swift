@@ -1,0 +1,11 @@
+{
+  "id": "charophyte_closeup_001",
+  "species": "Stonewort (Nitella-proxy)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "UNDERWATER_CLEAR",
+  "formation_ref": "JIUFOTANG",
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A single whorl of branches; Top-Right: Macro of the tiny, dark-red reproductive organs (oogonia); Bottom-Left: The 'stony' calcified texture of the stem; Bottom-Right: A cross-section of the main 'axis' stem.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; emphasis on the geometric, repeating patterns; dusty seafoam green."
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "finding_argentinosaurus_paleo1_STONE_PEG_FINAL_FINAL",
+  "subject": "dino_bones_paleontologist_1 discovering a natural cylindrical Argentinosaurus fossil",
+  "visual_logic": {
+    "action": "The paleontologist (dino_bones_paleontologist_1: blonde hair, light blue shirt, white sun hat) is holding a **single, fossilized, stone-like cylinder** with tweezers. Her expression is focused and gentle.",
+    "morphology_priority": "THE STONE PEG: **This is a simple, slender, solid cylinder of weathered bone.** It looks like a **heavy, smooth, naturally formed stone pestle or a thick, fossilized chalk stick.** It has **NO distinct crown, NO tapering root, NO bulbous ends, and NO mechanical/industrial features.** The object's thickness is uniform from top to bottom, with both ends rounded and blunt.",
+    "texture": "The surface is rough, weathered, and organic-looking, like aged bone or natural river stone. It has subtle, irregular vertical striations, but no sharp edges or metallic sheen.",
+    "color": "Earth-toned, pale brown, or grey, suggesting a fossil that has been buried in the earth.",
+    "focus": "The entire focus is on the paleontologist's hands and this single, natural, heavy, cylindrical fossil.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Ensure the object is clearly organic and fossilized, avoiding any resemblance to human teeth, shark teeth, or man-made objects. It must be a perfect, unadorned cylinder."
+  }
+}

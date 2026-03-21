@@ -1,0 +1,19 @@
+[
+  {
+    "id": "chasmosaurus_toothache_puzzle_036_no_tooth",
+    "species": "Chasmosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DINOSAUR_PARK",
+    "habitat_ref": "COASTAL_FLOODPLAIN_SCRUB",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Chasmosaurus is positioned in a low, aggressive-looking stance, but it's not hunting—it's searching. Its massive, ornate frill is tilted forward, casting a shadow over a patch of trampled ferns. It is using the edge of its heavy, hooked beak to scrap at the ground, creating deep furrows in the dark mud. One side of its face is slightly swollen, and its eyes are narrow and watery. It occasionally shakes its head in a quick, pained 'snap,' sending droplets of mud flying, but the search is clearly failing. The area it has cleared is just bare clay and broken roots—no tooth is visible. It looks up at the player with a huff of hot breath, appearing both annoyed and exhausted.",
+    "visual_logic": {
+      "palette": ["Slate grey", "Muddy brown", "Olive green", "Pale yellow", "Clay-red"],
+      "flora": ["Flowering shrubs", "Broadleaf ferns", "Ginkgo seedlings"],
+      "fauna": ["A small lizard scurrying away", "Insects buzzing in the mud"],
+      "substrate": "Sticky, dark riverbank clay and overturned sod"
+    },
+    "behavioral_intent": "Irritable and inefficient searching. The dinosaur’s 'scraping' action suggests it might have accidentally buried the tooth deeper into the mud, setting up the need for the player to use a sifting or scanning tool."
+  }
+]

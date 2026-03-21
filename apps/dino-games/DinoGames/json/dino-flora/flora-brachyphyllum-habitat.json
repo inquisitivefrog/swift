@@ -1,0 +1,26 @@
+{
+  "id": "brachyphyllum_forest_mature_002",
+  "species": "Brachyphyllum (Scale-leaf Conifer)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAPPLED_RIVER_SUNLIGHT",
+  "formation_ref": "SHAXIMIAO",
+  "environment_details": {
+    "habitat": "FORESTED_RIVER_SYSTEM",
+    "flora": [
+      "Grove of mature Brachyphyllum (bushy, medium-height trees with drooping, rope-like branches)",
+      "Tree ferns (as mid-story canopy)",
+      "Meandering river channel in the background"
+    ],
+    "ground_palette": [
+      "Red-brown",
+      "Forest green",
+      "Ochre"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; dense and bushy 'hedge' appearance; soft, drooping branch silhouettes; vibrant Jurassic forest atmosphere."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view of a Jurassic river forest. Brachyphyllum trees form a dense, green thicket on a red-brown mudstone bank. Their thick, scaly branches hang slightly toward the ground. In the background, the river reflects the ochre sky.",
+    "ground": "Rich red-brown soil covered in fallen green scales and patches of moss.",
+    "lighting": "Warm sunlight filtering through a high canopy, creating soft dappled light on the unique rope-like foliage of the Brachyphyllum grove."
+  }
+}

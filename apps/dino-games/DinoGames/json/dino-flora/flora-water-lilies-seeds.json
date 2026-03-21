@@ -1,0 +1,27 @@
+{
+  "id": "water_lilies_lifecycle_closeup_001",
+  "species": "Water Lilies (Early Angiosperms)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "JIUFOTANG",
+  "environment_details": {
+    "habitat": "FORESTED_VOLCANIC_LAKE_SYSTEM",
+    "flora": [
+      "Water lily flower (primitive, multi-petaled, pale cream or pinkish-white)",
+      "Water lily seed pod (clumpy, berry-like structure containing small dark seeds)",
+      "Water lily sprout (young submerged shoot with a single small unrolling leaf and roots)",
+      "Water lily pad (close-up of the floating leaf showing the waxy surface and radiating veins)"
+    ],
+    "ground_palette": [
+      "Light ash grey",
+      "Whitish tuff",
+      "Dark Gray"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; tactile textures like the waxy, water-repellent leaf surface and soft, translucent petals; clear quadrant separation for educational identification."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: The primitive flower; Top-Right: The seed-bearing pod; Bottom-Left: A submerged young sprout; Bottom-Right: A high-detail close-up of a floating lily pad.",
+    "ground": "A backdrop of fine, light grey volcanic silt and smooth ash-colored stones partially submerged in clear water.",
+    "lighting": "Clear, even, bright diffused daylight to ensure delicate structures like the flower petals and veins are visible."
+  }
+}

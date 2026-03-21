@@ -1,0 +1,27 @@
+{
+  "id": "horsetails_lifecycle_closeup_001",
+  "species": "Giant Horsetails (Equisetites)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "KEM_KEM",
+  "environment_details": {
+    "habitat": "RIVER_DELTA_WETLANDS",
+    "flora": [
+      "Horsetail strobilus (cone-like spore-bearing tip, distinct scales)",
+      "Segmented stem (bamboo-like joints with dark rings)",
+      "Horsetail sapling (single upright green shoot, very straight)",
+      "Whorled leaves (close-up of thin, needle-like leaves radiating from a stem joint)"
+    ],
+    "ground_palette": [
+      "Vibrant red",
+      "Sandy tan",
+      "Muddy brown"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the repetitive, geometric segments of the stems; tactile 'waxy' texture for the green stalks; clear quadrant separation for educational study."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: The spore-bearing tip (strobilus); Top-Right: Detailed view of a stem segment joint; Bottom-Left: A young emerging shoot; Bottom-Right: A high-detail view of the needle-like leaf whorl.",
+    "ground": "Wet, sandy tan riverbank soil with small ripples from water recession.",
+    "lighting": "Clear, even, bright diffused daylight to highlight the architectural structure of the plant."
+  }
+}

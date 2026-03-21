@@ -1,0 +1,19 @@
+[
+  {
+    "id": "albertosaurus_toothache_puzzle_044_no_tooth",
+    "species": "Albertosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "HORSESHOE_CANYON",
+    "habitat_ref": "ANCIENT_COASTAL_WOODLANDS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Albertosaurus is in the middle of a violent tantrum. It is standing on one powerful leg while the other kicks out at a fallen, rotting conifer log, splintering the wood into a thousand shards. Its head is tilted back, mouth wide open in a silent, pained roar, showing the empty, bloody socket in its upper jaw. Its small arms are twitching, and its tail is lashing through the tall ferns, flattening them into the mud. The ground is a chaotic explosion of wood splinters, bark, and torn leaves, but no tooth is visible. It looks absolutely exhausted and cornered by its own pain, staring at the player with a mix of aggression and a silent plea for help.",
+    "visual_logic": {
+      "palette": ["Steel grey", "Pine green", "Muddy charcoal", "Bruised purple", "Fresh wood-yellow"],
+      "flora": ["Metasequoia trees", "Tree ferns", "Moss-covered logs"],
+      "fauna": ["A small mammal scurrying into a hollow log", "Scattered feathers"],
+      "substrate": "Slippery river mud and a dense carpet of organic debris"
+    },
+    "behavioral_intent": "Aggressive frustration. The dinosaur has literally 'shredded' the search area, making it a nightmare of splinters and debris that the player will have to carefully sift through to find the hidden tooth."
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "id": "acrocanthosaurus_toothache_puzzle_051_stylized",
+  "species": "Acrocanthosaurus atokensis",
+  "tech_ref": "THREE_FINGERED_HANDS_MEDIAL_PALMS_HIGH_NEURAL_SPINES",
+  "lighting_ref": "BRIGHT_SATURATED_HIGH_NOON",
+  "formation_ref": "ANTLERS_FORMATION",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3_CLEAN",
+  "pose": "The Acrocanthosaurus is hunched over a shallow river pool, its reflection wobbling in the blue water. Its high-arched spine is the visual focus, with the skin stretched over the tall vertebrae. It is using its front hands—correctly oriented with palms facing each other—to splash water against its swollen lower jaw. Its mouth is slightly open, showing a gap where a large tooth should be. The ground is a tidy, clear bed of large, round river stones. NO TOOTH IS VISIBLE. The dinosaur looks exhausted, with one eye half-closed in a pained wince.",
+  "visual_logic": {
+    "palette": ["Slate-purple", "Teal", "Bone-white", "River-blue"],
+    "anatomical_priority": "High neural spines along the back; three fingers on hands; medial palm orientation (not pronated); long, deep skull.",
+    "cleanliness_factor": "Water is crystal clear; stones are simplified and large; no mud or messy debris to interfere with the player's upcoming search."
+  },
+  "behavioral_intent": "Weary and feverish. The dinosaur is trying to 'cool' the pain in the water, which sets up a mechanic where the player might need to search underwater or move the river stones."
+}

@@ -1,0 +1,26 @@
+{
+  "id": "horsetails_marsh_mature_002",
+  "species": "Giant Horsetails (Equisetites)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAPPLED_RIVER_SUNLIGHT",
+  "formation_ref": "KEM_KEM",
+  "environment_details": {
+    "habitat": "RIVER_DELTA_WETLANDS",
+    "flora": [
+      "Dense thicket of Giant Horsetails (varying heights, reaching 3 meters)",
+      "Floating aquatic ferns (in the water foreground)",
+      "Muddy riverbank roots"
+    ],
+    "ground_palette": [
+      "Vibrant red",
+      "Muddy brown",
+      "Sandy tan"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; thick reed-like appearance; lush but organized into a clear 'hedge' or bank; no sharp/aggressive angles; emphasizing the proximity to water."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view showing a dense, vertical 'forest' of horsetails lining the edge of a slow-moving, muddy brown river channel. The water reflects the vibrant red soil of the banks.",
+    "ground": "Saturated muddy brown soil transitioning into shallow water at the bottom of the frame.",
+    "lighting": "Warm, direct sunlight filtered through a slight riverside haze, creating soft dappled shadows on the segmented stalks."
+  }
+}

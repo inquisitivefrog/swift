@@ -9,18 +9,19 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | Path | When used |
 |------|-----------|
 | `Feedback/great-match.m4a` | Matching game: correct match |
-| `Feedback/try-again.m4a` | Guess / Toothache / Find Mama / Dino Lunch / Matrix: wrong answer |
-| `Feedback/thats-right-you-guessed-it.m4a` | Name That Dinosaur, Name That Pterosaur, Dino Footprints, Dino Lunch, Find Mama, Toothache: correct guess |
+| `Feedback/try-again.m4a` | Guess / Dino Toothache / Find Mama / Dino Lunch / Matrix: wrong answer |
+| `Feedback/thats-right-you-guessed-it.m4a` | Name That Dinosaur, Name That Pterosaur, Dino Footprints, Dino Lunch, Find Mama, Dino Toothache: correct guess |
 | `Feedback/not-that-one.m4a` | Matching: wrong creature selected |
 | `Feedback/good-job-you-got-them-all.m4a` | Victory (multiple games) |
 | `Feedback/crowd-cheering.m4a` | Victory (multiple games) |
 | `Feedback/you-did-it.m4a` | Balance game: balanced / ran out |
 | `Feedback/pick-a-dinosaur-first.m4a` | Matching (Land): tap before selecting dinosaur; Measure the Dinosaur!: tap right before left |
 | `Feedback/pick-a-pterosaur-first.m4a` | Matching (Air): tap before selecting pterosaur |
-| `Feedback/you-cant-be-serious-that-will-take-forever.m4a` | Measure the Dinosaur!: stack has 6 dinosaurs, would take forever |
+| `Feedback/you-cant-be-serious-that-will-take-forever.m4a` | Measure the Dinosaur!: stack cap (6) reached |
+| `Games/game-measure-you-cant-be-serious.m4a` | Measure the Dinosaur!: dinosaur too small (would need >5 of that species) |
+| `Games/game-measure-that-dinosaur-is-too-tall.m4a` | Measure the Dinosaur!: reject add when dinosaur would overshoot (too tall for remaining height) |
 | `Feedback/game-measure-stack-too-tall.m4a` | Measure the Dinosaur!: right stack is taller than left (overshot), round ends |
 | `Feedback/game-measure-close-enough-for-government-work.m4a` | Measure the Dinosaur!: failsafe when no valid choices left — "Close enough for government work!" then read comparison |
-| `Feedback/that-dinosaur-is-too-tall.m4a` | Measure the Dinosaur!: reject add when dinosaur would overshoot (too tall for remaining height) |
 | `Feedback/pick-another-one.m4a` | Matching: already-matched creature tapped |
 | `Feedback/is-heavier.m4a` | Weigh game: “X is heavier” |
 | `Feedback/is-as-tall-as.m4a` | Measure the Dinosaur!: "X is as tall as [stack]" (between left dino name and stack list) |
@@ -60,7 +61,7 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | `Games/game-matrix-materials.m4a` | Matrix Materials |
 | `Games/game-find-mama.m4a` | Find Mama |
 | `Games/game-dino-lunch.m4a` | Dino Lunch |
-| `Games/game-toothache.m4a` | Toothache |
+| `Games/game-dino-toothache.m4a` | Dino Toothache (game card + transition) |
 | `Games/game-wacky-dinosaurs.m4a` | Wacky Dinosaurs |
 | (and any other `game-{slug}` for games you add) | |
 
@@ -92,7 +93,10 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | `Games/game-find-mama-return-the-egg.m4a` | Find Mama |
 | `Games/game-find-mama-help-the-paleontologist.m4a` | Find Mama |
 | `Games/game-give-this-nutritious-lunch.m4a` | Dino Lunch |
-| `Games/game-can-you-return-the-tooth.m4a` | Toothache |
+| `Games/game-can-you-return-the-tooth.m4a` | Dino Toothache (legacy) |
+| `Games/games-dino-toothache-this-dinosaur-lost-its-tooth.m4a` | Dino Toothache round intro (all rounds) |
+| `Dinosaurs/dino-{slug}.m4a` | Dino Toothache: dinosaur name when round starts |
+| `Toothache/dino-toothache-{toothType}.m4a` | Dino Toothache: tooth intro when walking each of 5 options, and when tapping an option |
 | `Games/game-dino-footprints-tap-the-footprint-to-hear-description.m4a` | Dino Footprints: Source Footprints hints intro (e.g. “Tap the footprint to hear its description”) |
 | `Games/game-dino-ages-tap-the-period-to-hear-description.m4a` | Dino Ages: Source Ages hints intro (e.g. “Tap the period to hear which dinosaurs lived there”) |
 | `Games/game-dino-ages-jurassic-dinosaurs.m4a` | Dino Ages: Source Ages — Jurassic period description (clades/dinosaurs found) |
@@ -103,6 +107,20 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | `Games/game-dino-push-jurassic.m4a` | Dino Push: Jurassic option (copied from Cover) |
 | `Games/game-dino-push-cretaceous.m4a` | Dino Push: Cretaceous option (copied from Cover) |
 | `Games/game-dino-push-both.m4a` | Dino Push: Both option (copied from Cover) |
+| `Games/game-dino-push-wins.m4a` | Dino Push: after winner name when round ends ("wins!") |
+| `Games/game-dino-push-its-a-tie.m4a` | Dino Push: when round is a tie |
+| `Games/game-dino-flora-tap-the-image.m4a` | Dino Flora: Source Flora hints intro |
+
+---
+
+## Flora (Dino Flora – plant intros + hints)
+
+| Path | When used |
+|------|-----------|
+| `Flora/flora-{slug}.m4a` | Dino Flora: plant intro per round (e.g. flora-horsetails, flora-ginkgo) |
+| `Flora/hint-browsers.m4a` | Dino Flora: Source Flora hints — Browsers |
+| `Flora/hint-periods.m4a` | Dino Flora: Source Flora hints — Periods |
+| `Flora/hint-diets.m4a` | Dino Flora: Source Flora hints — Diets |
 
 ---
 
@@ -129,12 +147,14 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | Path | When used |
 |------|-----------|
 | `Levels/choose-a-level.m4a` | When level picker appears |
-| `Levels/level-1-really-easy-games.m4a` | Level 1 |
-| `Levels/level-2-easy-games.m4a` | Level 2 |
-| `Levels/level-3-getting-harder.m4a` | Level 3 |
-| `Levels/level-4-hard-games.m4a` | Level 4 |
-| `Levels/level-5-really-hard-games.m4a` | Level 5 |
-| `Levels/level-6-really-hard-games.m4a` | Level 6 |
+| `Levels/level-1-really-easy-games.m4a` | Level 1 — Really Easy Games |
+| `Levels/level-2-more-really-easy-games.m4a` | Level 2 — More Really Easy Games |
+| `Levels/level-3-easy-games.m4a` | Level 3 — Easy Games |
+| `Levels/level-4-more-easy-games.m4a` | Level 4 — More Easy Games |
+| `Levels/level-5-getting-harder.m4a` | Level 5 — Getting Harder |
+| `Levels/level-6-and-harder.m4a` | Level 6 — And Harder |
+| `Levels/level-7-hard-games.m4a` | Level 7 — Hard Games |
+| `Levels/level-8-are-you-sure-youre-ready.m4a` | Level 8 — Are You Sure You're Ready? |
 
 ---
 
@@ -180,7 +200,7 @@ Examples: `Ptero-Characteristics/wings.m4a`, `Ptero-Characteristics/crest.m4a`, 
 
 - **Feedback:** `Feedback/great-match.m4a`, `Feedback/try-again.m4a`, `Feedback/thats-right-you-guessed-it.m4a`, `Feedback/good-job-you-got-them-all.m4a`, `Feedback/crowd-cheering.m4a`, `Feedback/you-did-it.m4a`, `Feedback/not-that-one.m4a`, `Feedback/pick-a-dinosaur-first.m4a`, `Feedback/pick-a-pterosaur-first.m4a`, `Feedback/pick-another-one.m4a`, `Feedback/is-heavier.m4a`, `Feedback/they-both-weigh-about-the-same.m4a`, and the `Feedback/game-balance-*` phrases if you use Balance.
 - **Games:** one `Games/game-{id}.m4a` per game you use (so transition + walk have audio).
-- **Levels:** `Levels/choose-a-level.m4a` and `Levels/level-1-really-easy-games.m4a` … `Levels/level-6-really-hard-games.m4a` if you use the level picker.
+- **Levels:** `Levels/choose-a-level.m4a` and `Levels/level-1-really-easy-games.m4a` … `Levels/level-8-are-you-sure-youre-ready.m4a` if you use the level picker.
 - **Cover:** at least `Cover/cover-choose-a-dinosaur-game.m4a` (and other cover steps you use).
 - **Creature names:** as many `Dinosaurs/dino-*.m4a` and `Pterosaurs/ptero-*.m4a` as you want; the rest fall back to TTS.
 

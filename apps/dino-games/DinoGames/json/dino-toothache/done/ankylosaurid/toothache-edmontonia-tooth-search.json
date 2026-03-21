@@ -1,0 +1,19 @@
+[
+  {
+    "id": "edmontonia_toothache_puzzle_041_no_tooth",
+    "species": "Edmontonia",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "HORSESHOE_CANYON",
+    "habitat_ref": "ANCIENT_COASTAL_SWAMP",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Edmontonia is hunkered low to the ground in a defensive crouch, its massive shoulder spikes jutting forward into the surrounding ferns. It is attempting to sniff a patch of soft, black mud directly beneath its chest, but its rigid armor prevents it from lowering its head quite far enough. It is shifting its weight from side to side, accidentally pressing its wide, heavy belly into the mud and flattening the vegetation. One side of its armored jaw is noticeably swollen, and its small eyes are focused downward with a look of quiet, stubborn frustration. It lets out a short, puffing snort that ripples a nearby puddle. The ground visible around the edges of its body is just churned peat and broken fern fronds—no tooth is in sight. It looks like it has literally sat on the evidence.",
+    "visual_logic": {
+      "palette": ["Steel grey", "Peat black", "Moss green", "Burnt umber", "Bone grey"],
+      "flora": ["Cypress knees", "Water-ferns", "Clubmosses"],
+      "fauna": ["Small turtles retreating", "Mist rising from the peat"],
+      "substrate": "Deep, wet peat mud and slippery organic debris"
+    },
+    "behavioral_intent": "Physically restricted and accidental concealment. The dinosaur’s defensive 'hunker' has likely trapped the tooth underneath its massive body, requiring the player to guide the dinosaur to move before the search can truly begin."
+  }
+]

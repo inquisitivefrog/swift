@@ -1,0 +1,11 @@
+{
+  "id": "finding_brachiosaurus_paleo14_tooth_REVISED_FINAL",
+  "subject": "paleontologist_14 discovering a fossilized Brachiosaurus tooth",
+  "visual_logic": {
+    "composition": "A close-up, focused on a small, muddy excavation pit or riverbank. The same male paleontologist (dark-skinned, short hair, wearing glasses and a green field jacket) is carefully sifting through wet, reddish-brown earth.",
+    "action": "He is holding a pair of tweezers, proudly displaying a **single, broad, flat, and distinctly spoon-shaped fossilized tooth**. The tooth should have a rounded, spatulate end and be noticeably wider than it is long, resembling a miniature, solid, fossilized spoon bowl. It should be light brown or grey, with a textured, rock-like appearance, indicating fossilization. **Crucially, there should be NO actual metal or ceramic spoon in the image.**",
+    "morphology_priority": "STRICT BIOLOGY: Ensure the tooth is clearly spatulate/spoon-shaped, distinct from the 'Pencil Peg' (Sauropod) and any 'Leaf' teeth. It should be noticeably broader than it is long, and unequivocally appear as a fossilized biological object.",
+    "details": "A small trowel or brush is lying nearby, partially covered in mud. His expression is one of pleased scientific discovery.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded, toy-like proportions; highlight the unique 'silver spoon' morphology of the Brachiosaurus tooth. Maintain consistent 'toy' character style and matte textures. No dogs or lab equipment. Focus on the single fossilized tooth being held by tweezers."
+  }
+}

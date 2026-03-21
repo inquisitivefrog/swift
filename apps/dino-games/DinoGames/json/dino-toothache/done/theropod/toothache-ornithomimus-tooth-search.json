@@ -1,0 +1,19 @@
+[
+  {
+    "id": "ornithomimus_toothache_puzzle_013",
+    "species": "Ornithomimus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "HORSESHOE_CANYON",
+    "habitat_ref": "WOODLAND_FLOODPLAINS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Ornithomimus is leaning over a patch of ferns, looking focused and slightly frazzled. It has one hand hovering near its jaw as if checking a sore spot, while the other hand points tentatively toward a grouping of pebbles on the ground. Its expression is one of 'puzzled concern'—eyebrows raised, head tilted, and eyes bright with curiosity. It looks toward the viewer as if inviting them to help solve the mystery of the missing tooth, maintaining an upbeat but urgent educational tone.",
+    "visual_logic": {
+      "palette": ["Grey", "Tan", "Rusty Orange", "Olive Green", "Soft Charcoal"],
+      "flora": ["Metasequoia", "Water Ferns", "Sedge Grasses"],
+      "fauna": ["Small river turtles", "Dragonflies"],
+      "substrate": "Dark, wet organic mud with subtle coal streaks"
+    },
+    "behavioral_intent": "Engaging, inquisitive distress. The dinosaur acts as a 'patient' in a friendly matching game, looking for the player's assistance to find the right tooth."
+  }
+]

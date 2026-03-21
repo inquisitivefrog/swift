@@ -1,0 +1,7 @@
+{
+    "id": "ui_sauropod_pit_final",
+    "morphology": "buried_pit_nest",
+    "prompt": "A realistic 3D ground-level view of a saucer-shaped depression in a flat floodplain. The depression is filled with a dark mixture of soil and rotting leaf mulch. Several sauropod eggs are mostly underground; only the very top 10% of the ivory shells are visible, peeking out from under the mulch and dirt. The dirt is physically sitting on top of the shells. The surrounding ground is perfectly level with no mounds. The scene looks like a hole that was dug and then filled back in with debris.",
+    "visual_logic": "Uses 'depression' and 'filled back in' to force the AI to place the ground level ABOVE the majority of the egg models.",
+    "style_notes": "Heavy grit on shells. No vertical rims. Flat horizon."
+}

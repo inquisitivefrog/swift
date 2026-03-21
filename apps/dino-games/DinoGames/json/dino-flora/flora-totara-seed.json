@@ -1,0 +1,27 @@
+{
+  "id": "totara_lifecycle_closeup_001",
+  "species": "Tōtara (Podocarpus-type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "LA_AMARGA",
+  "environment_details": {
+    "habitat": "FORESTED_RIVER_SYSTEM",
+    "flora": [
+      "Tōtara 'Berry' (a green seed sitting on a bright red, swollen fleshy base)",
+      "Prickly foliage (stiff, linear, sharp-pointed needles arranged spirally)",
+      "Tōtara sapling (bushy and very prickly, deterrent to herbivores)",
+      "Bark detail (thick, stringy, deeply furrowed bark that peels in long strips)"
+    ],
+    "ground_palette": [
+      "Red-brown",
+      "Ochre",
+      "Dark Brown"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the 'stiff' and 'sharp' nature of the needles; vibrant red seed base; very textured, rugged bark; clear quadrant separation."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: The red fleshy seed base; Top-Right: A close-up of the stiff, prickly needles; Bottom-Left: A bushy young sapling; Bottom-Right: A high-detail view of the deeply furrowed, stringy bark.",
+    "ground": "Dry red-brown mudstone with fragments of ochre siltstone.",
+    "lighting": "Clear, even, bright diffused daylight to highlight the deep ridges in the bark."
+  }
+}

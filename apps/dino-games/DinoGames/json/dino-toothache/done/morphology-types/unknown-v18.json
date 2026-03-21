@@ -1,0 +1,11 @@
+{
+  "id": "finding_triceratops_battery_paleo5",
+  "subject": "dino_bones_paleontologist_5 holding a fossilized dental battery fragment",
+  "visual_logic": {
+    "character_specs": "Paleontologist 5: Older male, Black race, short grey hair, wearing a tan field vest and a wide-brimmed hat.",
+    "action": "He is holding a heavy, palm-sized **fragment of a dental battery** with both hands. He is looking at it with a look of expert fascination.",
+    "morphology_priority": "BATTERY FRAGMENT: This is a dense, rectangular block of fossilized bone. On one side, it shows multiple rows of 'Vertical Shear' teeth stacked tightly on top of each other. It looks like a **geological cross-section** or a piece of a honeycomb made of grey/brown stone.",
+    "details": "Dust and sand are being brushed off the fragment. The individual double-pronged roots are visible at the bottom of the block, while the top shows the worn, flat shearing surfaces.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; prioritize the 'heavy' feel of the object compared to a single tooth."
+  }
+}

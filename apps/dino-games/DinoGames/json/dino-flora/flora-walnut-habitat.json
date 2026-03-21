@@ -1,0 +1,26 @@
+{
+  "id": "walnut_forest_mature_002",
+  "species": "Early Hardwood (Walnut-like)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "IREN_DABASU",
+  "environment_details": {
+    "habitat": "FLOODPLAIN_WOODLANDS",
+    "flora": [
+      "Mature Walnut-like trees (broad, spreading crowns, dark rugged trunks)",
+      "Small flowering shrubs (early angiosperms)",
+      "Scattered fallen nuts on the forest floor"
+    ],
+    "ground_palette": [
+      "Ochre",
+      "Dark Grey",
+      "Pale Green-Grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; a sturdy and established forest feel; emphasis on the 'nut-bearing' nature of the grove; colors reflecting the semi-arid but fertile floodplain."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view of an open woodland. The ground is ochre-tinted earth scattered with dark grey stones. The trees are spaced out enough to allow high-key sunlight to reach the forest floor, where several green walnuts have fallen.",
+    "ground": "Dry, packed ochre clay with a light dusting of pale green-grey silt.",
+    "lighting": "High-key direct sunlight with long, soft shadows, creating a warm and inviting woodland atmosphere."
+  }
+}

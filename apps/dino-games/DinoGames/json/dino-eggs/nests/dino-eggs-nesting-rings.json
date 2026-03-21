@@ -1,0 +1,8 @@
+{
+    "id": "ui_oviraptor_nest",
+    "morphology": "oviraptor_nest",
+    "prompt": "High-fidelity 3D render of a highly organized prehistoric Oviraptor nest. The nest is a perfectly circular structure, approximately 1.5 meters in diameter, featuring a distinct open central space. The outer perimeter has a slightly raised rim, about 10-15 cm high, constructed from light soil and sparse dry vegetation. Within this structure, elongated, deep blue-green eggs are meticulously arranged in two concentric, paired rings around the central open space. Each egg is partially buried into the nest material, angled distinctly inward towards the center of the nest. The eggs are not randomly clustered nor fully buried. Background: arid, rocky badlands with sparse, tough desert scrub. Bright, clear, high-angle sunlight casting sharp shadows to emphasize the structure and egg angles. Focus on the precise geometric layout and the central open space.",
+    "visual_logic": "Generates a circular nest with a central void, multiple concentric egg rings, a specific egg orientation (angled inward), and a subtle raised rim, reflecting the unique Oviraptor nesting strategy.",
+    "style_notes": "No scale bar. Emphasize geometric precision, central open space, and inward-angled eggs. Arid environment.",
+    "definition_match": "Circular/central open space (~1-2m dia), Slightly raised rim, Paired rings/2-3 concentric circles, Eggs partially buried/angled inward."
+}

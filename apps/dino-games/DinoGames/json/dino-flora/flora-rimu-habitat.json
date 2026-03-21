@@ -1,0 +1,26 @@
+{
+  "id": "rimu_forest_mature_002",
+  "species": "Rimu (Dacrydium-type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAMP_MISTY_MORNING",
+  "formation_ref": "LA_AMARGA",
+  "environment_details": {
+    "habitat": "FORESTED_RIVER_SYSTEM",
+    "flora": [
+      "Mature Rimu trees (massive emergent trees with weeping, shaggy crowns)",
+      "Tree ferns (Ponga) in the understory",
+      "River mist in the distance"
+    ],
+    "ground_palette": [
+      "Red-brown",
+      "Forest green",
+      "Ochre"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; ancient and 'shaggy' forest aesthetic; trees that look textured and soft from a distance; rich Jurassic atmosphere."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view of a Jurassic ridge. The Rimu trees emerge above the rest of the canopy, their long weeping branches creating a soft, textured silhouette against a misty sky. The ground is a mix of red-brown earth and vibrant green moss.",
+    "ground": "A rich, moist forest floor of red-brown soil, densely packed with ferns and fallen wood.",
+    "lighting": "Soft, cool morning light with a low-lying mist, making the forest-green foliage appear deep and lush."
+  }
+}

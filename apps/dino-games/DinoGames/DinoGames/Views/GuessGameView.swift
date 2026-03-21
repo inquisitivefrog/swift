@@ -103,9 +103,12 @@ struct GuessGameView: View {
     /// Tracks first appearance so we only reset on initial load, not when advancing rounds (avoids resetting currentRound when SwiftUI re-invokes onAppear).
     @State private var hasInitiallyAppeared = false
 
-    /// The 3 correct dinosaurs in round order (for end-sequence row)
+    /// The correct dinosaurs per round in round order, filtered for duplicates (first appearance) for end-sequence row.
     private var endSequenceDinosaurs: [Dinosaur] {
-        gameConfig.rounds.map { r in r.options.first(where: { $0.id == r.correctAnswerId })! }
+        var seen: Set<Int> = []
+        return gameConfig.rounds
+            .map { r in r.options.first(where: { $0.id == r.correctAnswerId })! }
+            .filter { seen.insert($0.id).inserted }
     }
     
     // Get current round question
@@ -140,27 +143,34 @@ struct GuessGameView: View {
                     VStack(spacing: 40) {
                         // Top: Question image (silhouette), then round label below
                         VStack(spacing: 10) {
-                            // Silhouette image
+                            // Question image: primary, then dino-silhouette-{slug}, then full image with silhouette effect, then placeholder
                             if UIImage(named: question.questionImageName) != nil {
                                 Image(question.questionImageName)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 250, height: 250)
-                            } else if let fallback = question.questionImageFallback, !fallback.isEmpty {
-                                // Fallback: use full image with silhouette effect
-                                Image(fallback)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 250, height: 250)
-                                    .colorMultiply(.black)
-                                    .opacity(0.8)
                             } else {
-                                // Ultimate fallback: placeholder
-                                RoundedRectangle(cornerRadius: 15)
-                                    .fill(Color.black.opacity(0.5))
-                                    .frame(width: 250, height: 250)
+                                let baseName = question.questionImageFallback?.replacingOccurrences(of: "dino-", with: "") ?? ""
+                                let silhouetteName = baseName.isEmpty ? "" : "dino-silhouette-\(baseName)"
+                                if !silhouetteName.isEmpty && UIImage(named: silhouetteName) != nil {
+                                    Image(silhouetteName)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 250, height: 250)
+                                } else if let fallback = question.questionImageFallback, !fallback.isEmpty {
+                                    Image(fallback)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 250, height: 250)
+                                        .colorMultiply(.black)
+                                        .opacity(0.8)
+                                } else {
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .fill(Color.black.opacity(0.5))
+                                        .frame(width: 250, height: 250)
+                                }
                             }
-                            Text("Round \(currentRound) of 3")
+                            Text("Round \(currentRound) of \(gameConfig.rounds.count)")
                                 .font(.headline)
                                 .foregroundColor(.secondary)
                         }
@@ -199,7 +209,7 @@ struct GuessGameView: View {
                 speechManager.onAudioFinished = {
                     isAudioPlaying = false
                 }
-                // Intro already played on the transition screen; for Dino Footprints play round intro at start of each round
+                // Intro already played on the transition screen; for Dino Footprints and Dino Bones play round intro at start of each round
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                     startRoundIfNeeded()
                 }
@@ -240,7 +250,7 @@ struct GuessGameView: View {
         }
     }
     
-    /// Starts the round: for Dino Footprints plays "identify the footprint" then options walk; for other guess games goes straight to options walk.
+    /// Starts the round: for Dino Footprints plays "identify the footprint" then options walk; for Dino Bones plays "identify the skeleton" then options walk; for other guess games goes straight to options walk.
     private func startRoundIfNeeded() {
         guard let question = currentQuestion, !question.options.isEmpty, optionsWalkIndex == nil else { return }
         if gameConfig.id == "dino-footprints" {
@@ -332,7 +342,7 @@ struct GuessGameView: View {
                 self.speechManager.onAudioFinished = nil
                 DispatchQueue.main.async {
                     self.selectedDinosaur = nil
-                    if self.currentRound < 3 {
+                    if self.currentRound < self.gameConfig.rounds.count {
                         self.currentRound += 1
                         self.wrongGuessesThisRound = 0
                         self.isProcessingAnswer = false
@@ -817,8 +827,8 @@ struct GuessGameConfigs {
     // Rules: (1) choose 3 dinosaur clades at random; (2) choose 1 dinosaur from each clade; (3) exclude dinosaurs already used in previous games (persisted); victory block acknowledges the 3.
     static var nameThatDinosaur: GuessGameConfig {
         let allDinosaurs = MatchingGameConfigs.allDinosaurs
-        guard allDinosaurs.count >= 5 else {
-            fatalError("Need at least 5 dinosaurs for guess game, but only have \(allDinosaurs.count)")
+        guard allDinosaurs.count >= 3 else {
+            fatalError("Need at least 3 dinosaurs for guess game, but only have \(allDinosaurs.count)")
         }
 
         // Pool: dinosaurs with dino- image (for silhouette asset name). Exclude previously used so they are not repeated in future games.
@@ -827,7 +837,7 @@ struct GuessGameConfigs {
             guard let imageName = d.imageName, imageName.hasPrefix("dino-") else { return false }
             return !usedIds.contains(d.id)
         }
-        if pool.count < 5 {
+        if pool.count < 3 {
             NameThatDinosaurStorage.clearIfNeeded(availableCount: pool.count)
             usedIds = []
             pool = allDinosaurs.filter { d in
@@ -835,7 +845,7 @@ struct GuessGameConfigs {
                 return true
             }
         }
-        let questionPool = pool.count >= 5 ? pool : allDinosaurs
+        let questionPool = pool.count >= 3 ? pool : allDinosaurs
 
         // Pick 3 clades at random; prefer clades not yet used in recent games (maximize variety across 9 clades).
         let cladeById = MatchingGameConfigs.dinosaurCladeById
@@ -847,19 +857,19 @@ struct GuessGameConfigs {
             usedClades = []
         }
         let availableClades = allCladesWithDinos.filter { !usedClades.contains($0.rawValue) }
-        let cladesToUse = (availableClades.count >= 5 ? availableClades : allCladesWithDinos).shuffled()
+        let cladesToUse = (availableClades.count >= 3 ? availableClades : allCladesWithDinos).shuffled()
         let questionDinosaurs: [Dinosaur]
-        if cladesToUse.count >= 5 {
-            questionDinosaurs = (0..<5).compactMap { i in
+        if cladesToUse.count >= 3 {
+            questionDinosaurs = (0..<3).compactMap { i in
                 let clade = cladesToUse[i]
                 return (byClade[clade] ?? []).shuffled().first
             }
         } else {
-            questionDinosaurs = Array(questionPool.shuffled().prefix(5))
+            questionDinosaurs = Array(questionPool.shuffled().prefix(3))
         }
-        guard questionDinosaurs.count == 5,
-              Set(questionDinosaurs.map { $0.id }).count == 5 else {
-            fatalError("Need at least 5 unique dinosaurs for guess game")
+        guard questionDinosaurs.count == 3,
+              Set(questionDinosaurs.map { $0.id }).count == 3 else {
+            fatalError("Need at least 3 unique dinosaurs for guess game")
         }
         
         var rounds: [RoundQuestion] = []
@@ -924,7 +934,7 @@ struct GuessGameConfigs {
         
         // Verify all rounds have unique question dinosaurs (no duplicate silhouettes)
         let questionIds = Set(rounds.map { $0.correctAnswerId })
-        assert(questionIds.count == 5, "All 5 rounds must have unique question dinosaurs")
+        assert(questionIds.count == 3, "All 3 rounds must have unique question dinosaurs")
         
         return GuessGameConfig(
             id: "name-that-dinosaur",
@@ -992,14 +1002,14 @@ struct GuessGameConfigs {
             return footprintDinosaurMap[slug]!.clade
         }
         let cladesWithOneOrMore = FootprintClade.allCases.filter { (byClade[$0] ?? []).count >= 1 }
-        guard cladesWithOneOrMore.count >= 5 else {
-            fatalError("Need at least 5 clades with 1+ dinosaur for Dino Footprints (have \(cladesWithOneOrMore.count))")
+        guard cladesWithOneOrMore.count >= 3 else {
+            fatalError("Need at least 3 clades with 1+ dinosaur for Dino Footprints (have \(cladesWithOneOrMore.count))")
         }
         // One clade per round; show one footprint image per clade. Randomly picks from up to 3 variants per clade to reduce memorization.
-        let cladesForRounds = Array(cladesWithOneOrMore.shuffled().prefix(5))
+        let cladesForRounds = Array(cladesWithOneOrMore.shuffled().prefix(3))
         var usedQuestionIds: Set<Int> = []
         var rounds: [RoundQuestion] = []
-        for roundId in 1...5 {
+        for roundId in 1...3 {
             let clade = cladesForRounds[roundId - 1]
             let sameClade = byClade[clade] ?? []
             let correct = sameClade.shuffled().first { !usedQuestionIds.contains($0.id) } ?? sameClade.first!
@@ -1031,31 +1041,34 @@ struct GuessGameConfigs {
     
     // Dino Bones!: identify dinosaur from museum preparator scene—skeleton on tarp, paleontologist with gift fossil, one bone missing.
     // Clue: nearly articulated skeleton, gift fossil (partially in matrix), skull, or obvious missing bone (skull/foreleg/femur).
-    // 3 rounds, 3 options per round. Images: dino-bones-{slug} (e.g. dino-bones-trex).
+    // 3 rounds, 3 options per round. Images: dino-bones-{slug}; fallback: dino-silhouette-{slug}. Pool filtered to dinosaurs with dino-bones images.
+    // game-dino-bones-identify-the-skeleton.m4a plays at start of each round before options walk.
     static var dinoBones: GuessGameConfig {
         let allDinosaurs = MatchingGameConfigs.allDinosaurs
-        guard allDinosaurs.count >= 5 else {
-            fatalError("Need at least 5 dinosaurs for Dino Bones, but only have \(allDinosaurs.count)")
+        guard allDinosaurs.count >= 3 else {
+            fatalError("Need at least 3 dinosaurs for Dino Bones, but only have \(allDinosaurs.count)")
         }
         let pool = allDinosaurs.filter { d in
             guard let imageName = d.imageName, imageName.hasPrefix("dino-") else { return false }
-            return true
+            let slug = imageName.replacingOccurrences(of: "dino-", with: "")
+            return UIImage(named: "dino-bones-\(slug)") != nil
         }
         guard pool.count >= 3 else {
-            fatalError("Need at least 3 dinosaurs with dino- images for Dino Bones")
+            fatalError("Need at least 3 dinosaurs with dino-bones-{slug} images for Dino Bones, but only have \(pool.count)")
         }
         let cladeById = MatchingGameConfigs.dinosaurCladeById
         let byClade = Dictionary(grouping: pool) { cladeById[$0.id] ?? .theropod }
         let allCladesWithDinos = byClade.keys.filter { !(byClade[$0] ?? []).isEmpty }
+        let roundCount = 3
         let finalQuestionDinosaurs: [Dinosaur]
-        if allCladesWithDinos.count >= 3 {
-            let cladesToUse = Array(allCladesWithDinos.shuffled().prefix(3))
+        if allCladesWithDinos.count >= roundCount {
+            let cladesToUse = Array(allCladesWithDinos.shuffled().prefix(roundCount))
             finalQuestionDinosaurs = cladesToUse.compactMap { (byClade[$0] ?? []).shuffled().first }
         } else {
-            finalQuestionDinosaurs = Array(pool.shuffled().prefix(3))
+            finalQuestionDinosaurs = Array(pool.shuffled().prefix(roundCount))
         }
-        guard finalQuestionDinosaurs.count == 3, Set(finalQuestionDinosaurs.map { $0.id }).count == 3 else {
-            fatalError("Need 3 unique dinosaurs for Dino Bones")
+        guard finalQuestionDinosaurs.count == roundCount, Set(finalQuestionDinosaurs.map { $0.id }).count == roundCount else {
+            fatalError("Need \(roundCount) unique dinosaurs for Dino Bones")
         }
         var rounds: [RoundQuestion] = []
         for (roundNumber, questionDinosaur) in finalQuestionDinosaurs.enumerated() {

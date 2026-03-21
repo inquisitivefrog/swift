@@ -1,0 +1,27 @@
+{
+  "id": "herbaceous_fern_carpet_010",
+  "species": "Mixed Herbaceous Ferns (Ground cover)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SOFT_OVERCAST_FOREST_LIGHT",
+  "formation_ref": "MORRISON_LJ",
+  "environment_details": {
+    "habitat": "DAMP_FOREST_FLOOR",
+    "flora": [
+      "Dense carpet of small herbaceous ferns (various heights, overlapping fronds)",
+      "Vibrant green moss patches",
+      "No grass or broad deciduous leaves",
+      "Occasional fallen conifer needles (long, thin needles from Araucaria)"
+    ],
+    "ground_palette": [
+      "Vivid emerald green",
+      "Deep forest teal",
+      "Rich, dark soil peeking through"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the 'softness' and density of the ground cover; tactile, plush appearance; no sharp dry elements; emphasis on a lush, moisture-rich environment."
+  },
+  "visual_logic": {
+    "composition": "A low-angle, wide-shot looking across a vast, unbroken carpet of ferns beneath the shade of larger trees (trunks visible but not the focus). The ferns should look like a soft, green sea stretching into the distance.",
+    "ground": "Completely obscured by a dense layer of greenery; very soft and lush texture.",
+    "lighting": "Cool, soft, and even light, as if under a thick canopy or a misty sky, emphasizing the deep greens of the foliage."
+  }
+}

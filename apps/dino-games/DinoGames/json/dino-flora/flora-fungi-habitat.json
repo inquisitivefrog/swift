@@ -1,0 +1,19 @@
+{
+  "id": "fungal_cleanup_habitat_002",
+  "species": "Decomposer Grove",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAMP_SHADOW_DETAIL",
+  "formation_ref": "LA_AMARGA",
+  "environment_details": {
+    "habitat": "FORESTED_RIVER_SYSTEM",
+    "fauna_context": "Small insects (beetles) crawling on the caps",
+    "flora_context": "Decaying Araucaria log being reclaimed by fungi",
+    "ground_palette": ["Dark Umber", "Moss Green", "Ochre"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; vibrant 'pop' of mushroom colors in a dark forest setting; atmospheric and slightly damp vibe; rounded toy-like proportions."
+  },
+  "visual_logic": {
+    "composition": "A low-angle view of a fallen, mossy log. Various mushrooms—some tall and spindly, others flat and wide—are sprouting from the wood and the surrounding mud. It looks busy and productive, like a tiny construction site.",
+    "background": "Softly blurred ferns and the base of a massive Tōtara tree.",
+    "lighting": "Dramatic 'spotlight' effect where a single beam of light hits a cluster of bright red mushrooms in the dark understory."
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "walnut_lifecycle_closeup_001",
+  "species": "Early Hardwood (Walnut-like)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "IREN_DABASU",
+  "environment_details": {
+    "habitat": "FLOODPLAIN_WOODLANDS",
+    "flora": [
+      "Walnut-like leaf (pinnately compound, several pairs of leaflets on one stalk)",
+      "Early walnut fruit (green, fleshy outer husk enclosing a hard-shelled nut)",
+      "Walnut-like sapling (sturdy, straight stem with large compound leaves)",
+      "Bark detail (deeply furrowed, dark grey or brownish-grey with diamond-shaped ridges)"
+    ],
+    "ground_palette": [
+      "Pale Green-Grey",
+      "Ochre",
+      "Dark Grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; tactile textures on the rugged, 'craggy' bark; emphasis on the unique compound leaf shape for identification; clear quadrant separation."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A single compound leaf stalk; Top-Right: The green-husked fruit; Bottom-Left: A young sapling; Bottom-Right: A high-detail view of the deeply furrowed dark bark.",
+    "ground": "A mix of ochre-colored clay and dark grey siltstone fragments.",
+    "lighting": "Clear, even, bright diffused daylight to accentuate the deep shadows in the bark furrows."
+  }
+}

@@ -1,0 +1,10 @@
+ {
+  "id": "finding_stegosaurus_paleo10_FINAL",
+  "subject": "paleontologist_10 discovering a Stegosaurus tooth",
+  "visual_logic": {
+    "composition": "A close-up of a sifting tray. A female paleontologist (dark skin, braided molded hair, green vest) is holding a small fossil.",
+    "action": "She is using a soft brush to clean a **small, flat, triangular tooth**. The edges of the tooth are 'scalloped' or bumpy, distinct from the central ridge of the Iguanodon tooth.",
+    "morphology_priority": "STRICT BIOLOGY: Ensure the tooth is a flat triangle. It should look like a tiny, bumpy leaf made of polished stone.",
+    "style_notes": "No dogs or lab equipment; maintain the 'outdoor field' look of the Iguanodon find image."
+  }
+}

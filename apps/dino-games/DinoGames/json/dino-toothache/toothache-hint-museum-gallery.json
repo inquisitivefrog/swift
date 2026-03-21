@@ -1,0 +1,11 @@
+{
+  "id": "master_museum_gallery_9_teeth_FINAL",
+  "subject": "A pristine museum gallery displaying nine distinct toy-like dinosaur teeth on velvet pedestals",
+  "visual_logic": {
+    "composition": "A grand, symmetrical museum hall. Nine individual dark blue velvet pedestals are arranged in a wide, elegant arc across the polished floor. Each pedestal is perfectly lit by a dramatic, focused spotlight from above.",
+    "details": "Each pedestal proudly displays one of the nine unique dinosaur tooth types. The teeth are: \n1.  **Large, Curved 'Banana' Theropod Tooth** (e.g., T-Rex) \n2.  **Smooth, Straight 'Cone' Spinosaurid Tooth** \n3.  **Tiny, Delicate 'Needle' Archaeopteryx Tooth** (possibly under a magnifying glass or miniature display) \n4.  **Large, Heavily Ridged 'Giant Leaf' Iguanodon Tooth** \n5.  **Flat, Triangular 'Scalloped' Stegosaurus Tooth** \n6.  **Small, Flat 'Spiky Saw-Leaf' Pachycephalosaurus Tooth** \n7.  **Small, Finely Fluted 'Delicate Leaf' Ankylosaurus Tooth** \n8.  **Chunky, Double-Rooted 'Fork' Triceratops Tooth** \n9.  **Long, Smooth 'Pencil' Sauropod Tooth**",
+    "lighting": "Dramatic, focused spotlights on each tooth, creating subtle highlights and shadows on the velvet and polished floor. The overall gallery is softly lit to emphasize the individual displays.",
+    "environment": "The museum background is clean, modern, and slightly minimalist, focusing attention on the teeth. Perhaps subtle architectural details like high ceilings or columns are blurred in the background.",
+    "style_notes": "NO TEXT. STYLE_ANIMATED_FEATURE_V3; The teeth themselves should appear like highly detailed, polished toy replicas or perfect fossil models. Maintain matte textures where appropriate for the toy aesthetic, but allow for subtle shine on the 'polished' teeth."
+  }
+}

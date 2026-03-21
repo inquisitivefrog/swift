@@ -1,0 +1,7 @@
+{
+    "id": "ui_ct_scan_egg_ankylosaur_clay",
+    "morphology": "dinosaur_egg_ct_scan_result",
+    "style": "STYLE_CLAY_MASTER",
+    "state": "baby_ankylosaur_outline_inside",
+    "prompt": "A simulated CT scan image of a dinosaur egg, rendered in a charming, child-friendly claymation style, as if displayed on a scanner screen. The egg is an ovoid shape, typical of Ornithischians or Theropods (not spherical). The external shell of the egg is depicted as a simple, soft-textured clay outline. Inside, a clear, simplified, and adorable outline of a baby Ankylosaur embryo is visible. The internal structures of the embryo (like spine, skull, limbs) are subtly indicated with smoothed clay shapes. The entire image should have a soft, muted grayscale or a very light, desaturated clay-like color palette, giving the impression of an internal, X-ray-like view. The background is simple and clean, as if part of a digital display."
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "anchiornis_tooth_search_001",
+    "species": "Anchiornis",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TIAOJISHAN",
+    "habitat_ref": "FORESTED_VOLCANIC_HIGHLANDS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The subject is perched on a mossy branch, hunched over in a searching posture. One wing-hand is pressed against its jaw in a 'toothache' gesture, while the head is tilted downward, eyes wide and scanning the ground in a frantic, puzzed search. The mouth is slightly agape and crooked, revealing a visible gap where a tooth was recently lost.",
+    "visual_logic": {
+      "palette": ["Ash grey", "Charcoal", "Silver", "Red", "White"],
+      "flora": ["Giant Horsetails", "Dense Conifer forest", "Tree Ferns"],
+      "fauna": ["Jurassic Cockroaches", "Dragonflies"],
+      "substrate": "Dark charcoal-grey rocky terrain with ash dusting"
+    },
+    "behavioral_intent": "Expressive physical comedy conveying: 'My mouth hurts and I think I dropped a tooth around here somewhere'."
+  }
+]

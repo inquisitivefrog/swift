@@ -1,0 +1,19 @@
+[
+  {
+    "id": "brontosaurus_toothache_puzzle_022",
+    "species": "Brontosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MORRISON",
+    "habitat_ref": "OPEN_SAVANNA_WOODLAND",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Brontosaurus is kneeling on its front 'knees' in a patch of low ferns, making it eye-level with the player. Its thick neck is curved, and it is using one large, stump-like front foot to gently tap the ground near its snout. Its head is tilted, and its eyes are squeezed shut for a second in a brief 'pinch' of pain before opening wide to look at the player with an earnest, blinking gaze. One side of its jaw looks slightly swollen, and its mouth is held open just enough to show the missing peg-like tooth. It lets out a soft, low-frequency rumble, exhaling a small puff of dust that clears the search area on the ground.",
+    "visual_logic": {
+      "palette": ["Dusty ochre", "Terracotta", "Slate grey", "Olive green", "Warm tan"],
+      "flora": ["Low ferns", "Scattered conifers", "Dry mosses"],
+      "fauna": ["Small ptero-dactyls in the sky", "Beetles", "Lizards"],
+      "substrate": "Firm, cracked mudstone with a light dusting of silt"
+    },
+    "behavioral_intent": "Earnest, heavy-set search. The dinosaur’s physical 'thud' and kneeling posture emphasize its vulnerability and its reliance on the player’s expertise."
+  }
+]

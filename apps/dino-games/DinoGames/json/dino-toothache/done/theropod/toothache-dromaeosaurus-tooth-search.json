@@ -1,0 +1,15 @@
+{
+  "id": "dromaeosaurus_toothache_puzzle_055_stylized",
+  "species": "Dromaeosaurus albertensis",
+  "tech_ref": "FEATHERED_BODY_SICKLE_CLAW_DEEP_ROBUST_SKULL_THREE_FINGERED_HANDS",
+  "lighting_ref": "CRISP_COLD_MORNING_LIGHT",
+  "formation_ref": "DINOSAUR_PARK_FORMATION",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3_CLEAN",
+  "pose": "The Dromaeosaurus is in a low, aggressive stance over a fallen conifer branch. It has its head turned sharply, biting down on a thick, stylized pine cone with the side of its mouth that doesn't hurt. One eye is squeezed shut in a pained wince. Its hands are braced on the ground, palms facing inward, showing the sharp claws. Its sickle-shaped toe claws are dug into a clean, flat patch of grey rock. NO TOOTH IS VISIBLE. The dinosaur's feathers are ruffled, and it looks like a small, angry ball of fluff and teeth.",
+  "visual_logic": {
+    "palette": ["Charcoal grey", "Burnt orange", "Pine green", "Amber yellow"],
+    "anatomical_priority": "Skull is shorter and deeper than Deinonychus; full feathering; three fingers with medial orientation; prominent sickle claw on the foot.",
+    "cleanliness_factor": "Pine needles are grouped into clean 'clumps'; resin chunks are transparent and bright; rock surfaces are smooth and easy to scan for the tooth."
+  },
+  "behavioral_intent": "Aggressive and stubborn. The dinosaur is 'chewing' on things to relieve the pressure, which has likely wedged the lost tooth into a pine cone or under a resin chunk."
+}

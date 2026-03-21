@@ -1,0 +1,7 @@
+{
+    "id": "ui_egg_stegosaur",
+    "morphology": “stegosaur",
+    "prompt": "High-fidelity 3D render of a single Stegosaur egg next to a bright orange orange. Shape: thick rough shell, medium to large-sized, oval. Texture: tan with mottling along the face for camouflage. Background: clean, empty light-grey studio background. A single small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.",
+    "visual_logic": "Highlights the orange size of stegosaur eggs.”,
+    “style_notes”: “Only one scale bar."
+}

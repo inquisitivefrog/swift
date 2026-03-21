@@ -1,0 +1,19 @@
+[
+  {
+    "id": "lambeosaurus_toothache_puzzle_035_no_tooth",
+    "species": "Lambeosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DINOSAUR_PARK",
+    "habitat_ref": "HUMID_COASTAL_PLAIN",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Lambeosaurus is leaning heavily on its front limbs, its massive hatchet-shaped crest tilted toward the muddy ground. It is using its broad, spatulate beak to plow through a pile of rotting conifer logs and wet ferns, tossing debris behind it in a desperate attempt to find its lost tooth. Its front feet are trampling the very area it just searched, turning the ground into a chaotic slurry of mud and wood chips. One side of its jaw is swollen, and its eyes are squinted in focus and mild agony. It lets out a long, low-frequency rumble that vibrates the surrounding ferns. There is no tooth visible in the scene; the dinosaur has completely buried the evidence of its loss under a layer of churned earth.",
+    "visual_logic": {
+      "palette": ["Hatchet-orange", "Forest green", "Muddy charcoal", "Teal"],
+      "flora": ["Horsetails", "Dawn Redwoods", "Soft mosses"],
+      "fauna": ["Small ptero-dactyls circling high above", "Giant dragonflies"],
+      "substrate": "Slippery river mud and shattered, decaying logs"
+    },
+    "behavioral_intent": "Chaotic and destructive searching. The dinosaur’s size and weight are working against it, turning the search site into a mess that the player will eventually need to 'excavate' or 'sift' through."
+  }
+]

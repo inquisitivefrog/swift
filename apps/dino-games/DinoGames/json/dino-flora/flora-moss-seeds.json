@@ -1,0 +1,27 @@
+{
+  "id": "moss_lifecycle_closeup_013",
+  "species": "Generic Bryophyte (Mesozoic Moss)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "MORRISON_LJ",
+  "environment_details": {
+    "habitat": "DAMP_SHADED_ROCK",
+    "flora": [
+      "Individual moss plants (extreme close-up showing tiny, pointed green leaves, almost translucent)",
+      "Sporophytes (thin, reddish-brown stalks rising from the green moss cushion)",
+      "Capsules (the 'heads' of the stalks, distinct in shape, where spores are stored)",
+      "A dense, cushion-like moss clump, highlighting its velvety texture"
+    ],
+    "ground_palette": [
+      "Vivid lime green",
+      "Deep forest emerald",
+      "Burnt orange (for sporophyte stalks and capsules)"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; extreme focus on 'softness' and velvet-like texture; clean, high-contrast details of the tiny capsules; sense of micro-world complexity."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition. Top-left: Extreme macro of individual moss leaves, showing their translucence. Top-right: A 'forest' of thin reddish sporophytes rising from the green moss. Bottom-left: A detailed close-up of a single spore capsule. Bottom-right: A hero shot of a soft, round moss cushion, emphasizing its dense, plush texture.",
+    "ground": "A dark, wet rock surface with fine mineral textures peeking through the green, providing a stark contrast.",
+    "lighting": "Soft, even, diffused daylight to highlight the delicate, almost glowing nature of the moss leaves and the distinct forms of the sporophytes."
+  }
+}

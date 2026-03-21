@@ -105,7 +105,7 @@ private func habitatDisplayNameFromId(_ id: String) -> String {
 /// Kid-friendly nicknames for habitats (forest, desert, beach, meadow, etc.) — familiar from Dinosaur Train, Wild Kratts.
 /// Prefer nickname when Habitats/nickname-{slug}.m4a exists; else fall back to scientific name.
 private let fallbackHabitatsList: [DinoHabitat] = [
-    DinoHabitat(id: "seasonal-river-plains", name: habitatDisplayNameFromId("seasonal-river-plains"), nickname: "Meadow", imageName: "dino-habitats-seasonal-river-plains", habitatNameAudioKey: "habitat-name-seasonal-river-plains", dinoImageNames: ["dino-edmontosaurus", "dino-triceratops", "dino-ankylosaurus", "dino-parasaurolophus", "dino-pachycephalosaurus"]),
+    DinoHabitat(id: "seasonal-river-plains", name: habitatDisplayNameFromId("seasonal-river-plains"), nickname: "Meadow", imageName: "dino-habitats-open-woodland-plains", habitatNameAudioKey: "habitat-name-seasonal-river-plains", dinoImageNames: ["dino-edmontosaurus", "dino-triceratops", "dino-ankylosaurus", "dino-parasaurolophus", "dino-pachycephalosaurus"]),
     DinoHabitat(id: "seasonal-tropical-scrub", name: habitatDisplayNameFromId("seasonal-tropical-scrub"), nickname: "Rainforest", imageName: "dino-habitats-seasonal-tropical-scrub", habitatNameAudioKey: "habitat-name-seasonal-tropical-scrub", dinoImageNames: ["dino-gallimimus", "dino-velociraptor", "dino-deinonychus", "dino-oviraptor", "dino-majungasaurus"]),
     DinoHabitat(id: "semi-arid-floodplains", name: habitatDisplayNameFromId("semi-arid-floodplains"), nickname: "Valley", imageName: "dino-habitats-semi-arid-floodplains", habitatNameAudioKey: "habitat-name-semi-arid-floodplains", dinoImageNames: ["dino-edmontosaurus", "dino-parasaurolophus", "dino-iguanodon", "dino-triceratops", "dino-ankylosaurus"]),
     DinoHabitat(id: "semi-arid-plains", name: habitatDisplayNameFromId("semi-arid-plains"), nickname: "Desert", imageName: "dino-habitats-semi-arid-plains", habitatNameAudioKey: "habitat-name-semi-arid-plains", dinoImageNames: ["dino-gallimimus", "dino-velociraptor", "dino-deinonychus", "dino-oviraptor", "dino-majungasaurus"]),
@@ -116,7 +116,7 @@ private let fallbackHabitatsList: [DinoHabitat] = [
     DinoHabitat(id: "woodland-floodplains", name: habitatDisplayNameFromId("woodland-floodplains"), nickname: "Forest", imageName: "dino-habitats-woodland-floodplains", habitatNameAudioKey: "habitat-name-woodland-floodplains", dinoImageNames: ["dino-stegosaurus", "dino-apatosaurus", "dino-brachiosaurus", "dino-diplodocus", "dino-camarasaurus"]),
     DinoHabitat(id: "savannah", name: "Savannah", nickname: "Savannah", imageName: "dino-habitats-savannah", habitatNameAudioKey: "habitat-name-savannah", dinoImageNames: ["dino-gallimimus", "dino-edmontosaurus", "dino-parasaurolophus", "dino-triceratops", "dino-ankylosaurus"]),
     DinoHabitat(id: "lakeshore", name: "Lakeshore", nickname: "Lakeshore", imageName: "dino-habitats-lakeshore", habitatNameAudioKey: "habitat-name-lakeshore", dinoImageNames: ["dino-spinosaurus", "dino-baryonyx", "dino-iguanodon", "dino-parasaurolophus", "dino-edmontosaurus"]),
-    DinoHabitat(id: "rainforest", name: "Rainforest", nickname: "Rainforest", imageName: "dino-habitats-rainforest", habitatNameAudioKey: "habitat-name-rainforest", dinoImageNames: ["dino-velociraptor", "dino-deinonychus", "dino-oviraptor", "dino-majungasaurus", "dino-gallimimus"]),
+    DinoHabitat(id: "rainforest", name: "Rainforest", nickname: "Rainforest", imageName: "dino-habitats-dense-conifer-jungle", habitatNameAudioKey: "habitat-name-rainforest", dinoImageNames: ["dino-velociraptor", "dino-deinonychus", "dino-oviraptor", "dino-majungasaurus", "dino-gallimimus"]),
 ]
 
 /// Same pool as Dino Ages/Formations: all dinosaurs with dino-* image sets, deduplicated.
@@ -208,7 +208,7 @@ struct DinoHabitatsGameView: View {
     /// Intro walk: 0..<3 = current dinosaur index; nil = not walking.
     @State private var introWalkIndex: Int? = nil
 
-    private let totalRounds = 5
+    private let totalRounds = 3
     private let matchNeededPerRound = 1
 
     var body: some View {
@@ -278,8 +278,9 @@ struct DinoHabitatsGameView: View {
         return h.name
     }
 
-    /// Habitat image: prefer dino-habitats-{id} (matches Dinosaur-Habitats assets), fall back to dino-habitat-{id}.
+    /// Habitat image: try explicit imageName first, then dino-habitats-{id}, then dino-habitat-{id}.
     private func habitatImageName(_ h: DinoHabitat) -> String? {
+        if ImageAssetCache.imageExists(named: h.imageName) { return h.imageName }
         let plural = "dino-habitats-\(h.id)"
         let singular = "dino-habitat-\(h.id)"
         if ImageAssetCache.imageExists(named: plural) { return plural }
@@ -349,10 +350,10 @@ struct DinoHabitatsGameView: View {
                 speechManager.speak("great-match")
             }
         } else {
-            if let url = speechManager.urlForAudio(key: "not-that-one") {
+            if let url = speechManager.urlForAudio(key: "try-again") {
                 speechManager.playAudioFile(url: url)
             } else {
-                speechManager.speak("not-that-one")
+                speechManager.speak("try-again")
             }
         }
     }

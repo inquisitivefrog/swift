@@ -1,0 +1,15 @@
+{
+  "id": "searching_ankylosaurus_01_corrected",
+  "subject": "dino_racer_ankylosaurus searching for a lost tooth",
+  "character_ref": "dino_racer_ankylosaurus",
+  "tech_ref": "FOSSIL_SITE_SQUARE",
+  "lighting_ref": "HIGH_SUN",
+  "formation_ref": "TWO_MEDICINE",
+  "visual_logic": {
+    "composition": "A low-angle, wide shot of the **dino_racer_ankylosaurus** in the **Two Medicine** floodplains. He is extremely wide, squat, and low-slung, filling the frame with his bulk. His head is distinctive: **four prominent backward-pointing horns** (two at the top of the head, two at the cheeks) are clearly visible.",
+    "action": "He is peering grumpily at a patch of 'Dark organic mudstone' near his reinforced beak. His **massive, symmetrical slate-grey bone tail club** is resting heavily and visibly on the ground behind him, slightly scarred.",
+    "color_palette": "His skin is deep moss-green, and his dorsal armor is stony slate-grey, matching the 'Ironclad' visual identity.",
+    "environment_details": "The ground is grey and ocher mudstone with sparse, short woodland ferns.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on his stoic, tank-like bulk and his annoyed expression; rounded, toy-like proportions."
+  }
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "huayangosaurus_toothache_puzzle_017",
+    "species": "Huayangosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DASHANPU",
+    "habitat_ref": "SUBTROPICAL_CONIFER_FOREST",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Huayangosaurus is positioned in a low, earnest squat amidst a cluster of ginkgo leaves. Its broad head is tilted close to the ground, and one front paw is delicately raised, with a single digit pointing toward a small, light-colored object half-buried in the dirt. Its other cheek is puffed out slightly, and it uses a shoulder to gently 'cradle' its jaw against its own front limb to alleviate the pressure. Its eyes are focused and hopeful, looking from the ground up to the player, waiting for the diagnostic confirmation. Its back plates and shoulder spikes catch the dappled sunlight, adding a sense of calm to its focused search.",
+    "visual_logic": {
+      "palette": ["Deep forest green", "Earthy brown", "Mossy gold", "Slate", "Pale ivory"],
+      "flora": ["Ginkgos", "Conifers", "Tree ferns", "Moss"],
+      "fauna": ["Gasosaurus (distant)", "Shunosaurus (distant)", "Early beetles"],
+      "substrate": "Rich, dark humus-filled soil with scattered yellow ginkgo leaves"
+    },
+    "behavioral_intent": "Methodical and hopeful search. The dinosaur is showing the player exactly where it thinks the tooth is, facilitating the 'match the tooth' puzzle mechanic."
+  }
+]

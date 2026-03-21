@@ -1,0 +1,26 @@
+{
+  "id": "birch_grove_mature_002",
+  "species": "Early Hardwood (Birch-like)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "COOL_MORNING_MIST",
+  "formation_ref": "JIUFOTANG",
+  "environment_details": {
+    "habitat": "FORESTED_VOLCANIC_LAKE_SYSTEM",
+    "flora": [
+      "Grove of mature Birch-like trees (slender, white-barked trunks, airy and light canopy)",
+      "Conifer undergrowth (small volcanic-region shrubs)",
+      "Low herbaceous ferns"
+    ],
+    "ground_palette": [
+      "Light ash grey",
+      "Gray-green",
+      "Whitish tuff"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; slender and elegant silhouettes; a 'light' and airy forest feel rather than a dense, dark jungle."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view of a hillside grove of white-barked trees. The ground is a slope of light ash-grey tuff. In the distance, the misty surface of a volcanic lake is visible, but the trees are firmly rooted on the dryer slope.",
+    "ground": "A carpet of light ash grey volcanic soil with patches of gray-green moss and fallen yellow leaves.",
+    "lighting": "Cool, soft morning light with a slight mist between the white trunks, creating a serene, temperate woodland atmosphere."
+  }
+}

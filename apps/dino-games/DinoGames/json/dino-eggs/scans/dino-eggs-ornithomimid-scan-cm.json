@@ -1,0 +1,7 @@
+{
+    "id": "ui_ct_scan_egg_ornithomimid_clay",
+    "morphology": "dinosaur_egg_ct_scan_result",
+    "style": "STYLE_CLAY_MASTER",
+    "state": "baby_ornithomimid_outline_inside",
+    "prompt": "A simulated CT scan image of a dinosaur egg, rendered in a charming, child-friendly claymation style, as if displayed on a scanner screen. The egg is a pear-shaped ovoid, consistent with Ornithomimids (roughly pear-sized as previously established). The external shell of the egg is depicted as a simple, soft-textured clay outline. Inside, a clear, simplified, and adorable outline of a baby Ornithomimid embryo is visible. Key Ornithomimid features like a long, slender neck, a small head with large eye sockets, and delicate, bird-like limbs are subtly indicated with smoothed clay shapes. The body is curled in an embryonic posture. The entire image should have a soft, muted grayscale or a very light, desaturated clay-like color palette, giving the impression of an internal, X-ray-like view. A subtle grid pattern on the background further suggests a digital display. Focus on the distinct slender build and long neck of the Ornithomimid in an endearing clay style."
+}

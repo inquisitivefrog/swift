@@ -1,0 +1,27 @@
+{
+  "id": "browsing_levels_hint_card_005",
+  "type": "HINT_CARD",
+  "tech_ref": "SQUARE_ASPECT_RATIO",
+  "lighting_ref": "BRIGHT_PLAYFUL_CARTOON",
+  "formation_ref": "HUINCUL",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS_FLOODPLAINS",
+    "flora": [
+      "Small herbaceous ferns (ground cover)",
+      "Short Cycad tree (mid-height)",
+      "Tall Araucaria tree (canopy height)"
+    ],
+    "fauna": [
+      "Ankylosaurus (low-level browser)",
+      "Therizinosaurus (mid-level browser)",
+      "Argentinosaurus (high-level browser)"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; vertical hierarchy; no text."
+  },
+  "visual_logic": {
+    "composition": "The scene illustrates three distinct feeding heights in one frame. AT THE BOTTOM: A wide, armored Ankylosaurus is munching on a patch of small green ferns at its feet. IN THE MIDDLE: A Therizinosaurus uses its long neck and claws to reach the fronds of a cycad tree (about head-height for a human). AT THE TOP: The massive neck of an Argentinosaurus enters the frame from the side, with its head reaching the very top of a towering Araucaria tree to eat the needle-leaves. The different heights are clearly separated and easy for a child to distinguish.",
+    "ground": "Damp earth with fern clusters.",
+    "background": "Lush, sun-drenched floodplain forest.",
+    "lighting": "Bright, cheerful outdoor daylight."
+  }
+}

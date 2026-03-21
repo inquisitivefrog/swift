@@ -80,7 +80,7 @@ These are used as `Image(imageName)` where `imageName` comes from the game confi
 | Weigh game | game-weigh-dinosaur |
 | Name That Dinosaur! | game-name-that-dinosaur |
 | Wacky Dinosaurs! | game-wacky-dinosaurs |
-| Toothache! | game-toothache |
+| Dino Toothache! | game-dino-toothache |
 
 ### Other shared
 

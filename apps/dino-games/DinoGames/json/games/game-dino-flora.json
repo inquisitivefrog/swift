@@ -1,0 +1,28 @@
+{
+  "id": "dino_flora_game_card_complete_016",
+  "species": "Mesozoic Flora Grand Collection",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "VIBRANT_SUNSET_GLOW",
+  "formation_ref": "MORRISON_LJ",
+  "environment_details": {
+    "habitat": "ANCIENT_JURASSIC_VALLEY",
+    "flora": [
+      "Giant Araucaria tree (tall, geometric branches with scale-like leaves, dominating the skyline)",
+      "Cycads (short, thick armored trunks with stiff, radiating fronds in the midground)",
+      "A golden Ginkgo tree (adding a splash of yellow-green)",
+      "Tall Tree Ferns and Horsetail stands near a small stream",
+      "Lush Herbaceous Fern carpet and soft Moss covering the foreground rocks"
+    ],
+    "ground_palette": [
+      "Deep forest greens",
+      "Earthy ochres",
+      "Vivid red (for text)"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; tactile textures; very high visual density; clear educational silhouettes for each plant type."
+  },
+  "visual_logic": {
+    "composition": "A rich, multi-layered landscape. The massive Araucaria and Ginkgo anchor the background. Cycads and Tree Ferns fill the mid-ground. The foreground is a soft bed of moss and ferns. Centered at the bottom or top is the text 'Dino Flora!' in bright red, 3D mixed-case letters with a slight bevel.",
+    "ground": "A mix of damp earth, mossy stones, and a tiny bit of shoreline for the horsetails.",
+    "lighting": "Warm, cinematic golden-hour light that makes the red text 'pop' and highlights the textures of the various leaves."
+  }
+}

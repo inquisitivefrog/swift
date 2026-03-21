@@ -1,0 +1,15 @@
+{
+  "id": "carcharodontosaurus_toothache_puzzle_052_stylized",
+  "species": "Carcharodontosaurus saharicus",
+  "tech_ref": "THREE_FINGERED_HANDS_MEDIAL_PALMS_DEEP_LATERALLY_COMPRESSED_SKULL",
+  "lighting_ref": "VIBRANT_TROPICAL_SUNLIGHT",
+  "formation_ref": "KEM_KEM_GROUP",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3_CLEAN",
+  "pose": "The Carcharodontosaurus is standing knee-deep in a crystal-clear tidal pool. Its massive head is lowered, snout nearly touching the water's surface as it inspects the sandy bottom. Its mouth is open in a wide, pained 'O' shape, showing the gap in its serrated dental line. Its three-fingered hands are held close to its chest, palms facing each other in a nervous, 'fidgety' gesture. The bottom of the pool is covered in perfectly round white shells and smooth orange pebbles. NO TOOTH IS VISIBLE. The dinosaur's expression is one of intense, cross-eyed concentration.",
+  "visual_logic": {
+    "palette": ["Dusty crimson", "Pale cream", "Azure", "Orange-ochre"],
+    "anatomical_priority": "The skull must be very deep (tall) but thin when viewed from the front; three fingers on hands; medial palm orientation; no 'T. rex' bulk—more of a 'tall and thin' predator profile.",
+    "cleanliness_factor": "The water is perfectly transparent with simple caustic light patterns on the sand; the shells and pebbles are distinct shapes that the player can easily tap to move."
+  },
+  "behavioral_intent": "Meticulous and anxious. The dinosaur is afraid to move its feet for fear of crushing the tooth, creating a 'static' puzzle where the player must search around its massive legs."
+}

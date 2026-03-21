@@ -1,0 +1,7 @@
+{
+    "id": "ui_ct_scan_egg_ankylosaur_animated",
+    "morphology": "dinosaur_egg_ct_scan_result",
+    "style": "STYLE_ANIMATED_FEATURE_V3",
+    "state": "baby_ankylosaur_outline_inside",
+    "prompt": "A simulated CT scan image of a dinosaur egg, rendered in a vibrant and clear animated feature film style, as if displayed on a scanner screen. The egg is an ovoid shape, typical of Ornithischians or Theropods (not spherical). The external shell of the egg is depicted with a subtle transparency or in a bright, crisp grayscale. Inside, a detailed and scientifically accurate outline of a baby Ankylosaur embryo is clearly visible, with distinct skeletal features (skull, ribs, limb bones) rendered with precision. The internal image uses a clean, high-contrast grayscale or a cool, scientific blue-white color palette, providing a clear X-ray-like view. The overall impression is clean, engaging, and suitable for an educational animated display. The background is simple and clean, as if part of a digital display."
+}

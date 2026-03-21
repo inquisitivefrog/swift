@@ -1,0 +1,26 @@
+{
+  "id": "tree_fern_mamaku_habitat_002",
+  "species": "Tree Fern (Mamaku-type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "VOLCANIC_HAZE_SUNLIGHT",
+  "formation_ref": "JIUFOTANG",
+  "environment_details": {
+    "habitat": "FORESTED_VOLCANIC_LAKE_SYSTEM",
+    "flora": [
+      "Giant Mamaku trees (20 meters tall, thick black trunks, massive spreading crowns)",
+      "Early Birch-like trees (providing a white-barked contrast)",
+      "Low ferns and mosses on ash-grey rocks"
+    ],
+    "ground_palette": [
+      "Light ash grey",
+      "Whitish tuff",
+      "Buff"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; massive scale; creating a sense of a 'vertical' forest; the black trunks standing out against the light grey volcanic background."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view from the shore of a volcanic lake. Giant black tree ferns dominate the mid-ground, their crowns overlapping to form a dense canopy. The ground is a mix of whitish tuff and grey ash. In the background, a volcanic peak is visible through the hazy light.",
+    "ground": "Sloping ground of light ash grey volcanic soil with buff-colored rocky outcrops.",
+    "lighting": "Bright but hazy sunlight, as if filtered through volcanic particulate, casting soft shadows and highlighting the deep black of the Mamaku trunks."
+  }
+}

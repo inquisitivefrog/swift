@@ -1,0 +1,27 @@
+{
+  "id": "kauri_conifer_lifecycle_001",
+  "species": "Kauri (Agathis-type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "HUINCUL",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS_FLOODPLAINS",
+    "flora": [
+      "Kauri Cone (globose/spherical, green-to-brown, scales that disintegrate at maturity)",
+      "Kauri Leaves (broad, leathery, oval-shaped leaves with parallel veins, not needles)",
+      "Kauri sapling (sturdy, upright, with a distinct 'mini-pillar' trunk)",
+      "Bark detail (smooth, silver-grey bark that flakes off in large 'dinner-plate' scales)"
+    ],
+    "ground_palette": [
+      "Pale Green-Grey",
+      "Ochre",
+      "Dark Grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the massive 'pillar' trunk and the unique broad leaves; tactile flaking bark textures; clear quadrant separation."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A spherical green cone; Top-Right: Detail of the broad leathery leaves; Bottom-Left: A sturdy sapling; Bottom-Right: A high-detail view of the plate-like flaking bark.",
+    "ground": "Dry, pale green-grey clay with ochre siltstone fragments.",
+    "lighting": "Clear, even, bright diffused daylight to show the smooth, metallic sheen of the silver-grey bark."
+  }
+}

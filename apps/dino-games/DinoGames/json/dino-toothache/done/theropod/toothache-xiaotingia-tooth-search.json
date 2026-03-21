@@ -1,0 +1,19 @@
+[
+  {
+    "id": "xiaotingia_tooth_search_003",
+    "species": "Xiaotingia",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TIAOJISHAN",
+    "habitat_ref": "FORESTED_VOLCANIC_HIGHLANDS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Xiaotingia is in a state of comedic distress, standing on one leg while the other foot is lifted to its open beak in a 'checking the damage' gesture. Its head is cocked back, eyes bulging and looking downward toward the dark charcoal-grey volcanic ash floor. Its long, decorative tail feathers are ruffled and fanned out in agitation. A single, tiny white tooth is visible resting on a nearby volcanic rock, just out of the creature's line of sight, as it lets out a silent, pained 'huff' of steam.",
+    "visual_logic": {
+      "palette": ["Ash grey", "Charcoal", "Silver", "Brownish Gray", "Deep Red"],
+      "flora": ["Giant Horsetails", "Dense Conifer forest", "Ginkgos"],
+      "fauna": ["Jurassic Cockroaches", "Beetles"],
+      "substrate": "Volcanic Tuff and dark silt with visible ash dusting"
+    },
+    "behavioral_intent": "High-fidelity expressive physical comedy conveying: 'My mouth hurts and I think I dropped a tooth around here somewhere'."
+  }
+]

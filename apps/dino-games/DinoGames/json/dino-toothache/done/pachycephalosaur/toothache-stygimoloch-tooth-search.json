@@ -1,0 +1,19 @@
+[
+  {
+    "id": "stygimoloch_toothache_puzzle_026",
+    "species": "Stygimoloch",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "HELL_CREEK",
+    "habitat_ref": "FORESTED_RIVER_MARGINS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Stygimoloch is standing in a patch of ferns, its body angled away but its head turned back toward the viewer. It has one hand cradling the underside of its jaw, right where the beak meets the cheek. Its long neck-spines are tilted back, and its eyes are glossy and blinking rapidly in focus. Its mouth is held in a slightly skewed 'grimace,' and it looks up at the player with an expression of intense relief that someone is finally there to help.",
+    "visual_logic": {
+      "palette": ["Deep forest green", "Tan", "Rusty Brown", "Charcoal", "Bone white"],
+      "flora": ["Magnolias", "Ferns", "Dawn Redwoods"],
+      "fauna": ["Anzu (distant)", "Dragonflies"],
+      "substrate": "Rich, dark forest loam with scattered bright green leaves"
+    },
+    "behavioral_intent": "Earnest and communicative search. The dinosaur's spikes provide a dramatic frame for its pained expression, making the 'ouch' very clear to the player."
+  }
+]

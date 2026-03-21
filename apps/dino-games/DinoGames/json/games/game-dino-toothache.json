@@ -1,0 +1,20 @@
+{
+  "id": "dino_toothache_title_screen_v1_feature",
+  "project_name": "Dino Toothache",
+  "style_ref": "STYLE_3D_ANIMATED_FEATURE_V4_HIGH_FIDELITY",
+  "subject": "A large, expressive Allosaurus sitting in a lush, sun-drenched prehistoric glade.",
+  "pose": "The Allosaurus is sitting back on its haunches, looking slightly cross-eyed with a pained but endearing expression. It has its mouth slightly open, showing a glowing pink 'sore' spot on its gums. It is holding its jaw with its three-fingered hands (medial palm orientation).",
+  "typography": {
+    "text": "Dino Toothache",
+    "case": "Mixed Case",
+    "style": "3D thick block letters, bright red glossy finish, soft beveled edges",
+    "placement": "Center-top, slightly arched over the dinosaur's head",
+    "effects": "Subtle ambient occlusion where the letters meet the air, making them feel like a physical part of the 3D environment."
+  },
+  "lighting_ref": "CINEMATIC_REMLIGHT_MORNING_SUN",
+  "visual_logic": {
+    "palette": ["Bright red (text)", "Slate blue scales", "Vibrant forest green", "Golden sunlight"],
+    "cleanliness_factor": "The foreground is a clean, mossy patch with a few oversized, stylized ferns. No messy dirt or grit to distract from the title or the character.",
+    "character_fidelity": "High-fidelity skin textures with subtle specular highlights on the scales; expressive, wet-looking eyes that convey personality."
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "taxodium_lifecycle_closeup_001",
+  "species": "Taxodium (Bald Cypress-like)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "HORSESHOE_CANYON",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS",
+    "flora": [
+      "Taxodium cone (woody, globose cone with rugose, shield-shaped scales)",
+      "Alternate needles (flat, linear needles arranged alternately along the twig, distinct from Metasequoia)",
+      "Taxodium sapling (slender, upright with emerging feathery green needles)",
+      "Cypress Knee (close-up of a woody pneumatophore protruding from the mud)"
+    ],
+    "ground_palette": [
+      "Dark organic mudstone",
+      "Brown",
+      "Ocher"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the 'alternate' arrangement of needles to differentiate from Dawn Redwoods; focus on the unique textures of the woody 'knees'; clear quadrant separation."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A single woody globose cone; Top-Right: High-detail view of the alternate needle arrangement; Bottom-Left: A young sapling; Bottom-Right: A high-detail view of a 'cypress knee' rising from the mud.",
+    "ground": "Saturated, dark organic mudstone with small brown siltstone fragments.",
+    "lighting": "Clear, even, bright diffused daylight to emphasize the botanical differences in needle attachment."
+  }
+}

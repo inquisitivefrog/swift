@@ -1,0 +1,19 @@
+[
+  {
+    "id": "diplodocus_toothache_puzzle_021",
+    "species": "Diplodocus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MORRISON",
+    "habitat_ref": "RIVER_VALLEY_CONIFER_FOREST",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Diplodocus has its long neck stretched out horizontally, its head resting almost on the forest floor. Its small, horse-like face is tilted toward the viewer, with one front foot delicately pawing at a cluster of horsetails. It uses its tongue to poke at the front of its mouth, and its eyes are wide with a 'lost and found' intensity. It is huffing softly, blowing away a few fallen leaves to reveal a small, thin, pencil-shaped object on the mossy ground. It looks at the player with a gentle, hopeful blinking expression, waiting for the paleontologist to confirm if that’s the missing piece.",
+    "visual_logic": {
+      "palette": ["Sage green", "Slate blue", "Earthy brown", "Mossy green", "Pale grey"],
+      "flora": ["Horsetails", "Conifers", "Tree ferns", "Ginkgos"],
+      "fauna": ["Dryosaurus (peeking from trees)", "Dragonflies", "Small mammals"],
+      "substrate": "Moist, dark claystone covered in a thin layer of moss and conifer needles"
+    },
+    "behavioral_intent": "Earnest and helpful search. The dinosaur's extreme neck extension and focused gaze draw the player's eye directly to the tooth location."
+  }
+]

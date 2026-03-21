@@ -4,7 +4,14 @@ Mini game: stack dinosaurs on the right to match the height of a reference dinos
 
 ## Order of selection
 
-- **Pick the reference (left) first.** If the player taps the right side (or a dinosaur meant for the stack) before choosing the left reference, play **`Audio/Feedback/pick-a-dinosaur-first.m4a`** (same as matching games).
+- Game play begins with "choose your first dinosaur" followed by "choose your second dinosaur"; no separate "pick a dinosaur first" feedback is needed.
+
+## Size buckets (scale teaching)
+
+- **small** ≤1.5m, **medium** 1.5–6m, **large** 6–12m, **huge** >12m.
+- If first dinosaur is **not huge**, any additional dinosaur can never be huge → `game-measure-you-cant-be-serious`.
+- If first dinosaur is **large** and second is not, dinosaurs afterwards could still be large but risk overshoot → `game-measure-that-dinosaur-is-too-tall`.
+- If first dinosaur is **medium or small**, most dinosaurs are blocked; boundary enforcement ensures at least some remain addable.
 
 ## Right side: mix and match
 
@@ -18,8 +25,9 @@ Mini game: stack dinosaurs on the right to match the height of a reference dinos
 
 ## Audio paths (wired in code)
 
-- `Feedback/pick-a-dinosaur-first` — tap right before left.
-- `Feedback/you-cant-be-serious-that-will-take-forever` — add rejected because ratio > 1:5.
+- `Games/game-measure-you-cant-be-serious` — dinosaur too small (would need >5 of that species).
+- `Games/game-measure-that-dinosaur-is-too-tall` — dinosaur overshoots remaining height.
+- `Feedback/you-cant-be-serious-that-will-take-forever` — stack cap (6) reached.
 
 ## Implementation notes
 

@@ -1,0 +1,27 @@
+{
+  "id": "magnolia_lifecycle_closeup_001",
+  "species": "Early Hardwood (Magnolia-like)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "LANCE_HELL_CREEK",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS_FLOODPLAINS",
+    "flora": [
+      "Magnolia flower (large, cup-shaped, cream-colored petals, spirally arranged carpels)",
+      "Magnolia fruit (cone-like aggregate of follicles, showing bright red seeds)",
+      "Magnolia sapling (sturdy, upright with large, leathery oval leaves)",
+      "Bark detail (smooth and grey on young trees, becoming slightly plated/scaly with age)"
+    ],
+    "ground_palette": [
+      "Muddy Grey",
+      "Dark Brown",
+      "Tan"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the 'velvety' texture of the petals and the glossy sheen of the leaves; clear quadrant separation for educational study."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A large, open cream-colored flower; Top-Right: The distinctive red-seeded cone-fruit; Bottom-Left: A young sapling; Bottom-Right: A high-detail view of the smooth-to-plated grey bark.",
+    "ground": "Rich organic dark brown soil with a few fallen cream petals.",
+    "lighting": "Clear, even, bright diffused daylight to highlight the soft textures of the bloom."
+  }
+}

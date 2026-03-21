@@ -1,0 +1,26 @@
+{
+  "id": "taxodium_swamp_mature_002",
+  "species": "Taxodium (Bald Cypress-like)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "HUMID_OVERCAST_ATMOSPHERIC",
+  "formation_ref": "HORSESHOE_CANYON",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS",
+    "flora": [
+      "Mature Taxodium grove (buttressed trunks, dense crowns, surrounded by 'knees')",
+      "Floating Azolla (water fern) on the surface",
+      "Misty swamp background"
+    ],
+    "ground_palette": [
+      "Grey",
+      "Ocher",
+      "Brown"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasizing the 'forest of knees' surrounding the trees; thick, buttressed trunks; misty and humid swamp atmosphere."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view of a deep swamp. Mature Taxodium trees stand in dark, still water, their flared bases surrounded by dozens of woody 'knees' poking above the surface. The water is partially covered by bright green Azolla ferns.",
+    "ground": "Dark, submerged organic mud with ocher-colored silt visible through the tea-colored water.",
+    "lighting": "Soft, humid, overcast light that creates a quiet and atmospheric coastal swamp scene."
+  }
+}

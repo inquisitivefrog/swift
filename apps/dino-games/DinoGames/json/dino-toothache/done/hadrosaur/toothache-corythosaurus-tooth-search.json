@@ -1,0 +1,19 @@
+[
+  {
+    "id": "corythosaurus_toothache_puzzle_033_no_tooth",
+    "species": "Corythosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DINOSAUR_PARK",
+    "habitat_ref": "COASTAL_PLAIN_WOODLANDS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Corythosaurus is hunched low over a patch of flattened ferns and mud. Its magnificent helmet-like crest is tilted forward, and it is using both of its paddle-like front hands to desperately splash through a shallow, muddy puddle. Its head moves in a frantic, side-to-side sweeping motion, sniffing the wet earth, but it keeps missing the mark. One side of its jaw is held stiffly, and its large eyes are darting around with a sense of rising 'ouch-induced' frustration. The ground is a messy churn of mud and broken plants, but there is no tooth in sight. The dinosaur looks up at the player, let's out a low, mournful honk through its crest, and waits for a more professional search to begin.",
+    "visual_logic": {
+      "palette": ["Coral orange (crest)", "Deep teal", "Sandy tan", "Muddy brown", "Lush green"],
+      "flora": ["Magnolias", "Giant ferns", "Conifer logs"],
+      "fauna": ["A turtle retreating into its shell nearby", "Distant silhouettes of Parasaurolophus"],
+      "substrate": "Thick, wet river-silt and churned mud"
+    },
+    "behavioral_intent": "Messy, ineffective searching. The dinosaur is creating more of a mess than progress, emphasizing the 'lost' status of the tooth and the player's need to intervene."
+  }
+]

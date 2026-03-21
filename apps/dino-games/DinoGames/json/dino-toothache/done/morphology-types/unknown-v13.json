@@ -1,0 +1,11 @@
+{
+  "id": "finding_gigantoraptor_paleo16_beak_FINAL",
+  "subject": "dino_bones_paleontologist_2 discovering a Gigantoraptor beak fragment",
+  "visual_logic": {
+    "composition": "A close-up focused on a dusty excavation site. **dino_bones_paleontologist_2** is sifting through loose earth.",
+    "character_specs": "A younger female paleontologist with short black hair and tanned skin, wearing a green sun hat. Her uniform is a light green blouse worn UNDER a khaki safari vest, a green skirt, and black hiking boots.",
+    "action": "She is holding tweezers, proudly displaying a **single, large, curved, fossilized beak plate**. It looks like a thick, amber-colored shell fragment with visible growth lines, similar to a giant fingernail or turtle shell piece.",
+    "morphology_priority": "NO TEETH. This is a flat, curved keratinous plate. It must look like part of a beak, not a tooth.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; maintain exact character details from environment_config.json."
+  }
+}

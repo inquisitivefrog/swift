@@ -1,0 +1,11 @@
+{
+  "id": "finding_ankylosaur_leaf_tooth_paleo4",
+  "subject": "dino_bones_paleontologist_4 discovering a tiny Ankylosaurus tooth",
+  "visual_logic": {
+    "character_specs": "Paleontologist 4: White male, blonde hair, wearing a blue field shirt and sunglasses tucked into his collar.",
+    "action": "He is holding a pair of **fine-tipped tweezers** or a small magnifying loupe. Between the tweezers is a single, tiny, fossilized tooth.",
+    "morphology_priority": "THE LEAF TOOTH: The tooth is flat and triangular with a distinct 'crimped' or 'jagged' edge, resembling a stone holly leaf. It has a single, simple root. It is tiny compared to the paleontologist's hand.",
+    "color": "Dark chocolate brown or charcoal black, with a slight glossy sheen on the serrated edges.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Emphasize the 'delicate' nature of the find to contrast with the heavy armor of the dinosaur."
+  }
+}

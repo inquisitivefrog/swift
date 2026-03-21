@@ -1,0 +1,27 @@
+{
+  "id": "cycad_lifecycle_closeup_003",
+  "species": "Cycad",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "MORRISON_LJ",
+  "environment_details": {
+    "habitat": "SEMI_ARID_PLAINS",
+    "flora": [
+      "Cycad seed (large, brightly colored, visible texture, often red or orange)",
+      "Cycad cone (large, central, distinctive scales, showing seeds if open)",
+      "Cycad sapling (small, few fronds, emerging from ground)",
+      "Cycad frond (close-up, showing pinnate leaflets, leathery texture)"
+    ],
+    "ground_palette": [
+      "Variegated red",
+      "Pinkish grey",
+      "Greenish-grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; tactile, high-quality textures like smooth, waxy seeds, tough cone scales, and leathery fronds; clear emphasis on individual components for educational identification."
+  },
+  "visual_logic": {
+    "composition": "A quadrant or tiled composition showcasing distinct elements: one large seed, one central cone (partially open to show seeds), a small sapling, and a detailed close-up of a frond with its unique leaflet arrangement.",
+    "ground": "Pale, dusty tan earth with scattered chalky nodules, providing a clean backdrop for the botanical elements.",
+    "lighting": "Even, bright, diffused light to ensure all details are clearly visible without harsh shadows."
+  }
+}

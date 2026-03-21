@@ -44,6 +44,7 @@ enum GameCategory: String, CaseIterable, Identifiable {
 struct CategorySelectionView: View {
     @State private var selectedCategory: GameCategory?
     @State private var navigateToGames = false
+    @State private var showCredits = false
     @State private var speechManager = SpeechManager()
     /// Each category image is disabled until its cover message has played.
     @State private var enabledLand = false
@@ -88,6 +89,14 @@ struct CategorySelectionView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button("Credits") { showCredits = true }
+                }
+            }
+            .sheet(isPresented: $showCredits) {
+                CreditsView()
+            }
             .onAppear {
                 if !hasStartedCoverSequence {
                     hasStartedCoverSequence = true

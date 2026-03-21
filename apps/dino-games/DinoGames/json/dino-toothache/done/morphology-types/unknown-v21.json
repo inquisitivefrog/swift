@@ -1,0 +1,11 @@
+{
+  "id": "finding_stegosaurus_spade_paleo1",
+  "subject": "dino_bones_paleontologist_1 discovering a Stegosaurus tooth",
+  "visual_logic": {
+    "character_specs": "Paleontologist 1: White female, blonde hair in a messy bun, tan field shirt, cargo pants.",
+    "action": "She is brushing away fine silt from a small, spade-shaped fossil with a soft-bristled brush.",
+    "morphology_priority": "THE SIMPLE SPADE: The tooth is small, flat, and shaped like a rounded leaf or a garden spade. The edges have very tiny, rounded bumps (serrations). It lacks the deep vertical ridges of the Ankylosaur tooth.",
+    "color": "Light tan or creamy ivory, looking like it was preserved in dry sandstone.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Focus on the simple, elegant shape of the tooth to distinguish it from the 'busier' Ankylosaur tooth."
+  }
+}

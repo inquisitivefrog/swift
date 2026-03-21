@@ -1,0 +1,7 @@
+{
+    "id": "ui_egg_hadrosaur",
+    "morphology": “hadrosaur",
+    "prompt": "High-fidelity 3D render of a single Hadrosaur egg next to a bright orange mango. Shape: thick rough shell, medium to large-sized, spherical. Texture: light blue with a few blue  speckles along the face for camouflage. Background: clean, empty light-grey studio background. A single small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.",
+    "visual_logic": "Highlights the mango size of hadrosaur eggs.”,
+    “style_notes”: “Only one scale bar."
+}

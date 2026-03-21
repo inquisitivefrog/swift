@@ -1,0 +1,19 @@
+{
+  "id": "dino_tooth_museum_gallery_8_teeth_FINAL",
+  "subject": "A museum display of eight distinct dinosaur teeth fossils, arranged in an elegant gallery",
+  "visual_logic": {
+    "composition": "A clean, well-lit museum gallery setting. Eight individual, simple display pedestals are arranged gracefully in two rows or a gentle curve. Each pedestal is covered with dark, plush velvet. The background is a soft, muted museum wall (grey or beige).",
+    "action": "Each pedestal proudly showcases one unique, perfectly cleaned, and highly detailed fossil tooth from the 'Dino Toothache' series. The lighting highlights the texture and form of each tooth.",
+    "individual_teeth_ordered": [
+      {"tooth_type": "T-Rex tooth", "orientation": "pointed end up", "details": "robust, banana-shaped, toy-like rounded tip"},
+      {"tooth_type": "Australovenator tooth", "orientation": "pointed tip up", "details": "thin, serrated blade, curved"},
+      {"tooth_type": "Spinosaurus tooth", "orientation": "blunt conical peg up", "details": "long, straight, smooth cone, toy-safe rounded tip"},
+      {"tooth_type": "Archaeopteryx tooth", "orientation": "tiny needle-like spike up", "details": "very small, slender, slightly curved, thorn-like"},
+      {"tooth_type": "Apatosaurus tooth", "orientation": "blunt cylindrical peg up", "details": "long, slender, rounded top, pencil-like"},
+      {"tooth_type": "Ankylosaurus tooth", "orientation": "narrow root down, leaf-shaped crown up", "details": "small, fluted leaf-like shape"},
+      {"tooth_type": "Triceratops tooth", "orientation": "forked root down, fluted crown up", "details": "double-pronged root, textured crown"},
+      {"tooth_type": "Parasaurolophus dental battery", "orientation": "diamond-shaped faces up", "details": "cluster of small, interlocking diamond-shaped teeth, set in a small jaw fragment"}
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded, toy-like proportions for the teeth; clean, polished, and inviting museum aesthetic. NO TEXT OR LABELS anywhere in the image. Ensure consistent 'matte plastic' look."
+  }
+}

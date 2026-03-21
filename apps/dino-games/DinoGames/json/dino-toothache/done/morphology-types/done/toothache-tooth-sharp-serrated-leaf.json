@@ -1,0 +1,11 @@
+{
+  "id": "finding_pachycephalosaurus_paleo11_tooth_FINAL",
+  "subject": "paleontologist_11 discovering a Pachycephalosaurus tooth",
+  "visual_logic": {
+    "composition": "A close-up, focused on a dusty, rocky excavation site. A new male paleontologist (light skin, short brown hair, wearing glasses and a blue flannel shirt over a t-shirt) is carefully sifting through dry, loose earth.",
+    "action": "He is holding a small, flat, leaf-shaped tooth in a pair of fine tweezers. The tooth is clearly defined by its **sharp, prominent, saw-like serrations/points** along its entire edge, making it look like a tiny saw blade integrated into a leaf form.",
+    "morphology_priority": "STRICT BIOLOGY: Ensure the tooth is a flat leaf with sharp, distinct, saw-like points. It should be noticeably different from the smooth-edged Ankylosaur leaf or the scalloped Stegosaur triangle.",
+    "details": "A small pickaxe or digging tool is lying nearby, partially covered in dust. His expression is one of focused scientific discovery.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded, toy-like proportions; highlight the unique 'spiky saw-leaf' morphology of the Pachycephalosaur tooth. Maintain consistent 'toy' character style and matte textures."
+  }
+}

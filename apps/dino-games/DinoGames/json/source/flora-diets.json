@@ -1,0 +1,29 @@
+{
+  "id": "carnivore_diet_hint_card_002",
+  "type": "HINT_CARD",
+  "tech_ref": "SQUARE_ASPECT_RATIO",
+  "lighting_ref": "BRIGHT_PLAYFUL_CARTOON",
+  "formation_ref": "NO_SPECIFIC_FORMATION_GENERIC_BACKGROUND",
+  "character_refs": {
+    "paleontologist": "dino_bones_paleontologist_6"
+  },
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS",
+    "flora": [
+      "Lush green Tree Fern frond (the 'unwanted' snack)",
+      "Coastal scrub and palm-like plants in the background"
+    ],
+    "fauna": [
+      "Tyrannosaurus Rex (frustrated expression, arms crossed, eyes rolled, facing paleontologist)",
+      "Albertosaurus (unimpressed expression, head turned away with a pouty lip, body facing paleontologist)",
+      "Utahraptor (sassy expression, looking away with a dismissive hand-wave gesture, body facing paleontologist)"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; expressive body language; vibrant colors; clear visual gag, no text elements."
+  },
+  "visual_logic": {
+    "composition": "The scene is set outdoors in a bright, lush coastal lowlands environment, framed as a square image. On the LEFT, character 'dino_bones_paleontologist_6' (the younger female paleontologist with braided black hair and African ethnicity, wearing her signature white tee, khaki vest, and white shorts) stands hopefully, holding out a large tree fern frond. She is standing on sandy, damp earth. On the RIGHT, the three carnivorous dinosaurs stand in a huddle, clearly rejecting the offering through their body language alone. ALL THREE DINOSAURS ARE FACING THE PALEONTOLOGIST as they express their disinterest. The T-Rex has its arms crossed and eyes rolled up in frustration; the Albertosaurus is turning its head away with a 'pouty' lip but its body is oriented towards the paleontologist; and the Utahraptor is looking away with a dismissive hand-wave gesture, but its body is oriented towards the paleontologist.",
+    "ground": "Damp, light brown coastal earth, perhaps with some sparse grass or small pebbles.",
+    "background": "Softly blurred coastal scrub, distant palm-like plants, and perhaps a hint of a calm body of water under a bright, clear sky.",
+    "lighting": "Bright, playful, high-key outdoor daylight, ensuring all character expressions and the vibrant outdoor environment are clearly visible."
+  }
+}

@@ -1,0 +1,8 @@
+{
+    "id": "ui_troodon_nest",
+    "morphology": "troodon_nest",
+    "prompt": "High-fidelity 3D render of a prehistoric Troodon nest. The nest is a very shallow, wide scrape, barely a light depression, approximately 1.2 meters in diameter, situated in loose, sandy soil. The depression features a base of light soil and sand, with only sparse, delicate plant cover (e.g., fine grasses or small, dry leaves). Several distinctively elongated, off-white eggs are meticulously placed upright, point-down, and partially buried within the sediment of the scrape, so that their top halves are clearly exposed. The eggs are arranged in clusters, but these clusters are not tightly packed or in concentric rings like an Oviraptor nest. Background: arid, open badlands with distant eroded rock formations. Bright, diffused sunlight, highlighting the subtle depth and egg orientation. Focus on the delicate upright positioning and partial burial.",
+    "visual_logic": "Generates a very subtle scrape with upright, partially buried eggs in loose clusters, emphasizing the bird-like strategy without rigid geometric patterns.",
+    "style_notes": "No scale bar. Subtle depression, eggs clearly upright and half-buried. Arid environment, diffused light.",
+    "definition_match": "Shallow scrape/light depression, Eggs upright/partially buried, Clustered but not tightly packed, Soil/sand/light plant cover."
+}

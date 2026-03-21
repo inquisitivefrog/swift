@@ -1,0 +1,26 @@
+{
+  "id": "horsetail_break_habitat_002",
+  "species": "Equisetites Riverbank",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAMP_MISTY_MORNING",
+  "formation_ref": "JIUFOTANG",
+  "environment_details": {
+    "habitat": "FORESTED_RIVER_SYSTEM",
+    "flora": [
+      "Dense thicket of Giant Horsetails (standing straight up like green pipes)",
+      "Water lilies (from your previous Jiufotang additions) in the foreground",
+      "River mist and soft mud banks"
+    ],
+    "ground_palette": [
+      "Dark Brown",
+      "Moss Green",
+      "Slate Grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; creating a 'hall of mirrors' effect with the vertical stalks; atmospheric and damp feeling."
+  },
+  "visual_logic": {
+    "composition": "A low-angle view looking through a dense stand of horsetails. The stalks create a strong vertical rhythm. In the foreground, the muddy riverbank meets the water where lilies float. The background is soft and hazy with river mist.",
+    "ground": "Very wet, dark brown mud with small puddles and patches of bright green moss.",
+    "lighting": "Cool, misty morning light that makes the green of the stalks look neon and vibrant against the dark mud."
+  }
+}

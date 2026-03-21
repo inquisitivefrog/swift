@@ -1,0 +1,19 @@
+[
+  {
+    "id": "nodosaurus_toothache_puzzle_042_no_tooth",
+    "species": "Nodosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "FRONTIER",
+    "habitat_ref": "TIDAL_FLAT_SHORELINE",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Nodosaurus is standing on a sun-drenched tidal flat. It is leaning heavily on its front left limb, tilting its armored head down toward a patch of wet, rippled sand. Its wide, pebble-textured body casts a long, dark shadow directly over the area it is trying to inspect. It is using its front claws to weakly scrape at a pile of tangled, dark green kelp, but it is clearly missing the target. Its jaw is held tight, and its eyes are fixed on the dark shadow beneath it with an expression of bewildered pain. The surrounding sand is littered with broken seashells and small white pebbles that mimic the look of teeth, but a true tooth is nowhere to be seen. It looks up at the player, its throat moving in a slow, pained swallow.",
+    "visual_logic": {
+      "palette": ["Slate blue", "Sandy cream", "Kelp green", "Charcoal", "Shell-pink"],
+      "flora": ["Tangled kelp", "Sea-grasses"],
+      "fauna": ["Small crabs scuttling away", "Shorebirds in the far distance"],
+      "substrate": "Wet, rippled tidal sand with high-contrast shadows"
+    },
+    "behavioral_intent": "Static frustration. The dinosaur’s own anatomy (its wide body and the resulting shadow) is preventing it from seeing the ground clearly, requiring the player to provide light or a scan to find what’s hidden."
+  }
+]

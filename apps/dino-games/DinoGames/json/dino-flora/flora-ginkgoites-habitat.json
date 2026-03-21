@@ -1,0 +1,26 @@
+{
+  "id": "ginkgo_grove_habitat_002",
+  "species": "Ginkgoites (Maidenhair-type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "WARM_SUNDOWN_FOREST_CANOPY",
+  "formation_ref": "LA_AMARGA",
+  "environment_details": {
+    "habitat": "WARM_FLUVIAL_PLAINS",
+    "flora": [
+      "Mid-sized Ginkgo trees (distinctive pyramidal shape, vibrant yellow-green fan-shaped leaves)",
+      "Ground-level herbaceous ferns (deep forest green)",
+      "Moss patches",
+      "Fallen Ginkgo leaves (golden yellow)"
+    ],
+    "ground_palette": [
+      "Soft Terracotta",
+      "Dusty Tan"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; a 'shimmering' effect from the vibrant yellow-green fan leaves; warm, inviting prehistoric grove; clear contrast between light grey-brown corky trunks and the luminous green-yellow leaves."
+  },
+  "visual_logic": {
+    "composition": "A scenic view into a sun-drenched grove of Ginkgo trees, forming a neat, almost organized pyramidal growth habit. The ground is a rich carpet of deep green ferns and soft moss, with scattered golden yellow fallen Ginkgo leaves. Sunlight streams through the dense canopy in 'god rays' (crepuscular rays), making the fan-shaped leaves glow and 'shimmer'.",
+    "ground": "Damp forest floor consisting of reddish-brown iron-rich clay and siltstone, with verdant patches of moss and herbaceous ferns.",
+    "lighting": "Warm, golden-hour light, characterized by long shadows and a luminous glow filtering through the Ginkgo canopy, creating dappled light and shadow patterns on the forest floor."
+  }
+}

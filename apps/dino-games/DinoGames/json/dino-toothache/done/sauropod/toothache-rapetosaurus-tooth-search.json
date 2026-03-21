@@ -1,0 +1,19 @@
+[
+  {
+    "id": "rapetosaurus_toothache_puzzle_020",
+    "species": "Rapetosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MAEVARANO",
+    "habitat_ref": "SEASONAL_FLOODPLAINS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Rapetosaurus is kneeling on its front limbs, a gesture that brings its long, slender head close to a drying puddle. Its hand is gently pressed against its cheek, and it is using its long snout to carefully nudge aside some sun-bleached wood. Its eyes are soft and wide, scanning the light grey sandstone with a focused 'worried but hopeful' expression. The mouth is slightly ajar, revealing a gap where a peg-like tooth should be. It looks toward the camera with a gentle blink, silently asking the player to inspect the area it has cleared.",
+    "visual_logic": {
+      "palette": ["White sand", "Ash-grey", "Pale ochre", "Clay-red", "Soft Lavender"],
+      "flora": ["Early broadleaf trees", "Hardy shrubs", "Conifers"],
+      "fauna": ["Majungasaurus (distant silhouette)", "Simosuchus", "Beelzebufo"],
+      "substrate": "Fine-grained white sandstone and cracked clay"
+    },
+    "behavioral_intent": "Gentle, focused search. The dinosaur's lowered posture and calm demeanor make it an inviting 'patient' for younger players."
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "id": "clubmoss_habitat_002",
+  "species": "Lycophyte Groundcover",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAPPLED_FOREST_FLOOR",
+  "formation_ref": "LA_AMARGA",
+  "visual_logic": {
+    "composition": "A wide view of the forest floor. A dense, 'shag carpet' of clubmosses rolls over fallen logs and red-brown earth. Small, primitive insects are visible crawling through the green scales.",
+    "background": "The massive, scaly trunks of Tōtara and Rimu trees rising into the mist.",
+    "lighting": "Speckled sunlight breaking through the high canopy, hitting the yellow spore-tips."
+  }
+}

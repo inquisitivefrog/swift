@@ -1,0 +1,8 @@
+{
+    "id": "ui_sequential_laying_nest",
+    "morphology": "sequential_egg_laying_nest",
+    "prompt": "High-fidelity 3D render of a prehistoric Sequential Egg-Laying Nest, showcasing a multi-tiered structure built over time by an Oviraptorosaur. The nest is a large, circular, deep basin, approximately 2 meters in diameter, with a distinct empty central opening. It features numerous concentric rings of elongated, pale blue-green eggs, arranged in pairs. Crucially, the outermost rings appear slightly less settled or buried than the innermost rings, suggesting they were laid later. The nest visually communicates a process of gradual accumulation and layering, with eggs in different stages of partial burial or sediment integration across the multiple tiers. The nest material is fine, reddish-orange sand with minimal, scattered plant debris. Background: Arid, exposed badlands of the Gobi Desert under a clear, bright sky. Focus on the depth of the basin, the numerous, subtly differentiated concentric rings, and the visual implication of eggs laid over a period of time.",
+    "visual_logic": "Generates a deep, multi-tiered Oviraptorosaur-style nest with many concentric rings, subtly indicating sequential egg-laying through varying levels of burial/settling between inner and outer layers.",
+    "style_notes": "No scale bar. Emphasize multi-tiered structure, numerous rings, and subtle visual cues of sequential laying. Arid environment, blue-green eggs.",
+    "definition_match": "Eggs laid in pairs over time, Builds up rings/layers, Multi-tiered nest structure, (Oviraptorosaur base)."
+}

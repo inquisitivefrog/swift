@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "flora-horsetail-seeds-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "flora-horsetail-seeds-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "flora-horsetail-seeds-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

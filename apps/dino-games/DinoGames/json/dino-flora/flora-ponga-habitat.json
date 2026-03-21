@@ -1,0 +1,26 @@
+{
+  "id": "tree_fern_ponga_habitat_002",
+  "species": "Tree Fern (Ponga-like)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAPPLED_FOREST_SHADE",
+  "formation_ref": "LA_AMARGA",
+  "environment_details": {
+    "habitat": "FORESTED_RIVER_SYSTEM",
+    "flora": [
+      "Mature Tree Ferns (3-5 meters tall, slender trunks, massive umbrella-like crowns)",
+      "Podocarp conifers (forming the high canopy above)",
+      "Ground mosses and fallen logs"
+    ],
+    "ground_palette": [
+      "Red-brown",
+      "Forest green",
+      "Dark Brown"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; creating a lush 'prehistoric jungle' feel; using the ferns to create layers of depth in the forest."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view from a low-camera angle, looking up through the arching fronds of several Ponga trees. The slender trunks are textured and dark. Sunlight dapples through the high conifer canopy, catching the silver undersides of the fern leaves.",
+    "ground": "A rich, damp forest floor of red-brown soil and forest-green moss, with scattered ochre stones.",
+    "lighting": "High-contrast dappled light, with bright shafts hitting specific fronds while the rest of the understory remains in soft, cool shade."
+  }
+}

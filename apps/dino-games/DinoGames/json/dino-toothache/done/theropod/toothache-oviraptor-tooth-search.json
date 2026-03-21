@@ -1,0 +1,19 @@
+[
+  {
+    "id": "oviraptor_tooth_search_007",
+    "species": "Oviraptor",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DJADOKHTA",
+    "habitat_ref": "DESERT_DUNE_FIELDS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Oviraptor is on its knees in the soft orange sand of a dune slope. Its prominent head crest is tilted forward as it uses its slender, clawed fingers to sift through the grains with surgical precision. One hand is cupped over its toothless beak (which makes the 'lost tooth' search comedically ironic), and its eyes are narrowed in intense, squinting concentration. A small 'poof' of sand hangs in the air where it just dug, and its colorful tail feathers are spread flat against the sand behind it for stability.",
+    "visual_logic": {
+      "palette": ["Orange", "Red", "Tan", "Ochre", "Bright Blue"],
+      "flora": ["Desert scrub", "Xeric shrubs", "Hardy succulents"],
+      "fauna": ["Protoceratops", "Velociraptor", "Cretaceous Lizards"],
+      "substrate": "Loose orange-red aeolian sand and sandstone outcrops"
+    },
+    "behavioral_intent": "High-fidelity expressive physical comedy conveying: 'My mouth hurts and I think I dropped a tooth around here somewhere' (played for irony given the species' beak)."
+  }
+]

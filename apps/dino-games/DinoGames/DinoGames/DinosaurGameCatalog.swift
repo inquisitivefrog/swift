@@ -8,7 +8,7 @@
 import Foundation
 
 /// Difficulty level for dinosaur games (1–6). Shown as a picker between Dinosaurs and the game list.
-/// Use image with small dinosaur for level 1, bigger for level 2, etc. Audio: level-1-really-easy-games, level-2-easy-games, etc.
+/// Use image with small dinosaur for level 1, bigger for level 2, etc. Audio: level-1-really-easy-games, level-2-more-really-easy-games, etc.
 enum GameLevel: String, CaseIterable, Identifiable {
     case level1
     case level2
@@ -42,13 +42,13 @@ enum GameLevel: String, CaseIterable, Identifiable {
         let subtitle: String
         switch self {
         case .level1: subtitle = "Really Easy Games"
-        case .level2: subtitle = "Easy Games"
-        case .level3: subtitle = "Getting Harder"
-        case .level4: subtitle = "Hard Games"
-        case .level5: subtitle = "Really Hard Games"
-        case .level6: subtitle = "Are You Sure You're Ready?"
-        case .level7: subtitle = "Even Harder"
-        case .level8: subtitle = "The Hardest"
+        case .level2: subtitle = "More Really Easy Games"
+        case .level3: subtitle = "Easy Games"
+        case .level4: subtitle = "More Easy Games"
+        case .level5: subtitle = "Getting Harder"
+        case .level6: subtitle = "And Harder"
+        case .level7: subtitle = "Hard Games"
+        case .level8: subtitle = "Are You Sure You're Ready?"
         }
         return "\(title) — \(subtitle)"
     }
@@ -59,17 +59,17 @@ enum GameLevel: String, CaseIterable, Identifiable {
         return names[number - 1]
     }
 
-    /// Audio key for intro when this level is chosen (e.g. "Level One Really Easy Games"). Map in SpeechManager to Games/level-1-really-easy-games.m4a etc.
+    /// Audio key for intro when this level is chosen (e.g. "Level One Really Easy Games"). Map in SpeechManager to Levels/level-*-.m4a.
     var introAudioKey: String {
         switch self {
         case .level1: return "level-1-really-easy-games"
-        case .level2: return "level-2-easy-games"
-        case .level3: return "level-3-getting-harder"
-        case .level4: return "level-4-hard-games"
-        case .level5: return "level-5-really-hard-games"
-        case .level6: return "level-6-are-you-sure-youre-ready"
-        case .level7: return "level-7-even-harder"
-        case .level8: return "level-8-the-hardest"
+        case .level2: return "level-2-more-really-easy-games"
+        case .level3: return "level-3-easy-games"
+        case .level4: return "level-4-more-easy-games"
+        case .level5: return "level-5-getting-harder"
+        case .level6: return "level-6-and-harder"
+        case .level7: return "level-7-hard-games"
+        case .level8: return "level-8-are-you-sure-youre-ready"
         }
     }
 }
@@ -93,7 +93,7 @@ enum DinosaurGameCatalog {
             return [
                 .racing(RacingGameConfigs.racingDinosaurs),     // Racing Dinosaurs
                 .matching(MatchingGameConfigs.dinoDietFeatures), // Dino Diets!
-                .guess(GuessGameConfigs.dinoFootprints),        // Dino Footprints
+                .dinoAges(DinoAgesGameConfigs.dinoAges),           // Dino Ages
             ]
         case .level3:
             return [
@@ -104,21 +104,24 @@ enum DinosaurGameCatalog {
         case .level4:
             return [
                 .matching(MatchingGameConfigs.dinoFeatures),   // Match the Dinosaur
-                .dinoAges(DinoAgesGameConfigs.dinoAges),           // Dino Ages
-                .guess(GuessGameConfigs.dinoBones),             // Dino Bones!
+                .guess(GuessGameConfigs.dinoFootprints),        // Dino Footprints
+                .smilingDinos(SmilingDinosGameConfigs.smilingDinos), // Dino Smile!
             ]
         case .level5:
             return [
-                .toothache(ToothacheGameConfigs.toothache),    // Toothache
-                .matrixMaterials(MatrixMaterialsGameConfigs.matrixMaterials), // Matrix Materials
+                .guess(GuessGameConfigs.dinoBones),             // Dino Bones!
+                .dinoEggs(DinoEggsGameConfigs.dinoEggs),       // Dino Eggs!
+                .dinoFlora(DinoFloraGameConfigs.dinoFlora),    // Dino Flora!
             ]
         case .level6:
             return [
+                .toothache(ToothacheGameConfigs.toothache),    // Dino Toothache
                 .findMama(FindMamaConfigs.findMama),           // Find Mama
                 .dinoHabitats(DinoHabitatsGameConfigs.dinoHabitats), // Dino Habitats
             ]
         case .level7:
             return [
+                .matrixMaterials(MatrixMaterialsGameConfigs.matrixMaterials), // Matrix Materials
                 .dinoFormations(DinoFormationsGameConfigs.dinoFormations), // Dino Formations
             ]
         case .level8:

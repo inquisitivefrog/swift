@@ -1,0 +1,19 @@
+[
+  {
+    "id": "deinocheirus_toothache_puzzle_015",
+    "species": "Deinocheirus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "NEMEGT",
+    "habitat_ref": "RIVER_DELTA_WETLANDS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The massive Deinocheirus is hunched over a muddy riverbank, its large sail-back silhouetted against the sun. One of its famous, 8-foot-long arms is bent, with the huge claws resting gingerly against the side of its duck-like snout. It is using its other hand to slowly sift through a pile of river reeds and wet stones. Its expression is focused and mildly bothered—eyes narrowed as it peers at the mud, and its mouth held slightly open in a tender 'O' shape to avoid biting down on the sore spot. It looks up toward the player with a hopeful, questioning tilt of the head.",
+    "visual_logic": {
+      "palette": ["Sandy tan", "Clay-red", "Muddy brown", "Algae green", "Slate grey"],
+      "flora": ["Flowering plants", "River reeds", "Conifers", "Mosses"],
+      "fauna": ["Tarbosaurus (in distance)", "Gar fish", "Turtles"],
+      "substrate": "Laminated sand and clay with ripples from the water"
+    },
+    "behavioral_intent": "Earnest, heavy-set search. The dinosaur communicates its discomfort through slowed, deliberate movements and a direct 'help me' gaze directed at the player."
+  }
+]

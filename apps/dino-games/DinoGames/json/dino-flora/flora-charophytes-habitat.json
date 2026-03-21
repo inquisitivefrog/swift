@@ -1,0 +1,12 @@
+{
+  "id": "charophyte_habitat_002",
+  "species": "Charophyte Meadow",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "UNDERWATER_DAPPLED_SUNLIGHT",
+  "formation_ref": "JIUFOTANG",
+  "visual_logic": {
+    "composition": "An underwater perspective looking across a vast bed of Charophytes. They stand upright in the still water, looking like a submerged pine plantation. Small fish or aquatic larvae dart between the stalks.",
+    "background": "The dark, silty lakebed and the distant, bright surface of the water.",
+    "lighting": "Luminous 'caustic' light rays dancing across the green meadows."
+  }
+}

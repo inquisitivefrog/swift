@@ -1,0 +1,7 @@
+{
+    "id": "ui_egg_ornithischian",
+    "morphology": “ornithischian",
+    "prompt": "High-fidelity 3D render of a single Ornithischian egg next to a bright red apple. Shape: thick rough shell, medium-sized, round. Texture: pale brown with green speckles along the face for camouflage. Background: clean, empty light-grey studio background. A single small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.",
+    "visual_logic": "Highlights the apple size of ornithischian eggs.”,
+    “style_notes”: “Only one scale bar."
+}

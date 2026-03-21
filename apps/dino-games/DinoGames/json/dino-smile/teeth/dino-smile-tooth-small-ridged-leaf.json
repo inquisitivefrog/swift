@@ -1,0 +1,6 @@
+{
+    "id": "ui_tooth_ridged_leaf_stegosaurus",
+    "morphology": "Small Ridged Leaf",
+    "prompt": "High-fidelity 3D render of a Stegosaurus tooth. Shape: flat and wide, resembling a broad arrowhead or a small leaf. Texture: distinct vertical ridges (fluting) running from the base to the serrated top edge. Background: neutral soft-grey. Includes a checkered scale bar. Lighting emphasizes the depth of the ridges.",
+    "visual_logic": "Differentiates 'leaf-shaped' from 'peg-shaped' for herbivore matching."
+  },

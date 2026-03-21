@@ -1,0 +1,11 @@
+{
+  "id": "finding_therizinosaurus_paleo5_leaf_slicer_FINAL",
+  "subject": "dino_bones_paleontologist_5 discovering a Therizinosaurus tooth",
+  "visual_logic": {
+    "composition": "A close-up at a muddy riverbank dig site. **dino_bones_paleontologist_5** is carefully cleaning a specimen.",
+    "character_specs": "Younger female paleontologist, short black hair, Asian ethnicity. She wears a light red tee shirt UNDER a khaki safari vest, red shorts, and black hiking boots.",
+    "action": "She is holding a pair of tweezers, proudly displaying a **single, fossilized leaf-shaped tooth**. The tooth is small, broad, and distinctly shaped like a pointed leaf (lanceolate). It has coarse, jagged serrations along the edges, making it look like a miniature serrated plant leaf made of stone.",
+    "morphology_priority": "THE LEAF-SLICER: The tooth must be leaf-shaped and small. It is totally different from the long 'Grand Blade' or the 'Banana.' It should look like a specialized tool for shredding vegetation.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; maintain exact character details. Ensure the 'leaf-like' shape of the tooth is the focal point, emphasizing its herbivorous nature despite being a theropod."
+  }
+}

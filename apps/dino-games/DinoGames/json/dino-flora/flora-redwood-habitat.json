@@ -1,0 +1,26 @@
+{
+  "id": "redwood_swamp_mature_002",
+  "species": "Early Redwood (Metasequoia-type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "HUMID_OVERCAST_ATMOSPHERIC",
+  "formation_ref": "HORSESHOE_CANYON",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS",
+    "flora": [
+      "Mature Early Redwoods (buttressed trunks, towering height, orange-brown autumn foliage)",
+      "Standing water/swamp pools",
+      "Ferns and mosses on the buttressed roots"
+    ],
+    "ground_palette": [
+      "Grey",
+      "Ocher",
+      "Brown"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasizing the 'buttressed' wide base of the trunks; a misty, humid swamp atmosphere; giant trees making the environment feel ancient and vast."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view of a redwood swamp. The massive trunks have wide, flared bases (buttresses) submerged in shallow, dark water. The foliage is a mix of deep green and rusty ocher, reflected in the still water.",
+    "ground": "Water-saturated dark mud and silt, with ocher-colored clay visible at the water's edge.",
+    "lighting": "Soft, diffused light through a humid mist, creating a moody and atmospheric 'swamp forest' feel."
+  }
+}

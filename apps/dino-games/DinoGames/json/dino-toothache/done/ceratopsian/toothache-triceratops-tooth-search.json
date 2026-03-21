@@ -1,0 +1,14 @@
+{
+  "id": "searching_triceratops_01",
+  "subject": "dino_racer_triceratops searching for a lost tooth",
+  "character_ref": "dino_racer_triceratops",
+  "tech_ref": "FOSSIL_SITE_SQUARE",
+  "lighting_ref": "BRIGHT_OVERCAST_DAYLIGHT",
+  "formation_ref": "LANCE_HELL_CREEK",
+  "visual_logic": {
+    "composition": "A slightly low-angle, wide shot of **dino_racer_triceratops** in the Lance Hell Creek formation. He is kneeling on his front legs, peering intently into a small, shallow pit or depression in the tan-grey earth.",
+    "action": "His head is tilted with a puzzled, slightly grumpy expression. One of his powerful front feet is gently nudging aside a small cluster of rocks or a dead fern frond, as if looking underneath it. In the pit, there are a few generic, non-specific fossil fragments and some sediment, but no obvious tooth.",
+    "environment_details": "The background shows lush, green cycads and large ferns under an overcast sky, characteristic of the Hell Creek environment. The ground is damp, reddish-brown earth with scattered pebbles.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded, toy-like proportions; focus on the Triceratops's searching action and quizzical expression."
+  }
+}

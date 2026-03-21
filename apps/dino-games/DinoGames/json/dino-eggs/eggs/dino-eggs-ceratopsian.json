@@ -1,0 +1,7 @@
+{
+    "id": "ui_egg_ceratopsian",
+    "morphology": “ceratopsian",
+    "prompt": "High-fidelity 3D render of a single Ceratopsian egg next to a bright red apple. Shape: thick rough shell, medium to large-sized, oval. Texture: cream with a few pale green speckles along the face for camouflage. Background: clean, empty light-grey studio background. A single small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.",
+    "visual_logic": "Highlights the apple size of ceratopsian eggs.”,
+    “style_notes”: “Only one scale bar."
+}

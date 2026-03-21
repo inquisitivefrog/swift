@@ -1,0 +1,26 @@
+{
+  "id": "sycamore_grove_mature_002",
+  "species": "Early Hardwood (Sycamore-like)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAPPLED_RIVER_SUNLIGHT",
+  "formation_ref": "KEM_KEM",
+  "environment_details": {
+    "habitat": "RIVER_DELTA_WETLANDS",
+    "flora": [
+      "Mature Sycamore-like trees (massive white/tan mottled trunks, spreading crowns)",
+      "Riverside reeds and grasses",
+      "Fallen broad leaves on the water surface"
+    ],
+    "ground_palette": [
+      "Vibrant red",
+      "Muddy brown",
+      "Sandy tan"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; large, canopy-forming silhouettes; thick trunks; trees clustered near the water's edge to form a natural shade canopy."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view of a river bend where massive hardwood trees lean slightly over the water. Their distinct white-and-tan mottled trunks stand out against the vibrant red soil of the riverbank.",
+    "ground": "Wet muddy brown banks transitioning into the red sandstone of the delta.",
+    "lighting": "Bright, warm sunlight filtering through the broad-leaf canopy, creating large, soft dappled light patterns on the ground and the water."
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "id": "paleopus_closeup_001",
+  "species": "Paleopus (Early Vascular Plant)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "TAHORA",
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: The 'searching' tip of a creeping runner; Top-Right: A pair of small, fleshy oval leaves; Bottom-Left: The tiny attachment hairs (rhizoids) gripping grey rock; Bottom-Right: A cluster of emerging new leaves.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the 'tenacious' and 'wiry' feel of the stems."
+  }
+}

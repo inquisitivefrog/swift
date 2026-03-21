@@ -1,0 +1,11 @@
+{
+  "id": "finding_gallimimus_beak_fragment_paleo4",
+  "subject": "Paleontologist 4 discovering a slender Gallimimus beak fragment",
+  "visual_logic": {
+    "character_specs": "Paleontologist 4: Younger Latino male, short brown hair, signature thin-rimmed BLACK aviator glasses. Wearing a light white tee under a khaki safari vest.",
+    "action": "He is holding a **long, slender, slightly curved fossil fragment**—the missing piece of a Gallimimus beak. He is holding it up to the light with a triumphant, slightly comedic grin.",
+    "morphology_priority": "THE NIPPING BEAK: A thin, flat, shovel-shaped plate. It looks like a piece of dark amber or charcoal horn. It is long and delicate, clearly matching the 'nipping' beak shape of the search image.",
+    "color": "Dark, semi-translucent charcoal with fine vertical growth lines.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Rounded, toy-like proportions. Make the character's excitement over such a small find part of the humor."
+  }
+}

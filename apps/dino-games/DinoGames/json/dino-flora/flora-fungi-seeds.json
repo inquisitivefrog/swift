@@ -1,0 +1,23 @@
+{
+  "id": "fungi_recycler_closeup_001",
+  "species": "Mesozoic Macro-fungi",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "LA_AMARGA",
+  "environment_details": {
+    "habitat": "FOREST_FLOOR",
+    "flora_context": [
+      "Cap and Gills (the umbrella top and the ribbed underside)",
+      "Mycelium (the 'invisible' white threads underground that do the eating)",
+      "Shelf Fungus (hard, bracket-like growths on tree trunks)",
+      "Spore Cloud (fine dust-like particles dropping from the gills)"
+    ],
+    "ground_palette": ["Dark Umber", "Cream White", "Deep Red"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the 'polka-dot' or 'ribbed' textures; bold colors to stand out against the brown mud."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A classic red-capped mushroom with white spots; Top-Right: The underside showing the gills; Bottom-Left: A bracket fungus growing on a scaly Rimu log; Bottom-Right: A web of white mycelium threads in dark soil.",
+    "ground": "Rich, dark brown decomposing leaf litter.",
+    "lighting": "Soft, even light to show the contrast between the white gills and the dark earth."
+  }
+}

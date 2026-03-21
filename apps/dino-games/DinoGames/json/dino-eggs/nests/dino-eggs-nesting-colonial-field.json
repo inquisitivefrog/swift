@@ -1,0 +1,8 @@
+{
+    "id": "ui_hadrosaur_colonial_field",
+    "morphology": "colonial_nesting_field",
+    "prompt": "High-fidelity 3D render of a vast prehistoric Hadrosaur colonial nesting field. The scene shows dozens of Hadrosaur mound nests extending into the distance across a wide, lush floodplain. Each individual nest is a large, raised, blunt-topped dome, approximately 2 meters in diameter and 60 cm high, constructed from abundant rotting vegetation, decaying leaves, branches, and dark soil. The nests are consistently spaced 2-3 meters apart from each other. Several large, ovoid, off-white eggs are partially visible, resting on and slightly within the organic material of each mound. Background: expansive, misty floodplain with dense cycads, ferns, and distant prehistoric trees. Overcast lighting, high humidity, creating a sense of a massive, active breeding ground.",
+    "visual_logic": "Generates numerous consistent Hadrosaur mound nests, spaced appropriately across a wide landscape, to depict a colonial nesting site.",
+    "style_notes": "No scale bar. Focus on repetition, vastness, and consistent individual nest morphology. Misty, humid atmosphere.",
+    "definition_match": "Many nests in one area, ~1-3m spacing, same materials as individual mound nest (repeated)."
+}

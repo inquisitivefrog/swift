@@ -1,0 +1,27 @@
+{
+  "id": "herbaceous_fern_lifecycle_closeup_009",
+  "species": "Standard Herbaceous Fern (e.g., Dryopteris or Polypodium type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "MORRISON_LJ",
+  "environment_details": {
+    "habitat": "DAMP_FOREST_UNDERSTORY",
+    "flora": [
+      "Small Fiddlehead (tightly wound, thinner and smoother than the tree fern version)",
+      "Fern Leaflet underside (close-up showing rows of brown, circular sori/spore cases)",
+      "A creeping Rhizome (horizontal root-like stem with small roots and an emerging frond)",
+      "Cluster of delicate, ground-level fronds"
+    ],
+    "ground_palette": [
+      "Damp earth brown",
+      "Vivid forest green",
+      "Soft moss grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; focus on the contrast between the green leaf and the textured brown spore dots; clean and educational layout."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition showing: 1. A delicate emerging fiddlehead. 2. A close-up of the underside of a leaf showing spores (sori). 3. The underground rhizome system. 4. A small, healthy cluster of ground fronds.",
+    "ground": "Rich, moist soil with fine bits of organic debris like tiny twigs and moss.",
+    "lighting": "Clear, even, diffused daylight to ensure all small botanical details are sharp."
+  }
+}

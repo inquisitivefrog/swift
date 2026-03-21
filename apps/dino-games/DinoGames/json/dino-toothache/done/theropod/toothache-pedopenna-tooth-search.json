@@ -1,0 +1,19 @@
+[
+  {
+    "id": "pedopenna_tooth_search_006",
+    "species": "Pedopenna",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DAOHUGOU_BEDS",
+    "habitat_ref": "FORESTED_VOLCANIC_LAKE_SYSTEM",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Pedopenna is balanced precariously on one leg atop a slippery, silver-grey siltstone ledge. Its other leg is raised, the long foot-feathers trailing awkwardly as it uses a feathered wing-hand to gingerly feel along its lower jaw. Its head is tilted down at a sharp angle, searching the volcanic ash-dusted ground with wide, teary eyes. The beak is held slightly askew in a pained grimace, and its long tail is twitching in rhythmic annoyance, emphasizing the 'missing tooth' distress.",
+    "visual_logic": {
+      "palette": ["Silver-grey", "Cool grey", "Black carbonaceous shale", "Creamy ash", "Soft White"],
+      "flora": ["Evergreen conifers", "Alpine ferns", "Araucaria", "Tree Ferns"],
+      "fauna": ["Dragonflies", "Lacewings", "Jurassic Cockroaches"],
+      "substrate": "Slippery light-colored volcanic mud over laminated siltstone"
+    },
+    "behavioral_intent": "High-fidelity expressive physical comedy conveying: 'My mouth hurts and I think I dropped a tooth around here somewhere'."
+  }
+]

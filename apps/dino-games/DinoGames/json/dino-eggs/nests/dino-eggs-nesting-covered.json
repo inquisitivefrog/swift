@@ -1,0 +1,8 @@
+{
+    "id": "ui_veg_covered_nest",
+    "morphology": "vegetation_covered_nest",
+    "prompt": "High-fidelity 3D render of a prehistoric Vegetation-Covered Nest. The nest is a shallow, wide scrape, approximately 1.5 meters in diameter, dug into light, damp forest soil. Several ovoid, cream-colored eggs are placed within the scrape and are then lightly covered with a thin, irregular layer of fallen leaves, small twigs, and fine plant debris, approximately 3-5 cm deep. The eggs are not fully buried, and their outlines or subtle shapes are still discernible beneath the covering, providing camouflage. Background: Dappled sunlight filtering through a dense, lush prehistoric forest understory, suggesting moisture and ample plant material. Focus on the subtle concealment and the texture of the organic covering.",
+    "visual_logic": "Generates a shallow scrape with eggs lightly (3-5cm) covered by loose plant debris, providing camouflage and moisture, distinct from full burial or open exposure.",
+    "style_notes": "No scale bar. Subtle scrape. Eggs partially obscured by light plant material. Lush, forest environment, dappled light.",
+    "definition_match": "Shallow scrape, Eggs lightly covered with leaves/plant debris (~2-8cm depth), Camouflage/moisture retention."
+}

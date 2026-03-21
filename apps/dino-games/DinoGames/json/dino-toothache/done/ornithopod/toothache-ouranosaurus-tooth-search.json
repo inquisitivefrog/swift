@@ -1,0 +1,19 @@
+[
+  {
+    "id": "ouranosaurus_toothache_puzzle_030",
+    "species": "Ouranosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "ELRHAZ",
+    "habitat_ref": "RIVER_DELTA_WETLANDS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Ouranosaurus is standing knee-deep in a shallow, sunlit pool of water near the riverbank. It is distressed, huffing softly and using its broad, duck-like beak to nudge aside floating water lilies and river reeds. Its hands are submerged, feeling blindly through the silty bottom, creating small clouds of mud that obscure the ground. Its eyes are squeezed shut in a brief grimace of pain, then they open wide to scan the water's surface with an anxious, fluttering blink. The lost tooth is not where the dinosaur is looking; it is actually caught in the rough bark of a fallen log on the far side of the frame, glinting subtly in the sunlight.",
+    "visual_logic": {
+      "palette": ["Ochre sand", "Terracotta", "Algae green", "Faded pink", "Sun-bleached wood"],
+      "flora": ["Water lilies", "Horsetails", "Broad-leafed ferns"],
+      "fauna": ["Dragonflies", "Small fish silhouettes in the water"],
+      "substrate": "Shallow, clear river water over a bed of silt and smooth pebbles"
+    },
+    "behavioral_intent": "Blind, tactile search. The dinosaur's splashing and 'mucking about' creates visual noise, requiring the player to look past the movement to find the static, hidden tooth."
+  }
+]

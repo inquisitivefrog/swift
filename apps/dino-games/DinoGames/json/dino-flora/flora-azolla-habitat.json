@@ -1,0 +1,26 @@
+{
+  "id": "azolla_mat_mature_002",
+  "species": "Azolla (Water Fern)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "HUMID_OVERCAST_ATMOSPHERIC",
+  "formation_ref": "HORSESHOE_CANYON",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS",
+    "flora": [
+      "Vast Azolla mat (covering 90% of a still pool or lagoon surface)",
+      "Emergent Taxodium knees poking through the mat",
+      "Floating logs with moss"
+    ],
+    "ground_palette": [
+      "Grey",
+      "Ocher",
+      "Brown"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; the water surface looks like a solid green/red velvet carpet; atmospheric and humid; high contrast between the green fern and the dark mudstone banks."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view of a stagnant lagoon. The entire water surface is covered in a thick, velvety mat of Azolla. In areas with more sunlight, the fern turns a vibrant rusty red. The edges of the pool are lined with dark grey mudstone.",
+    "ground": "The 'ground' is the water surface, almost entirely obscured by the floating flora.",
+    "lighting": "Soft, humid light that emphasizes the rich, saturated colors of the fern mat against the grey landscape."
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "tree_fern_mamaku_lifecycle_001",
+  "species": "Tree Fern (Mamaku-type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "JIUFOTANG",
+  "environment_details": {
+    "habitat": "FORESTED_VOLCANIC_LAKE_SYSTEM",
+    "flora": [
+      "Mamaku Crozier (massive, jet-black coiled fiddlehead with thick black scales)",
+      "Black Stipe (close-up of the thick, dark, charcoal-black branch base)",
+      "Mamaku sapling (vigorous growth with black stems emerging from ash-grey soil)",
+      "Trunk detail (distinctive hexagonal 'honeycomb' pattern formed by old leaf scars)"
+    ],
+    "ground_palette": [
+      "Light ash grey",
+      "Whitish tuff",
+      "Buff"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; high contrast between the deep black stalks and the bright green fronds; emphasis on the 'honeycomb' trunk texture; clear quadrant separation."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A large black coiled fiddlehead; Top-Right: Detail of the black stipe; Bottom-Left: A young sapling in volcanic ash; Bottom-Right: A high-detail view of the hexagonal trunk scars.",
+    "ground": "Fine-grained light ash grey volcanic soil.",
+    "lighting": "Clear, even, bright diffused daylight to ensure the black textures don't get lost in shadow."
+  }
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "polacanthus_toothache_puzzle_043_no_tooth",
+    "species": "Polacanthus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "WESSEX",
+    "habitat_ref": "SUBTROPICAL_FERN_SWAMP",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Polacanthus is low to the ground, its belly almost touching the mud. Its head is buried deep into a cluster of uprooted ferns, and it is using its beak to frantically toss clumps of wet, red clay over its own shoulders. The sacral shield on its back is caked in mud, and its double row of spikes is shivering with the effort. One side of its jaw is held stiffly, and its eyes are squeezed shut in a pained, frustrated 'groan.' The ground around it is a chaotic mess of deep ruts and puddles, but there is no tooth visible. It looks like it is trying to dig a hole to hide from the pain, completely obscuring the area where the tooth might have fallen.",
+    "visual_logic": {
+      "palette": ["Rust red", "Slate grey", "Deep moss green", "Clay-brown", "Dirty white"],
+      "flora": ["Wealden ferns", "Horsetails", "Early conifers"],
+      "fauna": ["Small crocodyliforms sliding into the water", "Insects"],
+      "substrate": "Heavy, iron-rich red clay and muddy puddles"
+    },
+    "behavioral_intent": "Frantic, digging distress. The dinosaur's action of throwing mud over itself creates a 'messy' visual that tells the player the tooth is buried under the fresh layers of clay."
+  }
+]

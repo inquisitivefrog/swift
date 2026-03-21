@@ -1,0 +1,7 @@
+{
+    "id": "ui_egg_ornithomimid",
+    "morphology": “ornithomimid",
+    "prompt": "High-fidelity 3D render of a single Ornithomimid egg next to a dull yellow pear. Shape: thick rough shell, medium-sized, elongated. Texture: pale yellow with very fine speckles along the face for camouflage. Background: clean, empty light-grey studio background. A single small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.",
+    "visual_logic": "Highlights the pear size of ornithomimid eggs.”,
+    “style_notes”: “Only one scale bar."
+}

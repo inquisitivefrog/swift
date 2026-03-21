@@ -1,0 +1,26 @@
+{
+  "id": "palm_coastline_mature_002",
+  "species": "Early Palm (Sabalites-type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "TROPICAL_COASTAL_BRIGHT",
+  "formation_ref": "SOLNHOFEN",
+  "environment_details": {
+    "habitat": "COASTAL_LAGOONS",
+    "flora": [
+      "Mature Early Palms (slender trunks, exploding crowns of fan-shaped fronds)",
+      "Low-growing coastal shrubs",
+      "Early succulents or beach-clinging plants"
+    ],
+    "ground_palette": [
+      "Creamy limestone",
+      "Pale Blue (water)",
+      "Tan"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; bright and tropical feel; palms clustered in a 'beach-side' grove; clear contrast between the green fronds and the light sand."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view of a tropical coastline. Slender palms lean slightly over a white-sand beach (creamy limestone). The background shows the shallow, turquoise waters of a lagoon. The trees form a natural, airy hedge along the shore.",
+    "ground": "Dry, pale ochre sand transitioning into wet, dark tan sand at the water's edge.",
+    "lighting": "Intense, high-key tropical sunlight with sharp, dark shadows directly beneath the palm fronds."
+  }
+}

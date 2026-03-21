@@ -1,0 +1,19 @@
+[
+  {
+    "id": "dryosaurus_toothache_puzzle_029",
+    "species": "Dryosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MORRISON",
+    "habitat_ref": "OPEN_CONIFER_WOODLANDS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Dryosaurus is in an active, frantic search. It is using both of its small hands to push aside piles of dried conifer needles and small stones, creating a little clearing in the dirt. Its head is down, sniffing the ground, with its large eyes darting back and forth. One side of its face is tilted up toward the player with a look of distressed 'where is it?' confusion. It is NOT pointing; instead, its hands are busy digging.",
+    "visual_logic": {
+      "palette": ["Warm tan", "Dusty grey", "Olive green", "Ochre"],
+      "flora": ["Low ferns", "Conifer saplings", "Ground moss"],
+      "fauna": ["Small lizards", "Dragonflies"],
+      "substrate": "Dry, silty earth with high-detail clutter (twigs, pebbles, needles) to hide the tooth"
+    },
+    "behavioral_intent": "Frantic, uncoordinated searching. The dinosaur provides the emotional 'hook' (the toothache), while the player must provide the keen eyes to find the object in the environment."
+  }
+]

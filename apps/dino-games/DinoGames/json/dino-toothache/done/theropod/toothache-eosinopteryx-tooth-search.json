@@ -1,0 +1,19 @@
+[
+  {
+    "id": "eosinopteryx_tooth_search_002",
+    "species": "Eosinopteryx",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TIAOJISHAN",
+    "habitat_ref": "FORESTED_VOLCANIC_HIGHLANDS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Eosinopteryx is depicted in a low, frantic crouch amidst a bed of Jurassic ferns. One clawed wing is tucked gingerly against its lower beak, while the other is used to frantically sift through volcanic ash on the forest floor. Its large, soulful eyes are wide with panic and crossed slightly as it stares at a small, white pebble, mistaking it for the lost tooth. The mouth is pulled into a pained, lopsided grimace to show the empty socket.",
+    "visual_logic": {
+      "palette": ["Ash grey", "Charcoal", "Silver", "Red", "Pale Gold"],
+      "flora": ["Giant Horsetails", "Dense Conifer forest", "Alpine ferns"],
+      "fauna": ["Jurassic Cockroaches", "Lacewings"],
+      "substrate": "Dark charcoal-grey rocky terrain with a light dusting of grey ash"
+    },
+    "behavioral_intent": "Expressive physical comedy conveying: 'My mouth hurts and I think I dropped a tooth around here somewhere'."
+  }
+]

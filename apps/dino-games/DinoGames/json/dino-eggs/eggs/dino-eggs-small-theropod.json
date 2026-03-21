@@ -1,0 +1,7 @@
+{
+    "id": "ui_egg_archaeopteryx",
+    "morphology": “small_theropod",
+    "prompt": "High-fidelity 3D render of a pair of Theropod eggs next to a large kiwi. Shape: thick rough shell, long narrow stretched chicken egg appearance. Texture: Teal with green-colored swirls and speckles along the face for camouflage.  Background: clean, empty light-grey studio background. A single small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.",
+    "visual_logic": "Highlights the large kiwi size of theropod eggs.”,
+    “style_notes”: “Only one scale bar."
+} 

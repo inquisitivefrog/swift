@@ -1,0 +1,27 @@
+{
+  "id": "equisetites_lifecycle_001",
+  "species": "Equisetites (Giant Horsetail)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "JIUFOTANG",
+  "environment_details": {
+    "habitat": "FORESTED_RIVER_SYSTEM",
+    "flora": [
+      "Strobilus (a tan, cone-like structure at the very tip that releases spores)",
+      "Segmented Stem (bright green, ribbed, with distinct dark 'rings' at the joints)",
+      "Whorled Leaves (thin, needle-like leaves radiating out from the joints like a brush)",
+      "Rhizome (thick, horizontal underground stems that sprout new shoots)"
+    ],
+    "ground_palette": [
+      "Dark Brown (Wet Mud)",
+      "Forest Green",
+      "Ochre"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the 'click-together' look of the segments; vibrant lime-green stalks; clear quadrant separation."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: The tan spore cone (strobilus); Top-Right: A close-up of a single joint with its ring of tiny leaves; Bottom-Left: A cluster of young 'pipe' shoots emerging from mud; Bottom-Right: A cross-section of the hollow, ribbed stem.",
+    "ground": "Saturated, dark brown river mud with small ripples.",
+    "lighting": "Clear, diffused daylight to highlight the vertical ribbing on the stems."
+  }
+}

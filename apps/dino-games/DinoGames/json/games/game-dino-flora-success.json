@@ -1,0 +1,27 @@
+{
+  "id": "dino_flora_victory_018",
+  "species": "Early Angiosperms & Swamp Giants",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "CELEBRATORY_GOLDEN_SUNSHINE",
+  "formation_ref": "MORRISON_LJ",
+  "environment_details": {
+    "habitat": "CRETACEOUS_SWAMP_MARGIN",
+    "flora": [
+      "Taxodium (massive swamp cypress with 'knees' sticking out of the water)",
+      "Early Magnolias (primitive, large white/cream flowers on woody branches)",
+      "Flowering Bennettitales in the foreground",
+      "Lush floating water ferns"
+    ],
+    "ground_palette": [
+      "Saturated marsh greens",
+      "Pure flower white",
+      "Victory Gold"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; bright, high-energy colors; focus on the beauty of the first flowers."
+  },
+  "visual_logic": {
+    "composition": "A bright, open swamp scene. The Taxodium giants rise from the water. In the foreground, a Magnolia branch with a large, beautiful bloom frames the shot. Two captions in bright red 3D mixed-case: 'Dino Flora!' at the top and 'Player Wins!' at the bottom.",
+    "ground": "Shallow, clear water with visible roots and aquatic plants.",
+    "lighting": "Sparkling, high-key sunlight to create a joyful, 'winning' atmosphere."
+  }
+}

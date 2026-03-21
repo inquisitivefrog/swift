@@ -1,0 +1,15 @@
+{
+  "id": "allosaurus_toothache_puzzle_047_stylized",
+  "species": "Allosaurus fragilis",
+  "tech_ref": "THREE_FINGERED_HANDS_ENLARGED_THUMB_CLAW_MEDIAL_PALMS",
+  "lighting_ref": "VIBRANT_DAPPLED_FOREST_LIGHT",
+  "formation_ref": "MORRISON",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3_CLEAN",
+  "pose": "The Allosaurus is in a dramatic, character-driven crouch. It is looking directly at its own front hand with a look of extreme annoyance. Its hands are positioned correctly (palms facing each other), and its oversized thumb claw is pointing toward its open, pouting mouth. The jaw shows a localized, bright pink swelling. It is standing on a tidy patch of sun-warmed, flat orange rocks and vibrant green moss. NO TOOTH IS VISIBLE. The dinosaur's crests above its eyes are exaggerated and bright red, making it look like it has grumpy eyebrows.",
+  "visual_logic": {
+    "palette": ["Slate grey scales", "Bright red crests", "Moss green", "Sunset orange rocks"],
+    "anatomical_priority": "Prominent, pointed eye crests; very large thumb claw; three fingers only; medially oriented palms (no 'bunny hands').",
+    "cleanliness_factor": "Solid color shapes for the rocks and moss; no messy mud or loose dirt; clear contrast between the dinosaur's feet and the ground objects."
+  },
+  "behavioral_intent": "Petulant and grumpy. The dinosaur is 'blaming' the ground for its lost tooth, acting more like a frustrated character than a wild animal."
+}

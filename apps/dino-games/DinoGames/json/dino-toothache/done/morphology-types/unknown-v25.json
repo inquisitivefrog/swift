@@ -1,0 +1,11 @@
+{
+  "id": "finding_ornithomimid_nipping_beak_paleo4",
+  "subject": "dino_bones_paleontologist_4 discovering a Gallimimus beak fragment",
+  "visual_logic": {
+    "character_specs": "Paleontologist 4: Latino male, short brown hair, black thin-rimmed aviator glasses, safari vest over white tee.",
+    "action": "He is holding a **long, narrow, shovel-shaped fossil fragment** between his fingers, looking through it like a piece of dark glass.",
+    "morphology_priority": "THE NIPPING BEAK: No teeth. This is a thin, flat, slightly curved plate of fossilized keratin. It is long and slender, resembling a piece of a giant goose's bill. It looks delicate and sharp, not thick like the Gigantoraptor beak.",
+    "color": "Translucent amber or dark charcoal, with fine growth lines (striations) visible on the surface.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Use expressive physical comedy—maybe he's squinting one eye to look through the translucent fragment."
+  }
+}

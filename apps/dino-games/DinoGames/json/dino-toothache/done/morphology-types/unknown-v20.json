@@ -1,0 +1,11 @@
+{
+  "id": "finding_spinosaurid_spike_paleo3",
+  "subject": "dino_bones_paleontologist_3 holding a conical Spinosaurus tooth",
+  "visual_logic": {
+    "character_specs": "Paleontologist 3: Asian male, black hair, wearing a green field vest and holding a specimen bag.",
+    "action": "He is holding a long, straight, conical tooth upright between his thumb and forefinger.",
+    "morphology_priority": "THE CONICAL SPIKE: The tooth is perfectly round, straight, and tapers to a sharp point. There are NO serrations. It has fine vertical ridges running down the sides. It looks like a fossilized 'vampire fang' or a large stone needle.",
+    "color": "Dark, glossy black or deep mahogany, looking like it was pulled from river mud.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Ensure the roundness of the tooth is obvious to distinguish it from the flat 'Blade' teeth of other Theropods."
+  }
+}

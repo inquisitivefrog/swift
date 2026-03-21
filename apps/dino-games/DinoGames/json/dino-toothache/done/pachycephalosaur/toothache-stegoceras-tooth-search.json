@@ -1,0 +1,19 @@
+[
+  {
+    "id": "stegoceras_toothache_puzzle_025",
+    "species": "Stegoceras",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DINOSAUR_PARK",
+    "habitat_ref": "COASTAL_PLAIN_WOODLANDS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The small Stegoceras is in a low, bird-like crouch beside a fallen, mossy log. It has its head tilted sharply to the side, bringing its thick, rounded dome close to the bark. One of its small, three-fingered hands is pressed against its cheek, while the other is used to frantically point at a tiny white sliver wedged in the moss. Its eyes are wide and darting, and its beak is held open in a worried 'chirp' shape. It looks back and forth between the player and the ground, its tail twitching with anxious energy as it waits for the Paleontologist to help.",
+    "visual_logic": {
+      "palette": ["Sandy tan", "Iron-stone red", "Grey-blue", "Forest green", "Moss"],
+      "flora": ["Dawn redwoods", "Ferns", "Clubmosses"],
+      "fauna": ["Chasmosaurus (distant)", "Small mammals", "Lizards"],
+      "substrate": "Soft, damp forest floor with iron-stained sandy patches"
+    },
+    "behavioral_intent": "Quick, energetic, and anxious search. The dinosaur’s rapid movements and clear pointing gesture create a high sense of engagement for the player."
+  }
+]

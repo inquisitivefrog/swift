@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "dino-smile-tooth-nipping-beak-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "dino-smile-tooth-nipping-beak-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "dino-smile-tooth-nipping-beak-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

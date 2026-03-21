@@ -1,0 +1,7 @@
+{
+    "id": "ui_egg_stegosaur",
+    "morphology": “stegosaur",
+    "prompt”: “A professional claymation-style educational diagram. Center: a sub-spherical Stegosaurid egg next to a clay orange with a checkered scale bar at the bottom. Top-Right Inlay: A circular magnification labeled 'MACRO', showing a high-resolution view of the deep, hand-sculpted pitted clay texture from the first reference image.  Clean white leader line connects inlay to a focal point on the egg shell. Soft studio lighting, clean grey clay background.",
+    "visual_logic": "Highlights the unique eggshell text and orange size of stegosaur eggs.”,
+    “style_notes”: “Only one scale bar."
+}

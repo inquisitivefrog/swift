@@ -1,0 +1,7 @@
+{
+    "id": "ui_egg_titanosaur",
+    "morphology": “sauropod",
+    "prompt": "High-fidelity 3D render of a single Sauropod egg next to a grapefruit. Shape: thick rough shell, medium-sized, sub spherical. Texture: ivory with sand-colored swirls or subtle brown speckles along the face for camouflage.  Background: clean, empty light-grey studio background. A single small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.",
+    "visual_logic": "Highlights the grapefruit size of sauropod eggs.”,
+    “style_notes”: “Only one scale bar."
+}

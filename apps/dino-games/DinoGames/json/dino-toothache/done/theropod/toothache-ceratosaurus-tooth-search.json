@@ -1,0 +1,10 @@
+{
+  "id": "searching_ceratosaurus_01_FINAL",
+  "subject": "toy-like Ceratosaurus with a toothache",
+  "visual_logic": {
+    "composition": "The Ceratosaurus is standing in a lush, humid, swampy forest. Its signature nose-horn and two smaller brow horns are prominent, looking like smooth, rounded toy pieces. The body is a deep reddish-orange with darker stripes.",
+    "action": "It has its mouth open in a pained expression, clutching its jaw with a three-fingered hand. The upper jaw clearly shows a missing space where an exceptionally long, dagger-like tooth should be.",
+    "environment_details": "Dense green prehistoric foliage, large ferns, and misty swamp air.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded, toy-safe proportions; maintain matte, toy-like textures."
+  }
+}

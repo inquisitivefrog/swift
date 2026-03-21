@@ -1,0 +1,15 @@
+{
+  "id": "torvosaurus_toothache_puzzle_046_v3_clean",
+  "species": "Torvosaurus tanneri",
+  "tech_ref": "THREE_FINGERED_HANDS_ENLARGED_THUMB_CLAW_MEDIAL_PALMS",
+  "lighting_ref": "DRAMATIC_GOLDEN_HOUR_BACKLIT",
+  "formation_ref": "MORRISON",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3_CLEAN",
+  "pose": "The Torvosaurus is sitting back on its haunches like a giant, grumpy dog at the edge of a clear river. It has its mouth pulled into a lopsided, pained pucker, with one cheek bulging significantly. Its large, rectangular head is tilted. It is using its left hand—three fingers, palms facing inward—to point a massive, hooked thumb claw toward its open mouth in a gesture of 'Look at this mess!'. The ground in front of it is a tidy patch of smooth, multi-colored river stones and a few vibrant ginkgo leaves. No tooth is visible on the ground. The dinosaur looks directly at the player with wide, expressive, amber eyes that scream 'Fix it already!'.",
+  "visual_logic": {
+    "palette": ["Deep forest green (scales)", "Amber (eyes)", "Burnt sienna (accents)", "Turquoise (water)"],
+    "anatomical_priority": "Enlarged thumb claw is the focal point; rectangular muzzle; three fingers; medial palm orientation.",
+    "cleanliness_factor": "River stones are distinct and easy to 'sort' visually; water is transparent; very little grit or clutter."
+  },
+  "behavioral_intent": "Demanding and impatient. The dinosaur is literally pointing to the problem, making the search for the missing tooth feel like a direct request from a character."
+}

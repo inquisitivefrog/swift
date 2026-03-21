@@ -1,0 +1,14 @@
+{
+  "id": "finding_spinosaurus_paleo7_tooth_corrected",
+  "subject": "dino_bones_paleontologist_7 discovering a Spinosaurus tooth",
+  "character_ref": "dino_bones_paleontologist_7",
+  "tech_ref": "FOSSIL_SITE_SQUARE",
+  "lighting_ref": "OVERCAST_DAYLIGHT",
+  "formation_ref": "BAHARAIYA_OASIS",
+  "visual_logic": {
+    "composition": "A medium close-up, focused on the excavation by a riverbank in the Bahariya Oasis Formation. **dino_bones_paleontologist_7** (male, dark-skinned, short dark curly hair, **wide-brimmed fishing hat**, khaki fishing vest) is kneeling by a small, muddy stream.",
+    "action": "He is intensely focused, using a small mesh sieve to sift through wet river gravel. In his gloved hand, he holds a pair of tweezers, carefully extracting a **single, long, straight, conical tooth**. The tooth should look like a **smooth, sharp, un-serrated spike** or a very sharp, polished white nail, tapering evenly to a point. It has no roots (as it's a shed tooth) and no flat chewing surfaces.",
+    "details": "A small bucket of screened sediment and a magnifying loupe are lying nearby. His expression is one of careful, experienced concentration. The background shows blurred muddy riverbanks and lush swamp vegetation.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded, toy-like proportions; highlight the unique smooth, conical morphology of the Spinosaurus tooth and the paleontologist's meticulous work. Maintain consistent 'toy' character style."
+  }
+}

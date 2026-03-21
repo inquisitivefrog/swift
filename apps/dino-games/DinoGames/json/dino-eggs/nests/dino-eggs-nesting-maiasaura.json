@@ -1,0 +1,8 @@
+{
+    "id": "ui_maiasaura_nest",
+    "morphology": "maiasaura_nest",
+    "prompt": "High-fidelity 3D render of a prehistoric Maiasaura nest. The nest is a substantial, blunt dome-shaped mound, approximately 2 meters in diameter and 0.8 meters high, constructed from a mixture of decaying vegetation (leaves, twigs, ferns) and loose, dark soil. Several large, ovoid, cream-colored eggs are visible, clustered just beneath the surface of the mound, with some partially exposed, suggesting they are being incubated by the compost heat from the decaying plant material. The mound has a slightly disturbed, organic texture, indicating ongoing maintenance or fresh additions. Background: A lush, verdant prehistoric floodplain with dense ferns, cycads, and tall conifers under a warm, diffused sunlight. Focus on the organic construction, the scale of the mound, and the visible eggs within the compost material, clearly indicating incubation via decaying vegetation.",
+    "visual_logic": "Generates a substantial compost mound with partially exposed eggs, emphasizing incubation by decaying vegetation, specifically tied to the iconic Maiasaura nesting strategy.",
+    "style_notes": "No scale bar. Blunt dome shape. Visible organic material in construction. Eggs clustered, not deeply buried. Lush floodplain environment.",
+    "definition_match": "Mound type (~2m dia, ~0.5-1m height), Built from vegetation/soil, Eggs clustered/not deeply buried, Incubation by heat from decaying vegetation."
+}

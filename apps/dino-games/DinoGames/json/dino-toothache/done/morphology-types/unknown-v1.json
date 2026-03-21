@@ -1,0 +1,11 @@
+{
+  "id": "toothache-australovenator-tooth-find-ACTION",
+  "subject": "dino_bones_paleontologist_2 excavating a tooth",
+  "character_ref": "dino_bones_paleontologist_2",
+  "visual_logic": {
+    "composition": "A tight, high-angle 'work' shot. The camera is focused on the ground where the large, black, serrated Australovenator tooth is still partially embedded in the silty Tahora clay.",
+    "action": "Paleontologist_2 (short black hair, green sun hat) is using a fine-tipped dental pick in one hand and a small puffer bulb in the other to blow away fine sand from the serrated edge of the 'slicer' tooth. Her expression is one of intense, joyful focus.",
+    "details": "A small 'field kit' is open next to her, containing a vial of consolidant (fossil glue) and a soft brush. You can see the lagoon in the soft-focus background.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the tactile interaction between the tool and the fossil."
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "image_generation_request": {
+    "prompt": "A high-fidelity 3D wide shot of a bright museum office in STYLE_ANIMATED_FEATURE_V3. A large canvas tarp covers the floor with a disassembled Giganotosaurus skeleton laid out 100% flat like a puzzle, with its distinctive massive size, Carcharodontosaurid skull and shark-tooth serrations clearly visible and recognizable even in its disassembled state. RIGHT: The character-consistent dino_bones_paleontologist_2 leans forward, presenting a small rock-encased Giganotosaurus fossil serrated tooth. LEFT: The character-consistent dino-bones_preparator_2 is kneeling, pointing at the fossil tooth.  They make happy eye contact. The style features rounded toy-like proportions, clean lines, and tactile bone textures.",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "INDOOR_DAYLIGHT_BRIGHT",
+    "framing": "WIDE_SHOT",
+    "aspect_ratio": "1:1"
+  }
+}

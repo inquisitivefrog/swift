@@ -1,0 +1,7 @@
+{
+    "id": "ui_egg_ground_nest",
+    "morphology": "ground_nest",
+    "prompt": "High-fidelity 3D render of a prehistoric Ceratopsian ground nest. The Ceratopsian has dug a hole into the flat plain.  The top of the depression is even with the floodplain surface.  The eggs were dropped into the hole, then sand was gently pushed into the hole until the eggs are barely visible.  Only the very top 'poles' of the cream eggs with pale green speckles are visible through the grit.  Background: wide open floodplain, ferns, club moss. Bright sunny day.",
+    "visual_logic": "Highlights the ground nest.",
+    "style_notes": "No scale bar."
+}

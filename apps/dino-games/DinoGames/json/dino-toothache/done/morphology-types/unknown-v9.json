@@ -1,0 +1,10 @@
+{
+  "id": "finding_velociraptor_paleo13_tooth_REVISED_FINAL",
+  "subject": "paleontologist finding a Velociraptor tooth in a sifting screen",
+  "visual_logic": {
+    "composition": "Close-up of a sifting screen held by a paleontologist (same character as previous find). Inside the screen is a small, fossilized tooth.",
+    "action": "The tooth is a **small, sharp, and distinctly recurved (curving gently backward) tooth**. It should resemble a miniature, slender claw or a very sharp, thin scimitar blade. Crucially, it should have a **subtle half-curve, not a full C-shape**. Show tiny 'bumpy' serrations along the back edge of the curve.",
+    "morphology_priority": "STRICT BIOLOGY: The tooth must be much less curved than the previous C-shape, appearing as a gentle half-curve or swept-back talon. It should be clearly different from the Archaeopteryx needle and the T-Rex banana in size and curve.",
+    "style_notes": "Consistent with previous 'Find' assets; matte textures and clear, simple shapes for pre-readers."
+  }
+}

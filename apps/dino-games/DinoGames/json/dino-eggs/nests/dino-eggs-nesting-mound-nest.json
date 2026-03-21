@@ -1,0 +1,8 @@
+{
+    "id": "ui_hadrosaur_mound_nest",
+    "morphology": "mound_nest",
+    "prompt": "High-fidelity 3D render of a prehistoric Hadrosaur mound nest. The nest is a large, raised, blunt-topped dome, approximately 2 meters in diameter and 60 cm high, constructed primarily from abundant, rotting vegetation, decaying leaves, and broken branches, mixed with dark soil. Several large, ovoid, off-white eggs are partially visible, resting on and slightly within the mound's organic material. The eggs are not deeply buried. Background: lush prehistoric floodplain with cycads and ferns. Overcast lighting, suggesting high humidity.",
+    "visual_logic": "Creates a distinct, large, organic mound with visible eggs integrated into its surface, reflecting the 'not deeply buried' requirement.",
+    "style_notes": "No scale bar. Emphasize organic texture. Eggs are partially visible, sitting on or slightly within the mound, not buried.",
+    "definition_match": "Raised mound/dome (~1-2.5m dia, ~30-100cm height), Vegetation-heavy (leaves, branches, soil), Eggs on or within mound (not deeply buried)."
+}

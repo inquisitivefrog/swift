@@ -1,0 +1,58 @@
+{
+  "asset_group_id": "paleo_team_characters",
+  "project": "Dino Dental / Toothache Series",
+  "version": "1.0",
+  "description": "Consistent visual specifications for recurring paleontologist characters.",
+  "characters": [
+    {
+      "character_id": "dino_bones_paleontologist_7",
+      "gender": "Female",
+      "ethnicity": "Dark skin",
+      "hair": "Braided molded hair",
+      "attire": "Green vest over field shirt, khaki field pants",
+      "accessories": ["Gloves", "Small trowel"],
+      "primary_action_context": "Discovering Archaeopteryx tooth"
+    },
+    {
+      "character_id": "dino_bones_paleontologist_8",
+      "gender": "Female",
+      "ethnicity": "Light skin",
+      "hair": "Red molded hair",
+      "attire": "Yellow vest over field shirt, khaki field pants",
+      "accessories": ["Gloves", "Small brush", "Magnifying glass"],
+      "primary_action_context": "Cleaning Spinosaurus tooth"
+    },
+    {
+      "character_id": "dino_bones_paleontologist_9",
+      "gender": "Male",
+      "ethnicity": "Light skin",
+      "hair": "Short brown hair",
+      "attire": "Classic 'Indiana Jones' style fedora/archeologist hat, khaki field clothes",
+      "accessories": ["Gloves", "Tweezers", "Small trowel", "Field notebook and pencil"],
+      "primary_action_context": "Discovering Iguanodon tooth"
+    },
+    {
+      "character_id": "dino_bones_paleontologist_10",
+      "gender": "Female",
+      "ethnicity": "Dark skin",
+      "hair": "Braided molded hair (consistent with Paleo 7)",
+      "attire": "Green vest over field shirt, khaki field pants (consistent with Paleo 7)",
+      "accessories": ["Gloves", "Small soft brush", "Sifting tray"],
+      "primary_action_context": "Cleaning Stegosaurus tooth"
+    },
+    {
+      "character_id": "dino_bones_paleontologist_11",
+      "gender": "Male",
+      "ethnicity": "Light skin",
+      "hair": "Short brown hair",
+      "attire": "Glasses, blue flannel shirt over t-shirt",
+      "accessories": ["Gloves", "Fine tweezers", "Small pickaxe/digging tool"],
+      "primary_action_context": "Discovering Pachycephalosaurus tooth"
+    }
+  ],
+  "visual_specifications": {
+    "style": "STYLE_ANIMATED_FEATURE_V3",
+    "rendering": "Consistent 'toy-like' character style, matte textures",
+    "overall_pose": "Active, engaged in archaeological work (kneeling, sifting, holding tools)"
+  }
+}

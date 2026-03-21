@@ -1,0 +1,27 @@
+{
+  "id": "metasequoia_lifecycle_closeup_001",
+  "species": "Metasequoia (Dawn Redwood)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "HORSESHOE_CANYON",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS",
+    "flora": [
+      "Metasequoia cone (small, globose, with horizontal scales)",
+      "Opposite needles (flat, linear needles arranged in neat opposite pairs on the branch)",
+      "Metasequoia sapling (perfectly symmetrical, pyramidal shape)",
+      "Bark detail (reddish-brown, stringy bark that peels in long vertical strips)"
+    ],
+    "ground_palette": [
+      "Dark organic mudstone",
+      "Grey",
+      "Brown"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the 'feathery' softness of the needles; vibrant reddish-brown bark; clear quadrant separation."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: The small globose cone; Top-Right: High-detail view of the opposite needle arrangement; Bottom-Left: A symmetrical young sapling; Bottom-Right: The fibrous, vertical-shredding bark.",
+    "ground": "Damp, dark organic mudstone soil.",
+    "lighting": "Clear, even, bright diffused daylight to show the architectural symmetry of the needles."
+  }
+}

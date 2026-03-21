@@ -1,0 +1,12 @@
+{
+  "id": "searching_argentinosaurus_01_REVISED_V2",
+  "subject": "toy-like Argentinosaurus with a visible toothache wince",
+  "visual_logic": {
+    "composition": "A low-angle medium shot to emphasize the dinosaur's massive size. The Argentinosaurus is the primary focus against a vast, sun-drenched Cretaceous plain.",
+    "action": "The dinosaur is 'over-acting' its toothache. It has one massive front leg lifted, gently pressing a 'knee' against its lower jaw. Its head is tilted slightly to the side in discomfort.",
+    "expression_priority": "The dinosaur has a clear WINCE: one eye is squeezed shut, the other is wide and worried. Its mouth is slightly agape and lopsided, showing a row of blunt peg-like teeth with one clearly missing.",
+    "character_specs": "Smooth, vinyl-like skin texture in a soft dusty blue or earthy green. Despite the size, the face must remain expressive and empathetic.",
+    "environment": "Bright, high-saturation floodplain. Tall araucaria trees in the background provide scale. Use warm, cheerful lighting to contrast with the dinosaur's sad expression.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3. Avoid a neutral face. The goal is for a child to look at the image and immediately say, 'Oh no, his tooth hurts!'"
+  }
+}

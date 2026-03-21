@@ -1,0 +1,19 @@
+[
+  {
+    "id": "maiasaura_toothache_puzzle_034_no_tooth",
+    "species": "Maiasaura",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TWO_MEDICINE",
+    "habitat_ref": "UPLAND_NESTING_GROUNDS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Maiasaura is hunched over the rim of her mud-mound nest. She is using her broad, shovel-like beak to gently but unsuccessfully sift through the dry, trampled vegetation inside the nest. One hand is pressed against her lower jaw, which is visibly swollen. Her eyes are large and glassy with maternal worry, and she occasionally looks up to 'nuzzle' a nearby hatchling (out of focus) while letting out a soft, low-pitched groan of frustration. The ground is covered in crushed eggshell fragments and dry ferns, but no tooth is visible. She looks exhausted by her failed search and turns her gaze toward the player, hopeful for a miracle.",
+    "visual_logic": {
+      "palette": ["Dusty tan", "Sage green", "Earthy red", "Off-white (eggshells)"],
+      "flora": ["Dry ferns", "Conifer twigs", "Early shrubs"],
+      "fauna": ["Hatchling silhouettes", "Troodon (distant threat)"],
+      "substrate": "Hard-packed mud and sun-bleached vegetation"
+    },
+    "behavioral_intent": "Maternal distress and localized searching. The dinosaur’s focus on the nest creates a narrative reason for the search while keeping the actual tooth missing from the frame."
+  }
+]

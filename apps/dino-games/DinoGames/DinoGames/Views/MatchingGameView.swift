@@ -8,6 +8,7 @@
 import SwiftUI
 @preconcurrency import AVFoundation
 import UIKit
+import Combine
 
 // Track specific dinosaur-characteristic pairs that have been matched
 struct MatchedPair: Hashable {
@@ -17,7 +18,7 @@ struct MatchedPair: Hashable {
 
 // Shared audio manager for playing recorded audio files
 @MainActor
-class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegate {
+class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegate {
     private let synthesizer = AVSpeechSynthesizer()
     private var currentPlayer: AVAudioPlayer?
     private var secondaryPlayer: AVAudioPlayer? // For simultaneous play (e.g. crowd-cheering + winner name)
@@ -26,7 +27,11 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     
     // Callback for when audio finishes playing
     var onAudioFinished: (() -> Void)?
-    var isPlaying: Bool = false
+    @Published var isPlaying: Bool = false
+    
+    /// Safety timeout when audio session fails and delegate never fires (e.g. ATAudioSession activation failed).
+    private static let completionTimeoutSeconds: TimeInterval = 20
+    private var completionTimeoutWorkItem: DispatchWorkItem?
     
     /// Folder for characteristic audio: "Dino-Characteristics" or "Ptero-Characteristics" (set by MatchingGameView so shared words like "crest" load from the right place).
     var characteristicSubfolder: String = "Dino-Characteristics"
@@ -36,13 +41,34 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         synthesizer.delegate = self
     }
     
+    private func scheduleCompletionTimeout() {
+        cancelCompletionTimeout()
+        let work = DispatchWorkItem { [weak self] in
+            guard let self else { return }
+            Task { @MainActor in
+                self.completionTimeoutWorkItem = nil
+                self.isPlaying = false
+                let cb = self.onAudioFinished
+                self.onAudioFinished = nil
+                cb?()
+            }
+        }
+        completionTimeoutWorkItem = work
+        DispatchQueue.main.asyncAfter(deadline: .now() + Self.completionTimeoutSeconds, execute: work)
+    }
+    
+    private func cancelCompletionTimeout() {
+        completionTimeoutWorkItem?.cancel()
+        completionTimeoutWorkItem = nil
+    }
+    
     /// Returns bundle URL for a given audio key (e.g. "crowd-cheering", "Allosaurus") if found; nil otherwise.
     func urlForAudio(key: String) -> URL? {
         guard let path = audioFilePath(for: key) else { return nil }
         return resolveURL(forPath: path)
     }
 
-    /// Resolve path (e.g. "Feedback/crowd-cheering") to first found bundle URL (.m4a or .mp3).
+    /// Resolve path (e.g. "Feedback/crowd-cheering") to first found bundle URL (.m4a, .mp3, or .wav).
     private func resolveURL(forPath audioPath: String) -> URL? {
         let fileName = (audioPath as NSString).lastPathComponent
         let paths = [
@@ -53,22 +79,29 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             audioPath,
             fileName
         ]
-        for path in paths {
-            for ext in ["m4a", "mp3"] {
-                if let url = Bundle.main.url(forResource: path, withExtension: ext) { return url }
+        for resourcePath in paths {
+            for ext in ["m4a", "mp3", "wav"] {
+                if let url = Bundle.main.url(forResource: resourcePath, withExtension: ext) { return url }
             }
         }
         // Try subdirectory lookup (e.g. Feedback/congratulations → resource "congratulations" in "Audio/Feedback")
         if audioPath.contains("/") {
-            let subdir = "Audio/\((audioPath as NSString).deletingLastPathComponent)"
-            for ext in ["m4a", "mp3"] {
-                if let url = Bundle.main.url(forResource: fileName, withExtension: ext, subdirectory: subdir) { return url }
+            let pathDir = (audioPath as NSString).deletingLastPathComponent
+            let subdirs = [
+                "Audio/\(pathDir)",
+                "Assets/Audio/\(pathDir)",
+                "DinoGames/Assets/Audio/\(pathDir)"
+            ]
+            for subdir in subdirs {
+                for ext in ["m4a", "mp3", "wav"] {
+                    if let url = Bundle.main.url(forResource: fileName, withExtension: ext, subdirectory: subdir) { return url }
+                }
             }
         }
         if let resourcePath = Bundle.main.resourcePath, let enumerator = FileManager.default.enumerator(atPath: resourcePath) {
             while let file = enumerator.nextObject() as? String {
                 let lower = file.lowercased()
-                if lower.hasSuffix("\(fileName).m4a") || lower.hasSuffix("\(fileName).mp3") {
+                if lower.hasSuffix("\(fileName).m4a") || lower.hasSuffix("\(fileName).mp3") || lower.hasSuffix("\(fileName).wav") {
                     return URL(fileURLWithPath: (resourcePath as NSString).appendingPathComponent(file))
                 }
             }
@@ -78,6 +111,7 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
 
     /// Play two audio files simultaneously; calls whenLongestFinished after the longer one ends (plus short buffer).
     func playTogether(url1: URL, url2: URL, whenLongestFinished: @escaping () -> Void) {
+        ensureAudioSessionActive()
         stopCurrentAudio()
         secondaryPlayer?.stop()
         secondaryPlayer = nil
@@ -122,6 +156,7 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     // Stop current audio with fade-out to prevent click sounds
     // Needs to be accessible from other views (e.g. CategorySelectionView onDisappear, GuessGameView onDisappear).
     func stopCurrentAudio() {
+        cancelCompletionTimeout()
         secondaryPlayer?.stop()
         secondaryPlayer = nil
         if let player = currentPlayer, player.isPlaying {
@@ -407,6 +442,10 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Feedback/game-measure-stack-too-tall"
         case "game-measure-close-enough-for-government-work", "close enough for government work":
             return "Feedback/game-measure-close-enough-for-government-work"
+        case "game-measure-you-cant-be-serious", "game measure you cant be serious":
+            return "Games/game-measure-you-cant-be-serious"
+        case "game-measure-that-dinosaur-is-too-tall", "game measure that dinosaur is too tall":
+            return "Games/game-measure-that-dinosaur-is-too-tall"
         case "that-dinosaur-is-too-tall", "that dinosaur is too tall":
             return "Feedback/that-dinosaur-is-too-tall"
         case "pick-a-pterosaur-first", "pick a pterosaur first":
@@ -456,10 +495,29 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Games/game-can-you-name-that-dinosaur"
         case "can-you-name-the-pterosaur", "can you name the pterosaur":
             return "Games/game-can-you-name-the-pterosaur"
-        case "toothache":
-            return "Games/toothache"
+        case "toothache", "dino-toothache", "game-dino-toothache":
+            return "Games/game-dino-toothache"
+        case "game-dino-smile", "dino-smile", "smiling-dinos":
+            return "Games/game-dino-smile"
+        case "game-dino-smile-gameplay-directions":
+            return "Games/game-dino-smile-gameplay-directions"
+        case "game-dino-eggs", "dino-eggs":
+            return "Games/game-dino-eggs"
+        case "game-dino-eggs-beep":
+            return "Games/game-dino-eggs-beep"
+        case "game-dino-eggs-scan-failed":
+            return "Games/game-dino-eggs-scan-failed"
+        case "game-dino-eggs-tap-the-dinosaur":
+            return "Games/game-dino-eggs-tap-the-dinosaur"
+        case "game-dino-eggs-gameplay-directions", "games-dino-eggs-gameplay-directions",
+             "tap-the-dinosaur-when-you-see-the-egg":
+            return "Games/game-dino-eggs-gameplay-directions"
         case "can-you-return-the-tooth", "can you return the tooth":
             return "Games/game-can-you-return-the-tooth"
+        case "game-dino-toothache-this-dinosaur-lost-its-tooth":
+            return "Games/game-dino-toothache-this-dinosaur-lost-its-tooth"
+        case "games-dino-toothache-this-dinosaur-lost-its-tooth":
+            return "Games/games-dino-toothache-this-dinosaur-lost-its-tooth"
         case "racing-dinosaurs", "racing dinosaurs":
             return "Games/game-racing-dinosaurs"
         case "racing-pterosaurs", "racing pterosaurs", "game-racing-pterosaurs", "game racing pterosaurs":
@@ -524,6 +582,18 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Games/game-dino-bones"
         case "game-dino-bones-identify-the-skeleton", "identify the skeleton":
             return "Games/game-dino-bones-identify-the-skeleton"
+        case "game-dino-flora-which-three-dinosaurs":
+            return "Games/game-dino-flora-which-three-dinosaurs"
+        case "game-dino-flora-tap-the-plant-to-hear-description":
+            return "Games/game-dino-flora-tap-the-plant-to-hear-description"
+        case "game-dino-flora-tap-the-image":
+            return "Games/game-dino-flora-tap-the-image"
+        case "flora-hint-browsers":
+            return "Flora/hint-browsers"
+        case "flora-hint-periods":
+            return "Flora/hint-periods"
+        case "flora-hint-diets":
+            return "Flora/hint-diets"
         case "game-dino-push", "dino push":
             return "Games/game-dino-push"
         case "game-dino-push-choose-two-dinosaurs", "choose two dinosaurs":
@@ -542,6 +612,8 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             return "Games/game-dino-push-both"
         case "game-dino-push-its-a-tie":
             return "Games/game-dino-push-its-a-tie"
+        case "game-dino-push-wins":
+            return "Games/game-dino-push-wins"
         case "game-dino-push-choose-first", "choose your first dinosaur to push":
             return "Games/game-dino-push-choose-first"
         case "game-dino-push-choose-second", "choose your second dinosaur to push":
@@ -585,6 +657,18 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             var suffix = String(normalized.dropFirst("dino-char-".count))
             if suffix == "tail-spikes" { suffix = "tail-spike" } // audio file is tail-spike.m4a
             return "\(characteristicSubfolder)/\(suffix)"
+        // Flora: flora-* → Flora/flora-{slug}.m4a for Dino Flora game
+        case _ where normalized.hasPrefix("flora-"):
+            return "Flora/\(normalized)"
+        // Smiling Dinos: dino-smile-* → Smile/dino-smile-{toothType}.m4a for tooth intro audio
+        case _ where normalized.hasPrefix("dino-smile-"):
+            return "Smile/\(normalized)"
+        // Dino Eggs: dino-eggs-* → Eggs/dino-eggs-{eggType}.m4a for egg intro audio
+        case _ where normalized.hasPrefix("dino-eggs-"):
+            return "Eggs/\(normalized)"
+        // Dino Toothache: dino-toothache-* → Toothache/dino-toothache-{slug}.m4a for tooth intro audio
+        case _ where normalized.hasPrefix("dino-toothache-"):
+            return "Toothache/\(normalized)"
         // Dinosaurs: Audio/Dinosaurs/{key}.m4a for any other dino-* key (e.g. dino-camarasaurus) for dinosaur name audio
         case _ where normalized.hasPrefix("dino-"):
             return "Dinosaurs/\(normalized)"
@@ -666,7 +750,13 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         }
     }
     
+    /// Re-activate audio session before playback. Handles cases where session was deactivated (app update, YouTube, phone call).
+    private func ensureAudioSessionActive() {
+        try? AVAudioSession.sharedInstance().setActive(true)
+    }
+
     func playAudioFile(url: URL, fallbackSpeakText: String? = nil) {
+        ensureAudioSessionActive()
         do {
             // Stop any current player (only if still playing—e.g. interrupted) to avoid click when chaining
             if let old = currentPlayer, old.isPlaying {
@@ -693,6 +783,7 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
                 return
             }
             
+            scheduleCompletionTimeout()
             let fadeInDuration: TimeInterval = 0.2
             let fadeOutDuration: TimeInterval = 0.5
             let targetID = ObjectIdentifier(player)
@@ -714,6 +805,7 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
             // Fallback to TTS with original text (e.g. "Pteranodon") not filename
             let fallback = fallbackSpeakText ?? url.deletingPathExtension().lastPathComponent
             startSpeaking(fallback)
+            return
         }
     }
     
@@ -790,6 +882,7 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     
     // AVAudioPlayerDelegate method - called when audio finishes
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        cancelCompletionTimeout()
         // Clear currentPlayer before callback so chained playback doesn't call stop() on a finished player (reduces clicks)
         if currentPlayer === player {
             currentPlayer = nil
@@ -805,6 +898,7 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     
     // Handle audio interruption
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        cancelCompletionTimeout()
         if currentPlayer === player {
             currentPlayer = nil
         }
@@ -815,6 +909,7 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     // AVSpeechSynthesizerDelegate - called when TTS finishes
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         Task { @MainActor in
+            self.cancelCompletionTimeout()
             isPlaying = false
             onAudioFinished?()
         }
@@ -822,6 +917,7 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
         Task { @MainActor in
+            self.cancelCompletionTimeout()
             isPlaying = false
             onAudioFinished?()
         }
@@ -845,6 +941,7 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
     ]
 
     func startSpeaking(_ text: String) {
+        ensureAudioSessionActive()
         let utterance: AVSpeechUtterance
         if let attributed = buildAttributedStringWithIPA(text) {
             utterance = AVSpeechUtterance(attributedString: attributed)
@@ -856,6 +953,7 @@ class SpeechManager: NSObject, AVAudioPlayerDelegate, AVSpeechSynthesizerDelegat
         utterance.volume = 1.0 // Full volume
 
         isPlaying = true
+        scheduleCompletionTimeout()
         synthesizer.speak(utterance)
     }
 
@@ -882,10 +980,10 @@ struct MatchingGameView: View {
     @Binding var isPresented: Bool // For navigation back to game selection
     let gameConfig: MatchingGameConfig // Game-specific configuration
     
-    @State private var speechManager = SpeechManager()
+    @StateObject private var speechManager = SpeechManager()
     @State private var currentConfig: MatchingGameConfig
     @State private var currentRound: Int = 1
-    private let totalRounds: Int = 5
+    private let totalRounds: Int = 3
     @State private var selectedDinosaur: Dinosaur?
     @State private var selectedCharacteristic: Characteristic?
     @State private var matchedPairs: Set<MatchedPair> = [] // Track specific matched pairs
@@ -894,7 +992,6 @@ struct MatchingGameView: View {
     @State private var feedbackMessage = ""
     @State private var isCorrect = false
     @State private var audioTestMessage = ""
-    @State private var isAudioPlaying = false // Track if audio is currently playing
     @State private var showVictory = false // Show victory screen: vertical list, highlight + name audio, then good-job + crowd
     @State private var victoryShownAt: Date? // When victory view was shown; used to enforce minimum display time
     @State private var matchChoiceStartTime: Date? // When dinosaur was selected; used to measure time until characteristic selected
@@ -979,21 +1076,25 @@ struct MatchingGameView: View {
                 print("🎮 Game started with \(dinosaurs.count) dinosaurs: \(dinosaurs.map { $0.name }.joined(separator: ", "))")
                 print("🎮 Game has \(characteristics.count) characteristics: \(characteristics.map { $0.type }.joined(separator: ", "))")
             }
-            .allowsHitTesting(!isAudioPlaying) // Disable interaction while audio plays
-            .opacity(isAudioPlaying ? 0.7 : 1.0) // Visual indicator that interaction is disabled
+            .allowsHitTesting(!speechManager.isPlaying) // Disable interaction while audio plays
+            .opacity(speechManager.isPlaying ? 0.7 : 1.0) // Visual indicator that interaction is disabled
             .navigationBarTitleDisplayMode(.inline)
         } // End NavigationView
     } // End body
     
-    /// Fixed row height and scroll height so exactly 4 full rows are visible (no 4.5 or 5). Includes top/bottom padding.
+    /// Fixed row height and scroll height so exactly 3 full rows are visible. Includes top/bottom padding.
     private let victoryRowHeight: CGFloat = 92
-    private var victoryListVisibleHeight: CGFloat { 16 + 4 * victoryRowHeight + 3 * 12 + 16 }
+    private var victoryListVisibleHeight: CGFloat { 16 + 3 * victoryRowHeight + 2 * 12 + 16 }
 
     // MARK: - Victory: scrolling list in top half (highlight + name audio); bottom half shows "Good job!" then success image (no clear, image centered, no wrapper); then audio and dismiss
     private var victoryView: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                // Top half: scrolling list of dinosaurs (9 total), highlight + name audio, scroll to center — fixed height so ~4 visible (consistent across games)
+                Text(gameConfig.id == "match-the-diet" ? "Dino Diets!" : currentConfig.title)
+                    .font(.largeTitle)
+                    .padding(.top, 8)
+                    .padding(.bottom, 8)
+                // Top half: scrolling list of dinosaurs (9 total), highlight + name audio, scroll to center — fixed height so ~3 visible
                 ScrollViewReader { proxy in
                     ScrollView {
                         VStack(spacing: 12) {
@@ -1037,16 +1138,20 @@ struct MatchingGameView: View {
                 }
                 .frame(maxWidth: .infinity)
 
-                // Bottom half: during walk show empty space; after walk show success image only (centered, no wrapper)
+                // Bottom half: during walk show empty space; after walk show success image with space below (matches Dino Eggs layout)
                 Group {
                     if endSequenceStep == 2 {
-                        successImageView
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    playMatchingGoodJobAndCrowdThenDismiss()
-                                }
+                        VStack(spacing: 0) {
+                            Spacer(minLength: 16)
+                            successImageView
+                            Spacer(minLength: 40)
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                playMatchingGoodJobAndCrowdThenDismiss()
                             }
+                        }
                     } else {
                         Spacer()
                     }
@@ -1147,41 +1252,25 @@ struct MatchingGameView: View {
 
     private func playMatchingGoodJobAndCrowdThenDismiss() {
         endSequenceStep = 2
-        // Dino Diets!: after walking the list of dinosaurs used, play only crowd-cheering then return to level. Others: good-job + crowd.
-        let isDinoDiets = currentConfig.id == "match-the-diet"
+        // Uniform: good-job + crowd then dismiss (all matching games)
         let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
         let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
-        if isDinoDiets {
-            if let u = crowdURL {
-                speechManager.onAudioFinished = {
-                    self.speechManager.onAudioFinished = nil
-                    self.isAudioPlaying = false
-                    self.isPresented = false
-                }
-                speechManager.playAudioFile(url: u)
-            } else {
-                isAudioPlaying = false
-                isPresented = false
-            }
-        } else if let u1 = goodJobURL, let u2 = crowdURL {
+        if let u1 = goodJobURL, let u2 = crowdURL {
             speechManager.playTogether(url1: u1, url2: u2) {
                 self.speechManager.onAudioFinished = nil
-                self.isAudioPlaying = false
                 self.isPresented = false
             }
         } else if let u = goodJobURL ?? crowdURL {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
-                self.isAudioPlaying = false
                 self.isPresented = false
             }
             speechManager.playAudioFile(url: u)
         } else {
-            isAudioPlaying = false
             isPresented = false
         }
     }
-    
+
     private var mainGameView: some View {
             VStack(spacing: 20) {
                 // Title (use gameConfig so Dino Diets! always shows "Dino Diets!" not config.title)
@@ -1194,6 +1283,20 @@ struct MatchingGameView: View {
                     Text("Round \(currentRound) of \(totalRounds)")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
+                    // Feedback message below round status (avoids pushing grid up)
+                    if showFeedback {
+                        Text(feedbackMessage)
+                            .font(.headline)
+                            .foregroundColor(isCorrect ? .green : .orange)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(isCorrect ? Color.green.opacity(0.2) : Color.orange.opacity(0.2))
+                            )
+                            .transition(.scale)
+                            .padding(.top, 4)
+                    }
                 }
                 
                 // Main game area (centered)
@@ -1239,20 +1342,6 @@ struct MatchingGameView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, 40)
                 .padding(.vertical)
-                
-                // Feedback message (padding from bottom so wrapper isn't truncated by screen edge)
-                if showFeedback {
-                    Text(feedbackMessage)
-                        .font(.headline)
-                        .foregroundColor(isCorrect ? .green : .orange)
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(isCorrect ? Color.green.opacity(0.2) : Color.orange.opacity(0.2))
-                        )
-                        .transition(.scale)
-                        .padding(.bottom, 32)
-                }
             }
             .id(currentRound)
             .onAppear {
@@ -1268,12 +1357,10 @@ struct MatchingGameView: View {
         guard !introWalkComplete, dinosaurs.count >= 3, characteristics.count >= 5 else {
             if !introWalkComplete && (dinosaurs.count < 3 || characteristics.count < 5) {
                 introWalkComplete = true
-                isAudioPlaying = false
             }
             return
         }
         introWalkStep = 0
-        isAudioPlaying = true
         if gameConfig.id == "match-the-diet" {
             // Dino Diets!: play instruction (block tapping), then walk dinosaurs, then diets, then unblock
             speechManager.onAudioFinished = {
@@ -1302,7 +1389,6 @@ struct MatchingGameView: View {
         introWalkStep += 1
         if introWalkStep >= 8 {
             introWalkComplete = true
-            isAudioPlaying = false
             return
         }
         speechManager.onAudioFinished = { advanceIntroWalk() }
@@ -1321,15 +1407,15 @@ struct MatchingGameView: View {
     
     private func handleDinosaurTap(_ dinosaur: Dinosaur) {
         // Don't allow interaction while audio is playing
-        guard !isAudioPlaying else { return }
+        guard !speechManager.isPlaying else { return }
         
-        // If this dinosaur is fully matched (all characteristics matched), play handrail and don't allow selection
+        // If this dinosaur is fully matched (all characteristics matched), play handrail and don't allow selection.
+        // When dinosaurCharacteristics is empty (round config bug), allow selection instead of "pick another one".
         let dinosaurCharacteristics = characteristics.filter { $0.dinosaurId == dinosaur.id }
         let matchedCount = matchedPairs.filter { $0.dinosaurId == dinosaur.id }.count
-        if matchedCount >= dinosaurCharacteristics.count {
-            isAudioPlaying = true
+        if !dinosaurCharacteristics.isEmpty && matchedCount >= dinosaurCharacteristics.count {
             speechManager.onAudioFinished = {
-                DispatchQueue.main.async { self.isAudioPlaying = false }
+                DispatchQueue.main.async {  }
             }
             speechManager.speak("pick-another-one")
             return
@@ -1342,9 +1428,8 @@ struct MatchingGameView: View {
         }
         
         // Play audio feedback only when selecting (not deselecting); re-enable taps when name finishes
-        isAudioPlaying = true
         speechManager.onAudioFinished = {
-            DispatchQueue.main.async { self.isAudioPlaying = false }
+            DispatchQueue.main.async {  }
         }
         speechManager.speak(audioKey: dinosaur.imageName ?? dinosaur.name, fallbackText: dinosaur.name)
         
@@ -1357,13 +1442,12 @@ struct MatchingGameView: View {
     
     private func handleCharacteristicTap(_ characteristic: Characteristic) {
         // Don't allow interaction while audio is playing
-        guard !isAudioPlaying else { return }
+        guard !speechManager.isPlaying else { return }
         
         // Handrail: must select a creature first (dinosaur or pterosaur by game type)
         if selectedDinosaur == nil {
-            isAudioPlaying = true
             speechManager.onAudioFinished = {
-                DispatchQueue.main.async { self.isAudioPlaying = false }
+                DispatchQueue.main.async {  }
             }
             let pickFirstKey = gameConfig.id == "match-the-pterosaur" ? "pick-a-pterosaur-first" : "pick-a-dinosaur-first"
             speechManager.speak(pickFirstKey)
@@ -1372,9 +1456,8 @@ struct MatchingGameView: View {
         
         // If this specific characteristic is already matched, play handrail and don't allow selection
         if matchedPairs.contains(where: { $0.characteristicId == characteristic.id }) {
-            isAudioPlaying = true
             speechManager.onAudioFinished = {
-                DispatchQueue.main.async { self.isAudioPlaying = false }
+                DispatchQueue.main.async {  }
             }
             speechManager.speak("pick-another-one")
             return
@@ -1389,7 +1472,6 @@ struct MatchingGameView: View {
         selectedCharacteristic = characteristic
         
         // Play characteristic name; when it finishes, check match so result audio doesn't cut it off
-        isAudioPlaying = true
         speechManager.onAudioFinished = {
             DispatchQueue.main.async {
                 // Clear this one-shot callback, but do NOT overwrite any callback that `checkMatch()`
@@ -1398,7 +1480,6 @@ struct MatchingGameView: View {
                 if self.selectedDinosaur != nil && self.selectedCharacteristic != nil {
                     self.checkMatch()
                 } else {
-                    self.isAudioPlaying = false
                 }
             }
         }
@@ -1426,7 +1507,6 @@ struct MatchingGameView: View {
             let elapsed = matchChoiceStartTime.map { Date().timeIntervalSince($0) } ?? 0
             
             feedbackMessage = "Great Match!"
-            isAudioPlaying = true
             
             // Add this specific pair to matched pairs
             let newPair = MatchedPair(dinosaurId: dinosaur.id, characteristicId: characteristic.id)
@@ -1454,14 +1534,12 @@ struct MatchingGameView: View {
                             // Mark this round's creatures as used so next round won't reuse them
                             self.usedCreatureIds.formUnion(self.dinosaurs.map(\.id))
                             // Short pause so the last match feels complete, then start the next round.
-                            self.isAudioPlaying = false
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                                 self.startNextRound()
                             }
                         } else {
                             // Last round complete: show victory view; it will walk all 9 (highlight + name audio) then good-job + crowd then dismiss.
                             self.showVictory = true
-                            self.isAudioPlaying = true
                         }
                     }
                 }
@@ -1477,7 +1555,6 @@ struct MatchingGameView: View {
                 matchChoiceStartTime = nil // Reset timer after choosing audio
                 speechManager.onAudioFinished = {
                     DispatchQueue.main.async {
-                        self.isAudioPlaying = false
                         self.selectedDinosaur = nil
                         self.selectedCharacteristic = nil
                         self.showFeedback = false
@@ -1488,16 +1565,14 @@ struct MatchingGameView: View {
         } else {
             // Wrong match - encouragement and permission to continue (no failure count, no game over)
             feedbackMessage = "Try again!"
-            isAudioPlaying = true
             speechManager.onAudioFinished = {
                 DispatchQueue.main.async {
-                    self.isAudioPlaying = false
                     self.selectedDinosaur = nil
                     self.selectedCharacteristic = nil
                     self.showFeedback = false
                 }
             }
-            let wrongKey = gameConfig.id == "match-the-diet" ? "thats-not-right-try-again" : "not-that-one"
+            let wrongKey = gameConfig.id == "match-the-diet" ? "thats-not-right-try-again" : "try-again"
             speechManager.speak(wrongKey)
         }
     }
@@ -1748,6 +1823,17 @@ struct MatchingGameConfig {
                 }
                 if gameCharacteristics.count == 5 { break }
             }
+        }
+        // If still invalid (e.g. pool exhausted after many rounds), retry without exclusions so we always get a playable round
+        if gameCharacteristics.count != 5 && !excludingCreatureIds.isEmpty {
+            return createRandomDiet(
+                from: allDinosaurs,
+                allDietCharacteristics: allDietCharacteristics,
+                id: id,
+                title: title,
+                introAudio: introAudio,
+                excludingCreatureIds: []
+            )
         }
         gameCharacteristics.shuffle()
         return MatchingGameConfig(
@@ -2042,6 +2128,9 @@ struct MatchingGameConfigs {
         Dinosaur(id: 52, name: "Huayangosaurus", icon: "🦎", imageName: "dino-huayangosaurus", characteristicIds: [107, 108, 190]),
         Dinosaur(id: 53, name: "Ouranosaurus", icon: "🦎", imageName: "dino-ouranosaurus", characteristicIds: [109, 110, 191, 192]),
         Dinosaur(id: 54, name: "Suchomimus", icon: "🦖", imageName: "dino-suchomimus", characteristicIds: [111, 112, 193, 194]),
+        Dinosaur(id: 55, name: "Euoplocephalus", icon: "🛡️", imageName: "dino-euoplocephalus", characteristicIds: []),
+        Dinosaur(id: 56, name: "Polacanthus", icon: "🛡️", imageName: "dino-polacanthus", characteristicIds: []),
+        Dinosaur(id: 57, name: "Styracosaurus", icon: "🦏", imageName: "dino-styracosaurus", characteristicIds: []),
     ]
     
     /// Diet per dinosaur for Dino Diets! (Herbivore, Carnivore, Piscivore, Insectivore, Omnivore). Child-friendly; used only in match-the-diet game.
@@ -2055,6 +2144,7 @@ struct MatchingGameConfigs {
         37: "Carnivore", 38: "Carnivore", 39: "Carnivore", 40: "Herbivore", 41: "Carnivore", 42: "Carnivore",
         43: "Omnivore", 44: "Herbivore", 45: "Herbivore", 46: "Herbivore", 47: "Herbivore", 48: "Herbivore",
         49: "Herbivore", 50: "Herbivore", 51: "Herbivore", 52: "Herbivore", 53: "Herbivore", 54: "Piscivore",
+        55: "Herbivore", 56: "Herbivore", 57: "Herbivore",
     ]
 
     /// Estimated adult body mass in kg per dinosaur id (1–54). Used by Weigh and Balance games for seesaw ordering.
@@ -2066,6 +2156,7 @@ struct MatchingGameConfigs {
         33: 1,      34: 0.5,    35: 6_000,  36: 500,    37: 0.5,    38: 20,     39: 2_000,  40: 15_000,
         41: 1_500,  42: 2_000,  43: 40,     44: 18_000, 45: 2_000,  46: 3_000,  47: 3_500,  48: 3_000,
         49: 40,     50: 80,     51: 3_000,  52: 1_000,  53: 2_500,  54: 3_000,
+        55: 2_500,  56: 1_000,  57: 2_700,
     ]
 
     /// Clade per dinosaur (for Match the Dinosaur). Used so each round picks one dinosaur per clade for clear, varied choices.
@@ -2078,7 +2169,7 @@ struct MatchingGameConfigs {
         35: .ceratopsian, 36: .theropod, 37: .theropod, 38: .theropod, 39: .theropod, 40: .sauropod, 41: .theropod,
         42: .theropod, 43: .theropod, 44: .sauropod, 45: .stegosaur, 46: .ankylosaurid, 47: .hadrosaur, 48: .hadrosaur,
         49: .pachycephalosaur, 50: .pachycephalosaur, 51: .ankylosaurid, 52: .stegosaur, 53: .ornithopod,
-        54: .spinosaurid,
+        54: .spinosaurid, 55: .ankylosaurid, 56: .ankylosaurid, 57: .ceratopsian,
     ]
     
     // Full pool of available characteristics (can be expanded)

@@ -1,0 +1,26 @@
+{
+  "id": "totara_grove_mature_002",
+  "species": "Tōtara (Podocarpus-type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "LA_AMARGA",
+  "environment_details": {
+    "habitat": "FORESTED_RIVER_SYSTEM",
+    "flora": [
+      "Mature Tōtara (massive, wide trunks, dense rounded crowns of dark green)",
+      "Tree ferns (Mamaku) in the mid-ground",
+      "River bank in the background"
+    ],
+    "ground_palette": [
+      "Red-brown",
+      "Forest green",
+      "Ochre"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; massive, sturdy tree silhouettes; creating a sense of permanence and age; warm Jurassic river-valley atmosphere."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view of a sunlit river terrace. Several massive Tōtara trees stand as the dominant features. Their trunks are huge and textured. The ground is a mix of red-brown earth and patches of forest-green moss. The river glints in the background.",
+    "ground": "Firm, well-drained red-brown soil with scattered ochre river stones.",
+    "lighting": "Warm, direct sunlight that emphasizes the deep red-brown tones of the earth and the rugged texture of the tree trunks."
+  }
+}

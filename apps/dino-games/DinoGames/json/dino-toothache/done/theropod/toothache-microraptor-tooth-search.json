@@ -1,0 +1,19 @@
+[
+  {
+    "id": "microraptor_tooth_search_004",
+    "species": "Microraptor",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "JIUFOTANG",
+    "habitat_ref": "FORESTED_VOLCANIC_LAKE_SYSTEM",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Microraptor is clinging vertically to a ginkgo tree trunk, mid-glide descent. Its primary wings are flared for balance, while one of its feathered hind-leg 'wings' is lifted awkwardly toward its jaw in a pained gesture. Its head is turned sharply toward the camera with a wide-eyed, 'did you see where it went?' expression of panic. Its iridescent black feathers are slightly puffed out in stress, and its mouth is open just enough to reveal a gap in its sharp teeth.",
+    "visual_logic": {
+      "palette": ["Yellow-green", "Gray-green", "Purple-gray", "Iridescent Black", "Deep Blue"],
+      "flora": ["Early birch-like trees", "Paleopus", "Ginkgos", "Conifers"],
+      "fauna": ["Ants", "Wasps", "Crane Flies", "Beetles"],
+      "substrate": "Slippery, light-colored volcanic mud and textured ginkgo bark"
+    },
+    "behavioral_intent": "Expressive physical comedy conveying: 'My mouth hurts and I think I dropped a tooth around here somewhere'."
+  }
+]

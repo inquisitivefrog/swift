@@ -1,0 +1,6 @@
+ {
+    "id": "iguanodon_prestige_diamond",
+    "morphology": "Diamond Battery",
+    "prompt": "High-fidelity 3D animated feature style. Close-up of a smiling Iguanodon. Organic skin texture with vibrant teal and orange tones. Duck-bill mouth open to reveal a perfect 'Diamond Battery' dental block of diamond-shaped teeth. Style: cinematic animation. Warm, soulful eyes.",
+    "visual_logic": "Uses the diamond grid established in your 'iguanodon-smile' file but ensures it looks like a missing puzzle piece for the player."
+  }

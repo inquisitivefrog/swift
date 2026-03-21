@@ -1,0 +1,27 @@
+{
+  "id": "mossy_deep_wood_wide_014",
+  "species": "Mesozoic Bryophytes and Liverworts",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SOFT_DAPPLED_FOREST_LIGHT",
+  "formation_ref": "MORRISON_LJ",
+  "environment_details": {
+    "habitat": "TEMPERATE_RAINFOREST_UNDERSTORY",
+    "flora": [
+      "Moss carpeting large, ancient fallen logs",
+      "Moss 'beards' hanging from the lower branches of an Araucaria tree",
+      "Liverworts (flat, ribbon-like green plants) growing on wet stones",
+      "Small ferns peeking through the moss"
+    ],
+    "ground_palette": [
+      "Infinite shades of green",
+      "Rich mahogany wood tones",
+      "Cool slate grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the 'draping' quality of the vegetation; lush, heavy, and silent atmosphere; emphasizes moisture and age."
+  },
+  "visual_logic": {
+    "composition": "A medium-wide shot of a deep forest interior. The focus is a fallen, decaying log completely reclaimed by a thick, lumpy carpet of green moss. In the background, moss hangs in soft drapes from tree limbs, creating a sense of a vertical green world.",
+    "ground": "Soft and uneven, entirely covered in a mix of mosses and liverworts.",
+    "lighting": "Deep forest shadows with occasional 'pinpricks' of light filtering through, catching the dew on the mossy surfaces."
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "palm_lifecycle_closeup_001",
+  "species": "Early Palm (Sabalites-type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "SOLNHOFEN",
+  "environment_details": {
+    "habitat": "COASTAL_LAGOONS",
+    "flora": [
+      "Palm frond (large, fan-shaped 'palmate' leaf with radiating segments)",
+      "Palm fruit cluster (large hanging bunch of small, green-to-yellow drupes)",
+      "Palm sapling (single thick spear-like leaf emerging from a bulbous base)",
+      "Bark detail (diamond-shaped leaf scars or 'woven' fibrous texture on the trunk)"
+    ],
+    "ground_palette": [
+      "Creamy limestone",
+      "Tan",
+      "Pale Ochre"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the pleated, accordion-like folds of the fronds; tactile 'woven' texture for the trunk; clear quadrant separation."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A single fan-shaped frond; Top-Right: A cluster of small palm fruits; Bottom-Left: A young 'spear' sapling; Bottom-Right: A high-detail view of the diamond-patterned bark.",
+    "ground": "Fine-grained, creamy tan limestone sand with small shell fragments.",
+    "lighting": "Clear, even, bright diffused daylight reflecting off a light-colored sandy ground."
+  }
+}

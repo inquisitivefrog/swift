@@ -1,0 +1,19 @@
+[
+  {
+    "id": "gasparinisaura_toothache_puzzle_032_no_tooth",
+    "species": "Gasparinisaura",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "ANACLETO",
+    "habitat_ref": "OPEN_WOODLAND_SAVANNA",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The small Gasparinisaura is in a state of mild panic. It is standing on its hind legs, looking down at a patch of disturbed, kicked-up dirt where it clearly thought the tooth was, but isn't. One hand is pressed firmly against its swollen cheek, and its large, watery eyes are looking up at the player with a desperate 'I can't find it!' expression. Its tail is drooping, and its mouth is slightly open, showing the empty socket. The ground is a mess of scattered leaves and overturned pebbles, but the area is completely devoid of anything resembling a tooth. It looks defeated and in need of the player's tools to scan the area.",
+    "visual_logic": {
+      "palette": ["Rusty red", "Earth brown", "Deep orange", "Dull gold", "Dusty grey"],
+      "flora": ["Araucaria saplings", "Scattered broadleaf weeds"],
+      "fauna": ["A small dragonfly buzzing nearby"],
+      "substrate": "Loose, disturbed soil with no foreign objects or teeth visible"
+    },
+    "behavioral_intent": "Vulnerability and failure. The dinosaur has looked everywhere and found nothing, establishing the need for the player to step in with their 'Paleontologist Scan' or 'Sifting Tool'."
+  }
+]

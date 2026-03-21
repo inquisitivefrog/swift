@@ -1,0 +1,27 @@
+{
+  "id": "cypress_lifecycle_closeup_001",
+  "species": "Early Cypress (Taxodioid type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "WEALDEN",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS",
+    "flora": [
+      "Cypress cone (small, woody, globose with shield-shaped peltate scales)",
+      "Scaly foliage (close-up of tiny, overlapping scale-like needles tightly pressed to the twig)",
+      "Cypress sapling (slender, conical shape with reddish-grey bark)",
+      "Bark detail (fibrous, exfoliating in thin vertical strips, grey-brown color)"
+    ],
+    "ground_palette": [
+      "Mottled red",
+      "Blue-grey clay",
+      "Ochre yellow"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; tactile textures on the 'shield' scales of the cones; emphasis on the tightly packed scaly needles; clear quadrant separation."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A single globose woody cone; Top-Right: A spray of scaly foliage; Bottom-Left: A young sapling; Bottom-Right: A high-detail view of the fibrous, exfoliating bark.",
+    "ground": "Soft blue-grey clay with small mottled red sandstone inclusions.",
+    "lighting": "Clear, even, bright diffused daylight to show the intricate overlapping patterns of the needles."
+  }
+}

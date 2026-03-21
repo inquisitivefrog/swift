@@ -1,0 +1,12 @@
+{
+  "id": "paleopus_habitat_002",
+  "species": "Paleopus Rock-Cover",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "TAHORA",
+  "visual_logic": {
+    "composition": "A coastal cliff scene. The slate-grey rocks are criss-crossed with a network of Paleopus vines. The plant is the only splash of bright green against the grey and buff earth.",
+    "background": "The crashing waves of the Pacific lagoon and a pale, salt-hazy sky.",
+    "lighting": "High-contrast, bright sunlight emphasizing the plant's struggle to cling to the stone."
+  }
+}

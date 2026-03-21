@@ -1,0 +1,26 @@
+{
+  "id": "bennettitales_grove_mature_002",
+  "species": "Bennettitales (Cycadeoids)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "HUMID_OVERCAST_ATMOSPHERIC",
+  "formation_ref": "LANCE_HELL_CREEK",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS_FLOODPLAINS",
+    "flora": [
+      "Mature Bennettitales (palm-like trunks, dense crowns of fronds)",
+      "Lush canopy additions (broadleaf plants in distance)",
+      "Early ferns (as ground cover)"
+    ],
+    "ground_palette": [
+      "Forest green",
+      "Brown",
+      "Muddy Grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; thick, sturdy trunks; lush and humid atmosphere; trees arranged as a dense, natural hedge or forest of a single species."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view of a dense grove of palm-like Bennettitales growing along a muddy floodplain bank. The trees form a thick, natural wall of vegetation.",
+    "ground": "Saturated muddy grey earth with patches of forest green moss and fallen brown fronds.",
+    "lighting": "Soft, humid, slightly hazy light suggestive of a coastal floodplain, with a warm green-grey color cast."
+  }
+}

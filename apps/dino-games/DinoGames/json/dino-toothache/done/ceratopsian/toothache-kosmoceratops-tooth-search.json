@@ -1,0 +1,19 @@
+[
+  {
+    "id": "kosmoceratops_toothache_puzzle_037_no_tooth",
+    "species": "Kosmoceratops",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "KAIPAROWITS",
+    "habitat_ref": "HUMID_BAYOU_SWAMP",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Kosmoceratops is standing chest-deep in a thicket of giant ferns and horsetails. It has its massive, spike-fringed head lowered just inches above the black, peaty mud. It is breathing heavily, creating little puffs of mist in the humid air, but it remains strangely still—only its eyes are moving, darting frantically across the ground in a desperate visual scan. One of its sturdy front feet is half-buried in the muck, having just finished an unsuccessful 'rake' through the leaves. Its mouth is tightly shut, but the swelling on its left cheek is so pronounced it distorts the line of its beak. There is no tooth to be found; only the dark, wet reflections of the swamp are visible on the mud's surface.",
+    "visual_logic": {
+      "palette": ["Moss green", "Deep charcoal", "Rusty iron", "Display teal", "Mud-black"],
+      "flora": ["Cypress knees", "Giant horsetails", "Water-ferns"],
+      "fauna": ["Small turtles on a log", "Swarm of midges"],
+      "substrate": "Black peat mud and water-logged leaf litter"
+    },
+    "behavioral_intent": "Paralyzed by pain. The dinosaur has tried searching, failed, and is now standing still in 'staring' frustration, waiting for the player to use their tools to look where it cannot reach."
+  }
+]

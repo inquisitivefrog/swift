@@ -45,16 +45,27 @@ struct WackyGameView: View {
     @State private var selectedItems: [(imageName: String, displayName: String)] = []
     /// Which of the three is currently shown (0, 1, or 2).
     @State private var currentIndex = 0
+    /// Victory sequence: after showing all 3, walk list then success image + good-job + crowd.
+    @State private var showVictory = false
+    @State private var endSequenceStep = -1
+    @State private var endHighlightIndex = 0
+    
+    private let victoryRowHeight: CGFloat = 92
+    private var victoryListVisibleHeight: CGFloat { 16 + 3 * victoryRowHeight + 2 * 12 + 16 }
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 12) {
-                if selectedItems.isEmpty {
-                    Text("Loading…")
-                        .font(.title2)
-                        .foregroundColor(.secondary)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                } else if currentIndex < selectedItems.count {
+            Group {
+                if showVictory {
+                    victoryView
+                } else {
+                    VStack(spacing: 12) {
+                        if selectedItems.isEmpty {
+                            Text("Loading…")
+                                .font(.title2)
+                                .foregroundColor(.secondary)
+                                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        } else if currentIndex < selectedItems.count {
                     let item = selectedItems[currentIndex]
                     if UIImage(named: item.imageName) != nil {
                         Image(item.imageName)
@@ -75,11 +86,163 @@ struct WackyGameView: View {
                         .padding(.bottom, 24)
                 }
             }
+                }
+            }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
                 startSequence()
             }
+        }
+    }
+    
+    // MARK: - Victory (standard: scroll list → success image → good-job + crowd → dismiss)
+    
+    private var victoryView: some View {
+        VStack(spacing: 0) {
+            Text(gameConfig.title)
+                .font(.largeTitle)
+                .padding(.top, 8)
+                .padding(.bottom, 8)
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(spacing: 12) {
+                        ForEach(Array(selectedItems.enumerated()), id: \.offset) { index, item in
+                            let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                            HStack(spacing: 16) {
+                                wackyVictoryImage(item: item, isHighlighted: isHighlighted)
+                                Text(item.displayName)
+                                    .font(.title2)
+                                    .fontWeight(isHighlighted ? .semibold : .regular)
+                                    .foregroundColor(.primary)
+                                    .multilineTextAlignment(.leading)
+                                    .lineLimit(2)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .opacity(isHighlighted ? 1.0 : 0.5)
+                            }
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 10)
+                            .frame(height: victoryRowHeight)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                            )
+                            .id(index)
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 16)
+                }
+                .frame(height: victoryListVisibleHeight)
+                .onChange(of: endHighlightIndex) { _, newValue in
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        proxy.scrollTo(newValue, anchor: .center)
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity)
+            VStack(spacing: 0) {
+                Spacer(minLength: 16)
+                wackySuccessImageView
+                Spacer(minLength: 40)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            guard endSequenceStep == -1 else { return }
+            endSequenceStep = 1
+            endHighlightIndex = 0
+            if selectedItems.isEmpty {
+                playGoodJobAndCrowdThenDismiss()
+            } else {
+                let item = selectedItems[0]
+                let audioKey = "dino-\(item.imageName.replacingOccurrences(of: "wacky-", with: ""))"
+                speechManager.speak(audioKey: audioKey, fallbackText: item.displayName)
+                speechManager.onAudioFinished = { advanceVictoryHighlight() }
+            }
+        }
+    }
+    
+    private func wackyVictoryImage(item: (imageName: String, displayName: String), isHighlighted: Bool) -> some View {
+        Group {
+            if UIImage(named: item.imageName) != nil {
+                Image(item.imageName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 72, height: 72)
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .opacity(isHighlighted ? 1.0 : 0.4)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
+                    )
+            } else {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.gray.opacity(0.3))
+                    .frame(width: 72, height: 72)
+                    .overlay(Text("🦖").font(.system(size: 40)))
+                    .opacity(isHighlighted ? 1.0 : 0.4)
+            }
+        }
+    }
+    
+    private var wackySuccessImageView: some View {
+        Group {
+            if ImageAssetCache.imageExists(named: "game-wacky-dinosaurs-success") {
+                Image("game-wacky-dinosaurs-success")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 280, height: 280)
+            } else if ImageAssetCache.imageExists(named: "wacky-trex") {
+                Image("wacky-trex")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 280, height: 280)
+            } else {
+                Text("🎉")
+                    .font(.system(size: 100))
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    private func advanceVictoryHighlight() {
+        speechManager.onAudioFinished = nil
+        endHighlightIndex += 1
+        if endHighlightIndex < selectedItems.count {
+            let item = selectedItems[endHighlightIndex]
+            let audioKey = "dino-\(item.imageName.replacingOccurrences(of: "wacky-", with: ""))"
+            speechManager.speak(audioKey: audioKey, fallbackText: item.displayName)
+            speechManager.onAudioFinished = { advanceVictoryHighlight() }
+        } else {
+            endSequenceStep = 2
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                playGoodJobAndCrowdThenDismiss()
+            }
+        }
+    }
+    
+    private func playGoodJobAndCrowdThenDismiss() {
+        let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
+        let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
+        if let u1 = goodJobURL, let u2 = crowdURL {
+            speechManager.playTogether(url1: u1, url2: u2) {
+                self.speechManager.onAudioFinished = nil
+                self.isPresented = false
+            }
+        } else if let u = goodJobURL ?? crowdURL {
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = nil
+                self.isPresented = false
+            }
+            speechManager.playAudioFile(url: u)
+        } else {
+            isPresented = false
         }
     }
     
@@ -117,7 +280,7 @@ struct WackyGameView: View {
             }
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 9.0) {
-            isPresented = false
+            showVictory = true
         }
     }
 }

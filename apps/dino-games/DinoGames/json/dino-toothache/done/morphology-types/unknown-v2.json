@@ -1,0 +1,11 @@
+{
+  "id": "find_australo_paleo2",
+  "subject": "dino_bones_paleontologist_2 finding the tooth",
+  "character_ref": "dino_bones_paleontologist_2",
+  "formation_ref": "TAHORA",
+  "visual_logic": {
+    "composition": "Close-up of **dino_bones_paleontologist_2**. She has **short black hair** under her **green sun hat** and is wearing her **light green blouse** and **khaki vest**.",
+    "action": "She is holding a sharp, curved, serrated tooth with a look of triumphant discovery.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the tooth detail; matching the 'Seed/Leaf' scale from Dino Flora."
+  }
+}

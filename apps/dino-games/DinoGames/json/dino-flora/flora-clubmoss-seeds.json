@@ -1,0 +1,11 @@
+{
+  "id": "clubmoss_closeup_001",
+  "species": "Lycopod (Lycopodium-proxy)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "LA_AMARGA",
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A single upright 'club' (strobilus) dusted with yellow spore powder; Top-Right: Macro of the scale-like green leaves; Bottom-Left: The branching 'forked' stem pattern; Bottom-Right: The shallow, hair-like root system.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the 'soft-but-prickly' look; vibrant lime and forest greens."
+  }
+}

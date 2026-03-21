@@ -1,0 +1,11 @@
+{
+  "id": "search_gallimimus_beak_ache",
+  "subject": "A distressed Gallimimus with a chipped beak, looking for help",
+  "visual_logic": {
+    "dinosaur_specs": "Gallimimus: Long neck, slender body, ostrich-like appearance, featherless or very fine proto-feathers.",
+    "action": "The Gallimimus has its head lowered slightly, pointing its long, narrow snout towards the viewer. There is a **clearly visible chip or break near the tip of its upper beak.** It has a pained or worried expression in its large eyes.",
+    "background_context": "A dry, open, arid landscape with sparse vegetation, suggesting a plains or desert environment.",
+    "lighting": "Bright, natural daylight.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Ensure the beak chip is prominent but not gruesome. The overall tone should be one of mild discomfort and seeking assistance, not extreme pain."
+  }
+}

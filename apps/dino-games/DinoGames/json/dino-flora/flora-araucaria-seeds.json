@@ -1,0 +1,27 @@
+{
+  "id": "araucaria_lifecycle_closeup_001",
+  "species": "Araucaria (Monkey Puzzle Tree)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "MORRISON_LJ",
+  "environment_details": {
+    "habitat": "SEMI_ARID_PLAINS",
+    "flora": [
+      "Araucaria seed (large, almond-shaped, visible texture)",
+      "Araucaria cone (distinctive scales, open to show seeds)",
+      "Araucaria sapling (small, few branches, triangular scaled leaves)",
+      "Araucaria branch (close-up, showing spiraling, leathery, overlapping scales)"
+    ],
+    "ground_palette": [
+      "Variegated red",
+      "Pinkish grey",
+      "Greenish-grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; tactile, high-quality textures like smooth seeds, leathery bark, and distinct scaly Araucaria foliage; clear emphasis on individual components for educational identification."
+  },
+  "visual_logic": {
+    "composition": "A quadrant or tiled composition showcasing distinct elements: one large seed, one open cone, a small sapling, and a detailed close-up of a branch with its unique scale-like leaves.",
+    "ground": "Pale, dusty tan earth with scattered chalky nodules, providing a clean backdrop for the botanical elements.",
+    "lighting": "Even, bright, diffused light to ensure all details are clearly visible without harsh shadows."
+  }
+}

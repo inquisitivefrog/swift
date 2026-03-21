@@ -1,0 +1,7 @@
+{
+    "id": "ui_theropod_scrape_v2",
+    "morphology": "open_scrape_nest",
+    "prompt": "A high-fidelity 3D render from a low 45-degree angle. A flat, expansive arid plain of cracked dry mud. In the center is a very shallow, subtle basin just a few centimeters deep. Inside this basin, a dozen elliptical beige eggs are arranged in a perfect ring, each egg tilted upright at a 45-degree angle. The top of the basin is perfectly flush with the horizon. No raised rims, no mounds, no volcano-like structures. The ground is uniformly flat across the entire image. Harsh midday sunlight with sharp, short shadows inside the shallow scrape.",
+    "visual_logic": "By using 'basin' and 'flush with the horizon,' we tell the AI that the nest is an 'inward' feature of the ground, not an 'outward' building.",
+    "style_notes": "Extreme flatness. Eggs are the only vertical elements. Focus on the cracked mud texture being uniform."
+}

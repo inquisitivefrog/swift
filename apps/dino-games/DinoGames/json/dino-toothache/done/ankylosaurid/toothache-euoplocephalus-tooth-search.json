@@ -1,0 +1,19 @@
+[
+  {
+    "id": "euoplocephalus_toothache_puzzle_040_no_tooth",
+    "species": "Euoplocephalus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DINOSAUR_PARK",
+    "habitat_ref": "LOWLAND_FERN_SAVANNA",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Euoplocephalus is sprawled awkwardly in a shallow, dried-out mud wallow. Its wide, armored body is tilted to one side as it attempts to sniff the ground beneath its own heavy front legs. It is using its broad, beak-like snout to nudge aside heavy clumps of dried mud and flattened ferns, but its massive, weight-bearing feet have clearly stomped over the area repeatedly, leaving deep, messy footprints. One side of its armored head is bulging slightly from the toothache, and its small, dark eyes are blinking with a look of slow-moving, heavy-duty frustration. It lets out a wet, huffing breath that blows dust across the empty, trampled earth. There is no tooth visible—just a series of deep, muddy depressions where it might have been crushed.",
+    "visual_logic": {
+      "palette": ["Slate grey", "Muddy brown", "Moss green", "Bone white", "Dusty tan"],
+      "flora": ["Cycads", "Low ferns", "Ground moss"],
+      "fauna": ["A small beetle crawling over an osteoderm", "Distant bird silhouettes"],
+      "substrate": "Dried, cracked mud and heavily trampled vegetation"
+    },
+    "behavioral_intent": "Slow, labored, and destructive searching. The dinosaur’s sheer weight is the primary obstacle to the search, as it has likely trodden the tooth deep into the mud, setting up an 'excavation' phase for the player."
+  }
+]

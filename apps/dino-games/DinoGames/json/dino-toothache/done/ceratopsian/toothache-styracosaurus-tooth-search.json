@@ -1,0 +1,19 @@
+[
+  {
+    "id": "styracosaurus_toothache_puzzle_039_no_tooth",
+    "species": "Styracosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DINOSAUR_PARK",
+    "habitat_ref": "WINDY_FLOODPLAIN_SHRUBLANDS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Styracosaurus is in a very awkward position. It has its head lowered so far that its long frill-spikes have become tangled in a thicket of tough, woody shrubs. It is pulling back, visibly frustrated, which only causes the shrubs to shake and shed their leaves. Its massive nose horn is buried in a pile of loose, wind-blown sand it was trying to dig through. One eye is shut tight in a pained 'wince,' and the jaw is hanging open slightly, revealing a clear gap where the tooth should be. The ground is a smooth, wind-swept surface of sand and dust with no tooth in sight. It looks directly at the camera, stuck and defeated, waiting for the player to help it out of the bushes and find the lost tooth.",
+    "visual_logic": {
+      "palette": ["Dusty ochre", "Sage green", "Iron-red", "Sand-white"],
+      "flora": ["Tough shrubs", "Wind-bent grasses", "Low ferns"],
+      "fauna": ["A small mammal peeking from a burrow", "Dust motes"],
+      "substrate": "Fine, wind-rippled sand and dry, cracked earth"
+    },
+    "behavioral_intent": "Physically stuck and unsuccessful. The dinosaur's entanglement in the bushes provides a reason why it can't continue the search, handing the responsibility over to the player's tools."
+  }
+]

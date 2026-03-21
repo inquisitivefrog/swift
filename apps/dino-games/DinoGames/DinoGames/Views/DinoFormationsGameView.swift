@@ -172,7 +172,7 @@ struct DinoFormationsGameView: View {
     /// When true, show the formation hints overlay (location + period).
     @State private var showFormationHints = false
 
-    private let totalRounds = 5
+    private let totalRounds = 3
     private let matchesNeededPerRound = 3
 
     private var matchedDinosaursThisRoundInTapOrder: [Dinosaur] {
@@ -317,10 +317,10 @@ struct DinoFormationsGameView: View {
                 speechManager.speak("great-match")
             }
         } else {
-            if let url = speechManager.urlForAudio(key: "not-that-one") {
+            if let url = speechManager.urlForAudio(key: "try-again") {
                 speechManager.playAudioFile(url: url)
             } else {
-                speechManager.speak("not-that-one")
+                speechManager.speak("try-again")
             }
         }
     }

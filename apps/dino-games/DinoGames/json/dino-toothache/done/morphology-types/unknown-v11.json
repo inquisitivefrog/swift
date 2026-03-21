@@ -1,0 +1,11 @@
+{
+  "id": "finding_gigantoraptor_paleo16_beak_FINAL",
+  "subject": "paleontologist_2 discovering a Gigantoraptor beak fragment",
+  "visual_logic": {
+    "composition": "A close-up, focused on a dusty, dry excavation site. The second paleontologist character (male, dark-skinned, short hair, glasses, green field jacket, from Brachiosaurus find) is carefully sifting through loose, reddish-brown earth.",
+    "action": "He is holding a pair of tweezers, proudly displaying a **single, large, curved, and distinctly shell-like or plate-like fossilized beak fragment**. This is not a tooth. It should appear as a thick, smooth, amber-to-dark-brown piece of keratin, with visible striations or texture similar to a thick fingernail or a piece of a tortoise shell. It should have a gentle curve, indicating it came from a large, rounded beak.",
+    "morphology_priority": "NO TEETH AT ALL. This is a fossilized 'Beak Plate' or 'Beak Fragment.' It must be clearly non-dental in origin.",
+    "details": "A small brush and a measuring tape are lying nearby. His expression is one of thoughtful, important discovery, recognizing the significance of finding a beak piece.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded, toy-like proportions; highlight the unique 'Beak Plate' morphology. Maintain consistent 'toy' character style and matte textures. No dogs or lab equipment. Focus on the single beak fragment being held by tweezers."
+  }
+}

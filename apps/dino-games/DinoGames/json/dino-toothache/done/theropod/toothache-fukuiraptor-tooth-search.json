@@ -1,0 +1,15 @@
+{
+  "id": "fukuiraptor_toothache_puzzle_053_stylized",
+  "species": "Fukuiraptor kitadaniensis",
+  "tech_ref": "THREE_FINGERED_HANDS_ENLARGED_FIRST_AND_SECOND_CLAWS_MEDIAL_PALMS",
+  "lighting_ref": "SOFT_DIFFUSED_FOREST_CANOPY_LIGHT",
+  "formation_ref": "KITADANI_FORMATION",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3_CLEAN",
+  "pose": "The Fukuiraptor is crouching low to the ground in a carpet of soft green moss. Its body is slender and bird-like. It is using its front hands—palms facing inward—to push aside a pile of stylized, bright red mushrooms and large, rounded river pebbles. Its mouth is open in a silent, pained hiss, showing a clear dental gap in its upper jaw. Its large hand claws are the focal point, catching the light as they rake through the moss. NO TOOTH IS VISIBLE. The dinosaur looks focused and slightly panicked, with its tail held high and twitching.",
+  "visual_logic": {
+    "palette": ["Jade green", "Bright red (mushrooms)", "Soft grey", "Pale yellow"],
+    "anatomical_priority": "Slender, light build; three fingers with the first two having notably large, curved claws; medial palm orientation; narrow snout.",
+    "cleanliness_factor": "The moss is a solid, velvety texture; the mushrooms are bold, simple shapes; no small dirt particles—only distinct pebbles and leaves for the player to sort."
+  },
+  "behavioral_intent": "High-strung and frantic. The dinosaur’s quick movements have buried the tooth under the soft moss, requiring the player to 'brush' away the vegetation to find it."
+}

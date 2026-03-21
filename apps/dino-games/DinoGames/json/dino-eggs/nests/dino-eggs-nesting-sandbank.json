@@ -1,0 +1,8 @@
+{
+    "id": "ui_sandbank_nest",
+    "morphology": "sandbank_riverbank_nest",
+    "prompt": "High-fidelity 3D render of a prehistoric Sandbank / Riverbank Nest. The nest is a moderately buried clutch of eggs, located within a gently sloping sandy riverbank. The surface of the nest area is a subtle, disturbed patch of light-colored, fine sand. Several large, ovoid, cream-colored eggs are buried approximately 10-15 cm deep, with only slight, irregular bulges or faint outlines visible on the disturbed sand surface, indicating their presence. The sand appears loose and well-drained. Background: A wide, slow-moving prehistoric river with a shallow, sandy bank on one side. Lush, riparian vegetation (ferns, cycads) lines the far bank, and a bright, clear sky illuminates the scene, suggesting good solar heating. Signs of past water levels (subtle erosion lines on the bank) hint at the risk of flooding. Focus on the undisturbed appearance of the sand concealing the eggs, and the distinctive riverine environment.",
+    "visual_logic": "Generates a discreetly buried nest in a sandy riverbank, with minimal surface indications of eggs, emphasizing the environmental context and the 'moderate burial' depth.",
+    "style_notes": "No scale bar. Subtle surface disturbance. Eggs mostly buried. Riverine/sandy environment. Hints of potential erosion/flood risk.",
+    "definition_match": "Sandy soils/riverbanks/floodplains, Moderate burial (~5-20cm), Easy digging/good heat retention, Implied risk of flooding/erosion."
+}

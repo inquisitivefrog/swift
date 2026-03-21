@@ -1,0 +1,7 @@
+{
+    "id": "ui_ornithischian_simple_v2",
+    "morphology": "simple_ground_nest",
+    "prompt": "A high-angle 3D render of a flat, arid floodplain. In the center, there is a subtle, non-elevated patch of disturbed, loose dirt about 1.5 meters wide. This patch is flush with the surrounding ground. Eight cream-colored eggs are scattered in two loose, messy clusters within this disturbed dirt. The eggs are partially dusty, with light sand blown against their sides. There are no raised rims, no craters, and no circular walls. It looks like a natural, shallowly cleared spot on the earth. 8k resolution, hyper-realistic soil physics.",
+    "visual_logic": "By using 'disturbed dirt' and 'messy clusters,' we break the AI's tendency to build 'containers' or 'grids.'",
+    "style_notes": "Focus on the flatness of the horizon. No vertical height on the nest site."
+}

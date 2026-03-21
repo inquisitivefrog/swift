@@ -1,0 +1,22 @@
+{
+  "id": "liverwort_carpet_habitat_002",
+  "species": "Liverwort Mud-Mat",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "MISTY_RIVER_EDGE",
+  "formation_ref": "JIUFOTANG",
+  "environment_details": {
+    "habitat": "FORESTED_VOLCANIC_LAKE",
+    "flora": [
+      "Thick mats of Liverworts covering a fallen log",
+      "Rising steam from a nearby volcanic spring",
+      "Tiny Equisetites (Horsetail) shoots poking through the mat"
+    ],
+    "ground_palette": ["Dark Brown", "Deep Green", "Steam White"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; creating a 'micro-landscape' feel; very wet and lush atmosphere."
+  },
+  "visual_logic": {
+    "composition": "A close-to-the-ground view of a decaying log by a misty lake. The log is completely smothered in a slick, bright green carpet of liverworts. Tiny 'umbrellas' sprout everywhere. The air is thick with mist.",
+    "ground": "Black volcanic mud and wet, rotting wood.",
+    "lighting": "Flat, diffused morning light filtered through heavy mist and steam."
+  }
+}

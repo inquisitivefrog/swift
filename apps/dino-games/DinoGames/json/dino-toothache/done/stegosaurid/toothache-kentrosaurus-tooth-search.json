@@ -1,0 +1,19 @@
+[
+  {
+    "id": "kentrosaurus_toothache_puzzle_016",
+    "species": "Kentrosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TENDAGURU",
+    "habitat_ref": "COASTAL_ESTUARIES_AND_LAGOONS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Kentrosaurus is standing on a sandy embankment, its front end lowered and its tail spikes angled slightly upward. Its small head is turned toward the viewer, with one front leg lifted just slightly as if it wants to scratch its jaw but can't quite reach. Its mouth is held in a stiff, tight line, and its eyes are blinking in a rhythmic 'ow-ow' pattern. It is nudging a small patch of cycads with its snout, trying to see if its dropped tooth is snagged in the fronds. The overall look is one of stiff, awkward discomfort that clearly signals it needs a specialist's help.",
+    "visual_logic": {
+      "palette": ["Sand-yellow", "Silt-grey", "Ocher", "Rusty Brown", "Dusty Green"],
+      "flora": ["Cycads", "Drought-resistant conifers", "Low shrubs"],
+      "fauna": ["Giraffatitan (background)", "Pterosaurs", "Small lizards"],
+      "substrate": "Fine-grained sandy silt and tidal mud"
+    },
+    "behavioral_intent": "Determined but restricted search. The armored dinosaur shows vulnerability through its stiff neck movements and the focused, blinking gaze directed at the player."
+  }
+]

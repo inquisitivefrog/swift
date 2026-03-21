@@ -1,0 +1,27 @@
+{
+  "id": "azolla_lifecycle_closeup_001",
+  "species": "Azolla (Water Fern)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "HORSESHOE_CANYON",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS",
+    "flora": [
+      "Azolla individual plant (tiny, triangular or fan-shaped floating body with overlapping scale-like leaves)",
+      "Azolla roots (fine, feathery threads hanging straight down into the water)",
+      "Azolla colony (a dense, interlocking mat of many small plants)",
+      "Spore-bearing structure (close-up of the small, rounded sporocarps on the underside)"
+    ],
+    "ground_palette": [
+      "Dark organic mud",
+      "Green-Grey (water)",
+      "Deep Red (stressed coloration)"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the 'velvety' or fuzzy texture of the leaves; colors ranging from vibrant green to a rusty red; clear quadrant separation."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A single macro view of one plant; Top-Right: The feathery roots submerged in water; Bottom-Left: A dense cluster of the 'mat' formation; Bottom-Right: The small rounded sporocarps.",
+    "ground": "The background is the surface of still, dark water with reflections of the sky.",
+    "lighting": "Clear, even, bright diffused daylight to show the texture of the tiny overlapping leaves."
+  }
+}

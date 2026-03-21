@@ -1,0 +1,27 @@
+{
+  "id": "sycamore_lifecycle_closeup_001",
+  "species": "Early Hardwood (Sycamore-like)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "KEM_KEM",
+  "environment_details": {
+    "habitat": "RIVER_DELTA_WETLANDS",
+    "flora": [
+      "Sycamore-like leaf (broad, palmately lobed with jagged edges, vibrant green)",
+      "Seed ball (distinctive round, bristly fruit hanging from a slender stalk)",
+      "Hardwood sapling (slender grey-green trunk with a few oversized broad leaves)",
+      "Bark detail (mottled, peeling texture showing patches of cream, tan, and light green)"
+    ],
+    "ground_palette": [
+      "Vibrant red",
+      "Sandy tan",
+      "Muddy brown"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the 'camouflage' pattern of the peeling bark; broad, flat leaf surfaces with visible veins; clear quadrant separation for educational study."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A single broad lobed leaf; Top-Right: The spherical seed fruit; Bottom-Left: A young sapling; Bottom-Right: A high-detail view of the mottled, peeling bark.",
+    "ground": "Dry, sandy tan soil mixed with vibrant red sandstone pebbles.",
+    "lighting": "Clear, bright diffused light to showcase the complex textures of the bark and the leaf venation."
+  }
+}

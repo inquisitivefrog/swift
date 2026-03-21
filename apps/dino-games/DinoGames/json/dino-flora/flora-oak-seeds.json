@@ -1,0 +1,27 @@
+{
+  "id": "oak_lifecycle_closeup_001",
+  "species": "Early Hardwood (Oak-like)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "LANCE_HELL_CREEK",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS_FLOODPLAINS",
+    "flora": [
+      "Oak-like leaf (ovate with serrated or shallowly lobed edges, leathery texture)",
+      "Proto-acorn (small, cup-shaped nut with a textured base cap)",
+      "Oak-like sapling (thick, sturdy stem with a rugged leading bud)",
+      "Bark detail (rough, corky, and deeply fissured with a grey-brown tone)"
+    ],
+    "ground_palette": [
+      "Muddy Grey",
+      "Dark Brown",
+      "Tan"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the rugged, 'corky' texture of the bark; tactile feel for the nut-caps; clear quadrant separation for educational study."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A single serrated leaf; Top-Right: A cluster of small proto-acorns; Bottom-Left: A sturdy young sapling; Bottom-Right: A high-detail view of the rough, fissured grey bark.",
+    "ground": "Dry, packed muddy grey earth with scattered tan silt and small pebbles.",
+    "lighting": "Clear, even, bright diffused daylight to emphasize the 3D depth of the bark fissures and the texture of the acorn caps."
+  }
+}

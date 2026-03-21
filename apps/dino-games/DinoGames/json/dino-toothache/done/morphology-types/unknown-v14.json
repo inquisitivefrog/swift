@@ -1,0 +1,12 @@
+{
+  "id": "finding_gigantoraptor_paleo16_beak_REVISED_FINAL",
+  "subject": "dino_bones_paleontologist_2 discovering a fossilized Gigantoraptor beak plate",
+  "visual_logic": {
+    "composition": "A close-up focused on a dusty, sandy excavation site. **dino_bones_paleontologist_2** is sifting through loose, reddish earth with a handheld sieve.",
+    "character_specs": "A younger female paleontologist with short black hair and tanned skin, wearing a green sun hat. Her uniform is a light green blouse worn UNDER a khaki safari vest, a green skirt, and black hiking boots.",
+    "action": "She is holding a pair of small metal tweezers, carefully lifting a **single, fossilized beak plate fragment**. The fragment is broad, thick, and gently cupped (like a piece of a sturdy ceramic bowl). It has a pitted, stony texture and a matte, light-brown earthy color.",
+    "morphology_priority": "STRICT BIOLOGY: No sharp 'sickle' or 'sheath' shapes. This must look like a fragment of a powerful bony beak core. It should be small enough to realistically be held by tweezers and fit within the diameter of the sifting screen.",
+    "details": "Small pebbles and sand grains are visible in the sieve around the tweezers. Her expression is one of careful, scientific observation.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; maintain exact character details from environment_config.json. Ensure the scale of the fossil is small and realistic relative to the tools."
+  }
+}

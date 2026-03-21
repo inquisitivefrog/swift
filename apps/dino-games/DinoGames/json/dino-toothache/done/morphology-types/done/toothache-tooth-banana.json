@@ -1,0 +1,12 @@
+{
+  "id": "toothache-trex-tooth-find-v3-FINAL",
+  "subject": "dino_bones_paleontologist_4 excavating a realistic T-Rex tooth",
+  "character_ref": "dino_bones_paleontologist_4",
+  "visual_logic": {
+    "composition": A medium close-up, focused on the excavation site in the Hell Creek formation. **dino_bones_paleontologist_4** (male, light-skinned, brown hair) is kneeling, his **aviator glasses** pushed up onto his forehead.",
+    "action": "He is clearing dirt away from a **single, massive, banana-shaped tooth**. The tooth must be a **pointed cone**, with thick rounded tip to look like a toy or clay model, slightly curved, with a thick base and no flat chewing surface.",
+    "morphology_priority": "STRICT BIOLOGY: Ensure the tooth is a single sharp spike (canine-like) with visible serrations on the edges. No molar-like cusps. No flat top.",
+    "character_details": "Male, light skin, aviator glasses on forehead, khaki vest over a light green shirt.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded, toy-like proportions; High-stakes discovery moment."
+  }
+}

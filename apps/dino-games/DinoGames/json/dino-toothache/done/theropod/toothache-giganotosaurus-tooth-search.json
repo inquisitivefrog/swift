@@ -1,0 +1,19 @@
+[
+  {
+    "id": "giganotosaurus_toothache_puzzle_045_no_tooth",
+    "species": "Giganotosaurus carolini",
+    "tech_ref": "THREE_FINGERED_HANDS_NOT_PRONATED",
+    "lighting_ref": "HARSH_EQUATORIAL_SUN",
+    "formation_ref": "CANDELEROS",
+    "habitat_ref": "ARID_COASTAL_PLAINS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Giganotosaurus is seen from a low angle to emphasize its titanic scale. It is standing in a dry, red-rock canyon, using one massive, three-toed foot to kick a huge boulder aside, sending a cloud of red dust and smaller stones tumbling. Its long, deep skull is tilted downward, mouth slightly agape to reveal the inflamed gumline where a blade-like tooth is missing. Its three-fingered hands (with claws facing each other) are curled in a pained 'clutch' near its chest. Its eyes are squinting against the harsh sun and the rising dust. The ground is a jagged mess of red shale and scree, but no tooth is visible—it has been buried under the rockslide the dinosaur just created.",
+    "visual_logic": {
+      "palette": ["Terracotta red", "Dusty ochre", "Sun-bleached bone", "Dark charcoal (shadows)"],
+      "flora": ["Desiccated scrub-brush", "Sparse succulents"],
+      "fauna": ["Small lizard (Leptochamops) darting under a rock"],
+      "substrate": "Coarse red sandstone gravel and heavy boulders"
+    },
+    "behavioral_intent": "Destructive, high-magnitude searching. The dinosaur is over-exerting itself, causing environmental changes (the rockslide) that make the player's job of finding the tooth a matter of careful excavation."
+  }
+]

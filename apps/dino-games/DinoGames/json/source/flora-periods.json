@@ -1,0 +1,29 @@
+{
+  "id": "chronological_clash_hint_card_003",
+  "type": "HINT_CARD",
+  "tech_ref": "SQUARE_ASPECT_RATIO",
+  "lighting_ref": "BRIGHT_PLAYFUL_CARTOON",
+  "formation_ref": "MORRISON_PROXY",
+  "character_refs": {
+    "paleontologist": "dino_bones_paleontologist_1"
+  },
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS",
+    "flora": [
+      "Magnolia flower (The 'Future' Food)",
+      "Jurassic-era ferns and cycads in the background"
+    ],
+    "fauna": [
+      "Apatosaurus (suspicious expression, head pulled back, squinting at flower)",
+      "Stegosaurus (confused expression, head tilted, looking at flower like it's a puzzle)",
+      "Allosaurus (disgusted expression, arms crossed, looking away entirely)"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; clear visual gag about 'time-traveling' food; no text elements."
+  },
+  "visual_logic": {
+    "composition": "Square format. On the LEFT, 'dino_bones_paleontologist_1' (older male, white beard, glasses) holds out a large, glowing white Magnolia flower with an encouraging smile. On the RIGHT, the three Jurassic dinosaurs form a wall of rejection. The Apatosaurus is leaning its long neck far back away from the flower; the Stegosaurus has its head low, looking suspicious and skeptical; the Allosaurus is behind them, arms crossed and eyes rolled, completely uninterested in the 'newfangled' Cretaceous plant.",
+    "ground": "Damp, light brown earth with a few Jurassic fern fronds scattered around.",
+    "background": "A lush forest of ancient cycads and ginkgos, contrasting with the 'modern' Magnolia being offered.",
+    "lighting": "Bright, high-key outdoor daylight, highlighting the vibrant white of the 'alien' Magnolia flower."
+  }
+}

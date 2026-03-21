@@ -1,0 +1,11 @@
+{
+  "id": "finding_ornithomimid_nipping_beak_paleo2",
+  "subject": "dino_bones_paleontologist_2 discovering a Gallimimus beak fragment",
+  "visual_logic": {
+    "character_specs": "Paleontologist 2: Hispanic female, brunette ponytail, red field shirt.",
+    "action": "She is holding a **long, slender, slightly curved fragment** of fossilized keratin. It is much thinner and more delicate than a tooth.",
+    "morphology_priority": "THE NIPPING BEAK: No teeth. This is a thin, shovel-shaped plate. It has a sharp, straight edge for nipping. It looks like a piece of a giant ostrich beak rather than a heavy parrot beak.",
+    "color": "Dark charcoal or semi-translucent amber, with a smooth, slightly striated texture.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Ensure the fragment looks long and flat to distinguish it from the deep, curved Gigantoraptor beak."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "cypress_lagoon_mature_002",
+  "species": "Early Cypress (Taxodioid type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "HUMID_OVERCAST_ATMOSPHERIC",
+  "formation_ref": "WEALDEN",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS",
+    "flora": [
+      "Mature Early Cypresses (tall, narrow-topped, with 'knees' or roots protruding from the mud)",
+      "Sedge-like early grasses",
+      "Ferns clinging to the lower trunks"
+    ],
+    "ground_palette": [
+      "Blue-grey clay",
+      "Mottled red",
+      "Green-grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasizing the 'knees' (pneumatophores) poking out of the clay mud; misty, humid coastal lagoon atmosphere."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view of a coastal lagoon edge. Several mature cypresses stand in thick, blue-grey clay mud. Their roots form 'knees' that stick up above the water line. The background shows a hazy, mottled red sandstone cliff.",
+    "ground": "Saturated blue-grey clay mud with standing puddles and ripples of green-grey silt.",
+    "lighting": "Soft, humid, overcast light that makes the mottled colors of the Wealden clay stand out without harsh shadows."
+  }
+}

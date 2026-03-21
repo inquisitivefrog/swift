@@ -1,0 +1,11 @@
+{
+  "id": "finding_ceratosaurus_paleo15_tooth_FINAL",
+  "subject": "paleontologist_1 discovering a Ceratosaurus tooth",
+  "visual_logic": {
+    "composition": "A close-up, focused on a sifting tray or a small excavation pit in sandy, reddish earth. The first paleontologist character (female, light-skinned, short dark hair, safari vest, from Archaeopteryx find) is carefully examining a find.",
+    "action": "She is holding a pair of tweezers, proudly displaying a **single, exceptionally long, slender, and distinctly curved blade-like tooth**. The tooth should be significantly longer and more elegant than the T-Rex 'Banana' tooth, with a sharp point and subtle serrations along one edge. It should be light brown or beige in color.",
+    "morphology_priority": "STRICT BIOLOGY: Ensure the tooth is a 'Grand Blade'—much longer and more gracefully curved than typical large theropod teeth. It should clearly convey its role as a specialized, deep-cutting blade.",
+    "details": "A small field notebook and pencil are lying nearby. Her expression is one of pleased, meticulous discovery.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded, toy-like proportions; highlight the unique 'Grand Blade' morphology. Maintain consistent 'toy' character style and matte textures. No dogs or lab equipment."
+  }
+}

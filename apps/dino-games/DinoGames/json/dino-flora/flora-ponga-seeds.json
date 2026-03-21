@@ -1,0 +1,27 @@
+{
+  "id": "tree_fern_ponga_lifecycle_001",
+  "species": "Tree Fern (Ponga-like)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "LA_AMARGA",
+  "environment_details": {
+    "habitat": "FORESTED_RIVER_SYSTEM",
+    "flora": [
+      "Ponga Crozier (tightly coiled fiddlehead covered in brown fuzzy scales)",
+      "Silver Frond (close-up showing the forest-green top and striking silver-white underside)",
+      "Ponga sapling (small trunkless cluster of arching fronds)",
+      "Trunk detail (fibrous, dark brown 'woody' texture made of old leaf bases)"
+    ],
+    "ground_palette": [
+      "Red-brown",
+      "Ochre",
+      "Dark Brown"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the 'fuzzy' texture of the fiddleheads; high contrast between the green and silver of the leaves; clear quadrant separation."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A macro view of a fuzzy brown crozier; Top-Right: An overturned frond showing the silver underside; Bottom-Left: A young sapling; Bottom-Right: A high-detail view of the fibrous, textured trunk.",
+    "ground": "Damp red-brown earth with a light scattering of ochre silt.",
+    "lighting": "Clear, even, bright diffused daylight to emphasize the metallic silver sheen on the leaf undersides."
+  }
+}

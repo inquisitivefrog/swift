@@ -1,0 +1,7 @@
+{
+  "id": "ui_egg_utahraptor",
+  "morphology": "large_theropod",
+  "prompt": "High-fidelity 3D render of a large theropod egg next to a cantaloupe. Shape: elongated oval with a thick, slightly rough shell. Texture: green base with light white swirls and subtle speckling for camouflage. Background: clean, empty light-grey studio backdrop. Include a single small black-and-white checkered scale bar at the bottom for size reference. Use soft studio lighting to highlight surface detail.",
+  "visual_logic": "Highlights the cantaloupe-scale size of large theropod eggs.",
+  "style_notes": "Only one scale bar. No additional objects. Keep composition centered and uncluttered."
+}

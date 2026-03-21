@@ -1,0 +1,26 @@
+{
+  "id": "metasequoia_swamp_mature_002",
+  "species": "Metasequoia (Dawn Redwood)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "HUMID_OVERCAST_ATMOSPHERIC",
+  "formation_ref": "HORSESHOE_CANYON",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS",
+    "flora": [
+      "Mature Metasequoia grove (towering trees with flared, buttressed bases)",
+      "Standing water and dark mud",
+      "Lush mosses on the lower trunks"
+    ],
+    "ground_palette": [
+      "Grey",
+      "Ocher",
+      "Brown"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasizing the height and the 'buttressed' trunk bases; foggy, humid coastal swamp atmosphere."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle view of a redwood swamp. Towering Metasequoia trees stand with their flared bases in shallow, tea-colored water. The foliage is a soft, feathery green. The background is misty and dense.",
+    "ground": "Saturated grey mud and dark organic silt at the water's edge.",
+    "lighting": "Soft, diffused light through a heavy humid mist, creating an ancient, quiet swamp feeling."
+  }
+}

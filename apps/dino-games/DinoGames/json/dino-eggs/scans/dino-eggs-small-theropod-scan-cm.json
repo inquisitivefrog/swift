@@ -1,0 +1,7 @@
+{
+    "id": "ui_ct_scan_egg_small_theropod_clay",
+    "morphology": "dinosaur_egg_ct_scan_result",
+    "style": "STYLE_CLAY_MASTER",
+    "state": "baby_small_theropod_outline_inside",
+    "prompt": "A simulated CT scan image of a dinosaur egg, rendered in a charming, child-friendly claymation style, as if displayed on a scanner screen. The egg is a small, elongated ovoid shape, consistent with Small Theropods (roughly kiwi-sized as previously established). The external shell of the egg is depicted as a simple, soft-textured clay outline. Inside, a clear, simplified, and adorable outline of a baby Small Theropod embryo is visible. Key Small Theropod features like a relatively large head with prominent eye sockets, a slender neck, and delicate yet strong limbs with visible digits are subtly indicated with smoothed clay shapes. The body is curled in an embryonic posture. The entire image should have a soft, muted grayscale or a very light, desaturated clay-like color palette, giving the impression of an internal, X-ray-like view. A subtle grid pattern on the background further suggests a digital display. Focus on the distinct agile and predatory features of the small theropod, like its head and limbs, in an endearing clay style."
+}

@@ -1,0 +1,27 @@
+{
+  "id": "birch_lifecycle_closeup_001",
+  "species": "Early Hardwood (Birch-like)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "JIUFOTANG",
+  "environment_details": {
+    "habitat": "FORESTED_VOLCANIC_LAKE_SYSTEM",
+    "flora": [
+      "Birch-like leaf (small, triangular or ovate shape with finely serrated edges)",
+      "Catkins (slender, cylindrical flower clusters hanging from branches)",
+      "Birch-like sapling (very thin, whip-like white stem with sparse green leaves)",
+      "Bark detail (papery white or light cream texture with distinct horizontal dark lines/lenticels)"
+    ],
+    "ground_palette": [
+      "Light ash grey",
+      "Buff",
+      "Dark Gray"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the 'papery' peeling quality of the bark; tactile contrast between the smooth white trunk and the dark horizontal markings."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left: A single serrated leaf; Top-Right: A cluster of hanging catkins; Bottom-Left: A thin, young sapling; Bottom-Right: A high-detail close-up of the papery white bark with horizontal lenticels.",
+    "ground": "Fine grey volcanic ash mixed with small buff-colored pebbles.",
+    "lighting": "Clear, even, bright diffused daylight to make the white bark pop against the neutral ground."
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "dino-bones-baryonyx-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "dino-bones-baryonyx-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "dino-bones-baryonyx-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

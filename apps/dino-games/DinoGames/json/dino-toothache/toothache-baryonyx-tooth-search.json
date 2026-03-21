@@ -1,0 +1,11 @@
+{
+  "id": "searching_baryonyx_01_REVISED",
+  "subject": "toy-like Baryonyx with a toothache",
+  "visual_logic": {
+    "composition": "A bright, clear medium shot. The Baryonyx stands in a shallow river. The water is crystal clear and bright blue, not muddy.",
+    "character_specs": "The Baryonyx is stylized like a vinyl toy. It has a bright teal body with orange stripes. Its snout is long and distinct, but the eyes are large and expressive (toy-style).",
+    "action": "It is sitting on its haunches by the water, holding its long snout with both hands, looking sad. One large 'thumb claw' is visible and looks like a rounded white plastic piece.",
+    "environment": "Vibrant green jungle, bright yellow sunbeams, and sparkling water. High saturation.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; remove all 'painterly' or 'misty' effects. Ensure clean edges and a cheerful, high-energy color palette."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "finding_iguanodon_paleo9_tooth_FINAL",
+  "subject": "dino_bones_paleontologist_9 discovering an Iguanodon tooth",
+  "character_ref": "dino_bones_paleontologist_9",
+  "tech_ref": "FOSSIL_SITE_SQUARE",
+  "lighting_ref": "OVERCAST_DAYLIGHT",
+  "formation_ref": "WEALDEN_GROUP",
+  "visual_logic": {
+    "composition": "A medium close-up, focused on a soft, muddy field near a riverbank in the Wealden Group formation. **dino_bones_paleontologist_9** (male, light-skinned, short brown hair, wearing a classic 'Indiana Jones' style fedora/archeologist hat and khaki field clothes) is kneeling.",
+    "action": "He is carefully sifting through loose, damp earth with a small trowel. In his gloved hand, he holds a pair of tweezers, proudly displaying a **single, large, leaf-shaped tooth**. The tooth should be noticeably **larger** than the Ankylosaurus tooth, with a prominent central ridge and distinct, wide serrations along the edges, making it look like a sturdy, serrated herbivore grinder.",
+    "details": "A small field notebook and pencil are lying nearby. His expression is one of pleased, meticulous discovery. The background shows blurred muddy terrain and lush vegetation.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded, toy-like proportions; highlight the large size and prominent ridged, leaf-like morphology of the Iguanodon tooth. Maintain consistent 'toy' character style and matte textures."
+  }
+}

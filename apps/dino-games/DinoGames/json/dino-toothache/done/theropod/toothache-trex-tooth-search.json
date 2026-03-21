@@ -1,0 +1,14 @@
+{
+  "id": "searching_t_rex_01",
+  "subject": "dino_racer_t_rex searching for a lost tooth",
+  "character_ref": "dino_racer_t_rex",
+  "tech_ref": "FOSSIL_SITE_SQUARE",
+  "lighting_ref": "DRAMATIC_OVERCAST",
+  "formation_ref": "HELL_CREEK",
+  "visual_logic": {
+    "composition": "A dynamic, slightly low-angle wide shot of the **dino_racer_t_rex** in the Hell Creek badlands. His dark green skin has subtle stripes. He is stomping the ground with one massive foot, his jaws slightly agape in a snarl, steam possibly coming from his nostrils, conveying extreme fury.",
+    "action": "He's scanning the reddish-brown badlands, looking left and right, clearly agitated and searching for something large. He might have a small, almost cartoonish, "missing tooth" gap visible if his mouth is slightly open.",
+    "environment_details": "The background shows eroded, barren red-brown hills and ravines under a dramatic, overcast sky, characteristic of Hell Creek. Sparse, tough ferns dot the foreground.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded, toy-like proportions; emphasize his immense power and furious expression."
+  }
+}

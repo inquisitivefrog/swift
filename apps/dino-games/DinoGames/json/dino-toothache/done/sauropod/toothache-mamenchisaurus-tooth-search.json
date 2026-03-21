@@ -1,0 +1,19 @@
+[
+  {
+    "id": "mamenchisaurus_toothache_puzzle_023",
+    "species": "Mamenchisaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SHAXIMIAO",
+    "habitat_ref": "HUMID_JURASSIC_FOREST",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "pose": "The Mamenchisaurus has its incredibly long neck draped across the foreground like a heavy cable, with its head resting on a patch of soft moss. One front leg is folded slightly to lower its body height. It is using its snout to nudge a pile of fallen ginkgo leaves, looking for a lost tooth. Its expression is one of 'patient exhaustion'—eyes drooping slightly, a soft furrow in its brow, and its mouth held open just enough to reveal the long, spatula-like teeth. It looks up at the player with a slow, heavy blink, its long neck disappearing into the blurred green background of the forest.",
+    "visual_logic": {
+      "palette": ["Emerald green", "Silt brown", "Ochre", "Slate grey", "Moss"],
+      "flora": ["Ginkgo biloba", "Tree ferns", "Massive conifers"],
+      "fauna": ["Small pterosaurs", "Dragonflies", "Jurassic beetles"],
+      "substrate": "Thick moss over dark, damp river silt"
+    },
+    "behavioral_intent": "Weary but cooperative search. The extreme length of the neck leading to the small, pained face creates a strong visual 'trail' for the player to follow to the puzzle area."
+  }
+]

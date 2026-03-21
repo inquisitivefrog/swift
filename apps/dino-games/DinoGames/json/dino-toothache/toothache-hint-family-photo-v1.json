@@ -1,0 +1,19 @@
+{
+  "id": "dino_dental_family_photo_FINAL",
+  "subject": "A group photo of eight distinct toy-like cartoon dinosaurs, representing different tooth types",
+  "visual_logic": {
+    "composition": "A cheerful, slightly curved group photo of all eight representative dinosaurs. They are standing or interacting in a friendly, inviting manner, looking towards the viewer.",
+    "characters": [
+      {"dinosaur": "T-Rex", "details": "Standing tall, classic 'king' pose."},
+      {"dinosaur": "Australovenator", "details": "Slightly leaner, dynamic pose."},
+      {"dinosaur": "Spinosaurus", "details": "Distinctive sail, perhaps leaning slightly."},
+      {"dinosaur": "Archaeopteryx", "details": "Smaller, perched or standing next to a larger dino, showing off feathers."},
+      {"dinosaur": "Apatosaurus", "details": "Long neck curving gently, friendly expression."},
+      {"dinosaur": "Ankylosaurus", "details": "Low to the ground, armored, looking inquisitive."},
+      {"dinosaur": "Triceratops", "details": "Robust, three horns, sturdy stance."},
+      {"dinosaur": "Parasaurolophus", "details": "Distinctive head crest, gentle pose."}
+    ],
+    "environment": "A bright, lush, simplified prehistoric landscape background (e.g., green hills, cartoon trees, sunny sky) that doesn't distract from the dinosaurs.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; consistent 'rounded, toy-like' proportions; vibrant, kid-friendly colors; friendly expressions. Ensure smooth, matte plastic-like textures. The focus is on them as a happy, cohesive group."
+  }
+}

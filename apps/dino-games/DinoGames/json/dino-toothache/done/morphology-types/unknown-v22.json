@@ -1,0 +1,11 @@
+{
+  "id": "finding_ornithomimid_beak_paleo2",
+  "subject": "dino_bones_paleontologist_2 discovering a fossilized beak fragment",
+  "visual_logic": {
+    "character_specs": "Paleontologist 2: Hispanic female, brunette ponytail, red field shirt.",
+    "action": "She is holding a **curved, dark-colored fossil fragment** that looks like a piece of a large bird's beak. She is examining it closely under a magnifying glass.",
+    "morphology_priority": "THE BEAK FRAGMENT: No teeth. This is a thin, curved plate of fossilized keratin. It has a sharp 'leading edge' and a slightly porous interior texture. It looks more like a piece of horn or shell than a stone tooth.",
+    "color": "Dark amber or charcoal black, with a slightly glossy, organic sheen.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Make sure it looks distinct from a tooth so the player understands this clade is different."
+  }
+}

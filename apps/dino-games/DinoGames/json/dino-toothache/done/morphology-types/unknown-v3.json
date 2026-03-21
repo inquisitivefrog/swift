@@ -1,0 +1,14 @@
+{
+  "id": "finding_ankylosaurus_paleo3_corrected",
+  "subject": "dino_bones_paleontologist_3 finding an Ankylosaurus tooth",
+  "character_ref": "dino_bones_paleontologist_3",
+  "tech_ref": "FOSSIL_SITE_SQUARE",
+  "lighting_ref": "DAPPLED_EXCAVATION",
+  "formation_ref": "TWO_MEDICINE",
+  "visual_logic": {
+    "composition": "A medium close-up of **dino_bones_paleontologist_3** in the **Two Medicine** formation. He has **curly black hair** visible under his **white sun hat**. He is wearing a **light purple tee shirt** and **khaki safari vest**.",
+    "action": "He is holding a **small, fluted, leaf-shaped Ankylosaurus tooth** gently between his fingers, inspecting it with a calm, expert smile. He might be using a small dental pick or brush to highlight the tooth.",
+    "environment_details": "The background shows the grey and ocher palette of the Two Medicine mudstone, with some dappled sunlight filtering through sparse woodland foliage.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded, toy-like proportions; focus on the paleontologist's distinct features and the clear morphology of the herbivore tooth."
+  }
+}
