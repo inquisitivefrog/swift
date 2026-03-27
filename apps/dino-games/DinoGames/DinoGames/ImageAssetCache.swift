@@ -17,4 +17,9 @@ enum ImageAssetCache {
     static func imageExists(named name: String) -> Bool {
         ImageAssetNames.knownAssets.contains(name)
     }
+
+    /// Returns asset names that start with the given prefix, for random selection (e.g. dino-eggs-colors-stegosaur).
+    static func assets(matchingPrefix prefix: String) -> [String] {
+        ImageAssetNames.knownAssets.filter { $0.hasPrefix(prefix) }
+    }
 }

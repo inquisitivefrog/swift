@@ -81,6 +81,16 @@ private enum EggMorphology {
         default: return "dino-eggs-scans-\(eggType)"
         }
     }
+
+    /// Random dino-eggs-colors-{clade}-* asset for main egg display. Falls back to dino-eggs-{clade} if none.
+    static func randomColorsAsset(forClade clade: String) -> String? {
+        let prefix = "dino-eggs-colors-\(clade)-"
+        let matches = ImageAssetCache.assets(matchingPrefix: prefix)
+        if let chosen = matches.randomElement() { return chosen }
+        let fallback = "dino-eggs-\(clade)"
+        return ImageAssetCache.imageExists(named: fallback) ? fallback : nil
+    }
+
 }
 
 // MARK: - Data Models
@@ -127,16 +137,20 @@ struct DinoEggsGameView: View {
     @State private var displayedDinosaurs: [Dinosaur] = []
     /// When true, show nest image; when false, show egg.
     @State private var showNestImage = true
-    /// Scanner (replaces Micro CT): open until user taps to scan (when egg visible).
+    /// Scanner: open until user taps to scan (when egg visible).
     @State private var scannerIsOpen = true
-    /// Flash opacity when scanner is closed (1 = normal, 0.5 = dim); animates 4 times over 2s then beep.
-    @State private var scannerFlashOpacity: Double = 1.0
+    /// Flash opacity (1 = normal, 0.5 = dim); animates 4 times over 2s then beep on the active tool.
+    @State private var scanFlashOpacity: Double = 1.0
     /// When true, scanner area shows scan result (empty or clade) until round completes.
     @State private var hintShown = false
     /// When true, scan showed empty (20%); when false, showed clade image (80%).
     @State private var scanResultEmpty = false
     /// True while flash+beep sequence runs; prevents main-image toggle from reopening scanner.
     @State private var scanInProgress = false
+    /// Random colors asset for this round (dino-eggs-colors-{clade}-*). Picked at round start.
+    @State private var roundColorsAsset: String? = nil
+    /// When true (scanner finished), main egg area shows scan result (empty or baby skeleton).
+    @State private var scannerActive = false
 
     /// PoC: 1 round for testing; revert to 3 when enhancement is decided.
     private let totalRounds = 1
@@ -195,6 +209,7 @@ struct DinoEggsGameView: View {
         hintShown = false
         scanResultEmpty = false
         scanInProgress = false
+        scannerActive = false
     }
 
     // MARK: - Main Game
@@ -226,14 +241,17 @@ struct DinoEggsGameView: View {
             // Alternating main image: nest ↔ egg (egg is draggable to scanner)
             mainAlternatingImage
 
-            // Three tools in a row: Scanner (replaces Micro CT), Magnify, SEM
-            threeToolsRowView
+            // CT scanner only (magnify + SEM removed for simpler flow)
+            scannerToolRowView
 
             // Three dinosaurs below (dino-{slug}), tappable—only one matches the displayed egg
             threeDinoLayout
         }
         .task(id: currentRound) {
             displayedDinosaurs = dinosaurs.shuffled()
+            if let clade = currentRoundConfig?.eggType {
+                roundColorsAsset = EggMorphology.randomColorsAsset(forClade: clade)
+            }
         }
         .id(currentRound)
     }
@@ -247,11 +265,31 @@ struct DinoEggsGameView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: 340, maxHeight: 220)
-            } else if let egg = eggType, ImageAssetCache.imageExists(named: "dino-eggs-\(egg)") {
-                Image("dino-eggs-\(egg)")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 340, maxHeight: 220)
+            } else if let egg = eggType {
+                let imgName: String = {
+                    if scannerActive {
+                        if scanResultEmpty, ImageAssetCache.imageExists(named: "dino-eggs-scans-empty") {
+                            return "dino-eggs-scans-empty"
+                        }
+                        let scan = EggMorphology.scanAssetName(forEggType: egg)
+                        return ImageAssetCache.imageExists(named: scan) ? scan : "dino-eggs-scans-empty"
+                    }
+                    if let colors = roundColorsAsset, ImageAssetCache.imageExists(named: colors) {
+                        return colors
+                    }
+                    let fallback = "dino-eggs-\(egg)"
+                    return ImageAssetCache.imageExists(named: fallback) ? fallback : (roundColorsAsset ?? fallback)
+                }()
+                if ImageAssetCache.imageExists(named: imgName) {
+                    Image(imgName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 340, maxHeight: 220)
+                } else {
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.brown.opacity(0.2))
+                        .frame(width: 260, height: 130)
+                }
             } else {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color.brown.opacity(0.2))
@@ -262,125 +300,121 @@ struct DinoEggsGameView: View {
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .animation(.easeInOut(duration: 0.4), value: showNestImage)
         .onAppear { showNestImage = true }
-        .onChange(of: currentRound) { _, _ in showNestImage = true; scannerIsOpen = true; scannerFlashOpacity = 1; hintShown = false; scanResultEmpty = false; scanInProgress = false }
+        .onChange(of: currentRound) { _, _ in
+            showNestImage = true
+            scannerIsOpen = true
+            scanFlashOpacity = 1
+            hintShown = false
+            scanResultEmpty = false
+            scanInProgress = false
+            scannerActive = false
+            if let clade = currentRoundConfig?.eggType {
+                roundColorsAsset = EggMorphology.randomColorsAsset(forClade: clade)
+            }
+        }
         .onChange(of: showNestImage) { _, new in
             if !new { failedAttempts.removeAll() }
-            else if !scanInProgress { scannerIsOpen = true; scannerFlashOpacity = 1 }
+            else if !scanInProgress { scannerIsOpen = true; scanFlashOpacity = 1 }
         }
         .task(id: currentRound) {
             while !Task.isCancelled {
                 try? await Task.sleep(nanoseconds: UInt64(mainImageDisplaySeconds * 1_000_000_000))
                 if Task.isCancelled { break }
+                if scannerActive { break }
                 showNestImage.toggle()
             }
         }
     }
 
-    /// Fixed size per tool so three fit in a row. Was 280×120 single; now ~90×90 each.
-    private let toolImageSize: CGFloat = 90
-    private let toolSpacing: CGFloat = 12
+    private let scannerToolImageSize: CGFloat = 100
 
-    private var threeToolsRowView: some View {
+    private var scannerToolRowView: some View {
         let egg = currentRoundConfig?.eggType ?? ""
+        let emptyExists = ImageAssetCache.imageExists(named: "dino-eggs-scans-empty")
         let cladeImageName = egg.isEmpty ? "" : EggMorphology.scanAssetName(forEggType: egg)
         let cladeExists = !cladeImageName.isEmpty && ImageAssetCache.imageExists(named: cladeImageName)
-        let emptyExists = ImageAssetCache.imageExists(named: "dino-eggs-scans-empty")
-        let showEmpty = hintShown && scanResultEmpty && emptyExists
-        let showClade = hintShown && !scanResultEmpty && cladeExists
 
-        return Group {
-            if showEmpty {
-                Image("dino-eggs-scans-empty")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 280, maxHeight: 100)
-            } else if showClade {
-                Image(cladeImageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 280, maxHeight: 100)
-            } else {
-                HStack(spacing: toolSpacing) {
-                    scannerToolImage(emptyExists: emptyExists, cladeExists: cladeExists)
-                    toolPlaceholder(name: "dino-eggs-tools-magnify", label: "Magnify", emoji: "🔍")
-                    toolPlaceholder(name: "dino-eggs-tools-sem", label: "SEM", emoji: "🔬")
-                }
-                .padding(.horizontal)
-            }
+        return HStack {
+            Spacer(minLength: 0)
+            scannerToolImage(emptyExists: emptyExists, cladeExists: cladeExists)
+            Spacer(minLength: 0)
         }
+        .padding(.horizontal)
         .animation(.easeInOut(duration: 0.3), value: scannerIsOpen)
-        .animation(.easeInOut(duration: 0.15), value: scannerFlashOpacity)
-        .animation(.easeInOut(duration: 0.3), value: hintShown)
+        .animation(.easeInOut(duration: 0.15), value: scanFlashOpacity)
+        .animation(.easeInOut(duration: 0.3), value: scannerActive)
+        .animation(.easeInOut(duration: 0.3), value: scanInProgress)
     }
 
     @ViewBuilder
     private func scannerToolImage(emptyExists: Bool, cladeExists: Bool) -> some View {
-        let openName = ImageAssetCache.imageExists(named: "dino-eggs-tools-scanner-open") ? "dino-eggs-tools-scanner-open"
-            : (ImageAssetCache.imageExists(named: "dino-eggs-tools-micro-ct-scanner-open") ? "dino-eggs-tools-micro-ct-scanner-open" : nil)
-        let closedName = ImageAssetCache.imageExists(named: "dino-eggs-tools-scanner-closed") ? "dino-eggs-tools-scanner-closed"
-            : (ImageAssetCache.imageExists(named: "dino-eggs-tools-micro-ct-scanner-closed") ? "dino-eggs-tools-micro-ct-scanner-closed" : nil)
-        let displayName = scannerIsOpen ? (openName ?? closedName) : (closedName ?? openName)
+        let openName = "dino-eggs-tools-scanner-open"
+        let closedName = "dino-eggs-tools-scanner-closed"
+        let displayName: String? = {
+            if scanInProgress || !scannerIsOpen {
+                return ImageAssetCache.imageExists(named: closedName) ? closedName : (ImageAssetCache.imageExists(named: openName) ? openName : nil)
+            }
+            return ImageAssetCache.imageExists(named: openName) ? openName : (ImageAssetCache.imageExists(named: closedName) ? closedName : nil)
+        }()
 
-        if let name = displayName {
-            Image(name)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: toolImageSize, height: toolImageSize)
-                .opacity(scannerIsOpen ? 1 : scannerFlashOpacity)
-                .contentShape(Rectangle())
-                .onTapGesture {
-                    guard scannerIsOpen, !showNestImage else { return }
-                    scannerIsOpen = false
-                    scannerFlashOpacity = 1
-                    scanInProgress = true
-                    runScannerFlashThenBeep {
-                        self.scanInProgress = false
-                        let rolledEmpty = Double.random(in: 0..<1) < 0.2
-                        self.scanResultEmpty = rolledEmpty && emptyExists
-                        self.hintShown = self.scanResultEmpty || cladeExists
-                        if self.scanResultEmpty {
-                            self.speechManager.onAudioFinished = {
-                                self.speechManager.onAudioFinished = nil
-                                self.speechManager.speak("game-dino-eggs-tap-the-dinosaur")
-                            }
-                            self.speechManager.speak("game-dino-eggs-scan-failed")
-                        } else {
-                            self.speechManager.speak("game-dino-eggs-tap-the-dinosaur")
-                        }
+        Group {
+            if let name = displayName {
+                Image(name)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: scannerToolImageSize, height: scannerToolImageSize)
+                    .opacity(scanInProgress ? scanFlashOpacity : 1)
+            } else {
+                scannerToolPlaceholder
+            }
+        }
+        .contentShape(Rectangle())
+        .opacity((showNestImage || scannerActive) ? 0.5 : 1)
+        .onTapGesture {
+            guard scannerIsOpen, !scanInProgress, !showNestImage else { return }
+            if scannerActive { return }
+            scannerIsOpen = false
+            scanFlashOpacity = 1
+            scanInProgress = true
+            runScanFlashThenBeep {
+                self.scanInProgress = false
+                let rolledEmpty = Double.random(in: 0..<1) < 0.2
+                self.scanResultEmpty = rolledEmpty && emptyExists
+                self.hintShown = self.scanResultEmpty || cladeExists
+                self.scannerActive = true
+                self.showNestImage = false
+                if self.scanResultEmpty {
+                    self.speechManager.onAudioFinished = {
+                        self.speechManager.onAudioFinished = nil
+                        self.speechManager.speak("game-dino-eggs-tap-the-dinosaur")
                     }
+                    self.speechManager.speak("game-dino-eggs-scan-failed")
+                } else {
+                    self.speechManager.speak("game-dino-eggs-tap-the-dinosaur")
                 }
-        } else {
-            toolPlaceholder(name: nil, label: "Scanner", emoji: "📡")
+            }
         }
     }
 
     @ViewBuilder
-    private func toolPlaceholder(name: String?, label: String, emoji: String) -> some View {
-        let assetName = name.flatMap { ImageAssetCache.imageExists(named: $0) ? $0 : nil }
-        if let n = assetName {
-            Image(n)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: toolImageSize, height: toolImageSize)
-        } else {
-            VStack(spacing: 4) {
-                Text(emoji)
-                    .font(.system(size: 28))
-                Text(label)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-            .frame(width: toolImageSize, height: toolImageSize)
-            .background(RoundedRectangle(cornerRadius: 8).fill(Color.gray.opacity(0.15)))
+    private var scannerToolPlaceholder: some View {
+        VStack(spacing: 4) {
+            Text("📡")
+                .font(.system(size: 32))
+            Text("CT scanner")
+                .font(.caption)
+                .foregroundColor(.secondary)
         }
+        .frame(width: scannerToolImageSize, height: scannerToolImageSize)
+        .background(RoundedRectangle(cornerRadius: 8).fill(Color.gray.opacity(0.15)))
     }
 
-    private func runScannerFlashThenBeep(then: @escaping () -> Void) {
+    private func runScanFlashThenBeep(then: @escaping () -> Void) {
         Task { @MainActor in
             for _ in 0..<4 {
-                scannerFlashOpacity = 0.5
+                scanFlashOpacity = 0.5
                 try? await Task.sleep(nanoseconds: 500_000_000)
-                scannerFlashOpacity = 1
+                scanFlashOpacity = 1
                 try? await Task.sleep(nanoseconds: 500_000_000)
             }
             try? await Task.sleep(nanoseconds: 2_000_000_000)
@@ -440,7 +474,7 @@ struct DinoEggsGameView: View {
         speechManager.onAudioFinished = { self.speechManager.onAudioFinished = nil; self.advanceIntroWalk() }
         speechManager.speak(
             audioKey: "game-dino-eggs-gameplay-directions",
-            fallbackText: "Many dinosaur eggs need to be scanned to identify species. Help the Paleontologist by tapping the scanner when you see the egg."
+            fallbackText: "Egg identification depends on shape, size, and color. When you see the egg, tap the CT scanner to look inside, then tap the dinosaur that laid the egg."
         )
     }
 
@@ -472,8 +506,9 @@ struct DinoEggsGameView: View {
 
     // MARK: - Tap Handlers
 
+    /// Non-nil when user can answer (scan complete, egg showing). Flow: CT scanner → select dinosaur.
     private var currentDisplayedEggType: String? {
-        guard !showNestImage else { return nil }
+        guard !showNestImage, scannerActive else { return nil }
         return eggType
     }
 
@@ -770,12 +805,9 @@ private struct DinoEggsVictoryRow: View {
                     .frame(width: 72, height: 72)
             }
             VStack(alignment: .leading, spacing: 2) {
-                Text("Round \(roundNumber)")
+                Text(correctDinosaur.name)
                     .font(.title2)
                     .fontWeight(isHighlighted ? .semibold : .regular)
-                Text(correctDinosaur.name)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
             }
         }
         .padding(.horizontal, 20)

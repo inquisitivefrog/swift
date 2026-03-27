@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "dino-eggs-sem-stegosaurid-magnified-sem-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "dino-eggs-sem-stegosaurid-magnified-sem-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "dino-eggs-sem-stegosaurid-magnified-sem-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

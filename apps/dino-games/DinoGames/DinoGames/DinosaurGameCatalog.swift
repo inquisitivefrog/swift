@@ -111,6 +111,7 @@ enum DinosaurGameCatalog {
             return [
                 .guess(GuessGameConfigs.dinoBones),             // Dino Bones!
                 .dinoEggs(DinoEggsGameConfigs.dinoEggs),       // Dino Eggs!
+                .dinoTools(DinoToolsGameConfigs.dinoTools),   // Dino Tools!
                 .dinoFlora(DinoFloraGameConfigs.dinoFlora),    // Dino Flora!
             ]
         case .level6:
@@ -123,6 +124,7 @@ enum DinosaurGameCatalog {
             return [
                 .matrixMaterials(MatrixMaterialsGameConfigs.matrixMaterials), // Matrix Materials
                 .dinoFormations(DinoFormationsGameConfigs.dinoFormations), // Dino Formations
+                .dinoFossilHunt(DinoFossilHuntGameConfigs.dinoFossilHunt), // Dino Fossil Hunt!
             ]
         case .level8:
             return [

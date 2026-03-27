@@ -6,69 +6,81 @@
   "libraries": {
     "characters": {
       "dino_bones_preparator_1": {
-        "description": "A younger male museum preparator, short dark hair, tanned skin.",
+        "description": "An adult male grad student working as a museum preparator, short dark hair, tanned skin.",
         "eyewear": "Signature thin-rimmed BLACK RECTANGULAR lens glasses. These glasses are consistent in every scene.",
         "uniform": "A light blue tee shirt worn UNDER a white lab coat, blue jean slacks and black dress shoes.",
-        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
       },
       "dino_bones_preparator_2": {
-        "description": "A younger female museum preparator, short blonde hair, lightly tanned skin.",
+        "description": "An adult female grad student working as a museum preparator, short blonde hair, lightly tanned skin.",
         "uniform": "A light blue tee shirt worn UNDER a white lab coat, white skirt and light blue pumps.",
-        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
       },
       "dino_bones_preparator_3": {
-        "description": "A younger female museum preparator, long reddish hair, tanned skin.",
+        "description": "An adult female grad student working as a museum preparator, long reddish hair, tanned skin.",
         "uniform": "A light orange tee shirt worn UNDER a white lab coat, red skirt and orange pumps.",
-        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
       },
       "dino_bones_preparator_4": {
-        "description": "A younger male museum preparator, dark brown hair, tanned skin, Latino ethnicity.",
+        "description": "An adult male grad stadent working as a museum preparator, dark brown hair, tanned skin, Latino ethnicity.",
         "uniform": "A soccer sport jersey worn UNDER a white lab coat, blue jeans and grey sneakers.",
-        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
       },
       "dino_bones_preparator_5": {
-        "description": "A younger male museum preparator, curly black hair, African ethnicity, goatee.",
+        "description": "An adult male grad student working as a museum preparator, curly black hair, African ethnicity, goatee.",
         "uniform": "A purple tee shirt worn UNDER a white lab coat, blue jeans and white sneakers.",
-        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
       },
       "dino_bones_preparator_6": {
-        "description": "A younger female museum preparator, long black hair, Asian ethnicity.",
+        "description": "An adult female grad student working as a museum preparator, long black hair, Asian ethnicity.",
         "uniform": "A yellow tee shirt with a unicorn image worn UNDER a white lab coat, yellow skirt and white sneakers.",
-        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
       },
       "dino_bones_paleontologist_1": {
-        "description": "A younger female paleontologist, long blonde hair, tanned skin, wearing a white sun hat.",
+        "description": "An adult female grad student working as a paleontologist, long blonde hair, tanned skin, wearing a white sun hat.",
         "uniform": "A light pink blouse worn UNDER a khaki safari vest, white shorts and pink hiking boots.",
-        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
       },
       "dino_bones_paleontologist_2": {
-        "description": "A younger female paleontologist, short black hair, tanned skin, wearing a green sun hat.",
+        "description": "An adult female grad student working as a paleontologist, short black hair, tanned skin, wearing a green sun hat.",
         "uniform": "A light green blouse worn UNDER a khaki safari vest, green skirt and black hiking boots.",
-        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
       },
       "dino_bones_paleontologist_3": {
-        "description": "A younger male paleontologist, curly black hair, Black race, wearing a white sun hat.",
+        "description": "An adult male grad student working as a paleontologist, curly black hair, Black race, wearing a white sun hat.",
         "uniform": "A light purple tee shirt worn UNDER a khaki safari vest, white shorts and black hiking boots.",
-        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
       },
       "dino_bones_paleontologist_4": {
-        "description": "A younger male paleontologist, short brown hair, Latino ethnicity.",
+        "description": "An adult male grad stadent working as a paleontologist, short brown hair, Latino ethnicity.",
         "eyewear": "Signature thin-rimmed BLACK aviator lens glasses. These glasses are consistent in every scene.",
         "uniform": "A light white tee shirt worn UNDER a khaki safari vest, khaki shorts and brown hiking boots.",
-        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
       },
       "dino_bones_paleontologist_5": {
-        "description": "A younger female paleontologist, short black hair, Asian ethnicity.",
+        "description": "An adult female grad student working as a paleontologist, short black hair, Asian ethnicity.",
         "uniform": "A light red tee shirt worn UNDER a khaki safari vest, red shorts and black hiking boots.",
-        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
       },
       "dino_bones_paleontologist_6": {
-        "description": "A younger female paleontologist, braided black hair, African ethnicity.",
+        "description": "An adult female grad stadent working as a paleontologist, braided black hair, African ethnicity.",
         "uniform": "A white tee shirt worn UNDER a khaki safari vest, white shorts and black hiking boots.",
-        "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
+        "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
       },
       "dino_push_referee_1": {
-        "description": "A younger male paleontologist, dark short hair, clean-shaven, wearing a tan safari pith helmet.",
+        "description": "An adult male paleontologist, dark short hair, clean-shaven, wearing a tan safari pith helmet.",
         "eyewear": "Signature thin-rimmed BLACK CIRCULAR glasses (perfectly round lenses). These glasses are consistent in every scene.",
         "uniform": "A black-and-white vertical striped referee jersey worn UNDER a white silk komono.",
         "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."

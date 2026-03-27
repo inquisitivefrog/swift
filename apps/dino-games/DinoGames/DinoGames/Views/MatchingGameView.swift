@@ -509,9 +509,39 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-dino-eggs-scan-failed"
         case "game-dino-eggs-tap-the-dinosaur":
             return "Games/game-dino-eggs-tap-the-dinosaur"
+        case "game-dino-eggs-tap-the-sem":
+            return "Games/game-dino-eggs-tap-the-sem"
+        case "game-dino-eggs-tap-the-scanner":
+            return "Games/game-dino-eggs-tap-the-scanner"
+        case "game-dino-eggs-tap-magnifying-glass-first":
+            return "Games/game-dino-eggs-tap-magnifying-glass-first"
+        case "game-dino-eggs-tap-sem-microscope-first":
+            return "Games/game-dino-eggs-tap-sem-microscope-first"
         case "game-dino-eggs-gameplay-directions", "games-dino-eggs-gameplay-directions",
              "tap-the-dinosaur-when-you-see-the-egg":
             return "Games/game-dino-eggs-gameplay-directions"
+        case "game-dino-tools", "dino-tools":
+            return "Games/game-dino-tools"
+        case "game-dino-tools-beep":
+            return "Games/game-dino-tools-beep"
+        case "game-dino-tools-scan-failed":
+            return "Games/game-dino-tools-scan-failed"
+        case "game-dino-tools-tap-the-dinosaur":
+            return "Games/game-dino-tools-tap-the-dinosaur"
+        case "game-dino-tools-tap-the-sem":
+            return "Games/game-dino-tools-tap-the-sem"
+        case "game-dino-tools-tap-the-scanner":
+            return "Games/game-dino-tools-tap-the-scanner"
+        case "game-dino-tools-tap-magnifying-glass-first":
+            return "Games/game-dino-tools-tap-magnifying-glass-first"
+        case "game-dino-tools-tap-sem-microscope-first":
+            return "Games/game-dino-tools-tap-sem-microscope-first"
+        case "game-dino-tools-gameplay-directions", "games-dino-tools-gameplay-directions":
+            return "Games/game-dino-tools-gameplay-directions"
+        case "game-dino-fossil-hunt", "dino-fossil-hunt":
+            return "Games/game-dino-fossil-hunt"
+        case _ where normalized.hasPrefix("game-dino-fossil-hunt-"):
+            return "Games/\(normalized)"
         case "can-you-return-the-tooth", "can you return the tooth":
             return "Games/game-can-you-return-the-tooth"
         case "game-dino-toothache-this-dinosaur-lost-its-tooth":
