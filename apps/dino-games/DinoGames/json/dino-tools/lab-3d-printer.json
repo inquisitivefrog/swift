@@ -1,0 +1,15 @@
+{
+  "asset_id": "dino-tools-lab-3d-printer-001",
+  "label": "Precision Resin (SLA) 3D Printer",
+  "category": "Fabrication",
+  "description": "Uses a UV laser to cure liquid resin into a high-detail physical replica of a digital scan.",
+  "components": [
+    { "id": "resin_vat", "type": "consumable", "material": "Photo-reactive Polymer" },
+    { "id": "uv_curing_chamber", "type": "secondary_tool", "function": "Hardens the print after it's finished." },
+    { "id": "wash_station", "type": "secondary_tool", "function": "Cleans off excess liquid resin with Isopropyl Alcohol (IPA)." }
+  ],
+  "game_mechanics": {
+    "scaling_factor": "Player can print a 'Micro-Fauna' tooth at 10x size so they can show the serrations to a tour group.",
+    "model_fragility": "Prints need 'supports' removed manually (a mini-game using the Style 5 tweezers!)."
+  }
+}

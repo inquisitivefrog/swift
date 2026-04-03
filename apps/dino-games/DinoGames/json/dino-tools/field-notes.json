@@ -1,0 +1,22 @@
+{
+  "id": "tool_pro_field_journal_entry_02",
+  "item_name": "Scientific Field Observation Ledger",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A close-up of a weather-beaten yellow field notebook. The left page features a meticulous graphite sketch of a 3-foot dinosaur horn pedestalized in rock. The right page contains tight, legible technical handwriting. A small photo-scale bar is taped to the bottom of the page.",
+  "content_declaration": {
+    "specimen_id": "HC-2026-04 (Triceratops horridus - Partial Brow Horn)",
+    "geological_formation": "Hell Creek Formation (Upper Maastrichtian), Montana.",
+    "rock_stratification": "Located in a distinct 40cm thick lens of cross-bedded fluvial sandstone, situated 12 meters below the K-Pg boundary layer (iridium anomaly).",
+    "matrix_material": "Medium-grained, poorly sorted 'salt-and-pepper' sandstone. High carbonaceous content with visible leaf impressions (Ficus) in the surrounding silt stringers.",
+    "grid_position": {
+      "quadrant": "Sector B-North",
+      "xy_coord": "X: 45.2cm / Y: 88.7cm (from SW stake)",
+      "z_depth": "1.14m below Site Datum Alpha"
+    }
+  },
+  "constraints": {
+    "visual_note": "Handwriting should include small 'strike-throughs' or corrections to feel authentic to field conditions.",
+    "background": "The notebook is resting on a pair of dusty work gloves (Tan leather)."
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "asset_id": "dino-tools-lab-air-scribe-001",
+  "label": "Pneumatic Air Scribe",
+  "category": "Excavation Tools",
+  "description": "A precision handheld pneumatic tool used to remove rock matrix from fossilized bone through high-frequency vibration.",
+  "components": [
+    {
+      "id": "stylus_tip",
+      "type": "swappable_part",
+      "material": "Tungsten Carbide",
+      "function": "The contact point that vibrates against the rock. Needs frequent sharpening."
+    },
+    {
+      "id": "throttle_sleeve",
+      "type": "interactive_control",
+      "function": "Rotating sleeve or lever that controls the frequency of the strokes (BPM)."
+    },
+    {
+      "id": "air_hose_coupling",
+      "type": "attachment_point",
+      "requires": "dino-tools-lab-compressor",
+      "safety_note": "Requires inline oiler and moisture trap to prevent tool seizure."
+    },
+    {
+      "id": "o-ring_seal_kit",
+      "type": "maintenance_item",
+      "function": "Prevents air leaks and maintains internal pressure."
+    }
+  ],
+  "game_mechanics": {
+    "vibration_meter": "High vibration reduces player stamina/accuracy over time.",
+    "heat_buildup": "Continuous use requires 'cool down' periods to prevent internal damage.",
+    "precision_mode": "Allows for 'micro-etching' near delicate sutures or growth lines."
+  },
+  "tags": ["pneumatic", "precision", "prep", "noisy"]
+}

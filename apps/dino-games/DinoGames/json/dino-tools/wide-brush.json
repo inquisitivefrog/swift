@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_brush_wide_01",
+  "item_name": "Wide Field Utility Brush",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A 3-inch wide flat brush. It has a heavy-duty unfinished wooden handle for better grip in dusty conditions. The bristles are stiff, black synthetic fibers, cut straight across for maximum sweeping power.",
+  "constraints": {
+    "texture": "Visible wood grain on handle; coarse, stiff bristle texture.",
+    "background": "Solid neutral 50% grey floor plane."
+  }
+}

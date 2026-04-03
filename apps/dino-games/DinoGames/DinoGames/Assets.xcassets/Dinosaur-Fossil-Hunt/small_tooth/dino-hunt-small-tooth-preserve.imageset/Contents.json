@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "small-tooth-07-preserve-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "small-tooth-07-preserve-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "small-tooth-07-preserve-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

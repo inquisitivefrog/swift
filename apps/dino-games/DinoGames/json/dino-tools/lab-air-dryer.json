@@ -1,0 +1,12 @@
+{
+  "id": "tool_lab_air_dryer_01",
+  "item_name": "In-Line Compressed Air Dryer",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A small, boxy device connected between the compressor and the main air line. It has a small cooling fan and a digital readout of the 'Dew Point'. This ensures the air reaching the delicate TRX-07 bone is 100% bone-dry.",
+  "constraints": {
+    "detail": "Vibrating slightly when active; industrial grey finish.",
+    "background": "Wall-mounted next to the main compressor."
+  }
+}

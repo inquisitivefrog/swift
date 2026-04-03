@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_stabilizer_01",
+  "item_name": "Butvar Specimen Stabilizer",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A small, wide-mouthed amber glass bottle with a black screw-top lid. A small metal-handled brush is leaning against the bottle, its bristles wet with a clear, honey-like liquid. The label on the bottle is a clean, technical white with 'B-76 STABILIZER' printed in black.",
+  "constraints": {
+    "material": "Translucent amber glass; glossy liquid texture for the 'glue'.",
+    "logic": "Indicates a high-tier preservation step for fragile specimens."
+  }
+}

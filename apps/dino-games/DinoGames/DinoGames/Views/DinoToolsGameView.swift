@@ -5,6 +5,8 @@
 //  Dino Tools: Help the paleontologist use tools (magnifying glass, SEM microscope, CT scanner) to identify
 //  the egg species and return the egg to its mother. Flow: magnify → SEM → scanner → select dinosaur.
 //
+//  Tool row artwork: prefers `dino-tools-*` (Dinosaur-Tools: paleontologist | preparator | restorer) when present, else `dino-eggs-tools-*` (Dinosaur-Eggs).
+//
 
 import SwiftUI
 @preconcurrency import AVFoundation
@@ -106,6 +108,11 @@ private enum EggMorphology {
 private enum DinoToolsScanningTool {
     case scanner
     case sem
+}
+
+/// First matching imageset name (prefers earlier entries).
+private func dinoToolsFirstAssetName(_ candidates: [String]) -> String? {
+    candidates.first { ImageAssetCache.imageExists(named: $0) }
 }
 
 struct DinoToolsRound: Identifiable {
@@ -384,10 +391,14 @@ struct DinoToolsGameView: View {
 
     @ViewBuilder
     private var magnifyToolImage: some View {
-        let magnifierName = "dino-eggs-tools-magnifier"
-        let asset = ImageAssetCache.imageExists(named: magnifierName) ? magnifierName : nil
+        let magnifierName = dinoToolsFirstAssetName([
+            "dino-tools-dental-pick",
+            "dino-tools-tape-measure",
+            "dino-tools-hand-held-sifting-screen",
+            "dino-eggs-tools-magnifier",
+        ])
         Group {
-            if let n = asset {
+            if let n = magnifierName {
                 Image(n)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -410,11 +421,23 @@ struct DinoToolsGameView: View {
 
     @ViewBuilder
     private var semToolImage: some View {
-        let inactiveName = "dino-eggs-tools-sem-inactive"
-        let scanningName = "dino-eggs-tools-sem-scanning"
+        let inactiveName = dinoToolsFirstAssetName([
+            "dino-tools-dust-snorkel",
+            "dino-tools-exhaust-fume-hood",
+            "dino-tools-abrasive-cabinet",
+            "dino-eggs-tools-sem-inactive",
+        ])
+        let scanningName = dinoToolsFirstAssetName([
+            "dino-tools-downdraft-bench",
+            "dino-tools-dust-snorkel",
+            "dino-eggs-tools-sem-scanning",
+        ])
         let isSemScanning = scanningTool == .sem && scanInProgress
-        let displayName = isSemScanning && ImageAssetCache.imageExists(named: scanningName)
-            ? scanningName : (ImageAssetCache.imageExists(named: inactiveName) ? inactiveName : nil)
+        let displayName: String? = {
+            if isSemScanning, let s = scanningName { return s }
+            if let i = inactiveName { return i }
+            return scanningName
+        }()
 
         Group {
             if let name = displayName {
@@ -453,13 +476,24 @@ struct DinoToolsGameView: View {
 
     @ViewBuilder
     private func scannerToolImage(emptyExists: Bool, cladeExists: Bool) -> some View {
-        let openName = "dino-eggs-tools-scanner-open"
-        let closedName = "dino-eggs-tools-scanner-closed"
+        let openName = dinoToolsFirstAssetName([
+            "dino-tools-3d-printer",
+            "dino-tools-wet-sieve-stack",
+            "dino-eggs-tools-scanner-open",
+        ])
+        let closedName = dinoToolsFirstAssetName([
+            "dino-tools-digital-restoration",
+            "dino-tools-specimen-crate",
+            "dino-tools-3d-printer",
+            "dino-eggs-tools-scanner-closed",
+        ])
         let displayName: String? = {
             if scanningTool == .scanner || !scannerIsOpen {
-                return ImageAssetCache.imageExists(named: closedName) ? closedName : (ImageAssetCache.imageExists(named: openName) ? openName : nil)
+                if let c = closedName { return c }
+                return openName
             }
-            return ImageAssetCache.imageExists(named: openName) ? openName : (ImageAssetCache.imageExists(named: closedName) ? closedName : nil)
+            if let o = openName { return o }
+            return closedName
         }()
 
         Group {

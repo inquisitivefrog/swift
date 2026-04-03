@@ -1,0 +1,10 @@
+{
+    "id": "building_storage_tent_01",
+    "name": "Heavy Equipment Storage Tent",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_identity": "Reinforced, low-profile khaki tent used for heavy tool housing; interior shows the orange rock saw, pneumatic jackhammers, and sledge hammers neatly organized on heavy-duty rubber mats; several spare fuel canisters and rolls of white plaster burlap are stacked in the corner.",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "formation_context": "MORRISON_EJ",
+    "notes": "Character Paleontologist 6 is assigned to this area to organize gear."
+  }

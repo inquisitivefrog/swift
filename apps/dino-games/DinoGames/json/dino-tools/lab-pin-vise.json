@@ -1,0 +1,30 @@
+{
+  "asset_id": "dino-tools-lab-pin-vise-001",
+  "label": "Pin Vise with Tungsten Carbide Needle",
+  "category": "Preparation Tools",
+  "description": "A small, pen-like tool that securely holds a replaceable, hand-sharpened tungsten carbide needle for extremely fine manual matrix removal under a microscope.",
+  "components": [
+    {
+      "id": "pin_vise_handle",
+      "type": "held_item",
+      "material": "Anodized Aluminum or Steel",
+      "function": "Ergonomic grip for precise control."
+    },
+    {
+      "id": "collet_chuck",
+      "type": "mechanical_component",
+      "function": "Holds the interchangeable needle securely."
+    },
+    {
+      "id": "tungsten_carbide_needle",
+      "type": "consumable",
+      "material": "Tungsten Carbide",
+      "function": "Sharp, durable tip for scraping and chipping away fine matrix; requires frequent re-sharpening."
+    }
+  ],
+  "game_mechanics": {
+    "precision_scraping": "Player uses the pin vise to 'scrape' away matrix without damaging the fossil, requiring careful movement.",
+    "needle_wear": "The needle dulls with use, requiring the player to 'sharpen' it or replace it, affecting efficiency."
+  },
+  "tags": ["manual_tool", "precision", "micro-prep", "matrix_removal", "delicate"]
+}

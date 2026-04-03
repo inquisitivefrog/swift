@@ -1,0 +1,15 @@
+{
+  "asset_id": "dino-tools-lab-mass-spec-001",
+  "label": "Isotope Ratio Mass Spectrometer (IRMS)",
+  "category": "High-Tech Analysis",
+  "description": "A precision instrument that ionizes gas samples to measure the relative abundance of stable isotopes.",
+  "components": [
+    { "id": "ion_source", "type": "internal", "function": "Turns the sample into a plasma." },
+    { "id": "magnetic_sector", "type": "internal", "function": "Bends the ion path based on atomic mass." },
+    { "id": "faraday_cups", "type": "sensor", "function": "Detects and counts the ions hitting the back of the machine." }
+  ],
+  "game_mechanics": {
+    "calibration_check": "Player must run a 'Standard' (known sample) before the fossil to ensure the machine isn't drifting.",
+    "power_drain": "Running this machine uses significant 'Base Power'—don't run it at the same time as the Industrial Abrasive Cabinet!"
+  }
+}

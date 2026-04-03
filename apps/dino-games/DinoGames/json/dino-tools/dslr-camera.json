@@ -1,0 +1,15 @@
+{
+  "project": "DinoGames",
+  "version": "1.0.7",
+  "asset_manifests": [
+    {
+      "id": "tool_dslr_camera_01",
+      "name": "Expedition DSLR Camera",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "visual_identity": "Professional-grade DSLR with a rugged, matte black weather-sealed body; features a large 24-70mm zoom lens with a glass-like lens flare; a vibrant orange 'DinoGames' branded neck strap; clear digital rear display showing a thumbnail of a fossil discovery.",
+      "lighting_ref": "STUDIO_GROUNDED_LIGHT",
+      "tech_ref": "SQUARE_HERO_CARD",
+      "notes": "Used by the team for site documentation. The body should have subtle dust textures on the rubber grips to match the field-worn aesthetic of the rock saw. Set against a light-grey neutral background for UI clarity."
+    }
+  ]
+}

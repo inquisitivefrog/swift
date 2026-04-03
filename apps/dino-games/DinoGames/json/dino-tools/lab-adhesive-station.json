@@ -1,0 +1,12 @@
+{
+  "id": "env_lab_adhesive_station_01",
+  "item_name": "Chemical Stabilization Workbench",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A specialized lab bench with an integrated fume hood. On the bench are glass jars containing clear 'B-72' beads, several amber glass bottles of acetone, and a set of precision glass-tipped applicators. A small 'Vortex Mixer' is shown spinning a jar of adhesive.",
+  "constraints": {
+    "material": "Chemical-resistant white laminate; stainless steel glass-ware rack.",
+    "logic": "The 'Healing' mechanic. Used to repair fractures in the bone."
+  }
+}

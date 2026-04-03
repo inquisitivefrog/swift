@@ -1,0 +1,12 @@
+{
+  "report_id": "histology-hc-2026-042",
+  "subject": "Triceratops brow horn fragment",
+  "data_fields": {
+    "growth_rings_count": 18,
+    "remodeling_rate": "High",
+    "medullary_bone_present": true,
+    "vascular_density": "0.45 mm2"
+  },
+  "conclusion_text": "Specimen identified as a sexually mature, gravid female. Seasonal LAGs suggest a period of nutritional stress 3 years prior to death.",
+  "scientific_value_score": 85
+}

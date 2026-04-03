@@ -1,0 +1,41 @@
+{
+  "asset_id": "dino-tools-lab-microscope-view-001",
+  "label": "Binocular Stereo Microscope View",
+  "category": "Lab Equipment",
+  "description": "A close-up view through a stereo microscope, showing a small fossilized bone (e.g., a mammalian jaw fragment) on a prepared stage, with fine tools nearby.",
+  "components": [
+    {
+      "id": "eyepiece_lenses",
+      "type": "optical_component",
+      "magnification": "10x",
+      "function": "Provides primary magnification for viewing."
+    },
+    {
+      "id": "objective_lenses",
+      "type": "optical_component",
+      "magnification_range": "0.7x - 5x (variable)",
+      "function": "Provides variable magnification for the specimen."
+    },
+    {
+      "id": "focus_knob",
+      "type": "interactive_control",
+      "function": "Adjusts the focal plane for sharp image clarity."
+    },
+    {
+      "id": "specimen_stage",
+      "type": "static_mesh",
+      "material": "Frosted Glass or Black/White Reversible Plate",
+      "function": "Platform for placing the fossil during observation."
+    },
+    {
+      "id": "ring_light_illuminator",
+      "type": "light_source",
+      "function": "Provides bright, even, shadow-free illumination of the specimen."
+    }
+  ],
+  "game_mechanics": {
+    "identify_fractures": "Player must use the microscope to spot and mark micro-fractures on a small fossil before applying consolidant.",
+    "fine_detail_extraction": "Allows for precise removal of matrix from delicate areas of a fossil."
+  },
+  "tags": ["microscope", "magnification", "precision", "small_fauna", "observation"]
+}

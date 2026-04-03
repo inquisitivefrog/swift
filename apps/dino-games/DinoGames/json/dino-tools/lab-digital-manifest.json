@@ -1,0 +1,12 @@
+{
+  "asset_id": "dino-tools-lab-digital-manifest-001",
+  "label": "Digital Specimen Dashboard",
+  "category": "UI / Documentation",
+  "description": "A digital interface used to track the status, high-resolution 3D scans, and preparation history of the entire collection.",
+  "ui_elements": [
+    { "id": "prep_timer", "label": "Total Bench Time", "unit": "Hours/Minutes" },
+    { "id": "scan_viewer", "type": "3D_Orthographic", "function": "View the fossil from all angles." },
+    { "id": "safety_check", "label": "Hazard Exposure", "function": "Tracks player's exposure to dust and solvents." }
+  ],
+  "tags": ["dashboard", "database", "digital-twin"]
+}

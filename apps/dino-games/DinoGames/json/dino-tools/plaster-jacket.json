@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_plaster_jacket_01",
+  "item_name": "Plaster & Burlap Jacket Kit",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A heavy roll of natural brown burlap fabric sitting next to a white industrial bucket filled with wet plaster. The burlap shows a coarse, woven texture. One strip of burlap is shown partially dipped in the white plaster, appearing stiff and dripping slightly. This setup represents the traditional 'Field Jacket' method.",
+  "constraints": {
+    "material": "Coarse organic burlap fiber; matte white gypsum plaster.",
+    "background": "Isolated on a 50% grey floor plane with soft contact shadows."
+  }
+}

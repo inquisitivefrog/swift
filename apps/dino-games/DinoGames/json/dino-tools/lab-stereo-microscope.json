@@ -1,0 +1,33 @@
+{
+  "asset_id": "dino-tools-lab-stereo-microscope-001",
+  "label": "Binocular Stereo Prep Microscope",
+  "category": "Lab Equipment",
+  "description": "A long-reach boom-stand microscope providing 3D depth perception for high-precision manual preparation of micro-fossils.",
+  "components": [
+    {
+      "id": "boom_stand_arm",
+      "type": "static_mesh",
+      "function": "Allows the microscope head to swing over large fossils or bulky lab equipment."
+    },
+    {
+      "id": "led_ring_light",
+      "type": "light_source",
+      "function": "High-intensity, cool-temperature lighting to illuminate tiny details without melting adhesives."
+    },
+    {
+      "id": "zoom_adjustment_knob",
+      "type": "interactive_control",
+      "range": "0.5x to 4.5x optical zoom"
+    },
+    {
+      "id": "diopter_adjustment",
+      "type": "calibration_point",
+      "function": "Syncs the two eyepieces to the player's specific vision/focus."
+    }
+  ],
+  "game_mechanics": {
+    "view_toggle": "Player can switch between 'Workbench View' and 'Microscope View' to perform different tiers of cleaning.",
+    "focal_plane_drift": "As the player removes rock, the surface moves out of focus, requiring frequent adjustment of the 'Focus' dial."
+  },
+  "tags": ["magnification", "precision", "optics", "small-fauna"]
+}

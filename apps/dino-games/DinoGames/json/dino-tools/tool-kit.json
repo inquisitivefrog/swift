@@ -1,0 +1,14 @@
+{
+  "id": "paleontologist_tools_collection_01",
+  "item_name": "Paleontologist's Essential Field Kit",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A curated collection of paleontological tools laid out on a clean, light-colored surface. The collection includes various items such as a rock hammer, several dental picks with different tips (curved, straight, pointed), a small brush, a measuring tape, and a notebook with a pencil. Each tool is rendered with realistic material properties, showcasing the metallic sheen of the steel, the texture of rubber grips, and the subtle wear marks from field use. The arrangement is organized but natural, suggesting tools ready for or just used in an excavation.",
+  "constraints": {
+    "composition": "Multiple tools artfully arranged, not overlapping excessively, with clear separation for each item.",
+    "materials": "Authentic rendering of steel, wood, plastic, rubber, and paper textures. Metallic parts should show realistic reflections and highlights.",
+    "background": "Isolated on a clean, light cerulean blue or off-white studio background with soft, naturalistic shadows to give depth and grounding.",
+    "lighting": "Even studio lighting that highlights details and textures without harsh shadows."
+  }
+}

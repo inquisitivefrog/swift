@@ -1,0 +1,16 @@
+{
+  "asset_id": "dino-tools-mobile-scanner-001",
+  "label": "Handheld 3D Laser Scanner",
+  "category": "Field & Lab Data",
+  "description": "A portable device that uses non-contact laser geometry to capture high-accuracy 3D meshes of fossils and dig sites.",
+  "components": [
+    { "id": "laser_emitter", "type": "optics", "function": "Projects a grid of light to calculate surface depth." },
+    { "id": "integrated_camera", "type": "optics", "function": "Applies high-resolution color texture to the 3D mesh." },
+    { "id": "tactile_trigger", "type": "control", "function": "Allows 'point-and-shoot' scanning in tight museum drawers." }
+  ],
+  "game_mechanics": {
+    "scanning_mini_game": "Player must move the scanner in a 'painting' motion. If they move too fast, the tracking is lost; if too slow, the file size becomes unmanageable.",
+    "spatial_reconstruction": "Allows the player to 're-visit' the dig site in VR/Digital mode to see the original orientation of the bones."
+  },
+  "tags": ["LIDAR", "digital-twin", "mobile", "mapping"]
+}

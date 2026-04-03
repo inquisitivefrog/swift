@@ -1,0 +1,12 @@
+{
+  "id": "env_lab_air_drop_01",
+  "item_name": "Workstation Air Manifold",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A vertical metal pipe coming down from the ceiling, ending in a manifold with four quick-connect brass fittings. A bright blue coiled 'recoil' hose is plugged into one, stretching down to a wooden workbench where an air-scribe sits.",
+  "constraints": {
+    "logic": "Allows multiple Preparators to work on the same large jacket (like TRX-07) simultaneously.",
+    "background": "Mounting to a clean, white laboratory pillar."
+  }
+}

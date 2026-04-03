@@ -1,0 +1,10 @@
+{
+  "asset_id": "dino-tools-art-stylus-001",
+  "label": "Haptic Pressure Stylus",
+  "category": "Digital Reconstruction",
+  "description": "A high-precision input device used by the paleo-artist to sculpt soft tissue layers over 3D digital bone meshes.",
+  "game_mechanics": {
+    "muscle_attachment_mini_game": "Player must identify 'rugosity' (rough patches on the bone) where tendons once attached. Highlighting the correct spots allows Elena to 'shrink-wrap' the muscles accurately.",
+    "color_theory": "Player chooses pigments based on the 'Isotope Map' (e.g., Forest Green for upland herbivores, Sandy Yellow for delta-dwellers)."
+  }
+}

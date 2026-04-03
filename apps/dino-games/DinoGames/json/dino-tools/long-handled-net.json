@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_net_long_handle_01",
+  "item_name": "Long-Handled Field Net/Scoop",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A long-handled net or scoop, approximately 4 feet in length. It features a lightweight, yet durable, anodized aluminum pole with a comfortable, textured rubber grip near the top. The net itself is a deep, sturdy mesh bag made of robust, quick-drying synthetic fabric, attached to a strong, circular metal frame (approx. 10-inch diameter). The mesh is a dark, neutral color, showing minor wear and a few faint water stains, suggesting use in collecting aquatic samples or scooping sediment.",
+  "constraints": {
+    "texture": "Smooth, slightly metallic sheen on aluminum pole; textured rubber grip; interwoven fabric mesh texture; subtle water stains and wear on net.",
+    "background": "Solid neutral 50% grey floor plane."
+  }
+}

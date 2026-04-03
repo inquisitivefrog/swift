@@ -1,0 +1,12 @@
+{
+  "id": "item_pro_specimen_crate_01",
+  "item_name": "Reinforced Field Transport Crate",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A heavy-duty crate made of thick, unfinished plywood and 2x4 bracing. The lid is partially screwed down. Visible inside are white plaster jackets nestled in a bed of loose straw and high-density grey foam. The outside of the crate is stenciled with 'UP' arrows and the Museum's acronym in black ink.",
+  "constraints": {
+    "texture": "Rough-sawn wood grain; visible metal screw heads; organic straw texture.",
+    "background": "The tailgate of a dusty 4x4 pickup truck."
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_climbing_harness_01",
+  "item_name": "Full-Body Industrial Fall-Arrest Harness",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A heavy-duty black and yellow padded harness with multiple steel D-rings. It features specialized gear loops currently holding a rock hammer and a water bottle. A 'descender' device is clipped to the front, with a thick static climbing rope threaded through it.",
+  "constraints": {
+    "material": "High-strength nylon webbing; forged steel hardware; dusty appearance.",
+    "logic": "Safety requirement for any slope over 45 degrees."
+  }
+}

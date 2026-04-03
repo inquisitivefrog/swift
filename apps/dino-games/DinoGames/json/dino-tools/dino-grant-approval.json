@@ -1,0 +1,30 @@
+{
+  "asset_id": "dino-grant-approval-2026-001",
+  "status": "APPROVED",
+  "funding_source": "National Science Foundation / Museum Board",
+  "project_title": "Micro-Vertebrate Ecology of the Upper Hell Creek: A Multi-Proxy Approach",
+  "approval_metrics": {
+    "taxonomic_diversity": "High (Small Fauna Focus)",
+    "analytical_rigor": "Excellent (Mass Spec + Histology)",
+    "public_outreach_potential": "High (Digital CT Renders)"
+  },
+  "rewards": [
+    {
+      "type": "Currency",
+      "amount": 25000,
+      "label": "Research Credits"
+    },
+    {
+      "type": "Unlock",
+      "item_id": "lab_upgrade_micro_ct_v2",
+      "label": "Next-Gen Micro-CT Scanner"
+    },
+    {
+      "type": "Reputation",
+      "points": 500,
+      "tier": "Senior Preparator"
+    }
+  ],
+  "summary_text": "By correlating dental isotopes with stratigraphic dating, your work has provided the first definitive map of herbivore migration in this sector. The Board is particularly impressed by your patience in processing micro-fauna samples often overlooked by larger expeditions.",
+  "next_objective": "Establish a permanent field camp in the High-Altitude Uplands to verify the Oxygen-18 migration hypothesis."
+}

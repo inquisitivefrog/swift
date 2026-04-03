@@ -1,0 +1,13 @@
+{
+  "id": "item_pro_shale_crate_01",
+  "item_name": "Slotted Specimen Crate (Botany)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A rugged, custom-built wooden crate made of unfinished pine. The interior features vertical wooden slots (grooves) designed to hold thin shale slabs upright and separate from one another. Several grey shale slabs are visible inside, each wrapped in a thin layer of white archival foam. The exterior of the crate is stenciled with 'FRAGILE' and 'DINOGAMES BOTANY DEPT'.",
+  "constraints": {
+    "material": "Unfinished light-colored wood; soft white polyethylene foam padding.",
+    "logic": "Prevents thin rock layers from knocking against each other and shattering during the 4x4 ride back to base.",
+    "background": "Sitting on the sandy tailgate of a green field vehicle."
+  }
+}

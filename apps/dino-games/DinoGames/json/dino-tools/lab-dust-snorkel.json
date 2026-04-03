@@ -1,0 +1,12 @@
+{
+  "id": "env_lab_dust_snorkel_01",
+  "item_name": "High-Volume Articulated Dust Extractor",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A translucent plastic 'bell' hood attached to a segmented, flexible white arm. The arm is mounted to the ceiling and positioned directly over the TRX-07 jacket. A faint 'whirring' effect indicates high-speed suction. A small LED light ring is built into the rim of the hood to illuminate the work area.",
+  "constraints": {
+    "logic": "Must be active for any 'Pneumatic' task. Reduces 'Lab Cleaning' maintenance meter.",
+    "material": "Polycarbonate hood; aluminum joints; wire-reinforced suction hose."
+  }
+}

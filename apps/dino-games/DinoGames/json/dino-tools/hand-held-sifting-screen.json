@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_sifting_screen_hand_01",
+  "item_name": "Hand-Held Field Sifting Screen",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A sturdy, rectangular hand-held sifting screen, approximately 12x18 inches. It has a robust, unfinished wooden frame with visible wood grain, featuring a comfortable handle grip on each of the shorter sides. The screen mesh is made of durable, rust-resistant fine metal wire, securely fastened within the frame. There are traces of dried mud and sand on the frame and within the mesh, indicating recent field use.",
+  "constraints": {
+    "texture": "Visible wood grain on frame; fine, interwoven metal mesh texture; subtle dried mud/sand texture.",
+    "background": "Solid neutral 50% grey floor plane."
+  }
+}

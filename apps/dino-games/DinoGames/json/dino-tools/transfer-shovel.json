@@ -1,0 +1,14 @@
+{
+  "id": "tool_pro_shovel_square_01",
+  "item_name": "Square-Mouth Transfer Shovel",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "GLOBAL_FIELD_EQUIPMENT",
+  "pose": "Angled 3/4 beauty shot resting on the floor plane",
+  "visual_description": "A heavy-duty shovel with a flat, square-front blade designed for scooping loose rock and dirt off a flat surface. Features a short, reinforced fiberglass shaft with a wide D-grip handle for maximum control when throwing heavy loads of debris. The blade is wide and slightly upturned at the sides to prevent 'handful-sized' spills.",
+  "constraints": {
+    "material": "Saturated yellow fiberglass shaft; industrial black steel head.",
+    "logic": "Designed for volume; shows the scale of moving massive amounts of overburden."
+  }
+}

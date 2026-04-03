@@ -1,0 +1,9 @@
+{
+      "id": "trailer_fossil_transport_01_square",
+      "name": "Highway Fossil Trailer",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "visual_identity": "Dual-axle flatbed trailer; industrial grey with yellow safety tape; carrying large white plaster-jacketed fossils secured with orange straps; centered 1:1 composition.",
+      "lighting_ref": "HIGH_SUN",
+      "tech_ref": "SQUARE_HERO_CARD",
+      "notes": "Changed to square format. The trailer should be shown isolated from the truck to fit the square frame."
+    }

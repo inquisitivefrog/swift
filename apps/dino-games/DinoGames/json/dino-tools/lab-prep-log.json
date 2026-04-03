@@ -1,0 +1,14 @@
+{
+  "asset_id": "dino-tools-lab-prep-log-001",
+  "label": "Specimen Preparation Log",
+  "category": "Documentation",
+  "description": "A chronological record of all physical and chemical interventions performed on a specimen during the preparation process.",
+  "log_entries": [
+    { "timestamp": "ISO-8601", "tool_used": "Air Scribe", "notes": "Removed ironstone concretion from distal end." },
+    { "timestamp": "ISO-8601", "chemical_used": "5% B-72 in Acetone", "notes": "Consolidated micro-fractures on the articular surface." }
+  ],
+  "game_mechanics": {
+    "reversibility_track": "Tracks how much adhesive has been added. Too much 'glue' makes the fossil look messy; too little makes it fragile."
+  },
+  "tags": ["record-keeping", "science-method", "lab-journal"]
+}

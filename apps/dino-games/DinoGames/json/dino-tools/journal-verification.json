@@ -1,0 +1,11 @@
+{
+  "id": "ui_journal_verification_01",
+  "item_name": "Daily Field Log Verification",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "The bottom of a field journal page. It shows a formal 'End of Day' summary. There are two signature lines: one for the 'Lead Excavator' and one for the 'Site Recorder'. A rubber-stamp ink mark shows the date: 'MAR 22 2026'. A small GPS coordinate string is written in the margin.",
+  "logic_notes": {
+    "gameplay_trigger": "Clicking the signature 'locks' the data for that specimen, preventing further edits and awarding 'Scientific Credibility' points.",
+    "visual_detail": "The ink of the signature should look slightly feathered, as if written with a felt-tip pen on all-weather paper."
+  }
+}

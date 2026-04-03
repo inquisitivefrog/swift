@@ -1,0 +1,12 @@
+{
+  "id": "tool_lab_compressor_01",
+  "item_name": "Ultra-Quiet Oil-Less Air Compressor",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A sleek, professional air compressor with twin white vertical tanks. The motor is encased in a sound-muffling shroud. A digital pressure gauge glows blue, showing '90 PSI'. It features a clear glass bowl on the side (the moisture trap) and a series of brass regulators.",
+  "constraints": {
+    "material": "Powder-coated white steel; braided stainless steel lead lines.",
+    "logic": "The power source for all Preparator tools. Must be 'drained' of water daily."
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "asset_id": "dino-tools-field-wash-cradle-001",
+  "label": "Screen-Washing Rocker Station",
+  "category": "Field Processing",
+  "description": "A heavy-duty wooden frame with mesh bottoms, suspended over a water source, used to wash away clay and sand from bulk matrix samples.",
+  "components": [
+    {
+      "id": "rocker_frame",
+      "type": "static_mesh",
+      "material": "Treated Lumber / PVC",
+      "function": "Holds the matrix and allows the user to 'agitate' it in the water."
+    },
+    {
+      "id": "matrix_sample_bag",
+      "type": "held_item",
+      "label_ref": "dino-tools-bulk-matrix-bag",
+      "function": "The source material being dumped into the screens."
+    },
+    {
+      "id": "high_pressure_hose",
+      "type": "interactive_tool",
+      "function": "Used to gently break down stubborn clay clumps that don't dissolve by rocking alone."
+    }
+  ],
+  "game_mechanics": {
+    "agitation_mini_game": "Player must rock the frame at the right rhythm to pass sediment without 'abrading' the tiny fossils inside.",
+    "yield_calculation": "The cleaner the wash, the easier the 'Sorting' phase will be back in the lab."
+  },
+  "tags": ["macro-fossils", "wet-screening", "bulk-sampling", "river-work"]
+}

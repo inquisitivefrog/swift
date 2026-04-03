@@ -1,0 +1,12 @@
+{
+  "id": "char_field_ppe_01",
+  "item_name": "Badlands Field Safety Rig",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A collection of four essential field items: 1. High-impact polycarbonate safety glasses with 'Dust-Seal' foam edges. 2. Heavy-duty leather 'Palomino' work gloves (scuffed and stained with red dirt). 3. A pair of gel-filled tactical knee pads for 'Detail-Phase' crawling. 4. A wide-brimmed 'safari' style sun hat with a removable neck flap.",
+  "constraints": {
+    "material": "Distressed leather; breathable synthetic mesh; scratched clear plastic.",
+    "logic": "Reduces 'Fatigue' and prevents 'Minor Injury' events during excavation."
+  }
+}

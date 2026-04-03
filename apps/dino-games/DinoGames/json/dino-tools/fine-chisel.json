@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_chisel_detail_01",
+  "item_name": "Fine Specimen Detail Chisel",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A small, pen-sized hand tool. It has a thick, ergonomic teal-colored rubber handle designed for a palm-grip. The 'blade' is a very short, sharp needle-thin piece of stainless steel. It looks more like a surgical instrument than a construction tool.",
+  "constraints": {
+    "anatomy": "No striking cap; designed for hand-pressure only.",
+    "logic": "Provides a sense of extreme precision and fragility."
+  }
+}

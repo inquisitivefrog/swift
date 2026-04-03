@@ -1,0 +1,29 @@
+{
+  "asset_id": "dino-tools-lab-heavy-cabinet-001",
+  "label": "Industrial Abrasive Blast Cabinet",
+  "category": "Heavy Preparation",
+  "description": "A sealed, high-pressure chamber used for bulk matrix removal on large specimens using heavy-duty abrasive media.",
+  "components": [
+    {
+      "id": "sealed_glove_ports",
+      "type": "interactive_geometry",
+      "material": "Thick Neoprene/Rubber",
+      "function": "Allows the user to manipulate the specimen and blaster while maintaining a dust-tight seal."
+    },
+    {
+      "id": "high_volume_nozzle",
+      "type": "held_item",
+      "function": "Directs a wide stream of abrasive media (Dolomite or Aluminum Oxide) for rapid clearing."
+    },
+    {
+      "id": "replaceable_sash_shield",
+      "type": "consumable_part",
+      "function": "Protects the main glass from being etched by reflecting abrasive media."
+    }
+  ],
+  "game_mechanics": {
+    "visibility_degradation": "The more the player blasts, the more the 'viewing window' scratches, requiring a shield replacement to restore clarity.",
+    "bulk_clearing": "Much faster than the air-scribe but provides less control; using this on 'small fauna' would destroy the specimen."
+  },
+  "tags": ["heavy-duty", "sandblasting", "enclosed", "matrix-removal"]
+}

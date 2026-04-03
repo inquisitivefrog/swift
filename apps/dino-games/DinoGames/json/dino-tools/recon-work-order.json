@@ -1,0 +1,32 @@
+{
+  "work_order_id": "recon-2026-77",
+  "assigned_to": "Elena 'Lens' Vasquez",
+  "input_requirements": {
+    "primary_mesh": "LIDAR_Scan_HC2026_042",
+    "internal_structure": "MicroCT_Volume_Data",
+    "biochemical_data": "Isotope_Report_Carbon_Oxygen"
+  },
+  "reconstruction_parameters": [
+    {
+      "stage": "Anatomical Rigging",
+      "method": "Extant Phylogenetic Bracketing",
+      "status": "Awaiting Bone Pathology Report",
+      "impact": "Determines range of motion and muscle mass."
+    },
+    {
+      "stage": "Integument Application",
+      "method": "Melanosome Analysis / Speculative Mapping",
+      "status": "Pending",
+      "impact": "Decides between scales, proto-feathers, or skin."
+    }
+  ],
+  "output_assets": {
+    "gallery_render": "4K_Textured_Turntable",
+    "physical_output": "1:1_Scale_Resin_Print_Painted",
+    "public_label": "Digital_Interactive_Kiosk_Export"
+  },
+  "cost_multiplier": {
+    "clean_data_bonus": -0.15,
+    "missing_context_penalty": 0.25
+  }
+}

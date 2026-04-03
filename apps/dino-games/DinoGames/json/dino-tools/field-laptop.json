@@ -1,0 +1,12 @@
+{
+  "id": "tool_tech_rugged_laptop_01",
+  "item_name": "Military-Grade Rugged Laptop",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A thick, heavy-duty laptop with a magnesium alloy chassis and reinforced rubber corners. The screen is high-brightness 'sunlight-readable' matte finish. It is shown open, displaying a 3D wireframe model of a dinosaur bone. It has a built-in handle and port covers to keep out dust and moisture.",
+  "constraints": {
+    "material": "Textured black and silver metal; glowing backlit keyboard (amber or red for night work).",
+    "logic": "The primary interface for all 'High-Tech' tools like GPR and LIDAR scanners."
+  }
+}

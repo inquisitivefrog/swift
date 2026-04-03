@@ -1,0 +1,12 @@
+{
+  "id": "tool_tech_3d_scanner_01",
+  "item_name": "Handheld Structured Light Scanner",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A high-tech handheld device resembling a bulky, futuristic camera with dual lenses and an integrated screen. It emits a visible grid of soft blue light patterns onto a dinosaur footprint in the rock. The screen shows a real-time 'heat map' of the 3D depth data being captured.",
+  "constraints": {
+    "logic": "Used for non-invasive data collection of surfaces.",
+    "background": "Held by a technician over a horizontal rock slab with clear trackway impressions."
+  }
+}

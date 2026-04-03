@@ -1,0 +1,8 @@
+"id": "tool_sledge_hammer_01_icon",
+      "name": "Heavy-Duty Sledge Hammer",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "visual_identity": "Industrial safety orange and weathered steel hammer; octagonal head with 'DinoGames' logo; set against a solid, light-grey neutral background for maximum icon clarity.",
+      "lighting_ref": "STUDIO_GROUNDED_LIGHT",
+      "tech_ref": "DEFAULT_SQUARE",
+      "notes": "Background lightened to hex #E0E0E0 to ensure visibility at small scales."
+    }

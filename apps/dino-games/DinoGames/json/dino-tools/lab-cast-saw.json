@@ -1,0 +1,12 @@
+{
+  "id": "tool_lab_cast_saw_01",
+  "item_name": "High-Torque Oscillating Specimen Saw",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A handheld power tool with a thick, ergonomic handle and a circular, serrated steel blade. The blade does not rotate; it vibrates in a tight arc. It is shown mid-cut, slicing a clean line through the white plaster of the TRX-07 jacket. A small plume of white dust is being sucked into the nearby snorkel.",
+  "constraints": {
+    "material": "Medical-grade stainless steel; high-impact blue plastic housing; heavy-duty power cord.",
+    "logic": "The 'First Move' in the lab. Used to remove the 'Cap' of the plaster jacket."
+  }
+}

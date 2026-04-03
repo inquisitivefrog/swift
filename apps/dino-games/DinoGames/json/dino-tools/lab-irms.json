@@ -1,0 +1,16 @@
+{
+  "asset_id": "dino-tools-lab-mass-spec-001",
+  "label": "Isotope Ratio Mass Spectrometer (IRMS)",
+  "category": "High-Tech Analysis",
+  "description": "A precision instrument used to measure the relative abundance of stable isotopes in fossilized enamel and bone.",
+  "status_lights": {
+    "vacuum_sealed": "Green",
+    "ion_beam_active": "Blue",
+    "sample_tray": "Ready"
+  },
+  "game_mechanics": {
+    "warm_up_time": 300,
+    "maintenance_cost": 150,
+    "accuracy_multiplier": 1.2
+  }
+}

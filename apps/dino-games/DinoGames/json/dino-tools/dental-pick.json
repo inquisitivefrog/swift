@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_dental_pick_01",
+  "item_name": "Stainless Steel Dental Pick",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A long, slender hand tool made of high-polish stainless steel. It features a knurled (textured) center grip for non-slip handling. One end tapers to a sharp, needle-like point, while the other is a small, curved hook. It is shown reflecting sharp studio highlights.",
+  "constraints": {
+    "anatomy": "Extremely fine tips; surgical-grade appearance.",
+    "background": "Isolated on a light cerulean blue background with a soft contact shadow."
+  }
+}

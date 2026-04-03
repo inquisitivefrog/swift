@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_site_notice_01",
+  "item_name": "Official Site Authorization Plaque",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A heavy-duty plastic A-frame sign or a weather-sealed pouch attached to a t-post. Inside the clear plastic pouch is a visible document with the Department of the Interior header. Large bold text at the top reads: 'AUTHORIZED PALEONTOLOGICAL EXCAVATION IN PROGRESS'. It includes a contact number for the host museum.",
+  "constraints": {
+    "logic": "Acts as the 'Legal Shield' for the player's site.",
+    "background": "Isolated on a neutral grey floor plane."
+  }
+}

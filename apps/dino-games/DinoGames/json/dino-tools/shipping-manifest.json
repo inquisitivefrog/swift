@@ -1,0 +1,11 @@
+{
+  "id": "doc_pro_shipping_manifest_01",
+  "item_name": "Specimen Transfer & Prep-Request Form",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A formal document with a 'Museum of Paleontology' header. It lists the contents of the crate (e.g., 'Jacket HC-22: 1x Triceratops Horn'). It includes a 'Handling Warning' section with hand-checked boxes for 'EXTREMELY FRAGILE' and 'PYRITE DISEASE RISK'. There is a signature line for the Field Lead to 'Release' the specimen and a blank line for the Lab Manager to 'Receive' it.",
+  "constraints": {
+    "logic": "Links the field data directly to the lab workflow.",
+    "detail": "Must look like a carbon-copy form with a yellow 'duplicate' sheet peeking out from behind the white top sheet."
+  }
+}

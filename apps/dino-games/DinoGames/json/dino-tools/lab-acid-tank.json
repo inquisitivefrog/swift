@@ -1,0 +1,22 @@
+{
+  "asset_id": "dino-tools-lab-acid-tank-001",
+  "label": "Specimen Disaggregation Tank",
+  "category": "Chemical Preparation",
+  "description": "A high-density polyethylene tank used for the controlled dissolution of carbonate matrix using weak organic acids.",
+  "components": [
+    {
+      "id": "acid_resistant_basket",
+      "type": "removable_part",
+      "function": "Allows the player to lift the fossil out of the acid without touching the liquid."
+    },
+    {
+      "id": "calcium_phosphate_buffer",
+      "type": "consumable",
+      "function": "Added to the acid to ensure the chemical only eats the rock, not the bone."
+    }
+  ],
+  "game_mechanics": {
+    "soak_timer": "This is a real-time task. The fossil must soak for 24-48 hours. If left too long, even buffered acid will begin to 'etch' the bone."
+  },
+  "tags": ["chemistry", "dissolution", "limestone", "soaking"]
+}

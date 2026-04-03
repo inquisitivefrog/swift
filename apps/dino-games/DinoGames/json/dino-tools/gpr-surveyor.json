@@ -1,0 +1,12 @@
+{
+  "id": "tool_tech_gpr_unit_01",
+  "item_name": "GPR Subsurface Surveyor",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A device that looks like a high-tech lawnmower with a flat, orange rectangular 'antenna' box at the base. It has a ruggedized tablet mounted on the handlebars. The tablet displays a scrolling 'Radargram' with colorful hyperbolic curves indicating buried objects.",
+  "constraints": {
+    "logic": "Allows the player to 'see' where to dig before breaking ground.",
+    "background": "Being pushed across a flat, dusty plateau in the badlands."
+  }
+}

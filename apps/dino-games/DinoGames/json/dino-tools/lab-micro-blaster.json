@@ -1,0 +1,43 @@
+{
+  "asset_id": "dino-tools-lab-micro-blaster-001",
+  "label": "Micro-Abrasive Blasting Unit",
+  "category": "Mechanical Preparation",
+  "description": "A precision instrument that uses a stream of abrasive powder propelled by compressed air to gently 'erase' rock matrix from fossil surfaces.",
+  "components": [
+    {
+      "id": "abrasive_reservoir",
+      "type": "container",
+      "contents": ["Sodium Bicarbonate", "Dolomite Powder", "Aluminum Oxide"],
+      "function": "Holds the media used for blasting; different hardness levels are used for different rock types."
+    },
+    {
+      "id": "blast_nozzle",
+      "type": "held_item",
+      "material": "Hi-Tech Ceramic or Tungsten",
+      "function": "A pencil-sized handpiece that directs the abrasive stream."
+    },
+    {
+      "id": "foot_pedal_actuator",
+      "type": "interactive_control",
+      "function": "Allows the preparator to toggle the flow of powder while keeping both hands on the specimen."
+    },
+    {
+      "id": "viewing_window",
+      "type": "static_mesh",
+      "material": "Polycarbonate with replaceable shields",
+      "function": "Protects the user while allowing a clear view of the work."
+    },
+    {
+      "id": "dust_extraction_port",
+      "type": "attachment_point",
+      "requires": "dino-tools-lab-dust-snorkel",
+      "function": "Connects to the vacuum system to prevent the cabinet from becoming opaque with dust."
+    }
+  ],
+  "game_mechanics": {
+    "media_selection": "Player must choose the correct abrasive hardness. If the powder is harder than the fossil (Mohs scale), the fossil takes damage.",
+    "visibility_management": "If the player doesn't clear the dust, the screen becomes 'foggy,' increasing the risk of over-blasting.",
+    "pressure_regulation": "High PSI removes rock faster but risks 'pitting' the bone surface."
+  },
+  "tags": ["abrasive", "cleaning", "high-pressure", "prep-station"]
+}

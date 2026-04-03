@@ -1,0 +1,30 @@
+{
+  "asset_id": "dino-tools-lab-petri-dish-001",
+  "label": "Petri Dishes for Fossil Fragments",
+  "category": "Lab Consumables",
+  "description": "Small, clear, shallow dishes with lids used to sort, contain, and temporarily store very small fossil fragments or isolated micro-fossils during preparation.",
+  "components": [
+    {
+      "id": "dish_base",
+      "type": "container",
+      "material": "Borosilicate Glass or Polystyrene",
+      "properties": ["Clear", "Stackable"]
+    },
+    {
+      "id": "dish_lid",
+      "type": "container_component",
+      "material": "Borosilicate Glass or Polystyrene",
+      "function": "Protects contents from dust and loss."
+    },
+    {
+      "id": "specimen_label_area",
+      "type": "ui_element",
+      "function": "Area for writing specimen numbers or notes to avoid mixing fragments."
+    }
+  ],
+  "game_mechanics": {
+    "fragment_sorting": "Player must sort tiny bone fragments into labeled petri dishes to reconstruct a complete skeleton.",
+    "loss_prevention": "Failure to use petri dishes or label them correctly results in 'lost' fragments."
+  },
+  "tags": ["storage", "organization", "small_fauna", "containment", "labware"]
+}

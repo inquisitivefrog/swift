@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_headlamp_01",
+  "item_name": "High-CRI Field Headlamp",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A ruggedized headlamp with a wide elastic strap. The lamp body features multiple lenses: one for a wide floodlight and one for a narrow spot beam. The light emitted is very close to natural sunlight spectrum to allow for accurate rock-color identification at night.",
+  "constraints": {
+    "logic": "Essential for 'Fine Detail' work during night shifts.",
+    "background": "Isolated on a neutral 50% grey floor plane."
+  }
+}

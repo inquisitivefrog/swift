@@ -1,0 +1,12 @@
+{
+  "id": "item_pro_matrix_bag_01",
+  "item_name": "Reinforced Bulk Matrix Transport Bag",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A heavy-duty white woven polypropylene bag (like a small sandbag). It is tied shut with a zip-tie. A waterproof tag is attached, reading: 'SITE HC-22, UNIT 4, BULK MATRIX'. The bag looks heavy and damp.",
+  "constraints": {
+    "logic": "Represents 'Unprocessed Data' that must be sieved in the Lab phase.",
+    "background": "Stacked on the metal pallet next to the TRX-07 jacket."
+  }
+}

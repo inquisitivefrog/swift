@@ -1,0 +1,12 @@
+{
+  "id": "item_pro_reclamation_seed_01",
+  "item_name": "Native Species Revegetation Kit",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A burlap sack filled with a mix of native grass seeds and 'Hydromulch' (a green, fibrous material). Next to it is a 'Seed Spreader' and a roll of biodegradable coconut-fiber erosion matting. These are used to 'seal' the refilled pit.",
+  "constraints": {
+    "logic": "The final step of the 'Permit Checklist'.",
+    "background": "A recently refilled and leveled dig site."
+  }
+}

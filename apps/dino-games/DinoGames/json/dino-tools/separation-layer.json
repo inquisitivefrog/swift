@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_separator_01",
+  "item_name": "Specimen Separator Foil",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A roll of heavy-duty aluminum foil and a stack of white archival tissue paper. The foil is shown with a crinkled, highly reflective metallic surface. These materials are used to wrap the exposed fossil bone before the plaster jacket is applied to prevent sticking.",
+  "constraints": {
+    "material": "High-specular silver foil; soft matte white tissue paper.",
+    "logic": "Critical safety step in the preservation process."
+  }
+}

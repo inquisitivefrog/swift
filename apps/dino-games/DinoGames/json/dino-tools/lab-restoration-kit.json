@@ -1,0 +1,21 @@
+{
+  "asset_id": "dino-tools-lab-restoration-kit-001",
+  "label": "Physical Restoration Station",
+  "category": "Curation",
+  "description": "Tools and materials used to structurally stabilize and visually complete fragmented fossils.",
+  "materials": [
+    {
+      "id": "epoxy_putty",
+      "label": "Apoxie Sculpt",
+      "function": "A two-part putty used to fill large gaps. It hardens without shrinking."
+    },
+    {
+      "id": "acrylic_paraloid_paint",
+      "label": "Reversible Pigments",
+      "function": "Paint used to tint the filler to match the bone, usually one shade lighter to distinguish it from the original."
+    }
+  ],
+  "game_mechanics": {
+    "sculpting_mini_game": "Player must use a spatula tool to smooth the putty into the correct anatomical shape. If the shape is wrong, the 'Scientific Accuracy' score drops."
+  }
+}

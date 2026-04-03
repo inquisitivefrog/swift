@@ -1,0 +1,37 @@
+{
+  "id_prefix": "dino_fossil_hunt_card",
+  "project": "DinoGames",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "game_title": "Dino Fossil Hunt!",
+  "cards": [
+    {
+      "id_suffix": "reward_001",
+      "archetype": "Player Wins: Fully Articulated Skeleton",
+      "lighting_ref": "STUDIO_SHOWCASE_BRIGHT",
+      "formation_ref": "MUSEUM_EXHIBIT_HALL",
+      "environment_details": {
+        "habitat": "CLIMATE_CONTROLLED_SHOWROOM",
+        "fossil_elements": [
+          "A complete, fully articulated Tyrannosaurus Rex skeleton standing majestically, polished to a museum-quality finish.",
+          "Soft, ambient spotlighting highlighting the skeletal structure.",
+          "A clean, minimalist museum base for the skeleton.",
+          "Subtle informational display plaque in the background.",
+          "A small crowd of animated, awe-struck onlookers (children and adults) viewing the display."
+        ],
+        "ground_palette": [
+          "Polished concrete greys",
+          "Warm accent lighting (yellow/orange)",
+          "Bone-white (for skeleton)"
+        ],
+        "style_notes": "rounded, tactile; clean, educational aesthetic. Focus on detailed, accurate skeletal articulation with a stylized, inviting museum environment."
+      },
+      "visual_logic": {
+        "composition": "A medium-wide shot of a grand museum hall. The fully articulated T-Rex skeleton stands as the central focal point, viewed from a slightly low angle to emphasize its impressive size. The background shows a modern museum interior. Centered at the top is the text 'Dino Fossil Hunt!' in bold, gleaming gold, 3D block letters with a celebratory sparkle effect, slightly raised above the exhibit base.  Centered at the bottom is additional text 'Player Wins!'",
+        "ground": "Polished museum floor reflecting the ambient light.",
+        "lighting": "Bright, clean studio lighting with focused spotlights on the skeleton to emphasize its victory. A warm, celebratory glow for the 'Player Wins!' text."
+      }
+    }
+  ]
+}
+

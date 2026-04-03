@@ -1,0 +1,50 @@
+{
+  "asset_id": "dino-archive-shelving-001",
+  "label": "High-Density Mobile Shelving Unit",
+  "category": "Curation / Storage",
+  "description": "Industrial-grade, mobile shelving system designed to maximize storage density for museum collections. Operated via a hand crank to open and close aisles.",
+  "components": [
+    {
+      "id": "shelving_framework",
+      "material": "Heavy-gauge Powder-coated Steel",
+      "function": "Structural support for shelves and integrated drawer units. Protects contents from light and dust when compacted."
+    },
+    {
+      "id": "mobile_base_track",
+      "material": "Steel Rails / Reinforced Concrete",
+      "function": "Allows shelving units to move along the floor, compacting or expanding aisles."
+    },
+    {
+      "id": "hand_crank_mechanism",
+      "material": "Cast Iron / Steel Gearing",
+      "function": "Player-interactable element to manually move shelving units, opening or closing aisles. Provides haptic feedback."
+    },
+    {
+      "id": "integrated_drawer_slots",
+      "material": "Steel",
+      "function": "Holds multiple 'dino-archive-drawer-001' units. Slots can be empty or filled."
+    },
+    {
+      "id": "large_specimen_bays",
+      "material": "Steel / Reinforced Decking",
+      "function": "Open bays for storing larger specimens, often within 'jackets' (plaster/burlap casts) or custom crates."
+    },
+    {
+      "id": "aisle_marker_panel",
+      "type": "UI_element",
+      "function": "Displays range of accession numbers, taxonomic groups, or geological periods stored within the adjacent shelves."
+    }
+  ],
+  "game_mechanics": {
+    "movement_puzzle": "Player must operate the hand crank to shift shelving units, creating an aisle to access a desired section. Units may 'lock' or jam, requiring a mini-game to free them.",
+    "capacity_management": "Limited open aisles mean the player must strategically move units to reach different collection areas. Some areas might be inaccessible until specific units are moved.",
+    "environmental_hazard": "Operating the units too quickly or improperly could cause a minor tremor, potentially dislodging a fragile specimen (leading to a quick-time event to catch it)."
+  },
+  "asset_relationships": [
+    {
+      "relationship_type": "contains",
+      "target_asset_id": "dino-archive-drawer-001",
+      "notes": "Each shelving unit can contain numerous individual archive drawers."
+    }
+  ]
+}

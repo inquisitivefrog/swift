@@ -1,0 +1,12 @@
+{
+  "report_id": "archive-stats-hc-2026-900",
+  "collection_batch": "Isolated Theropod Teeth (n=450)",
+  "research_focus": "Palaeopathology (Injury & Combat)",
+  "findings": {
+    "wear_patterns": "30% show 'carinas' breakage consistent with bone-crunching.",
+    "scavenging_evidence": "12% show acid etching from being partially digested.",
+    "growth_average": "Mean size suggests a population dominated by juveniles (75%)."
+  },
+  "conclusion": "The high juvenile mortality rate suggests this was a nesting ground or a high-predation 'kill zone' rather than a living area.",
+  "data_integrity": "LIDAR Mesh Resolution: 0.05mm"
+}

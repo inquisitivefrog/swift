@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_chisel_point_01",
+  "item_name": "Hardened Steel Point Chisel",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A slender, high-carbon steel chisel designed for precision. Unlike the flat-head version, this tool tapers to a sharp, four-sided pyramid point. The shaft is hexagonal for a steady grip, and the striking cap shows slight mushrooming from field use. It features a bright yellow rubber hand guard for knuckle protection.",
+  "constraints": {
+    "material": "Brushed industrial steel; high-visibility yellow rubber.",
+    "background": "Isolated on a neutral 50% grey studio floor with high-contrast contact shadows."
+  }
+}

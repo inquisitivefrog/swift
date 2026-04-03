@@ -1,0 +1,14 @@
+{
+  "id": "tool_pro_hammer_02_corrected",
+  "item_name": "Professional Geological Rock Pick",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "GLOBAL_FIELD_EQUIPMENT",
+  "pose": "Full profile view, head of the hammer at the top",
+  "visual_description": "A professional-grade geological rock pick. The head is a single piece of drop-forged steel. One side of the head is a flat, square striking face; the opposite side is a long, sharp, slightly curved pointed pick (not a claw). The handle is a high-visibility blue or black shock-reduction vinyl grip. The steel has a satin finish with high-fidelity specular highlights.",
+  "constraints": {
+    "anatomy_fix": "Strictly no curved nail-pulling claw; replace with a solid tapered geological pick point.",
+    "background": "Solid neutral 50% grey floor plane with soft-edged contact shadows."
+  }
+}

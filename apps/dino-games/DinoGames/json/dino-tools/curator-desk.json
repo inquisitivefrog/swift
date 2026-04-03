@@ -1,0 +1,20 @@
+{
+  "asset_id": "dino-curator-desk-001",
+  "label": "Accessioning & Cataloging Suite",
+  "category": "Administration",
+  "description": "The final checkpoint where specimens are officially recorded into the museum's permanent digital and physical archives.",
+  "tools": [
+    {
+      "id": "archival_ink_pen",
+      "function": "Used to write catalog numbers directly onto the bone (over a base layer of B-72)."
+    },
+    {
+      "id": "digital_calipers",
+      "function": "Takes the 'Official Measurements' that will be cited in scientific papers."
+    }
+  ],
+  "game_mechanics": {
+    "provenance_check": "If the player's field notes are missing GPS coordinates or stratigraphic data, the Curator will REJECT the specimen.",
+    "accession_bonus": "Successfully cataloging a rare 'Small Fauna' specimen unlocks a higher 'Museum Rank' for the player."
+  }
+}

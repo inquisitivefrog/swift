@@ -1,0 +1,12 @@
+{
+  "id": "env_basecamp_tent_01",
+  "item_name": "Weather-Shield Expedition Command Tent",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A large, tan-colored geodesic or frame tent made of heavy-duty ripstop canvas. It has reinforced tie-downs held by earth anchors. One flap is open, revealing a folding table inside with a laptop, field journals, and a small microscope. A solar power cable runs under the bottom edge.",
+  "constraints": {
+    "material": "Weather-beaten canvas; clear PVC window panels; heavy-duty zippers.",
+    "background": "Positioned against a backdrop of stratified badlands, with sandbags lining the base for wind resistance."
+  }
+}

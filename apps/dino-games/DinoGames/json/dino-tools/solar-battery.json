@@ -1,0 +1,12 @@
+{
+  "id": "tool_tech_solar_battery_01",
+  "item_name": "Industrial Lithium Power Station",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A large, ruggedized battery 'cube' with reinforced corners and heavy-duty handles. The front face features a glowing LCD screen showing '98% Charge' and 'Input: 400W'. It has multiple AC outlets, USB-C ports, and a high-amperage 12V port. A solar cable is plugged into the 'Input' side.",
+  "constraints": {
+    "visual_detail": "Dust-proof covers on all ports; cooling fans visible behind a mesh grate.",
+    "background": "Sitting on a wooden crate inside a ventilated field tent."
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_surveyor_level_01",
+  "item_name": "Optical Auto-Level & Tripod",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A professional optical level (sighting scope) mounted on a heavy-duty collapsible aluminum tripod. The level is painted a high-visibility yellow with a sunshade over the lens. A circular bubble level is visible on the side. It is shown standing on a rugged, uneven dirt surface, perfectly level.",
+  "constraints": {
+    "material": "Anodized aluminum tripod legs; high-gloss yellow paint on the scope.",
+    "logic": "Used to determine the 'Z' (vertical) coordinate of a fossil."
+  }
+}

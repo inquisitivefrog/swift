@@ -1,0 +1,12 @@
+{
+  "id": "env_pro_debris_net_01",
+  "item_name": "Safety Catch-Netting",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A heavy-duty black mesh net stretched horizontally beneath the work platform. It is designed to catch falling rocks (overburden) or dropped tools. Several small chunks of sandstone are already sitting in the net.",
+  "constraints": {
+    "logic": "Essential safety asset for multi-level dig sites.",
+    "background": "Suspended between the scaffold and the cliff face."
+  }
+}

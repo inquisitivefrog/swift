@@ -1,0 +1,12 @@
+{
+  "id": "char_field_boots_01",
+  "item_name": "Composite-Toe Field Boots",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "Rugged, over-the-ankle boots with deep 'Vibram' lugs for traction on loose scree. The leather is salt-stained and dusty. The toe area is reinforced but lightweight composite (not steel, to avoid thermal transfer in the cold).",
+  "constraints": {
+    "logic": "Essential for 'Phase 7: Transport' when moving 500lb jackets.",
+    "background": "Coated in a layer of dried 'Hell Creek' mud."
+  }
+}

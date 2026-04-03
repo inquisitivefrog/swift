@@ -1,0 +1,23 @@
+{
+  "asset_id": "dino-ui-digital-repository-001",
+  "label": "Global Paleontology Database (GPD)",
+  "category": "UI / Data Management",
+  "description": "A cloud-based interface for storing, tagging, and sharing high-resolution 3D specimen data.",
+  "features": [
+    {
+      "id": "mesh_viewer",
+      "type": "Interactive 3D",
+      "function": "Rotate, zoom, and measure specimens in a virtual space."
+    },
+    {
+      "id": "metadata_editor",
+      "type": "Form",
+      "fields": ["Locality", "Stratigraphy", "Collector", "Element ID"]
+    },
+    { "id": "privacy_toggle", "label": "Embargo Status", "function": "Keep data private until publication or share it with the 'Global Community' for a Reputation bonus." }
+  ],
+  "game_mechanics": {
+    "crowdsourced_id": "If a player can't identify a bone, they can 'Upload to Community.' An NPC expert will identify it after a 24-hour delay.",
+    "data_corruption_risk": "Hard drives can fail! Player must spend 'Lab Credits' on server backups."
+  }
+}

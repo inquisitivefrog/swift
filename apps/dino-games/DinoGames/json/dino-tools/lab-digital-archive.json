@@ -1,0 +1,27 @@
+{
+  "asset_id": "dino-tools-lab-digital-archive-001",
+  "label": "High-Resolution Digitization Station",
+  "category": "Curation",
+  "description": "A combination of LIDAR and multi-angle photography used to create 'Digital Twins' of specimens for remote research.",
+  "components": [
+    {
+      "id": "structured_light_scanner",
+      "type": "held_item",
+      "function": "Captures sub-millimeter surface geometry using projected light patterns."
+    },
+    {
+      "id": "photogrammetry_turntable",
+      "type": "static_mesh",
+      "function": "Rotates the specimen 360° while a camera takes hundreds of high-resolution photos."
+    },
+    {
+      "id": "cloud_database_uplink",
+      "type": "ui_element",
+      "function": "Uploads the 3D mesh to a global repository (e.g., MorphoSource) for other researchers."
+    }
+  ],
+  "game_mechanics": {
+    "archival_speedrun": "The museum only gives the player 4 hours of 'Collections Access.' They must scan as many specimens as possible before the doors lock.",
+    "digital_pathology": "Using the scan to highlight 'Combat Scars' or 'Healed Fractures' that are invisible to the naked eye."
+  }
+}

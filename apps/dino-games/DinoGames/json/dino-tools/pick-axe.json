@@ -1,0 +1,14 @@
+{
+  "id": "tool_pro_pickaxe_01",
+  "item_name": "Heavy-Duty Overburden Pick-Axe",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "GLOBAL_FIELD_EQUIPMENT",
+  "pose": "Diagonal hero shot, head tilted downward to show the dual-point tip",
+  "visual_description": "A large, two-handed industrial pick-axe. The head is forged from dark, matte carbon steel with a thick central eye. One side features a sharp, elongated point for piercing hard ground; the other side is a flat, wide 'mattock' blade for prying and scraping. The handle is a sturdy, high-gloss fiberglass in a safety-yellow color with black rubberized overmolding at the grip points.",
+  "constraints": {
+    "scale_reference": "Should appear significantly larger and heavier than the rock pick.",
+    "background": "Isolated on a neutral 50% grey studio floor with high-contrast contact shadows."
+  }
+}

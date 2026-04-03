@@ -1,0 +1,11 @@
+[
+  {
+    "id": "tool_awl_01",
+    "name": "Paleontologist's Precision Awl",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_identity": "Slender, aged wooden handle with a polished brass ferrule and a sharp, sturdy steel spike. The handle should have subtle wear marks, indicating frequent use, and a small 'DinoGames' logo etched discreetly into the brass. The steel spike should show a fine tip, suitable for delicate work, and a slight patina from exposure to field conditions.",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "tech_ref": "DEFAULT_SQUARE",
+    "notes": "Designed for delicate fossil preparation. The wooden handle should complement the natural tones of the Morrison Formation, while the brass ferrule adds a touch of classic expedition equipment."
+  }
+]

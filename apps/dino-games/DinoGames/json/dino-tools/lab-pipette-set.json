@@ -1,0 +1,30 @@
+{
+  "asset_id": "dino-tools-lab-pipette-set-001",
+  "label": "Glass Pasteur Pipette with Latex Bulb",
+  "category": "Lab Consumables",
+  "description": "A tapered glass tube used for the precise drop-by-drop application of liquid consolidants to fossil surfaces.",
+  "components": [
+    {
+      "id": "tapered_glass_stem",
+      "type": "static_mesh",
+      "material": "Borosilicate Glass",
+      "function": "Allows for high-visibility placement of adhesive."
+    },
+    {
+      "id": "latex_squeeze_bulb",
+      "type": "interactive_component",
+      "material": "Natural Rubber / Latex",
+      "function": "The 'spatula' end used to create suction and controlled release of liquid."
+    },
+    {
+      "id": "acrylic_pipette_rack",
+      "type": "storage_asset",
+      "function": "Keeps tips elevated and prevents cross-contamination between different concentrations of B-72."
+    }
+  ],
+  "game_mechanics": {
+    "surface_tension_physics": "Player must tap the tip of the pipette to a crack to trigger 'capillary action,' drawing the glue deep into the bone.",
+    "clog_timer": "If the player leaves B-72 in the glass stem too long, it hardens, requiring the player to 'dispose' of the tool and grab a new one."
+  },
+  "tags": ["precision", "capillary-action", "wicking", "disposable"]
+}

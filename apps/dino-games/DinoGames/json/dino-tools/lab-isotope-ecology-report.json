@@ -1,0 +1,14 @@
+{
+  "report_id": "isotope-hc-2026-042",
+  "chemical_markers": {
+    "delta_18O": -12.4,
+    "delta_13C": -8.1,
+    "strontium_87_86": 0.7085
+  },
+  "interpretation": {
+    "dietary_source": "C3 Plants (Upland Conifers)",
+    "water_type": "Meteoric (High-altitude snowmelt)",
+    "migration_behavior": "Altitudinal Migrant"
+  },
+  "map_overlay_id": "pathway_mountain_to_delta_01"
+}

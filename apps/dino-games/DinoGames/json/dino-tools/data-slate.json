@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_data_slate_01",
+  "item_name": "Field Data Declaration Board",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A small handheld dry-erase board with a black aluminum frame. It has pre-printed sections for 'SITE ID', 'SPECIMEN #', 'FORMATION', and 'DATE'. It is shown with hand-written text: 'HC-2026', 'T-REX-JUV', 'HELL CREEK', and '22-MAR'. A black dry-erase marker is attached by a string.",
+  "constraints": {
+    "logic": "Critical for photographic documentation and archive organization.",
+    "background": "Held by a gloved hand against a backdrop of excavated bone."
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "tool_lab_air_scrubber_01",
+  "item_name": "Ceiling-Mount HEPA Filtration Unit",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A large rectangular box hanging from the lab rafters. It has a high-gloss white finish and a visible intake grate with a thick, pleated paper filter behind it. A digital 'Air Quality' indicator on the side shows a green 'Good' status.",
+  "constraints": {
+    "logic": "Background asset that hums quietly. If it turns 'Red,' the player must change the filter.",
+    "detail": "Visible vibration of the metal housing."
+  }
+}

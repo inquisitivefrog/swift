@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_chisel_set_01",
+  "item_name": "Hardened Steel Cold Chisel",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A heavy-duty cold chisel made of high-carbon steel. The shaft is hexagonal to prevent rolling, and the 'striking cap' at the top shows slight 'mushrooming' (flattened edges) from repeated hammer impacts. The tip is a sharp, wide-blade wedge. It features a high-visibility orange rubber hand guard to protect the user's knuckles.",
+  "constraints": {
+    "material": "Dull grey industrial steel with a matte finish; bright orange safety rubber.",
+    "background": "Isolated on a neutral 50% grey studio floor with a soft contact shadow."
+  }
+}

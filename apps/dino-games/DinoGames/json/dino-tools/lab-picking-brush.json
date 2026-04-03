@@ -1,0 +1,25 @@
+{
+  "asset_id": "dino-tools-lab-picking-brush-001",
+  "label": "Size 000 Synthetic Picking Brush",
+  "category": "Micro-Preparation",
+  "description": "An ultra-fine tipped brush used to lift microscopic fossils using surface tension rather than mechanical pressure.",
+  "components": [
+    {
+      "id": "synthetic_bristles",
+      "type": "geometry",
+      "material": "Taklon / Nylon",
+      "function": "Holds moisture to create a 'tack' for lifting micro-fossils."
+    },
+    {
+      "id": "wooden_handle",
+      "type": "static_mesh",
+      "material": "Polished Hardwood",
+      "ergonomics": "Short-handle for close-range microscope work."
+    }
+  ],
+  "game_mechanics": {
+    "moisture_meter": "The brush must stay 'damp' to function. If it dries out, the fossil won't stick; if it's too wet, the fossil might wash away.",
+    "zero_damage_lift": "Guarantees a 0% 'Crush Chance' compared to tweezers, but requires more precise 'hovering' over the target."
+  },
+  "tags": ["fragile", "handling", "surface-tension", "micro-fauna"]
+}

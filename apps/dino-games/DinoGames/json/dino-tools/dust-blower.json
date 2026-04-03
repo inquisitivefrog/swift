@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_dust_blower_01",
+  "item_name": "Rubber Squeeze-Bulb Blower",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A classic pear-shaped rubber squeeze bulb, often used in laboratory settings. The body is a vibrant blue matte rubber, and it features a long, thin plastic nozzle for directed air. It is shown mid-squeeze to imply functionality.",
+  "constraints": {
+    "material": "Soft-touch matte rubber; translucent plastic nozzle tip.",
+    "background": "Isolated on a light grey studio floor."
+  }
+}

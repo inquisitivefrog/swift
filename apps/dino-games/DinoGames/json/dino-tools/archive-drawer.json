@@ -1,0 +1,27 @@
+{
+  "asset_id": "dino-archive-drawer-001",
+  "label": "Museum Archive Drawer (Standard)",
+  "category": "Curation / Storage",
+  "description": "Climate-controlled, acid-free storage drawer designed to protect specimens from degradation. The true heart of any natural history museum.",
+  "components": [
+    {
+      "id": "drawer_shell",
+      "material": "Powder-coated Steel",
+      "function": "Provides physical protection and light exclusion."
+    },
+    {
+      "id": "inner_lining",
+      "material": "Acid-free Ethafoam / Cotton batting",
+      "function": "Cushions specimens and prevents chemical reactions."
+    },
+    {
+      "id": "drawer_label_holder",
+      "type": "UI_element",
+      "function": "Displays range of accession numbers, taxon, and stratigraphic level of contents."
+    }
+  ],
+  "game_mechanics": {
+    "search_mini_game": "Player must manually 'open' drawers and scan for relevant accession numbers or specimen types (e.g., 'all Theropod teeth from Hell Creek').",
+    "condition_check": "Some drawers might contain specimens suffering from 'pyrite disease' (a crumbling caused by unstable minerals) which the player can stabilize for a bonus."
+  }
+}

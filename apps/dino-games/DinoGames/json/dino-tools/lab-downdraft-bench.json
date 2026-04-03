@@ -1,0 +1,12 @@
+{
+  "id": "env_lab_downdraft_bench_01",
+  "item_name": "Perforated Downdraft Prep-Station",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A stainless steel workbench where the top surface is a grid of thousands of small holes. A heavy-duty internal vacuum motor pulls air downward. A few small fossil fragments and a dental pick are sitting on the grid. The metal is slightly scuffed from use.",
+  "constraints": {
+    "logic": "Provides a 'Clean-Zone' for Preparator 2 (The Micro-Cleaner).",
+    "background": "Integrated into the main lab's steel cabinetry."
+  }
+}

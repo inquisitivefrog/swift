@@ -1,0 +1,12 @@
+{
+  "id": "env_lab_intake_station_01",
+  "item_name": "Specimen Receiving Table",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A heavy steel industrial workbench under bright, cool-white LED shop lights. On the table sits the opened specimen crate, a laptop showing the field GPS coordinates, and a set of heavy-duty 'bolt cutters' used to snip the wire mesh inside the plaster jackets. A magnifying lamp is swung over the center of the table.",
+  "constraints": {
+    "material": "Brushed stainless steel table top; industrial green painted legs.",
+    "background": "A clean, white-walled lab interior with a 'Danger: Silica Dust' warning sign on the wall."
+  }
+}

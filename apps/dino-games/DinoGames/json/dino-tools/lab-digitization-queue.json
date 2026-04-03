@@ -1,0 +1,30 @@
+{
+  "asset_id": "dino-lab-digitization-queue-001",
+  "label": "Lab Scan Manifest",
+  "category": "Data Management",
+  "description": "A priority list of specimens awaiting 3D capture. Not all specimens are approved for high-res scanning.",
+  "queue_logic": [
+    {
+      "specimen_type": "Holotype (New Species)",
+      "scan_method": "Micro-CT (Internal)",
+      "priority": "Critical",
+      "reason": "Full anatomical record required before physical prep."
+    },
+    {
+      "specimen_type": "Bulk Archive (Teeth/Fragments)",
+      "scan_method": "Batch Photogrammetry (Surface)",
+      "priority": "Low",
+      "reason": "Statistical population study only."
+    },
+    {
+      "specimen_type": "Public Display",
+      "scan_method": "LIDAR (Large Scale)",
+      "priority": "Medium",
+      "reason": "Required for 3D-printing replica for museum gift shop/gallery."
+    }
+  ],
+  "game_mechanics": {
+    "server_storage_limit": "The player must delete old 'Low-Res' scans to make room for new 'High-Res' CT data.",
+    "processing_delay": "High-res CT scans take 24 in-game hours to 'render' before the results can be viewed."
+  }
+}

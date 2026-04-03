@@ -1,0 +1,15 @@
+{
+  "project": "DinoGames",
+  "version": "1.1.1",
+  "asset_manifests": [
+    {
+      "id": "tool_clinometer_01",
+      "name": "Geological Clinometer",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "visual_identity": "A precision hand-held sighting compass and clinometer; features a rugged, rectangular aluminum body in 'Industrial Orange'; includes two side-viewing windows with a dual-scale internal dial for measuring slope angles and strike/dip of rock layers; a black nylon lanyard is attached to the base.",
+      "lighting_ref": "STUDIO_GROUNDED_LIGHT",
+      "tech_ref": "SQUARE_HERO_CARD",
+      "notes": "Essential for Paleontologist 04 and 01 when documenting the angle of 'Centrosaurus ribs projecting from a tall sandstone cliff'. Used to determine the exact tilt of sedimentary layers in the Morrison Formation."
+    }
+  ]
+}

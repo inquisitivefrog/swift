@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_weather_station_01",
+  "item_name": "Automated Field Weather Station",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A small tripod-mounted device with a spinning anemometer (wind cups) on top and a digital rain gauge. A small solar panel on its neck powers its internal transmitter. It is placed on the highest ridge overlooking the dig site.",
+  "constraints": {
+    "logic": "Provides early warning for 'Phase 7: Site Closure' (Tarps & Sandbags).",
+    "background": "Silhouetted against a dramatic, cloudy Montana sky."
+  }
+}

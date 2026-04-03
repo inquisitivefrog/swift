@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_precision_forceps_01",
+  "item_name": "Inox Anti-Magnetic Field Forceps",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A pair of long, slender stainless steel tweezers with needle-sharp points. The tips are slightly offset (bent) to allow for a better line of sight. They are shown delicately lifting a tiny, 2mm-long serrated dinosaur tooth from a pile of loose sand next to a dental pick.",
+  "constraints": {
+    "material": "Satin-finish 'Inox' steel (non-reflective for field use).",
+    "logic": "Essential for picking up 'micro-vertebrate' remains like teeth, fish scales, or lizard jawbones."
+  }
+}

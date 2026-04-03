@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_tape_measure_01",
+  "item_name": "Surveyor's Steel Tape",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A heavy-duty, open-reel tape measure. The frame is high-impact orange plastic with a large foldable winding crank. The tape itself is yellow steel with black and red metric markings. A portion of the tape is pulled out, showing the '0' hook end.",
+  "constraints": {
+    "anatomy": "Open-reel surveyor style (not a small pocket tape measure).",
+    "background": "Isolated on a 50% grey studio floor with high-contrast contact shadows."
+  }
+}

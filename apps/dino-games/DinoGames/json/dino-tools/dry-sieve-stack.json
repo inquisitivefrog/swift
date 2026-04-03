@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_field_sieve_stack_01",
+  "item_name": "Stainless Steel Nested Sieve Stack",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A stack of three circular stainless steel frames. The top frame has a 1/4-inch wire mesh; the middle has a 1/16-inch mesh; the bottom has a fine 'window-screen' mesh. They are shown sitting in a plastic wash-tub, with muddy water draining through the bottom.",
+  "constraints": {
+    "material": "High-grade stainless steel; brass mesh for the finest level.",
+    "logic": "Used to separate 'Matrix' (sand/clay) from 'Micro-fossils' (teeth/scales)."
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "asset_id": "dino-tools-lab-cradling-001",
+  "label": "Archival Specimen Cradle Kit",
+  "category": "Curation & Storage",
+  "description": "Materials used to create custom-fitted supports for fossils to prevent pressure points and structural failure during long-term storage.",
+  "components": [
+    {
+      "id": "ethafoam_planks",
+      "type": "material",
+      "properties": ["Non-reactive", "Closed-cell", "Shock-absorbent"],
+      "function": "Carved to the shape of the fossil to provide a soft, stable base."
+    },
+    {
+      "id": "plaster_moms",
+      "type": "static_mesh",
+      "description": "A rigid fiberglass or plaster 'mother mold' that holds the foam and fossil in a fixed orientation."
+    },
+    {
+      "id": "tyvek_liner",
+      "type": "consumable",
+      "function": "A smooth, archival-grade fabric barrier placed between the fossil and the foam to prevent snagging."
+    },
+    {
+    "id": "polyethylene_backer_rod",
+    "type": "material",
+    "function": "Flexible foam 'snakes' used to fill gaps and provide lateral stability in a storage drawer."
+    }
+  ],
+  "game_mechanics": {
+    "weight_distribution_puzzle": "Player must identify the 'weak points' of a fossil (e.g., a thin mid-shaft) and place supports to equalize the load.",
+    "archival_check": "Using non-archival materials (like bubble wrap or acidic cardboard) causes the 'specimen health' bar to deplete over time."
+  },
+  "tags": ["curation", "storage", "protection", "museum-standards"]
+}

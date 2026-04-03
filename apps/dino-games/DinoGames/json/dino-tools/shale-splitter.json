@@ -1,0 +1,23 @@
+{
+  "asset_manifest": {
+    "tool_id": "tool_pro_shale_splitter_set_01",
+    "project": "DinoGames",
+    "category": "Excavation - Paleobotany",
+    "description": "A professional-grade kit for splitting sedimentary layers to reveal compression fossils.",
+    "components": [
+      {
+        "item": "Wide-Blade Chisel",
+        "visual_details": "Forged high-carbon steel with a 3-inch wide, tapered edge. The blade is extremely thin compared to a standard chisel. The handle features a rubberized 'safety grip' to protect the hand from stray hammer strikes.",
+        "wear_state": "Slightly scuffed at the tip with silver metal showing through black powder coating."
+      },
+      {
+        "item": "Geological Rock Hammer",
+        "visual_details": "A 22oz pointed-tip rock hammer with a blue vinyl grip. The head is polished steel, showing a flat striking face on one side and a sharp 'pick' end on the other.",
+        "scale_reference": "Hammer head is roughly 7 inches long."
+      }
+    ],
+    "usage_pose": "The chisel is held at a 45-degree angle to the shale layer, with the wide blade inserted into a visible crack. The hammer is captured mid-swing, ready to strike the flat end of the chisel.",
+    "art_style": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting": "Sharp highlights on the polished steel edges to emphasize the 'new' and 'professional' quality of the grad student gear."
+  }
+}

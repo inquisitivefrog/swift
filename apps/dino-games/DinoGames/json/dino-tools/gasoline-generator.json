@@ -1,0 +1,12 @@
+{
+  "id": "tool_tech_generator_01",
+  "item_name": "Portable Inverter Power Station",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A compact, suitcase-style gasoline generator. The casing is a professional matte red or blue plastic with a comfortable carry handle. It features a digital display showing 'Wattage Output' and several protected AC outlets. It is tucked behind a small rock outcrop to further dampen sound.",
+  "constraints": {
+    "detail": "Visible exhaust port and fuel cap; looks ruggedized for dust/sand resistance.",
+    "background": "Sitting on a rubber mat to prevent vibration into the bone bed."
+  }
+}

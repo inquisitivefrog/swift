@@ -1,0 +1,12 @@
+{
+  "id": "env_pro_cliff_scaffold_01",
+  "item_name": "Modular Cliff-Face Work Platform",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A rugged aluminum scaffolding system bolted directly into the sandstone butte. The platform has a slip-resistant metal grate floor and safety toe-boards to prevent tools from falling on people below. A heavy-duty pulley system is attached to the top frame for hauling up plaster and water.",
+  "constraints": {
+    "logic": "Provides a stable 'Z-axis' workspace for vertical bones.",
+    "background": "Bolted into a stratified orange-red sandstone cliff."
+  }
+}

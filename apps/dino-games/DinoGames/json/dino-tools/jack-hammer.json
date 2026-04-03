@@ -1,0 +1,9 @@
+{
+      "id": "tool_jack_hammer_01_icon",
+      "name": "Pneumatic Jackhammer",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "visual_identity": "Safety orange T-handle jackhammer with polished chrome bit; dark grey coiled hose; isolated on a bright, off-white studio background to eliminate dark shadows.",
+      "lighting_ref": "STUDIO_GROUNDED_LIGHT",
+      "tech_ref": "DEFAULT_SQUARE",
+      "notes": "High-key lighting setup to emphasize the silhouette for UI use."
+    }

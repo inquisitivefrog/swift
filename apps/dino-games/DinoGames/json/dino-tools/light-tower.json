@@ -1,0 +1,12 @@
+{
+  "id": "tool_tech_site_lighting_01",
+  "item_name": "Portable LED Field Light Tower",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A tripod-mounted array of four high-intensity LED panels. The light is a crisp, cool white. A thick orange power cable runs from the base of the tripod toward a distant generator. The light is angled downward, illuminating a patch of rocky ground with sharp, clear shadows.",
+  "constraints": {
+    "logic": "Enables night-shift excavation at the cost of fuel/power.",
+    "background": "Dark twilight desert background to emphasize the light's power."
+  }
+}

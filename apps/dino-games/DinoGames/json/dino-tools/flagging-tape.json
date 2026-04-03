@@ -1,0 +1,15 @@
+{
+  "project": "DinoGames",
+  "version": "1.0.8",
+  "asset_manifests": [
+    {
+      "id": "tool_flagging_tape_01",
+      "name": "Site Marking Flagging Tape",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "visual_identity": "A roll of high-visibility, non-adhesive industrial orange flagging tape; features a semi-matte, durable plastic texture with 'DINO RESEARCH' printed in bold black typography; shown partially unrolled to reveal its flexible, ribbon-like quality; the edges of the roll show subtle 'field wear' and dust.",
+      "lighting_ref": "STUDIO_GROUNDED_LIGHT",
+      "tech_ref": "SQUARE_HERO_CARD",
+      "notes": "Essential for marking find-spots during prospecting and creating boundary lines around the excavation pit. The orange matches the project's consistent industrial tool palette."
+    }
+  ]
+}

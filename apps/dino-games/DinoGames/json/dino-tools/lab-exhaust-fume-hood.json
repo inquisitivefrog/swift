@@ -1,0 +1,42 @@
+{
+  "asset_id": "dino-tools-lab-fume-hood-001",
+  "label": "Overhead Chemical Fume Hood",
+  "category": "Lab Equipment",
+  "description": "A ventilated enclosure used for mixing archival adhesives and handling volatile solvents like Acetone and Ethanol.",
+  "components": [
+    {
+      "id": "sash_window",
+      "type": "interactive_geometry",
+      "material": "Tempered Safety Glass",
+      "function": "Sliding vertical barrier to protect the preparator from splashes and fumes."
+    },
+    {
+      "id": "exhaust_plenum",
+      "type": "static_mesh",
+      "function": "Rear baffle system that ensures uniform airflow across the work surface."
+    },
+    {
+      "id": "work_surface",
+      "type": "static_mesh",
+      "material": "Epoxy Resin",
+      "properties": ["Chemical Resistant", "Heat Resistant"]
+    },
+    {
+      "id": "utility_valves",
+      "type": "interactive_points",
+      "labels": ["Compressed Air", "Vacuum", "Gas", "Water"]
+    },
+    {
+      "id": "airflow_monitor",
+      "type": "ui_display",
+      "unit": "Feet per Minute (FPM)",
+      "safe_range": "80-120"
+    }
+  ],
+  "associated_tools": [
+    "dino-tools-lab-adhesive-station",
+    "dino-tools-lab-ppe-respirator",
+    "beakers_and_graduated_cylinders"
+  ],
+  "tags": ["ventilation", "safety", "chemistry", "stabilization"]
+}

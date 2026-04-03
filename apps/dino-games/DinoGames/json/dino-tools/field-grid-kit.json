@@ -1,0 +1,14 @@
+{
+  "id": "tool_pro_mapping_grid_01",
+  "item_name": "Precision Field Grid Kit",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "GLOBAL_FIELD_EQUIPMENT",
+  "pose": "Top-down bird's eye view of a 1-meter square quadrant",
+  "visual_description": "A square mapping grid formed by four high-visibility yellow nylon strings. The strings are held in place by four heavy-duty steel survey stakes driven into the ground. Every 10cm on the string is marked with a small black bead. A small plastic 'North' arrow sits in the corner of the grid.",
+  "constraints": {
+    "logic": "Provides a mathematical structure to the messy dig site.",
+    "background": "The grid is laid over a patch of neutral grey-brown 'matrix' soil to show contrast with the yellow string."
+  }
+}

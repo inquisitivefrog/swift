@@ -1,0 +1,11 @@
+[
+  {
+    "id": "material_polyurethane_foam_01",
+    "name": "Paleontological Polyurethane Foam Kit",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_identity": "A professional-grade, two-part polyurethane foam kit. Features two distinct, industrial-style metal canisters (one labeled 'Part A' and one 'Part B') with color-coded nozzles and clear, bold warning labels. The foam itself is shown partially extruded, expanding from a nozzle onto a small, irregularly shaped fossil fragment, appearing as a dense, off-white, slightly textured, rapidly curing material. The background implies a field setting with dusty, reddish earth.",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "tech_ref": "DEFAULT_SQUARE",
+    "notes": "Emphasizes the foam in its active, expanding state, demonstrating its use for fossil jacketing and stabilization. The canisters should look durable and practical for field use, with legible branding."
+  }
+]

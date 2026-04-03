@@ -1,0 +1,16 @@
+{
+  "asset_id": "dino-tools-lab-specimen-tag-001",
+  "label": "Archival Specimen Tag",
+  "category": "Documentation",
+  "description": "A heavy-duty, acid-free cardstock tag attached to the specimen or its container to ensure its identity and field data are never separated from the bone.",
+  "fields": [
+    { "id": "field_number", "label": "Field No.", "example": "2026-HC-042" },
+    { "id": "taxon", "label": "Taxon", "example": "cf. Nanotyrannus" },
+    { "id": "formation", "label": "Formation", "example": "Hell Creek" },
+    { "id": "collector", "label": "Collector", "example": "J. Doe" }
+  ],
+  "game_mechanics": {
+    "data_integrity": "If the player mislabels a tag, the specimen 'Value' drops. Player must match field notes to the tag exactly."
+  },
+  "tags": ["provenance", "labeling", "curation"]
+}

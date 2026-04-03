@@ -1,0 +1,29 @@
+{
+  "asset_id": "dino-tools-lab-digital-analysis-001",
+  "label": "Advanced Imaging Suite",
+  "category": "High-Tech Research",
+  "description": "A suite of non-destructive tools used to visualize internal structures and surface textures at the microscopic level.",
+  "items": [
+    {
+      "id": "micro_ct_scanner",
+      "type": "large_equipment",
+      "function": "Creates a 3D X-ray map of the fossil's interior.",
+      "visual_output": "Volumetric Render (Grey/Blue)"
+    },
+    {
+      "id": "sem_chamber",
+      "type": "large_equipment",
+      "function": "Uses electron beams to view surface morphology at 50,000x magnification.",
+      "visual_output": "High-Detail Greyscale"
+    },
+    {
+      "id": "sputter_coater",
+      "type": "support_tool",
+      "function": "Applies a microscopic gold-leaf layer to fossils for SEM readiness."
+    }
+  ],
+  "game_mechanics": {
+    "internal_discovery": "Scanning a 'Mystery Rock' might reveal a hidden embryo or a parasite inside a bone.",
+    "cost_resource": "These tools require 'Lab Credits' or 'Grant Money' to run, unlike the manual air-scribe."
+  }
+}

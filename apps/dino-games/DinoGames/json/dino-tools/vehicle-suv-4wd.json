@@ -1,0 +1,9 @@
+{
+      "id": "vehicle_suv_4wd_01_square",
+      "name": "Expedition SUV",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "visual_identity": "Vibrant red boxy SUV; rooftop tent and rear-mounted spare tire; large windows showing the interior; centered 1:1 composition.",
+      "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+      "tech_ref": "SQUARE_HERO_CARD",
+      "notes": "Changed to square format. Character 'Paleontologist 4' should be visible through the windshield."
+    }

@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_site_cover_01",
+  "item_name": "Heavy-Duty Weather Tarp & Sandbags",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A large, thick silver-and-brown woven tarp draped over an uneven mound (the fossil pedestal). The edges of the tarp are held down by six olive-drab canvas sandbags. This represents the site being 'put to bed' for the evening or to wait out a storm.",
+  "constraints": {
+    "texture": "Woven plastic 'poly-tarp' texture; heavy canvas texture for sandbags.",
+    "background": "A dusty trench edge."
+  }
+}

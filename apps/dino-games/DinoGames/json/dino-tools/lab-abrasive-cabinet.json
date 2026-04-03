@@ -1,0 +1,12 @@
+{
+  "id": "env_lab_abrasive_cabinet_01",
+  "item_name": "Sealed Blast-Containment Chamber",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A large metal box with a slanted glass viewing window. Two heavy black rubber gloves are built into the front, sticking inward. Inside, the TRX-07 bone is illuminated by bright internal LED strips. The interior glass is slightly frosted from abrasive over-spray.",
+  "constraints": {
+    "material": "Powder-coated steel; tempered glass; heavy industrial rubber.",
+    "logic": "Provides 100% dust containment for the micro-blasting process."
+  }
+}

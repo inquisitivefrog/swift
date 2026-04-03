@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_survey_tape_01",
+  "item_name": "High-Viz Locality Perimeter Kit",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A bundle of four pointed wooden lath stakes (flat, thin wood). One stake is driven into the ground with a long tail of 'Fluorescent Pink' plastic survey tape tied to the top, fluttering in the wind. The tape is printed with the words 'SCIENTIFIC STUDY AREA - DO NOT DISTURB'.",
+  "constraints": {
+    "material": "Unfinished splintery pine wood; thin crinkled plastic tape.",
+    "background": "Dry, cracked earth with sagebrush at the base."
+  }
+}

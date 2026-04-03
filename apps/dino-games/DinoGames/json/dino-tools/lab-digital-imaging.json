@@ -1,0 +1,30 @@
+{
+  "asset_id": "dino-tools-lab-digital-imaging-001",
+  "label": "Microscope Digital Imaging Suite",
+  "category": "Optics & Data",
+  "description": "A high-speed CMOS camera and 4K monitor setup for real-time fossil preparation display and documentation.",
+  "components": [
+    {
+      "id": "c_mount_camera",
+      "type": "attachment",
+      "resolution": "4K / 60fps",
+      "function": "Captures the optical feed from the trinocular port."
+    },
+    {
+      "id": "articulating_monitor",
+      "type": "static_mesh",
+      "size": "32-inch IPS Display",
+      "function": "Displays the 'Live Feed' of the preparation to the player."
+    },
+    {
+      "id": "footswitch_shutter",
+      "type": "interactive_control",
+      "function": "Allows the player to take a 'Snap-Shot' of a discovery without moving their hands from the tools."
+    }
+  ],
+  "game_mechanics": {
+    "digital_zoom": "Player can digitally zoom in on the screen to see matrix grains, though it may become 'pixelated' compared to optical zoom.",
+    "photo_collection": "Captured images are saved to the 'Digital Prep Log' we discussed earlier."
+  },
+  "tags": ["digital", "camera", "imaging", "monitor", "documentation"]
+}

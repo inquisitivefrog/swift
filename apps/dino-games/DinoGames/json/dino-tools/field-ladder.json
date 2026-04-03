@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_field_ladder_01",
+  "item_name": "Reinforced Fiberglass Extension Ladder",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A bright orange fiberglass ladder leaning against a butte. The feet are equipped with wide, pivoting steel 'mud shoes' to prevent sinking. A 'ladder-caddy' is hooked to the rungs, holding brushes and a small stabilizer bottle.",
+  "constraints": {
+    "material": "Non-conductive orange fiberglass; textured aluminum rungs.",
+    "background": "Leaning against a light-grey mudstone slope."
+  }
+}

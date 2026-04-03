@@ -1,0 +1,35 @@
+{
+  "asset_id": "dino-tools-lab-micro-prep-001",
+  "label": "Small Fauna Micro-Prep Station",
+  "category": "Precision Lab Equipment",
+  "description": "A high-magnification workspace for the preparation of delicate micro-vertebrate fossils.",
+  "components": [
+    {
+      "id": "binocular_microscope",
+      "type": "interactive_viewport",
+      "magnification": "10x - 80x",
+      "features": ["LED Ring Light", "Adjustable Focal Arm"]
+    },
+    {
+      "id": "tungsten_carbide_needles",
+      "type": "held_item",
+      "description": "Hand-sharpened needles held in a pin vise for manual grain-by-grain matrix removal."
+    },
+    {
+      "id": "micro_applicator_brush",
+      "type": "consumable",
+      "size": "00000 Synthetic Sable",
+      "function": "Applying tiny drops of B-72 consolidant to hairline fractures."
+    },
+    {
+      "id": "silica_sand_cradle",
+      "type": "static_mesh",
+      "function": "A small beanbag or tray of fine sand used to nestle the fossil so it doesn't move during prep."
+    }
+  ],
+  "game_mechanics": {
+    "magnification_zoom": "Player must toggle zoom levels to see 'micro-fractures' that are invisible at 1x scale.",
+    "steady_hand_meter": "Precision work on small fauna requires high focus; caffeine or fatigue levels in-game could affect jitter."
+  },
+  "tags": ["micro-prep", "microscope", "small-fauna", "delicate"]
+}

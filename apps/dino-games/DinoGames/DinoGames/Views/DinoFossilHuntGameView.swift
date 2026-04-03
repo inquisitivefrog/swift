@@ -3,7 +3,8 @@
 //  DinoGames
 //
 //  Dino Fossil Hunt: one quest per session (4 rounds: discovery → excavate → preserve → transport).
-//  Each round shows a story image and directions audio, then the player picks 2 of 5 tools (same star layout as Dino Flora).
+//  Each round: story art + directions audio, then pick 2 of 5 tools (star layout). Correct pair = random from a phase-appropriate
+//  **paleontologist** pool; distractors default to **preparator + restorer** so dig vs lab vs digital reads clearly for kids.
 //
 
 import SwiftUI
@@ -28,11 +29,19 @@ enum FossilHuntPhase: String, CaseIterable, Identifiable {
     }
 }
 
-/// One tool in the fossil-hunt palette. Thumbnails use **`dino-tools-{slug}`** imagesets.
+/// Asset folders under `Assets.xcassets/Dinosaur-Tools/`: **paleontologist** (dig / field), **preparator** (lab prep), **restorer** (art & digital restoration).
+/// Gameplay: suitable tools for a beat come from **one** group; distractors from the others so kids read dig vs prep vs screen work clearly.
+enum FossilHuntToolGroup: String, CaseIterable {
+    case paleontologist
+    case preparator
+    case restorer
+}
+
+/// One tool in the fossil-hunt palette. Thumbnails use **`dino-tools-field-*` / `lab-*` / `art-*`** (`fossilHuntAssetName`).
 struct FossilHuntTool: Identifiable, Hashable {
     let id: String
     let displayLabel: String
-    /// Imageset name `dino-tools-{slug}` when present; otherwise emoji fallback.
+    /// Imageset name when present; otherwise emoji fallback.
     let imageName: String?
     let emoji: String
     /// Optional intro audio key (e.g. tool name clip). Falls back to `displayLabel` TTS.
@@ -44,14 +53,14 @@ struct DinoFossilHuntRoundConfig: Identifiable {
     /// Story index 1…N (N = `fossilHuntStoryLibrary.count`).
     let storyNumber: Int
     let phase: FossilHuntPhase
-    /// Large story image (imageset) for this beat — your art, not the tool thumbnails.
+    /// Large story image (imageset) `dino-hunt-{storyKebab}-{phase}` — your art, not the tool thumbnails.
     let storyImageName: String
-    /// `game-dino-fossil-hunt-{story}-{stage}` → `Games/game-dino-fossil-hunt-{story}-{stage}.m4a`
+    /// `game-dino-fossil-hunt-{storyKebab}-{stage}` → `Games/game-dino-fossil-hunt-{storyKebab}-{stage}.m4a`
     let directionsAudioKey: String
-    /// Exactly two tool slugs matching **`dino-tools-{slug}`** (the two critical tools).
-    let correctToolIds: [String]
-
-    var correctIdSet: Set<String> { Set(correctToolIds) }
+    /// Paleontologist-folder tools appropriate for this story + phase; **two** are chosen at random as correct when the round starts.
+    let suitableToolSlugs: [String]
+    /// Suitable slugs belong to this tier; distractors are drawn from the **other** tiers (e.g. preparator + restorer when this beat is paleontologist).
+    let suitableToolGroup: FossilHuntToolGroup
 }
 
 struct DinoFossilHuntQuestConfig {
@@ -67,46 +76,230 @@ struct DinoFossilHuntGameConfig {
     let quest: DinoFossilHuntQuestConfig
 }
 
-// MARK: - Tool palette (5 tools: imagesets `dino-tools-{slug}`)
+// MARK: - Tool catalogs (imagesets `dino-tools-field-*` / `lab-*` / `art-*` — see `fossilHuntAssetName`)
 
-/// Fixed order for star layout; slugs must match your `dino-tools-*` imagesets.
-private let fossilHuntToolSlugs: [String] = ["magnifier", "sem", "scanner", "rock-hammer", "brush"]
+/// Every `dino-tools-field-*` imageset used by Fossil Hunt (see `fossilHuntAssetName`); phase pools decide what can be a correct answer.
+private let fossilHuntPaleontologistToolSlugs: [String] = [
+    "acid-kit", "aerial-lift", "basecamp-tent", "blm-permit", "boots", "bulk-matrix-bag",
+    "cliff-scaffold", "climbing-harness", "clinometer", "data-slate", "debris-netting",
+    "dental-pick", "digging-shovel", "dry-sieve-stack", "dslr-camera", "dust-blower",
+    "fine-brush", "fine-chisel", "flagging-tape", "gasoline-generator", "gnss-surveyor",
+    "gpr-surveyor", "gps", "grid-kit", "hand-held-sifting-screen", "headlamp", "jack-hammer",
+    "journal", "lab-tent", "ladder", "laptop", "laser-scanner", "ledger", "light-tower",
+    "locality-map", "long-handled-net", "medium-chisel", "mess-tent", "micro-vial-set", "notes",
+    "optical-lens", "perimeter-kit", "personal-locator-beacon", "photo-scale", "pick-axe",
+    "pickup-truck", "plaster-jacket", "polyurethane-foam", "ppe", "precision-awl",
+    "precision-forceps", "private-land-consent", "private-landowner-gift", "reclamation-report",
+    "reclamation-seeds", "reclamation-tarp", "rock-color-chart", "rock-hammer", "rock-saw",
+    "satellite-phone", "satellite-terminal", "separation-layer", "shale-splitter",
+    "shipping-manifest", "sifting-screen", "site-cover", "site-notice", "sledge-hammer",
+    "slotted-shale-crate", "solar-array", "solar-battery", "specimen-crate", "specimen-saw",
+    "specimen-stabilizer", "specimen-vial", "storage-tent", "surveyor-level", "tape-measure",
+    "tool-kit", "trailer-transport", "transfer-shovel", "transport-pallet", "transport-sled",
+    "tribal-permit", "vehicle-suv-4wd", "wash-cradle", "waterproof-collection", "weather-station",
+    "wet-sieve-stack", "wide-brush",
+]
+
+/// Every `dino-tools-lab-*` imageset (preparator / distractor tier).
+private let fossilHuntPreparatorToolSlugs: [String] = [
+    "abrasive-cabinet", "abrasive-media", "acid-tank", "adhesive-station", "air-drop",
+    "air-dryer", "air-scrubber", "archive-drawer", "archive-stats", "cast-saw", "compressor",
+    "cradling", "ct-render", "detail-brush", "downdraft-bench", "dust-snorkel",
+    "exhaust-fume-hood", "heavy-cabinet", "intake-station", "jacket-separator", "micro-blaster",
+    "micro-prep", "microscope-view", "mobile-scanner", "petri-dish", "picking-brush", "pin-vise",
+    "ppe", "precision-measuring", "prep-log", "pry-kit", "shipping-kit", "specimen-tag",
+    "stereo-microscope", "tweezers",
+]
+
+private let fossilHuntRestorerToolSlugs: [String] = [
+    "3d-printer", "digital-restoration", "ui-digital-repository", "ui-ecology-map", "ui-exhibit-label",
+]
+
+private func fossilHuntSlugs(in group: FossilHuntToolGroup) -> [String] {
+    switch group {
+    case .paleontologist: return fossilHuntPaleontologistToolSlugs
+    case .preparator: return fossilHuntPreparatorToolSlugs
+    case .restorer: return fossilHuntRestorerToolSlugs
+    }
+}
+
+/// Phase-appropriate **paleontologist** (dig-site) tools, merged with per-story extras (`fossilHuntStoryPhaseExtras`).
+private func fossilHuntPhaseBasePaleontologistSlugs(phase: FossilHuntPhase) -> [String] {
+    switch phase {
+    /// Land: `DINO_FOSSIL_HUNT_DISCOVERY_TOOLS.md` (no paperwork / site-admin). `gpr-surveyor` stands in until `gps` exists.
+    case .discovery:
+        return [
+            "locality-map", "tape-measure", "surveyor-level", "clinometer", "gpr-surveyor",
+            "rock-color-chart", "grid-kit", "flagging-tape", "notes", "boots",
+        ]
+    /// Canonical excavate pool — see `DINO_FOSSIL_HUNT_EXCAVATE_TOOLS.md` (`hunt_phase = excavate` only).
+    case .excavate:
+        return [
+            "dental-pick", "fine-chisel", "medium-chisel", "rock-hammer", "pick-axe", "transfer-shovel",
+            "shale-splitter", "rock-saw", "hand-held-sifting-screen", "fine-brush", "wide-brush",
+            "dust-blower",
+        ]
+    /// Packing / stabilizing only — no tools that belong in excavate or discovery (see `DINO_FOSSIL_HUNT_TOOL_IDENTIFIERS.md`).
+    /// No `site-cover` (story art reads as fair weather / post-storm dry, not active rain).
+    /// `separation-layer` (foil / barrier) = wrap and isolate — **preserve** only, not discovery or excavate.
+    case .preserve:
+        return [
+            "plaster-jacket", "specimen-stabilizer", "micro-vial-set", "waterproof-collection",
+            "separation-layer",
+        ]
+    /// Hauling — crates, sled, vehicles, lift. Imagesets `dino-tools-field-*` (helicopter TBD when art lands).
+    case .transport:
+        return [
+            "transport-sled", "specimen-crate", "specimen-vial", "shipping-manifest", "slotted-shale-crate",
+            "trailer-transport", "vehicle-suv-4wd", "pickup-truck", "aerial-lift",
+        ]
+    }
+}
+
+/// Basecamp / power — not “move the fossil” (transport) for this game.
+private let fossilHuntCampInfrastructureSlugs: Set<String> = [
+    "gasoline-generator", "light-tower", "solar-array", "solar-battery", "weather-station",
+]
+
+private func fossilHuntMergedSuitablePaleontologistSlugs(phase: FossilHuntPhase, extras: [String]) -> [String] {
+    let base = fossilHuntPhaseBasePaleontologistSlugs(phase: phase)
+    var merged = Array(Set(base + extras)).filter { fossilHuntPaleontologistToolSlugs.contains($0) }
+    if phase == .transport {
+        merged.removeAll { fossilHuntCampInfrastructureSlugs.contains($0) }
+    }
+    if phase == .discovery {
+        /// Never treat preserve / excavate / transport tools as discovery answers (e.g. `separation-layer`).
+        var notDiscovery = Set<String>()
+        notDiscovery.formUnion(fossilHuntPhaseBasePaleontologistSlugs(phase: .excavate))
+        notDiscovery.formUnion(fossilHuntPhaseBasePaleontologistSlugs(phase: .preserve))
+        notDiscovery.formUnion(fossilHuntPhaseBasePaleontologistSlugs(phase: .transport))
+        merged.removeAll { notDiscovery.contains($0) }
+    }
+    return merged.sorted()
+}
+
+/// Extra **paleontologist** slugs per story + phase (expanded pool → more variety when picking 2 correct at random).
+private func fossilHuntStoryPhaseExtras(storySlug: String, phase: FossilHuntPhase) -> [String] {
+    switch phase {
+    case .discovery:
+        switch storySlug {
+        /// Only underwater adds the net; all other story “extras” were leaking wrong-phase tools into discovery.
+        case "underwater": return ["long-handled-net"]
+        default: return []
+        }
+    case .excavate:
+        switch storySlug {
+        case "cliff": return ["shale-splitter", "pick-axe", "rock-saw"]
+        case "underwater": return ["wet-sieve-stack"]
+        case "bone_bed": return ["dental-pick", "medium-chisel", "rock-hammer", "sifting-screen"]
+        case "colony": return ["fine-chisel", "dental-pick", "sifting-screen"]
+        /// Shale layers + amber in debris (land); not the Underwater wet-sieve story.
+        case "botany": return ["shale-splitter", "dry-sieve-stack", "dental-pick", "fine-chisel", "wide-brush"]
+        default: return []
+        }
+    case .preserve:
+        switch storySlug {
+        case "underwater": return ["waterproof-collection", "micro-vial-set"]
+        case "bone_bed": return ["plaster-jacket", "micro-vial-set"]
+        default: return []
+        }
+    case .transport:
+        switch storySlug {
+        case "underwater": return ["waterproof-collection", "specimen-crate", "shipping-manifest"]
+        case "colony": return []
+        case "cliff": return []
+        default: return []
+        }
+    }
+}
 
 private let fossilHuntToolLabels: [String: String] = [
-    "magnifier": "Magnifying glass",
-    "sem": "SEM microscope",
-    "scanner": "CT scanner",
-    "rock-hammer": "Rock hammer",
-    "brush": "Brush",
+    "aerial-lift": "Aerial lift",
+    "boots": "Field boots",
+    "gpr-surveyor": "GPR surveyor",
+    "pickup-truck": "Pickup truck",
+    "personal-locator-beacon": "PLB",
+    "trailer-transport": "Trailer",
+    "vehicle-suv-4wd": "SUV (4WD)",
+    "specimen-vial": "Specimen vial",
+    "ui-digital-repository": "Digital repository",
+    "ui-ecology-map": "Ecology map",
+    "ui-exhibit-label": "Exhibit label",
 ]
 
-private let fossilHuntToolEmojis: [String: String] = [
-    "magnifier": "🔍",
-    "sem": "🔬",
-    "scanner": "📡",
-    "rock-hammer": "🔨",
-    "brush": "🖌️",
-]
+private let fossilHuntToolEmojis: [String: String] = [:]
 
-private func fossilHuntTool(forSlug slug: String) -> FossilHuntTool {
-    let name = "dino-tools-\(slug)"
+private func fossilHuntDisplayLabel(forSlug slug: String) -> String {
+    if let custom = fossilHuntToolLabels[slug] { return custom }
+    return slug.split(separator: "-").map { String($0).capitalized }.joined(separator: " ")
+}
+
+/// Matches `Dinosaur-Tools/` imagesets: `dino-tools-field-*`, `dino-tools-lab-*`, `dino-tools-art-*`.
+/// Slugs that exist in both field and lab (e.g. `ppe`) need `isCorrectOption` + `roundPrimaryGroup` so correct dig-site answers keep field art.
+private func fossilHuntAssetName(
+    forSlug slug: String,
+    isCorrectOption: Bool,
+    roundPrimaryGroup: FossilHuntToolGroup
+) -> String {
+    if isCorrectOption {
+        switch roundPrimaryGroup {
+        case .paleontologist: return "dino-tools-field-\(slug)"
+        case .preparator: return "dino-tools-lab-\(slug)"
+        case .restorer: return "dino-tools-art-\(slug)"
+        }
+    }
+    if fossilHuntPreparatorToolSlugs.contains(slug) { return "dino-tools-lab-\(slug)" }
+    if fossilHuntRestorerToolSlugs.contains(slug) { return "dino-tools-art-\(slug)" }
+    return "dino-tools-field-\(slug)"
+}
+
+private func fossilHuntTool(
+    forSlug slug: String,
+    isCorrectOption: Bool,
+    roundPrimaryGroup: FossilHuntToolGroup
+) -> FossilHuntTool {
+    let name = fossilHuntAssetName(forSlug: slug, isCorrectOption: isCorrectOption, roundPrimaryGroup: roundPrimaryGroup)
     return FossilHuntTool(
         id: slug,
-        displayLabel: fossilHuntToolLabels[slug] ?? slug,
+        displayLabel: fossilHuntDisplayLabel(forSlug: slug),
         imageName: name,
         emoji: fossilHuntToolEmojis[slug] ?? "🔧",
         introAudioKey: nil
     )
 }
 
-private var fossilHuntToolPalette: [FossilHuntTool] {
-    fossilHuntToolSlugs.map { fossilHuntTool(forSlug: $0) }
+private func fossilHuntPickCorrectSlugs(from pool: [String], count: Int, using rng: inout SeededRNG) -> [String] {
+    guard pool.count >= count else { return pool }
+    var shuffled = pool
+    shuffled.shuffle(using: &rng)
+    return Array(shuffled.prefix(count))
 }
 
-/// The three tools that are wrong answers for this beat (palette minus the two critical slugs).
-private func fossilHuntDistractionSlugs(critical: [String]) -> [String] {
-    let c = Set(critical)
-    return fossilHuntToolSlugs.filter { !c.contains($0) }
+/// Distractors come from **other** tiers first, so preparator/restorer icons read as “not dig-site tools” for young players.
+/// Never falls back to arbitrary field tools — that showed e.g. `separation-layer` during discovery.
+private func fossilHuntPickDistractorSlugs(
+    count: Int,
+    excluding: Set<String>,
+    primaryGroup: FossilHuntToolGroup,
+    using rng: inout SeededRNG
+) -> [String] {
+    var pool = FossilHuntToolGroup.allCases
+        .filter { $0 != primaryGroup }
+        .flatMap { fossilHuntSlugs(in: $0) }
+        .filter { !excluding.contains($0) }
+    guard !pool.isEmpty else { return [] }
+    pool.shuffle(using: &rng)
+    var out: [String] = []
+    while out.count < count {
+        for s in pool where out.count < count {
+            if !out.contains(s) { out.append(s) }
+        }
+        if out.count < count {
+            let s = pool[Int.random(in: 0..<pool.count, using: &rng)]
+            out.append(s)
+        }
+    }
+    return Array(out.prefix(count))
 }
 
 // MARK: - Star layout (same pentagon as Dino Flora)
@@ -134,113 +327,74 @@ private func fossilHuntTimeSeed() -> UInt64 {
 
 private let fossilHuntToolCircleSize: CGFloat = 88
 
-// MARK: - Story map (draft) — critical vs distraction tools
+// MARK: - Story library — audio / art + tool logic
 //
-// **Small circles (always 5):** imagesets `dino-tools-{slug}` for slug in `fossilHuntToolSlugs`.
+// **Directions audio:** `Games/game-dino-fossil-hunt-{storyKebab}-{phase}.m4a`
+// **Story art:** `dino-hunt-{storyKebab}-{phase}`
 //
-// **Audio (directions each beat):** `Games/game-dino-fossil-hunt-{story}-{stage}.m4a`
-//   with story ∈ 1…N (N = number of stories in `fossilHuntStoryLibrary`) and stage ∈ discovery | excavate | preserve | transport.
-//
-// For each cell: **Critical** = the two tools players must tap. **Distractions** = the other three slugs
-// (computed by `fossilHuntDistractionSlugs(critical:)` — not stored separately).
-//
-// ```
-// Story │ Stage      │ Story image (large)          │ Critical (dino-tools-*)     │ Distractions (implicit)
-// ------+------------+------------------------------+-----------------------------+---------------------------
-// 1     │ discovery  │ fossil-hunt-1-discovery      │ magnifier, scanner          │ sem, rock-hammer, brush
-// 1     │ excavate   │ fossil-hunt-1-excavate       │ rock-hammer, brush          │ magnifier, sem, scanner
-// 1     │ preserve   │ fossil-hunt-1-preserve       │ sem, brush                  │ magnifier, scanner, rock-hammer
-// 1     │ transport  │ fossil-hunt-1-transport      │ scanner, rock-hammer        │ magnifier, sem, brush
-// 2     │ discovery  │ fossil-hunt-2-discovery      │ scanner, sem                │ magnifier, rock-hammer, brush
-// 2     │ excavate   │ fossil-hunt-2-excavate       │ magnifier, rock-hammer      │ sem, scanner, brush
-// 2     │ preserve   │ fossil-hunt-2-preserve       │ brush, scanner              │ magnifier, sem, rock-hammer
-// 2     │ transport  │ fossil-hunt-2-transport      │ magnifier, brush            │ sem, scanner, rock-hammer
-// 3     │ discovery  │ fossil-hunt-3-discovery      │ magnifier, brush            │ sem, scanner, rock-hammer
-// 3     │ excavate   │ fossil-hunt-3-excavate       │ scanner, sem                │ magnifier, rock-hammer, brush
-// 3     │ preserve   │ fossil-hunt-3-preserve       │ rock-hammer, scanner        │ magnifier, sem, brush
-// 3     │ transport  │ fossil-hunt-3-transport      │ sem, rock-hammer            │ magnifier, scanner, brush
-// 4     │ discovery  │ fossil-hunt-4-discovery      │ rock-hammer, magnifier      │ sem, scanner, brush
-// 4     │ excavate   │ fossil-hunt-4-excavate       │ brush, scanner              │ magnifier, sem, rock-hammer
-// 4     │ preserve   │ fossil-hunt-4-preserve       │ magnifier, sem              │ scanner, rock-hammer, brush
-// 4     │ transport  │ fossil-hunt-4-transport      │ scanner, brush              │ magnifier, sem, rock-hammer
-// ```
-//
-// Rename `fossil-hunt-{story}-{stage}` imagesets or edit `FossilHuntStoryDefinition` below to match your art.
+// **Tools:** Each round has `suitableToolSlugs` (paleontologist). When the round **starts**, two correct tools are chosen **at random**
+// from that pool (so repeats feel different). The star’s other three icons are **preparator + restorer** only (unlikely at the dig),
+// unless there aren’t enough assets yet — then we fall back to other paleontologist tools not chosen as correct.
 
-private struct FossilHuntBeatDef {
-    let storyImageName: String
-    /// Two slugs — must be distinct and each ∈ `fossilHuntToolSlugs`.
-    let criticalToolSlugs: [String]
+/// `big_fossil` → `big-fossil` for audio keys and image name segments.
+private func fossilHuntKebabStorySlug(_ slug: String) -> String {
+    slug.replacingOccurrences(of: "_", with: "-")
+}
+
+/// Imagesets: `dino-hunt-{storyKebab}-{phase}` (e.g. `dino-hunt-big-fossil-discovery`).
+private func fossilHuntStoryImageName(storySlug: String, phase: FossilHuntPhase) -> String {
+    let kebab = fossilHuntKebabStorySlug(storySlug)
+    return "dino-hunt-\(kebab)-\(phase.rawValue)"
 }
 
 private struct FossilHuntStoryDefinition {
-    let storyId: Int
+    let storyNumber: Int
+    let storySlug: String
     let title: String
-    let beats: [FossilHuntPhase: FossilHuntBeatDef]
 }
 
 private let fossilHuntStoryLibrary: [FossilHuntStoryDefinition] = [
-    FossilHuntStoryDefinition(
-        storyId: 1,
-        title: "Story 1",
-        beats: [
-            .discovery: FossilHuntBeatDef(storyImageName: "fossil-hunt-1-discovery", criticalToolSlugs: ["magnifier", "scanner"]),
-            .excavate: FossilHuntBeatDef(storyImageName: "fossil-hunt-1-excavate", criticalToolSlugs: ["rock-hammer", "brush"]),
-            .preserve: FossilHuntBeatDef(storyImageName: "fossil-hunt-1-preserve", criticalToolSlugs: ["sem", "brush"]),
-            .transport: FossilHuntBeatDef(storyImageName: "fossil-hunt-1-transport", criticalToolSlugs: ["scanner", "rock-hammer"]),
-        ]
-    ),
-    FossilHuntStoryDefinition(
-        storyId: 2,
-        title: "Story 2",
-        beats: [
-            .discovery: FossilHuntBeatDef(storyImageName: "fossil-hunt-2-discovery", criticalToolSlugs: ["scanner", "sem"]),
-            .excavate: FossilHuntBeatDef(storyImageName: "fossil-hunt-2-excavate", criticalToolSlugs: ["magnifier", "rock-hammer"]),
-            .preserve: FossilHuntBeatDef(storyImageName: "fossil-hunt-2-preserve", criticalToolSlugs: ["brush", "scanner"]),
-            .transport: FossilHuntBeatDef(storyImageName: "fossil-hunt-2-transport", criticalToolSlugs: ["magnifier", "brush"]),
-        ]
-    ),
-    FossilHuntStoryDefinition(
-        storyId: 3,
-        title: "Story 3",
-        beats: [
-            .discovery: FossilHuntBeatDef(storyImageName: "fossil-hunt-3-discovery", criticalToolSlugs: ["magnifier", "brush"]),
-            .excavate: FossilHuntBeatDef(storyImageName: "fossil-hunt-3-excavate", criticalToolSlugs: ["scanner", "sem"]),
-            .preserve: FossilHuntBeatDef(storyImageName: "fossil-hunt-3-preserve", criticalToolSlugs: ["rock-hammer", "scanner"]),
-            .transport: FossilHuntBeatDef(storyImageName: "fossil-hunt-3-transport", criticalToolSlugs: ["sem", "rock-hammer"]),
-        ]
-    ),
-    FossilHuntStoryDefinition(
-        storyId: 4,
-        title: "Story 4",
-        beats: [
-            .discovery: FossilHuntBeatDef(storyImageName: "fossil-hunt-4-discovery", criticalToolSlugs: ["rock-hammer", "magnifier"]),
-            .excavate: FossilHuntBeatDef(storyImageName: "fossil-hunt-4-excavate", criticalToolSlugs: ["brush", "scanner"]),
-            .preserve: FossilHuntBeatDef(storyImageName: "fossil-hunt-4-preserve", criticalToolSlugs: ["magnifier", "sem"]),
-            .transport: FossilHuntBeatDef(storyImageName: "fossil-hunt-4-transport", criticalToolSlugs: ["scanner", "brush"]),
-        ]
-    ),
+    FossilHuntStoryDefinition(storyNumber: 1, storySlug: "big_fossil", title: "Big Fossil"),
+    FossilHuntStoryDefinition(storyNumber: 2, storySlug: "small_tooth", title: "Small Tooth"),
+    FossilHuntStoryDefinition(storyNumber: 3, storySlug: "skull", title: "Skull"),
+    FossilHuntStoryDefinition(storyNumber: 4, storySlug: "skeleton", title: "Skeleton"),
+    FossilHuntStoryDefinition(storyNumber: 5, storySlug: "bone_bed", title: "Bone Bed"),
+    FossilHuntStoryDefinition(storyNumber: 6, storySlug: "botany", title: "Botany"),
+    FossilHuntStoryDefinition(storyNumber: 7, storySlug: "cliff", title: "Cliff"),
+    FossilHuntStoryDefinition(storyNumber: 8, storySlug: "colony", title: "Colony"),
+    FossilHuntStoryDefinition(storyNumber: 9, storySlug: "underwater", title: "Underwater"),
 ]
 
 private func fossilHuntQuest(from def: FossilHuntStoryDefinition) -> DinoFossilHuntQuestConfig {
+    let storyKebab = fossilHuntKebabStorySlug(def.storySlug)
     let rounds: [DinoFossilHuntRoundConfig] = FossilHuntPhase.allCases.map { phase in
-        guard let beat = def.beats[phase] else {
-            fatalError("Missing beat story \(def.storyId) phase \(phase)")
-        }
-        let critical = beat.criticalToolSlugs
-        assert(Set(critical).count == 2, "Story \(def.storyId) \(phase) must have two distinct critical tools")
+        let extras = fossilHuntStoryPhaseExtras(storySlug: def.storySlug, phase: phase)
+        let suitable = fossilHuntMergedSuitablePaleontologistSlugs(phase: phase, extras: extras)
+        precondition(suitable.count >= 2, "Story \(def.storySlug) phase \(phase) needs ≥2 paleontologist tools in suitable pool")
         return DinoFossilHuntRoundConfig(
-            storyNumber: def.storyId,
+            storyNumber: def.storyNumber,
             phase: phase,
-            storyImageName: beat.storyImageName,
-            directionsAudioKey: "game-dino-fossil-hunt-\(def.storyId)-\(phase.rawValue)",
-            correctToolIds: critical
+            storyImageName: fossilHuntStoryImageName(storySlug: def.storySlug, phase: phase),
+            directionsAudioKey: "game-dino-fossil-hunt-\(storyKebab)-\(phase.rawValue)",
+            suitableToolSlugs: suitable,
+            suitableToolGroup: .paleontologist,
         )
     }
-    return DinoFossilHuntQuestConfig(id: "\(def.storyId)", displayName: def.title, rounds: rounds)
+    return DinoFossilHuntQuestConfig(id: def.storySlug, displayName: def.title, rounds: rounds)
 }
 
 private let dinoFossilHuntAllQuests: [DinoFossilHuntQuestConfig] = fossilHuntStoryLibrary.map { fossilHuntQuest(from: $0) }
+
+/// When non-nil, only this story runs (local testing). Use `nil` for all stories in sessions.
+private let fossilHuntSingleStoryTestingSlug: String? = nil
+
+private var dinoFossilHuntPlayableQuests: [DinoFossilHuntQuestConfig] {
+    if let slug = fossilHuntSingleStoryTestingSlug,
+       let q = dinoFossilHuntAllQuests.first(where: { $0.id == slug }) {
+        return [q]
+    }
+    return dinoFossilHuntAllQuests
+}
 
 // MARK: - View
 
@@ -252,14 +406,16 @@ struct DinoFossilHuntGameView: View {
     @State private var hasStartedGame = false
     @State private var currentRoundIndex = 0
     @State private var toolSlots: [FossilHuntTool] = []
+    /// Two slugs picked at random from `roundConfig.suitableToolSlugs` (paleontologist pool) when the round is prepared.
+    @State private var roundCorrectToolIds: Set<String> = []
     @State private var matchedToolIds: Set<String> = []
     @State private var isGameComplete = false
     @State private var endSequenceStep = -1
     @State private var endHighlightIndex = 0
     @State private var introWalkIndex: Int?
     @State private var displayedToolLabel: String?
-
-    private let matchesNeededPerRound = 2
+    /// Full-screen hints (same pattern as Dino Footprints).
+    @State private var showFossilHuntHints = false
 
     private var quest: DinoFossilHuntQuestConfig { gameConfig.quest }
     private var totalRounds: Int { quest.rounds.count }
@@ -268,14 +424,32 @@ struct DinoFossilHuntGameView: View {
         return quest.rounds[currentRoundIndex]
     }
 
-    private var correctIdsThisRound: Set<String> {
-        roundConfig?.correctIdSet ?? []
-    }
+    private var correctIdsThisRound: Set<String> { roundCorrectToolIds }
 
     var body: some View {
         NavigationView {
             mainContent
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .overlay(alignment: .topTrailing) {
+                    if !isGameComplete, roundConfig != nil {
+                        Button {
+                            showFossilHuntHints = true
+                        } label: {
+                            Text("Hints")
+                                .font(.caption.weight(.semibold))
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 14)
+                                .padding(.vertical, 10)
+                                .background(Circle().fill(Color.blue))
+                                .frame(width: 72, height: 72)
+                        }
+                        .padding(.top, 8)
+                        .padding(.trailing, 16)
+                    }
+                }
+                .fullScreenCover(isPresented: $showFossilHuntHints) {
+                    SourceFossilHuntHintsView(onDismiss: { showFossilHuntHints = false })
+                }
                 .navigationBarTitleDisplayMode(.inline)
                 .onAppear {
                     guard !hasStartedGame else { return }
@@ -394,7 +568,7 @@ struct DinoFossilHuntGameView: View {
         endHighlightIndex = 0
         introWalkIndex = nil
         displayedToolLabel = nil
-        shuffleToolSlots()
+        prepareToolsForCurrentRound()
         playIntroThenFirstRound()
     }
 
@@ -435,9 +609,36 @@ struct DinoFossilHuntGameView: View {
         }
     }
 
-    private func shuffleToolSlots() {
-        var rng = SeededRNG(seed: fossilHuntTimeSeed() &+ UInt64(currentRoundIndex * 17))
-        toolSlots = fossilHuntToolPalette.shuffled(using: &rng)
+    private func prepareToolsForCurrentRound() {
+        guard let r = roundConfig else {
+            toolSlots = []
+            roundCorrectToolIds = []
+            return
+        }
+        var seed = fossilHuntTimeSeed()
+        seed ^= UInt64(bitPattern: Int64(r.storyNumber &* 0x9E37_79B9))
+        seed ^= UInt64(bitPattern: Int64(currentRoundIndex &* 0x85EB_CA6B))
+        seed ^= UInt64(bitPattern: Int64(r.phase.rawValue.hashValue))
+        var rng = SeededRNG(seed: seed)
+        let correct = fossilHuntPickCorrectSlugs(from: r.suitableToolSlugs, count: 2, using: &rng)
+        roundCorrectToolIds = Set(correct)
+        let distractors = fossilHuntPickDistractorSlugs(
+            count: 3,
+            excluding: roundCorrectToolIds,
+            primaryGroup: r.suitableToolGroup,
+            using: &rng
+        )
+        var fiveSlugs = correct + distractors
+        /// Unbiased star order (LCG `SeededRNG` is poor for permutations).
+        var orderRng = SystemRandomNumberGenerator()
+        fiveSlugs.shuffle(using: &orderRng)
+        toolSlots = fiveSlugs.map { slug in
+            fossilHuntTool(
+                forSlug: slug,
+                isCorrectOption: roundCorrectToolIds.contains(slug),
+                roundPrimaryGroup: r.suitableToolGroup
+            )
+        }
     }
 
     private func startIntroWalk() {
@@ -512,7 +713,7 @@ struct DinoFossilHuntGameView: View {
         matchedToolIds = []
         introWalkIndex = nil
         displayedToolLabel = nil
-        shuffleToolSlots()
+        prepareToolsForCurrentRound()
         beginCurrentRoundDirections()
     }
 
@@ -651,6 +852,189 @@ struct DinoFossilHuntGameView: View {
     }
 }
 
+// MARK: - Fossil Hunt hints (Dino Footprints–style full-screen grid)
+
+/// Optional `imageName` imagesets (e.g. `source-fossil-hunt-paleontologist`) — grid falls back to emoji tiles when missing.
+/// Audio keys use `Games/game-dino-fossil-hunt-hint-*.m4a` via `audioFilePath` prefix `game-dino-fossil-hunt-`.
+private struct SourceFossilHuntHint: Identifiable {
+    let id: String
+    let imageName: String?
+    let displayName: String
+    let audioKey: String
+    let fallbackExplanation: String
+    let placeholderEmoji: String
+}
+
+private let sourceFossilHuntHints: [SourceFossilHuntHint] = [
+    SourceFossilHuntHint(
+        id: "paleontologist",
+        imageName: "source-fossil-hunt-paleontologist",
+        displayName: "At the dig",
+        audioKey: "game-dino-fossil-hunt-hint-paleontologist",
+        fallbackExplanation: "Paleontologist tools are for finding and digging fossils out in the field.",
+        placeholderEmoji: "⛏️"
+    ),
+    SourceFossilHuntHint(
+        id: "preparator",
+        imageName: "source-fossil-hunt-preparator",
+        displayName: "In the lab",
+        audioKey: "game-dino-fossil-hunt-hint-preparator",
+        fallbackExplanation: "Preparator tools are for cleaning and getting fossils ready in the lab.",
+        placeholderEmoji: "🧪"
+    ),
+    SourceFossilHuntHint(
+        id: "restorer",
+        imageName: "source-fossil-hunt-restorer",
+        displayName: "Restoring",
+        audioKey: "game-dino-fossil-hunt-hint-restorer",
+        fallbackExplanation: "Restorer work uses screens and digital tools to study and show fossils without breaking them.",
+        placeholderEmoji: "🖥️"
+    ),
+    SourceFossilHuntHint(
+        id: "phases",
+        imageName: "source-fossil-hunt-phases",
+        displayName: "Four steps",
+        audioKey: "game-dino-fossil-hunt-hint-phases",
+        fallbackExplanation: "Each round is a step: discovery, then excavate, then preserve, then transport.",
+        placeholderEmoji: "🔎"
+    ),
+]
+
+private struct SourceFossilHuntHintsView: View {
+    let onDismiss: () -> Void
+    @State private var speechManager = SpeechManager()
+    @State private var selectedHint: SourceFossilHuntHint?
+    @State private var introPlayed = false
+
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            if selectedHint == nil {
+                gridView
+            } else {
+                detailView
+            }
+
+            Button {
+                speechManager.stopCurrentAudio()
+                speechManager.onAudioFinished = nil
+                onDismiss()
+            } label: {
+                Text("<")
+                    .font(.system(size: 28, weight: .medium))
+                    .foregroundColor(.blue)
+                    .frame(width: 44, height: 44)
+            }
+            .padding(.leading, 8)
+            .padding(.top, 8)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(.systemBackground))
+        .onAppear {
+            playIntroOnce()
+        }
+        .onDisappear {
+            speechManager.onAudioFinished = nil
+            speechManager.stopCurrentAudio()
+        }
+    }
+
+    private var gridView: some View {
+        VStack(spacing: 20) {
+            Text("Dino Fossil Hunt")
+                .font(.title2.weight(.semibold))
+                .padding(.top, 44)
+            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
+                ForEach(sourceFossilHuntHints) { hint in
+                    Button {
+                        showHintDetail(hint)
+                    } label: {
+                        Group {
+                            if let name = hint.imageName, ImageAssetCache.imageExists(named: name) {
+                                Image(name)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 120)
+                                    .clipped()
+                            } else {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.gray.opacity(0.25))
+                                    .frame(height: 120)
+                                    .overlay(
+                                        VStack(spacing: 6) {
+                                            Text(hint.placeholderEmoji)
+                                                .font(.system(size: 40))
+                                            Text(hint.displayName)
+                                                .font(.caption.weight(.semibold))
+                                                .foregroundStyle(.secondary)
+                                                .multilineTextAlignment(.center)
+                                        }
+                                        .padding(8)
+                                    )
+                            }
+                        }
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding(.horizontal, 24)
+            Spacer()
+        }
+    }
+
+    @ViewBuilder
+    private var detailView: some View {
+        if let hint = selectedHint {
+            VStack(spacing: 20) {
+                Spacer()
+                if let name = hint.imageName, ImageAssetCache.imageExists(named: name) {
+                    Image(name)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 320, maxHeight: 320)
+                } else {
+                    Text(hint.placeholderEmoji)
+                        .font(.system(size: 120))
+                }
+                Text(hint.displayName)
+                    .font(.title2.weight(.semibold))
+                    .foregroundStyle(.primary)
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+
+    private func playIntroOnce() {
+        guard !introPlayed else { return }
+        introPlayed = true
+        speechManager.onAudioFinished = nil
+        if let url = speechManager.urlForAudio(key: "game-dino-fossil-hunt-hint-intro") {
+            speechManager.playAudioFile(url: url)
+        } else if let url = speechManager.urlForAudio(key: "game-hint") {
+            speechManager.playAudioFile(url: url)
+        } else {
+            speechManager.speak("Tap a picture to hear a tip about paleontologist, preparator, and restorer tools.")
+        }
+    }
+
+    private func showHintDetail(_ hint: SourceFossilHuntHint) {
+        selectedHint = hint
+        speechManager.onAudioFinished = nil
+        speechManager.onAudioFinished = {
+            speechManager.onAudioFinished = nil
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                selectedHint = nil
+            }
+        }
+        if let url = speechManager.urlForAudio(key: hint.audioKey) {
+            speechManager.playAudioFile(url: url)
+        } else {
+            speechManager.speak(hint.fallbackExplanation)
+        }
+    }
+}
+
 // MARK: - Subviews
 
 private struct FossilHuntToolCircleView: View {
@@ -721,10 +1105,10 @@ private struct FossilHuntVictoryRow: View {
 // MARK: - Catalog entry
 
 enum DinoFossilHuntGameConfigs {
-    /// Picks a random story each session. Add entries to `fossilHuntStoryLibrary` to grow N.
+    /// Picks a random story each session from `dinoFossilHuntPlayableQuests` (see `fossilHuntSingleStoryTestingSlug`).
     static var dinoFossilHunt: DinoFossilHuntGameConfig {
         var rng = SeededRNG(seed: fossilHuntTimeSeed())
-        let quest = dinoFossilHuntAllQuests.randomElement(using: &rng) ?? dinoFossilHuntAllQuests[0]
+        let quest = dinoFossilHuntPlayableQuests.randomElement(using: &rng) ?? dinoFossilHuntPlayableQuests[0]
         return DinoFossilHuntGameConfig(
             id: "dino-fossil-hunt",
             title: "Dino Fossil Hunt!",

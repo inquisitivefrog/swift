@@ -1,0 +1,14 @@
+{
+  "id": "tool_pro_shovel_long_01",
+  "item_name": "Full-Size Excavation Shovel",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "GLOBAL_FIELD_EQUIPMENT",
+  "pose": "Vertical orientation, three-quarter view to show the ergonomic curve of the shaft",
+  "visual_description": "A professional-grade long-handled shovel. The shaft is 48-inches of polished, straight-grain ash wood leading to a heavy-gauge forged steel head. The blade is a deep-dish round point with wide 'foot steps' at the top for driving the shovel into hard earth with a boot. The steel is a matte charcoal color with a silver-polished edge from abrasive use.",
+  "constraints": {
+    "anatomy": "Full-length handle (no folding mechanism); oversized deep-dish blade for high-volume debris movement.",
+    "background": "Isolated on light grey with a strong contact shadow at the base."
+  }
+}

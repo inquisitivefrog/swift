@@ -1,0 +1,13 @@
+{
+  "accession_id": "USNM-2026-X-042",
+  "status": "Permanent Collection",
+  "curator_sign_off": "Dr. A. Thorne",
+  "legal_status": "Federal Land (Permit #882-B)",
+  "archival_location": "Cabinet 14, Drawer D, Shelf 2",
+  "data_links": {
+    "field_notes": "digital_archive_hc_field_vol1",
+    "ct_scan": "mesh_3d_hc_042_final",
+    "isotope_report": "irms_data_774"
+  },
+  "preservation_notes": "Specimen stored in acid-free Ethafoam cradle. Humidity must be maintained at 45-50% to prevent pyrite disease."
+}

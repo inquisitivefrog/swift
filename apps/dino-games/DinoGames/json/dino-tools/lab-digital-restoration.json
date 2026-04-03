@@ -1,0 +1,19 @@
+{
+  "asset_id": "dino-tools-digital-restoration-001",
+  "label": "Retro-Deformation Software",
+  "category": "Digital Analysis",
+  "description": "Software suite used to mathematically reverse the crushing and shearing forces of millions of years of burial.",
+  "features": [
+    {
+      "id": "mirror_tool",
+      "function": "If the left side of a jaw is missing, the software mirrors the right side to create a perfect 'restored' whole."
+    },
+    {
+      "id": "un-crush_algorithm",
+      "function": "Calculates the original volume of the bone by identifying 'stress vectors' in the digital mesh."
+    }
+  ],
+  "game_mechanics": {
+    "puzzle_solve": "The player must manually pull 'nodes' on the 3D model to align the joints properly, like a digital orthopedic surgeon."
+  }
+}

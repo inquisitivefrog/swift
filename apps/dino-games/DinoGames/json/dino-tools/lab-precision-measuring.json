@@ -1,0 +1,36 @@
+{
+  "asset_id": "dino-tools-lab-precision-measuring-001",
+  "label": "Chemical Consolidation Kit",
+  "category": "Lab Consumables",
+  "description": "Used to create archival-grade adhesives by mixing resin beads with volatile solvents at specific weight/volume ratios.",
+  "components": [
+    {
+      "id": "graduated_pipettes",
+      "type": "disposable_tool",
+      "function": "Transferring small, precise amounts of solvent (Acetone) to the mixing beaker."
+    },
+    {
+      "id": "glass_beaker_set",
+      "type": "static_mesh",
+      "volumes": ["50ml", "250ml", "500ml"],
+      "material": "Borosilicate Glass"
+    },
+    {
+      "id": "digital_mass_scale",
+      "type": "interactive_ui",
+      "precision": "0.01g",
+      "function": "Weighing resin beads (Paraloid B-72 or Butvar B-76) for the mixture."
+    },
+    {
+      "id": "airtight_storage_jars",
+      "type": "container",
+      "contents": ["B-72 Pellets", "Mixed Consolidant"],
+      "safety_note": "Solvents will evaporate quickly if lids are not seated correctly."
+    }
+  ],
+  "game_mechanics": {
+    "viscosity_puzzle": "Player must mix a thin solution (low beads/high solvent) for 'wicking' into tiny cracks, or thick solution for 'joining' large fragments.",
+    "evaporation_timer": "If the jar is left open too long, the 'glue' hardens and becomes unusable."
+  },
+  "tags": ["chemistry", "measurement", "precision", "solvent"]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "doc_pro_tribal_permit_01",
+  "item_name": "Tribal Council Land Use Resolution",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A formal document printed on heavy cream-colored paper. It features a decorative border and a Tribal Nation seal at the top. The text grants 'Paleontological Prospecting Access' for a specific window of time. It is signed by the Tribal Chairman. The paper looks slightly weathered, as if it has been carried in a field pack.",
+  "constraints": {
+    "aesthetic": "Dignified and formal, distinct from the bureaucratic look of the BLM forms.",
+    "logic": "Represents a deeper level of cultural and legal negotiation."
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "env_pro_reclamation_tarp_01",
+  "item_name": "Heavy-Duty Spoils Containment Tarp",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A massive, reinforced black polymer tarp laid out next to an excavation pit. On top of the tarp is a neatly organized mound of excavated rock and dirt (the overburden). This ensures that when the project is done, the dirt can be poured back into the hole without contaminating the surrounding vegetation.",
+  "constraints": {
+    "logic": "Prevents 'Scarring' of the landscape.",
+    "background": "Dry Montana scrubland with the tarp edge visible."
+  }
+}

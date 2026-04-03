@@ -1,0 +1,29 @@
+{
+  "asset_id": "dino-ui-exhibit-label-001",
+  "specimen_name": "The 'Highland' Triceratops",
+  "scientific_name": "Triceratops prorsus",
+  "accession_number": "HC-2026-042",
+  "label_sections": [
+    {
+      "header": "The Discovery",
+      "body": "Found in the sun-bleached mudstones of Montana, this specimen was initially just a cluster of brown fragments. It took 200 hours of precision air-abrasion to reveal the bone beneath the rock."
+    },
+    {
+      "header": "Forensic Insight",
+      "body": "Isotope analysis of the tooth enamel reveals this animal was a traveler. It spent its summers drinking snowmelt in the mountains before migrating 300 miles to the coastal deltas to avoid the winter chill."
+    },
+    {
+      "header": "Digital Restoration",
+      "body": "The skull on display is a 3D-printed reconstruction. The original fossil was too fragile to mount, so we used Micro-CT scans to 'virtually' repair the crushing caused by 66 million years of burial."
+    }
+  ],
+  "game_stats": {
+    "scientific_accuracy": "98%",
+    "completeness": "72%",
+    "public_engagement_bonus": "+500 Credits"
+  },
+  "interactive_elements": {
+    "qr_link": "https://morphosource.org/view/HC-2026-042",
+    "tactile_zone": "3D-printed 'Please Touch' horn texture"
+  }
+}

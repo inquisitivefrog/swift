@@ -1,0 +1,12 @@
+{
+  "id": "tool_tech_rock_saw_01",
+  "item_name": "Gas-Powered Diamond Rock Saw",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A heavy-duty industrial saw resembling a large chainsaw but with a circular diamond-tipped blade instead of a chain. It features a dual-handle grip and an attachment for a water hose (to suppress dust). The blade is dusty and shows signs of cutting through stratified rock.",
+  "constraints": {
+    "material": "Gritty, industrial orange and black plastic; steel blade with visible diamond grit on the edge.",
+    "logic": "The ultimate 'Overburden' tool for the hardest rock types."
+  }
+}

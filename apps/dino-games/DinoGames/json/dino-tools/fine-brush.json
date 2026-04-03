@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_brush_fine_01",
+  "item_name": "Soft-Bristle Detail Brush",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A precision brush with a slim, ergonomic wooden handle. The ferrule (the metal part) is bright silver. The bristles are long, soft natural fibers, shaped into a fine point. It is shown at a 45-degree angle as if dusting a surface.",
+  "constraints": {
+    "material": "Polished mahogany wood handle; soft cream-colored bristles.",
+    "logic": "Used for the 'final reveal' of a specimen."
+  }
+}

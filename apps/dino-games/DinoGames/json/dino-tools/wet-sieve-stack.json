@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_sieve_wet_stack_01",
+  "item_name": "Wet Sieve Stack",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A stack of three round, nested wet sieves. The top sieve has a coarse mesh (e.g., 4mm), the middle sieve a medium mesh (e.g., 2mm), and the bottom sieve a fine mesh (e.g., 0.5mm). Each sieve features a sturdy, polished stainless steel rim and frame, with the mesh securely integrated. The sieves show subtle signs of water streaks and mineral residue, indicating recent use in wet sifting. They are stacked neatly, with a collection pan at the very bottom.",
+  "constraints": {
+    "texture": "Smooth, reflective stainless steel; distinct, varying mesh patterns for each sieve; subtle wet and mineral residue textures.",
+    "background": "Solid neutral 50% grey floor plane."
+  }
+}

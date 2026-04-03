@@ -1,0 +1,28 @@
+{
+  "asset_id": "dino-tools-lab-media-types-001",
+  "label": "Abrasive Media Varieties",
+  "category": "Consumables",
+  "items": [
+    {
+      "name": "Sodium Bicarbonate",
+      "hardness_mohs": 2.5,
+      "color_code": "White",
+      "best_for": ["Fragile bone", "Surface polishing", "Hell Creek Mudstone"]
+    },
+    {
+      "name": "Dolomite",
+      "hardness_mohs": 3.5,
+      "color_code": "Tan/Brown",
+      "best_for": ["Standard matrix removal", "Morrison Formation Sandstone"]
+    },
+    {
+      "name": "Crushed Walnut Shell",
+      "hardness_mohs": 3.0,
+      "color_code": "Dark Brown",
+      "best_for": ["Removing organic stains", "Non-destructive cleaning"]
+    }
+  ],
+  "game_mechanics": {
+    "media_matching": "Player must match media hardness to the rock type found in the Field Notes to avoid 'Scuffing' the fossil."
+  }
+}

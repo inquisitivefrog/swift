@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_photo_scale_01",
+  "item_name": "Standard Photo Scale & North Arrow",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A L-shaped plastic scale marked in centimeters (black and white blocks) alongside a separate bright yellow plastic arrow labeled 'N'. They are placed on a flat rock surface. The scale provides a size reference, while the arrow indicates magnetic north.",
+  "constraints": {
+    "logic": "Essential for 'Photogrammetry'—creating 3D models from photos.",
+    "background": "Placed on a textured 'Hell Creek' mudstone surface for contrast."
+  }
+}

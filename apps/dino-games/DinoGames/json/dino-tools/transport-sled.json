@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_transport_sled_01",
+  "item_name": "Heavy-Duty Specimen Sled",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A rugged transport sled made of thick, weathered plywood with reinforced steel rails on the bottom. Heavy-duty yellow nylon ratchet straps are looped through the frame. In the center sits a large, white, rounded plaster jacket (resembling a large boulder) securely strapped down for transport.",
+  "constraints": {
+    "scale": "Should look massive and heavy, implying the need for multiple workers to move.",
+    "background": "Isolated on a neutral grey studio floor."
+  }
+}

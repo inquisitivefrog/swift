@@ -1,0 +1,12 @@
+{
+  "report_id": "date-hc-2026-042",
+  "method": "Uranium-Lead (U-Pb) Zircon Dating",
+  "strata_context": "Upper Hell Creek Formation",
+  "timestamp_results": {
+    "absolute_age_ma": 66.04,
+    "margin_of_error": 0.02,
+    "geological_period": "Late Cretaceous (Maastrichtian)"
+  },
+  "is_last_day_specimen": true,
+  "unlocks_achievement": "The End of an Era"
+}

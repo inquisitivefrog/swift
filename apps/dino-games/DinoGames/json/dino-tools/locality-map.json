@@ -1,0 +1,11 @@
+{
+  "id": "doc_pro_locality_map_01",
+  "item_name": "Authorized Prospecting Locality Map",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A topographic map with a translucent red 'Authorized Search Area' shaded over a specific canyon system. The map features GPS grid lines, contour elevations, and a BLM logo in the corner. Hand-drawn circles mark 'Discovery Potential' zones.",
+  "constraints": {
+    "detail": "Technical topographic features like 'Section 14, T12N, R54E' should be visible in the margin notes.",
+    "background": "Spread out on a folding camp table with a rock hammer used as a paperweight."
+  }
+}

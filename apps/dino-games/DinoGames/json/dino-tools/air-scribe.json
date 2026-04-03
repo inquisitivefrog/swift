@@ -1,0 +1,12 @@
+{
+  "id": "tool_lab_air_scribe_01",
+  "item_name": "Pneumatic Fine-Detail Air-Scribe",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A pen-sized tool made of stainless steel, connected to a coiled blue air hose. The tip features a tungsten-carbide stylus that vibrates at high speed. It is being held like a pencil, delicately chipping away a small flake of dark sandstone from a fossilized vertebra.",
+  "constraints": {
+    "material": "Brushed metal; flexible reinforced hose.",
+    "logic": "The primary tool for the Lab Phase. Requires an Air Compressor."
+  }
+}

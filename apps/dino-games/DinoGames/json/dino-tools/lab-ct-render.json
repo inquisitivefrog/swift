@@ -1,0 +1,16 @@
+{
+  "asset_id": "dino-tools-lab-ct-render-001",
+  "label": "Volumetric Micro-CT Data",
+  "category": "Digital Research",
+  "description": "The processed 3D data from a Micro-CT scan, allowing for 'virtual' preparation and internal inspection of the specimen.",
+  "visual_states": [
+    { "id": "raw_scan", "description": "The fossil and rock appear as a solid grey mass based on density." },
+    { "id": "segmented_bone", "description": "The rock is rendered transparent, leaving the bone visible in high-contrast color (often orange or blue)." },
+    { "id": "internal_voids", "description": "Reveals the braincase, inner ear canals, and un-erupted teeth." }
+  ],
+  "game_mechanics": {
+    "slice_navigation": "Player uses a scroll wheel to move through 'Z-slices' of the rock, looking for the tell-tale white glint of dense bone.",
+    "virtual_extraction": "Player can 'tag' parts of the bone to be 3D printed, creating a physical model of a fossil that is still trapped inside a rock."
+  },
+  "tags": ["3D-data", "x-ray", "non-destructive", "discovery"]
+}

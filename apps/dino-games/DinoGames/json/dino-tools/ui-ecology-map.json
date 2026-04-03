@@ -1,0 +1,23 @@
+{
+  "asset_id": "dino-tools-ui-ecology-map-001",
+  "label": "Isotopic Resource Map",
+  "category": "Data Visualization",
+  "description": "An interactive overlay for the dig-site map that displays the feeding ranges and migratory paths of herbivores based on dental geochemistry.",
+  "layers": [
+    {
+      "id": "strontium_gradient",
+      "label": "Geological Signature",
+      "function": "Shows which dinosaurs stayed in the river delta vs. the upland forests."
+    },
+    {
+      "id": "oxygen_isoscape",
+      "label": "Water Source Map",
+      "function": "Tracks seasonal migration based on the 'heaviness' of the water the animals drank."
+    }
+  ],
+  "game_mechanics": {
+    "ecological_niche_discovery": "By mapping 10+ teeth, the player unlocks a 'Life History' trophy for that species, revealing exactly what they ate.",
+    "community_analysis": "Comparing Triceratops and Hadrosaur maps reveals if they were competing for the same food or 'partitioning' the environment."
+  },
+  "tags": ["ecology", "migration", "geochemistry", "big-data"]
+}

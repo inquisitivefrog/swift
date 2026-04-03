@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_collection_waterproof_01",
+  "item_name": "Waterproof Sample Collection Kit",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A collection of field-ready sampling containers including three clear plastic zip-top bags and four cylindrical screw-top vials. The bags are thick, heavy-duty transparent polymer with reinforced blue seal tracks at the top. The vials are made of translucent polypropylene with bright orange leak-proof caps. Some containers are empty, while one vial contains a small amount of murky sediment and one bag has a damp, fossilized fragment visible inside. All items show minor condensation and micro-scratches from field handling.",
+  "constraints": {
+    "texture": "Clear and translucent plastic with soft specular highlights; matte rubberized texture on vial caps; realistic water droplet/condensation effects inside bags.",
+    "background": "Solid neutral 50% grey floor plane."
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_color_chart_01",
+  "item_name": "Munsell Rock Color Communication Book",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A small, fan-out binder containing hundreds of small, colored rectangular chips. A hand is holding the book up against a cliff face of stratified sandstone, comparing the rock's color to the chips in the book.",
+  "constraints": {
+    "detail": "Chips should have tiny alphanumeric codes printed under them.",
+    "logic": "Used to standardize the description of rock stratification."
+  }
+}

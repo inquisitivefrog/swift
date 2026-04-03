@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_gps_unit_01",
+  "item_name": "Ruggedized Field GPS",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A heavy-duty, handheld GPS unit with a bright orange high-impact plastic casing. The screen is illuminated, showing a topographic map with a blinking 'Find' icon. It has tactile rubber buttons and a small carabiner clip at the top. Next to it sits a classic silver-cased Brunton-style geological compass.",
+  "constraints": {
+    "material": "Glow-in-the-dark or high-viz orange plastic; glass screen with 'digital' UI glow.",
+    "background": "Isolated on a neutral 50% grey studio floor."
+  }
+}

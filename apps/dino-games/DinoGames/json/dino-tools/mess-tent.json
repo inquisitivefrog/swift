@@ -1,0 +1,10 @@
+{
+    "id": "building_mess_tent_01",
+    "name": "Expedition Mess Tent",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_identity": "Large, heavy-duty khaki canvas marquee with reinforced black zippers; open side-flaps revealing a communal interior; features three long wooden trestle tables with industrial orange folding chairs; a small corner kitchenette with a silver percolator and stack of orange melamine plates.",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "formation_context": "MORRISON_EJ",
+    "notes": "Canvas texture should show subtle weathering and dust accumulation to match the field research pickup truck."
+  }

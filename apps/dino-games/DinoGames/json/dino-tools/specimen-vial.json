@@ -1,0 +1,12 @@
+{
+  "id": "item_pro_specimen_vial_01",
+  "item_name": "Clear Polystyrene Micro-Vial",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A small, clear plastic tube with a snap-top cap. Inside, nestled in a small tuft of white cotton or archival tissue, is a single black, fossilized crocodile tooth. A small paper label inside the vial reads: 'SITE HC-22, UNIT 4, TOOTH'.",
+  "constraints": {
+    "logic": "Protects micro-fossils from being crushed or lost during transport.",
+    "background": "The vial is sitting inside a grid-divided plastic organizer box."
+  }
+}

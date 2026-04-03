@@ -1,0 +1,15 @@
+{
+  "project": "DinoGames",
+  "version": "1.1.0",
+  "asset_manifests": [
+    {
+      "id": "tool_sat_phone_01",
+      "name": "Expedition Satellite Phone",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "visual_identity": "Heavy-duty, ruggedized handheld satellite communicator; matte charcoal grey body with reinforced orange rubber bumpers on the corners; features a thick, stowable flip-up antenna and a backlit physical keypad; the screen displays a 'Signal Strength: Strong' icon with a 2D map coordinate.",
+      "lighting_ref": "STUDIO_GROUNDED_LIGHT",
+      "tech_ref": "SQUARE_HERO_CARD",
+      "notes": "Essential for 'Overseas' expeditions where cellular service is non-existent. It is often seen clipped to Paleontologist 04's vest or charging via the gasoline generator in the Prep Tent."
+    }
+  ]
+}

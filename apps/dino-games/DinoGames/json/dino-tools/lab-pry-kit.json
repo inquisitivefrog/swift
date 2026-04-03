@@ -1,0 +1,12 @@
+{
+  "id": "tool_lab_pry_kit_01",
+  "item_name": "Non-Marring Jacket Separators",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A set of three tools: a flat stainless steel mini-crowbar and two heavy-duty nylon 'spudgers' (wedge-shaped sticks). They are designed to be wedged into the saw-cut line to lever the two halves of the plaster jacket apart without touching the fossil.",
+  "constraints": {
+    "logic": "The mechanic for the 'Grand Reveal'—the moment the top of the jacket is lifted.",
+    "background": "Lying on a clean green cutting mat next to the TRX-07 pallet."
+  }
+}

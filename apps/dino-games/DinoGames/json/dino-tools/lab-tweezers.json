@@ -1,0 +1,29 @@
+{
+  "asset_id": "dino-tools-lab-tweezers-005",
+  "label": "High-Precision Watchmaker Tweezers",
+  "category": "Micro-Preparation",
+  "description": "Ultra-fine, anti-magnetic stainless steel tweezers designed for manipulating micro-fossils under a microscope.",
+  "components": [
+    {
+      "id": "needle_points",
+      "type": "geometry",
+      "material": "Inox Stainless Steel",
+      "function": "Allows for the gripping of fossils smaller than 0.5mm."
+    },
+    {
+      "id": "tension_limiter",
+      "type": "physics_property",
+      "function": "Ensures the player doesn't apply too much 'crush force' to a fragile specimen."
+    },
+    {
+      "id": "anti_glare_finish",
+      "type": "material_texture",
+      "function": "Matte finish to prevent LED ring-light reflections from blinding the preparator."
+    }
+  ],
+  "game_mechanics": {
+    "tremor_simulation": "Higher magnification levels increase the visual 'jitter' of the tweezers, requiring the player to time their 'click' to pick up a fossil.",
+    "the_ping_effect": "If the player releases the tension too quickly, the fossil can 'ping' (shoot out of the tweezers) and get lost in the lab, requiring a search mini-game."
+  },
+  "tags": ["precision", "handling", "micro-fauna", "sorting"]
+}

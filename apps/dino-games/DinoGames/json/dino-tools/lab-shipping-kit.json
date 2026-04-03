@@ -1,0 +1,29 @@
+{
+  "asset_id": "dino-tools-lab-shipping-kit-001",
+  "label": "Forensic Sampling & Transport Kit",
+  "category": "Logistics",
+  "description": "Standardized kit for collecting and shipping microscopic powder samples to external analytical laboratories.",
+  "components": [
+    {
+      "id": "micro_diamond_drill",
+      "type": "held_item",
+      "function": "Used to extract 10-20mg of enamel powder from a tooth."
+    },
+    {
+      "id": "centrifuge_vial_set",
+      "type": "consumable",
+      "material": "Polypropylene",
+      "function": "Leak-proof containers for the extracted powder."
+    },
+    {
+      "id": "chain_of_custody_form",
+      "type": "documentation",
+      "function": "Ensures the 'outsource' lab knows exactly which specimen the powder came from."
+    }
+  ],
+  "game_mechanics": {
+    "shipping_delay": "Once sent, the player loses access to that sample for 72 hours, creating a 'waiting' period that encourages them to work on other fossils.",
+    "contamination_risk": "If the player doesn't wear gloves during sampling, the report might come back as 'Inconclusive: Human Contamination Found.'"
+  },
+  "tags": ["outsourcing", "sampling", "logistics", "forensics"]
+}

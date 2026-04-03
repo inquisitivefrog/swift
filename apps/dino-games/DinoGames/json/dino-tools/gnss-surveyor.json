@@ -1,0 +1,15 @@
+{
+  "project": "DinoGames",
+  "version": "1.0.9",
+  "asset_manifests": [
+    {
+      "id": "tool_gnss_surveyor_01",
+      "name": "High-Precision GNSS Receiver",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "visual_identity": "A professional-grade satellite positioning system; features a bright orange 'smart' pole topped with a white, saucer-shaped GNSS antenna. A ruggedized field tablet is clamped to the pole at chest height, showing a topographic map of the Morrison Formation with blue 'GPS fix' icons. The base of the pole has a sharp steel tip for precise ground placement.",
+      "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+      "tech_ref": "SQUARE_HERO_CARD",
+      "notes": "Used primarily by Paleontologist 04 to record the exact coordinates of the Centrosaurus bone bed. The orange pole matches the project's consistent industrial tool aesthetic."
+    }
+  ]
+}

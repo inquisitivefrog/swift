@@ -1,0 +1,12 @@
+{
+  "id": "tool_pro_field_journal_01",
+  "item_name": "Rite-in-the-Rain Field Ledger",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A thick, spiral-bound field notebook with a bright yellow waterproof cover. The cover has a printed scale (ruler) along the edge. The notebook is open to a page showing a hand-drawn sketch of a Triceratops frill with coordinate annotations. A technical 0.5mm mechanical pencil is clipped to the spiral wire.",
+  "constraints": {
+    "material": "Matte yellow plastic cover; slightly off-white 'all-weather' paper texture.",
+    "detail": "Sketch on the page must look like a professional field drawing, not a cartoon."
+  }
+}

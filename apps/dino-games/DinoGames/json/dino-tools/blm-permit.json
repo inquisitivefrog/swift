@@ -1,0 +1,11 @@
+{
+  "id": "doc_pro_blm_permit_01",
+  "item_name": "BLM Form 3809-1 (Paleontological Permit)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A high-fidelity 3D model of a multi-page federal document. The top page features the 'U.S. Department of the Interior - Bureau of Land Management' seal. It contains official-looking fields for 'Permit Number', 'Project Name', and 'Approved Land Description'. There is a blue-ink signature at the bottom and a red 'APPROVED' rubber stamp in the upper margin.",
+  "constraints": {
+    "text_clarity": "The BLM seal and the words 'Department of the Interior' must be legible.",
+    "background": "The document is clipped to a rugged silver metal clipboard, resting on a dusty Jeep hood."
+  }
+}

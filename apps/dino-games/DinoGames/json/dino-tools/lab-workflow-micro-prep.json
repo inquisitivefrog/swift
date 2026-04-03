@@ -1,0 +1,33 @@
+{
+  "asset_id": "dino-tools-workflow-micro-prep-001",
+  "label": "Micro-Fauna Processing Loop",
+  "category": "Workflow Logic",
+  "description": "The logical sequence of moving a small fauna specimen from chemical stabilization to microscopic matrix removal.",
+  "steps": [
+    {
+      "step": 1,
+      "location": "Fume Hood",
+      "action": "Mix B-72 Resin + Acetone",
+      "tool": "Vortex Mixer",
+      "objective": "Create 'wicking' consolidant (water-thin)."
+    },
+    {
+      "step": 2,
+      "location": "Stereo Microscope",
+      "action": "Manual Matrix Removal",
+      "tool": "Pin Vise / Tweezers",
+      "objective": "Reveal the fossilized bone from the surrounding rock under 10x magnification."
+    },
+    {
+      "step": 3,
+      "location": "Stereo Microscope",
+      "action": "Consolidation",
+      "tool": "Pasteur Pipette",
+      "objective": "Apply the prepared B-72 to micro-fractures identified under magnification."
+    }
+  ],
+  "game_mechanics": {
+    "magnification_toggle": "Player clicks the microscope to enter 'Micro-Mode' where mouse sensitivity is lowered for precision clicking.",
+    "chemical_freshness": "The B-72 mixed in the hood has a 'shelf life' before it becomes too gummy to wick properly."
+  }
+}

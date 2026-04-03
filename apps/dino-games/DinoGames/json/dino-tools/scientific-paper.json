@@ -1,0 +1,20 @@
+{
+  "asset_id": "dino-ui-scientific-paper-001",
+  "label": "Published Research Article",
+  "category": "Publication",
+  "description": "The formalized presentation of original research findings, peer-reviewed and accepted by a scientific journal.",
+  "status": "Published (Journal of Vertebrate Paleontology)",
+  "metadata": {
+    "title": "Isotopic Evidence for Altitudinal Migration in Late Cretaceous North American Triceratops (HC-2026-042)",
+    "authors": ["Player Name", "Dr. Aris Thorne", "E. Vasquez"],
+    "journal": "Journal of Vertebrate Paleontology",
+    "volume_issue": "Vol. 46, Issue 2",
+    "pages": "pp. 145-162",
+    "doi": "10.1080/02724634.2026.1234567"
+  },
+  "abstract": "Stable isotope analysis ($\delta^{18}O$ and $\delta^{13}C$) of *Triceratops prorsus* enamel from the Hell Creek Formation (Maastrichtian) provides compelling evidence for seasonal altitudinal migration. Low $\delta^{18}O$ signatures suggest consumption of high-altitude meteoric water, indicating movements between mountainous regions and lowland deltas. This study highlights the underestimated ecological complexity of Late Cretaceous megaherbivores and underscores the utility of micro-sampling techniques for inferring paleo-behavior.",
+  "game_mechanics": {
+    "citations_tracker": "The paper generates 'Citation Points' over time, increasing the player's long-term reputation.",
+    "press_release_event": "Publication triggers a 'Museum Press Conference' mini-game, where the player must answer questions about their findings."
+  }
+}

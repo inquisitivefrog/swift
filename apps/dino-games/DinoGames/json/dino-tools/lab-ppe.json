@@ -1,0 +1,12 @@
+{
+  "id": "char_lab_ppe_01",
+  "item_name": "Full-Facility Protection Suite",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A collection of three items: 1. A heavy-duty dark grey rubberized apron with adjustable neck strap. 2. A flip-up clear polycarbonate face shield with a padded headband. 3. A box of high-visibility purple nitrile gloves. All items show light dusting of white plaster powder.",
+  "constraints": {
+    "material": "Matte rubber; crystal-clear plastic; textured synthetic latex.",
+    "logic": "The 'Skin' of the Preparator. Prevents cross-contamination and injury."
+  }
+}

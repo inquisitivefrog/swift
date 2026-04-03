@@ -1,0 +1,31 @@
+{
+  "asset_id": "dino-tools-field-acid-kit-001",
+  "label": "Carbonate Field Test Kit",
+  "category": "Field Tools",
+  "description": "A small, portable kit used to detect the presence of calcium carbonate in rock matrix using a 10% Hydrochloric Acid (HCl) solution.",
+  "components": [
+    {
+      "id": "hcl_dropper_bottle",
+      "type": "held_item",
+      "material": "Opaque LDPE Plastic",
+      "contents": "10% Hydrochloric Acid",
+      "safety_label": "Corrosive - Wear Eye Protection"
+    },
+    {
+      "id": "neutralizing_agent",
+      "type": "consumable",
+      "contents": "Sodium Bicarbonate Solution",
+      "function": "Used to stop the reaction and clean the rock surface after testing."
+    },
+    {
+      "id": "safety_glasses",
+      "type": "equipment_slot",
+      "required_for_use": true
+    }
+  ],
+  "game_mechanics": {
+    "effervescence_check": "Applying acid to Limestone/Calcite triggers an 'Active Fizz' (CO2 release). Siliceous rocks (Sandstone/Chert) show no reaction.",
+    "lab_strategy_unlock": "Successful 'Fizz' result unlocks the 'Acid Preparation' minigame in the Lab phase."
+  },
+  "tags": ["chemistry", "geology", "identification", "field-work"]
+}

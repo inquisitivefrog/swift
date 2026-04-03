@@ -1,0 +1,32 @@
+{
+  "asset_id": "dino-tools-lab-sorting-tray-001",
+  "label": "Dual-Contrast Picking Tray Set",
+  "category": "Micro-Preparation",
+  "description": "A shallow, non-reflective tray used to spread out micro-fossil concentrate for visual sorting under a microscope.",
+  "components": [
+    {
+      "id": "reversible_tray_insert",
+      "type": "static_mesh",
+      "colors": ["Matte Black", "Matte White"],
+      "function": "Black side for light-colored fossils (calcite/quartz); White side for dark, mineralized fossils."
+    },
+    {
+      "id": "watchmaker_tweezers",
+      "type": "held_item",
+      "material": "Anti-magnetic Stainless Steel",
+      "tip_style": "High-Precision #5 Point",
+      "function": "Used to pick up fragments less than 1mm in size without crushing them."
+    },
+    {
+      "id": "picking_brush",
+      "type": "held_item",
+      "size": "000 Synthetic",
+      "function": "Moistened slightly to 'tack' and lift the smallest teeth via surface tension."
+    }
+  ],
+  "game_mechanics": {
+    "contrast_toggle": "Player must flip the tray insert to see 'stealth' fossils that match the current background color.",
+    "sorting_mini_game": "A timed challenge to pick 'X' number of mammal teeth out of a pile of 'Y' gravel. Success depends on zoom level and steady hand."
+  },
+  "tags": ["sorting", "picking", "micro-fauna", "cataloging"]
+}
