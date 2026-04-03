@@ -1,0 +1,14 @@
+[
+  {
+    "id": "doc_pro_field_ledger_01",
+    "item_name": "Taphonomic Field Ledger",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_description": "A rugged, bright yellow field clipboard holding a ring-bound stack of cream-colored heavy paper. The top sheet features a detailed graphite sketch of a Triceratops skull with grid coordinates, orientation arrows, and fossil fragment labels. A silver and black mechanical pencil is attached to the left side. The lighting is soft and neutral, highlighting the texture of the paper and the matte plastic of the clipboard.",
+    "constraints": {
+      "logic": "The primary analog record for mapping a specimen's orientation in the quarry before excavation.",
+      "background": "Solid light grey studio floor."
+    }
+  }
+]

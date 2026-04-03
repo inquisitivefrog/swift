@@ -1,0 +1,10 @@
+{
+  "id": "SHOULDER_IGUA_V1",
+  "species": "Iguanodon",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A sturdy, paddle-like scapula that curves along the ribs.",
+  "visual_hook": "The 'Workman's Shoulder'. It looks balanced—strong enough to walk on, but light enough to allow the arms to reach for food.",
+  "material": "Matte, ochre-toned bone. Dry and earthy.",
+  "inset_view": "Top-right corner: Cross-section showing a mix of solid edges and a mesh core.",
+  "negative_prompt": "very thin, sharp, shiny"
+}

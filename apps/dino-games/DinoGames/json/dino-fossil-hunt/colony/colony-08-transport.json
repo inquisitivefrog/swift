@@ -1,0 +1,17 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-5_3-v3.png 
+
+{
+  "id": "scene_adv9_04_preservation_undercutting",
+  "project": "DinoGames",
+  "character_refs": ["paleo_05", "paleo_03"],
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "NATURAL_SUNSET",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A close-up, low-angle action shot within a wide, shallow circular pit. At the center is a massive mushroom-shaped field jacket made of white plaster and burlap. The 'cap' is broad and very low to the ground. Paleo 05, wearing the red-sleeved shirt, and Paleo 03, wearing the hat, are standing *inside* the wider, deeper trench around the pedestal in deep, symmetrical squats. Their heads are significantly higher than the low-profile top of the broad jacket. They hold and operate a long, straight crosscut hand saw horizontally at the very base of the narrow plaster 'neck,' cutting directly through where it meets the ground. Plywood sheets are ready on the soil outside the pit. White plaster dust and sediment are kicking up from the saw cut. The lighting is sunny and golden, with high-key sunset colors over the vast desert landscape and distant hills, matching the truck scene in the background.",
+  "constraints": {
+    "material": "Brute plaster and raw metal saw; dry, dusty earth; warm sunset hues.",
+    "logic": "Documents the complex 'Undercutting' task in the Preserve Phase, used to separate the fully stabilized and low-profile fossil block from the Earth."
+  }
+}

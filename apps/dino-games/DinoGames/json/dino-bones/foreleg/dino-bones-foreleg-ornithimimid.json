@@ -1,0 +1,10 @@
+{
+  "id": "ARM_GALL_V1",
+  "species": "Gallimimus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Long, lanky arm bones ending in three long, straight fingers.",
+  "visual_hook": "The 'Raking Hand'. The fingers are all about the same length and have long, gently curved claws for grasping branches.",
+  "material": "Matte, light-sand bone. Smooth and streamlined.",
+  "inset_view": "Top-right corner: Cross-section showing a very lightweight, mesh-filled interior.",
+  "negative_prompt": "short arms, two fingers, heavy, shiny"
+}

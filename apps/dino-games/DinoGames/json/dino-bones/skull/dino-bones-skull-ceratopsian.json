@@ -1,0 +1,9 @@
+{
+  "id": "SKULL_TRIC_05",
+  "species": "Triceratops",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STUDIO_GROUNDED",
+  "lighting_ref": "STUDIO_SOFT",
+  "pose": "Full profile including the large neck frill. Highlight the parrot-like rostral bone (beak) and the two large brow horns.",
+  "educational_focus": "Integrated defensive armor: how the skull, horns, and frill form a single functional unit."
+}

@@ -1,0 +1,19 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-1_6-v2.png 
+
+{
+  "id": "adv8_04_transport_botany",
+  "project": "DinoGames",
+  "reference_image": "char_ref_sheet_paleo-1_6-v2.jpg",
+  "character_refs": ["paleontologist_01", "paleontologist_06"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "HELL_CREEK",
+  "habitat_ref": "ANCIENT_LAKE_MARGIN",
+  "lighting_ref": "LATE_AFTERNOON_WARM",
+  "pose": "Medium wide shot. Paleontologist 01 (female, long blonde hair, tanned skin, white sun hat, light pink blouse under khaki safari vest, white shorts, pink hiking boots) is carefully sliding a shale slab, wrapped in thin foam, into a specialized slotted wooden crate. Paleontologist 06 (female, braided black hair, white tee shirt under khaki safari vest, white shorts) is standing nearby, holding a small padded case open to show several glass specimen vials, each containing a tiny find (amber, seeds, or teeth). Their field vehicle (a rugged 4x4) is visible in the background with the trunk open. The warm sunset light emphasizes the successful end of a meticulous day. The scale of the crates is smaller and more precise than the large plaster jackets used for dinosaurs.",
+  "constraints": {
+    "mood": "Satisfied, careful, and organized.",
+    "visual_cues": "Vials should be labeled with tiny white tags; the shale crate should look custom-built for thin slabs."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "SHOULDER_GALL_V1",
+  "species": "Gallimimus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Very long, thin, strap-like shoulder blades.",
+  "visual_hook": "The 'Racing Straps'. The bones are very narrow and follow the curve of the ribs perfectly for a streamlined body.",
+  "material": "Matte, light-sand bone. Smooth and delicate.",
+  "inset_view": "Top-right corner: Cross-section showing lightweight, mesh-filled interior.",
+  "negative_prompt": "wide, heavy, thick, shiny"
+}

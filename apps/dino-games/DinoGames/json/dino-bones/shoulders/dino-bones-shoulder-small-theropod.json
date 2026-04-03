@@ -1,0 +1,10 @@
+{
+  "id": "SHOULDER_ARCH_V1",
+  "species": "Archaeopteryx",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "An L-shaped shoulder assembly where the scapula meets the long coracoid.",
+  "visual_hook": "The 'Flight Anchor'. The bones are arranged to point upward and backward, acting like the hinge for a wing.",
+  "material": "Matte, pale cream bone. Paper-thin and translucent in appearance.",
+  "inset_view": "Top-right corner: Extreme close-up showing a completely hollow, tube-like structure.",
+  "negative_prompt": "heavy, thick, blocky, shiny"
+}

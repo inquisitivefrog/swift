@@ -1,0 +1,56 @@
+These are supposed to be young adults per this character reference sheet supposedly locked in. Consider them grad students with master’s degrees in Paleontology, Geology or Biology.
+
+attach: char_ref_sheet_paleo-1_4-v2.png
+
+{
+  "asset_manifest": {
+    "title": "DinoGames Paleontologist Duo: Character Reference Sheet",
+    "characters": [
+      {
+        "id": "paleontologist_01",
+        "name": "Paleontologist 1 (Female)",
+        "role": "Young Adult Graduate Student - Paleontology",
+        "gender": "Female",
+        "age_range": "20s",
+        "ethnicity": "Caucasian",
+        "hair_style": "Long, blonde",
+        "skin_tone": "Tanned",
+        "headwear": "White sun hat",
+        "upper_body_layer_1": "Light pink blouse",
+        "upper_body_layer_2": "Khaki safari vest",
+        "lower_body": "White shorts",
+        "footwear": "Pink hiking boots",
+        "expression": "Friendly, neutral",
+        "pose": "T-pose / Neutral standing"
+      },
+      {
+        "id": "paleontologist_04",
+        "name": "Paleontologist 4 (Male)",
+        "role": "Young Adult Graduate Student - Paleontology",
+        "gender": "Male",
+        "age_range": "20s",
+        "ethnicity": "Latino",
+        "hair_style": "Short, brown",
+        "skin_tone": "Natural",
+        "eyewear": "Thin-rimmed black aviator lens glasses (consistent)",
+        "headwear": "None",
+        "upper_body_layer_1": "Light white tee shirt",
+        "upper_body_layer_2": "Khaki safari vest",
+        "lower_body": "Khaki shorts",
+        "footwear": "Brown hiking boots",
+        "expression": "Friendly, neutral",
+        "pose": "T-pose / Neutral standing"
+      }
+    ],
+    "setting": {
+      "background": "Neutral 50% grey background",
+      "lighting": "Studio lighting, even, no harsh shadows",
+      "visual_style": "STYLE_ANIMATED_FEATURE_V3 (High-fidelity 3D, expressive, rounded edges, cinematic)"
+    },
+    "composition": {
+      "framing": "Full body, side-by-side",
+      "orientation": "Vertical",
+      "purpose": "Character reference sheet for animation/modeling"
+    }
+  }
+}

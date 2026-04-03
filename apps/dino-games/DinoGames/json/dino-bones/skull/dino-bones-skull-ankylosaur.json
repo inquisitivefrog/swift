@@ -1,0 +1,9 @@
+{
+  "id": "SKULL_ANKY_06",
+  "species": "Ankylosaurus magniventris",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STUDIO_GROUNDED",
+  "lighting_ref": "STUDIO_SOFT",
+  "pose": "Top-down or three-quarter view to highlight the broad, triangular shape. Ensure the four backward-pointing horns (two jugal horns at the cheeks, two squamosal horns at the top corners) are distinct and symmetrical. The anterior beak must be sharp and toothless.",
+  "educational_focus": "Integrated cranial armor and the specific 'four-horn' arrangement that distinguishes it from other thyreophorans."
+}

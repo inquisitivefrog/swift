@@ -1,0 +1,10 @@
+{
+  "id": "LEG_ANKY_V1",
+  "species": "Ankylosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Stout, very thick legs. The bones are short and wide.",
+  "visual_hook": "Built like a tank’s suspension. The leg bones are rugged and lumpy, designed to carry the heavy weight of the armor plates.",
+  "material": "Matte, heavy grey bone. Rugose and bumpy surface.",
+  "inset_view": "Top-right corner: Cross-section showing solid, heavy-duty bone matrix.",
+  "negative_prompt": "tall, graceful, bird-like, shiny"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "NECK_IGUA_GROUNDED_V2",
+  "species": "Iguanodon",
+  "style_ref": "STUDIO_GROUNDED",
+  "background": "SOLID_LIGHT_GREY",
+  "pose": "Main: Articulated cervical column. Inset: Detailed view of the zygapophyses (interlocking joints).",
+  "material": "Matte, ochre-toned bone. The surface is dry and earthy with visible porous grain.",
+  "educational_focus": "Interlocking joints that provided stability for low-to-medium height browsing.",
+  "negative_prompt": "glossy, shiny, wet, epoxy, plastic, labels"
+}

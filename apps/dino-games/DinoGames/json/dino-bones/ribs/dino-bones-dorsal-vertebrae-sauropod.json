@@ -1,0 +1,10 @@
+{
+  "id": "RIBCAGE_APAT_V1",
+  "species": "Apatosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A massive, arched section of the backbone with giant, sweeping ribs.",
+  "visual_hook": "The 'Cathedral Ceiling'. The ribs are enormous and form a wide, rounded cavern to hold its giant stomach.",
+  "material": "Matte, light-grey tan bone. The backbone looks like a series of heavy bridges.",
+  "inset_view": "Top-right corner: Cross-section of a massive vertebra showing the complex 'Lace-bone' air chambers.",
+  "negative_prompt": "small, narrow, slender, shiny"
+}

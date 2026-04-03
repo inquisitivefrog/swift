@@ -1,0 +1,9 @@
+{
+  "id": "SKULL_TREX_01",
+  "species": "Tyrannosaurus rex",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STUDIO_GROUNDED",
+  "lighting_ref": "STUDIO_SOFT",
+  "pose": "Lateral profile of the skull, jaw slightly agape to reveal heterodont dentition. Focus on the large postorbital fenestra and the thick, robust maxilla.",
+  "educational_focus": "Bone-crushing depth of the jaw and wide back of the skull for muscle attachment."
+}

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "AERIAL_LIFT_HELI_SPECIMEN_SQ_01",
+    "species": "Triceratops femur (single bone)",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "LANCE_HELL_CREEK",
+    "pose": "Square composition centered on a heavy-lift helicopter (like a stylized CH-54 Tarhe) in a stable high hover, dominating the top half of the frame. Attached below it on a single, tense lifting line is a compact white plastic jacket containing a single large fossil bone. The small plastic jacket payload is positioned in the lower center, scaled to appear significant but much smaller than a full plaster jacket. The helicopter's nose is touching the left frame edge and its tail rotor touches the right frame edge, centered vertically. Both elements are contained within the 1024x1024 square frame. The lighting is sunny and cinematic, with high-key exposure and a slight hazy glow in the distant horizon. Swirling dust below the small load from the rotor wash, similar to the movement seen in image_20.png. Background features the rugged, arid Hell Creek terrain with conifer groves.",
+    "educational_focus": "The specific field logistics and specialized transport methods for recovering single, high-value fossil specimens from remote locations."
+  }
+]

@@ -1,0 +1,17 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-3_4-v2.png 
+
+{
+  "id": "adv7_01_discovery_grid",
+  "project": "DinoGames",
+  "reference_image": "char_ref_sheet_paleo-3_4-v2.jpg",
+  "character_refs": ["paleontologist_03", "paleontologist_04"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat_ref": "BADLANDS_PLATEAU",
+  "pose": "Wide cinematic shot. Paleontologist 04 is kneeling, hammering a wooden stake into the dry earth, while Paleontologist 03 stands opposite him, pulling a bright yellow string taut to form a square grid section. The ground between them is littered with the tops of weathered, sun-bleached Centrosaurus bones (horns and ribs) just breaking the surface. 03's magnifying glass on his lanyard dangles as he leans over to inspect the site. The grid of strings extends across the entire foreground, showing the massive area they intend to map.",
+  "constraints": {
+    "tool_detail": "Grid strings should be vibrant (yellow or orange) to contrast with the tan earth.",
+    "character_consistency": "04 must be wearing his black aviators; 03 in his white sun hat and purple tee."
+  }
+}

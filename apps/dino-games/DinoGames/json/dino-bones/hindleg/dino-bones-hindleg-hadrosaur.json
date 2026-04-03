@@ -1,0 +1,10 @@
+{
+  "id": "LEG_IGUA_V1",
+  "species": "Iguanodon",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Strong, versatile leg bones. The foot has three wide, blunt toes.",
+  "visual_hook": "A 'Walking' leg. The three toes end in hoof-like nails rather than claws. It looks built for steady travel.",
+  "material": "Matte, ochre-toned bone. Earthy and dry.",
+  "inset_view": "Top-right corner: Cross-section showing a balanced mix of solid outer bone and mesh interior.",
+  "negative_prompt": "sharp claws, raptor-toe, shiny"
+}

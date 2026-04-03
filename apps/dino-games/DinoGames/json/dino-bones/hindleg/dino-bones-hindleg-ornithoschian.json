@@ -1,0 +1,10 @@
+{
+  "id": "LEG_PACHY_V1",
+  "species": "Pachycephalosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Strong, muscular-looking femur with wide, stable foot bones.",
+  "visual_hook": "The 'Bracing' leg. It looks like a heavy-duty tripod leg, built to plant firmly in the ground during a head-butt.",
+  "material": "Matte, weathered-tan bone. Dense and heavy.",
+  "inset_view": "Top-right corner: Cross-section showing reinforced bone walls for impact resistance.",
+  "negative_prompt": "slender, hollow, shiny"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "SHOULDER_TRIC_V1",
+  "species": "Triceratops",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A broad, thick scapula with a very large, rounded coracoid at the shoulder joint.",
+  "visual_hook": "The 'Shield Anchor'. The bone is wide and heavy-duty, built to support the weight of the massive head and frill.",
+  "material": "Matte, dark-tan bone. Very dense and solid.",
+  "inset_view": "Top-right corner: Cross-section showing almost entirely solid bone with no air holes.",
+  "negative_prompt": "thin, long blades, shiny"
+}

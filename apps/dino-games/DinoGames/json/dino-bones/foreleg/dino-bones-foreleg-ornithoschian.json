@@ -1,0 +1,10 @@
+{
+  "id": "ARM_PACHY_V1",
+  "species": "Pachycephalosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Relatively short but sturdy arms with five-fingered hands.",
+  "visual_hook": "Simple, functional arms. They look like the 'helper arms' used for balance or pushing away from obstacles.",
+  "material": "Matte, weathered-tan bone. Stony texture.",
+  "inset_view": "Top-right corner: Cross-section showing reinforced bone for minor impact resistance.",
+  "negative_prompt": "large claws, two fingers, wings, shiny"
+}

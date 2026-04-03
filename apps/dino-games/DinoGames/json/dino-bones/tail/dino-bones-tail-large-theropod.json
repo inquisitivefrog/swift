@@ -1,0 +1,10 @@
+{
+  "id": "TAIL_TREX_V1",
+  "species": "Tyrannosaurus rex",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A massive, thick horizontal tail held straight out behind the pelvis.",
+  "visual_hook": "The 'Muscle Beam'. The vertebrae have long 'Chevrons' underneath (V-shaped bones) to protect blood vessels and anchor huge muscles.",
+  "material": "Matte, toasted-tan bone. Rugged and powerful.",
+  "inset_view": "Top-right corner: Cross-section showing the large 'Chevron' bone and internal honeycomb matrix.",
+  "negative_prompt": "dragging on ground, thin, whip-like, spikes, shiny"
+}

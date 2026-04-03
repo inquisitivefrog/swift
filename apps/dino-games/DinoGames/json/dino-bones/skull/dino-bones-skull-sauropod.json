@@ -1,0 +1,9 @@
+{
+  "id": "SKULL_APAT_04_REVISED",
+  "species": "Apatosaurus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STUDIO_GROUNDED",
+  "lighting_ref": "STUDIO_SOFT",
+  "pose": "Lateral view. MANDIBLE MUST BE TOOTHLESS IN THE BACK. The only teeth should be thin, peg-like, and located at the very tip of the snout. No serrations.",
+  "educational_focus": "Contrast the tiny, peg-like raking teeth of a herbivore with the massive crushing teeth of a theropod."
+}

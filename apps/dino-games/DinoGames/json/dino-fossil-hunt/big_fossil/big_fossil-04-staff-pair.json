@@ -1,0 +1,106 @@
+These are supposed to be young adults per this character reference sheet supposedly locked in. Consider them grad students with master’s degrees in Paleontology, Geology or Biology.  Reference this image for character visuals and generate an image with this asset manifest please.
+
+attach: char_ref_sheet_paleo-1_3-v1.png
+
+{
+  "project": "DinoGames",
+  "version": "1.0.1-grad-student-update",
+  "category": "CharacterReferenceSheet",
+  "characters": [
+    {
+      "id": "dino_bones_paleontologist_1_grad_student",
+      "name": "Dr. Evelyn Reed (Paleontologist 1)",
+      "age_group": "Young Adult (24-28 years old)",
+      "education": "Master's Degree in Paleontology",
+      "ethnicity": "Caucasian",
+      "gender": "Female",
+      "hair_style": "Long blonde hair, often tied back in a ponytail or braid during fieldwork",
+      "skin_tone": "Tanned",
+      "headwear": {
+        "type": "White sun hat",
+        "description": "Standard wide-brimmed sun hat for sun protection, slightly worn from use"
+      },
+      "uniform": {
+        "top_layer": {
+          "item": "Khaki safari vest",
+          "details": "Multi-pocketed, durable fabric, often has a small, embroidered university logo or departmental patch"
+        },
+        "mid_layer": {
+          "item": "Light pink blouse",
+          "details": "Breathable, quick-dry fabric, slightly rolled sleeves"
+        },
+        "bottom_layer": {
+          "item": "White shorts",
+          "details": "Cargo style, practical for fieldwork"
+        },
+        "footwear": {
+          "item": "Pink hiking boots",
+          "details": "Sturdy, waterproof, mud-splattered"
+        },
+        "accessories": [
+          "Small field bag/satchel (cross-body)",
+          "Notebook and pencil tucked into vest pocket",
+          "Geological hammer attached to belt loop"
+        ]
+      },
+      "personality_traits": [
+        "Enthusiastic",
+        "Detail-oriented",
+        "Pragmatic",
+        "Slightly adventurous"
+      ],
+      "visual_style_preset": "STYLE_ANIMATED_FEATURE_V3",
+      "notes": "Often seen taking meticulous notes, has a keen eye for subtle fossil traces."
+    },
+    {
+      "id": "dino_bones_paleontologist_3_grad_student",
+      "name": "Dr. Marcus Thorne (Paleontologist 3)",
+      "age_group": "Young Adult (24-28 years old)",
+      "education": "Master's Degree in Geology (with a focus on sedimentary environments)",
+      "ethnicity": "Black",
+      "gender": "Male",
+      "hair_style": "Curly black hair, kept short and practical for fieldwork",
+      "skin_tone": "Dark",
+      "headwear": {
+        "type": "White sun hat",
+        "description": "Standard wide-brimmed sun hat, often worn backwards or slightly askew"
+      },
+      "uniform": {
+        "top_layer": {
+          "item": "Khaki safari vest",
+          "details": "Multi-pocketed, durable fabric, often has a small, embroidered university logo or departmental patch, perhaps a few small tears from rough terrain"
+        },
+        "mid_layer": {
+          "item": "Light purple tee shirt",
+          "details": "Moisture-wicking fabric, comfortable fit"
+        },
+        "bottom_layer": {
+          "item": "White shorts",
+          "details": "Cargo style, durable, often dusty"
+        },
+        "footwear": {
+          "item": "Black hiking boots",
+          "details": "Rugged, well-worn, excellent grip for varied terrain"
+        },
+        "accessories": [
+          "GPS device on belt",
+          "Small trowel/brush set in vest pocket",
+          "Camera with telephoto lens for documenting finds"
+        ]
+      },
+      "personality_traits": [
+        "Calm under pressure",
+        "Resourceful",
+        "Technologically adept",
+        "Patient"
+      ],
+      "visual_style_preset": "STYLE_ANIMATED_FEATURE_V3",
+      "notes": "Excellent at identifying geological formations and understanding the context of fossil finds. Often the one navigating or setting up field equipment."
+    }
+  ],
+  "pair_dynamics": {
+    "relationship": "Colleagues / Field Partners",
+    "synergy": "Evelyn's meticulous fossil identification and Marcus's geological context analysis complement each other perfectly, making them an efficient fieldwork duo. They share a playful rivalry but deep professional respect."
+  },
+  "asset_generation_notes": "These profiles are updated to reflect the 'grad student' interpretation for DinoGames Project v1.0.1. The core visual elements remain consistent with STYLE_ANIMATED_FEATURE_V3, but with added details suggesting field experience and intellectual focus appropriate for their educational background. The uniforms show signs of practical use rather than being pristine."
+}

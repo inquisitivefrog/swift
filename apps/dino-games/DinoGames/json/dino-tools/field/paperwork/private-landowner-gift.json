@@ -1,0 +1,14 @@
+[
+  {
+    "id": "item_pro_landowner_gift_01",
+    "item_name": "3D-Printed Desktop Replica",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_description": "A high-detail, 1:10 scale 3D print of a Triceratops horn core, mounted on a polished walnut base. The replica is a clean, bone-white resin, contrasting with the dark wood. A small brass plaque on the base reads: 'In appreciation of [Landowner Name] - Hell Creek Expedition.' It is shown being presented in a professional gift box with foam padding.",
+    "constraints": {
+      "logic": "A diplomatic tool used to build long-term 'prospecting' partnerships with private landowners.",
+      "background": "A rustic wooden table next to the signed Consent Agreement."
+    }
+  }
+]

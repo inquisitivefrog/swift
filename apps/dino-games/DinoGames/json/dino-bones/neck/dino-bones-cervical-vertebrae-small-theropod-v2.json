@@ -1,0 +1,11 @@
+{
+  "id": "NECK_SMALL_THERO_V3",
+  "species": "Archaeopteryx (or Deinonychus-type)",
+  "style_ref": "STUDIO_GROUNDED",
+  "background": "SOLID_LIGHT_GREY",
+  "pose": "Main: A sequence of three cervical vertebrae showing a sharp S-curve. Inset: A tight cross-section of the neural canal.",
+  "inset_detail": "The inset highlights the 'Dual-Channel' system: the central passage for the spinal cord and the distinct grooves above and below for the ossified tendons (stiffening rods).",
+  "material": "Matte, pale cream bone. The surface looks delicate, almost like fine porcelain, but the internal mesh is dense and 'wire-like' for high tension strength.",
+  "educational_focus": "Tendon Ossification—showing how dinosaurs turned soft tissue into bony struts for extreme balance and agility.",
+  "negative_prompt": "glossy, shiny, wet, meat, skin, feathers, text, pedestal"
+}

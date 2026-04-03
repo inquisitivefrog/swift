@@ -1,0 +1,34 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-2_5-v2.png
+
+{
+  "id": "adv5_04_transport_exit",
+  "project": "DinoGames",
+  "version": "1.0.1",
+  "reference_image": "char_ref_sheet_paleo-2_5-v2.jpg",
+  "character_refs": [
+    "dino_bones_paleontologist_2",
+    "dino_bones_paleontologist_5"
+  ],
+  "prop_refs": [
+    "vehicle_canoe_orange_01",
+    "tool_pro_wet_sieve_stack_01",
+    "tool_padded_gear_bag_01",
+    "tool_pro_long_handled_net_01"
+  ],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "LANCE_HELL_CREEK",
+  "habitat_ref": "COASTAL_LOWLANDS",
+  "lighting_ref": "LATE_AFTERNOON_WARM",
+  "composition": {
+    "framing": "WIDE_SHOT",
+    "aspect_ratio": "1:1",
+    "pose_description": "An orange canoe is pulled halfway onto the sandy riverbank. Paleontologist 05 (Asian ethnicity, short black hair, no hat, light red tee, khaki vest, red shorts) is carefully lifting the metal nested wet sieve stack into the center of the canoe. Paleontologist 02 (tanned skin, short black hair, green sun hat, light green blouse, khaki vest, green skirt) is seated in the back of the boat, holding open a padded gear bag where the small specimen vial is securely tucked. The long-handled net is stowed along the hull. The scene captures 'satisfied exhaustion' at the end of the day."
+  },
+  "technical_constraints": {
+    "lighting": "Golden hour; long shadows stretching across the sand and warm, orange reflections on the water surface.",
+    "environmental_detail": "Wet footprints on the sand leading from the river to the canoe; the canoe's hull shows a wet waterline.",
+    "character_drift_correction": "Paleontologist 05 must have no hat and maintain Asian facial features. Paleontologist 02 must maintain her green hat and skirt."
+  }
+}

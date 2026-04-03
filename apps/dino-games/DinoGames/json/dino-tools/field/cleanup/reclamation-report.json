@@ -1,0 +1,14 @@
+[
+  {
+    "id": "env_pro_reclamation_report_01",
+    "item_name": "Site Reclamation Status Report",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_description": "A professional clip-board holding a multi-page document with the 'DinoGames' project logo at the top. The top sheet features a 'PASSED' stamp in vibrant green ink, overlaying a checklist of environmental recovery steps. A set of 'Before and After' polaroid-style photos are clipped to the side, showing a scarred excavation pit successfully returned to its natural state with native 'Cloverly' flora like conifer groves and Paleopus herbs.",
+    "constraints": {
+      "logic": "Documents the final stage of field work where the site is restored to its original condition to prevent long-term environmental scarring.",
+      "background": "Restored Hell Creek landscape with fresh soil and young saplings."
+    }
+  }
+]

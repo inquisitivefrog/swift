@@ -1,0 +1,10 @@
+{
+  "id": "PELVIS_STEG_V1",
+  "species": "Stegosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Lateral view focusing on the vertical height of the ilium.",
+  "visual_hook": "The top bones flare up and out like giant wings. These anchored the massive muscles needed to swing the spiked tail.",
+  "material": "Matte, toasted-almond bone. Pitted and rough texture.",
+  "inset_view": "Top-right corner: Cross-section showing dense bone for muscle anchorage.",
+  "negative_prompt": "flat, horizontal, shiny, text"
+}

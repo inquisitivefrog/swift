@@ -1,0 +1,58 @@
+{
+  "asset_manifest": {
+    "id": "char_ref_paleontologist_pair_01",
+    "item_name": "Paleontologist Grad Student Pair Reference Sheet",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_description": "A professional character reference sheet featuring two young adult graduate student paleontologists standing side-by-side against a neutral 50% grey background. Both characters are shown in a clear, neutral standing position with friendly, approachable expressions. All uniform details are clearly visible.",
+    "characters": [
+      {
+        "id": "dino_bones_paleontologist_03",
+        "description": "Young adult male graduate student paleontologist, specializing in microfossil analysis.",
+        "demographics": {
+          "race": "Black",
+          "hair_color": "Black",
+          "hair_style": "Curly, short"
+        },
+        "uniform_details": {
+          "top": "Light purple tee shirt",
+          "outerwear": "Khaki safari vest",
+          "bottoms": "White shorts",
+          "footwear": "Black hiking boots"
+        },
+        "accessories": [
+          "White sun hat",
+          "Small, well-worn magnifying glass on a lanyard"
+        ],
+        "expression": "Friendly, approachable"
+      },
+      {
+        "id": "dino_bones_paleontologist_04",
+        "description": "Young adult male graduate student paleontologist, specializing in stratigraphy and field excavation.",
+        "demographics": {
+          "ethnicity": "Latino",
+          "hair_color": "Brown",
+          "hair_style": "Short"
+        },
+        "uniform_details": {
+          "top": "Light white tee shirt",
+          "outerwear": "Khaki safari vest",
+          "bottoms": "Khaki shorts",
+          "footwear": "Brown hiking boots"
+        },
+        "accessories": [
+          "Thin-rimmed BLACK aviator lens glasses (consistent in every scene)",
+          "Sturdy leather-bound field journal"
+        ],
+        "expression": "Friendly, approachable"
+      }
+    ],
+    "constraints": {
+      "background": "Solid neutral 50% grey",
+      "pose": "Neutral standing position, side-by-side",
+      "framing": "Full body, capturing all uniform details",
+      "age_representation": "Young adult (mid-20s to early 30s)"
+    }
+  }
+}

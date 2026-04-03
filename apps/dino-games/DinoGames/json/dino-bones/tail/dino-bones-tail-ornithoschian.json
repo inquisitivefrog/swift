@@ -1,0 +1,10 @@
+{
+  "id": "TAIL_PACHY_V1",
+  "species": "Pachycephalosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A stiff tail with a 'basket' of bony rods surrounding the vertebrae.",
+  "visual_hook": "The 'Bony Basket'. The tail is encased in a mesh of ossified tendons, making it look like it's wrapped in wire.",
+  "material": "Matte, weathered-tan bone. Stony and rigid.",
+  "inset_view": "Top-right corner: Close-up of the interlocking 'basket' bones.",
+  "negative_prompt": "flexible, wagging tail, spikes, shiny"
+}

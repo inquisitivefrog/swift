@@ -1,0 +1,9 @@
+{ "id": "building_lab_tent_01", 
+  "name": "Field Research Lab Tent", 
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_identity": "Weatherproof white vinyl tent with 'DinoGames' logo embossed near the entrance; sealed 'clean-room' style zippered door; interior features high-tech workstations with glowing monitors, a specimen table holding a plaster-jacketed fossil, and a rack of orange-handled precision tools including the sledge hammer and rock saw.", 
+  "lighting_ref": "STUDIO_GROUNDED_LIGHT", 
+  "tech_ref": "SQUARE_HERO_CARD", 
+  "formation_context": "MORRISON_EJ",
+  "notes": "Lighting should be cooler (daylight LED) compared to the warm, sun-drenched exterior of the camp." 
+}

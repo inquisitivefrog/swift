@@ -1,0 +1,11 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-4_1-v1.png 
+
+{
+  "id": "adv7_04_transport_lowering",
+  "project": "DinoGames",
+  "character_refs": ["paleontologist_01", "paleontologist_04"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "pose": "Wide shot. The large, fully-wrapped white plaster jacket is being slowly lowered down the cliff face using a pulley system. Paleontologist 04 is at the top, carefully feeding the rope through a belay device. At the base of the cliff, Paleontologist 01 is guiding the heavy jacket onto a waiting stretcher/sled. Their rugged 4x4 field vehicle is parked nearby, ready to receive the fossil. The late afternoon sun casts long shadows, emphasizing the height of the cliff they just conquered."
+}

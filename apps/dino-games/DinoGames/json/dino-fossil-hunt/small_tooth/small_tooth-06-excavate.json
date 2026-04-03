@@ -1,0 +1,106 @@
+These are supposed to be young adults per this character reference sheet supposedly locked in. Consider them grad students with master’s degrees in Paleontology, Geology or Biology.  Reference this image for character visuals and generate an image with this asset manifest please.
+
+attach: char_ref_sheet_paleo-2_4-v2.png
+
+{
+  "scene_id": "hell_creek_formation_microfossil_prospecting_002_dig",
+  "setting": {
+    "location": "Lance-Hell Creek Formation, USA",
+    "era": "Late Cretaceous",
+    "weather": "Bright, high-key sunny day",
+    "time_of_day": "12:30pm (midday, slightly later)",
+    "terrain": "Still at the old, dried-up riverbed. Close-up on a patch of yellowish-grey mudstone and brown-grey silt with smaller, finer sediment spread on a tarp or ground cloth.",
+    "habitat": "Semi-Arid Seasonal Floodplain",
+    "flora": [
+      "Sparse vegetation in background (Bennettitales, Tree ferns)"
+    ],
+    "fauna": [
+      "Cicadas (implied sound)",
+      "Wasps (one or two still subtly present nearby)"
+    ],
+    "atmosphere": "Clear, vibrant, sharp shadows, dry air, hints of dust, focus on meticulous work.",
+    "lighting": "SUNNY_EXPOSED"
+  },
+  "characters": [
+    {
+      "id": "paleontologist_02",
+      "name": "Paleontologist 2",
+      "ethnicity": "Caucasian",
+      "gender": "Female",
+      "age_group": "Younger Adult",
+      "hair": "Short black hair",
+      "skin_tone": "Tanned",
+      "clothing": {
+        "headwear": "Green sun hat",
+        "top_inner": "Light green blouse",
+        "top_outer": "Khaki safari vest",
+        "bottom": "Green skirt",
+        "footwear": "Black hiking boots"
+      },
+      "action": "Seated or kneeling, diligently working with a small paintbrush or tweezers over the sieve stack. Her expression is focused and patient.",
+      "position": "Foreground, slightly to the left, actively sorting."
+    },
+    {
+      "id": "paleontologist_04",
+      "name": "Paleontologist 4",
+      "ethnicity": "Latino",
+      "gender": "Male",
+      "age_group": "Younger Adult",
+      "hair": "Short brown hair",
+      "accessories": [
+        "Thin-rimmed BLACK aviator lens glasses (prominent)"
+      ],
+      "clothing": {
+        "top_inner": "Light white tee shirt",
+        "top_outer": "Khaki safari vest",
+        "bottom": "Khaki shorts",
+        "footwear": "Brown hiking boots"
+      },
+      "action": "Seated or kneeling opposite Paleontologist 2, carefully pouring a scoop of sediment into the top sieve, or using tweezers to sort. His expression is equally focused.",
+      "position": "Foreground, slightly to the right, also actively sorting."
+    }
+  ],
+  "equipment": [
+    {
+      "item": "Sieve Stack",
+      "description": "A prominent, multi-tiered metal or plastic sieve stack. Sediment is actively being sifted through it.",
+      "position": "Central foreground, between the two paleontologists."
+    },
+    {
+      "item": "Tweezers",
+      "description": "Small, precise paleontological tweezers being used by at least one character to pick out microfossils.",
+      "position": "In hand of P2, or near P4."
+    },
+    {
+      "item": "Small paintbrush",
+      "description": "Used for gently clearing debris from a sieve screen.",
+      "position": "In hand of P2, or near P4."
+    },
+    {
+      "item": "Collection Vials",
+      "description": "A few small, clear plastic vials or sample bags, possibly open, awaiting discoveries.",
+      "position": "On the ground cloth next to the sieve stack."
+    },
+    {
+      "item": "Ground Cloth / Tarp",
+      "description": "A light-colored tarp or canvas sheet laid out to catch sieved debris and protect tools.",
+      "position": "Under the sieve stack and paleontologists' immediate work area."
+    },
+    {
+      "item": "Hand Scoop / Trowel",
+      "description": "For collecting sediment to put into the sieve.",
+      "position": "Near P4 or on the ground cloth."
+    }
+  ],
+  "style": {
+    "art_style": "STYLE_ANIMATED_FEATURE_V3",
+    "character_proportions": "Rounded, appealing, 'toy-like'",
+    "character_features": "Expressive faces showing concentration, patience, and diligence.",
+    "framing": "SQUARE_HERO_CARD",
+    "composition": "Perfectly centered 1:1, 25% negative space buffer. Focus on the central activity of sorting, with characters on either side.",
+    "camera_angle": "Medium close-up, slightly overhead, to clearly show the hands, tools, and the sieve stack in detail."
+  },
+  "microfossil_targets": [
+    "Implied presence, not visibly resolved: Alphadon mammal teeth, Teiid lizard fragments (tiny specks within the sieve)"
+  ]
+}

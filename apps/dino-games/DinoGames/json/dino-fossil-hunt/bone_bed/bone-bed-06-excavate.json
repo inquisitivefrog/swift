@@ -1,0 +1,15 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-3_4-v2.png 
+
+{
+  "id": "adv7_02_excavation_mapping",
+  "project": "DinoGames",
+  "character_refs": ["paleontologist_03", "paleontologist_04"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "pose": "A high-angle 'birds-eye' technical shot looking down into one grid square. Paleontologist 03 is using a fine dental pick and a soft brush to reveal three intertwined Edmontosaurus femurs. Next to him, Paleontologist 04 is holding his leather-bound field journal, meticulously sketching the exact position of the bones relative to the grid strings overhead. The bones are densely packed, overlapping like a game of 'pick-up sticks.' Dust is swept into small piles at the corners of the grid.",
+  "constraints": {
+    "visual_logic": "Show the intersection of the grid strings in the corners of the frame to maintain the 'mapping' theme.",
+    "detail": "Include a small North-arrow marker and a scale bar on the ground next to the bones."
+  }
+}

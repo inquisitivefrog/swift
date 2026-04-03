@@ -1,0 +1,14 @@
+[
+  {
+    "id": "tool_pro_data_umbilical_01",
+    "item_name": "Ruggedized High-Speed Data Cable",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_description": "A thick, coiled orange data cable with reinforced, weather-sealed connectors. It is shown plugged into the side of the Handheld LiDAR Scanner and leading toward a rugged laptop. The bright orange color ensures it isn't tripped over in the dusty Morrison terrain.",
+    "constraints": {
+      "logic": "The physical tether required for high-bandwidth data transfers at basecamp.",
+      "background": "The edge of a canvas field tent with a folding table."
+    }
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "id": "NECK_TREX_GROUNDED_V3",
+  "species": "Tyrannosaurus rex",
+  "style_ref": "STUDIO_GROUNDED",
+  "background": "SOLID_LIGHT_GREY",
+  "pose": "A single, isolated mid-cervical vertebra in lateral profile, centered. Top-right corner: A square inset containing a high-detail sagittal cross-section of the same bone.",
+  "geometry_fix": "Vertebra should be a truncated, standalone specimen. No ribs, no long spinal extensions, and no connection to other skeletal elements.",
+  "material": "Matte, weathered bone with toasted-tan (iron-rich) mineralization. Surface is porous and tactile. The inset reveals a complex honeycomb lattice of trabecular bone and deep, hollow pleurocoels.",
+  "lighting": "Studio soft light. High internal shadows in the bone cavities to show depth without glossy reflections.",
+  "base": "The bone is resting on a low-profile, textured grey silt/sediment base.",
+  "negative_prompt": "glossy, shiny, epoxy, wet, long tail-like bone, connected skeleton, blurry inset, text, labels"
+}

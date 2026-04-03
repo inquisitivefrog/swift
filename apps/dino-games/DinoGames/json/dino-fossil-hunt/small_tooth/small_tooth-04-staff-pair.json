@@ -1,0 +1,13 @@
+These are supposed to be young adults per this character reference sheet supposedly locked in. Consider them grad students with master’s degrees in Paleontology, Geology or Biology.
+
+attach: char_ref_sheet_paleo-2_4-v1.png
+
+{
+  "id": "char_ref_paleo_02_04",
+  "project": "DinoGames",
+  "character_refs": ["dino_bones_paleontologist_2", "dino_bones_paleontologist_4"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "tech_ref": "DEFAULT_SQUARE",
+  "pose": "A professional character reference sheet showing two paleontologists side-by-side against a neutral grey background. On the left is Paleontologist 02 (younger female, short black hair, green sun hat, green blouse, khaki vest, green skirt, black boots). On the right is Paleontologist 04 (younger Latino male, short brown hair, signature black aviator glasses, white tee, khaki vest, khaki shorts, brown boots). Both have friendly, expressive faces."
+}

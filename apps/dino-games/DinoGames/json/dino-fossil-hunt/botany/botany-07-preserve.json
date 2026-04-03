@@ -1,0 +1,19 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-1_6-v2.png 
+
+{
+  "id": "adv8_03_preservation_micro",
+  "project": "DinoGames",
+  "reference_image": "char_ref_sheet_paleo-1_6-v2.jpg",
+  "character_refs": ["paleontologist_01", "paleontologist_06"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "HELL_CREEK",
+  "habitat_ref": "ANCIENT_LAKE_MARGIN",
+  "lighting_ref": "SUNNY_BRIGHT_DAYLIGHT",
+  "pose": "Close-up technical shot. A Dry Sieve Stack (brushed aluminum, showing fine dust but no water) sits on a field table. Paleontologist 06 (female, braided black hair, white tee shirt under khaki safari vest) is pointing at a tiny, teardrop-shaped piece of golden amber caught in the fine lower mesh. Paleontologist 01 (female, long blonde hair, tanned skin, white sun hat, light pink blouse under khaki safari vest, white shorts, pink hiking boots) is leaning in, looking through a silver hand lens (magnifying glass) held up to the amber to see a microscopic insect trapped inside. On the field table next to them lies a split shale slab showing a perfect, high-contrast black leaf impression. Both characters look fascinated and triumphant.",
+  "constraints": {
+    "tool_detail": "The hand lens should show a magnified 'zoom' effect of the amber; the sieve stack must appear dry/dusty, not wet.",
+    "fossil_detail": "The leaf impression should have delicate, serrated edges visible on the grey rock."
+  }
+}

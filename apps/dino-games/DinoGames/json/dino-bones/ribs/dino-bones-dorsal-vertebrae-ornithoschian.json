@@ -1,0 +1,10 @@
+{
+  "id": "RIBCAGE_PACHY_V1",
+  "species": "Pachycephalosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Side view showing a very thick, rigid backbone and rounded ribs.",
+  "visual_hook": "The 'Brace Box'. The ribs are thick and the backbone is reinforced to act like a bumper for head-butting.",
+  "material": "Matte, weathered-tan bone. Dense and stony.",
+  "inset_view": "Top-right corner: Cross-section of the spine showing reinforced joints for shock absorption.",
+  "negative_prompt": "thin, bird-like, shiny"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "TAIL_STEG_V1",
+  "species": "Stegosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Side view of the thick, muscular tail ending in four large, pointed bony spikes (thagomizers).",
+  "visual_hook": "The 'Spike Tail'. The spikes are arranged in two pairs at the very end, pointing outward and backward.",
+  "material": "Matte, toasted-almond bone. The spikes look like polished, lethal stone.",
+  "inset_view": "Top-right corner: Cross-section of a tail spike showing a solid, high-density core for impact.",
+  "negative_prompt": "club, thin whip, feathers, shiny, labels"
+}

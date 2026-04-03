@@ -1,0 +1,10 @@
+{
+  "id": "NECK_ARCH_GROUNDED_V2",
+  "species": "Archaeopteryx",
+  "style_ref": "STUDIO_GROUNDED",
+  "background": "SOLID_LIGHT_GREY",
+  "pose": "Main: The complete articulated cervical series showing the S-curve. Inset: Close-up of the delicate, thin-walled bone structure.",
+  "material": "Matte, pale cream bone. Fine, bird-like textures with minimal mineralization staining.",
+  "educational_focus": "The evolutionary link between dinosaur necks and modern bird necks.",
+  "negative_prompt": "glossy, shiny, wet, epoxy, plastic, labels"
+}

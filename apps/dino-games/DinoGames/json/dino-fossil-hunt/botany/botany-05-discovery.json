@@ -1,0 +1,15 @@
+reference this image for character visuals.  
+
+attach: char_ref_sheet_paleo-1_6-v2.png 
+
+{
+  "id": "adv8_01_discovery",
+  "project": "DinoGames",
+  "reference_image": "char_ref_sheet_paleo-1_6-v2.jpg",
+  "character_refs": ["paleontologist_01", "paleontologist_06"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "HELL_CREEK",
+  "habitat_ref": "ANCIENT_LAKE_MARGIN",
+  "lighting_ref": "OVERCAST_DIFFUSE_DAYLIGHT",
+  "pose": "Wide shot. Paleontologist 01 (female, long blonde hair, tanned skin, white sun hat, light pink blouse under khaki safari vest, white shorts, pink hiking boots) and Paleontologist 06 (female, braided black hair, African ethnicity, white tee shirt under khaki safari vest, white shorts, black hiking boots) stand at the base of a grey, layered shale cliff next to a dry, sandy basin. Paleontologist 01 is pointing at a thin, dark line of carbonized material in the rock—an indicator of ancient plant life. Paleontologist 06 is looking intently at the loose sand at their feet, where small bits of amber glint in the soft light. The mood is observant and expectant."
+}

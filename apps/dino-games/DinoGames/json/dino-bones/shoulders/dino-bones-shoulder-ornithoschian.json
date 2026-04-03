@@ -1,0 +1,10 @@
+{
+  "id": "SHOULDER_PACHY_V1",
+  "species": "Pachycephalosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Relatively small but thick shoulder blades.",
+  "visual_hook": "The 'Brace Pad'. These bones sit tight against the ribs to help absorb the shock that travels down the spine from the head.",
+  "material": "Matte, weathered-tan bone. Stony and dense.",
+  "inset_view": "Top-right corner: Cross-section showing reinforced bone at the shoulder socket.",
+  "negative_prompt": "long, wing-like, shiny"
+}

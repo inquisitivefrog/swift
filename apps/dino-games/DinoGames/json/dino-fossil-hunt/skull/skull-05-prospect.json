@@ -1,0 +1,42 @@
+These are supposed to be young adults per this character reference sheet supposedly locked in. Consider them grad students with master’s degrees in Paleontology, Geology or Biology.  Reference this image for character visuals and generate an image with this asset manifest please.
+
+attach: char_ref_sheet_paleo-5_6-v2.png
+
+{
+  "id": "adv3_01_discovery",
+  "project": "DinoGames",
+  "asset_type": "scene_render",
+  "source_prompt_id": "rewritten_discovery_prompt_v2",
+  "characters_present": [
+    {
+      "ref": "dino_bones_paleontologist_05",
+      "description": "Younger female, Asian ethnicity, finely textured short black hair (side-parted bob, layered), tapered jawline, detailed almond-shaped eyes, light red tee, khaki safari vest (fitted), red shorts, black hiking boots. Clean appearance.",
+      "pose": "Kneeling, pointing at exposed skull."
+    },
+    {
+      "ref": "dino_bones_paleontologist_06",
+      "description": "Younger female, African ethnicity, long, high-fidelity individual black braids (micro-braids, textured), refined jawline, expressive eyes, white tee, khaki safari vest (fitted), white shorts, black hiking boots. Clean appearance.",
+      "pose": "Standing, observing the discovery."
+    }
+  ],
+  "environment": {
+    "formation_ref": "TIAOJISHAN",
+    "habitat_ref": "FORESTED_VOLCANIC_HIGHLANDS",
+    "geology_details": "Wide ledge of Silver-grey Volcanic Tuff. Surrounding terrain is charcoal-grey rocky volcanic material.",
+    "flora_details": "Dense Jurassic conifers (Pityophyllum/Elatocladus) and giant horsetails (Equisetum) framing the scene."
+  },
+  "lighting": {
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "description": "Warm, shimmering highlights filtered through dense forest canopy and/or temporary dig-site tarps, creating soft contrast."
+  },
+  "props": [
+    {
+      "type": "dinosaur_fossil",
+      "description": "Dinosaur skull, partially exposed in the rock face at eye-level with Paleontologist 05.",
+      "material": "Fossilized bone within volcanic tuff."
+    }
+  ],
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "style_attributes": "High-fidelity 3D textures, nuanced rendering, refined forms, cinematic depth, tactile surfaces on clothing and skin, realistic specular highlights.",
+  "camera_framing": "Mid-shot, framing both paleontologists and the fossil discovery, with environmental context visible."
+}

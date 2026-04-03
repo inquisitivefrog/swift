@@ -1,0 +1,81 @@
+These are supposed to be young adults per this character reference sheet supposedly locked in. Consider them grad students with master’s degrees in Paleontology, Geology or Biology.  Reference this image for character visuals and generate an image with this asset manifest please.
+
+attach: char_ref_sheet_paleo-1_3-v2.png
+
+{
+  "scene_id": "morrison_formation_post_storm_apatosaurus_001",
+  "setting": {
+    "location": "Morrison Formation, USA",
+    "era": "Late Jurassic",
+    "event": "After a torrential thunderstorm",
+    "weather": "Dark, bruised purples and greys (sky), sliver of pale, diffused light breaking through",
+    "terrain": "Base of a towering, erosion-carved mudstone butte; ground dark, wet, slick with rain; reddish-brown and grey fluvial mudstone",
+    "habitat": "Floodplain Environment",
+    "flora": [
+      "Horse-tail rushes (Equisetum)",
+      "Ferns",
+      "Conifers (on higher sections)"
+    ],
+    "fauna": [
+      "Dripping water sounds",
+      "Distant frog/amphibian calls",
+      "Rustle of small, wet mammals"
+    ],
+    "atmosphere": "Thick with damp earth and petrichor, humid, quiet anticipation",
+    "lighting": "OVERCAST_DIFFUSED"
+  },
+  "characters": [
+    {
+      "id": "paleontologist_01",
+      "name": "Paleontologist 1",
+      "gender": "Feale",
+      "age_group": "Young Adult",
+      "appearance": "Long blonde hair, sunny disposition",
+      "clothing": {
+        "outerwear": "Light pink rain jacket",
+        "top_inner": "Pink blouse",
+        "bottom": "White canvas pants",
+        "footwear": "Mud-splattered waterproof hiking boots"
+      },
+      "equipment": [
+        "GPS unit",
+        "Geological hammer"
+      ],
+      "action": "Resting after digging out a large Apatosaurus femur."
+    },
+    {
+      "id": "paleontologist_03",
+      "name": "Paleontologist 3",
+      "gender": "Male",
+      "ethnicity": "Black",
+      "age_group": "Young Adult",
+      "hair": "Curly black hair",
+      "clothing": {
+        "outerwear": "Bright yellow rain poncho",
+        "top_inner": "Light purple field shirt",
+        "bottom": "Black field pants",
+        "footwear": "Heavy-duty rubber boots"
+      },
+      "equipment": [
+        "Field notebook",
+        "Small hand trowel"
+      ],
+      "action": "Resting after digging out a large Apatosaurus femur."
+    }
+  ],
+  "discovery": {
+    "type": "Apatosaurus femur",
+    "condition": "Fully exposed and recently dug out of the cliff side, glistening with moisture, unmistakable size and shape",
+    "color": "Fossilized dark grey-brown",
+    "geological_context": "Stretched across the trail on the side of a mudstone butte; recent rain has washed away loose sediment"
+  },
+  "style": {
+    "art_style": "STYLE_ANIMATED_FEATURE_V3",
+    "character_proportions": "Rounded, appealing, 'toy-like'",
+    "character_features": "Expressive",
+    "framing": "SQUARE_HERO_CARD",
+    "composition": "Perfectly centered 1:1, 25% negative space buffer",
+    "framing": "MEDIUM_SHOT_DETAIL",
+    "color_palette": "Earthy tones (reddish-browns, greys, dark greens) with contrasting bright yellow and dark blue"
+  }
+}

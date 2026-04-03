@@ -1,0 +1,18 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-2_5-v2.png
+
+{
+  "id": "adv5_01_riverbed_discovery",
+  "project": "DinoGames",
+  "reference_image": "char_ref_sheet_paleo-2_5-v2.jpg",
+  "character_refs": [
+    "dino_bones_paleontologist_2",
+    "dino_bones_paleontologist_5"
+  ],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "HELL_CREEK",
+  "habitat_ref": "RIVER_BADLANDS_SHALLOW_BANK",
+  "lighting_ref": "SUNNY_BRIGHT_DAYLIGHT",
+  "pose": "A medium wide shot, slightly elevated. Paleontologist 02 (fair skin, short brown hair, blue long-sleeve shirt, khaki shorts) and Paleontologist 05 (dark skin, braided black hair, green tank top, cargo shorts) are paddling a sturdy, orange canoe downstream on a wide, calm river. They are approaching a shallow, sandy bank on the left where the river widens. Paleontologist 05, seated in the front, points excitedly with an outstretched arm towards a prominent, dried-up gully in the bank, clearly the mouth of an ancient riverbed now exposed as a geological feature. Paleontologist 02, in the back, paddles with a curious expression, looking in the direction Paleontologist 05 is pointing. The background shows distant, eroded badlands typical of a riverine environment."
+}

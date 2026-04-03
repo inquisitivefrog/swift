@@ -1,0 +1,15 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-5_6-v1.png
+
+{
+    "id": "adv3_04_transport",
+    "project": "DinoGames",
+    "reference_image": "char_ref_sheet_paleo-5_6-v1.jpg",
+    "character_refs": ["dino_bones_paleontologist_05", "dino_bones_paleontologist_06"],
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "TIAOJISHAN",
+    "habitat_ref": "FORESTED_VOLCANIC_HIGHLANDS",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "pose": "Two-person heavy lift; characters walking toward camera carrying a bone-jacket sling.",
+}

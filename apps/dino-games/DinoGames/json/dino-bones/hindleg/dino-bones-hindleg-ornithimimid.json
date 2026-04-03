@@ -1,0 +1,10 @@
+{
+  "id": "LEG_GALL_V1",
+  "species": "Gallimimus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Super-extended tibia (shin) and very long metatarsals (foot bones).",
+  "visual_hook": "Built for sprinting. The leg is very long and slender, resembling an ostrich leg.",
+  "material": "Matte, light-sand bone. Clean and streamlined.",
+  "inset_view": "Top-right corner: Cross-section showing thin, high-strength cortical bone walls.",
+  "negative_prompt": "heavy, wide, slow-looking, shiny"
+}

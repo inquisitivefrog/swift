@@ -1,0 +1,22 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-2_5-v2.png
+
+{
+  "id": "adv5_02_excavation_search",
+  "project": "DinoGames",
+  "reference_image": "char_ref_sheet_paleo-2_5-v2.jpg",
+  "character_refs": [
+    "paleontologist_02",
+    "paleontologist_05"
+  ],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "HELL_CREEK",
+  "habitat_ref": "RIVER_BADLANDS_SHALLOW_BANK",
+  "lighting_ref": "SUNNY_BRIGHT_DAYLIGHT",
+  "pose": "A medium-wide technical shot. Paleontologist 05 is standing knee-depth in the modern river, using a long-handled net to scoop heavy, wet sediment from the floor where the ancient riverbed delta meets the water. Simultaneously, Paleontologist 02 is on the sandy bank, holding a hand-held sifting screen (tool_pro_sifting_screen_hand_01). 02 is shaking a previous scoop of gravel at the water's surface to wash away silt. Their expressions are focused and industrious; no fossils are visible yet, only wet river stones and grey mud.",
+  "constraints": {
+    "tool_detail": "Net should show dripping water; sifting screen should show 'fines' washing through the mesh into the river.",
+    "environment": "Visible stratification in the dry ancient riverbed bank in the background."
+  }
+}

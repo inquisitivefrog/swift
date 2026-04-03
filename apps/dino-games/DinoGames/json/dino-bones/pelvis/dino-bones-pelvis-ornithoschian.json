@@ -1,0 +1,10 @@
+{
+  "id": "PELVIS_TREX_V1",
+  "species": "Tyrannosaurus rex",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Side profile of the full pelvic girdle. Focus on the 'Pubic Boot' at the bottom.",
+  "visual_hook": "The bottom bone ends in a massive, flat, sled-like 'boot' shape. The top bone (ilium) is a long, heavy blade.",
+  "material": "Matte, toasted-tan bone. Extremely thick and rugged texture.",
+  "inset_view": "Top-right corner: Cross-section of the ilium blade showing dense bone with a small core of honeycomb mesh.",
+  "negative_prompt": "thin, fragile, shiny, bird-like hips, labels"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "SKULL_PACHY_09",
+  "species": "Pachycephalosaurus wyomingensis",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STUDIO_GROUNDED",
+  "lighting_ref": "STUDIO_SOFT",
+  "pose": "Lateral profile to best showcase the extreme thickness of the solid bone dome on the roof of the skull. Include the small, blunt bony spikes or knobs surrounding the back of the head and snout.",
+  "educational_focus": "The use of specialized bone density (the dome) for head-butting or social display."
+}

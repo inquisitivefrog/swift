@@ -1,0 +1,10 @@
+{
+  "id": "RIBCAGE_ARCH_V1",
+  "species": "Archaeopteryx",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "The delicate thoracic basket and slender backbone.",
+  "visual_hook": "Looks like a tiny, fragile bird cage. The ribs are very thin and slightly overlapping (uncinate processes).",
+  "material": "Matte, pale cream bone. Fine and needle-like.",
+  "inset_view": "Top-right corner: Close-up of the tiny 'hooks' on the ribs that helped the chest stay stiff for flight.",
+  "negative_prompt": "heavy, thick, bulky, shiny"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "RIBCAGE_STEG_V1",
+  "species": "Stegosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Lateral view of the high-arched back and deep ribs.",
+  "visual_hook": "The 'Tall Ridge'. The backbone arches very high in the middle, making the dinosaur look like a steep hill.",
+  "material": "Matte, toasted-almond bone. Rough and weathered.",
+  "inset_view": "Top-right corner: Cross-section of the neural spines where the plates once sat.",
+  "negative_prompt": "flat, low back, shiny"
+}

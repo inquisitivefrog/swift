@@ -1,0 +1,15 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-5_3-v3.png 
+
+{
+  "id": "adv9_02_excavation_dusting",
+  "project": "DinoGames",
+  "character_refs": ["paleontologist_05", "paleontologist_03"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "pose": "Extreme close-up/Macro shot. Paleontologist 03 is using a tiny, soft-bristle watercolor brush and a rubber air duster bulb to gently blow fine sand away from a delicate, tiny hatchling limb bone next to an eggshell. Paleontologist 05 is leaning in close, holding a small tray of tools. The lighting is soft, highlighting the texture of the eggshells. Both characters are wearing magnifying loupes flipped down over their eyes for the detail work.",
+  "constraints": {
+    "tool_detail": "Show the air duster bulb being squeezed, with a tiny 'puff' of sand moving away from the bone."
+  }
+}
+

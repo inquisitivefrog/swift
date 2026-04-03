@@ -1,0 +1,10 @@
+{
+  "id": "LEG_ARCH_V1",
+  "species": "Archaeopteryx",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Extremely long, needle-thin leg bones. The 'toe-claw' is slightly curved.",
+  "visual_hook": "Looks exactly like a modern bird's leg. The bones are very long compared to their thickness.",
+  "material": "Matte, pale cream bone. Smooth, delicate, porcelain-like texture.",
+  "inset_view": "Top-right corner: Close-up showing the bone is almost entirely hollow, like a drinking straw.",
+  "negative_prompt": "heavy, thick, bulky, shiny, labels"
+}

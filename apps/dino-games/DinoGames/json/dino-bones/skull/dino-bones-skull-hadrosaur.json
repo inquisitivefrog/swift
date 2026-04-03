@@ -1,0 +1,9 @@
+{
+  "id": "SKULL_IGUA_03",
+  "species": "Iguanodon",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STUDIO_GROUNDED",
+  "lighting_ref": "STUDIO_SOFT",
+  "pose": "Three-quarter view to show the broad, toothless anterior beak and the dense battery of grinding teeth in the cheeks.",
+  "educational_focus": "The distinct 'horse-like' length of the face and specialized herbivorous beak."
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "tool_pro_field_scanner_01",
+    "item_name": "Handheld LiDAR Surface Mapper",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_description": "A high-tech handheld scanner being held by a field researcher. The device emits a glowing cyan laser grid over a dinosaur trackway in the sandstone. A built-in screen shows a thermal-style depth map of the impression. The researcher wears a rugged canvas field jacket and protective gloves.",
+    "constraints": {
+      "logic": "Used for non-invasive site documentation and 3D reconstruction of trackways.",
+      "background": "Arid, sun-drenched canyon with layered sedimentary rock."
+    }
+  }
+]

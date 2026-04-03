@@ -1,0 +1,10 @@
+{
+  "id": "RIBCAGE_TRIC_V1",
+  "species": "Triceratops",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A wide, circular ribcage and very dense backbone.",
+  "visual_hook": "The 'Big Barrel'. The ribs form a perfect circle to hold all the plants it eats. It looks like a huge wooden barrel.",
+  "material": "Matte, dark-tan bone. Thick, solid, and heavy.",
+  "inset_view": "Top-right corner: Cross-section showing solid, heavy ribs with no air holes.",
+  "negative_prompt": "narrow, thin, hollow, shiny"
+}

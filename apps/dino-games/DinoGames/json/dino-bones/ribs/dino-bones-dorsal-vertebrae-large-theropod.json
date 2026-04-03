@@ -1,0 +1,10 @@
+{
+  "id": "RIBCAGE_TREX_V1",
+  "species": "Tyrannosaurus rex",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Side view of the dorsal column and ribcage. The ribs are long and curve deeply downward.",
+  "visual_hook": "The 'Tall Heart'. The ribcage is narrow but very deep from top to bottom, making the T-Rex look powerful and athletic.",
+  "material": "Matte, toasted-tan bone. The backbone has high, rugged spines (neural spines).",
+  "inset_view": "Top-right corner: Cross-section of a rib showing the 'I-beam' shape—thin but incredibly strong.",
+  "negative_prompt": "wide, round, flat-chested, shiny, text"
+}

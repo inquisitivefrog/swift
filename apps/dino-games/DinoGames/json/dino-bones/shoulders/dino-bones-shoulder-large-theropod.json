@@ -1,0 +1,10 @@
+{
+  "id": "SHOULDER_TREX_V1",
+  "species": "Tyrannosaurus rex",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A long, slightly curved scapula (shoulder blade) and the rounded coracoid bone at the base.",
+  "visual_hook": "The 'Giant Cleaver'. The bone is a long, flat blade that would have sat along the side of the ribs. It looks surprisingly sleek for such a big animal.",
+  "material": "Matte, toasted-tan bone. Rough textures where the heavy arm muscles once attached.",
+  "inset_view": "Top-right corner: Cross-section of the blade showing a dense outer 'crust' with a very fine honeycomb interior.",
+  "negative_prompt": "wide plates, tiny blades, shiny, wings"
+}

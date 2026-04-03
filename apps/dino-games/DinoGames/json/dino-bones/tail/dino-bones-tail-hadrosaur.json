@@ -1,0 +1,10 @@
+{
+  "id": "TAIL_IGUA_V1",
+  "species": "Iguanodon",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A side-flattened (deep) tail that is very stiff at the base.",
+  "visual_hook": "The 'Tall Tail'. The spines on top and bottom make the tail look like a tall, flat paddle or an oar.",
+  "material": "Matte, ochre-toned bone. Criss-crossed with bony tendons.",
+  "inset_view": "Top-right corner: Cross-section showing the tall, blade-like shape of the vertebrae.",
+  "negative_prompt": "round tail, whip-like, spikes, shiny"
+}

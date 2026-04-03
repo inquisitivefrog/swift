@@ -1,0 +1,14 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-5_3-v3.png 
+
+{
+  "id": "adv9_03_preservation_consolidant",
+  "project": "DinoGames",
+  "character_refs": ["paleontologist_05", "paleontologist_03"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "pose": "Medium shot. Paleontologist 05 is carefully painting a thin, clear liquid (consolidant) onto a cracked eggshell using a fine brush to keep it from crumbling. Meanwhile, Paleontologist 03 is starting to build a 'block' by trenching around the entire nest. He is placing a protective layer of wet tissue paper over the stabilized eggs before they apply the plaster. The 'sub-block' stands out from the ground like a small pedestal.",
+  "constraints": {
+    "visual_logic": "The consolidant should give the fossil a slight 'wet' sheen where it has been applied."
+  }
+}

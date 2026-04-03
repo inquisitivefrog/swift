@@ -1,0 +1,10 @@
+{
+  "id": "RIBCAGE_IGUA_V1",
+  "species": "Iguanodon",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Side view of the torso. Strong ribs and a backbone with ossified (bony) tendons visible.",
+  "visual_hook": "The 'Criss-Cross Back'. You can see bony 'strings' crossing over the backbone to make it extra stiff and strong.",
+  "material": "Matte, ochre-toned bone. Dry and textured.",
+  "inset_view": "Top-right corner: Close-up of the bony tendons looking like stiff wires along the spine.",
+  "negative_prompt": "hollow, light, sharp, shiny"
+}

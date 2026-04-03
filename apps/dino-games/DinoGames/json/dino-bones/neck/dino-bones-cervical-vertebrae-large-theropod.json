@@ -1,0 +1,10 @@
+{
+  "id": "NECK_TREX_01",
+  "species": "Tyrannosaurus rex",
+  "style_ref": "STUDIO_GROUNDED",
+  "lighting_ref": "STUDIO_SOFT",
+  "background": "SOLID_LIGHT_GREY",
+  "material": "Matte weathered bone, toasted tan color, tactile porous texture, no gloss",
+  "pose": "Articulated series of the first four cervical vertebrae (including the Atlas and Axis). Lateral view showing the thick, robust neural spines. The bones look heavy and powerful.",
+  "educational_focus": "The massive attachment points for the powerful neck muscles required to stabilize the heavy head."
+}

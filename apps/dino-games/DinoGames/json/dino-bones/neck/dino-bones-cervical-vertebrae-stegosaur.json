@@ -1,0 +1,10 @@
+{
+  "id": "NECK_STEG_GROUNDED_V2",
+  "species": "Stegosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "background": "SOLID_LIGHT_GREY",
+  "pose": "Main: Lateral view of the cervical series. Inset: View of the small dermal ossicles (skin bones) found in the neck region.",
+  "material": "Matte, toasted-almond bone. Soft, dry finish with subtle pitting.",
+  "educational_focus": "The protective throat armor (dermal ossicles) that guarded the underside of the neck.",
+  "negative_prompt": "glossy, shiny, wet, epoxy, plastic, labels"
+}

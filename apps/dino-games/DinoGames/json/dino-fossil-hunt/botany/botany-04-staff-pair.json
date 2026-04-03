@@ -1,0 +1,29 @@
+{
+  "asset_manifest": {
+    "characters": [
+      {
+        "id": "paleontologist_01",
+        "description": "Female grad student, early 20s, pursuing a Master's degree in Paleontology, Geology, or Biology. Bright, highly focused, and intellectually driven. Medium-length dark brown hair, often tied back for practicality. Fair skin, with sharp, intelligent blue eyes. Wears black rectangular glasses as a signature accessory. Dressed in the official tan safari vest (FIELD_PALEO_CREW_01 uniform) over a light-colored, long-sleeved shirt. Possesses an athletic and lean build, suitable for fieldwork. Displays a friendly, approachable, and enthusiastic expression.",
+        "uniform": "FIELD_PALEO_CREW_01 (Tan safari vest)",
+        "accessories": "Black rectangular glasses",
+        "age_range": "Early 20s (young adult)",
+        "education": "Master's degree in Paleontology, Geology, or Biology",
+        "demeanor": "Focused, keen, friendly, enthusiastic"
+      },
+      {
+        "id": "paleontologist_06",
+        "description": "Male grad student, mid-20s, pursuing a Master's degree in Paleontology, Geology, or Biology. Enthusiastic, practical, and dependable with a resourceful attitude. Short, sandy blonde hair, often slightly disheveled from active work. Tanned, slightly rugged skin from field exposure. Warm hazel eyes that convey a sense of adventure. Wears black aviator glasses as his distinctive eyewear. Dressed in the official tan safari vest (FIELD_PALEO_CREW_01 uniform) over a light-colored, durable shirt. Possesses a sturdy, broad-shouldered build, indicative of physical capability. Displays a friendly, approachable, and confident expression.",
+        "uniform": "FIELD_PALEO_CREW_01 (Tan safari vest)",
+        "accessories": "Black aviator glasses",
+        "age_range": "Mid-20s (young adult)",
+        "education": "Master's degree in Paleontology, Geology, or Biology",
+        "demeanor": "Enthusiastic, practical, friendly, confident"
+      }
+    ],
+    "pose": "Clear 'T-pose' / neutral standing position",
+    "background": "Neutral 50% grey",
+    "lighting": "Even, soft studio lighting to capture all uniform and facial details",
+    "art_style": "STYLE_ANIMATED_FEATURE_V3",
+    "composition": "Both paleontologists standing side-by-side"
+  }
+}

@@ -1,0 +1,15 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-5_6-v1.png
+
+{
+    "id": "adv3_02_detail",
+    "project": "DinoGames",
+    "reference_image": "char_ref_sheet_paleo-5_6-v1.jpg",
+    "character_refs": ["dino_bones_paleontologist_05", "dino_bones_paleontologist_06"],
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "TIAOJISHAN",
+    "habitat_ref": "FORESTED_VOLCANIC_HIGHLANDS",
+    "lighting_ref": "STUDIO_SOFT",
+    "pose": "On the ledge, work is intense. Paleontologist 05 (short black hair) uses a dental pick on the skull, while Paleontologist 06 (long individual braids) applies liquid consolidant. Their faces and vests are now smudged with dark charcoal-grey ash. Brushes and specimen vials clutter the workspace."
+  }

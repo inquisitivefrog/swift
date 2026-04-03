@@ -1,0 +1,26 @@
+{
+  "asset_name": "paleontologist_pair_reference_sheet",
+  "characters": [
+    {
+      "id": "dino_bones_paleontologist_3",
+      "description": "Adult male graduate student paleontologist, curly black hair, Black, white sun hat, light purple tee shirt, khaki safari vest, white shorts, black hiking boots, friendly neutral expression, standing pose.",
+      "age_group": "young adult (grad student)",
+      "academic_status": "Master's in Paleontology/Geology/Biology"
+    },
+    {
+      "id": "dino_bones_paleontologist_5",
+      "description": "Adult female graduate student paleontologist, short black hair, Asian, tanned complexion, light red tee shirt, khaki safari vest, red shorts, black hiking boots, friendly neutral expression, standing pose.",
+      "age_group": "young adult (grad student)",
+      "academic_status": "Master's in Paleontology/Geology/Biology"
+    }
+  ],
+  "scene": {
+    "background": "neutral 50% grey background",
+    "lighting": "even, professional studio lighting",
+    "pose": "clear neutral standing position, side-by-side",
+    "expression": "friendly expressions",
+    "framing": "full body",
+    "style": "STYLE_ANIMATED_FEATURE_V3, high-fidelity 3D animation, rounded, expressive, cinematic features, soft stylized edges, adult human proportions (not chibi)"
+  },
+  "purpose": "professional character reference sheet to capture all uniform details"
+}

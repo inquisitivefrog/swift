@@ -1,0 +1,18 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-1_4-v3.png
+
+{
+  "id": "adv4_02_excavation",
+  "project": "DinoGames",
+  "reference_image": "char_ref_sheet_paleo-1_4-v3.jpg",
+  "character_refs": [
+    "dino_bones_paleontologist_1",
+    "dino_bones_paleontologist_4"
+  ],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "DJADOKHTA",
+  "habitat_ref": "DESERT_DUNE_FIELDS",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "pose": "A medium-close technical shot of the excavation. Paleontologist 04 (Latino, aviator glasses, white tee, khaki vest) is using a small silver dental pick to carefully remove orange sandstone from between the articulated neck vertebrae of the Velociraptor. Paleontologist 01 (long blonde hair, white sun hat, pink blouse, white shorts) is beside him, using a hand-bulb blower to puff away fine dust. The skeleton is now 75% exposed, showing the long tail curving into the sand. Sunlight glints off their tools and the character's glasses. Both characters have focused, determined expressions and visible sweat from the desert heat."
+}

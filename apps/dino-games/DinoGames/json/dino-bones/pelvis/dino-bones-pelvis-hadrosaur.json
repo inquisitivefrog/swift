@@ -1,0 +1,10 @@
+{
+  "id": "PELVIS_IGUA_V1",
+  "species": "Iguanodon",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Side view showing the long, backward-sweeping pubic bone.",
+  "visual_hook": "A very long, straight bone pointing toward the tail. It looks like a kickstand, helping the dinosaur switch from two legs to four.",
+  "material": "Matte, ochre-toned bone. Earthy and dry.",
+  "inset_view": "Top-right corner: Cross-section showing a mix of solid support and mesh interior.",
+  "negative_prompt": "sharp, predator hips, pubic boot, shiny"
+}

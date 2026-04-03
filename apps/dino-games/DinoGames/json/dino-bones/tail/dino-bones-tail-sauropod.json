@@ -1,0 +1,10 @@
+{
+  "id": "TAIL_APAT_V1",
+  "species": "Apatosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "An incredibly long, horizontal tail that tapers into a thin, wire-like end.",
+  "visual_hook": "The 'Supersonic Whip'. The end of the tail has dozens of tiny, rod-like bones that look like a lash.",
+  "material": "Matte, light-grey tan bone. The base vertebrae are huge and 'winged'.",
+  "inset_view": "Top-right corner: Cross-section of a base vertebra showing extreme 'Lace-bone' pneumaticity.",
+  "negative_prompt": "short, club, spikes, upright curve, shiny"
+}

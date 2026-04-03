@@ -1,0 +1,18 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-1_4-v3.png
+
+{
+  "id": "adv4_01_discovery",
+  "project": "DinoGames",
+  "reference_image": "char_ref_sheet_paleo-1_4-v3.jpg",
+  "character_refs": [
+    "dino_bones_paleontologist_1",
+    "dino_bones_paleontologist_4"
+  ],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "DJADOKHTA",
+  "habitat_ref": "DESERT_DUNE_FIELDS",
+  "lighting_ref": "SUNRISE_GOLDEN_HOUR",
+  "pose": "An extreme wide panoramic hero shot in the orange-red Djadokhta desert. Paleontologist 01 (long blonde hair, white sun hat, pink blouse) is kneeling in the lower-left foreground, using a soft brush to dust sand off a Velociraptor skull partially eroding from a sandstone slope. Paleontologist 04 (Latino, brown hair, black aviator glasses, white tee) stands in the mid-ground center-right, holding a GPS device and looking out over the rest of the articulated skeleton which is 50% buried in the sand. Sparse desert ferns and ripples in the orange sand frame the scene under a low golden sun."
+}

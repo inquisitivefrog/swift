@@ -1,0 +1,14 @@
+[
+  {
+    "id": "transport_pro_heavy_pallet_01",
+    "item_name": "Reinforced Specimen Transport Pallet",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_description": "A massive white plaster jacket containing a large dinosaur limb bone, secured to a rusted industrial steel pallet. The jacket is wrapped in yellow ratcheting straps and burlap webbing. Black stenciled text on the side reads 'MUSEUM OF PALEONTOLOGY - JACKET ID: TRX-07 - FRAGILE'. The scene is set in a spacious, concrete-floored warehouse with similar jackets in the blurred background.",
+    "constraints": {
+      "logic": "Represents the safe arrival of field specimens at the museum collections facility before laboratory preparation begins.",
+      "background": "Industrial warehouse interior with high ceilings and cool, ambient lighting."
+    }
+  }
+]

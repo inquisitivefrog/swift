@@ -1,0 +1,10 @@
+{
+  "id": "LEG_TRIC_V1",
+  "species": "Triceratops",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Short, stocky femur and wide, sturdy lower leg bones.",
+  "visual_hook": "The 'Powerhouse' leg. It’s built low to the ground for stability, with wide toes that look like blunt hooves.",
+  "material": "Matte, dark-tan bone. Very dense and solid-looking.",
+  "inset_view": "Top-right corner: Cross-section showing incredibly thick, solid bone with almost no hollow center.",
+  "negative_prompt": "long, slender, running legs, shiny"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "ARM_TREX_V1",
+  "species": "Tyrannosaurus rex",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "The complete arm assembly: a short humerus, radius, and ulna, ending in a two-fingered hand.",
+  "visual_hook": "Surprisingly small compared to the other bones. The hand has only two fingers with sharp, curved claws. It looks like a heavy-duty meat hook.",
+  "material": "Matte, toasted-tan bone. Very thick and dense despite its small size.",
+  "inset_view": "Top-right corner: Cross-section showing surprisingly thick cortical bone—built for strength, not just decoration.",
+  "negative_prompt": "long arm, three fingers, wings, feathers, shiny"
+}

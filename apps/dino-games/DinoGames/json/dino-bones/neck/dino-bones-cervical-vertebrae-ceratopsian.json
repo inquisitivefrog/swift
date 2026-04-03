@@ -1,0 +1,10 @@
+{
+  "id": "NECK_TRIC_GROUNDED_V2",
+  "species": "Triceratops",
+  "style_ref": "STUDIO_GROUNDED",
+  "background": "SOLID_LIGHT_GREY",
+  "pose": "Main: The 'Syncervical' (fused first three neck bones). Inset: Cross-section showing the extreme density of the bone.",
+  "material": "Matte, dark-tan weathered bone. Texture is heavy and stone-like.",
+  "educational_focus": "Fused vertebrae needed to support the massive weight of the horned and frilled skull.",
+  "negative_prompt": "glossy, shiny, wet, epoxy, plastic, labels"
+}

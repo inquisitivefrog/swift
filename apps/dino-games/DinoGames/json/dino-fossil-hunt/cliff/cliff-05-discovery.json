@@ -1,0 +1,14 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-4_1-v1.png
+
+{
+  "id": "adv7_01_discovery_cliff",
+  "project": "DinoGames",
+  "reference_image": "char_ref_sheet_paleo-4_1-v1.jpg",
+  "character_refs": ["paleontologist_01", "paleontologist_04"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "HELL_CREEK_CLIFF",
+  "lighting_ref": "BRIGHT_OVERCAST",
+  "pose": "Wide shot. Paleontologist 04 (wearing black aviators) stands at the top of a steep sandstone cliff, securing a heavy-duty orange climbing rope to a metal anchor. Below him, Paleontologist 01 (white sun hat, pink boots) is suspended mid-wall in a safety harness, pointing at a cluster of large, dark Centrosaurus ribs protruding from the vertical rock face. She is looking up at 04, giving a 'thumbs up' to signal the site is secure. The vast badlands stretch out in the background."
+}

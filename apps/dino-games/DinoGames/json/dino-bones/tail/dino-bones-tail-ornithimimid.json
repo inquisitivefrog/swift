@@ -1,0 +1,10 @@
+{
+  "id": "TAIL_GALL_V1",
+  "species": "Gallimimus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A very straight, slender tail held perfectly horizontal.",
+  "visual_hook": "The 'Racing Fin'. The bones are interlocked with long bony rods to keep the tail stiff for high-speed turns.",
+  "material": "Matte, light-sand bone. Smooth and thin.",
+  "inset_view": "Top-right corner: Close-up of the ossified tendons looking like stiff wires along the vertebrae.",
+  "negative_prompt": "flexible, curly tail, heavy, spikes, shiny"
+}

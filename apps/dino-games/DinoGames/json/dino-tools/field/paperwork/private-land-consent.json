@@ -1,0 +1,14 @@
+[
+  {
+    "id": "doc_pro_private_land_consent_01",
+    "item_name": "Private Landowner Access & Excavation Agreement",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_description": "A high-quality parchment-style document resting on a rustic wooden table. The header reads 'CONSENT TO PROSPECT' in a bold, serif font. Key sections visible include 'Term of Access', 'Liability Waiver', and a 'Division of Discovery' clause. A signature line at the bottom features a wax seal or an official project stamp from the 'DinoGames' museum. A vintage fountain pen and a set of brass keys to a ranch gate sit next to the paper.",
+    "constraints": {
+      "logic": "Establishes the legal right to keep fossils found on private property, which—unlike federal land—are the property of the landowner until transferred.",
+      "background": "A warm, interior ranch house office with soft window light."
+    }
+  }
+]

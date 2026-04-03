@@ -1,0 +1,10 @@
+{
+  "id": "TAIL_TRIC_V1",
+  "species": "Triceratops",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A relatively short, tapering tail that curves gently downward.",
+  "visual_hook": "The 'Stubby Tail'. It is thick at the base but much shorter than a predator's tail, used mostly for balance.",
+  "material": "Matte, dark-tan bone. Dense and chunky vertebrae.",
+  "inset_view": "Top-right corner: Cross-section showing solid bone with very small neural canals.",
+  "negative_prompt": "long, whip-like, spikes, club, shiny"
+}

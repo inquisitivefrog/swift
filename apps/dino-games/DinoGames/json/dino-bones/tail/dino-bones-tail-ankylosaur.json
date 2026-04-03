@@ -1,0 +1,10 @@
+{
+  "id": "TAIL_ANKY_V1",
+  "species": "Ankylosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A straight, rigid tail handle ending in a massive, bulbous bone club.",
+  "visual_hook": "The 'Wrecking Ball'. The vertebrae in the last half of the tail are fused into a stiff rod to swing the heavy club.",
+  "material": "Matte, heavy grey bone. The club has a rough, pitted, armored texture.",
+  "inset_view": "Top-right corner: Cross-section of the club showing it is a solid mass of reinforced bone.",
+  "negative_prompt": "flexible tail, spikes, slender, shiny"
+}

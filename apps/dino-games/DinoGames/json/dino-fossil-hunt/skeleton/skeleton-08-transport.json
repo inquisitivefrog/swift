@@ -1,0 +1,17 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-1_4-v3.png
+
+{
+  "id": "adv4_04_transport",
+  "project": "DinoGames",
+  "character_refs": [
+    "dino_bones_paleontologist_1",
+    "dino_bones_paleontologist_4"
+  ],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "DJADOKHTA",
+  "habitat_ref": "DESERT_DUNE_FIELDS",
+  "lighting_ref": "SUNRISE_GOLDEN_HOUR",
+  "pose": "A narrative-rich cinematic wide shot at a remote desert airfield. Foreground: Paleo 01 (long blonde hair, white sun hat, pink blouse, khaki vest) holds a clipboard, pointing to a permit for a local government official wearing a uniform. The permit has been stamped for approval. Paleo 04 (Latino, short brown hair, signature black thin-rimmed aviator glasses, white tee, khaki vest) stands beside her with a silver suitcase and two passports. Mid-ground: A dusty 4x4 SUV has a large, lumpy, solid white plaster-wrapped fossil bundle (no visible bones, entirely covered in plaster) strapped securely to its roof. A small white propeller plane is parked at a significant distance from the 4x4, clearly separate. SUNRISE_GOLDEN_HOUR lighting with long shadows over cracked earth and rolling orange Djadokhta sand dunes. High-fidelity 3D aesthetic, ensuring no exposed fossil bones."
+}

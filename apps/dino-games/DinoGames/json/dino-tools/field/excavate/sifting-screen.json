@@ -1,0 +1,14 @@
+[
+  {
+    "id": "tool_pro_sifting_screen_01",
+    "item_name": "Manual Micro-Vertebrate Sifter",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_description": "A square wooden sifting tray with ergonomic side handles. The center is a fine silver metal mesh. The frame is made of weathered oak with visible grain and dried mud splatters from the Hell Creek formation. It is shown from a high-angle studio perspective to emphasize the mesh density.",
+    "constraints": {
+      "logic": "Used to process 'spoils' from the excavation pit to ensure no small teeth or micro-fossils are lost.",
+      "background": "Solid light grey studio floor."
+    }
+  }
+]

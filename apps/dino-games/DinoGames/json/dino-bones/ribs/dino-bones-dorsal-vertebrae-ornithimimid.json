@@ -1,0 +1,10 @@
+{
+  "id": "RIBCAGE_GALL_V1",
+  "species": "Gallimimus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A long, streamlined ribcage and straight dorsal column.",
+  "visual_hook": "The 'Ostrich Chest'. It is very narrow and sleek, built like a torpedo for fast running.",
+  "material": "Matte, light-sand bone. Smooth finish.",
+  "inset_view": "Top-right corner: Cross-section showing the hollow backbone, filled with air-sac cavities.",
+  "negative_prompt": "wide, round, bulky, shiny"
+}

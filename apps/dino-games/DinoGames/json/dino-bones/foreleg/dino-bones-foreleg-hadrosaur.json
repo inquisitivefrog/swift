@@ -1,0 +1,10 @@
+{
+  "id": "ARM_IGUA_V1",
+  "species": "Iguanodon",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Sturdy arm bones with a very famous hand.",
+  "visual_hook": "The 'Swiss Army Knife' hand: A giant, conical thumb spike, three middle fingers ending in hooves for walking, and a flexible pinky finger.",
+  "material": "Matte, ochre-toned bone. Dry and earthy.",
+  "inset_view": "Top-right corner: Cross-section of the thumb spike showing it is a solid, lethal point of bone.",
+  "negative_prompt": "claws on all fingers, tiny arms, shiny"
+}

@@ -1,0 +1,46 @@
+{
+  "project": "DinoGames",
+  "version": "1.0.6",
+  "asset_manifests": [
+    {
+      "id": "card_01_expedition_field_station",
+      "title": "Fossil Hunt: The Field Station",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "tech_ref": "SQUARE_HERO_CARD",
+      "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+      "visual_identity": "An expansive 1:1 camp layout featuring a 'tent city' aesthetic. Includes a large mess tent, a dedicated equipment storage tent, and a prep-work tent with open flaps showing field laptops and fossils on tables. The orange canoe sits on a lakeside rack in the background.",
+      "infrastructure": [
+        { "item": "Light Tower", "status": "Extended, ready for dusk" },
+        { "item": "Weather Station", "status": "Active, spinning anemometer" },
+        { "item": "Solar Array & Battery", "status": "Powering the prep-tent laptops" },
+        { "item": "Gasoline Generator", "status": "Positioned away from tents to reduce noise" }
+      ],
+      "character_actions": [
+        {
+          "character": "Paleontologist 4",
+          "action": "Inside the prep tent, wearing his black aviator glasses, analyzing data on a laptop."
+        },
+        {
+          "character": "Paleontologist 1",
+          "action": "Unloading shale sheets (plant imprints) from the 4WD Pickup; wearing her pink blouse and sun hat."
+        },
+        {
+          "character": "Paleontologist 3",
+          "action": "Cleaning a large Apatosaurus femur on a work table in the prep tent; wearing his purple tee."
+        },
+        {
+          "character": "Paleontologist 2",
+          "action": "At the mess tent, organizing supplies; wearing her green sun hat and blouse."
+        },
+        {
+          "character": "Paleontologist 5",
+          "action": "Near the SUV, checking a Protoceratops egg specimen; wearing her red tee and shorts."
+        },
+        {
+          "character": "Paleontologist 6",
+          "action": "In the storage tent, organizing the jackhammer and rock saw; wearing her braids."
+        }
+      ]
+    }
+  ]
+}

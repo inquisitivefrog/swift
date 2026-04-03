@@ -1,0 +1,12 @@
+{
+  "id": "tool_tech_specimen_saw_01",
+  "item_name": "Handheld Specimen Jacketing Saw",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_description": "A compact, high-torque handheld power saw with a medium-sized, serrated diamond blade. Unlike the large Rock Saw, this tool is built for two-handed precision. The body is a high-visibility industrial orange with ergonomic rubberized black grips. White plaster dust and dried mud are caked around the blade guard, and a yellow safety trigger is prominent on the handle.",
+  "constraints": {
+    "material": "Reinforced polymer housing in 'Dino Research' orange; brushed aluminum blade guard; steel blade with fine-tooth serration.",
+    "logic": "Used specifically for 'Under-cutting' a fossil block and trimming the protective plaster jacket before transport."
+  }
+}

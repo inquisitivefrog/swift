@@ -1,0 +1,89 @@
+These are supposed to be young adults per this character reference sheet supposedly locked in. Consider them grad students with master’s degrees in Paleontology, Geology or Biology.  Reference this image for character visuals and generate an image with this asset manifest please.
+
+attach: char_ref_sheet_paleo-1_3-v2.png
+
+{
+  "scene_id": "morrison_formation_post_storm_apatosaurus_001_final",
+  "setting": {
+    "location": "Morrison Formation, USA",
+    "era": "Late Jurassic",
+    "event": "After a torrential thunderstorm and successful fossil recovery",
+    "weather": "Dark, bruised purples and greys (sky), sliver of pale, diffused light breaking through",
+    "terrain": "Base of a towering, erosion-carved mudstone butte; ground dark, wet, slick with rain; reddish-brown and grey fluvial mudstone",
+    "habitat": "Floodplain Environment",
+    "flora": [
+      "Horse-tail rushes (Equisetum)",
+      "Ferns",
+      "Conifers (on higher sections of butte)"
+    ],
+    "fauna": [
+      "Dripping water sounds",
+      "Distant frog/amphibian calls (fading)",
+      "Rustle of small, wet mammals (moving away)"
+    ],
+    "atmosphere": "Thick with damp earth and petrichor, humid, quiet sense of accomplishment and relief",
+    "lighting": "OVERCAST_DIFFUSED"
+  },
+  "description": "The finale. Paleontologists 1 and 3 stand in the foreground watching the fossil-laden sled being towed away by a 4WD pickup truck, seeing it off with a sense of completion.",
+  "background_details": "Clear evidence of the messy jacket creation near the original dig site: discarded burlap scraps, white plaster spills on the ground, and used water jugs. The path where the truck is moving shows fresh tire tracks in the mud.",
+  "characters": [
+    {
+      "id": "paleontologist_01",
+      "name": "Paleontologist 1",
+      "gender": "Female",
+      "age_group": "Young Adult",
+      "appearance": "Long blonde hair, sunny disposition",
+      "clothing": {
+        "outerwear": "Light pink rain jacket",
+        "top_inner": "Pink blouse",
+        "bottom": "White canvas pants",
+        "footwear": "Mud-splattered waterproof hiking boots"
+      },
+      "equipment": [
+        "GPS unit (visible on belt or held loosely)",
+        "Geological hammer (holstered or leaning against rock)"
+      ],
+      "action": "Leaning against a rock with an exhausted but satisfied smile, watching the truck depart."
+    },
+    {
+      "id": "paleontologist_03",
+      "name": "Paleontologist 3",
+      "gender": "Male",
+      "ethnicity": "Black",
+      "age_group": "Young Adult",
+      "hair": "Curly black hair",
+      "clothing": {
+        "outerwear": "Bright yellow rain jacket/poncho (consistent with prior scenes)",
+        "top_inner": "Light purple field shirt",
+        "bottom": "Black field pants",
+        "footwear": "Heavy-duty rubber boots"
+      },
+      "equipment": [
+        "Field notebook (tucked into pocket)",
+        "Small hand trowel (in backpack or pocket)"
+      ],
+      "action": "Giving a tired thumbs up towards the departing truck; visible plaster dust on hands and shirt, signifying the recent work."
+    }
+  ],
+  "transportation": {
+    "vehicle_type": "4WD Pickup Truck",
+    "condition": "Mud-splattered, practical",
+    "action": "Slowly towing the sled away from the dig site",
+    "details": "Ropes securing the sled to the truck, showing tension"
+  },
+  "discovery": {
+    "type": "Apatosaurus femur (in jacket)",
+    "condition": "Securely wrapped in a burlap and plaster jacket, placed on a wooden sled",
+    "color": "Off-white plaster over natural burlap",
+    "geological_context": "Being transported away from the base of the mudstone butte, leaving tracks in the wet ground"
+  },
+  "style": {
+    "art_style": "STYLE_ANIMATED_FEATURE_V3",
+    "character_proportions": "Rounded, appealing, 'toy-like'",
+    "character_features": "Expressive",
+    "framing": "SQUARE_HERO_CARD",
+    "composition": "Perfectly centered 1:1, 25% negative space buffer, showing characters in foreground and truck/sled receding into midground.",
+    "framing_shot_type": "WIDE_SHOT",
+    "color_palette": "Earthy tones (reddish-browns, greys, dark greens) for the environment, with contrasting bright yellow and light pink for character rain gear."
+  }
+}

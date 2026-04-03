@@ -1,0 +1,10 @@
+{
+  "id": "ARM_TRIC_V1",
+  "species": "Triceratops",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Very thick humerus with a massive 'crest' (deltopectoral crest) for muscle attachment.",
+  "visual_hook": "The arm looks like it’s built for a push-up. The hand is wide and flat to carry the weight of the giant head.",
+  "material": "Matte, dark-tan bone. Dense and solid.",
+  "inset_view": "Top-right corner: Cross-section showing thick walls and a very dense internal mesh.",
+  "negative_prompt": "slender, long, grasping, shiny"
+}

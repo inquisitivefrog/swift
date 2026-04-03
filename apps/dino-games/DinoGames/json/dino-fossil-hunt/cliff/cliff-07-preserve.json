@@ -1,0 +1,14 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-4_1-v1.png 
+
+{
+  "id": "adv7_03_preservation_hanging_jacket",
+  "project": "DinoGames",
+  "character_refs": ["paleontologist_01", "paleontologist_04"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "pose": "Close-up technical shot. Paleontologist 01 is applying white plaster bandages to the exposed front of a fossilized skull still partially embedded in the cliff. Paleontologist 04 is assisting by holding a bucket of wet plaster. Because they are on a vertical face, the white plaster jacket looks reinforced with extra burlap. The contrast between the stark white plaster, the grey rock, and 01’s pink hiking boots (braced against the wall) creates a dynamic scene.",
+  "constraints": {
+    "visual_logic": "The jacket should look like it's being built directly onto the cliff wall."
+  }
+}

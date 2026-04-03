@@ -1,0 +1,9 @@
+{
+  "id": "NECK_TREX_CURVE_V3",
+  "species": "Tyrannosaurus rex",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A vertical composition of the neck bones arranged in a tight, sharp 'S' shape, similar to a swan or a striking cobra.",
+  "visual_hook": "The 'Atlas' and 'Axis' (the first two bones) are at the top, curving sharply back then forward. This is the 'Spring' that held the heavy head.",
+  "geometry_fix": "Truncate the end of the neck cleanly. No trailing hallucinated bones. Focus on the arc.",
+  "negative_prompt": "horizontal line, straight bones, flat neck, tail bones"
+}

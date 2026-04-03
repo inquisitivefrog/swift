@@ -1,0 +1,10 @@
+{
+  "id": "NECK_PACHY_GROUNDED_V2",
+  "species": "Pachycephalosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "background": "SOLID_LIGHT_GREY",
+  "pose": "Main: Robust, thickened cervical vertebrae. Inset: Close-up of the interlocking 'tongue-and-groove' joints.",
+  "material": "Matte, weathered-tan bone. Dense, heavy appearance.",
+  "educational_focus": "The reinforced neck structure designed to handle the impact forces of head-butting.",
+  "negative_prompt": "glossy, shiny, wet, epoxy, plastic, labels"
+}

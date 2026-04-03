@@ -1,0 +1,20 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-1_6-v2.png 
+
+{
+  "id": "adv8_02_excavation_combined",
+  "project": "DinoGames",
+  "reference_image": "char_ref_sheet_paleo-1_6-v2.jpg",
+  "character_refs": ["paleontologist_01", "paleontologist_06"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "HELL_CREEK",
+  "habitat_ref": "ANCIENT_LAKE_MARGIN_DRY",
+  "lighting_ref": "SUNNY_BRIGHT_DAYLIGHT",
+  "pose": "Medium-wide action shot at the base of a dry, grey shale cliff. Paleontologist 06 (female, braided black hair, white tee shirt under khaki safari vest, white shorts) is in the foreground, kneeling and intensely focused as she uses a wide, flat chisel and a small rock hammer to carefully pry open a thin layer of shale horizontally. Dust motes rise from the splitting rock. In the mid-ground, slightly behind and to the side, Paleontologist 01 (female, long blonde hair, tanned skin, white sun hat, light pink blouse under khaki safari vest, white shorts, pink hiking boots) is actively using a small hand-trowel to scoop loose, dry, sandy sediment from the base of the cliff into a canvas collection bag. Both characters are engaged in their respective tasks, surrounded by broken shale fragments and dry, fine sand, indicating an active site for microfossil and paleobotanical recovery.",
+  "constraints": {
+    "action_clarity": "Ensure both shale splitting and dry scooping are clearly discernible as distinct activities without obscuring each other.",
+    "environment_detail": "Show stratified layers in the shale cliff; emphasize the dry, dusty nature of the ground.",
+    "tool_usage": "Chisel should be inserted into a rock layer; trowel should be actively scooping."
+  }
+}

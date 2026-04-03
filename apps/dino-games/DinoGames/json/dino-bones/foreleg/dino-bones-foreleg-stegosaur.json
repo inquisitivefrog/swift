@@ -1,0 +1,10 @@
+{
+  "id": "ARM_STEG_V1",
+  "species": "Stegosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Short, stocky arm bones—much shorter than the hind legs.",
+  "visual_hook": "Makes the dinosaur look like it is 'sloping' downhill. The 'fingers' are short and ending in blunt, hoof-like tips.",
+  "material": "Matte, toasted-almond bone. Rough and pitted.",
+  "inset_view": "Top-right corner: Cross-section showing dense bone built to hold the front half of the body low to the ground.",
+  "negative_prompt": "long arms, climbing arms, shiny"
+}

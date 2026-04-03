@@ -1,0 +1,9 @@
+{
+  "id": "SKULL_STEG_07",
+  "species": "Stegosaurus stenops",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STUDIO_GROUNDED",
+  "lighting_ref": "STUDIO_SOFT",
+  "pose": "Lateral profile emphasizing the long, narrow, and low-slung silhouette. The front of the mouth must feature a narrow, toothless beak, while the back of the jaw contains small, leaf-shaped teeth.",
+  "educational_focus": "The extreme size difference between the massive body and the tiny, tubular skull."
+}

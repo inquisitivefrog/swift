@@ -1,0 +1,15 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-3_4-v2.png 
+
+{
+  "id": "adv7_04_transport_mass",
+  "project": "DinoGames",
+  "character_refs": ["paleontologist_03", "paleontologist_04"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "pose": "Wide shot at sunset. A rugged flatbed trailer is parked near the site. Paleontologist 04 and Paleontologist 03 are working together to slide a heavy, large plaster jacket onto the trailer bed using wooden rollers. The trailer is already half-full with various sized jackets and stacked specimen trays. The long shadows and orange sky provide a 'mission accomplished' atmosphere as they secure the load with heavy-duty straps.",
+  "constraints": {
+    "lighting": "Warm golden hour glow; shadows stretching across the badlands.",
+    "composition": "The scale of the trailer vs. the size of the jackets should emphasize the 'mass' recovery effort."
+  }
+}

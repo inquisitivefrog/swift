@@ -1,0 +1,14 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-3_4-v2.png 
+
+{
+  "id": "adv7_03_preservation_jackets",
+  "project": "DinoGames",
+  "character_refs": ["paleontologist_03", "paleontologist_04"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "pose": "Medium shot. The team has reached a deeper layer of the bed. Paleontologist 04 is applying wet plaster bandages to a large 'cluster' of bones (an articulated section of vertebrae), creating a single large jacket. Paleontologist 03 is nearby, carefully placing smaller, disarticulated bone fragments into a plastic tray lined with foam. Several finished white plaster jackets are already visible in the background, labeled with black marker 'GRID A-1, LAYER 2'.",
+  "constraints": {
+    "action": "04's hands should be messy with white plaster; 03 should look focused, holding a small rib bone with a label tag attached."
+  }
+}

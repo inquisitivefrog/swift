@@ -1,0 +1,10 @@
+{
+  "id": "ARM_ARCH_V1",
+  "species": "Archaeopteryx",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Very long, slender arm bones. The 'fingers' are long and tipped with tiny, needle-sharp claws.",
+  "visual_hook": "The arm is almost as long as the leg. It looks like a folding fan frame. This is the 'Wing-Arm'.",
+  "material": "Matte, pale cream bone. Extremely light and delicate.",
+  "inset_view": "Top-right corner: Cross-section showing 'paper-thin' bone walls and a completely hollow center for flight.",
+  "negative_prompt": "heavy, thick, bulky, shiny"
+}

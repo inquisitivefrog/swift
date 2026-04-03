@@ -1,0 +1,9 @@
+{
+  "id": "SKULL_GALL_08",
+  "species": "Gallimimus bullatus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STUDIO_GROUNDED",
+  "lighting_ref": "STUDIO_SOFT",
+  "pose": "Lateral view. The skull must be entirely toothless with a flat, keratinous-looking beak. Large orbital fenestra (eye sockets) should be the most prominent feature of the mid-skull.",
+  "educational_focus": "Adaptation for a toothless, bird-like diet and highly developed sight."
+}

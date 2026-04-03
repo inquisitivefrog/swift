@@ -1,0 +1,9 @@
+{
+  "id": "SKULL_ARCH_02",
+  "species": "Archaeopteryx",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STUDIO_GROUNDED",
+  "lighting_ref": "STUDIO_SOFT",
+  "pose": "Close-up profile. The skull is bird-like and tapered. Ensure the small, sharp teeth are visible within the slender beak-like snout.",
+  "educational_focus": "Transitionary features: reptilian teeth paired with a light, avian skull structure."
+}

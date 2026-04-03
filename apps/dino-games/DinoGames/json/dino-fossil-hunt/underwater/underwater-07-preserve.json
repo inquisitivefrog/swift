@@ -1,0 +1,35 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-2_5-v2.png
+
+{
+  "id": "adv5_03_preservation_eureka_corrected",
+  "project": "DinoGames",
+  "version": "1.0.2",
+  "reference_image": "char_ref_sheet_paleo-2_5-v2.jpg",
+  "character_refs": [
+    "dino_bones_paleontologist_2",
+    "dino_bones_paleontologist_5"
+  ],
+  "prop_refs": [
+    "tool_pro_wet_sieve_stack_01",
+    "fossil_tail_vertebra_01",
+    "tool_specimen_vial_01",
+    "tool_fine_tweezers_01"
+  ],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "LANCE_HELL_CREEK",
+  "habitat_ref": "COASTAL_LOWLANDS",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "composition": {
+    "framing": "MEDIUM_CLOSE_TECHNICAL",
+    "aspect_ratio": "1:1",
+    "pose_description": "Paleontologist 02 (tanned skin, short black hair, green sun hat, light green blouse, khaki safari vest, green skirt) has lifted the top tray of a nested three-tier wet sieve stack to reveal a fossilized tail vertebra. Paleontologist 05 (Asian ethnicity, short black hair, NO HAT, light red tee, khaki safari vest, red shorts) leans in closely, holding a clear specimen vial and fine tweezers. Both exhibit wide, excited 'Eureka' expressions with adult human proportions. The scene is set on a flat rock at the water's edge, with sunlight reflecting off the wet metal mesh and the river surface."
+  },
+  "technical_constraints": {
+    "character_drift_correction": "Strictly adhere to Paleontologist 05's Asian ethnicity and absence of headwear. Ensure both characters maintain adult proportions to avoid chibi-style drift.",
+    "fossil_detail": "The vertebra must appear distinct from surrounding wet pebbles; it should be darker, with a visible porous, bone-like texture.",
+    "tool_detail": "Visible nesting of the sieve stack; the bottom tray must contain very fine, dark silty sand.",
+    "aspect_ratio_safety": "Centered 1:1 square composition with a 25% negative space buffer to protect characters and props from frame edges."
+  }
+}

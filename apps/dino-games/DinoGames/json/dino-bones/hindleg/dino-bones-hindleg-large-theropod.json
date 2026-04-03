@@ -1,0 +1,10 @@
+{
+  "id": "LEG_TREX_V1",
+  "species": "Tyrannosaurus rex",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A massive, powerful femur (thigh bone) and tibia (shin bone) showing a strong 'V' angle at the knee.",
+  "visual_hook": "The bones are thick but the 'Bird-Foot' has three huge, clawed toes. It looks like a giant version of a chicken's leg.",
+  "material": "Matte, toasted-tan bone. Rugged and scarred where muscles once attached.",
+  "inset_view": "Top-right corner: Cross-section of the femur showing a thick outer shell and a wide, hollow center for lightness.",
+  "negative_prompt": "elephant feet, flat feet, hooves, shiny, epoxy"
+}

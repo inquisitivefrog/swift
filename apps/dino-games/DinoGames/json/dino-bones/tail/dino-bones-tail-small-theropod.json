@@ -1,0 +1,10 @@
+{
+  "id": "TAIL_ARCH_V1",
+  "species": "Archaeopteryx",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A long, bony tail made of many tiny, slender vertebrae.",
+  "visual_hook": "The 'Bony Feather-Shaft'. Unlike modern birds (who have a stump), this is a long dinosaur tail that would have anchored large feathers.",
+  "material": "Matte, pale cream bone. Needle-thin and delicate.",
+  "inset_view": "Top-right corner: Close-up of the tiny attachment points for feathers.",
+  "negative_prompt": "short stump, fan tail, heavy, shiny"
+}

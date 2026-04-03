@@ -1,0 +1,18 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-1_4-v3.png
+
+{
+  "id": "adv4_03_jacketing",
+  "project": "DinoGames",
+  "reference_image": "char_ref_sheet_paleo-1_4-v3.jpg",
+  "character_refs": [
+    "dino_bones_paleontologist_1",
+    "dino_bones_paleontologist_4"
+  ],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "DJADOKHTA",
+  "habitat_ref": "DESERT_DUNE_FIELDS",
+  "lighting_ref": "DAPPLED_EXCAVATION",
+  "pose": "Paleontologist 01 (long blonde hair, white sun hat, pink blouse, white shorts) and Paleontologist 04 (Latino, aviator glasses, white tee, khaki vest) are working together to apply wet plaster-soaked burlap strips over the Velociraptor skeleton, which is now sitting on a 'pedestal' of orange sandstone. 01 is smoothing a white plaster-soaked strip over the skull, while 04 is mixing more plaster in a nearby yellow bucket. Their hands and clothes are messy with white plaster drips. Several rolls of burlap, a water jug, and a small trowel are visible on the ground. A temporary canvas tarp overhead creates a dappled lighting effect against the bright orange desert background."
+}

@@ -1,0 +1,41 @@
+{
+  "asset_manifest": {
+    "character_reference_sheet": {
+      "title": "Paleontologist Team: Grad Student Reference Sheet",
+      "description": "Professional character reference sheet for paleontologists 1 and 4, depicted as young adult grad students. Both are shown standing side-by-side against a neutral 50% grey background in a clear, neutral pose with friendly expressions, capturing all uniform details. Visual style adheres to STYLE_ANIMATED_FEATURE_V3.",
+      "characters": [
+        {
+          "id": "dino_bones_paleontologist_1",
+          "gender": "female",
+          "age_group": "young_adult_grad_student",
+          "degree": "Masters in Paleontology/Geology/Biology",
+          "physical_features": "long blonde hair, tanned skin",
+          "headwear": "white sun hat",
+          "uniform_top": "light pink blouse, khaki safari vest",
+          "uniform_bottom": "white shorts",
+          "footwear": "pink hiking boots",
+          "expression": "friendly_neutral",
+          "pose": "neutral_standing",
+          "visual_style": "STYLE_ANIMATED_FEATURE_V3"
+        },
+        {
+          "id": "dino_bones_paleontologist_4",
+          "gender": "male",
+          "age_group": "young_adult_grad_student",
+          "degree": "Masters in Paleontology/Geology/Biology",
+          "physical_features": "short brown hair, tanned skin, Latino ethnicity",
+          "eyewear": "signature thin-rimmed BLACK aviator lens glasses",
+          "uniform_top": "light white tee shirt, khaki safari vest",
+          "uniform_bottom": "khaki shorts",
+          "footwear": "brown hiking boots",
+          "expression": "friendly_neutral",
+          "pose": "neutral_standing",
+          "visual_style": "STYLE_ANIMATED_FEATURE_V3"
+        }
+      ],
+      "background": "neutral 50% grey",
+      "lighting": "studio_softbox_lighting",
+      "camera_angle": "eye_level_full_body"
+    }
+  }
+}

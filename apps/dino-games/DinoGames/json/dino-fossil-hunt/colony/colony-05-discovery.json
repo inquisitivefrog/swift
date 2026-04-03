@@ -1,0 +1,13 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-5_3-v3.png
+
+{
+  "id": "adv9_01_discovery_nest",
+  "project": "DinoGames",
+  "reference_image": "char_ref_sheet_paleo-5_3-v3.jpg",
+  "character_refs": ["paleontologist_05", "paleontologist_03"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat_ref": "GOBI_DESERT_DUNES",
+  "pose": "Wide shot. Paleontologist 05 is kneeling on a soft sand dune, using a roll of bright blue survey tape to mark a circular perimeter around a cluster of oblong Protoceratops eggs partially visible in the sandstone. Paleontologist 03 is standing just outside the circle, holding a GPS device and looking down at the nest with a look of awe. The eggs are arranged in a perfect 'clutch' circle, barely touched by erosion."
+}

@@ -1,0 +1,11 @@
+reference this image for character visuals.
+
+attach: char_ref_sheet_paleo-4_1-v1.png 
+
+{
+  "id": "adv7_02_excavation_chipping",
+  "project": "DinoGames",
+  "character_refs": ["paleontologist_01", "paleontologist_04"],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "pose": "Medium action shot. Both paleontologists are harnessed to the cliff face. Paleontologist 01 is using a small pneumatic scribe (hand-held air tool) to carefully chip away the matrix around a dinosaur vertebrae, sending small puffs of dust into the air. Paleontologist 04, positioned slightly higher, is installing a small debris net beneath her workspace to catch any loose stones. They both look intensely focused, their safety gear (carabiners, ropes) clearly visible and integrated into their khaki vests."
+}

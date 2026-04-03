@@ -1,0 +1,10 @@
+{
+  "id": "ARM_APAT_V1",
+  "species": "Apatosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A massive, vertical humerus (upper arm) that is nearly as thick as the hind leg.",
+  "visual_hook": "A straight 'Pillar-Arm'. The 'hand' is a vertical block of bones with one single, large thumb claw sticking out sideways.",
+  "material": "Matte, light-grey tan bone. Looks like carved stone.",
+  "inset_view": "Top-right corner: Cross-section showing 'Lace-bone' pneumaticity—massive but filled with air-sac holes.",
+  "negative_prompt": "fingers, grasping hand, slender, shiny"
+}

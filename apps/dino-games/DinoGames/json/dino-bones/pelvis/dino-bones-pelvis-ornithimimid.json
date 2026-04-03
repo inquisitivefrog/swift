@@ -1,0 +1,10 @@
+{
+  "id": "PELVIS_GALL_V1",
+  "species": "Gallimimus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Lateral view showing long, thin, bird-like pelvic bones.",
+  "visual_hook": "Very elongated and light. The bones are narrow and streamlined, looking like the frame of a racing bicycle.",
+  "material": "Matte, light-sand bone. Smooth and clean surface.",
+  "inset_view": "Top-right corner: Cross-section showing very thin outer walls and large hollow centers for lightness.",
+  "negative_prompt": "heavy, bulky, wide, shiny, text"
+}

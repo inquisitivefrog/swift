@@ -1,0 +1,105 @@
+These are supposed to be young adults per this character reference sheet supposedly locked in. Consider them grad students with master’s degrees in Paleontology, Geology or Biology.  Reference this image for character visuals and generate an image with this asset manifest please.
+
+attach: char_ref_sheet_paleo-1_3-v2.png
+
+{
+  "asset_id": "dino-field-jacket-001",
+  "label": "Field Jacket (Large Vertebrate)",
+  "category": "Excavation / Specimen Protection",
+  "description": "A protective plaster and burlap jacket constructed around a fossil in the field to allow for safe transport to the lab. Essential for large or fragile specimens.",
+  "materials_required": [
+    {
+      "id": "plaster_of_paris",
+      "quantity": "50 lb bag",
+      "purpose": "Hardening agent for the jacket"
+    },
+    {
+      "id": "burlap_strips",
+      "quantity": "50 ft roll (pre-cut)",
+      "purpose": "Structural reinforcement for the plaster"
+    },
+    {
+      "id": "water_jugs",
+      "quantity": "3x 1-gallon",
+      "purpose": "Mixing plaster"
+    },
+    {
+      "id": "aluminum_foil",
+      "quantity": "Heavy-duty roll",
+      "purpose": "Initial barrier to protect fossil from direct plaster contact"
+    },
+    {
+      "id": "toilet_paper_rolls",
+      "quantity": "3 rolls",
+      "purpose": "Alternative barrier for intricate areas; absorbs moisture"
+    },
+    {
+      "id": "sharpened_trowels",
+      "quantity": "2",
+      "purpose": "Applying plaster and shaping jacket"
+    },
+    {
+      "id": "marking_paint_orange",
+      "quantity": "1 can",
+      "purpose": "Labeling jacket with accession number and 'THIS SIDE UP' arrow"
+    }
+  ],
+  "game_mechanics": {
+    "jacket_construction_mini_game": "Player must apply successive layers of burlap and plaster within a time limit, ensuring even coverage and thickness without damaging the fossil. A 'structural integrity' meter fills as layers are applied.",
+    "weight_management": "Successfully jacketing a large fossil (like the Apatosaurus femur) grants a 'Heavy Lift' bonus, but requires coordinating a 'lifting crew' or specialized equipment for transport.",
+    "preservation_score_impact": "A poorly constructed jacket (e.g., too thin, gaps) can lead to 'fossil damage' during transport, impacting the specimen's final 'Scientific Accuracy' score."
+  },
+  "interactive_elements": {
+    "tooltip_on_burlap": "Hover to see 'Wet Burlap' status (too dry/too wet affects plaster adhesion).",
+    "tooltip_on_femur_outline": "Click to 'Analyze Fossil Perimeter' and plan jacket shape."
+  },
+  "action_scene": "Paleontologist 1 and Paleontologist 3 are kneeling in the muddy excavation site, working together to wrap the massive Apatosaurus femur. Paleontologist 1 (blonde, pink rain jacket) is carefully smoothing a wet, plaster-soaked burlap strip over the bone's surface. Paleontologist 3 (Black, yellow rain poncho) is holding the 50ft roll of burlap and cutting a new strip with a small tool. Both characters look tired and mud-splattered but are smiling with a sense of accomplishment.",
+  "environmental_details": "The scene is set in the MORRISON formation, featuring tan-grey mudstone and forest green ferns under a moody, overcast sky. Scattered around them are the materials_required: a 50lb bag of Plaster of Paris, water jugs, and a roll of heavy-duty aluminum foil.",
+  "characters": [
+    {
+      "id": "paleontologist_01",
+      "name": "Paleontologist 1",
+      "gender": "Feale",
+      "age_group": "Young Adult",
+      "appearance": "Long blonde hair, sunny disposition",
+      "clothing": {
+        "outerwear": "Light pink rain jacket",
+        "top_inner": "Pink blouse",
+        "bottom": "White canvas pants",
+        "footwear": "Mud-splattered waterproof hiking boots"
+      },
+      "equipment": [
+        "GPS unit",
+        "Geological hammer"
+      ],
+    },
+    {
+      "id": "paleontologist_03",
+      "name": "Paleontologist 3",
+      "gender": "Male",
+      "ethnicity": "Black",
+      "age_group": "Young Adult",
+      "hair": "Curly black hair",
+      "clothing": {
+        "outerwear": "Bright yellow rain poncho",
+        "top_inner": "Light purple field shirt",
+        "bottom": "Black field pants",
+        "footwear": "Heavy-duty rubber boots"
+      },
+      "equipment": [
+        "Field notebook",
+        "Small hand trowel"
+      ],
+    }
+  ],
+
+  "style": {
+    "art_style": "STYLE_ANIMATED_FEATURE_V3",
+    "character_proportions": "Rounded, appealing, 'toy-like'",
+    "character_features": "Expressive",
+    "framing": "SQUARE_HERO_CARD",
+    "composition": "Perfectly centered 1:1, 25% negative space buffer",
+    "framing": "MEDIUM_SHOT_DETAIL",
+    "color_palette": "Earthy tones (reddish-browns, greys, dark greens) with contrasting bright yellow and dark blue"
+  }
+}

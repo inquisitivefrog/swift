@@ -1,0 +1,10 @@
+{
+  "id": "LEG_STEG_V1",
+  "species": "Stegosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "The femur is significantly longer than the lower leg bones (tibia/fibula).",
+  "visual_hook": "The 'High-Hipped' look. The back legs are much longer than the front legs, making the dinosaur's back tilt forward.",
+  "material": "Matte, toasted-almond bone. Pitted and rough.",
+  "inset_view": "Top-right corner: Cross-section showing dense bone for tail-swinging leverage.",
+  "negative_prompt": "equal length bones, bird-feet, shiny"
+}

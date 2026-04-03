@@ -1,0 +1,10 @@
+{
+  "id": "NECK_GALL_GROUNDED_V2",
+  "species": "Gallimimus",
+  "style_ref": "STUDIO_GROUNDED",
+  "background": "SOLID_LIGHT_GREY",
+  "pose": "Main: Elongated, slender cervical vertebrae. Inset: Cross-section showing thin cortical bone and wide pneumatic cavities.",
+  "material": "Matte, light-sand bone. Sleek, streamlined bone surfaces.",
+  "educational_focus": "Lightweight construction for high-speed balance and rapid head movement.",
+  "negative_prompt": "glossy, shiny, wet, epoxy, plastic, labels"
+}

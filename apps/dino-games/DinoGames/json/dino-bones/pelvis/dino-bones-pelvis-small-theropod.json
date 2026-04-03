@@ -1,0 +1,10 @@
+{
+  "id": "PELVIS_ARCH_V1",
+  "species": "Archaeopteryx",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Side view of a delicate, tiny pelvic structure.",
+  "visual_hook": "A mix of dinosaur and bird features. The bones are beginning to sweep backward, looking like a tiny, fragile fork.",
+  "material": "Matte, pale cream bone. Fine, porcelain-like detail.",
+  "inset_view": "Top-right corner: Extreme close-up of the paper-thin bone texture.",
+  "negative_prompt": "large, heavy, T-rex hips, labels"
+}
