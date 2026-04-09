@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: DINOSAUR_PARK]",
+      "layer_3_action": {
+        "subject": "Pteranodon",
+        "features": ["Large backwards-pointing crest", "Long toothless beak", "Large wingspan", "Tiny tail"],
+        "action": "A dramatic 1:1 square silhouette of a Pteranodon banking in flight over a coastal lagoon. No text."
+      }
+    }
+  }
+]

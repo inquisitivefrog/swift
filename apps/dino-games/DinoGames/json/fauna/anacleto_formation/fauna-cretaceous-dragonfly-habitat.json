@@ -1,0 +1,22 @@
+{
+  "id": "cretaceous_dragonfly_habitat_001",
+  "species": "Cretaceous Dragonfly (Odonata)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "RIVER_REEDS_AND_POOLS",
+    "flora": [
+      "Flowering Equisetum (Horsetails)",
+      "Floating water ferns (Marsileaceae)",
+      "Tall, swaying sedges"
+    ],
+    "ground_palette": ["Purple-Red Mud", "Teal Water", "Ochre"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; stained-glass wing patterns; iridescent metallic-blue body; large, multi-faceted 'gem' eyes; focus on transparency and light refraction."
+  },
+  "visual_logic": {
+    "composition": "A high-speed capture of a dragonfly hovering an inch above a still pool. The wings are a blur of motion, but the body is tack-sharp. The purple mud of the Anacleto is reflected in the water's surface, creating a beautiful color contrast with the dragonfly's blue body.",
+    "ground": "Soft riverbank silt and shallow, clear water with a bed of smooth purple pebbles.",
+    "lighting": "Sparkling, direct sunlight hitting the wings to create prismatic 'rainbow' flares."
+  }
+}

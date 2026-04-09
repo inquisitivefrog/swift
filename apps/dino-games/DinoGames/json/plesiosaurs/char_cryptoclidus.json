@@ -1,0 +1,13 @@
+[
+  {
+    "id": "GAME_CARD_PLESIO_CLAY_001",
+    "species": "Cryptoclidus eurymerus",
+    "style_id": "STYLE_CLAY_MASTER",
+    "formation_ref": "OXFORD_CLAY",
+    "visual_logic": {
+      "color_palette": "Pale sea-foam green with dark forest-green 'tiger' stripes along the neck.",
+      "texture": "Glossy 'wet clay' finish; visible interlocking needle-teeth made of white clay.",
+      "action": "Twisting its neck to look at a small school of clay fish."
+    }
+  }
+]

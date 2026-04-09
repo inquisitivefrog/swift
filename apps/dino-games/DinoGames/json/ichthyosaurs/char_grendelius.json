@@ -1,0 +1,16 @@
+[
+  {
+    "id": "DINO_ICHTHY_009",
+    "species": "Grendelius mordax",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "style_id": "STYLE_CLAY_MASTER",
+    "formation_ref": "BLUE_LIAS",
+    "habitat_ref": "OPEN_OCEAN_PELAGIC",
+    "visual_logic": {
+      "color_palette": "Dark forest-green with thick, rugged clay armor-plates along the spine.",
+      "action": "Crunching on a stylized, rounded 'toy' ammonite shell.",
+      "environment": "Dark blue-grey water with limestone white rocky outcrops in the background."
+    }
+  }
+]

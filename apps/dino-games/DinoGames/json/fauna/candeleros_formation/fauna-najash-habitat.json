@@ -1,0 +1,19 @@
+{
+  "id": "najash_habitat_natural_001",
+  "species": "Najash rionegrina (Legged Snake)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "SUNSET_EXPOSED_CINEMATIC",
+  "formation_ref": "CANDELEROS",
+  "environment_details": {
+    "habitat": "RED_SAND_DUNES",
+    "flora": ["Stunted desert shrubs", "Dry, hardy ferns in dune shadows"],
+    "ground_palette": ["Sunset Orange", "Terracotta Red", "Deep Ochre"],
+    "style_notes": "High-fidelity 3D; realistic scale textures with 'dust' layers; focus on the two tiny but visible hind legs near the tail."
+  },
+  "visual_logic": {
+    "composition": "A low-angle shot showing the Najash side-winding across the crest of a vibrant red sand dune. The wind is blowing a light 'sand-mist' off the crest. Its two small hind legs are clearly visible, tucked slightly as it moves.",
+    "ground": "Fine, ripple-patterned red sand with high-detail grain textures; scattered dark red sandstone pebbles.",
+    "lighting": "Golden-hour sunset light coming from the side, creating long, dramatic shadows and a warm glow on the snake's scales."
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "primitive_bee_habitat_natural_001",
+  "species": "Mesozoic Bee (Apoidea)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "CRETACEOUS_FLOWER_GLADE",
+    "flora": ["Early Angiosperms", "Magnolia-type flowers", "Sedges"],
+    "ground_palette": ["Ochre", "Dusty Rose", "Purple"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; fuzzy, tactile 'bee-fuzz' texture; large, friendly dark eyes; golden-yellow pollen visible on the legs."
+  },
+  "visual_logic": {
+    "composition": "A wide-angle 'bee-perspective' flying toward a bright, pale-yellow Cretaceous flower. The environment is vibrant and sunny. The purple mudstone of the Anacleto is visible as a soft-focus background, providing a beautiful color contrast.",
+    "ground": "Sun-dappled floodplain soil with patches of early flowering ground cover.",
+    "lighting": "Clear, bright daylight that emphasizes the 'fluffiness' of the bee and the delicate petals of the flower."
+  }
+}

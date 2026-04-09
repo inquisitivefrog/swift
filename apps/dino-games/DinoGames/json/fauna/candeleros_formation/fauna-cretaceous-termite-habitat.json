@@ -1,0 +1,19 @@
+{
+  "id": "termite_habitat_natural_001",
+  "species": "Cretaceous Primitive Termite",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "SOFT_INTERNAL_GLOW",
+  "formation_ref": "CANDELEROS",
+  "environment_details": {
+    "habitat": "DECAYING_ARAUCARIA_LOG",
+    "flora": ["Dry bracket fungi", "Petrified wood fragments", "Resin beads"],
+    "ground_palette": ["Deep Sienna", "Ochre", "Umber"],
+    "style_notes": "High-fidelity 3D; semi-translucent 'pale' exoskeletons; worker caste is small and rounder; soldier caste has elongated, dark-orange armored heads with sharp mandibles."
+  },
+  "visual_logic": {
+    "composition": "A cutaway view of a fallen log lying on red sand. The camera is 'inside' a gallery, showing termites moving through carved-out wooden tunnels. In the background, the bright desert sun peeks through a crack in the bark, illuminating dust motes and wood fibers.",
+    "ground": "A mix of chewed wood pulp ('frass') and fine red sand tracked in from outside.",
+    "lighting": "Warm, diffused light filtering through the wood, giving the termites a gentle 'internal glow' due to their thin shells."
+  }
+}

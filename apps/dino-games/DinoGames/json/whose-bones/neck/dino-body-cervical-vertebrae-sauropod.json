@@ -1,0 +1,10 @@
+{
+  "id": "NECK_APAT_LONG_V3",
+  "species": "Apatosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  “tech_ref”: “DEFAULT_SQUARE”,
+  "pose": "A wide horizontal shot showing a long, articulated sequence of at least 10 cervical vertebrae. The neck should appear incredibly long and tapering.",
+  "geometry_fix": "Vertebrae are elongated and horizontal. No hallucinated tail bones. The sequence must look like a long bridge of bone.",
+  "inset_detail": "Inset in the corner shows the 'Lace-like' internal pneumaticity of a single vertebra.",
+  "educational_focus": "Extreme Length—how many small bones joined together to create a 40-foot neck."
+}

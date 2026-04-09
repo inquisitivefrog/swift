@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "fauna-araripesuchus-behavior-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "fauna-araripesuchus-behavior-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "fauna-araripesuchus-behavior-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

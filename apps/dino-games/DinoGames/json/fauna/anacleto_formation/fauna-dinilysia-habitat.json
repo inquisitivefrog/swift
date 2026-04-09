@@ -1,0 +1,26 @@
+{
+  "id": "dinilysia_habitat_natural_001",
+  "species": "Dinilysia patagonica (Terrestrial Snake)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "FLUVIAL_FLOODPLAIN",
+    "flora": [
+      "Low-lying ferns",
+      "Sedge-like vegetation near mudbanks",
+      "Stunted Araucaria trees in the background"
+    ],
+    "ground_palette": [
+      "Deep Purple-Red",
+      "Ochre",
+      "Dull Brown"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded, expressive features; tactile, 'pebbly' scale texture; emphasis on the snake's thick, powerful body; background features purple-tinged mudstone."
+  },
+  "visual_logic": {
+    "composition": "A low-angle close-up of the Dinilysia slithering over a mudstone ridge. The snake’s head is slightly raised, tongue flicking. In the foreground, a broken geode reveals sparkling crystals, a hallmark of the Anacleto geology.",
+    "ground": "Cracked purple-red claystone mixed with fine ochre silt; sparse clusters of ancient ferns.",
+    "lighting": "Warm, direct cinematic sunlight creating high-contrast shadows that accentuate the snake's muscular form."
+  }
+}

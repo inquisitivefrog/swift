@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: PIERRE_SHALE]",
+      "layer_3_action": {
+        "subject": "Globidens",
+        "features": ["Robust skull", "Thick neck", "Large, blunt-looking teeth in profile"],
+        "action": "A 1:1 square silhouette of a Globidens descending toward a cluster of ammonites. No text."
+      }
+    }
+  }
+]

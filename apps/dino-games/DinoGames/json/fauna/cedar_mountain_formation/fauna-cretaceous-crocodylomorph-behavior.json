@@ -1,0 +1,36 @@
+{
+  "id": "CM_CROC_BEHAVIOR_01",
+  "layout": "2x2 Quadrant Grid",
+  "formation_ref": "CEDAR_MOUNTAIN",
+  "habitat_ref": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "no_text_constraint": "True",
+  "quadrants": {
+    "top_left": {
+      "scene": "Birth (The Hatchling)",
+      "description": "A tiny crocodylomorph poking its head out of a leathery eggshell in a nest of warm sand and Paleopus herbs; it is looking up at a butterfly with wide, wondering eyes.",
+      "visual_cue": "New life / Curiosity"
+    },
+    "top_right": {
+      "scene": "Dining (The Fisher)",
+      "description": "The crocodylomorph standing on a 'Chalky white' limestone rock by a stream, successfully holding a small, shimmering 3D-styled fish in its mouth; looking proud.",
+      "visual_cue": "Finding food / Success"
+    },
+    "bottom_left": {
+      "scene": "Sleeping (Sun-Basking)",
+      "description": "The crocodylomorph sprawled out on a flat, sun-warmed 'Maroon' mudstone; eyes closed tight with a tiny 'Z' bubble or just a peaceful smile.",
+      "visual_cue": "Resting / Warmth"
+    },
+    "bottom_right": {
+      "scene": "Playing (The Splash)",
+      "description": "The character sliding down a muddy 'Pale lavender' bank into a pool of water, with large, stylized water droplets flying everywhere; mouth open in a laugh.",
+      "visual_cue": "Movement / Fun"
+    }
+  },
+  "visual_logic": {
+    "lighting": "SUNNY_EXPOSED_CINEMATIC with high saturation to appeal to children.",
+    "palette": ["Pale lavender", "Chalky white", "Maroon", "Dull green"]
+  },
+  constraints”: “No text."
+}
+ 

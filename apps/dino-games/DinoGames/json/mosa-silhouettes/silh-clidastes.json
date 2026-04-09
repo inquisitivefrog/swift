@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: PIERRE_SHALE]",
+      "layer_3_action": {
+        "subject": "Clidastes",
+        "features": ["Small, needle-like skull", "Slender athletic body", "Short, sharp tail fluke"],
+        "action": "A 1:1 square silhouette of a Clidastes darting horizontally in a high-speed pursuit. No text."
+      }
+    }
+  }
+]

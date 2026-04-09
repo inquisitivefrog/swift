@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: BLUE_LIAS]",
+      "layer_3_action": {
+        "subject": "Ichthyosaurus",
+        "features": ["Prototypical dolphin-like shape", "Short, curved tail fluke", "Small dorsal fin", "Large orbital ring"],
+        "action": "A sharp 1:1 square silhouette of an Ichthyosaurus in a classic swimming pose. No text."
+      }
+    }
+  }
+]

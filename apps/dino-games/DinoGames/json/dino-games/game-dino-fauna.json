@@ -1,0 +1,22 @@
+{
+  "id": "GAME_CARD_DINO_FAUNA_01",
+  "project": "DinoGames",
+  "category": "Marketing/UI Asset",
+  "species_featured": ["Early Cretaceous Ants", "Lizard (Squamata)"],
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "CEDAR_MOUNTAIN",
+  "habitat_ref": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+  "visual_elements": {
+    "foreground": "A curious, brightly colored lizard with soft, rounded features peering from behind a Maroon-streaked limestone rock.",
+    "midground": "A small trail of amber-colored primitive ants moving across a patch of Paleopus herbs growing in a damp siltstone crack.",
+    "background": "Lush Tree Ferns and Conifers catching the warm, golden-hour light, creating a slight atmospheric hazy glow.",
+    "typography": {
+      "text": "DINO FAUNA!",
+      "style": "Bright 3D red mixed-case caption",
+      "position": "Centered at the bottom, matching the DINO FLORA! layout."
+    }
+  },
+  "color_palette": ["Pale lavender", "Chalky white", "Maroon", "Golden yellow", "Vibrant green"]
+}

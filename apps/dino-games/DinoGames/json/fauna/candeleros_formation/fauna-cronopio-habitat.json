@@ -1,0 +1,21 @@
+{
+  "id": "najash_behavior_quadrant_001",
+  "species": "Najash rionegrina (Legged Snake)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_SOFT_WITH_RIM_LIGHTING",
+  "formation_ref": "CANDELEROS",
+  "visual_logic": {
+    "composition": "A professional 2x2 grid with thin divider lines. Ray-traced 3D rendering with deep shadows.",
+    
+    "top_left_birth": "A subterranean sandy burrow. Several leathery, off-white eggs are nestled in the sand. One hatchling Najash is emerging, its tiny hind legs twitching for the first time. Soft light filters from the burrow entrance.",
+    
+    "top_right_dining": "The Najash is coiled and striking at a 'Cronopio' (small mammal). The action is frozen in time with subtle motion blur on the snake's head. The 'dog-croc' (Araripesuchus) is visible as a distant, non-overlapping silhouette in the background to show ecological competition.",
+    
+    "bottom_left_sleeping": "The snake is coiled tightly into a 'S-shape' inside the cool, dark shade of a hollowed-out red sandstone rock. The matte texture of the rock contrasts with the slightly reflective, smooth scales of the snake.",
+    
+    "bottom_right_playing": "Two juvenile Najash are 'wrestling' in a shallow sand pit, their bodies intertwined. Their movements have kicked up a soft cloud of red dust, illuminated by a shaft of light.",
+    
+    "rendering_notes": "Use physical-based rendering (PBR) for the sand and scales. Ensure the two hind legs are rendered with anatomical precision in the Birth and Playing quadrants to emphasize this unique evolutionary feature."
+  }
+}

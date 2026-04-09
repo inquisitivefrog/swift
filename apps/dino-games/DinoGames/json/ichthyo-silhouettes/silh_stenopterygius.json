@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: POSEIDON_SHALE]",
+      "layer_3_action": {
+        "subject": "Stenopterygius",
+        "features": ["Extremely narrow flippers", "Slender snout", "High, pointed dorsal fin", "Tapered tail fluke"],
+        "action": "A 1:1 square silhouette of a Stenopterygius performing a tight banking turn. No text."
+      }
+    }
+  }
+]

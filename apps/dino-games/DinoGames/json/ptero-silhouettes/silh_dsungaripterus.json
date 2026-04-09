@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: CEDAR_MOUNTAIN]",
+      "layer_3_action": {
+        "subject": "Dsungaripterus",
+        "features": ["Upturned tweezer-like beak", "Low bony ridge on snout", "Pointed crest at back of head"],
+        "action": "The 1:1 square silhouette of a Dsungaripterus walking on all fours across a dry flood channel. No text."
+      }
+    }
+  }
+]

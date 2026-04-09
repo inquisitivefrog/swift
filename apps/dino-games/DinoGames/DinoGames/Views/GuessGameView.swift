@@ -16,6 +16,24 @@ struct RoundQuestion: Identifiable {
     let questionImageFallback: String? // Fallback full image name
     let correctAnswerId: Int // ID of the correct dinosaur
     let options: [Dinosaur] // 3 dinosaurs: 1 correct + 2 decoys (all unique)
+    /// Whose Bones?: victory walk speaks `body-{key}` → Audio/Body/{key}.m4a (e.g. skull, ribcage).
+    let bodySegmentSpeechKey: String?
+
+    init(
+        id: Int,
+        questionImageName: String,
+        questionImageFallback: String?,
+        correctAnswerId: Int,
+        options: [Dinosaur],
+        bodySegmentSpeechKey: String? = nil
+    ) {
+        self.id = id
+        self.questionImageName = questionImageName
+        self.questionImageFallback = questionImageFallback
+        self.correctAnswerId = correctAnswerId
+        self.options = options
+        self.bodySegmentSpeechKey = bodySegmentSpeechKey
+    }
 }
 
 // MARK: - Name That Dinosaur used-creature persistence (avoid repeat in future games, acknowledge in victory block)
@@ -109,6 +127,20 @@ struct GuessGameView: View {
         return gameConfig.rounds
             .map { r in r.options.first(where: { $0.id == r.correctAnswerId })! }
             .filter { seen.insert($0.id).inserted }
+    }
+
+    /// Whose Bones?: body segment keys aligned with `endSequenceDinosaurs` for victory audio.
+    private var endSequenceBodySegmentSpeechKeys: [String] {
+        guard gameConfig.id == "whose-bones" else { return [] }
+        var keys: [String] = []
+        var seen: Set<Int> = []
+        for r in gameConfig.rounds {
+            guard let seg = r.bodySegmentSpeechKey else { continue }
+            guard let dino = r.options.first(where: { $0.id == r.correctAnswerId }) else { continue }
+            guard seen.insert(dino.id).inserted else { continue }
+            keys.append(seg)
+        }
+        return keys
     }
     
     // Get current round question
@@ -267,6 +299,13 @@ struct GuessGameView: View {
                 self.playDinoBonesHintThenStartOptionsWalk()
             }
             speechManager.speak("game-dino-bones-identify-the-skeleton")
+        } else if gameConfig.id == "whose-bones" {
+            isAudioPlaying = true
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = nil
+                self.startOptionsWalkIfNeeded()
+            }
+            speechManager.speak("game-whose-bones-gameplay")
         } else {
             startOptionsWalkIfNeeded()
         }
@@ -448,6 +487,14 @@ struct GuessGameView: View {
             endHighlightIndex = 0
             if endSequenceDinosaurs.isEmpty {
                 endSequenceStep = 2
+            } else if gameConfig.id == "whose-bones" {
+                let keys = endSequenceBodySegmentSpeechKeys
+                if !keys.isEmpty {
+                    speechManager.speak("body-\(keys[0])")
+                } else {
+                    speechManager.speak(audioKey: endSequenceDinosaurs[0].imageName ?? endSequenceDinosaurs[0].name, fallbackText: endSequenceDinosaurs[0].name)
+                }
+                speechManager.onAudioFinished = { advanceEndHighlight() }
             } else {
                 speechManager.speak(audioKey: endSequenceDinosaurs[0].imageName ?? endSequenceDinosaurs[0].name, fallbackText: endSequenceDinosaurs[0].name)
                 speechManager.onAudioFinished = { advanceEndHighlight() }
@@ -510,7 +557,16 @@ struct GuessGameView: View {
         speechManager.onAudioFinished = nil
         endHighlightIndex += 1
         if endHighlightIndex < endSequenceDinosaurs.count {
-            speechManager.speak(audioKey: endSequenceDinosaurs[endHighlightIndex].imageName ?? endSequenceDinosaurs[endHighlightIndex].name, fallbackText: endSequenceDinosaurs[endHighlightIndex].name)
+            if gameConfig.id == "whose-bones" {
+                let keys = endSequenceBodySegmentSpeechKeys
+                if endHighlightIndex < keys.count {
+                    speechManager.speak("body-\(keys[endHighlightIndex])")
+                } else {
+                    speechManager.speak(audioKey: endSequenceDinosaurs[endHighlightIndex].imageName ?? endSequenceDinosaurs[endHighlightIndex].name, fallbackText: endSequenceDinosaurs[endHighlightIndex].name)
+                }
+            } else {
+                speechManager.speak(audioKey: endSequenceDinosaurs[endHighlightIndex].imageName ?? endSequenceDinosaurs[endHighlightIndex].name, fallbackText: endSequenceDinosaurs[endHighlightIndex].name)
+            }
             speechManager.onAudioFinished = { advanceEndHighlight() }
         } else {
             endSequenceStep = 2
@@ -1106,5 +1162,105 @@ struct GuessGameConfigs {
             rounds: rounds,
             availableDinosaurs: allDinosaurs
         )
+    }
+
+    /// Temporarily 2 rounds while `dino-body-*` coverage is limited (e.g. ankylosaur + sauropod). Increase when more clades ship.
+    private static let whoseBonesRoundCount = 2
+
+    /// Whose Bones?: main image is `dino-body-{segment}-{clade}`; pick the dinosaur whose clade matches the clue. Options use full-body `dino-{slug}` art (same as Match / Weigh).
+    static var whoseBones: GuessGameConfig {
+        let allDinosaurs = MatchingGameConfigs.allDinosaurs
+        let pool = allDinosaurs.filter { d in
+            guard let imageName = d.imageName, imageName.hasPrefix("dino-") else { return false }
+            return UIImage(named: imageName) != nil
+        }
+        guard pool.count >= 3 else {
+            fatalError("Need at least 3 dinosaurs with bundled dino- full-body images for Whose Bones, but only have \(pool.count)")
+        }
+        let cladeById = MatchingGameConfigs.dinosaurCladeById
+        var clueQueue = shuffledWhoseBonesClues()
+        guard clueQueue.count >= whoseBonesRoundCount else {
+            fatalError("Need at least \(whoseBonesRoundCount) dino-body-* imagesets for Whose Bones, but only have \(clueQueue.count)")
+        }
+        var rounds: [RoundQuestion] = []
+        var usedCorrectIds: Set<Int> = []
+        while rounds.count < whoseBonesRoundCount && !clueQueue.isEmpty {
+            let clue = clueQueue.removeFirst()
+            let matching = dinoCladesMatchingBodyAssetClade(clue.assetClade)
+            guard !matching.isEmpty else { continue }
+            let correctPool = pool.filter { matching.contains(cladeById[$0.id] ?? .theropod) && !usedCorrectIds.contains($0.id) }
+            guard let correct = correctPool.shuffled().first else { continue }
+            let decoyPool = pool.filter { !matching.contains(cladeById[$0.id] ?? .theropod) && $0.id != correct.id }
+            guard decoyPool.count >= 2 else { continue }
+            let decoys = Array(decoyPool.shuffled().prefix(2))
+            var options = [correct] + decoys
+            options.shuffle()
+            rounds.append(RoundQuestion(
+                id: rounds.count + 1,
+                questionImageName: clue.imageAssetName,
+                questionImageFallback: correct.imageName,
+                correctAnswerId: correct.id,
+                options: options,
+                bodySegmentSpeechKey: clue.segment
+            ))
+            usedCorrectIds.insert(correct.id)
+        }
+        guard rounds.count == whoseBonesRoundCount else {
+            fatalError("Could not build \(whoseBonesRoundCount) Whose Bones rounds (clade/body asset mismatch — add clues or adjust pool)")
+        }
+        return GuessGameConfig(
+            id: "whose-bones",
+            title: "Whose Bones?",
+            introAudio: "game-whose-bones",
+            rounds: rounds,
+            availableDinosaurs: allDinosaurs
+        )
+    }
+
+    private struct WhoseBonesClue {
+        let imageAssetName: String
+        let segment: String
+        let assetClade: String
+    }
+
+    private static let whoseBonesSegments = ["skull", "neck", "foreleg", "hindleg", "pelvis", "ribcage", "shoulder", "tail"]
+
+    private static func shuffledWhoseBonesClues() -> [WhoseBonesClue] {
+        var clues: [WhoseBonesClue] = []
+        for name in ImageAssetNames.knownAssets where name.hasPrefix("dino-body-") {
+            guard let parsed = parseDinoBodyAssetName(name) else { continue }
+            clues.append(WhoseBonesClue(imageAssetName: name, segment: parsed.segment, assetClade: parsed.clade))
+        }
+        return clues.shuffled()
+    }
+
+    private static func parseDinoBodyAssetName(_ name: String) -> (segment: String, clade: String)? {
+        let prefix = "dino-body-"
+        guard name.hasPrefix(prefix) else { return nil }
+        let rest = String(name.dropFirst(prefix.count))
+        for seg in whoseBonesSegments {
+            let mid = "\(seg)-"
+            guard rest.hasPrefix(mid) else { continue }
+            let clade = String(rest.dropFirst(mid.count))
+            if clade.isEmpty { continue }
+            return (seg, clade)
+        }
+        return nil
+    }
+
+    private static func dinoCladesMatchingBodyAssetClade(_ assetClade: String) -> Set<DinoClade> {
+        switch assetClade {
+        case "sauropod": return [.sauropod]
+        case "ankylosaur": return [.ankylosaurid]
+        case "ceratopsian": return [.ceratopsian]
+        case "hadrosaur": return [.hadrosaur]
+        case "stegosaur": return [.stegosaur]
+        case "small-theropod", "large-theropod", "ornithomimid":
+            return [.theropod, .spinosaurid]
+        case "ornithischian":
+            return [.ornithopod, .pachycephalosaur, .stegosaur, .ankylosaurid, .ceratopsian, .hadrosaur]
+        default:
+            return []
+        }
     }
 }

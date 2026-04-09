@@ -1,0 +1,10 @@
+{
+  "id": "PELVIS_APAT_V2",
+  "species": "Apatosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "A structural tripod of bone. A top horizontal blade (Ilium) connects to two downward-reaching struts.",
+  "visual_hook": "The 'Open Arch'. The front strut (Pubis) points 45 degrees forward. The rear strut (Ischium) points 45 degrees backward. There is a wide, empty gap between them at the bottom.",
+  "material": "Matte, light-grey tan bone. Stony, weathered texture.",
+  "inset_view": "Top-right corner: Cross-section of the Ilium showing solid, dense bone growth rings.",
+  "negative_prompt": "human pelvis, bowl-shape, touching bones, fused bottom, fleshy, skin, organs"
+}

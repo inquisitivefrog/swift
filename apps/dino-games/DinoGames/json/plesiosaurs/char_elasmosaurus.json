@@ -1,0 +1,18 @@
+{
+  "id": "DINO_PLESIO_011",
+  "species": "Elasmosaurus platyurus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "style_id": "STYLE_CLAY_MASTER",
+  "formation_ref": "PIERRE_SHALE",
+  "habitat_ref": "PELAGIC_SHELF_SEA",
+  "visual_logic": {
+    "color_palette": "Deep sea-foam green dorsal skin with dark forest-green 'racing stripes' along the entire neck; pale cream-colored underbelly.",
+    "texture": "Smooth, matte clay finish with high-gloss finish on the eyes and inside the mouth.",
+    "action": "The Elasmosaurus is shown with its impossibly long neck curving gracefully in a double 'S' shape, its small head peering curiously at the viewer. Its four flippers are positioned as if in a gentle downward stroke.",
+    "environment": {
+      "water": "Slate blue water with sharp, prismatic 'god-rays' filtering from the top-left corner.",
+      "biota": "A school of small, silver-clay Enchodus fish darting through the background particulates (marine snow)."
+    }
+  }
+}

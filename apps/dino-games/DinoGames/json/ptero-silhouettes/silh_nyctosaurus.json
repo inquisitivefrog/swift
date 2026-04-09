@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: NEMEGT]",
+      "layer_3_action": {
+        "subject": "Nyctosaurus",
+        "features": ["Enormous Y-shaped antler crest", "No clawed fingers on wings", "Short tail"],
+        "action": "A 1:1 square silhouette of a Nyctosaurus soaring, its massive head crest cutting a unique profile against the sunset. No text."
+      }
+    }
+  }
+]

@@ -1,0 +1,8 @@
+"OPEN_OCEAN_PELAGIC": {
+   "substrate": "Organic marine snow and abyssal silts",
+   "visuals": {
+     "ground": "Distant, dark silty floor with scattered ammonite shells",
+     "water": "Deep cobalt to indigo blue; visible 'god-rays' from the surface far above",
+     "atmospheric_effects": ["Suspended plankton", "Marine snow particulates"]
+   }
+}

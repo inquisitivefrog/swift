@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: TIAOJISHAN]",
+      "layer_3_action": {
+        "subject": "Anurognathus",
+        "features": ["Small size", "Very short tail", "Broad frog-like skull", "Rounded wing tips"],
+        "action": "A sharp 1:1 square silhouette of an Anurognathus clinging to the side of a giant horsetail. No text."
+      }
+    }
+  }
+]

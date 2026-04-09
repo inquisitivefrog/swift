@@ -1,0 +1,17 @@
+[
+  {
+    "id": "DINO_ICHTHY_005",
+    "species": "Ophthalmosaurus icenicus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "style_id": "STYLE_CLAY_MASTER",
+    "formation_ref": "OXFORD_CLAY",
+    "habitat_ref": "OPEN_OCEAN_PELAGIC",
+    "visual_logic": {
+      "color_palette": "Deep plum-purple back with a pale lilac belly; enormous, glossy black eyes.",
+      "action": "Diving deep vertically, its teardrop-shaped body perfectly streamlined.",
+      "environment": "Greenish-grey murky water with stylized shoals of tiny belemnites (squid-like)."
+    }
+  }
+]
+

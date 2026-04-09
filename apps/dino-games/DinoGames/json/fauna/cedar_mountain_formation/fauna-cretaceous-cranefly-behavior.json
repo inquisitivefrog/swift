@@ -1,0 +1,40 @@
+{
+  "id": "CM_CRANEFLY_BEHAVIOR_01_V2",
+  "layout": "2x2 Quadrant Grid",
+  "formation_ref": "CEDAR_MOUNTAIN",
+  "habitat_ref": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+  "global_constraints": {
+    "morphology_lock": "Strictly adhere to ID: CM_CRANEFLY_CHAR_01. Maintain slender, non-waisted, pale-amber abdomen in all poses.",
+    "leg_integrity": "Legs must remain thread-like and disproportionately long (stilt-walker style) regardless of action.",
+    "negative_prompt_logic": "No wasp-like banding, no thorax thickening, no predatory or 'armored' insect traits."
+  },
+  "quadrants": {
+    "top_left": {
+      "scene": "Birth (Emergence)",
+      "description": "An adult crane fly crawling from its pupal case; highlight the 'pale-amber' and 'cream' segmented body as it unfurls; legs are long, pale, and delicate.",
+      "educational_note": "Shows the transition from water/damp soil to air."
+    },
+    "top_right": {
+      "scene": "Dining (Nectar Feeding)",
+      "description": "Perched on a shrubby angiosperm; maintain the cylindrical, 'mosquito-like' humped thorax; avoid any wasp-like abdominal tapering while sipping.",
+      "educational_note": "Highlights their role as early pollinators."
+    },
+    "bottom_left": {
+      "scene": "Sleeping (Resting)",
+      "description": "Hanging vertically from a Conifer needle; legs are loosely tucked but remain visibly 'thread-like' and stilt-long; body remains light-toned.",
+      "educational_note": "Shows how they hide from predators and weather."
+    },
+    "bottom_right": {
+      "scene": "Playing (The Mating Dance)",
+      "description": "Two flies in a bobbing flight; emphasize the 'bumbling' clumsy movement; bodies must stay pale-amber against the dark maroon rocks.",
+      "educational_note": "Visualizes the rhythmic flight behavior common to the species."
+    }
+  },
+  "visual_logic": {
+    "lighting": "Consistent golden afternoon sun (DAPPLED_EXCAVATION style)",
+    "palette_separation": {
+      "environment": ["Chalky white", "Pale lavender", "Maroon"],
+      "fauna_fixed": ["Pale Amber", "Cream", "Translucent"]
+    }
+  }
+}

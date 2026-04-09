@@ -1,0 +1,13 @@
+{
+  "id": "CM_CROC_CHAR_01",
+  "species": "Small Early Cretaceous Crocodylomorph",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_identity": {
+    "body": "Slender, flexible body with a long tail; legs are positioned more underneath the body for high-walking/running. Soft, pebbled skin textures.",
+    "coloration": "Mottled 'Pale lavender' and 'Dull green' to camouflage with the riverbank silt and moss.",
+    "face": "Very large, warm golden eyes with 'Disney-style' expressive brows. A short, rounded snout that looks more 'dog-like' and friendly than a modern alligator.",
+    "no_text_constraint": "True. Facial expressions must communicate all emotions (curiosity, joy, sleepiness)."
+  },
+  "personality": "Playful, observant, and quick; a 'scout' of the river valleys."
+}

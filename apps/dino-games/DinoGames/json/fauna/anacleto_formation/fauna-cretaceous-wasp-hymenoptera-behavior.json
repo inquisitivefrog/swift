@@ -1,0 +1,11 @@
+{
+  "id": "cretaceous_wasp_behavior_quadrant_001",
+  "species": "Primitive Wasp (Hymenoptera)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_SOFT",
+  "formation_ref": "ANACLETO",
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left (Birth): A wasp larva inside a mud-daubed nest tube; Top-Right (Dining): The wasp hovering over a lepidosaur (lizard) to scavenge or hunt; Bottom-Left (Sleeping): Suspended from a twig by its mandibles, wings still; Bottom-Right (Activity): The wasp 'cleaning' its antennae with its front legs while perched on a purple stone.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; ensure the 'waist' is visible and the wings have a slight prismatic shimmer."
+  }
+}

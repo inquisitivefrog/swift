@@ -1,0 +1,11 @@
+{
+  "id": "cretaceous_beetle_behavior_quadrant_001",
+  "species": "Cretaceous Ground Beetle (Coleoptera)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "ANACLETO",
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left (Birth): A soft-bodied, pale larva (grub) hatching from soil; Top-Right (Dining): The beetle using sharp mandibles to crunch through the shell of a smaller insect; Bottom-Left (Sleeping): Tucked under a flat piece of purple mudstone, antennae retracted; Bottom-Right (Activity): The beetle navigating a 'canyon' created by a large dinosaur's footprint in the mud.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the mechanical, 'tank-like' movement of the legs; vibrant metallic sheen on the wing cases."
+  }
+}

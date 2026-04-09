@@ -1,0 +1,11 @@
+{
+  "id": "ARM_ANKY_V1",
+  "species": "Ankylosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Short, bowed, and incredibly thick arm bones.",
+  "visual_hook": "Built like a bulldozer's arm. The bones are bent slightly outward to support the wide, armored chest.",
+  "material": "Matte, heavy grey bone. Rugose, bumpy texture.",
+  "inset_view": "Top-right corner: Cross-section showing almost 100% solid, heavy bone.",
+  "negative_prompt": "long, slender, graceful, shiny”,
+  “constraints”: “No text"
+}

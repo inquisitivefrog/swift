@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_PLESIO_006",
+    "species": "Liopleurodon ferox",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "style_id": "STYLE_CLAY_MASTER",
+    "formation_ref": "OXFORD_CLAY",
+    "visual_logic": {
+      "color_palette": "Deep sea-green back with vibrant orange 'warning' stripes; pale underbelly.",
+      "action": "The 'King of the Sea' gliding slowly through murky green-grey water, mouth slightly open to show white clay teeth.",
+      "environment": "Hazy marine snow with the silhouette of a giant Leedsichthys in the far background."
+    }
+  }
+]

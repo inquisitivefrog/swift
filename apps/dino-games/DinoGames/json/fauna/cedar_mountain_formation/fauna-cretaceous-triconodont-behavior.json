@@ -1,0 +1,40 @@
+{
+  "id": "CM_MAMMAL_BEHAVIOR_01",
+  "layout": "2x2 Quadrant Grid",
+  "tech_ref": "SQUARE_HERO_CARD",
+  "formation_ref": "CEDAR_MOUNTAIN",
+  "habitat_ref": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "global_constraints": {
+    "text_render": "STRICT_NO_TEXT",
+    "aspect_ratio": "1:1 Square",
+    "audience": "Pre-reader (Visual Narrative Only)"
+  },
+  "quadrants": {
+    "top_left": {
+      "scene": "Birth (The Huddle)",
+      "description": "A pile of tiny, pink, hairless babies huddling together in a nest of dry grass inside a hollow log; one parent is gently grooming them.",
+      "visual_action": "Family / Warmth"
+    },
+    "top_right": {
+      "scene": "Dining (The Seed Cracker)",
+      "description": "The mammal sitting on its haunches, holding a large Conifer seed in its front paws and nibbling quickly; cheeks are puffed out.",
+      "visual_action": "Eating / Dexterity"
+    },
+    "bottom_left": {
+      "scene": "Sleeping (Under the Ferns)",
+      "description": "The mammal curled into a tight furry ball under a large Tree Fern leaf; only the tip of its pink nose is visible. Soft blue 'twilight' lighting.",
+      "visual_action": "Resting / Hiding"
+    },
+    "bottom_right": {
+      "scene": "Playing (The Tumble)",
+      "description": "Two small mammals play-fighting, rolling over each other in a 'fur-ball' on the 'Chalky white' silt; dust clouds are rendered as soft 3D puffs.",
+      "visual_action": "Social / Energy"
+    }
+  },
+  "visual_logic": {
+    "lighting": "DAPPLED_EXCAVATION (High contrast to show off fur highlights).",
+    "palette": ["Pale lavender", "Chalky white", "Maroon", "Warm Brown", "Cream"]
+  },
+  "constraint": "No text."
+}

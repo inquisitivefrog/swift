@@ -1,0 +1,26 @@
+{
+  "id": "CM_BEETLE_BEHAVIOR_01",
+  "layout": "2x2 Quadrant Grid",
+  "formation_ref": "CEDAR_MOUNTAIN",
+  "habitat_ref": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "quadrants": {
+    "top_left": {
+      "description": "A soft, cream-colored beetle larva (grub) with a friendly face poking out of a burrow in the Pale lavender silt; surrounded by tiny Chalky white pebbles."
+    },
+    "top_right": {
+      "description": "The beetle nibbling on a fallen, decaying Ginkgo leaf; it looks satisfied, with 'tasty' emoji-like expressions."
+    },
+    "bottom_left": {
+      "description": "The beetle curled up in a cozy, silk-lined chamber beneath a Maroon mudstone rock; soft ambient blue light to indicate nighttime."
+    },
+    "bottom_right": {
+      "description": "The beetle climbing over a 'giant' (to him) Limestone nodule, looking triumphant at the peak; high-angle shot to show scale."
+    }
+  },
+  "visual_logic": {
+    "lighting": "DAPPLED_EXCAVATION with high-contrast shadows to emphasize the glossy shell.",
+    "palette": ["Pale lavender", "Chalky white", "Maroon", "Metallic Forest Green"]
+  },
+  constraints”: “No text."
+}

@@ -1,0 +1,26 @@
+{
+  "id": "chelid_turtle_habitat_natural_001",
+  "species": "Chelid Turtle (Prochelidella)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "LACUSTRINE_MARGIN (Lake Edge)",
+    "flora": [
+      "Water lilies (Cretaceous variants)",
+      "Reeds and horsetails (Equisetum)",
+      "Floating algae mats"
+    ],
+    "ground_palette": [
+      "Deep Purple-Red Mud",
+      "Algae Green",
+      "River Silt Grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; smooth, streamlined shell with subtle growth rings; wide, friendly eyes; the neck is visible and tucked slightly to the side; 'wet' shader effect on the shell."
+  },
+  "visual_logic": {
+    "composition": "A half-submerged 'split-shot' view. Above water, the turtle's head is peeking out near a floating lily pad. Below water, its webbed feet are paddling through clear, silt-flecked water. The background shows the distinctive purple-red mudbanks of the Anacleto.",
+    "ground": "Soft, underwater river silt and smooth river stones transitioning to thick purple clay at the water's edge.",
+    "lighting": "Bright daylight filtering through the water surface, creating 'god rays' (caustics) that dance on the turtle's back."
+  }
+}

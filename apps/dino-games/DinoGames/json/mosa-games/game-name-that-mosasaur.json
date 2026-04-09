@@ -1,0 +1,32 @@
+{
+  "id": "GAME_START_MOSA_001",
+  "title": "Start Game: Mosasaur Level",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "style_id": "STYLE_CLAY_MASTER",
+  "formation_ref": "PIERRE_SHALE",
+  "habitat_ref": "PELAGIC_SHELF_SEA",
+  "app_image_config": {
+    "layer_1_style": "[REF: STYLE_CLAY_MASTER]",
+    "layer_2_setting": "[REF: PIERRE_SHALE]",
+    "layer_3_action": {
+      "subject": "A diverse gathering of Mosasaurs",
+      "features": [
+        "A massive Mosasaurus hoffmannii in the center foreground, mouth slightly open to show 'double' pterygoid teeth.",
+        "A smaller, agile Clidastes darting in the upper right.",
+        "A Globidens bobbing near the bottom left, eyeing a cluster of ammonites.",
+        "All characters feature friendly, glossy eyes and rounded clay proportions."
+      ],
+      "action": "The Mosasaurs are arranged in a dynamic, 'family portrait' style, swimming toward the viewer as if entering the game arena.",
+      "text_overlay": {
+        "content": "Name that Mosasaur",
+        "style": "Bright red, 3D extruded clay-style lettering, mixed case, playful bold sans-serif font.",
+        "placement": "Center, slightly arched over the main Mosasaurus."
+      }
+    }
+  },
+  "visual_logic": {
+    "water": "Deep slate-blue water with intense, shimmering 'god-rays' creating a spotlight effect on the central characters.",
+    "atmosphere": "Abundant silver bubbles and floating marine snow to create a sense of depth and 'start-screen' excitement."
+  }
+}

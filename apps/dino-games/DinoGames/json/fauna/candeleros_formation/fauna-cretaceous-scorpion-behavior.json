@@ -1,0 +1,21 @@
+{
+  "id": "cretaceous_scorpion_behavior_quadrant_001",
+  "species": "Cretaceous Desert Scorpion",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "NIGHT_UV_FLUORESCENCE",
+  "formation_ref": "CANDELEROS",
+  "visual_logic": {
+    "composition": "A professional 2x2 grid. To make this educational and 'cool' for kids, we include the 'glow' effect.",
+    
+    "top_left_birth": "A 'mother' scorpion with dozens of tiny, white, translucent scorplings riding on her back. She is in a protected sandy hollow. The babies look soft and 'pearly' compared to her rugged armor.",
+    
+    "top_right_dining": "The scorpion has captured a 'Cronopio' (saber-toothed mammal) by the leg with one pincer, while its tail is arched over, stinger poised to strike. The mammal is mid-struggle, creating a high-stakes action silhouette.",
+    
+    "bottom_left_sleeping": "The scorpion is buried just beneath the surface of the sand, with only the tips of its pincers and its 'tail-spike' visible. This demonstrates its 'ambush' resting state.",
+    
+    "bottom_right_activity": "A nighttime scene: The scorpion is walking across the dunes. Under the Cretaceous moonlight, its body is 'fluorescing' a bright, ghostly neon-teal/cyan—a real-world trait of scorpions that looks like magic in a game setting.",
+    
+    "rendering_notes": "The 'fluorescence' in the bottom-right panel should have a soft 'bloom' effect. Ensure the pincers look heavy and powerful, not spindly, to distinguish them from standard insects."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "lepidosaur_behavior_quadrant_001",
+  "species": "Anacleto Lepidosaur (Small Lizard)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "FLOODPLAIN_EDGES",
+    "flora": [
+      "Mossy rock crevices",
+      "Low-lying Cretaceous wildflowers"
+    ],
+    "ground_palette": [
+      "Purple-Grey",
+      "Terracotta",
+      "Deep Green"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; storytelling focus; emphasis on speed and agility; clean quadrant borders; expressive 'character-driven' movements."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left (Birth): A tiny, vivid lizard head poking out of a small, parchment-like white egg tucked into a rock crack; Top-Right (Dining): The lizard mid-leap, capturing a dragonfly-like insect in mid-air with its tongue; Bottom-Left (Sleeping): The lizard flattened against a warm, flat stone, eyes closed in total relaxation, soaking up the heat; Bottom-Right (Playing/Social): Two lizards performing a 'push-up' display to one another on a log, a common social behavior, with their colorful throat fans (dewlaps) extended.",
+    "ground": "A mix of smooth river stones, purple mudstone, and small patches of green moss.",
+    "lighting": "Bright, even daylight to emphasize the tiny details of the scales and the fast-paced action in the 'Dining' and 'Playing' scenes."
+  }
+}

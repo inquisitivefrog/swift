@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "fauna-cretaceous-beetle-carabidae-habitat-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "fauna-cretaceous-beetle-carabidae-habitat-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "fauna-cretaceous-beetle-carabidae-habitat-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

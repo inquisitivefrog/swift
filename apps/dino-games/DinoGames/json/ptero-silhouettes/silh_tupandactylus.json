@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: CANDELEROS]",
+      "layer_3_action": {
+        "subject": "Tupandactylus",
+        "features": ["Oversized sail-like crest", "Large bony spike at back of head", "Toothless beak"],
+        "action": "A sharp 1:1 square silhouette of a Tupandactylus walking through a stream, crest held high. No text."
+      }
+    }
+  }
+]

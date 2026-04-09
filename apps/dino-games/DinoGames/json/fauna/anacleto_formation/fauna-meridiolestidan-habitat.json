@@ -1,0 +1,26 @@
+{
+  "id": "meridiolestidan_habitat_natural_001",
+  "species": "Meridiolestidan Mammal (Groebertherium-type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAPPLED_FOREST_LIGHT",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "FLUVIAL_FLOODPLAIN_UNDERSTORY",
+    "flora": [
+      "Broad-leafed ferns (Gleicheniaceae)",
+      "Low-hanging Araucaria branches",
+      "Decaying conifer logs with moss"
+    ],
+    "ground_palette": [
+      "Muted Purple",
+      "Deep Russet",
+      "Moss Green"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; soft, tactile fur texture; large, dark 'button' eyes for a friendly look; long, slightly tufted tail; rounded ears."
+  },
+  "visual_logic": {
+    "composition": "A ground-level 'mammal-eye-view' looking through a curtain of ferns. The Meridiolestidan is perched on a mossy log, its nose twitching. In the background, the soft-focus legs of a passing titanosaur provide a massive sense of scale.",
+    "ground": "A rich carpet of purple-red clay soil covered in a layer of brown leaf litter and vibrant green mosses.",
+    "lighting": "Dappled sunlight filtering through the canopy, creating warm spots on the mammal's fur and the forest floor."
+  }
+}

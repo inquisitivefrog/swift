@@ -1,0 +1,26 @@
+{
+  "id": "gasparinisaura_habitat_natural_001",
+  "species": "Gasparinisaura cincosaltensis",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "OPEN_FLOODPLAIN_WOODLAND",
+    "flora": [
+      "Low-lying cycads",
+      "Clusters of podocarp saplings",
+      "Tall, dried grasses"
+    ],
+    "ground_palette": [
+      "Vivid Purple-Red",
+      "Ochre",
+      "Dusty Rose"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; sleek, bipedal stance; counter-shaded skin (darker on top, lighter on belly); large, alert eyes with bird-like blinking; very long, stiff tail for balance."
+  },
+  "visual_logic": {
+    "composition": "A dynamic mid-shot of a Gasparinisaura frozen in a 'listening' pose, one foot slightly raised. It is framed by two purple-red mudstone pillars. In the background, a hazy heat shimmer rises from the Anacleto floodplains, adding a sense of Cretaceous warmth.",
+    "ground": "A mix of dusty ochre silt and the characteristic purple-red claystone of the formation, dotted with small pebbles and geodes.",
+    "lighting": "Bright, high-noon sunlight creating short, sharp shadows, highlighting the muscle definition in the dinosaur's powerful hind legs."
+  }
+}

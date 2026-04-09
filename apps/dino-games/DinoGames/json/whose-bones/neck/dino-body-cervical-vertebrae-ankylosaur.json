@@ -1,0 +1,11 @@
+{
+  "id": "NECK_ANKY_GROUNDED_V2",
+  "species": "Ankylosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "background": "SOLID_LIGHT_GREY",
+  "pose": "Main: Cervical vertebrae with overlying half-ring armor plates. Inset: The connection point where bone meets armor.",
+  "material": "Matte, heavy grey-tan bone. The armor plates have a slightly rougher, rugose texture.",
+  "educational_focus": "Cervical half-rings—specialized armor protecting the vulnerable neck joints.",
+  "negative_prompt": "glossy, shiny, wet, epoxy, plastic, labels”,
+  “constraints”: “No text"
+}

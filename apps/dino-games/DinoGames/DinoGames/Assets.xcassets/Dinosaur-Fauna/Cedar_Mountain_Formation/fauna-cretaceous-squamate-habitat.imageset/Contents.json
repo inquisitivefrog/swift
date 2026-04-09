@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "fauna-cretaceous-squamate-habitat-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "fauna-cretaceous-squamate-habitat-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "fauna-cretaceous-squamate-habitat-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "id": "GAME_CARD_ICHTHY_002",
+  "title": "Name that Ichthyosaurus (Family)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "style_id": "STYLE_CLAY_MASTER",
+  "formation_ref": "POSEIDON_SHALE",
+  "habitat_ref": "PELAGIC_SHELF_SEA",
+  "app_image_config": {
+    "layer_1_style": "[REF: STYLE_CLAY_MASTER]",
+    "layer_2_setting": "[REF: POSEIDON_SHALE]",
+    "layer_3_action": {
+      "subject": {
+        "mother": "A large, sleek mother Stenopterygius, detailed with soft grey-blue countershading and a friendly, watchful amber eye.",
+        "pup": "A tiny, matching Ichthyosaur pup, designed in a classic 'chibi' toy style, swimming close under her pectoral fin."
+      },
+      "features": ["Mother protecting pup", "Dolphin-like clay bodies", "Large, friendly eyes", "Detailed tail flukes"],
+      "action": "The mother Stenopterygius is swimming gracefully horizontally, her head slightly turned to look back at the tiny pup mimicking her movements.",
+      "companions": [
+        {
+          "species": "Belemnites",
+          "description": "A distant, hazy school of small squid-like Belemnites, blurred to create depth."
+        },
+        {
+          "species": "Floating Crinoids",
+          "description": "A single floating driftwood log covered in stylized, golden-pyrite crinoid 'sea lilies' in the upper far background."
+        }
+      ],
+      "text_overlay": {
+        "content": "Name that Ichthyosaurus",
+        "style": "Bright red, 3D extruded clay-style lettering, mixed case, playful sans-serif font.",
+        "placement": "Top center, slightly arched."
+      },
+      "text_overlay": {
+        "content": "Player Wins!",
+        "style": "Bright red, 3D extruded clay-style lettering, mixed case, playful sans-serif font.",
+        "placement": "Bottom center, slightly arched."
+      }
+    }
+  },
+  "visual_logic": {
+    "water": "Dark indigo water with distinct shimmering vertical 'god-rays' filtering from the surface, creating an atmospheric, deep-shelf effect.",
+    "atmosphere": "Abundant suspended organic particulates ('marine snow') shimmering with soft light."
+  }
+}

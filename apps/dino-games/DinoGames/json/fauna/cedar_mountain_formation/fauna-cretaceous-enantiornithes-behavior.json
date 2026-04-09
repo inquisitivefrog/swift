@@ -1,0 +1,36 @@
+{
+  "id": "CM_BIRD_BEHAVIOR_01",
+  "layout": "2x2 Quadrant Grid",
+  "tech_ref": "SQUARE_HERO_CARD",
+  "formation_ref": "CEDAR_MOUNTAIN",
+  "habitat_ref": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "no_text_constraint": "True",
+  "quadrants": {
+    "top_left": {
+      "scene": "Birth (The Nest)",
+      "description": "A fluffy Enantiornithes hatchling with a few stray 'spiky' feathers poking out of a nest made of Conifer needles and moss. It is opening its beak wide as if chirping.",
+      "visual_cue": "Hungry / New life"
+    },
+    "top_right": {
+      "scene": "Dining (The Berry Picker)",
+      "description": "The Enantiornithes perched on a branch of an early fruiting plant, holding a small purple berry in its beak. Its eyes are squeezed shut in a 'tasty' expression.",
+      "visual_cue": "Eating / Happiness"
+    },
+    "bottom_left": {
+      "scene": "Sleeping (The Fluff-ball)",
+      "description": "The Enantiornithes tucked into a ball on a high branch of a Ginkgo tree under a starry, deep-blue sky. Only its tail feathers and one sleepy eye are visible.",
+      "visual_cue": "Quiet / Nighttime"
+    },
+    "bottom_right": {
+      "scene": "Playing (Splash Bath)",
+      "description": "The Enantiornithes splashing in a shallow puddle on top of a 'Chalky white' limestone rock. Water droplets and loose feathers are flying in the air.",
+      "visual_cue": "Bathing / Playfulness"
+    }
+  },
+  "visual_logic": {
+    "lighting": "SUNNY_EXPOSED_CINEMATIC with colorful lens flares to enhance the 'reward' feeling for kids.",
+    "palette": ["Pale lavender", "Chalky white", "Maroon", "Turquoise", "Sunny Yellow"]
+  },
+  “constraint”: “No text."
+}

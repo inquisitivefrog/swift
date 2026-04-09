@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: TENDAGURU]",
+      "layer_3_action": {
+        "subject": "Dimorphodon",
+        "features": ["Large deep puffin-like beak", "Long tail with diamond-shaped vane", "Robust limbs"],
+        "action": "A high-contrast 1:1 square silhouette of a Dimorphodon leaping from a rock with its tail held stiffly. No text."
+      }
+    }
+  }
+]

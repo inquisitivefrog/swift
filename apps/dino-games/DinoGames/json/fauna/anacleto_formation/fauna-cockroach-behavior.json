@@ -1,0 +1,11 @@
+{
+  "id": "cockroach_behavior_quadrant_001",
+  "species": "Mesozoic Cockroach (Blattodea)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SOFT_INTERNAL_GLOW",
+  "formation_ref": "ANACLETO",
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left (Birth): An ootheca (egg case) hidden in bark splitting open to reveal tiny, pale nymphs; Top-Right (Dining): The cockroach nibbling on a fallen, decaying Cretaceous fruit; Bottom-Left (Sleeping): Dozens of cockroaches huddled together in the dark hollow of a tree; Bottom-Right (Playing/Activity): A cockroach scurrying rapidly across a dry leaf, its long antennae blurred with motion.",
+    "style_notes": "Avoid making them 'gross'; use warm browns and ambers to give them a 'forest-critter' feel compatible with the toy-like style."
+  }
+}

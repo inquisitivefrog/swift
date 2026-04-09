@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: BLUE_LIAS]",
+      "layer_3_action": {
+        "subject": "Plesiosaurus",
+        "features": ["Small head", "Long, thin neck", "Broad body", "Four identical flippers"],
+        "action": "A 1:1 square silhouette of a Plesiosaurus in a gentle 'S-curve' swim. No text."
+      }
+    }
+  }
+]

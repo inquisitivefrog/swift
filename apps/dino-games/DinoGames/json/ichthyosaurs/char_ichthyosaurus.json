@@ -1,0 +1,16 @@
+[
+  {
+    "id": "DINO_ICHTHY_001",
+    "species": "Ichthyosaurus communis",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "style_id": "STYLE_CLAY_MASTER",
+    "formation_ref": "BLUE_LIAS",
+    "habitat_ref": "OPEN_OCEAN_PELAGIC",
+    "visual_logic": {
+      "color_palette": "Dolphin-grey back with a soft lavender-tinted underbelly; dark charcoal eye-patches.",
+      "action": "Leaping playfully through the surface of deep indigo water, trailing a few oversized 'clay' water droplets.",
+      "environment": "Background shows 'god-rays' filtering down past a floating ammonite shell."
+    }
+  }
+]

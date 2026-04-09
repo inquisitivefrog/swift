@@ -1,0 +1,12 @@
+{
+  "id": "SHOULDER_APAT_V1",
+  "species": "Apatosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "region": "shoulder",
+  "pose": "A two-part, robust L-shaped anchor. The vertical part is the 'Boat Oar' scapula; the base is the thick, rounded coracoid.",
+  "visual_hook": "The 'Pillar-Shoulder Girdle.' The scapula is massive, paddle-shaped, and widens at the top, standing taller than a human. It meets the short, powerful coracoid at the shoulder joint.",
+  "material": "Matte, light-grey tan bone. Stony and deeply pitted.",
+  "inset_view": "Top-right corner: Cross-section of the thickest part of the scapula showing dense, solid bone development with no internal air chambers, built for stability and muscle attachment.",
+  "negative_prompt": "fenestrae, air sacs, pneumaticity, lace-bone, slender, short, bird-like, shiny”,
+  “constraints”: “No text."
+}

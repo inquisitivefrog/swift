@@ -1,0 +1,19 @@
+{
+  "id": "antlion_habitat_natural_001",
+  "species": "Cretaceous Antlion (Myrmeleontidae)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "CANDELEROS",
+  "environment_details": {
+    "habitat": "PROTECTED_DUNE_BASE",
+    "flora": ["Overhanging dry fern", "Exposed sandstone ledge"],
+    "ground_palette": ["Vibrant Terracotta", "Burnt Orange", "Soft Peach"],
+    "style_notes": "High-fidelity 3D; the sand pit is a perfect inverted cone; the larva is mostly hidden, only its large, curved mandibles are visible at the very bottom."
+  },
+  "visual_logic": {
+    "composition": "A high-angle 'look-down' shot into a cluster of three antlion pits. The pits are located in the soft, dry sand beneath a sandstone overhang. One pit is currently active, with tiny puffs of sand being 'flicked' out by the hidden larva to maintain the steepness of the walls.",
+    "ground": "Fine, powdery red sand with high-detail surface displacement to show the 'slump' lines of the cone.",
+    "lighting": "Strong directional light creating a deep, crescent-shaped shadow inside each cone, emphasizing the depth and danger of the trap."
+  }
+}

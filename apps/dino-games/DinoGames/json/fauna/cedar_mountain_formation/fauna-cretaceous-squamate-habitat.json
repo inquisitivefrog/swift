@@ -1,0 +1,13 @@
+{
+  "id": "CM_LIZARD_CHAR_01",
+  "species": "Early Cretaceous Squamate (Small Lizard)",
+  "tech_ref": "SQUARE_HERO_CARD",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_identity": {
+    "body": "Slender, vibrant lizard with a long, tapering tail. Skin has a soft, beaded texture with high-fidelity scale patterns.",
+    "coloration": "Electric lime green with 'Maroon' spots along the spine to stand out against 'Pale lavender' rocks.",
+    "face": "Large, rotating 'chameleon-style' eyes with bright gold irises. A friendly, slight curve to the mouth line.",
+    "constraints": ["STRICT_NO_TEXT", "NON_AGGRESSIVE_ANATOMY"]
+  },
+  "personality": "Darting, curious, and slightly shy. It tilts its head and sticks out a tiny forked tongue to 'taste' the air."
+}

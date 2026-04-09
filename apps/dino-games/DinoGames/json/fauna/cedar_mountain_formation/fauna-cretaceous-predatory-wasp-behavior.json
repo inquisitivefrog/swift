@@ -1,0 +1,33 @@
+{
+  "id": "CM_WASP_BEHAVIOR_01",
+  "layout": "2x2 Quadrant Grid",
+  "formation_ref": "CEDAR_MOUNTAIN",
+  "habitat_ref": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "quadrants": {
+    "top_left": {
+      "scene": "Birth (Nesting)",
+      "description": "A female wasp carefully constructing a small mud-cell nest inside a crevice of Maroon-colored mudstone; using her mandibles to smooth the 'Chalky white' clay.",
+      "educational_note": "Demonstrates early nesting and maternal care behaviors."
+    },
+    "top_right": {
+      "scene": "Dining (Foraging)",
+      "description": "The wasp capturing a small beetle larva among Paleopus herbs; the scene is framed to look like a 'heroic' catch rather than a scary hunt.",
+      "educational_note": "Explains the predatory role of wasps in controlling other insect populations."
+    },
+    "bottom_left": {
+      "scene": "Sleeping (Sheltering)",
+      "description": "The wasp tucked under a broad leaf of an early angiosperm during a rain shower; water droplets are stylized and large, reflecting the 'Dappled' light.",
+      "educational_note": "Shows how insects seek protection from the elements."
+    },
+    "bottom_right": {
+      "scene": "Playing (Social Interaction)",
+      "description": "Two wasps performing a synchronized hovering 'dance' near a Conifer branch, showing dynamic posing and expressive facial features.",
+      "educational_note": "Visualizes social communication or territorial displays in a friendly way."
+    }
+  },
+  "visual_logic": {
+    "lighting": "SUNNY_EXPOSED_CINEMATIC with warm highlights and soft-edged shadows.",
+    "palette": ["Pale lavender", "Chalky white", "Maroon", "Deep Blue-Black"]
+  }
+}

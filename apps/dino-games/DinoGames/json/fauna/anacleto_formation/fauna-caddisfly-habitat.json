@@ -1,0 +1,22 @@
+{
+  "id": "caddisfly_habitat_001",
+  "species": "Cretaceous Caddisfly (Trichoptera)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAMP_MISTY_MORNING",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "SHALLOW_STREAM_BED",
+    "flora": [
+      "Submerged mosses",
+      "Decaying Araucaria needles",
+      "Algae-coated rocks"
+    ],
+    "ground_palette": ["Dark Umber", "Slate Grey", "Deep Purple"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the 'architectural' nature of the larval case; the adult has soft, moth-like hairy wings; earthy but rich textures."
+  },
+  "visual_logic": {
+    "composition": "A focus on the riverbed. In the center, a Caddisfly larva is visible inside its 'mobile home'—a tube made of tiny purple mudstone fragments and bits of fossilized wood. An adult caddisfly rests on a dry rock just above the water line.",
+    "ground": "A mosaic of tiny stones, sand, and organic debris at the bottom of a clear, bubbling stream.",
+    "lighting": "Cool, soft-focus morning light that highlights the 'wet' texture of the river stones."
+  }
+}

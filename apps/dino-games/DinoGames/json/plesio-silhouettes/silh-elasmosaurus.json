@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: PIERRE_SHALE]",
+      "layer_3_action": {
+        "subject": "Elasmosaurus",
+        "features": ["Impossibly long neck", "Small skull", "Tapered tail", "Large paddles"],
+        "action": "A horizontal 1:1 silhouette where the neck spans the entire width of the frame. No text."
+      }
+    }
+  }
+]

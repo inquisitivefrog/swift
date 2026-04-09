@@ -1,0 +1,9 @@
+{
+  "habitat_id": "PELAGIC_SHELF_SEA",
+  "substrate": "Bituminous mud and organic "marine snow"",
+  "visuals": {
+    "ground": "Flat, dark-grey abyssal floor with scattered ammonite shells",
+    "water": "Deep indigo-to-black water with shimmering 'god-rays' from the surface",
+    "atmosphere": "Suspended particulates (plankton) and silver bubbles"
+  }
+}

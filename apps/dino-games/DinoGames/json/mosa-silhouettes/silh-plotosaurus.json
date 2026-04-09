@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: PIERRE_SHALE]",
+      "layer_3_action": {
+        "subject": "Plotosaurus",
+        "features": ["Highly streamlined fish-like head", "Compact rigid body", "Large upright tail fluke"],
+        "action": "A 1:1 square silhouette of a Plotosaurus in a deep-diving descent. No text."
+      }
+    }
+  }
+]

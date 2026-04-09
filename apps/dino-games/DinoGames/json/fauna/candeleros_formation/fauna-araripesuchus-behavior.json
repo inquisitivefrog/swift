@@ -1,0 +1,21 @@
+{
+  "id": "araripesuchus_behavior_quadrant_001",
+  "species": "Araripesuchus gomesii (Dog-Croc)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_SOFT_WITH_RIM_LIGHTING",
+  "formation_ref": "CANDELEROS",
+  "visual_logic": {
+    "composition": "A professional 2x2 grid. Ray-traced textures highlight the 'bumpy' skin and expressive face.",
+    
+    "top_left_birth": "A shallow nest scraped into the warm sand under a desert shrub. Three leathery eggs are visible; one hatchling Araripesuchus is 'galloping' out of the shell on its tiny, long legs. It looks alert and ready to run immediately.",
+    
+    "top_right_dining": "The 'Dog-Croc' is pouncing on a large desert scorpion. It is standing on its hind legs slightly, with its front paws pinned on the sand, snout hovering over the prey. The scorpion's stinger is arched, but the croc's thick scales provide protection.",
+    
+    "bottom_left_sleeping": "The animal is 'denning'—curled up inside a cool, shaded sandstone cave. Unlike a modern croc, it is curled in a circle like a dog, with its snout tucked toward its tail. The lighting is soft and cool.",
+    
+    "bottom_right_playing": "Two Araripesuchus are 'play-sparring' on a sand dune, standing on their hind legs and nipping at each other's snouts. Their movements are springy and energetic, kicking up plumes of fine red dust.",
+    
+    "rendering_notes": "Avoid flat 'swamp croc' colors. Give the Araripesuchus a 'desert camo' pattern of tan, brown, and brick-red. Ensure the eyes are positioned more forward than a typical crocodile to give it a more focused, intelligent expression."
+  }
+}

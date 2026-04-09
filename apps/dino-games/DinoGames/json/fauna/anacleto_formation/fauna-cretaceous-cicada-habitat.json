@@ -1,0 +1,18 @@
+{
+  "id": "cretaceous_cicada_habitat_001",
+  "species": "Cretaceous Cicada (Cicadidae)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "GOLDEN_HOUR_WARMTH",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "ARAUCARIA_FOREST_CANOPY",
+    "flora": ["Araucaria bark", "Resin/Amber drips", "Scale-leaves"],
+    "ground_palette": ["Purple-Grey", "Sienna", "Amber"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; large, clear wings with thick veins; wide-set red eyes; heavy, robust body."
+  },
+  "visual_logic": {
+    "composition": "A side-profile of a cicada clinging to the 'shingle-like' bark of an Araucaria tree. A drip of golden resin is visible nearby. The background shows the distant floodplain under a setting sun.",
+    "ground": "The view is elevated, looking down at the purple-red forest floor far below.",
+    "lighting": "Golden, late-afternoon light that illuminates the veins in the cicada's wings like stained glass."
+  }
+}

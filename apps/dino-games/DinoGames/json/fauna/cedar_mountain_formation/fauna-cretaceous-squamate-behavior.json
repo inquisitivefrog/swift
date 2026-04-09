@@ -1,0 +1,39 @@
+{
+  "id": "CM_CRETACEOUS_SQUAMATE_BEHAVIOR_01",
+  "layout": "2x2 Quadrant Grid",
+  "tech_ref": "SQUARE_HERO_CARD",
+  "formation_ref": "CEDAR_MOUNTAIN",
+  "habitat_ref": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "global_constraints": {
+    "text_render": "STRICT_NO_TEXT",
+    "aspect_ratio": "1:1 Square",
+    "audience": "Pre-reader (Visual Narrative Only)"
+  },
+  "quadrants": {
+    "top_left": {
+      "scene": "Birth (The Hatching)",
+      "description": "A tiny Squamate head with one bright eye peeking out of a white, leathery egg buried in 'Chalky white' silt; a sense of wonder.",
+      "visual_action": "Emergence / Discovery"
+    },
+    "top_right": {
+      "scene": "Dining (The Snack)",
+      "description": "The Squamate perched on a 'Maroon' rock, its tongue catching a small 'Amber' colored ant; large expressive eyes showing focus.",
+      "visual_action": "Hunting / Nourishment"
+    },
+    "bottom_left": {
+      "scene": "Sleeping (The Crevice)",
+      "description": "The Squamate curled into a tight spiral inside a cool, 'Pale lavender' rock crack; soft moonlight filtering in.",
+      "visual_action": "Resting / Safety"
+    },
+    "bottom_right": {
+      "scene": "Playing (Tail-Wagging)",
+      "description": "The Squamate on a 'Dull green' mossy bank, standing high on its legs and looking at its own tail with a playful, 'confused' expression.",
+      "visual_action": "Self-awareness / Play"
+    }
+  },
+  "visual_logic": {
+    "lighting": "SUNNY_EXPOSED_CINEMATIC with high-saturation colors.",
+    "palette": ["Pale lavender", "Chalky white", "Maroon", "Electric Lime Green"]
+  }
+}

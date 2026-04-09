@@ -1,0 +1,11 @@
+{
+  "id": "PELVIS_ANKY_V1",
+  "species": "Ankylosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Top-down view of the pelvis.",
+  "visual_hook": "Extremely flat and broad, like a coffee table. This pelvis is fused to the spine to support heavy armor plating on top.",
+  "material": "Matte, heavy grey bone. Rugose and bumpy texture.",
+  "inset_view": "Top-right corner: Cross-section showing how the armor plates are fused directly to the hip bone.",
+  "negative_prompt": "tall, narrow, graceful, shiny”,
+  “constraints”: “no tail, no text."
+}

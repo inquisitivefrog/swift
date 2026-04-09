@@ -1,0 +1,18 @@
+[
+  {
+    "id": "PTERO_005_PTERODACTYLUS",
+    "species": "Pterodactylus",
+    "style_id": "STYLE_CLAY_MASTER",
+    "tech_ref": "DEFAULT_SQUARE",
+    "formation_ref": "SOLNHOFEN",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "period": "JURASSIC",
+    "flora_manifest": ["JURASSIC_BASE", "SOLNHOFEN_ADDITIONS"],
+    "fauna_manifest": ["JURASSIC_BASE", "SOLNHOFEN_ADDITIONS"],
+    "visual_logic": {
+      "subject": "A small, sleek pterosaur with a straight beak and tiny clay teeth.",
+      "action": "Standing on fine white carbonate sand looking at a small crocodilian.",
+      "environment": "Clear turquoise shallow water with pandanus-like shrubs."
+    }
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: LANCE_HELL_CREEK]",
+      "layer_3_action": {
+        "subject": "Quetzalcoatlus",
+        "features": ["Extreme vertical height", "Giraffe-like neck", "Massive beak", "Sturdy quadrupedal stance"],
+        "action": "The 1:1 square silhouette of a Quetzalcoatlus towering over a palm tree while standing on the ground. No text."
+      }
+    }
+  }
+]

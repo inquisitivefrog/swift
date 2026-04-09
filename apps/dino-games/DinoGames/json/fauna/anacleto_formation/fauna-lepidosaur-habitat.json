@@ -1,0 +1,26 @@
+{
+  "id": "lepidosaur_habitat_natural_001",
+  "species": "Anacleto Lepidosaur (Small Lizard)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "ROCKY_MUDSTONE_OUTCROP",
+    "flora": [
+      "Xeric shrubs",
+      "Sparse ground-cover ferns",
+      "Dry, scrubby brush"
+    ],
+    "ground_palette": [
+      "Vivid Purple",
+      "Dusty Ochre",
+      "Ash Grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; iridescent or 'gem-like' scales; large, observant lizard eyes; dynamic 'ready-to-bolt' posture; tail is long and tapers elegantly."
+  },
+  "visual_logic": {
+    "composition": "A close-up of a brightly colored lizard basking on a chunk of purple mudstone. One eye is tilted upward toward the sky (watching for predators). Behind it, a cluster of small, broken geodes glimmers in the sun, mirroring the iridescent shimmer of the lizard's own scales.",
+    "ground": "Cracked, sun-baked purple claystone with fine sandy patches of ochre silt.",
+    "lighting": "Hard, bright afternoon sun that creates sharp shadows and makes the lizard’s metallic-green and blue scales 'pop' against the purple earth."
+  }
+}

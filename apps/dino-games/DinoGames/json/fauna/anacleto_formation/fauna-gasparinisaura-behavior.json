@@ -1,0 +1,26 @@
+{
+  "id": "gasparinisaura_behavior_quadrant_001",
+  "species": "Gasparinisaura cincosaltensis",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "RIVER_VALLEY_FLOODPLAIN",
+    "flora": [
+      "Fresh green ferns",
+      "Soft conifer needles",
+      "Flowering Cretaceous shrubs"
+    ],
+    "ground_palette": [
+      "Terracotta",
+      "Deep Purple",
+      "Fern Green"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on social behavior and agility; clean quadrant separation; character-driven expressions (curiosity, caution, and joy)."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left (Birth): A colonial nesting site with several small, leathery eggs; a hatchling with oversized eyes is clumsily stepping out of a shell; Top-Right (Dining): The Gasparinisaura using its small front hands to pull a fern frond toward its beak; Bottom-Left (Sleeping): A small group of three Gasparinisaura huddling together for warmth, their tails draped over one another; Bottom-Right (Playing): Two juveniles engaged in a playful chase, leaping over a fallen, mossy log with great agility.",
+    "ground": "Soft, trampled vegetation and red-purple mud, showing various small three-toed footprints.",
+    "lighting": "Clear, bright daylight that emphasizes the social bond between the animals and the vibrant colors of their environment."
+  }
+}

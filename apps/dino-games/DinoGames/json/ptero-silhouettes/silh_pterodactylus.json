@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: SOLNHOFEN]",
+      "layer_3_action": {
+        "subject": "Pterodactylus",
+        "features": ["Straight beak with small teeth at tip", "Small body size", "Short tail", "Long neck"],
+        "action": "The 1:1 square silhouette of a Pterodactylus standing on a white sandbar with its wings folded. No text."
+      }
+    }
+  }
+]

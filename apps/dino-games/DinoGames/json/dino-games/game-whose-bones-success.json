@@ -1,0 +1,41 @@
+{
+  "id": "GAME_CARD_WHOSE_BONES_02",
+  "project": "DinoGames",
+  "category": "Marketing/UI Asset - Game Card",
+  "species_featured": ["Human (dino_bones_paleontologist_05)", "Edmontosaurus (Carcass)"],
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "DAPPLED_AFTERNOON_SUN",
+  "formation_ref": "DINOSAUR_PARK_FORMATION",
+  "habitat_ref": "COASTAL_ALLUVIAL_PLAIN",
+  
+  "visual_elements": {
+    "foreground_subject": {
+      "character_ref": "dino_bones_paleontologist_05",
+      "pose": "Kneeling in the mudstone, holding a fine-bristled brush in one hand and a magnifying glass in the other. She is clearing silt away from the 'duck-bill' beak of the skull.",
+      "visual_identity": "Asian ethnicity with short black hair and tanned skin.",
+      "uniform": "Bright red tee shirt under a khaki safari vest, red shorts, and brown hiking boots."
+    },
+    "primary_subject": {
+      "fossil": "Hadrosaur (Edmontosaurus) semi-articulated carcass",
+      "pose": "The skeleton is partially buried in dark grey mudstone. The long, lattice-like tail and the ribcage are exposed, showing the 'Hollow-Tube' structure of a lighter bipedal dinosaur.",
+      "visual_hook": "The 'Puzzle-Bones.' Unlike the solid Apatosaur, these look more delicate, with visible hollows in the vertebrae and a flat, toothless beak.",
+      "material": "Matte, charcoal-grey to dark brown bone, looking slightly 'fossilized' within the surrounding rock."
+    },
+    "environment": {
+      "substrate": "Wet, dark organic mudstone and siltstone with ripples from an ancient river.",
+      "flora": "Lush tree ferns and dense conifer seedlings catching dappled light.",
+      "palette": ["Dark grey", "Ochre", "Brown", "Deep forest green", "Bright red (Character/Text)"].
+    },
+    "typography": {
+      "text": "Whose Bones?",
+      "style": "Extra-large 3D red mixed-case caption with a gold stroke/highlight.",
+      "position": "Centered at the top."
+    },
+    "typography": {
+      "text": “Player Wins!",
+      "style": "Extra-large 3D red mixed-case caption with a gold stroke/highlight.",
+      "position": "Centered at the bottom."
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "giant_water_bug_habitat_001",
+  "species": "Giant Water Bug (Belostomatidae)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAMP_MISTY_MORNING",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "RIVER_MARGINS",
+    "flora": [
+      "Thick reeds",
+      "Floating lily-like leaves",
+      "Exposed tree roots"
+    ],
+    "ground_palette": ["Purple-Red Clay", "Ochre", "Murky Brown"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; flat, leaf-like body shape; powerful, pincer-like front legs; mottled brown and grey 'camouflage' textures."
+  },
+  "visual_logic": {
+    "composition": "A top-down view of the water bug perfectly camouflaged against a submerged, decaying leaf. Only its large, dark eyes and the tips of its front pincers are clearly visible. The water is still, reflecting the misty morning sky.",
+    "ground": "A mix of smooth river clay and dark organic leaf litter.",
+    "lighting": "Low, soft morning light that emphasizes the 'flatness' of the bug and its ability to hide in plain sight."
+  }
+}

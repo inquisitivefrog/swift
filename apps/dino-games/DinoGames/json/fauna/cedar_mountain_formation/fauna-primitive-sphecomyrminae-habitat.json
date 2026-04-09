@@ -1,0 +1,14 @@
+{
+  "id": "CM_BIRD_CHAR_01",
+  "species": "Early Cretaceous Enantiornithes (Early Bird)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_identity": {
+    "body": "Small, plump, and covered in soft 'animated' downy feathers. Two wings with visible but small, rounded vestigial claws at the 'elbow' joint.",
+    "coloration": "Vibrant turquoise and sunny yellow feathers to provide high contrast against the formation's purple and white ground colors.",
+    "face": "Large, sparkling black eyes with expressive white 'eyebrows' made of feathers. A short, slightly hooked beak.",
+    "no_text_constraint": "True. Personality is shown through tilting the head and 'puffed out' chest feathers."
+  },
+  "personality": "Cheerful, jittery, and very curious. It moves with quick, hopping motions and short bursts of flight.”,
+  “constraint”: “No text."
+}

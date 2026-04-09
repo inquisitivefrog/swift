@@ -1,0 +1,10 @@
+{
+  "id": "LEG_APAT_V1",
+  "species": "Apatosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "region": "hindleg",
+  "pose": "A massive, two-part vertical pillar. The top (thigh) and bottom (shin) bones are stacked straight to support weight.",
+  "visual_hook": "The 'Pillar-leg.' The foot is wide and round like an elephant's. The shin area is shorter and thicker than the thigh.",
+  "material": "Matte, light-grey tan bone. Stony and weathered.",
+  "inset_view": "Top-right corner: Cross-section of the bone showing dense, solid rings like an ancient tree."
+}

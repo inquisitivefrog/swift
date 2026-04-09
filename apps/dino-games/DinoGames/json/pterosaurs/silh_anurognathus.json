@@ -1,0 +1,16 @@
+[
+  {
+    "id": "PTERO_001_ANUROGNATHUS",
+    "species": "Anurognathus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "style_id": "STYLE_CLAY_MASTER",
+    "formation_ref": "TIAOJISHAN",
+    "habitat_ref": "FORESTED_VOLCANIC_HIGHLANDS",
+    "visual_logic": {
+      "subject": "A tiny, frog-faced pterosaur with a fuzzy matte clay texture.",
+      "action": "Perched on a dark charcoal-grey rock dusted with light ash, hunting a Jurassic beetle.",
+      "environment": "Dense conifer forest background with giant horsetails."
+    }
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: SOLNHOFEN]",
+      "layer_3_action": {
+        "subject": "Caypullisaurus",
+        "features": ["High-speed streamlined body", "Very tall, symmetrical tail fluke", "Small, narrow pectoral fins"],
+        "action": "A 1:1 square silhouette of a Caypullisaurus in a high-speed sprint across the lagoon. No text."
+      }
+    }
+  }
+]

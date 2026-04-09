@@ -1,0 +1,33 @@
+{
+  "id": "GAME_CARD_DINO_FAUNA_SUCCESS_01",
+  "project": "DinoGames",
+  "category": "Reward/End-Game Asset",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "CEDAR_MOUNTAIN",
+  "habitat_ref": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+  "visual_elements": {
+    "primary_subject": {
+      "character": "Small Early Cretaceous Lizard",
+      "pose": "Centered, sitting upright on a lavender-tinted siltstone, looking directly at the camera with a joyful, wide-eyed expression.",
+      "details": "Soft pebbled skin texture in vibrant greens and yellows to pop against the formation palette."
+    },
+    "secondary_subject": {
+      "character": "Primitive Ants",
+      "action": "Two ants in the lower corner appearing to 'cheer' or wave with their antennae, adding to the celebratory mood."
+    },
+    "background": "The lush Cedar Mountain flora (Paleopus and Conifers) slightly blurred (bokeh effect) to keep focus on the lizard.",
+    "typography": {
+      "text": “Player Wins!",
+      "style": "Extra-large 3D red mixed-case caption with a slight gold stroke/highlight for a 'premium' feel.",
+      "position": "Centered at the bottom."
+    },
+    "typography": {
+      "text": “Dino Fauna!",
+      "style": "Extra-large 3D red mixed-case caption with a slight gold stroke/highlight for a 'premium' feel.",
+      "position": "Centered at the top."
+    },
+  },
+  "emotional_tone": "Celebratory, rewarding, and friendly."
+}

@@ -237,6 +237,7 @@
       "LA_AMARGA_ADDITIONS": ["Equisetites (Giant Horsetails)", "Charophytes (Aquatic stoneworts)", "Early Podocarp Conifers"],
       "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
       "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
+      "POSEIDON_ADDITIONS": ["Floating Crinoid rafts (Seirocrinus) attached to driftwood", "Sargassum-like algae", "Phytoplankton blooms"],
       "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
       "TIAOJISHAN_ADDITIONS": ["Giant Horsetails", "Dense Conifer forest"],
       "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"]
@@ -251,6 +252,7 @@
       "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizards)", "Cicadas"],
       "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
       "NEMEGT_ADDITIONS": ["Freshwater crabs", "Shrimp", "Gar-like predators", "Champsosaurus"],
+      "POSEIDON_ADDITIONS": ["Stenopterygius", "Eurhinosaurus (long-snout)", "Temnodontosaurus (giant eyes)", "Ammonites (Harpoceras)", "Belemnites", "Giant Crinoids"],
       "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates"]
     },
     "era_manifests": {
@@ -293,6 +295,22 @@
         "substrate": "Bentonite clay and shale",
         "visuals": { "ground": "Slippery, light-colored volcanic mud", "water": "Deep blue-green caldera lake" }
       },
+      "OPEN_OCEAN_PELAGIC": {
+        "substrate": "Organic marine snow and abyssal silts",
+        "visuals": {
+          "ground": "Distant, dark silty floor with scattered ammonite shells",
+          "water": "Deep cobalt to indigo blue; visible 'god-rays' from the surface far above",
+          "atmospheric_effects": ["Suspended plankton", "Marine snow particulates"]
+        }
+      },
+      "PELAGIC_SHELF_SEA": {
+        "substrate": "Bituminous mud and organic "marine snow"",
+        "visuals": {
+          "ground": "Flat, dark-grey abyssal floor with scattered ammonite shells",
+          "water": "Deep indigo-to-black water with shimmering 'god-rays' from the surface",
+          "atmosphere": "Suspended particulates (plankton) and silver bubbles"
+        }
+      },
       "RIVER_DELTA_WETLANDS": {
         "physics": { "altitude": "sea_level", "water": "very_high" },
         "visuals": { "ground": "Point bars of gravel and coarse sand", "water": "Network of distributary channels" }
@@ -334,6 +352,30 @@
       "DESERT_DUNE_FIELDS": { "lighting_bias": "Extreme", "surface": "High-albedo sand and minimal shadow" }
     },
     "formation_logic": {
+      "ANACLETO" {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE", "ANACLETO_ADDITIONS"],
+        "fauna": ["LATE_CRETACEOUS_BASE"],
+        "habitat_default": "MEANDERING_RIVER_SYSTEMS",
+        "palette": ["Deep Purple-Red", "Maroon", "Silty Grey", "Pale Ochre"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Mudstone", "Siltstone", "Claystone"],
+          "mineral_palette": ["Emerald Green", "Mint", "Moss"]
+        }
+      },
+      {
+      "BLUE_LIAS": {
+        "period": "EARLY_JURASSIC",
+        "flora_manifest": ["JURASSIC_BASE", "FLOATING_CRINOID_RAFTS"],
+        "fauna_manifest": ["JURASSIC_BASE", "AMMONITES", "BELEMNITES"],
+        "habitat_default": "OPEN_OCEAN_PELAGIC",
+        "palette": ["Blue-grey", "Charcoal", "Limestone White"],
+        "strata_specifics": {
+          "primary_rocks": ["Laminated shale", "Argillaceous limestone"],
+          "mineral_palette": ["Dark Grey", "Blue-Grey", "Pyrite Gold"]
+        }
+      },
       "CANDELEROS": {
         "period": "EARLY_CRETACEOUS",
         "flora": ["EARLY_CRETACEOUS_BASE", "CANDELEROS_ADDITIONS"],
@@ -513,6 +555,18 @@
           "mineral_palette": ["Vibrant red", "Golden yellow", "Pale pink", "Dark mahogany"]
         }
       },
+      "KITADANI": {
+        "period": "EARLY_CRETACEOUS",
+        "flora": ["EARLY_CRETACEOUS_BASE", "KITADANI_ADDITIONS"],
+        "fauna": ["EARLY_CRETACEOUS_BASE", "KITADANI_ADDITIONS"],
+        "habitat_default": "MEANDERING_RIVER_SYSTEMS",
+        "palette": ["Light Grey", "Charcoal", "Reddish-Brown (Tuff)", "Deep Water Blue"],
+        "manifest": EARLY_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Light-grey sandstone", "Blackish organic shale"],
+          "mineral_palette": ["Light Grey", "Charcoal", "Reddish-Brown (Tuff)", "Deep Water Blue"]
+        }
+      },
       "LA_COLONIA": {
         "period": "LATE_CRETACEOUS",
         "flora": ["LATE_CRETACEOUS_BASE"],
@@ -597,6 +651,40 @@
           "mineral_palette": ["Light gray", "Tan", "Yellowish-orange", "Yellowish-grey"]
         }
       },
+      "OXFORD_CLAY": {
+        "period": "EARLY_JURASSIC",
+        "flora_manifest": ["JURASSIC_BASE", "PHYTOPLANKTON_BLOOMS"],
+        "fauna_manifest": ["JURASSIC_BASE", "AMMONITES", "LEEDSICHTHYS"],
+        "habitat_default": "OPEN_OCEAN_PELAGIC",
+        "palette": ["Greenish-grey", "Muddy Brown", "Deep Blue"],
+        "geology": {
+          "primary_rocks": ["Silicate-rich clay", "Organic mudstone"],
+          "mineral_palette": ["Greenish-grey", "Olive", "Dark Grey"]
+        }
+      },
+      "PIERRE_SHALE": {
+        "period": "LATE_CRETACEOUS",
+        "flora_manifest": ["LATE_CRETACEOUS_BASE", "PHYTOPLANKTON_BLOOMS"],
+        "fauna_manifest": ["LATE_CRETACEOUS_BASE", "MOSASAURS", "HESPERORNIS"],
+        "habitat_default": "PELAGIC_SHELF_SEA",
+        "palette": ["Dark Grey", "Slate Blue", "Silvery-White"],
+        "geology": {
+          "primary_rocks": ["Bentonite-rich shale", "Organic mudstone"],
+          "mineral_palette": ["Slate Grey", "Silver", "Black Carbonaceous Shale"]
+        }
+      },
+      "POSEIDON_SHALE": {
+        "period": "EARLY_JURASSIC",
+        "flora": ["JURASSIC_BASE", "POSEIDON_ADDITIONS"],
+        "fauna": ["JURASSIC_BASE", "POSEIDON_ADDITIONS"]
+        "habitat_default": "PELAGIC_SHELF_SEA",
+        "palette": ["Black oil shale", "Grey-white"],
+        "manifest": "JURASSIC_BASE",
+        "geology": {
+          "primary_rocks": ["Black Shale", "Pyrite nodules"],
+          "mineral_palette": ["Charcoal", "Jet black", "Pyrite gold", "Deep indigo"]
+        }
+      },
       "SHAXIMIAO": {
         "period": "JURASSIC",
         "flora": ["JURASSIC_BASE"],
@@ -667,6 +755,18 @@
         "geology": {
           "primary_rocks": ["Clay", "Siltstone", "Sandstone"],
           "mineral_palette": ["Mottled red", "Green-grey", "Ochre yellow", "Blue-grey clay"]
+        }
+      },
+      "WESSEX": {
+        "period": "EARLY_CRETACEOUS",
+        "flora": ["EARLY_CRETACEOUS_BASE", "WEALDEN_ADDITIONS"],
+        "fauna": ["EARLY_CRETACEOUS_BASE"],
+        "habitat_default": "SEASONAL_SUBTROPICAL_FLOODPLAIN",
+        "palette": ["Red", "Purple", "White"],
+        "manifest": "EARLY_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Mudstone", "White Sand"],
+          "mineral_palette": ["Red", "Purple", "Ochre", "Charcoal grey (plant debris)"]
         }
       }
     }

@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: PIERRE_SHALE]",
+      "layer_3_action": {
+        "subject": "Dolichorhynchops",
+        "features": ["Long, narrow 'sword' snout", "Short neck", "Compact, athletic body"],
+        "action": "A 1:1 square silhouette of a Dolichorhynchops in a high-speed pursuit pose. No text."
+      }
+    }
+  }
+]

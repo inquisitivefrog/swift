@@ -1,0 +1,21 @@
+{
+  "id": "termite_behavior_quadrant_001",
+  "species": "Cretaceous Primitive Termite",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_SOFT_WITH_RIM_LIGHTING",
+  "formation_ref": "CANDELEROS",
+  "visual_logic": {
+    "composition": "A professional 2x2 grid. The 3D rendering highlights the 'milky' texture of the workers versus the 'polished wood' texture of the soldiers.",
+    
+    "top_left_birth": "The Royal Chamber. A large, bloated Queen termite is surrounded by tiny, attentive workers. Dozens of small, pearl-like eggs are being moved by workers into nursery side-chambers. The atmosphere is calm and humid.",
+    
+    "top_right_dining": "A group of workers are seen vibrating their heads as they chew through a thick fiber of ancient wood. One worker is sharing a drop of liquid (trophallaxis) with another, showing their social feeding behavior.",
+    
+    "bottom_left_sleeping": "A 'resting gallery' where hundreds of termites are packed closely together, perfectly still, to conserve moisture and body heat during the cold desert night. Their antennae are lowered and overlapping.",
+    
+    "bottom_right_activity": "Defense! An 'Araripesuchus' (dog-croc) snout is poking into a break in the log. The 'Soldier' termites have rushed to the front, clicking their oversized, dark mandibles in a defensive line to protect the workers fleeing behind them.",
+    
+    "rendering_notes": "The soldiers' heads should have a high-gloss, 'lacquered' finish to distinguish them as the 'armor' of the colony. Use subsurface scattering on the workers to make them look soft and organic."
+  }
+}

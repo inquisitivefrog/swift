@@ -1,0 +1,12 @@
+{
+  "app_image_config": {
+    "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+    "tech_ref": "DEFAULT_SQUARE",
+    "layer_2_setting": "[REF: WESSEX]",
+    "layer_3_action": {
+      "subject": "Riparovenator",
+      "features": ["Crocodile-like skull", "Robust forelimbs", "Tall neural spines on tail", "Spinosaurid profile"],
+      "action": "A sharp 1:1 square silhouette of a Riparovenator prowling the edge of a grey plant-debris bed. No text."
+    }
+  }
+}

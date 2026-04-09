@@ -1,0 +1,11 @@
+{
+  "id": "RIBCAGE_ANKY_V1",
+  "species": "Ankylosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "pose": "Top-down or wide-front view of the ribcage. The ribs are flared out almost horizontally.",
+  "visual_hook": "The 'Pancake Chest'. The ribcage is wider than it is tall, providing a broad, flat base for its back armor.",
+  "material": "Matte, heavy grey bone. Rugose and fused to parts of the armor.",
+  "inset_view": "Top-right corner: Cross-section showing ribs that are thick and flattened like planks.",
+  "negative_prompt": "tall, narrow, graceful, shiny”,
+  “constraints”: “No text."
+}

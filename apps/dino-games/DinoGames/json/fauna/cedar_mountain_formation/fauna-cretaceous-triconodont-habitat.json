@@ -1,0 +1,13 @@
+{
+  "id": "CM_MAMMAL_CHAR_01",
+  "species": "Early Cretaceous Triconodont (Small Mammal)",
+  "tech_ref": "SQUARE_HERO_CARD",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_identity": {
+    "body": "Plump, shrew-like body covered in thick, soft-looking brown and cream fur. A long, slightly furry tail.",
+    "face": "Twitching pink nose; long, delicate whiskers; and very large, round 'night-vision' eyes to show it likes the dark.",
+    "paws": "Tiny, dexterous five-fingered paws, perfect for holding small seeds or insects.",
+    "constraints": ["STRICT_NO_TEXT", "TACTILE_FUR_TEXTURE"]
+  },
+  "personality": "Nervous, busy, and very fast. It sniffs the air constantly and scurries with high-energy movements."
+}

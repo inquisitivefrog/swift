@@ -1,0 +1,26 @@
+{
+  "id": "chelid_turtle_behavior_quadrant_001",
+  "species": "Chelid Turtle (Prochelidella)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "GOLDEN_HOUR_WARMTH",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "ANACLETO_RIVER_SYSTEM",
+    "flora": [
+      "Sedge grass",
+      "Submerged aquatic plants",
+      "Fallen Araucaria logs"
+    ],
+    "ground_palette": [
+      "Terracotta",
+      "Golden Sand",
+      "Deep Teal Water"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the 'side-neck' anatomy; gentle, slow-moving character energy; quadrants should feel interconnected by the river environment."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left (Birth): A small hatchling turtle digging its way out of a sandy riverbank, with the sun low on the horizon; Top-Right (Dining): The turtle underwater, snapping its jaws at a small freshwater crustacean near a mossy rock; Bottom-Left (Sleeping): The turtle pulled partially into its shell, resting at the bottom of a shallow pool, surrounded by gently waving water weeds; Bottom-Right (Playing/Basking): A 'stack' of three turtles of different sizes basking on a half-submerged log, soaking up the afternoon sun.",
+    "ground": "Varies from gritty, sun-warmed sand to the slippery, algae-covered wood of a fallen tree.",
+    "lighting": "Warm, golden-hour lighting that emphasizes the textures of the shells and the sparkling ripples of the river water."
+  }
+}

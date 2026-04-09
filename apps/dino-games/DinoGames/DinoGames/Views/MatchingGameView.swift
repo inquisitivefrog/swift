@@ -68,6 +68,27 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         return resolveURL(forPath: path)
     }
 
+    /// Tool name clips under `Assets/Audio/Tools/<category>/` — tries `field-{slug}` then `{slug}` in each folder (matches on-disk layout).
+    private static let toolsAudioSubdirectories: [String] = [
+        "discovery", "excavate", "preserve", "transport",
+        "basecamp", "cleanup", "paperwork",
+        "lab", "art",
+    ]
+
+    /// Looks up `Tools/{subdir}/field-{slug}` then `Tools/{subdir}/{slug}`; returns first hit (e.g. Dino Fossil Hunt intro walk + taps).
+    func urlForToolsAudio(slug: String) -> URL? {
+        let slug = slug.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !slug.isEmpty else { return nil }
+        let bases = ["field-\(slug)", slug]
+        for subdir in Self.toolsAudioSubdirectories {
+            for base in bases {
+                let path = "Tools/\(subdir)/\(base)"
+                if let url = resolveURL(forPath: path) { return url }
+            }
+        }
+        return nil
+    }
+
     /// Resolve path (e.g. "Feedback/crowd-cheering") to first found bundle URL (.m4a, .mp3, or .wav).
     private func resolveURL(forPath audioPath: String) -> URL? {
         let fileName = (audioPath as NSString).lastPathComponent
@@ -176,6 +197,18 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         }
     }
     
+    /// Maps a body-segment slug to `Audio/Body/{stem}.m4a` filename stem (Whose Bones?).
+    private func bodySegmentAudioStem(_ slug: String) -> String {
+        switch slug {
+        case "rib-cage", "ribs", "ribcage", "dorsal-vertebrae": return "ribcage"
+        case "shoulder", "shoulders", "shoulder-blade", "shoulder-blades": return "shoulder"
+        case "fore-leg", "foreleg": return "foreleg"
+        case "hind-leg", "hindleg": return "hindleg"
+        case "cervical-vertebrae": return "neck"
+        default: return slug
+        }
+    }
+
     // Map text to audio file paths (case-insensitive matching)
     private func audioFilePath(for text: String) -> String? {
         let normalized = text.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
@@ -540,6 +573,15 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-dino-tools-gameplay-directions"
         case "game-dino-fossil-hunt", "dino-fossil-hunt":
             return "Games/game-dino-fossil-hunt"
+        /// Dino Fossil Hunt hint tiles: `Assets/Audio/Fossil/{phase}.m4a` (not under Games/).
+        case "game-dino-fossil-hunt-hint-discovery":
+            return "Fossil/discovery"
+        case "game-dino-fossil-hunt-hint-excavate":
+            return "Fossil/excavate"
+        case "game-dino-fossil-hunt-hint-preserve":
+            return "Fossil/preserve"
+        case "game-dino-fossil-hunt-hint-transport":
+            return "Fossil/transport"
         case _ where normalized.hasPrefix("game-dino-fossil-hunt-"):
             return "Games/\(normalized)"
         case "can-you-return-the-tooth", "can you return the tooth":
@@ -608,12 +650,22 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-dino-footprints"
         case "game-dino-footprints-identify-the-footprint", "identify the footprint":
             return "Games/game-dino-footprints-identify-the-footprint"
+        case "game-whose-bones", "whose bones", "whose bones?":
+            return "Games/game-whose-bones"
+        case "game-whose-bones-gameplay":
+            return "Games/game-whose-bones-gameplay"
+        case "game-whose-bones-success":
+            return "Games/game-whose-bones-success"
         case "game-dino-bones", "dino bones":
             return "Games/game-dino-bones"
         case "game-dino-bones-identify-the-skeleton", "identify the skeleton":
             return "Games/game-dino-bones-identify-the-skeleton"
         case "game-dino-flora-which-three-dinosaurs":
             return "Games/game-dino-flora-which-three-dinosaurs"
+        case "game-dino-fauna-which-three-dinosaurs-bugs":
+            return "Games/game-dino-fauna-which-three-dinosaurs-bugs"
+        case "game-dino-fauna-which-three-dinosaurs-animals":
+            return "Games/game-dino-fauna-which-three-dinosaurs-animals"
         case "game-dino-flora-tap-the-plant-to-hear-description":
             return "Games/game-dino-flora-tap-the-plant-to-hear-description"
         case "game-dino-flora-tap-the-image":
@@ -690,6 +742,10 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         // Flora: flora-* → Flora/flora-{slug}.m4a for Dino Flora game
         case _ where normalized.hasPrefix("flora-"):
             return "Flora/\(normalized)"
+        // Fauna: fauna-{slug} → Fauna/{slug}.m4a for Dino Fauna species intros
+        case _ where normalized.hasPrefix("fauna-"):
+            let slug = String(normalized.dropFirst("fauna-".count))
+            return "Fauna/\(slug)"
         // Smiling Dinos: dino-smile-* → Smile/dino-smile-{toothType}.m4a for tooth intro audio
         case _ where normalized.hasPrefix("dino-smile-"):
             return "Smile/\(normalized)"
@@ -699,6 +755,22 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         // Dino Toothache: dino-toothache-* → Toothache/dino-toothache-{slug}.m4a for tooth intro audio
         case _ where normalized.hasPrefix("dino-toothache-"):
             return "Toothache/\(normalized)"
+        // Body segments: Audio/Body/{stem}.m4a (Whose Bones? segment names). Keys: body-{slug} or bare slug after space→hyphen normalization.
+        case _ where normalized.hasPrefix("body-"):
+            let slug = String(normalized.dropFirst("body-".count))
+            return "Body/\(bodySegmentAudioStem(slug))"
+        case "skull", "neck", "pelvis", "tail", "foreleg", "hindleg", "shoulder", "ribcage":
+            return "Body/\(normalized)"
+        case "rib-cage", "ribs", "dorsal-vertebrae":
+            return "Body/ribcage"
+        case "shoulders", "shoulder-blade", "shoulder-blades":
+            return "Body/shoulder"
+        case "fore-leg":
+            return "Body/foreleg"
+        case "hind-leg":
+            return "Body/hindleg"
+        case "cervical-vertebrae":
+            return "Body/neck"
         // Dinosaurs: Audio/Dinosaurs/{key}.m4a for any other dino-* key (e.g. dino-camarasaurus) for dinosaur name audio
         case _ where normalized.hasPrefix("dino-"):
             return "Dinosaurs/\(normalized)"

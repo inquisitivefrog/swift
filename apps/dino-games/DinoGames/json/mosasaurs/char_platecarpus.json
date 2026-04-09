@@ -1,0 +1,16 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_002",
+    "species": "Platecarpus coryphaeus",
+    "style_id": "STYLE_CLAY_MASTER",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "formation_ref": "PIERRE_SHALE",
+    "visual_logic": {
+      "color_palette": "Mottled brownish-green with bright orange bands across the tail fluke.",
+      "texture": "Smooth 'wet' clay finish with high-contrast keeled scales on the back.",
+      "action": "A sharp, banking turn through a forest of kelp-like floating seaweed.",
+      "environment": "Sun-dappled shallow water with dancing light patterns (caustics) on the seafloor."
+    }
+  }
+]

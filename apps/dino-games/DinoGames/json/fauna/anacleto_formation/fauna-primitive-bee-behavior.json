@@ -1,0 +1,11 @@
+{
+  "id": "primitive_bee_behavior_quadrant_001",
+  "species": "Mesozoic Bee (Apoidea)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "ANACLETO",
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left (Birth): A tiny larva inside a pollen-lined cell in a hollow reed; Top-Right (Dining): The bee covered in bright yellow pollen, sipping nectar from a flower; Bottom-Left (Sleeping): Tucked inside a folded leaf overnight; Bottom-Right (Activity): The bee in a 'pollen dance' near a flowering shrub.",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the 'fuzz' or soft hair on the bee's thorax to make it look approachable and cute for children."
+  }
+}

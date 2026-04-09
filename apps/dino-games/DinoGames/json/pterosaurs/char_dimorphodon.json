@@ -1,0 +1,18 @@
+[
+  {
+    "id": "PTERO_002_DIMORPHODON",
+    "species": "Dimorphodon",
+    "style_id": "STYLE_CLAY_MASTER",
+    "tech_ref": "DEFAULT_SQUARE",
+    "formation_ref": "TENDAGURU",
+    "habitat_ref": "COASTAL_LOWLANDS",
+    "period": "JURASSIC",
+    "flora_manifest": ["JURASSIC_BASE"],
+    "fauna_manifest": ["JURASSIC_BASE"],
+    "visual_logic": {
+      "subject": "A pterosaur with a large, puffin-like clay beak and a long tail with a diamond tip.",
+      "action": "Clambering playfully over a fallen Araucaria log in the steamy lagoon mud.",
+      "environment": "Low-altitude humidity haze with visible dragonflies in the air."
+    }
+  }
+]

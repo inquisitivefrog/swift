@@ -1,0 +1,18 @@
+{
+  "id": "cockroach_habitat_natural_001",
+  "species": "Mesozoic Cockroach (Blattodea)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAMP_MISTY_MORNING",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "DECAYING_LOG_COMMUNITY",
+    "flora": ["Araucaria bark", "Shelf fungi", "Damp leaf litter"],
+    "ground_palette": ["Deep Purple", "Umber", "Sienna"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; long, delicate antennae; amber-brown translucent wings; flat, aerodynamic body."
+  },
+  "visual_logic": {
+    "composition": "A side-angle view of a cockroach scurrying along the side of a fallen log. The texture of the 'shingle' bark is highly detailed. In the background, the misty morning light catches a spiderweb covered in dew.",
+    "ground": "A rich, moist environment of dark red-brown soil and purple clay fragments.",
+    "lighting": "Soft, cool morning light with high humidity, making the cockroach's back look damp and reflective."
+  }
+}

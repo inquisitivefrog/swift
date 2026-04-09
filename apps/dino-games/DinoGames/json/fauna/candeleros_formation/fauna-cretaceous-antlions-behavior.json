@@ -1,0 +1,21 @@
+{
+  "id": "antlion_behavior_quadrant_001",
+  "species": "Cretaceous Antlion (Myrmeleontidae)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_SOFT_WITH_RIM_LIGHTING",
+  "formation_ref": "CANDELEROS",
+  "visual_logic": {
+    "composition": "A professional 2x2 grid. PBR textures focus on the contrast between the bristly, armored larva and the delicate, veined wings of the adult.",
+    
+    "top_left_birth": "A side-view cross-section of the sand. A tiny, bristly hatchling is digging backward into the red earth immediately after emerging from a small egg. Its oversized jaws are already fully formed and ready to work.",
+    
+    "top_right_dining": "The 'Action' panel. A sand-burrowing beetle has fallen into the pit. The Antlion larva has lunged upward from the bottom, its massive curved mandibles locked around the beetle's leg. Sand is cascading down the walls of the cone.",
+    
+    "bottom_left_sleeping": "The 'Metamorphosis' rest state. A spherical cocoon made of silk and red sand grains is buried deep underground. Through a slight 'translucent' cheat in the render, we can see the pupa transforming inside.",
+    
+    "bottom_right_activity": "The adult form (the 'Antlion Fly') has emerged. It is perched on a dry desert reed at twilight, its four long, transparent wings shimmering with a subtle amber tint. Its body is slender and prehistoric-looking.",
+    
+    "rendering_notes": "The larva should have a dusty, 'dirty' texture to look like it lives in the soil. The adult wings should use a 'thin-film' shader to capture the iridescent light reflections."
+  }
+}

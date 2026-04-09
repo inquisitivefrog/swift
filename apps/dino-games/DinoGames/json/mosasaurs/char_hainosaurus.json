@@ -1,0 +1,15 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_008",
+    "species": "Hainosaurus bernardi",
+    "style_id": "STYLE_CLAY_MASTER",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "formation_ref": "PIERRE_SHALE",
+    "visual_logic": {
+      "color_palette": "Deep navy blue with a stark white lateral line running the length of the body.",
+      "action": "Cruising slowly through the abyss with an intimidating, wide-eyed gaze.",
+      "environment": "Deep indigo water with very faint god-rays from the far surface."
+    }
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "id": "water_beetle_behavior_001",
+  "species": "Cretaceous Water Beetle (Dytiscidae)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_SOFT",
+  "formation_ref": "ANACLETO",
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left (Birth): A long, slender larva (Water Tiger) emerging from a submerged plant stem; Top-Right (Dining): The beetle tackling a small tadpole or fish fry; Bottom-Left (Sleeping/Resting): The beetle hanging upside down at the surface, 'recharging' its air supply; Bottom-Right (Playing/Social): Several beetles 'racing' through a forest of underwater plants.",
+    "style_notes": "Focus on the 'Water Tiger' larva in the birth quadrant—it should look like a miniature, fierce dragon to contrast with the sleek adult."
+  }
+}

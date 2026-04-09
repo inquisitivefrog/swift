@@ -1,0 +1,11 @@
+"PIERRE_SHALE": {
+  "period": "LATE_CRETACEOUS",
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "PHYTOPLANKTON_BLOOMS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE", "MOSASAURS", "HESPERORNIS"],
+  "habitat_default": "PELAGIC_SHELF_SEA",
+  "palette": ["Dark Grey", "Slate Blue", "Silvery-White"],
+  "geology": {
+    "primary_rocks": ["Bentonite-rich shale", "Organic mudstone"],
+    "mineral_palette": ["Slate Grey", "Silver", "Black Carbonaceous Shale"]
+  }
+}

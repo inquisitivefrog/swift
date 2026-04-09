@@ -1,0 +1,16 @@
+{
+  "id": "giant_water_bug_behavior_quadrant_v3",
+  "species": "Giant Water Bug (Belostomatidae)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_SOFT_WITH_RIM_LIGHTING",
+  "formation_ref": "ANACLETO",
+  "visual_logic": {
+    "composition": "A clean 2x2 quadrant grid with thin, professional divider lines. Each panel features a high-fidelity 3D model with realistic depth of field.",
+    "top_left_parenting": "A male bug on a 3D-textured reed. The eggs on its back have a translucent, organic 'pearl' texture with subsurface scattering. Soft rim lighting highlights the bug's legs clasping the plant.",
+    "top_right_dining": "Action shot. The bug’s front pincers are thick and chitinous, catching a small fish. Water splashes are rendered as realistic 3D droplets with refractive properties.",
+    "bottom_left_resting": "The bug is anchored to a vertical stem. The lighting is moody and dappled. The bug's shell has a matte, leathery texture with fine 'micro-scratches' to look like a real physical object. No background animals to ensure zero silhouette overlap.",
+    "bottom_right_swimming": "Underwater view. The bug’s oar-like legs have realistic hair fringes (cilia) that catch the light. Motion blur is applied only to the legs, while the body remains tack-sharp.",
+    "rendering_notes": "NO 2D outlines. NO flat colors. Use ray-traced shadows and realistic water caustics. The bug should look like a high-end physical collectible or a 3D movie character, not a drawing."
+  }
+}

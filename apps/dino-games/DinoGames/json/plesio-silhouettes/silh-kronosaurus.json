@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: PIERRE_SHALE]",
+      "layer_3_action": {
+        "subject": "Kronosaurus",
+        "features": ["Giant boxy skull", "Short, thick neck", "Massive rear paddles", "Tapered tail"],
+        "action": "A 1:1 square silhouette of the massive Kronosaurus cruising horizontally. No text."
+      }
+    }
+  }
+]

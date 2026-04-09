@@ -1,0 +1,16 @@
+[
+  {
+    "id": "PTERO_003_DSUNGARIPTERUS",
+    "species": "Dsungaripterus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "style_id": "STYLE_CLAY_MASTER",
+    "formation_ref": "CEDAR_MOUNTAIN",
+    "habitat_ref": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+    "visual_logic": {
+      "subject": "Pterosaur with an upturned, tweezer-like beak and a low bony crest on its snout.",
+      "action": "Poking around a dry flash-flood channel made of pale lavender mudstone.",
+      "environment": "Chalky white nodules on the ground with sparse ginkgo trees."
+    }
+  }
+]

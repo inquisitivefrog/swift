@@ -1,0 +1,11 @@
+{
+  "id": "cretaceous_dragonfly_behavior_001",
+  "species": "Cretaceous Dragonfly (Odonata)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "ANACLETO",
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left (Birth): A dragonfly nymph crawling out of the water onto a reed, its back splitting to reveal the damp, crumpled wings of the adult; Top-Right (Dining): The dragonfly snatching a small gnat mid-air with its 'leg-basket'; Bottom-Left (Sleeping): Clinging to the underside of a broad fern leaf during a rain shower, wings folded back; Bottom-Right (Playing/Social): Two dragonflies engaged in a spiraling aerial 'dogfight' over a sunlit patch of the river.",
+    "style_notes": "Emphasize the 'transformation' in the birth quadrant—making it look magical and heroic for a child audience."
+  }
+}

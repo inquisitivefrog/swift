@@ -1,0 +1,12 @@
+{
+  "formation_id": "OXFORD_CLAY",
+  "period": "EARLY_JURASSIC",
+  "flora_manifest": ["JURASSIC_BASE", "PHYTOPLANKTON_BLOOMS"],
+  "fauna_manifest": ["JURASSIC_BASE", "AMMONITES", "LEEDSICHTHYS"],
+  "base_habitat": "OPEN_OCEAN_PELAGIC",
+  "palette": ["Greenish-grey", "Muddy Brown", "Deep Blue"],
+  "strata_specifics": {
+    "ground_texture": ["Silicate-rich clay", "Organic mudstone"],
+    "color_palette": ["Greenish-grey", "Olive", "Dark Grey"]
+  }
+}

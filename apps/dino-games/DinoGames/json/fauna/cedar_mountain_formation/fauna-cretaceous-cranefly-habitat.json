@@ -1,0 +1,14 @@
+{
+  "id": "CM_CRANEFLY_CHAR_01",
+  "species": "Early Cretaceous Crane Fly (Tipulomorpha)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_identity": {
+    "body": "Slender, elongated segmented body with soft, rounded edges; pale amber and cream coloration.",
+    "wings": "Two large, translucent wings with delicate, high-fidelity vein patterns; subtle iridescent sheen.",
+    "legs": "Six very long, thread-like legs held in a relaxed, 'stilt-walker' pose to appear whimsical rather than spindly.",
+    "face": "Large, dark, expressive eyes with a soft 'soulful' glint; small, non-threatening mouthparts."
+  },
+  "anatomy_constraints": "Must maintain long-legged silhouette; wings must be large enough to look functional for 'energetic' flight animation.",
+  "personality": "Gentle, clumsy, and slightly bumbling; moves with a bobbing, rhythmic flight pattern."
+}

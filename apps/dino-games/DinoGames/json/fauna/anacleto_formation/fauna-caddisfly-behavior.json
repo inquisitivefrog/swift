@@ -1,0 +1,11 @@
+{
+  "id": "caddisfly_behavior_001",
+  "species": "Cretaceous Caddisfly (Trichoptera)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "STUDIO_SOFT",
+  "formation_ref": "ANACLETO",
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left (Birth/Building): A larva carefully 'gluing' a tiny geode fragment to its silk tube with its front legs; Top-Right (Dining): The adult caddisfly sipping nectar from a primitive Cretaceous flower; Bottom-Left (Sleeping): The adult resting on tree bark, perfectly camouflaged against the lichen; Bottom-Right (Playing/Social): A swarm of adult caddisflies dancing in a 'cloud' over the water during twilight.",
+    "style_notes": "The 'Building' quadrant should look like a craft project, emphasizing the 'engineer' aspect of the insect."
+  }
+}

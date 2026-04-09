@@ -1,0 +1,25 @@
+{
+  "id": "DINO_026_RIPAROVENATOR",
+  "species": "Riparovenator milnerae",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "style_id": "STYLE_CLAY_MASTER",
+  "formation_ref": "WESSEX",
+  "habitat_ref": "SEASONAL_SUBTROPICAL_FLOODPLAIN",
+  "visual_identity": {
+    "color_palette": "Deep teal-green skin with vibrant sunset-orange 'tiger stripes' along the tail and neck; pale cream underbelly.",
+    "texture": "Smooth matte clay texture with a subtle pearlescent sheen on the snout to mimic wet skin.",
+    "distinguishing_marks": "Large, curved black talons on the thumbs; a series of small, rounded 'clay' bumps along the ridge of its crocodile-like snout."
+  },
+  "anatomy_constraints": {
+    "head": "Long, low crocodile-like skull with a slight notch near the tip of the snout; large, friendly, expressive yellow eyes.",
+    "limbs": "Robust arms with three fingers; the first finger (thumb) features a significantly larger hooked claw.",
+    "body": "Slender but muscular theropod frame; a tail with tall neural spines that give it a slightly flattened, 'paddle' appearance for swimming."
+  },
+  "visual_logic": {
+    "subject": "A friendly, stylized Riparovenator with a curious expression.",
+    "action": "Standing on a mottled red clay bank, one foot splashing into grey silty water, while watching a prehistoric dragonfly.",
+    "environment": "Background features charred 'plant debris' logs (lignite) and sparse, Mediterranean-style conifers (Pseudofrenelopsis) under a bright Cretaceous sun."
+  },
+  "personality": "The 'Patient Fisher'—calm, observant, and highly agile in water. He has a slightly more graceful, rhythmic movement style compared to the high-energy Allosaurus."
+}

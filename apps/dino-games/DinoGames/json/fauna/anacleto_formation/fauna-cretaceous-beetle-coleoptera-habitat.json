@@ -1,0 +1,18 @@
+{
+  "id": "cretaceous_beetle_habitat_001",
+  "species": "Cretaceous Ground Beetle (Coleoptera)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAPPLED_FOREST_LIGHT",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "FOREST_FLOOR_UNDERSTORY",
+    "flora": ["Rotting Araucaria logs", "Bracket fungi", "Thick moss"],
+    "ground_palette": ["Dark Umber", "Deep Purple", "Burnt Orange"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; iridescent metallic-green elytra (wing cases); heavy mandibles; tactile, segmented legs."
+  },
+  "visual_logic": {
+    "composition": "A low-angle shot of a beetle climbing over a ridge of bark. The beetle's shell reflects the green of the moss and the purple of the Anacleto clay. In the background, a dinosaur's footprint has collected a small pool of water.",
+    "ground": "Rich, dark organic soil mixed with flaking bark and orange-colored fungi.",
+    "lighting": "Sharp rays of light hitting the beetle's metallic back, creating bright specular highlights."
+  }
+}

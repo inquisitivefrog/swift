@@ -1,0 +1,19 @@
+{
+  "id": "buitreraptor_habitat_natural_001",
+  "species": "Buitreraptor gonzalezorum",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "DAPPLED_DESERT_BRUSH",
+  "formation_ref": "CANDELEROS",
+  "environment_details": {
+    "habitat": "DUNE_MARGIN_SCRUB",
+    "flora": ["Spiky desert cycads", "Low-lying dry ferns", "Weathered driftwood"],
+    "ground_palette": ["Terracotta", "Sandy Gold", "Deep Red"],
+    "style_notes": "High-fidelity 3D; plumage consists of fine, hair-like proto-feathers; long, needle-thin snout; extremely long tail for balance; bird-like, intelligent eyes."
+  },
+  "visual_logic": {
+    "composition": "A sleek Buitreraptor is crouched behind a spiky cycad bush, its long neck curved as it peers toward a potential prey item. The background features the sharp crest of a red sand dune under a hazy, hot sky. Its feathers have a subtle iridescent 'sheen' like a magpie.",
+    "ground": "A mix of loose red sand and cracked, sun-baked earth with small patches of dry, yellowed vegetation.",
+    "lighting": "Bright, harsh sunlight filtered through the spiky leaves of the cycad, creating complex shadow patterns across the raptor's feathered back."
+  }
+}

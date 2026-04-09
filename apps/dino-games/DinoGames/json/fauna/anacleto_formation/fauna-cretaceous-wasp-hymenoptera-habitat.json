@@ -1,0 +1,18 @@
+{
+  "id": "cretaceous_wasp_habitat_001",
+  "species": "Primitive Wasp (Hymenoptera)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "OPEN_WOODLAND_FLOWER_BED",
+    "flora": ["Early Angiosperms (primitive flowers)", "Magnolia-like blooms"],
+    "ground_palette": ["Vivid Purple", "Ochre", "Sage Green"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; slender 'waist'; transparent, amber-tinted wings; vibrant yellow and black warning colors; high-gloss exoskeleton."
+  },
+  "visual_logic": {
+    "composition": "A close-up of a wasp landing on the central cone of a primitive flower. The background is a soft-focus wash of purple Anacleto mudstone and green leaves. The wasp's wings are slightly vibrating, creating a delicate blur.",
+    "ground": "A carpet of fallen flower petals over dusty ochre silt.",
+    "lighting": "Warm, direct sun that makes the yellow bands on the wasp's body glow against the purple landscape."
+  }
+}

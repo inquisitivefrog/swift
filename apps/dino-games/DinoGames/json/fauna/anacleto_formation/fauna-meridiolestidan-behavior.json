@@ -1,0 +1,26 @@
+{
+  "id": "meridiolestidan_behavior_quadrant_001",
+  "species": "Meridiolestidan Mammal (Groebertherium-type)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SOFT_INTERNAL_GLOW",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "FLOODPLAIN_FOREST",
+    "flora": [
+      "Conifer bark textures",
+      "Soft seed pods",
+      "Hollowed logs"
+    ],
+    "ground_palette": [
+      "Warm Tan",
+      "Dark Brown",
+      "Purple-Grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; storytelling focus; emphasis on family and survival; warm and cozy aesthetics for the sleeping and birth scenes."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left (Birth): A cozy, fur-lined nest inside a hollowed-out log, showing a mother curled around three tiny, pinkish, fuzz-covered pups; Top-Right (Dining): The mammal standing on its hind legs, holding a large, colorful Cretaceous beetle in its paws and taking a bite; Bottom-Left (Sleeping): The mammal curled into a tight 'fuzz-ball' inside a rock crevice, its long tail wrapped around its body like a blanket; Bottom-Right (Playing): Two juvenile mammals 'wrestling' and tumbling over a large, round seed pod on the forest floor.",
+    "ground": "Varies by quadrant—from soft nest materials (fur/leaves) to the gritty, purple-red silt of the Anacleto floodplain.",
+    "lighting": "Soft, diffused lighting throughout, with a warm golden 'rim light' in the playing scene to highlight the fluffiness of their fur."
+  }
+}

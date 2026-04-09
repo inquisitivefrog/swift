@@ -1,0 +1,15 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_004",
+    "species": "Globidens alabamaensis",
+    "style_id": "STYLE_CLAY_MASTER",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "formation_ref": "PIERRE_SHALE",
+    "visual_logic": {
+      "color_palette": "Deep violet-grey with white 'pebbled' spots on the flippers; rounded bulbous molar teeth.",
+      "action": "Crushing a bright red-and-gold clay Ammonite in its jaws.",
+      "environment": "Deep blue water with a silty seafloor scattered with shell fragments."
+    }
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "id": "cronopio_behavior_quadrant_001",
+  "species": "Cronopio dentiacutus (Saber-toothed Mammal)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_SOFT_WITH_RIM_LIGHTING",
+  "formation_ref": "CANDELEROS",
+  "visual_logic": {
+    "composition": "A professional 2x2 grid. Ray-traced textures emphasize the fur and the sharp teeth.",
+    
+    "top_left_birth": "Inside a cozy, fur-lined burrow tucked deep beneath a sandstone shelf. A mother Cronopio is curled around four tiny, pink, hairless pups. The scene is lit by a warm, subterranean glow.",
+    
+    "top_right_dining": "The Cronopio is standing on its hind legs, using its long front claws to pin down a large Cretaceous beetle. Its mouth is open, showing the long 'saber' teeth about to deliver a precise bite. The beetle has a metallic, iridescent shell.",
+    
+    "bottom_left_sleeping": "The mammal is tucked into a ball inside a vertical rock crack, its long tail wrapped over its nose like a blanket. Its large eyes are shut tight, and the fur looks slightly ruffled.",
+    
+    "bottom_right_playing": "Two Cronopios are engaged in a high-speed chase across a fallen, petrified log. Their movements are agile and springy. One is mid-leap, showcasing its slender, athletic build and long tail used for balance.",
+    
+    "rendering_notes": "Avoid 2D 'cartoon' tropes. Ensure the teeth look like ivory/bone (translucent at the tips) and the eyes have a realistic 'wet' glint. The 'Dining' quadrant should look like a miniature action scene from a 3D movie."
+  }
+}

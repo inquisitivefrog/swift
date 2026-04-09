@@ -1,0 +1,26 @@
+{
+  "id": "lungfish_behavior_quadrant_001",
+  "species": "Dipnoan Lungfish (Metaceratodus)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "SEASONAL_FLOODPLAIN_WETLANDS",
+    "flora": [
+      "Dried reeds",
+      "Aquatic moss",
+      "Floating seed pods"
+    ],
+    "ground_palette": [
+      "Cracked Purple Clay",
+      "Dark Umber",
+      "Silt Grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; storytelling focus on survival; quadrants emphasize the transition from water to mud; friendly but prehistoric aesthetic."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left (Birth): Tiny, translucent fish larvae with visible external gills wriggling in a cluster of bubbles attached to a submerged reed; Top-Right (Dining): The lungfish suction-feeding on a freshwater snail near the muddy bottom; Bottom-Left (Sleeping/Aestivation): The lungfish curled up inside a protective 'mud cocoon' in cracked, dry purple earth, showing how it survives the dry season; Bottom-Right (Playing/Surfacing): The lungfish poking its snout above the water's surface to take a gulp of air, creating a series of concentric ripples.",
+    "ground": "Varies from soft, bubbly underwater mud to the hard, geometric cracks of sun-baked Anacleto claystone.",
+    "lighting": "Clear, even lighting to highlight the unique 'mud cocoon' texture and the details of the 'air-gulping' behavior."
+  }
+}

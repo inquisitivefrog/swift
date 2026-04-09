@@ -1,0 +1,21 @@
+{
+  "id": "buitreraptor_behavior_quadrant_001",
+  "species": "Buitreraptor gonzalezorum",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_SOFT_WITH_RIM_LIGHTING",
+  "formation_ref": "CANDELEROS",
+  "visual_logic": {
+    "composition": "A professional 2x2 grid with high-detail 3D rendering and realistic feather physics.",
+    
+    "top_left_birth": "A hidden nest site tucked into a sandstone crevice. Several elongated, speckled eggs are visible. One hatchling is peering out, its tiny snout already noticeably long and slender, covered in soft, white downy feathers.",
+    
+    "top_right_dining": "The Buitreraptor is using its specialized long snout to pluck a 'Najash' (legged snake) from a narrow rock crack. The snake is wriggling, and the raptor's head is tilted to the side to maintain its grip. This highlights its role as a small-prey specialist.",
+    
+    "bottom_left_sleeping": "The raptor is sleeping standing on one leg, its head tucked deep into the feathers of its wing-arm, similar to a modern heron or stork. It is sheltered by the overhang of a red sandstone boulder.",
+    
+    "bottom_right_playing": "A pair of juvenile Buitreraptors are 'dancing'—performing a leaping display with their wings spread wide, kicking up red sand. This social behavior emphasizes their bird-like agility and the vibrant orange-red dust of the Candeleros.",
+    
+    "rendering_notes": "The feathers should not look like solid blocks; they should have individual barb detail and react to the 'lighting_ref'. Avoid 'scary' monster tropes; maintain the elegant, bird-of-prey aesthetic."
+  }
+}

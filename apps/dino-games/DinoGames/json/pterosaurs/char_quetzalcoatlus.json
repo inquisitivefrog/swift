@@ -1,0 +1,18 @@
+[
+  {
+    "id": "PTERO_007_QUETZALCOATLUS",
+    "species": "Quetzalcoatlus",
+    "style_id": "STYLE_CLAY_MASTER",
+    "tech_ref": "DEFAULT_SQUARE",
+    "formation_ref": "LANCE_HELL_CREEK",
+    "habitat_ref": "COASTAL_LOWLANDS",
+    "period": "LATE_CRETACEOUS",
+    "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+    "fauna_manifest": ["LATE_CRETACEOUS_BASE", "HELL_CREEK_ADDITIONS"],
+    "visual_logic": {
+      "subject": "A giant pterosaur with a long neck, walking on all fours like a giraffe.",
+      "action": "Stalking through a lush canopy of palm-like Bennettitales.",
+      "environment": "Ground is brownish-black lignite and clay; a small Alphadon mammal watches from a tree."
+    }
+  }
+]

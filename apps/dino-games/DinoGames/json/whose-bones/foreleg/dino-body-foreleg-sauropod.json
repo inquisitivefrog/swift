@@ -1,0 +1,11 @@
+{
+  "id": "ARM_APAT_V1",
+  "species": "Apatosaurus",
+  "style_ref": "STUDIO_GROUNDED",
+  "region": "foreleg",
+  "pose": "A massive, perfectly vertical two-part pillar (upper and lower arm) with zero joint rotation.",
+  "visual_hook": "The 'Pillar-Arm'. The wrist and hand bones are fused into a rigid, vertical block. A single, large 'thumb' claw is the only separate digit.",
+  "material": "Matte, light-grey tan bone. Stony and weathered.",
+  "inset_view": "Top-right corner: Cross-section of the humerus (upper arm) showing dense, solid medullary bone development with tree-ring growth patterns.",
+  "negative_prompt": "fenestrae, air sacs, flexible wrist, supination, grasping fingers, slender"
+}

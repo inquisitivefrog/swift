@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: CANDELEROS]",
+      "layer_3_action": {
+        "subject": "Kyhytysuka",
+        "features": ["Macropredatory tooth arrangement visible in profile", "Large overall size", "Aggressive posture", "Pointed snout"],
+        "action": "A 1:1 square silhouette of a Kyhytysuka lunging forward in an attack posture. No text."
+      }
+    }
+  }
+]

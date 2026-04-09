@@ -1,0 +1,35 @@
+{
+  "id": "GAME_CARD_WHOSE_BONES_01",
+  "project": "DinoGames",
+  "category": "Marketing/UI Asset - Game Card",
+  "species_featured": ["Human (dino_bones_paleontologist_1)", "Apatosaurus (Femur)"],
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "MORRISON_LJ",
+  "habitat_ref": "SEMI_ARID_PLAINS",
+  
+  "visual_elements": {
+    "foreground_subject": {
+      "character_ref": "dino_bones_paleontologist_1",
+      "pose": "Crouched low beside the femur, holding a traditional magnifying glass. Her expression is one of intense scientific focus and wonder.",
+      "visual_identity": "Adult human proportions with soft, stylized, and slightly rounded edges. Long blonde hair and tanned skin visible under her white sun hat.",
+      "uniform": "Light pink blouse under a khaki safari vest, white shorts, and pink hiking boots."
+    },
+    "primary_subject": {
+      "fossil": "Apatosaurus Femur",
+      "visual_hook": "The 'Pillar-Bone.' A massive (6ft+) weathered, stony-textured femur resting horizontally. It appears dense and solid to serve as a 'weight anchor' for game physics.",
+      "material": "Matte, light-grey tan bone, stony, weathered."
+    },
+    "environment": {
+      "substrate": "Pale, dusty tan earth with white chalky nodules.",
+      "flora": "Sparse Jurassic scrub and seasonal leaf-drop Ginkgoales in the hazy distance.",
+      "palette": ["Variegated red", "Pinkish grey", "Greenish-grey", "Tan", "White"].
+    },
+    "typography": {
+      "text": "Whose Bones?",
+      "style": "Extra-large 3D red mixed-case caption with a gold stroke/highlight for a premium feel.",
+      "position": "Centered at the bottom."
+    }
+  }
+}

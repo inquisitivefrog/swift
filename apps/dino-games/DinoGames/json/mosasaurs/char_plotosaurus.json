@@ -1,0 +1,15 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_009",
+    "species": "Plotosaurus bennisoni",
+    "style_id": "STYLE_CLAY_MASTER",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "formation_ref": "PIERRE_SHALE",
+    "visual_logic": {
+      "color_palette": "Sleek metallic-silver and charcoal grey; ultra-smooth aerodynamic clay texture.",
+      "action": "Leaping completely out of the water in a high-speed breach.",
+      "environment": "Vibrant blue sky background with massive clay splashes of water."
+    }
+  }
+]

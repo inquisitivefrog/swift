@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: ELRHAZ]",
+      "layer_3_action": {
+        "subject": "Tapejara",
+        "features": ["Tall semi-circular head crest", "Short downturned beak", "Compact body"],
+        "action": "The 1:1 square silhouette of a Tapejara perched on a sandbar, highlighting the large sail-like crest. No text."
+      }
+    }
+  }
+]

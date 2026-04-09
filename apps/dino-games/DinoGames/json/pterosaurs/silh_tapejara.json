@@ -1,0 +1,16 @@
+[
+  {
+    "id": "PTERO_009_TAPEJARA",
+    "species": "Tapejara",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "style_id": "STYLE_CLAY_MASTER",
+    "formation_ref": "ELRHAZ",
+    "habitat_ref": "RIVER_DELTA_WETLANDS",
+    "visual_logic": {
+      "subject": "A pterosaur with a massive, vibrant semicircular clay crest on its head.",
+      "action": "Perched on a golden-yellow sandbar within a network of river channels.",
+      "environment": "High-key midday sun reflecting off light beige fluvial silts."
+    }
+  }
+]

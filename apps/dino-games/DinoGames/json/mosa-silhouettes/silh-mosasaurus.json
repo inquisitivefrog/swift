@@ -1,0 +1,17 @@
+{
+  "app_image_config": {
+    "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+    "tech_ref": "DEFAULT_SQUARE",
+    "layer_2_setting": "[REF: PIERRE_SHALE]",
+    "layer_3_action": {
+      "subject": "Mosasaurus hoffmannii",
+      "features": [
+        "Large, blocky skull with a heavy lower jaw",
+        "Deep, muscular chest cavity",
+        "Large pectoral and pelvic paddles",
+        "Long tail terminating in a distinct, downward-curving fluke"
+      ],
+      "action": "A 1:1 square silhouette of a Mosasaurus swimming in a powerful, lateral horizontal pose. No text."
+    }
+  }
+}

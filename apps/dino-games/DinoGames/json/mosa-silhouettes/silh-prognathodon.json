@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: PIERRE_SHALE]",
+      "layer_3_action": {
+        "subject": "Prognathodon",
+        "features": ["Deep, massive skull", "Heavy-set neck", "Wide powerful flippers"],
+        "action": "A 1:1 square silhouette of a Prognathodon biting down on a sea turtle shell. No text."
+      }
+    }
+  }
+]

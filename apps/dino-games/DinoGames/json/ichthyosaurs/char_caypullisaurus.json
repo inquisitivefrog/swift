@@ -1,0 +1,16 @@
+[
+  {
+    "id": "DINO_ICHTHY_007",
+    "species": "Caypullisaurus bonareli",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "style_id": "STYLE_CLAY_MASTER",
+    "formation_ref": "SOLNHOFEN",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "visual_logic": {
+      "color_palette": "Vibrant electric-blue skin with white 'speed streaks' along the sides.",
+      "action": "Sprinting horizontally through the water, tail fluke creating a soft 'clay' wake.",
+      "environment": "Pristine white sand and distant soft-blue lagoon horizons."
+    }
+  }
+]

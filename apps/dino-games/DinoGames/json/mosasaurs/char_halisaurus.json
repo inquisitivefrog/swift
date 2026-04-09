@@ -1,0 +1,15 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_007",
+    "species": "Halisaurus platyspondylus",
+    "style_id": "STYLE_CLAY_MASTER",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "formation_ref": "PIERRE_SHALE",
+    "visual_logic": {
+      "color_palette": "Vibrant turquoise with yellow 'leopard' spots and a soft glossy finish.",
+      "action": "Curling its body in a playful 'lizard-like' spiral near the surface.",
+      "environment": "Bright tropical blue water with clay air bubbles."
+    }
+  }
+]

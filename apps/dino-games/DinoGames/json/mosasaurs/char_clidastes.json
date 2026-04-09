@@ -1,0 +1,15 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_003",
+    "species": "Clidastes propython",
+    "style_id": "STYLE_CLAY_MASTER",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "formation_ref": "PIERRE_SHALE",
+    "visual_logic": {
+      "color_palette": "Light sandy-tan with dark chocolate 'jagged' stripes; glossy white clay teeth.",
+      "action": "Darting through a school of clay fish with its mouth wide open.",
+      "environment": "Clear sunlit water with shimmering caustic light patterns."
+    }
+  }
+]

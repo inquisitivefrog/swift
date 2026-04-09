@@ -1,0 +1,26 @@
+{
+  "id": "lungfish_habitat_natural_001",
+  "species": "Dipnoan Lungfish (Metaceratodus)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DAMP_MISTY_MORNING",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "EPHEMERAL_MUD_POOL",
+    "flora": [
+      "Stagnant water weeds",
+      "Rotting conifer branches",
+      "Algae-covered mudbanks"
+    ],
+    "ground_palette": [
+      "Deep Purple-Red Mud",
+      "Olive Green",
+      "Ochre"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; large, heavy scales with a slight iridescent sheen; thick, paddle-like fins; small but bright eyes; the fish looks robust and ancient."
+  },
+  "visual_logic": {
+    "composition": "A side-profile view of the lungfish resting at the bottom of a shallow, murky pool. The water is clear enough to see its 'armored' scales. In the background, the thick, purple-red clay of the Anacleto forms a steep bank, with a few ancient horsetails reflected in the water's surface.",
+    "ground": "A bed of soft, fine river silt and decaying organic matter (leaves/twigs) over a base of red-purple clay.",
+    "lighting": "Soft, diffused morning light filtering through a light mist, giving the water a cool, emerald-green tint."
+  }
+}

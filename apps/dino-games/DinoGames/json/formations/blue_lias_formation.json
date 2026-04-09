@@ -1,0 +1,12 @@
+{
+  "formation_id": "BLUE_LIAS",
+  "period": "EARLY_JURASSIC",
+  "flora_manifest": ["JURASSIC_BASE", "FLOATING_CRINOID_RAFTS"],
+  "fauna_manifest": ["JURASSIC_BASE", "AMMONITES", "BELEMNITES"],
+  "base_habitat": "OPEN_OCEAN_PELAGIC",
+  "palette": ["Blue-grey", "Charcoal", "Limestone White"],
+  "strata_specifics": {
+    "ground_texture": ["Laminated shale", "Argillaceous limestone"],
+    "color_palette": ["Dark Grey", "Blue-Grey", "Pyrite Gold"]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "formation_id": "POSEIDON_SHALE",
+  "base_habitat": "PELAGIC_SHELF_SEA",
+  "period": "EARLY_JURASSIC",
+  "strata_specifics": {
+    "ground_texture": "Finely laminated black oil shale and pyrite nodules",
+    "color_palette": ["Charcoal", "Jet black", "Pyrite gold", "Deep indigo"]
+  },
+  "flora_manifest": ["JURASSIC_BASE", "POSEIDON_ADDITIONS"],
+  "fauna_manifest": ["JURASSIC_BASE", "POSEIDON_ADDITIONS"]
+}

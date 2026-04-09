@@ -1,0 +1,14 @@
+{
+  "id": "CM_WASP_CHAR_01",
+  "species": "Early Cretaceous Predatory Wasp (Hymenoptera)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_identity": {
+    "body": "Slender, segmented torso with a distinct 'wasp waist'; smooth, high-fidelity chitin textures with soft, rounded edges to remain child-friendly.",
+    "coloration": "Deep iridescent blue-black with subtle amber highlights on the joints.",
+    "wings": "Four translucent, shimmering wings with delicate vein patterns; rendered with high-quality specular highlights.",
+    "face": "Large, expressive compound eyes with a friendly, soulful glint; short, non-aggressive antennae."
+  },
+  "anatomy_constraints": "Must maintain a recognizable wasp silhouette while avoiding sharp, needle-like points or aggressive stingers to suit the target audience.",
+  "personality": "Alert, industrious, and helpful; moves with quick, zippy, but controlled flight paths."
+}

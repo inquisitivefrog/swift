@@ -2,13 +2,13 @@
 //  DinosaurGameCatalog.swift
 //  DinoGames
 //
-//  Games for Land category (Dinosaurs). Six levels; 3–4 games per level. Visual: level image shows dinosaur size (small = level 1, bigger = level 2, etc.) so pre-readers can tell them apart. Audio: e.g. "Level One Really Easy Games".
+//  Games for Land category (Dinosaurs). Ten levels; 0–5+ games per level. Visual: level image shows dinosaur size (small = level 1, bigger = level 2, etc.) so pre-readers can tell them apart. Audio: e.g. "Level One Really Easy Games"; files in Audio/Levels/level-*-.m4a.
 //
 
 import Foundation
 
-/// Difficulty level for dinosaur games (1–6). Shown as a picker between Dinosaurs and the game list.
-/// Use image with small dinosaur for level 1, bigger for level 2, etc. Audio: level-1-really-easy-games, level-2-more-really-easy-games, etc.
+/// Difficulty level for dinosaur games (1–10). Shown as a picker between Dinosaurs and the game list.
+/// Use image with small dinosaur for level 1, bigger for level 2, etc. Audio: level-1-really-easy-games, … (map in SpeechManager to Levels/level-*-.m4a).
 enum GameLevel: String, CaseIterable, Identifiable {
     case level1
     case level2
@@ -18,6 +18,8 @@ enum GameLevel: String, CaseIterable, Identifiable {
     case level6
     case level7
     case level8
+    case level9
+    case level10
 
     var id: String { rawValue }
 
@@ -32,6 +34,8 @@ enum GameLevel: String, CaseIterable, Identifiable {
         case .level6: return 6
         case .level7: return 7
         case .level8: return 8
+        case .level9: return 9
+        case .level10: return 10
         }
     }
 
@@ -49,13 +53,18 @@ enum GameLevel: String, CaseIterable, Identifiable {
         case .level6: subtitle = "And Harder"
         case .level7: subtitle = "Hard Games"
         case .level8: subtitle = "Are You Sure You're Ready?"
+        case .level9: subtitle = "Impossible Games"
+        case .level10: subtitle = "Good Luck You'll Need It"
         }
         return "\(title) — \(subtitle)"
     }
 
     /// Asset name for level card: dino-level-one (small dino), dino-level-two (bigger), … Pre-readers distinguish by size.
     var imageName: String {
-        let names = ["dino-level-one", "dino-level-two", "dino-level-three", "dino-level-four", "dino-level-five", "dino-level-six", "dino-level-seven", "dino-level-eight"]
+        let names = [
+            "dino-level-one", "dino-level-two", "dino-level-three", "dino-level-four", "dino-level-five",
+            "dino-level-six", "dino-level-seven", "dino-level-eight", "dino-level-nine", "dino-level-ten",
+        ]
         return names[number - 1]
     }
 
@@ -70,6 +79,8 @@ enum GameLevel: String, CaseIterable, Identifiable {
         case .level6: return "level-6-and-harder"
         case .level7: return "level-7-hard-games"
         case .level8: return "level-8-are-you-sure-youre-ready"
+        case .level9: return "level-9-impossible-games"
+        case .level10: return "level-10-good-luck-youll-need-it"
         }
     }
 }
@@ -85,51 +96,59 @@ enum DinosaurGameCatalog {
         switch level {
         case .level1:
             return [
-                .guess(GuessGameConfigs.nameThatDinosaur),      // Name That Dinosaur
                 .weigh(WeighGameConfigs.weighDinosaur),        // Weigh the Dinosaur
                 .whoIsTaller(WhoIsTallerGameConfigs.whoIsTaller), // Which Dino Is Taller
+                .wacky(WackyGameConfigs.wackyDinosaurs),       // Wacky Dinosaurs
             ]
         case .level2:
             return [
+                .guess(GuessGameConfigs.nameThatDinosaur),      // Name That Dinosaur
                 .racing(RacingGameConfigs.racingDinosaurs),     // Racing Dinosaurs
-                .matching(MatchingGameConfigs.dinoDietFeatures), // Dino Diets!
                 .dinoAges(DinoAgesGameConfigs.dinoAges),           // Dino Ages
             ]
         case .level3:
             return [
-                .measure(MeasureGameConfigs.measureDinosaur),   // Measure the Dinosaur!
-                .balance(BalanceGameConfigs.balanceDinosaur),   // Balance the Dinosaurs
-                .dinoPush(DinoPushGameConfigs.dinoPushNeedsPeriod),        // Dino Push!
+                .guess(GuessGameConfigs.dinoFootprints),        // Dino Footprints
+                .dinoFlora(DinoFloraGameConfigs.dinoFlora),    // Dino Flora!
+                .dinoEggs(DinoEggsGameConfigs.dinoEggs),       // Dino Eggs!
             ]
         case .level4:
             return [
-                .matching(MatchingGameConfigs.dinoFeatures),   // Match the Dinosaur
-                .guess(GuessGameConfigs.dinoFootprints),        // Dino Footprints
+                .matrixMaterials(MatrixMaterialsGameConfigs.matrixMaterials), // Matrix Materials
+                .matching(MatchingGameConfigs.dinoDietFeatures), // Dino Diets!
                 .smilingDinos(SmilingDinosGameConfigs.smilingDinos), // Dino Smile!
             ]
         case .level5:
             return [
                 .guess(GuessGameConfigs.dinoBones),             // Dino Bones!
-                .dinoEggs(DinoEggsGameConfigs.dinoEggs),       // Dino Eggs!
                 .dinoTools(DinoToolsGameConfigs.dinoTools),   // Dino Tools!
-                .dinoFlora(DinoFloraGameConfigs.dinoFlora),    // Dino Flora!
+                .dinoFauna(DinoFaunaGameConfigs.dinoFauna),   // Dino Fauna!
             ]
         case .level6:
             return [
-                .toothache(ToothacheGameConfigs.toothache),    // Dino Toothache
-                .findMama(FindMamaConfigs.findMama),           // Find Mama
+                .balance(BalanceGameConfigs.balanceDinosaur),   // Balance the Dinosaurs
+                .measure(MeasureGameConfigs.measureDinosaur),   // Measure the Dinosaur!
                 .dinoHabitats(DinoHabitatsGameConfigs.dinoHabitats), // Dino Habitats
             ]
         case .level7:
             return [
-                .matrixMaterials(MatrixMaterialsGameConfigs.matrixMaterials), // Matrix Materials
-                .dinoFormations(DinoFormationsGameConfigs.dinoFormations), // Dino Formations
-                .dinoFossilHunt(DinoFossilHuntGameConfigs.dinoFossilHunt), // Dino Fossil Hunt!
+                .dinoPush(DinoPushGameConfigs.dinoPushNeedsPeriod),        // Dino Push!
+                .matching(MatchingGameConfigs.dinoFeatures),   // Match the Dinosaur
+                .guess(GuessGameConfigs.whoseBones),            // Whose Bones?
             ]
         case .level8:
             return [
+                .dinoFossilHunt(DinoFossilHuntGameConfigs.dinoFossilHunt), // Dino Fossil Hunt!
+                .toothache(ToothacheGameConfigs.toothache),    // Dino Toothache
+                .findMama(FindMamaConfigs.findMama),           // Find Mama
+            ]
+        case .level9:
+            return [
                 .dinoLunch(DinoLunchConfigs.dinoLunch),        // Dino Lunch
-                .wacky(WackyGameConfigs.wackyDinosaurs),       // Wacky Dinosaurs
+            ]
+        case .level10:
+            return [
+                .dinoFormations(DinoFormationsGameConfigs.dinoFormations), // Dino Formations
             ]
         }
     }

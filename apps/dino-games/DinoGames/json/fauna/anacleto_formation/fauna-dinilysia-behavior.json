@@ -1,0 +1,25 @@
+{
+  "id": "dinilysia_behavior_quadrant_001",
+  "species": "Dinilysia patagonica (Terrestrial Snake)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "FLOODPLAIN_BURROW_SYSTEM",
+    "flora": [
+      "Exposed roots of conifers",
+      "Dry mosses on clay"
+    ],
+    "ground_palette": [
+      "Purple",
+      "Dark Red",
+      "Slate Grey"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; storytelling focus; quadrant tiled composition; vibrant but grounded colors; 'toy-like' but biologically plausible behaviors."
+  },
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left (Birth): A cluster of leathery, cream-colored eggs in a soft earth burrow, with one hatchling snake peeking out; Top-Right (Dining): The snake lunging from shadows to catch a small, scurrying lepidosaur (lizard); Bottom-Left (Sleeping): The snake coiled tightly into a perfect circle inside a cool, dark mudstone crevice; Bottom-Right (Playing/Exploration): The snake curiously exploring a pile of small, colorful geodes, its body weaving between the stones.",
+    "ground": "Moist, dark red floodplain soil with visible sedimentary layering in the burrow shots.",
+    "lighting": "Even, bright diffused light to ensure all four behavior vignettes are clearly visible and approachable for children."
+  }
+}

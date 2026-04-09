@@ -1,0 +1,21 @@
+{
+  "id": "sand_beetle_behavior_quadrant_001",
+  "species": "Cretaceous Sand-Burrower (Coleoptera)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_SOFT_WITH_RIM_LIGHTING",
+  "formation_ref": "CANDELEROS",
+  "visual_logic": {
+    "composition": "A professional 2x2 grid. PBR (Physical Based Rendering) focuses on the contrast between the shiny beetle and the gritty sand.",
+    
+    "top_left_birth": "Deep underground in a cool, damp sand chamber. A cluster of smooth white eggs is nestled near a cache of buried plant matter. One larva (grub) is emerging, looking plump and creamy-white compared to the red sand.",
+    
+    "top_right_dining": "The beetle is scavenging on a fallen Araucaria cone, using its mandibles to shred the tough scales to reach the seeds inside. This highlights its role as a desert cleaner.",
+    
+    "bottom_left_sleeping": "The beetle is completely submerged just an inch below the sand surface to escape the midday heat. Only the very tips of its antennae are poking out like tiny sticks to 'feel' the air temperature.",
+    
+    "bottom_right_playing": "A group of three beetles are 'tumble-rolling' down a dune face—a common behavior when escaping predators or heat. They look like shiny marbles bouncing over the red sand ripples.",
+    
+    "rendering_notes": "The elytra should have a 'car-paint' level of reflectivity, showing a distorted reflection of the desert sky. Use high-resolution sand textures to emphasize the small scale of the animal."
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "cretaceous_scorpion_habitat_001",
+  "species": "Cretaceous Desert Scorpion",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "MIDDAY_HARSH_SHADOWS",
+  "formation_ref": "CANDELEROS",
+  "environment_details": {
+    "habitat": "SANDSTONE_CREVICE",
+    "flora": ["Desiccated moss", "Dried conifer needles"],
+    "ground_palette": ["Deep Crimson", "Oxide Red", "Dusty Black"],
+    "style_notes": "High-fidelity 3D; exoskeleton has a 'hammered metal' or 'rough stone' texture; heavy, thick pincers (chelae); visible sensory hairs (trichobothria) on the legs."
+  },
+  "visual_logic": {
+    "composition": "A top-down 'macro' view of a scorpion squeezed into a tight horizontal crack in a red sandstone wall. Its color perfectly matches the rock, making it almost invisible except for the glint of its many small eyes. The stinger is curled tightly over its back.",
+    "ground": "Gritty, wind-blown red sand settled into the grooves of ancient, weathered rock.",
+    "lighting": "Extreme contrast; the bright desert sun illuminates the sand outside the crack, while the scorpion remains in deep, cool violet shadows, highlighted by a single stray beam of light."
+  }
+}

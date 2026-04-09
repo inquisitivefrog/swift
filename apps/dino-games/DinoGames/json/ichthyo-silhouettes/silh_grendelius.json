@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: BLUE_LIAS]",
+      "layer_3_action": {
+        "subject": "Grendelius",
+        "features": ["Bulky, reinforced skull", "Heavy-set body", "Powerful biting jaws"],
+        "action": "A 1:1 square silhouette of a Grendelius crushing a large ammonite in its jaws. No text."
+      }
+    }
+  }
+]

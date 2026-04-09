@@ -1,0 +1,16 @@
+[
+  {
+    "id": "DINO_ICHTHY_008",
+    "species": "Platypterygius platydactylus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "style_id": "STYLE_CLAY_MASTER",
+    "formation_ref": "WEALDEN",
+    "habitat_ref": "COASTAL_LOWLANDS",
+    "visual_logic": {
+      "color_palette": "Mottled rusty-orange and green-grey skin to match the Wealden riverbanks.",
+      "action": "Using its wide, fan-like flippers to stabilize itself in a slow-moving estuary channel.",
+      "environment": "Mottled red clay banks with floating water lilies and reeds."
+    }
+  }
+]

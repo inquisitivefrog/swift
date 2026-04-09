@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_PLESIO_010",
+    "species": "Polycotylus latipinnis",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "style_id": "STYLE_CLAY_MASTER",
+    "formation_ref": "PIERRE_SHALE",
+    "visual_logic": {
+      "color_palette": "Earth-tone brown and tan with dark mahogany 'racing stripes'.",
+      "action": "Positioned horizontally, its thick, muscular flippers angled as if in mid-flap.",
+      "environment": "Grey-blue water with drifting seagrass fragments and organic particulates."
+    }
+  }
+]

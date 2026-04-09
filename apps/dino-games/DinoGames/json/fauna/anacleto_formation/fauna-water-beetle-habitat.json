@@ -1,0 +1,22 @@
+{
+  "id": "water_beetle_habitat_001",
+  "species": "Cretaceous Water Beetle (Dytiscidae)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "ANACLETO",
+  "environment_details": {
+    "habitat": "STAGNANT_FLOODPLAIN_POOL",
+    "flora": [
+      "Submerged hornwort",
+      "Floating duckweed-type plants",
+      "Decaying fern fronds"
+    ],
+    "ground_palette": ["Deep Purple Mud", "Dark Teal", "Silt Grey"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; smooth, oval, highly polished shell; oar-like fringed back legs; silver air bubble visible at the tail end."
+  },
+  "visual_logic": {
+    "composition": "An underwater shot looking up toward the surface. The beetle is diving downward, its powerful back legs kicking like oars. A shiny, silvery air bubble is trapped against its back, looking like a precious jewel.",
+    "ground": "A soft bed of purple-tinted silt with scattered, water-logged wood fragments.",
+    "lighting": "Bright daylight filtering through the water, creating 'caustics' (shimmering light patterns) on the beetle's glossy back."
+  }
+}

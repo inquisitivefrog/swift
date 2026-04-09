@@ -1,0 +1,14 @@
+{
+  "id": "CM_BEETLE_CHAR_01",
+  "species": "Early Cretaceous Ground Beetle (Carabidae lineage)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_identity": {
+    "body": "Oval, robust armored body with a glossy, 'candy-coated' shell texture. Segmented legs with tiny, rounded gripping hooks.",
+    "coloration": "Deep metallic forest green with Maroon pinstriping along the elytra (wing covers) to match the formation's mineral palette.",
+    "face": "Large, curious black eyes; short, segmented antennae that twitch energetically. Non-threatening, rounded mandibles.",
+    "texture": "Subsurface scattering on the shell to give it a realistic 3D depth and high-gloss specular highlights."
+  },
+  "anatomy_constraints": "Avoid sharp spikes or aggressive pincers; maintain a 'weighty' feel in the 3D model to distinguish it from the light, airy flies.",
+  "personality": "Sturdy, determined, and a bit of a 'tank'; moves with purposeful, rhythmic scurrying."
+}

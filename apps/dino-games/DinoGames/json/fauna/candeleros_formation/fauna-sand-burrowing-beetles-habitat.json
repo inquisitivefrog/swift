@@ -1,0 +1,19 @@
+{
+  "id": "sand_beetle_habitat_natural_001",
+  "species": "Cretaceous Sand-Burrower (Coleoptera)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "CANDELEROS",
+  "environment_details": {
+    "habitat": "ACTIVE_DUNE_SLOPE",
+    "flora": ["Isolated tufts of dry desert grass", "Exposed Araucaria roots"],
+    "ground_palette": ["Sunset Orange", "Vibrant Red", "Pale Gold"],
+    "style_notes": "High-fidelity 3D; ultra-smooth, mirror-finish elytra (wing cases); wide, shovel-shaped front tibia (legs) for digging; no visible external 'fuzz' to prevent sand friction."
+  },
+  "visual_logic": {
+    "composition": "A low-angle shot of the beetle mid-climb on a steep red sand dune. As it moves, it leaves a distinctive 'braided' track in the fine sand behind it. The sun is reflecting off its back in a sharp starburst. In the far distance, a massive sauropod footprint is visible in the valley floor.",
+    "ground": "Fine-grained red sand with perfect ripple physics; some grains are actively 'sliding' down the dune around the beetle's legs.",
+    "lighting": "High-noon desert sun, creating high-specular highlights on the beetle's back and deep, sharp shadows in the sand ripples."
+  }
+}

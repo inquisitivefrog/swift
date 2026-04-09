@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: SOLNHOFEN]",
+      "layer_3_action": {
+        "subject": "Rhamphorhynchus",
+        "features": ["Long tail with a paddle vane", "Forward-angled teeth in beak", "Curved wing profile"],
+        "action": "A 1:1 square silhouette of a Rhamphorhynchus skimming the water's surface with its paddle-tail visible. No text."
+      }
+    }
+  }
+]

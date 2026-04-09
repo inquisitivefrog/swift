@@ -1,0 +1,11 @@
+{
+  "id": "cicada_behavior_quadrant_001",
+  "species": "Cretaceous Cicada (Cicadidae)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "GOLDEN_HOUR_WARMTH",
+  "formation_ref": "ANACLETO",
+  "visual_logic": {
+    "composition": "A quadrant tiled composition: Top-Left (Birth/Emergence): The adult cicada pulling itself out of its brown, crunchy nymph shell on a tree trunk; Top-Right (Dining): The cicada using its needle-like beak to sip sap from a branch; Bottom-Left (Sleeping): Motionless on the underside of a thick leaf; Bottom-Right (Activity/Singing): The cicada's abdomen vibrating rapidly as it lets out its iconic Cretaceous buzz.",
+    "style_notes": "The 'Emergence' quadrant should highlight the contrast between the dull brown shell and the soft, fresh green/blue of the new adult body."
+  }
+}

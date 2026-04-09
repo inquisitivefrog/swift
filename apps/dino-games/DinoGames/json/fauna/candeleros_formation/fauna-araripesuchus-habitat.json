@@ -1,0 +1,19 @@
+{
+  "id": "araripesuchus_habitat_natural_001",
+  "species": "Araripesuchus gomesii (Dog-Croc)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "CANDELEROS",
+  "environment_details": {
+    "habitat": "EPHEMERAL_DESERT_OASIS",
+    "flora": ["Stunted Araucaria trees", "Dry, yellowed sedge grass", "Desert scrub"],
+    "ground_palette": ["Vibrant Terracotta", "Sandy Ochre", "Slate Grey"],
+    "style_notes": "High-fidelity 3D; skin texture is a mix of fine reptilian scales and larger protective scutes along the back; long, slender legs that lift the belly high off the ground; blunt, friendly snout."
+  },
+  "visual_logic": {
+    "composition": "A side-angle shot of the Araripesuchus trotting along the edge of a drying mud pool. Its posture is high and athletic, not sprawling. In the background, massive red sand dunes tower against a pale blue sky. Its tail is held straight out for balance.",
+    "ground": "Cracked, sundried terracotta clay at the water's edge, transitioning into fine orange sand.",
+    "lighting": "Hard, bright desert sun from a high angle, creating a sharp, dark shadow directly beneath the animal to emphasize its height off the ground."
+  }
+}
