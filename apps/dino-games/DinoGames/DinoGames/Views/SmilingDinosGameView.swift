@@ -488,17 +488,20 @@ struct SmilingDinosGameView: View {
         if let u1 = goodJobURL, let u2 = crowdURL {
             speechManager.playTogether(url1: u1, url2: u2) {
                 self.speechManager.onAudioFinished = nil
+                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
                 self.isAudioPlaying = false
                 self.isPresented = false
             }
         } else if let u = goodJobURL ?? crowdURL {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
+                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
                 self.isAudioPlaying = false
                 self.isPresented = false
             }
             speechManager.playAudioFile(url: u)
         } else {
+            LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
             isAudioPlaying = false
             isPresented = false
         }
@@ -734,7 +737,7 @@ struct SmilingDinosGameConfigs {
         let pool = dinosaursWithSmileAndTooth
 
         let allToothTypes = Set(pool.compactMap { DentalMorphology.smileToothType(for: $0) }.filter { ImageAssetCache.imageExists(named: "dino-smile-tooth-\($0)") })
-        let cladeById = MatchingGameConfigs.dinosaurCladeById
+        let cladeById = LandDinosaurCladeCatalog.cladeByCreatureId
         let toothTypeToClades: [String: Set<DinoClade>] = {
             var map: [String: Set<DinoClade>] = [:]
             for dino in pool {

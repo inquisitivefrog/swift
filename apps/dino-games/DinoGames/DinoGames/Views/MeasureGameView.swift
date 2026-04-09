@@ -90,7 +90,7 @@ enum MeasureGameConfigs {
     /// Grid slots: one per clade, clade tracked for replacement. Shuffled for random grid order.
     /// When `preferringSmallEnough` is set, ensure at least one clade contributes a creature with height <= that value (guarantees addable option).
     static func makeRoundSlotsForDinosaurs(excluding usedIds: Set<Int>, preferringSmallEnough remainingHeight: Double? = nil) -> [(clade: DinoClade, creature: MeasureCreature)]? {
-        let cladeById = MatchingGameConfigs.dinosaurCladeById
+        let cladeById = LandDinosaurCladeCatalog.cladeByCreatureId
         let pool = MatchingGameConfigs.allDinosaurs.filter { d in
             guard let imageName = d.imageName, imageName.hasPrefix("dino-"),
                   !usedIds.contains(d.id) else { return false }
@@ -143,7 +143,7 @@ enum MeasureGameConfigs {
     /// Replacement creature from clade, excluding current grid ids. Nil if none available.
     /// When `preferringSmallEnough` is set, prefer creatures with height <= that value (e.g. when left reference is small).
     static func replacementMeasureCreature(clade: DinoClade, excluding gridCreatureIds: Set<Int>, preferringSmallEnough maxHeight: Double? = nil) -> MeasureCreature? {
-        let cladeById = MatchingGameConfigs.dinosaurCladeById
+        let cladeById = LandDinosaurCladeCatalog.cladeByCreatureId
         let pool = MatchingGameConfigs.allDinosaurs.filter { d in
             guard let imageName = d.imageName, imageName.hasPrefix("dino-"),
                   !gridCreatureIds.contains(d.id) else { return false }
@@ -1056,15 +1056,18 @@ struct MeasureGameView: View {
         if let u1 = goodJobURL, let u2 = crowdURL {
             speechManager.playTogether(url1: u1, url2: u2) {
                 self.speechManager.onAudioFinished = nil
+                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
                 self.isPresented = false
             }
         } else if let u = goodJobURL ?? crowdURL {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
+                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
                 self.isPresented = false
             }
             speechManager.playAudioFile(url: u)
         } else {
+            LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
             isPresented = false
         }
     }

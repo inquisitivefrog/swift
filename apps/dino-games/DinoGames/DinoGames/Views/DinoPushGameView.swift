@@ -779,15 +779,18 @@ struct DinoPushGameView: View {
         if let u1 = goodJobURL, let u2 = crowdURL {
             speechManager.playTogether(url1: u1, url2: u2) {
                 self.speechManager.onAudioFinished = nil
+                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.config.id)
                 self.isPresented = false
             }
         } else if let u = goodJobURL ?? crowdURL {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
+                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.config.id)
                 self.isPresented = false
             }
             speechManager.playAudioFile(url: u)
         } else {
+            LandDinosaurProgress.notifyCompletionIfLandGame(configId: config.id)
             isPresented = false
         }
     }

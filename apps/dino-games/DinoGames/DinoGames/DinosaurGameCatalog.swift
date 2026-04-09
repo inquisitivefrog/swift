@@ -120,7 +120,7 @@ enum DinosaurGameCatalog {
             ]
         case .level5:
             return [
-                .guess(GuessGameConfigs.dinoBones),             // Dino Bones!
+                .guess(GuessGameConfigs.whoseBones),            // Whose Bones? (before Dino Bones — concept pair)
                 .dinoTools(DinoToolsGameConfigs.dinoTools),   // Dino Tools!
                 .dinoFauna(DinoFaunaGameConfigs.dinoFauna),   // Dino Fauna!
             ]
@@ -134,7 +134,7 @@ enum DinosaurGameCatalog {
             return [
                 .dinoPush(DinoPushGameConfigs.dinoPushNeedsPeriod),        // Dino Push!
                 .matching(MatchingGameConfigs.dinoFeatures),   // Match the Dinosaur
-                .guess(GuessGameConfigs.whoseBones),            // Whose Bones?
+                .guess(GuessGameConfigs.dinoBones),            // Dino Bones! (after Whose Bones — concept pair)
             ]
         case .level8:
             return [

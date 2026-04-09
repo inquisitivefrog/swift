@@ -672,15 +672,18 @@ struct DinoEggsGameView: View {
         if let u1 = goodJobURL, let u2 = crowdURL {
             speechManager.playTogether(url1: u1, url2: u2) {
                 self.speechManager.onAudioFinished = nil
+                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
                 self.isPresented = false
             }
         } else if let u = goodJobURL ?? crowdURL {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
+                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
                 self.isPresented = false
             }
             speechManager.playAudioFile(url: u)
         } else {
+            LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
             isPresented = false
         }
     }
@@ -826,7 +829,7 @@ struct DinoEggsGameConfigs {
 
     static var dinoEggs: DinoEggsGameConfig {
         let pool = dinosaursWithDinoAndEgg
-        let cladeById = MatchingGameConfigs.dinosaurCladeById
+        let cladeById = LandDinosaurCladeCatalog.cladeByCreatureId
         let byClade = Dictionary(grouping: pool) { cladeById[$0.id] ?? .theropod }
         let allClades = Array(byClade.keys).filter { !(byClade[$0] ?? []).isEmpty }
         var usedIds: Set<Int> = []
@@ -893,13 +896,13 @@ struct DinoEggsGameConfigs {
     /// Pool for distractors: any clade except the correct one.
     private static func dinosaursForDistractors(excludingClade excluded: DinoClade) -> [Dinosaur] {
         baseDinosaursWithDinoAndEgg(allowedClades: nil).filter { dino in
-            (MatchingGameConfigs.dinosaurCladeById[dino.id] ?? .theropod) != excluded
+            LandDinosaurCladeCatalog.clade(forCreatureId: dino.id) != excluded
         }
     }
 
     private static func baseDinosaursWithDinoAndEgg(allowedClades: Set<DinoClade>?) -> [Dinosaur] {
         let excludedClades: Set<DinoClade> = [.spinosaurid, .pachycephalosaur]
-        let cladeById = MatchingGameConfigs.dinosaurCladeById
+        let cladeById = LandDinosaurCladeCatalog.cladeByCreatureId
         return MatchingGameConfigs.allDinosaurs.filter { dino in
             let clade = cladeById[dino.id] ?? .theropod
             if let allowed = allowedClades, !allowed.contains(clade) { return false }

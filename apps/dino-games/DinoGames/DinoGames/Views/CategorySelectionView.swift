@@ -11,15 +11,19 @@ import UIKit
 enum GameCategory: String, CaseIterable, Identifiable {
     case land
     case air
-    case sea
+    case mosasaurs
+    case plesiosaurs
+    case ichthyosaurs
     
     var id: String { rawValue }
     
     var title: String {
         switch self {
         case .land: return "Dinosaurs"
-        case .sea: return "Marine Reptiles"
         case .air: return "Pterosaurs"
+        case .mosasaurs: return "Mosasaurs"
+        case .plesiosaurs: return "Plesiosaurs"
+        case .ichthyosaurs: return "Ichthyosaurs"
         }
     }
     
@@ -27,16 +31,20 @@ enum GameCategory: String, CaseIterable, Identifiable {
     var imageAssetName: String {
         switch self {
         case .land: return "category-land"
-        case .sea: return "category-sea"
         case .air: return "category-air"
+        case .mosasaurs: return "category-mosasaurs"
+        case .plesiosaurs: return "category-plesiosaurs"
+        case .ichthyosaurs: return "category-ichthyosaurs"
         }
     }
     
     var fallbackSystemImageName: String {
         switch self {
         case .land: return "leaf.fill"
-        case .sea: return "drop.fill"
         case .air: return "wind"
+        case .mosasaurs: return "lizard.fill"
+        case .plesiosaurs: return "tortoise.fill"
+        case .ichthyosaurs: return "fish.fill"
         }
     }
 }
@@ -49,7 +57,9 @@ struct CategorySelectionView: View {
     /// Each category image is disabled until its cover message has played.
     @State private var enabledLand = false
     @State private var enabledAir = false
-    @State private var enabledSea = false
+    @State private var enabledMosasaurs = false
+    @State private var enabledPlesiosaurs = false
+    @State private var enabledIchthyosaurs = false
     /// True only after the fourth clip (marine reptiles) has finished; prevents tapping during that clip and overlapping audio.
     @State private var coverSequenceComplete = false
     @State private var hasStartedCoverSequence = false
@@ -58,7 +68,9 @@ struct CategorySelectionView: View {
         switch category {
         case .land: return enabledLand
         case .air: return enabledAir
-        case .sea: return enabledSea
+        case .mosasaurs: return enabledMosasaurs
+        case .plesiosaurs: return enabledPlesiosaurs
+        case .ichthyosaurs: return enabledIchthyosaurs
         }
     }
     
@@ -142,7 +154,9 @@ struct CategorySelectionView: View {
     }
     
     private func coverAirDone() {
-        enabledSea = true
+        enabledMosasaurs = true
+        enabledPlesiosaurs = true
+        enabledIchthyosaurs = true
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
             self.coverSequenceComplete = true

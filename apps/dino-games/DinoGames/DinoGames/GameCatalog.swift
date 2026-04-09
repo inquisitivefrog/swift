@@ -8,7 +8,8 @@
 import Foundation
 
 enum GameCatalog {
-    /// Returns the ordered list of games for the given category. For .land, pass a level to get games for that level; otherwise level is ignored.
+    /// Returns the ordered list of games for the given category.
+    /// Pass a `GameLevel` to get games for that rung; when `level` is nil, returns all games in level order (concatenated).
     static func games(for category: GameCategory, level: GameLevel? = nil) -> [GameType] {
         switch category {
         case .land:
@@ -17,9 +18,25 @@ enum GameCatalog {
             }
             return DinosaurGameCatalog.games
         case .air:
+            if let level = level {
+                return PterosaurGameCatalog.games(level: level)
+            }
             return PterosaurGameCatalog.games
-        case .sea:
-            return MarineReptileGameCatalog.games
+        case .mosasaurs:
+            if let level = level {
+                return MosasaurGameCatalog.games(level: level)
+            }
+            return MosasaurGameCatalog.games
+        case .plesiosaurs:
+            if let level = level {
+                return PlesiosaurGameCatalog.games(level: level)
+            }
+            return PlesiosaurGameCatalog.games
+        case .ichthyosaurs:
+            if let level = level {
+                return IchthyosaurGameCatalog.games(level: level)
+            }
+            return IchthyosaurGameCatalog.games
         }
     }
 }

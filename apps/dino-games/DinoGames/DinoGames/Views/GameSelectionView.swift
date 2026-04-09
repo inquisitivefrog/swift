@@ -7,6 +7,7 @@
 
 import SwiftUI
 import AVFoundation
+import Combine
 
 // Import MatchingGameConfig from MatchingGameView
 // (In Swift, types are accessible across files in the same module)
@@ -71,33 +72,38 @@ struct GameSelectionView: View {
     @State private var gameWalkIndex: Int? = nil
     @State private var transitionGameImage: String?
     @State private var transitionAudioFile: String?
-    /// For Dinosaurs only: selected level (Easy/Mid/Hard). nil = showing level picker; non-nil = showing game list for that level.
+    /// Selected difficulty rung (shared `GameLevel` across categories). nil = level picker; non-nil = game list for that level.
     @State private var selectedLevel: GameLevel? = nil
     @State private var showCredits = false
+    @ObservedObject private var landProgress = LandDinosaurProgress.shared
 
-    /// Games for the current category (and level when category is land). When land + selectedLevel == nil we show level picker, not this list.
+    /// Games for the current category and level. When `selectedLevel == nil`, callers typically show the level picker instead of this list.
     private var gamesForCategory: [GameType] {
-        GameCatalog.games(for: category, level: category == .land ? selectedLevel : nil)
+        GameCatalog.games(for: category, level: selectedLevel)
     }
 
-    /// True when we show the game list (so intro + game walk run). False when we show the level picker (land, no level yet).
+    /// True when we show the game list (intro + game walk). False on the level picker.
     private var showingGameList: Bool {
-        category != .land || selectedLevel != nil
+        selectedLevel != nil
     }
     
     private var selectedGameId: String? {
         selectedGame?.id
     }
     
-    /// Navigation bar title. Empty when showing a level's game list (land + selectedLevel) so the level header (title) in the scroll is the only level heading.
+    /// Navigation bar title. Empty when showing a level's game list so the level header in the scroll is the only level heading.
     private var gameSelectionTitle: String {
-        switch category {
-        case .land:
-            if selectedLevel != nil { return "" }
-            return "Choose a level"
-        case .air: return "Choose a Pterosaur Game!"
-        case .sea: return "Choose a Marine Reptile Game!"
-        }
+        if selectedLevel != nil { return "" }
+        return "Choose a level"
+    }
+
+    private func isLandLevelLocked(_ level: GameLevel) -> Bool {
+        category == .land && !landProgress.isLevelUnlocked(level)
+    }
+
+    private func isLandGamePlayable(_ game: GameType) -> Bool {
+        guard category == .land, let level = selectedLevel else { return true }
+        return landProgress.canPlayLandGame(game, at: level)
     }
 
     /// Call after transition dismisses to present the correct game sheet.
@@ -161,13 +167,20 @@ struct GameSelectionView: View {
         gamesForCategory.isEmpty
     }
 
-    /// Level picker: Level 1–8 in a 4×2 grid (images with text below). Shown when category == .land && selectedLevel == nil.
+    /// Level picker: ten levels in a grid. Shown when no level is selected yet.
     @ViewBuilder
     private var levelPickerContent: some View {
         ScrollView {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 4), spacing: 16) {
                 ForEach(GameLevel.allCases) { level in
-                    LevelCard(level: level, onTap: { selectedLevel = level })
+                    LevelCard(
+                        level: level,
+                        isLocked: isLandLevelLocked(level),
+                        onTap: {
+                            guard !isLandLevelLocked(level) else { return }
+                            selectedLevel = level
+                        }
+                    )
                 }
             }
             .padding(.horizontal, 20)
@@ -189,10 +202,10 @@ struct GameSelectionView: View {
         }
     }
 
-    /// Main content: level picker for Dinosaurs (no level chosen) or game cards.
+    /// Main content: level picker or game cards.
     @ViewBuilder
     private var mainSelectionContent: some View {
-        if category == .land && selectedLevel == nil {
+        if selectedLevel == nil {
             levelPickerContent
         } else {
             gameCardsStack
@@ -267,7 +280,7 @@ struct GameSelectionView: View {
     @ViewBuilder
     private var gameCardsStack: some View {
         Group {
-            if category == .land, let level = selectedLevel {
+            if let level = selectedLevel {
                 levelHeaderView(level: level)
                     .id("levelHeader")
             }
@@ -293,7 +306,7 @@ struct GameSelectionView: View {
                     isSelected: selectedGameId == gameType.id || (gameWalkIndex != nil && gameWalkIndex == index),
                     isIntroduced: (gameWalkIndex == nil && !isAudioPlaying) || (gameWalkIndex != nil && index <= gameWalkIndex!),
                     showName: showGameName && selectedGameId == gameType.id,
-                    isDisabled: isAudioPlaying,
+                    isDisabled: isAudioPlaying || !isLandGamePlayable(gameType),
                     onTap: { handleGameTap(gameType) }
                 )
                 .id(gameType.id)
@@ -334,7 +347,7 @@ struct GameSelectionView: View {
                     if showGameTransition {
                         showGameTransition = false
                         selectedGame = nil
-                    } else if category == .land && selectedLevel != nil {
+                    } else if selectedLevel != nil {
                         selectedLevel = nil
                     } else {
                         navigateToCategories = false
@@ -343,7 +356,7 @@ struct GameSelectionView: View {
                     Image(systemName: "chevron.left")
                 }
             }
-            if !(category == .land && selectedLevel == nil) {
+            if selectedLevel != nil {
                 ToolbarItem(placement: .primaryAction) {
                     Button("Credits") { showCredits = true }
                 }
@@ -357,10 +370,15 @@ struct GameSelectionView: View {
             // So the game-name walk runs for each level when the list changes (non-readers memorize by hearing names).
             hasPlayedWelcome = false
         }
+        .onReceive(NotificationCenter.default.publisher(for: .landDinosaurGameCompleted)) { note in
+            guard category == .land, let id = note.userInfo?["gameId"] as? String else { return }
+            landProgress.markPlayed(canonicalGameId: id)
+        }
     }
 
     private func handleGameTap(_ gameType: GameType) {
         guard !isAudioPlaying && !showGameTransition else { return }
+        guard isLandGamePlayable(gameType) else { return }
         
         // Store the selected game
         selectedGame = gameType
@@ -487,10 +505,10 @@ private struct GameSelectionNavigationContent: View {
                 }
                 .onChange(of: gameWalkIndex) { _, newValue in
                     guard let idx = newValue else { return }
-                    let games = GameCatalog.games(for: category, level: category == .land ? selectedLevel : nil)
+                    let games = GameCatalog.games(for: category, level: selectedLevel)
                     // When starting the walk on a level list, scroll to level header first so it's visible (fixes missing header after returning from a game).
                     let targetId: String
-                    if idx == 0, category == .land, selectedLevel != nil {
+                    if idx == 0, selectedLevel != nil {
                         targetId = "levelHeader"
                     } else if idx < games.count, let id = games[idx].id {
                         targetId = id
@@ -499,7 +517,7 @@ private struct GameSelectionNavigationContent: View {
                     }
                     func doScroll() {
                         withAnimation(.easeInOut(duration: 0.35)) {
-                            proxy.scrollTo(targetId, anchor: idx == 0 && category == .land && selectedLevel != nil ? .top : .center)
+                            proxy.scrollTo(targetId, anchor: idx == 0 && selectedLevel != nil ? .top : .center)
                         }
                     }
                     DispatchQueue.main.async { doScroll() }
@@ -1036,19 +1054,22 @@ private struct GameSelectionNavigationContent: View {
                 startGameWalk()
             }
         }
-        let introKey: String
-        switch category {
-        case .land:
-            introKey = selectedLevel.map { $0.introAudioKey } ?? "choose-a-dinosaur-game"
-        case .air: introKey = "choose-a-pterosaur-game"
-        case .sea: introKey = "choose-a-marine-reptile-game"
-        }
+        let introKey: String = {
+            if let level = selectedLevel {
+                return level.introAudioKey
+            }
+            switch category {
+            case .land: return "choose-a-dinosaur-game"
+            case .air: return "choose-a-pterosaur-game"
+            case .mosasaurs, .plesiosaurs, .ichthyosaurs: return "choose-a-marine-reptile-game"
+            }
+        }()
         speechManager.speak(introKey)
     }
 
     /// After category intro finishes, walk the game list: highlight each card and play its intro audio so children learn image ↔ name.
     private func startGameWalk() {
-        let games = GameCatalog.games(for: category, level: category == .land ? selectedLevel : nil)
+        let games = GameCatalog.games(for: category, level: selectedLevel)
         if games.isEmpty {
             isAudioPlaying = false
             speechManager.onAudioFinished = nil
@@ -1504,47 +1525,58 @@ enum GameType {
 
 private struct LevelCard: View {
     let level: GameLevel
+    var isLocked: Bool = false
     let onTap: () -> Void
 
     var body: some View {
         Button(action: onTap) {
-            VStack(spacing: 8) {
-                if ImageAssetCache.imageExists(named: level.imageName) {
-                    Image(level.imageName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: .infinity)
-                        .frame(minHeight: 60, maxHeight: 80)
-                } else {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(Color.accentColor.opacity(0.15))
-                        .frame(minHeight: 60, maxHeight: 80)
-                        .overlay(
-                            Text(level.title)
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                                .foregroundColor(.primary)
-                        )
+            ZStack(alignment: .topTrailing) {
+                VStack(spacing: 8) {
+                    if ImageAssetCache.imageExists(named: level.imageName) {
+                        Image(level.imageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: .infinity)
+                            .frame(minHeight: 60, maxHeight: 80)
+                    } else {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color.accentColor.opacity(0.15))
+                            .frame(minHeight: 60, maxHeight: 80)
+                            .overlay(
+                                Text(level.title)
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.primary)
+                            )
+                    }
+                    Text(level.title)
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                        .foregroundColor(.primary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                 }
-                Text(level.title)
-                    .font(.subheadline)
-                    .fontWeight(.medium)
-                    .foregroundColor(.primary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
+                .padding(10)
+                .frame(maxWidth: .infinity)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(Color.gray.opacity(0.1))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.accentColor.opacity(isLocked ? 0.15 : 0.4), lineWidth: 2)
+                )
+                if isLocked {
+                    Image(systemName: "lock.fill")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .padding(8)
+                }
             }
-            .padding(10)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(Color.gray.opacity(0.1))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .stroke(Color.accentColor.opacity(0.4), lineWidth: 2)
-            )
+            .opacity(isLocked ? 0.5 : 1)
         }
         .buttonStyle(.plain)
+        .disabled(isLocked)
     }
 }
 

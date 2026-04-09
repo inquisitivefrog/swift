@@ -780,15 +780,18 @@ struct BalanceGameView: View {
         if let u1 = goodJobURL, let u2 = crowdURL {
             speechManager.playTogether(url1: u1, url2: u2) {
                 self.speechManager.onAudioFinished = nil
+                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
                 self.isPresented = false
             }
         } else if let u = goodJobURL ?? crowdURL {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
+                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
                 self.isPresented = false
             }
             speechManager.playAudioFile(url: u)
         } else {
+            LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
             isPresented = false
         }
     }
@@ -992,7 +995,7 @@ struct BalanceGameConfigs {
 
     /// Returns 9 dinosaurs: one per clade (9 clades), shuffled for random grid order. Same logic as Weigh the Dinosaur.
     static func makeRandomBalanceDinosaurItems() -> [BalanceItem] {
-        let cladeById = MatchingGameConfigs.dinosaurCladeById
+        let cladeById = LandDinosaurCladeCatalog.cladeByCreatureId
         let pool = MatchingGameConfigs.allDinosaurs.filter { d in
             guard let img = d.imageName, img.hasPrefix("dino-"),
                   MatchingGameConfigs.dinosaurEstimatedWeightKgById[d.id] != nil
