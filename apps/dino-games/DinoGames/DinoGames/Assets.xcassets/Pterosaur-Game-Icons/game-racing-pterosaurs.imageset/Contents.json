@@ -1,10 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "game-racing-pterosaurs-240.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "game-racing-pterosaurs-320.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

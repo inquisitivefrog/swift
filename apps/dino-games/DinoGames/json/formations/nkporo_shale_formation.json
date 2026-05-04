@@ -1,0 +1,11 @@
+{
+  "formation_id": "NKPORO_SHALE_FORMATION",
+  "base_habitat": "COASTAL_LOWLANDS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": ["Organic-rich black shales", "Silty mudstone", "Coal seams"],
+    "color_palette": ["Charcoal Black", "Siderite Orange", "Muddy Brown", "Dark Grey"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE", "NKPORO_SHALE_ADDITIONS"], 
+  "fauna_manifest": ["LATE_CRETACEOUS_MARINE_BASE", "NKPORO_SHALE_ADDITIONS"]
+}

@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "dino-silhouette-carcharodontosaurus-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "dino-silhouette-carcharodontosaurus-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "dino-silhouette-carcharodontosaurus-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

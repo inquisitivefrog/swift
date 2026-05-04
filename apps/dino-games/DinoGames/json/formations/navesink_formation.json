@@ -1,0 +1,11 @@
+{
+  "formation_id": "NAVESINK",
+  "base_habitat": "PELAGIC_SHELF_SEA",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Glauconitic greensand", "Marl", "Silty clay"],
+    "color_palette": ["Dull Olive Green", "Dark Charcoal Grey", "Rusty Iron-Orange", "Pyrite Silver"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "NAVESINK_ADDITIONS"], 
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE", "NAVESINK_ADDITIONS"]
+}

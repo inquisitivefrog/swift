@@ -1,0 +1,12 @@
+{
+    "formation_id": "PIERRE_SHALE_FW",
+    "period": "LATE_CRETACEOUS",
+    "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE"],
+    "fauna_manifest": ["LATE_CRETACEOUS_BASE", "INOCERAMIDS", "Baculites"],
+    "base_habitat": "EPICONTINENTAL_SEAWAY",
+    "palette": ["Dark Lead-Grey", "Iron-Rust", "Muted Blue"],
+    "strata_specifics": {
+      "ground_texture": ["Carbonaceous shale", "Siderite concretions"],
+      "color_palette": ["Dark Lead-Grey", "Siderite Orange", "Charcoal"]
+    }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "DINO_168_AMARGASAURUS",
+  "species": "Amargasaurus cazaui",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "LA_AMARGA",
+  "habitat_ref": "WOODLAND_FLOODPLAINS",
+  "visual_identity": {
+    "color_palette": "Dusty terracotta skin with teal-blue highlights along the neck spines; pale cream underbelly.",
+    "texture": "Leathery skin with fine, pebbled scales; the neck spines have a smooth, horn-like keratin texture at the tips.",
+    "distinguishing_marks": "Two parallel rows of long spines running down the neck; a short, thick tail; large, soulful eyes."
+  },
+  "anatomy_constraints": {
+    "head": "Small, boxy sauropod head with a blunt snout; large expressive yellow eyes; positioned low due to the short neck.",
+    "neck": "Relatively short for a sauropod, featuring two distinct rows of elongated neural spines.",
+    "body": "Compact, muscular sauropod frame; limbs are stout and pillar-like."
+  },
+  "visual_logic": {
+    "subject": "A calm, curious Amargasaurus foraging near a riverbank.",
+    "action": "Leaning its neck down to reach low ferns, showcasing the unique split-spine profile.",
+    "environment": "Background features the mottled red clays and green-grey siltstones of the La Amarga formation under a clear, bright sun."
+  },
+  "personality": "The 'Spiny Wanderer'—gentle, slow-moving, and highly distinctive. He has a peaceful, rhythmic presence.",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC"
+}

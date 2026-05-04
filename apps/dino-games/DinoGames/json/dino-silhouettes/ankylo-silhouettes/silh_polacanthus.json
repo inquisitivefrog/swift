@@ -1,0 +1,26 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": {
+        "style_id": "STYLE_SILHOUETTE",
+        "tech_ref": "DEFAULT_SQUARE",
+        "description": "High-contrast backlighting, solid black silhouette, zero internal detail, sharp edges for morphology study."
+      },
+      "layer_2_setting": {
+        "formation_id": "WEALDEN",
+        "period": "EARLY_CRETACEOUS",
+        "habitat_default": "COASTAL_LOWLANDS",
+        "visuals": {
+          "ground": "Mottled red and blue-grey clay",
+          "lighting": "DUSK_SILHOUETTE"
+        },
+        "flora_manifest": ["EARLY_CRETACEOUS_BASE", "WEALDEN_ADDITIONS"]
+      },
+      "layer_3_action": {
+        "subject": "Polacanthus",
+        "features": ["double row of dorsal spikes", "sacral shield armor", "low-profile head", "clear limb separation"],
+        "action": "A sharp solid black silhouette of a Polacanthus walking through shallow coastal water, its distinctive double row of spikes creating a jagged profile against the horizon."
+      }
+    }
+  }
+]

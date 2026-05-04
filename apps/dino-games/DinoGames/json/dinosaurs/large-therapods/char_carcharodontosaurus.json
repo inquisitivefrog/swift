@@ -1,0 +1,26 @@
+{
+  "id": "DINO_156_CARCHARODONTOSAURUS",
+  "species": "Carcharodontosaurus saharicus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "KEM_KEM",
+  "habitat_ref": "RIVER_DELTA_SYSTEMS",
+  "visual_identity": {
+    "color_palette": "Dusty desert-sand base with deep mahogany-red 'war paint' patterns around the eyes and along the spine; pale clay underbelly.",
+    "texture": "Rough, leathery skin with fine scales; noticeably thickened, rugose texture on the brow ridges.",
+    "distinguishing_marks": "Massive, narrow skull; large serrated teeth visible even when the mouth is slightly open; three-fingered hands with sharp claws."
+  },
+  "anatomy_constraints": {
+    "head": "Long, deep, and laterally compressed skull; small, rugose brow ridges; large, intelligent yellow eyes.",
+    "limbs": "Massive, powerful hind legs for steady movement; robust forelimbs with three functional fingers.",
+    "body": "Enormous, heavy-set theropod frame; a long, thick tail used for balancing the weight of the massive head."
+  },
+  "visual_logic": {
+    "subject": "A dominant, observant Carcharodontosaurus surveying its territory.",
+    "action": "Standing tall on a sun-baked red sandstone ledge overlooking a lush delta.",
+    "environment": "Background features the hazy, bright horizon of the Kem Kem beds with distant broad-leafed trees and a silty river."
+  },
+  "personality": "The 'Desert Monarch'—stoic, imposing, and patient. He has a regal but dangerous presence as the undisputed king of his environment.",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC"
+}

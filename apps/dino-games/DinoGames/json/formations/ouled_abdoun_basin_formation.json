@@ -1,0 +1,14 @@
+[
+  {
+    "formation_id": "OULED_ABDOUN_BASIN",
+    "period": "LATE_CRETACEOUS",
+    "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE"],
+    "fauna_manifest": ["LATE_CRETACEOUS_BASE", "ENCHODUS", "SQUALICORAX"],
+    "base_habitat": "PELAGIC_SHELF_SEA",
+    "palette": ["Phosphatic Gold", "Bone White", "Deep Teal"],
+    "strata_specifics": {
+      "ground_texture": ["Phosphatic sand", "Soft marl", "Bone-rich lag deposits"],
+      "color_palette": ["Ochre", "Pale Tan", "Dusty Gold"]
+    }
+  }
+]

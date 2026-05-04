@@ -1,0 +1,14 @@
+[
+  {
+    "formation_id": "CSEHBANYA_FORMATION",
+    "period": "LATE_CRETACEOUS",
+    "flora_manifest": ["LATE_CRETACEOUS_FLUVIAL_BASE", "FERNS", "CYCADS"],
+    "fauna_manifest": ["LATE_CRETACEOUS_BASE", "ALLODAPOSUCHUS", "FRESHWATER_FISH"],
+    "base_habitat": "FRESHWATER_RIVER_SYSTEM",
+    "palette": ["Tannin Brown", "Deep Green", "Clay Red"],
+    "strata_specifics": {
+      "ground_texture": ["Alluvial silt", "Variegated clay", "Sandstone lens"],
+      "color_palette": ["Rusty Red", "Olive Green", "Muddy Brown"]
+    }
+  }
+]

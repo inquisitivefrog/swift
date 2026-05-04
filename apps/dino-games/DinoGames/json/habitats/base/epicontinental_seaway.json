@@ -1,0 +1,8 @@
+"EPICONTINENTAL_SEAWAY": {
+  "substrate": "Calcareous ooze, chalk, and dark organic mud",
+  "visuals": {
+    "ground": "Pale, high-albedo chalky seafloor with scattered inoceramid shells",
+    "water": "Shallow, sunlit turquoise-to-cobalt waters; high visibility",
+    "atmospheric_effects": ["Refractive water ripples on the seafloor", "Abundant schools of small forage fish"]
+  }
+}

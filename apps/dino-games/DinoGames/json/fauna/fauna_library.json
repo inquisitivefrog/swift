@@ -1,6 +1,7 @@
 {
   "fauna_library": {
     "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
+    "HAKEL_ADDITIONS": ["Eurypholis (long-snouted fish)", "Prionolepis", "Stomatopods (Mantis shrimp)", "Small marine lizards"],
     "HELL_CREEK_ADDITIONS:" ["Alphadon (Opossum-like)", "Teiids (fast-running lizards)", "Cicadas", "Early wasps"],
     "IREN_DABASU_ADDITIONS": ["Ostracods", "Freshwater turtles", "Hybodont sharks (in river channels)", "Small lizards"],
     "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
@@ -8,7 +9,9 @@
     "LA_AMARGA_ADDITIONS": ["Amargasuchus (small, friendly crocodylomorph)", "Vincelestes (opossum-sized early mammal)", "Freshwater turtles"],
     "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
     "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)", "Cicadas"],
+    "NAVESINK_ADDITIONS": ["Ammonites (Baculites)", "Belemnitella", "Pycnodont fish", "Halisaurus platyspondylus"],
     "NEMEGT_ADDITIONS": ["Freshwater crabs", "Shrimp", "Gar-like predators", "Champsosaurus (crocodile-like but smaller)"],
+    "NKPORO_SHALE_ADDITIONS": ["Pluridens calabariensis", "Giant Sawfish (Onchoselachus)", "Araripemys (turtles)", "Large ammonites"],
     "POSEIDON_ADDITIONS": ["Stenopterygius", "Eurhinosaurus (long-snout)", "Temnodontosaurus (giant eyes)", "Ammonites (Harpoceras)", "Belemnites", "Giant Crinoids"],
     "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates"]
   }

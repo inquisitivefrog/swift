@@ -1,0 +1,13 @@
+{
+    "formation_id": "HVAR_DEPOSITS",
+    "period": "LATE_CRETACEOUS",
+    "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE", "SEA_GRASS_PRIMITIVE"],
+    "fauna_manifest": ["LATE_CRETACEOUS_BASE", "SMALL_CRUSTACEANS"],
+    "base_habitat": "SHALLOW_LAGOON",
+    "palette": ["Turquoise", "Coral White", "Sand"],
+    "strata_specifics": {
+      "ground_texture": ["Platy limestone", "Laminated carbonate"],
+      "color_palette": ["White", "Light Beige", "Silver-Grey"]
+    }
+  }
+]

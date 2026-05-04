@@ -1,0 +1,14 @@
+[
+  {
+    "formation_id": "MAASTRICHT_FORMATION",
+    "period": "LATE_CRETACEOUS",
+    "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE"],
+    "fauna_manifest": ["LATE_CRETACEOUS_BASE", "AMMONITES", "SEA_TURTLES"],
+    "base_habitat": "COASTAL_SHELF",
+    "palette": ["Soft Chalk Yellow", "Flint Grey", "Oceanic Cyan"],
+    "strata_specifics": {
+      "ground_texture": ["Bioclastic tuffaceous chalk", "Flint nodules"],
+      "color_palette": ["Pale Ochre", "Ash Grey", "Sand"]
+    }
+  }
+]

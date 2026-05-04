@@ -1,0 +1,11 @@
+{
+  "formation_id": "KIMMERIDGE_CLAY",
+  "habitat_default": "PELAGIC_SHELF_SEA",
+  "period": "LATE_JURASSIC",
+  "strata_specifics": {
+    "ground_texture": ["Organic-rich shale", "Mudstone", "Cementstone"],
+    "color_palette": ["Dark Grey", "Bituminous Black", "Slate Blue"],
+  },
+  "flora_manifest": ["JURASSIC_BASE", "PHYTOPLANKTON_BLOOMS"],
+  "fauna_manifest": ["JURASSIC_BASE", "AMMONITES", "LEEDSICHTHYS"],
+}

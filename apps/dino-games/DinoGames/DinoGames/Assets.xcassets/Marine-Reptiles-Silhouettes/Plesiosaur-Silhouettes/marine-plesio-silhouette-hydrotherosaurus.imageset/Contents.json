@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "plesio-silhouette-hydrotherosaurus-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "plesio-silhouette-hydrotherosaurus-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "plesio-silhouette-hydrotherosaurus-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

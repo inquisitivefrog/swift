@@ -1,0 +1,9 @@
+"SILT_SHELF_BASIN": {
+  "description": "A high-turbidity, nutrient-dense marine basin with limited visibility.",
+  "visual_logic": {
+    "water": "Dark brown-to-grey organic-rich water with a heavy suspension of 'marine snow' and silt particles.",
+    "lighting": "Diffused 'cloudy' god-rays; sunlight is choked by sediment, creating a high-contrast 'spotlight' only near the surface.",
+    "floor": "Massive, oblate calcareous concretions (2-3 meters wide) half-buried in soft, dark silty mud.",
+    "atmosphere": "Abundant particulates and 'jarositic' (yellowish) mineral clouds drifting from the seabed."
+  }
+}

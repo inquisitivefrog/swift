@@ -1,0 +1,11 @@
+{
+  "formation_id": "PAJA",
+  "base_habitat": "EPICONTINENTAL_SEAWAY",
+  "period": "EARLY_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": ["Claystone", "Siltstone", "Calcareous concretions"],
+    "color_palette": ["Iron-oxide Orange", "Steel Grey", "Ochre"]
+  },
+  "flora_manifest": ["EARLY_CRETACEOUS_BASE"], 
+  "fauna_manifest": ["EARLY_CRETACEOUS_BASE", "AMMONITES"]
+}

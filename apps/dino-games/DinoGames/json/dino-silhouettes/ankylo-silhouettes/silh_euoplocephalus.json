@@ -1,0 +1,26 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": {
+        "style_id": "STYLE_SILHOUETTE",
+        "tech_ref": "DEFAULT_SQUARE",
+        "description": "High-contrast backlighting, solid black silhouette, zero internal detail, sharp edges for morphology study."
+      },
+      "layer_2_setting": {
+        "formation_id": "DINOSAUR_PARK",
+        "period": "LATE_CRETACEOUS",
+        "habitat_default": "COASTAL_LOWLANDS",
+        "visuals": {
+          "ground": "Dark, rich organic mud",
+          "lighting": "DUSK_SILHOUETTE"
+        },
+        "flora_manifest": ["LATE_CRETACEOUS_BASE", "CYCAD_PALMS"]
+      },
+      "layer_3_action": {
+        "subject": "Euoplocephalus",
+        "features": ["heavy tail club", "broad armored back", "spiky neck frill", "low-slung quadrupedal frame"],
+        "action": "A sharp solid black silhouette of a Euoplocephalus standing on a muddy bank, tail club raised slightly, framed against a vibrant sunset orange sky."
+      }
+    }
+  }
+]

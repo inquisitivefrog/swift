@@ -1,0 +1,26 @@
+{
+  "id": "DINO_142_CARNOTAURUS",
+  "species": "Carnotaurus sastrei",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "LA_COLONIA",
+  "habitat_ref": "ESTUARIES_AND_COASTAL_LAGOONS",
+  "visual_identity": {
+    "color_palette": "Deep burnt-umber skin with charcoal-grey osteoderms; vibrant crimson-red highlights on the tips of the horns.",
+    "texture": "Leathery skin covered in small scales with prominent, raised bony bumps (osteoderms) along the back and sides.",
+    "distinguishing_marks": "Two large, forward-facing brow horns; extremely tiny, vestigial arms; a deep, snub-nosed snout."
+  },
+  "anatomy_constraints": {
+    "head": "Short, deep skull with thick bull-like horns; large expressive yellow eyes; muscular neck.",
+    "limbs": "Long, powerful hind legs built for sprinting; tiny, four-fingered forelimbs that are almost invisible against the body.",
+    "body": "Muscular, athletic frame; a thick tail base indicating powerful 'caudofemoralis' muscles for speed."
+  },
+  "visual_logic": {
+    "subject": "A determined, fast-moving Carnotaurus in a mid-stride sprint.",
+    "action": "Running across an ocher-colored coastal flat, kicking up dry silt.",
+    "environment": "Background features the sparse, salt-tolerant vegetation of a Late Cretaceous lagoon under a bright, high-contrast sun."
+  },
+  "personality": "The 'Bull-Runner'—highly energetic, competitive, and incredibly fast. He has a bold, confident presence.",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC"
+}

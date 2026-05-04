@@ -1,0 +1,11 @@
+{
+  "formation_id": "HAKEL_FORMATION",
+  "base_habitat": "EPICONTINENTAL_SEAWAY",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": ["Laminated platy limestone", "Thin-bedded carbonate marls"],
+    "color_palette": ["Cream White", "Light Beige", "Soft Yellow", "Pyrite Gold"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "HAKEL_ADDITIONS"], 
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE", "HAKEL_ADDITIONS"], 
+}

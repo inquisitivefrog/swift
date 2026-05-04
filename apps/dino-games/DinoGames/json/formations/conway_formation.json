@@ -1,0 +1,12 @@
+{
+  "formation_id": "CONWAY_FORMATION",
+  "base_habitat": "SILT_SHELF_BASIN",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": ["Fine silty sandstone", "Calcareous concretions", "Jarositic mudstone"],
+    "color_palette": ["Jarositic yellow", "Dark silt grey", "Glauconitic green", "Slate blue"]
+  }
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "PLANONYLON_WOOD"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE", "TANIWHASAURUS_CLAN"],
+  "manifest": "LATE_CRETACEOUS_BASE",
+}

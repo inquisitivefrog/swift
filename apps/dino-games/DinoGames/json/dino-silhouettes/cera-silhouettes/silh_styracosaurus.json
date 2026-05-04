@@ -1,0 +1,26 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": {
+        "style_id": "STYLE_SILHOUETTE",
+        "tech_ref": "DEFAULT_SQUARE",
+        "description": "High-contrast backlighting, solid black silhouette, zero internal detail, sharp edges for morphology study."
+      },
+      "layer_2_setting": {
+        "formation_id": "TWO_MEDICINE",
+        "period": "LATE_CRETACEOUS",
+        "habitat_default": "WOODLAND_FLOODPLAINS",
+        "visuals": {
+          "ground": "Grey and ocher siltstone",
+          "lighting": "DUSK_SILHOUETTE"
+        },
+        "flora_manifest": ["LATE_CRETACEOUS_BASE"]
+      },
+      "layer_3_action": {
+        "subject": "Styracosaurus",
+        "features": ["long nasal horn", "elaborate spiked frill", "sturdy quadrupedal build", "expressive head tilt"],
+        "action": "A sharp solid black silhouette of a Styracosaurus in a dynamic 'Karate Kid' style crane stance, emphasizing the unique spikes of its frill against a high-contrast sky."
+      }
+    }
+  }
+]

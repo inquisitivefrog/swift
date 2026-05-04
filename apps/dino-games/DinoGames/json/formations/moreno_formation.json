@@ -1,0 +1,14 @@
+[
+  {
+    "formation_id": "MORENO_FORMATION",
+    "period": "LATE_CRETACEOUS",
+    "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE"],
+    "fauna_manifest": ["LATE_CRETACEOUS_BASE", "RADIOLARIANS", "SQUID"],
+    "base_habitat": "OPEN_OCEAN_PELAGIC",
+    "palette": ["Deep Cobalt", "Slate", "Steel Grey"],
+    "strata_specifics": {
+      "ground_texture": ["Diatomaceous shale", "Organic mudstone"],
+      "color_palette": ["Dark Grey", "Steel Blue", "Black"]
+    }
+  }
+]

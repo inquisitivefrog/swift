@@ -1,0 +1,26 @@
+{
+  "id": "DINO_114_GASPARINISAURA",
+  "species": "Gasparinisaura cincosaltensis",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "ANACLETO",
+  "habitat_ref": "WOODLAND_FLOODPLAINS",
+  "visual_identity": {
+    "color_palette": "Dusty rose-pink skin with charcoal-grey 'pinstripes' along the spine; pale lavender underbelly.",
+    "texture": "Smooth, soft-touch matte skin with fine pebbled scales; glossy, wet look for the eyes.",
+    "distinguishing_marks": "Small, rounded snout; large dark eyes; dark tips on the toes and fingers."
+  },
+  "anatomy_constraints": {
+    "head": "Short, rounded skull with a small beak; large, expressive eyes; short neck.",
+    "limbs": "Bipedal; long, slender hind legs for sprinting; small, delicate five-fingered hands.",
+    "body": "Small, compact, and agile frame; long, rigid tail held straight for balance."
+  },
+  "visual_logic": {
+    "subject": "A curious, alert Gasparinisaura tilting its head.",
+    "action": "Standing on a purplish-red clay bank, surrounded by low-growing ferns and horsetails.",
+    "environment": "Background features the muddy estuaries and grey-green siltstones of a Late Cretaceous floodplain under a golden afternoon sun."
+  },
+  "personality": "The 'Pet-sized Friend'—social, skittish, and highly curious. Moves with quick, bird-like head bobs.",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC"
+}

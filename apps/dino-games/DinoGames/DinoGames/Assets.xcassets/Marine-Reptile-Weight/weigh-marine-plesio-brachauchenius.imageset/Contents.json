@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "weigh-marine-plesio-brachauchenius-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "weigh-marine-plesio-brachauchenius-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "weigh-marine-plesio-brachauchenius-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

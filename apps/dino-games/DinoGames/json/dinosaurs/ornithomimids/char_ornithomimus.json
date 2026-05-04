@@ -1,0 +1,26 @@
+{
+  "id": "DINO_042_ORNITHOMIMUS",
+  "species": "Ornithomimus edmontonicus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "DINOSAUR_PARK",
+  "habitat_ref": "COASTAL_LOWLANDS",
+  "visual_identity": {
+    "color_palette": "Bright amber-orange base with three thin horizontal white 'speed streaks' from neck to tail; cream-colored underbelly.",
+    "texture": "Soft, downy feather covering across the body; long pennaceous feathers on the forearms forming primitive wing-structures; smooth beak texture.",
+    "distinguishing_marks": "Large, dark, glassy bird-like eyes; a streak of crimson-red 'mohawk' feathers running from the crown down the nape."
+  },
+  "anatomy_constraints": {
+    "head": "Small, toothless beak; large expressive eyes; slender S-curve neck.",
+    "limbs": "Very long, thin legs optimized for sprinting; three-toed bird-like feet; long arms with three slender fingers held in a tight tuck.",
+    "body": "Aerodynamic, lightweight frame; tail held straight and rigid as a horizontal counterweight."
+  },
+  "visual_logic": {
+    "subject": "A high-strung, twitchy Ornithomimus in a mid-bolt sprint pose.",
+    "action": "Navigating through low-altitude coastal humidity, kicking up dark organic mud.",
+    "environment": "Background features the grey and dark green tones of a coastal lowland marsh with cycad palms and muddy estuaries."
+  },
+  "personality": "The 'Sprint Specialist'—high-strung, alert, and lightning-fast. Always looks like he's about to bolt at the slightest sound.",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC"
+}

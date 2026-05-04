@@ -1,0 +1,14 @@
+[
+  {
+    "formation_id": "NIOBRARA_CHALK",
+    "period": "LATE_CRETACEOUS",
+    "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE"],
+    "fauna_manifest": ["LATE_CRETACEOUS_BASE", "HESPERORNIS", "XIPHACTINUS"],
+    "base_habitat": "EPICONTINENTAL_SEAWAY",
+    "palette": ["Cream White", "Smoky Grey", "Azure Blue"],
+    "strata_specifics": {
+      "ground_texture": ["Pure chalk", "Calcareous shale"],
+      "color_palette": ["Off-white", "Light Grey", "Soft Yellow"]
+    }
+  }
+]

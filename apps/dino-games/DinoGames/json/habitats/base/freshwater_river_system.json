@@ -1,0 +1,7 @@
+"FRESHWATER_RIVER_SYSTEM": {
+  "substrate": "Alluvial silt, clay, and river pebbles",
+  "visuals": {
+    "water": "Murky, tannin-stained tea-colored water; low visibility",
+    "atmospheric_effects": ["Dappled sunlight through overhanging canopy", "Suspended river sediment"]
+  }
+}

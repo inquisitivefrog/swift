@@ -1,0 +1,11 @@
+{
+  "formation_id": "CARLILE_SHALE",
+  "base_habitat": "EPICONTINENTAL_SEAWAY",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Varicolored red and purple mudstone with white sand lenses",
+    "color_palette": ["Silver-Grey", "Buff", "Chalky White"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE"], 
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE", "MOSASAURS", "XIPHACTINUS"]
+}
