@@ -1,0 +1,18 @@
+{
+  "app_image_config": {
+    "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+    "tech_ref": "DEFAULT_SQUARE",
+    "layer_2_setting": "[REF: ANACLETO]",
+    "layer_3_action": {
+      "subject": "Gasparinisaura",
+      "features": [
+        "Short, rounded skull with a small beak",
+        "Bipedal with long, slender hind legs for sprinting",
+        "Small, delicate five-fingered hands",
+        "Long, rigid tail held straight for balance",
+        "Small, compact, and agile frame"
+      ],
+      "action": "A sharp 1:1 square silhouette of a curious, alert Gasparinisaura tilting its head while standing on a purplish-red clay bank. No text."
+    }
+  }
+}

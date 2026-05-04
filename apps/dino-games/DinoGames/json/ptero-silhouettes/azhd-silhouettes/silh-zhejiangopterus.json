@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_ZHEJI_SILHOUETTE_001",
+    "species": "Zhejiangopterus linhaiensis",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "TANGSHANG_FORMATION",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette with exceptionally smooth, streamlined edges.",
+      "environment": "Lush wetland sunrise with soft-focus bamboo silhouettes in the far background.",
+      "backlight_strategy": "Warm golden rim-light that highlights the long, needle-thin beak and the absence of a crest.",
+      "facial_silhouette": "The primary clue for the player is the perfectly flat, crestless top of the head and the extremely long, straight beak."
+    },
+    "pose": "Perched on a horizontal branch in a 3/4 profile; the neck is curved in a graceful 'S' shape like a heron, keeping the silhouette compact and approachable.",
+    "negative_constraints": "Do not add a crest; keep the beak line perfectly straight; avoid aggressive 'predatory' poses."
+  }
+]

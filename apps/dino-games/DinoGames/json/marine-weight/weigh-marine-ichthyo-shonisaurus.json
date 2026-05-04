@@ -1,0 +1,16 @@
+[
+  {
+    "id": "asset_weight_profile_shonisaurus_V1",
+    "species": "Shonisaurus",
+    "class": "TITAN",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": {
+      "alignment": "BOTTOM_ALIGNED_TO_FRAME",
+      "color_palette": "Deep Sea Slate: A dark charcoal-grey body with a very light 'bone-white' underbelly. Minimal patterning.",
+      "texture": "Smooth but with visible 'scars' and barnacle-like patches on the fins to show extreme age.",
+      "environment_override": "[REF: LUNING_FORMATION] - Open, deep-water navy blue with floating prehistoric squid silhouettes in the distance."
+    },
+    "morphology_hook": "The 'Ultimate Heavyweight.' Even bulkier than the Shastasaurus, with four large, identical paddle-flippers."
+  }
+]

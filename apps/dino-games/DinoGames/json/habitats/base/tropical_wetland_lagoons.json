@@ -1,0 +1,7 @@
+"TROPICAL_WETLAND_LAGOONS": {
+  "substrate": "Fine carbonate silt and iron-rich clay",
+  "visuals": { 
+    "ground": "Variegated reddish-brown mud with shallow turquoise pools",
+    "atmospheric_effects": ["Heat shimmer", "High-key tropical saturation"]
+  }
+}

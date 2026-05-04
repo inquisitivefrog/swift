@@ -1,0 +1,14 @@
+[
+  {
+    "id": "GAME_CARD_CTENO_SILHOUETTE_001",
+    "species": "Ctenochasma",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette; edges are smooth and 'rounded'.",
+      "environment": "Soft lunar glow with diffused mist.",
+      "facial_silhouette": "The exceptionally long, thin beak with a subtle, fuzzy 'fringe' along the bottom edge."
+    },
+    "pose": "Side profile swimming; the silhouette emphasizes the swan-like neck and the elegant, needle-thin beak."
+  }
+]

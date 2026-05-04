@@ -1,0 +1,54 @@
+
+Azhdarchids
+01. Hatzegopteryx: ~4.5m – 5.5m
+02. Quetzalcoatlus: ~4.5m – 5.5m
+03. Arambourgiania: ~4.5m – 5.5m
+
+Large Azhdarchids
+04. Cryodrakon: ~2.5m – 3.5m
+05. Thanatosdrakon: ~2.5m – 3.5m
+06. Aerotitan: ~2.5m – 3.5m
+07. Zhejiangopterus: ~2.5m – 3.5m
+
+Large Ocean Gliders
+08. Tropeognathus: ~1.5m – 2.0m
+09. Ornithocheirus: ~1.5m – 2.0m
+10. Pteranodon: ~1.5m – 2.0m
+
+Crested Specialists Fishers
+11. Thalassodromeus: ~1.0m – 1.5m
+12. Anhanguera: ~1.0m – 1.5m
+13. Tupandactylus: ~1.0m – 1.5m
+14. Bakonydraco: ~1.0m – 1.5m
+15. Tapejara: ~1.0m – 1.5m
+
+Mid-sized Flyers
+16. Nyctosaurus: ~0.6m – 0.9m
+17. Coloborhynchus: ~0.6m – 0.9m
+18. Istiodactylus: ~0.6m – 0.9m
+19. Guidraco: ~0.6m – 0.9m
+20. Ludodactylus: ~0.6m – 0.9m
+21. Boreopterus: ~0.6m – 0.9m
+22. Pterodaustro: ~0.6m – 0.9m
+23. Dsungaripterus: ~0.6m – 0.9m
+24. Noripterus: ~0.6m – 0.9m
+25. Caiuajara: ~0.6m – 0.9m
+
+Small-to-Medium Basal Forms
+26. Ctenochasma: ~0.2m – 0.5m
+27. Gnathosaurus: ~0.2m – 0.5m
+28. Pterodactylus: ~0.2m – 0.5m
+29. Darwinopterus: ~0.2m – 0.5m
+30. Sinopterus: ~0.2m – 0.5m
+31. Caupedactylus: ~0.2m – 0.5m
+32. Scaphognathus: ~0.2m – 0.5m
+33. Campylognathoides: ~0.2m – 0.5m
+34. Dimorphodon: ~0.2m – 0.5m
+
+The Micros
+35. Rhamphorhynchus: < 0.2m
+36. Sordes: < 0.2m
+37. Eudimorphodon: < 0.2m
+38. Jeholopterus: < 0.2m
+39. Anurognathus: < 0.2m
+40. Nemicolopterus: < 0.2m

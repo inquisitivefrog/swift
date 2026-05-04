@@ -1,0 +1,41 @@
+
+01. Hatzegopteryx: 200kg – 250kg
+02. Quetzalcoatlus: 200kg – 250kg
+03. Arambourgiania: 70kg – 150kg
+04. Cryodrakon: 70kg – 150kg
+05. Thanatosdrakon: 70kg – 150kg
+06. Aerotitan: 70kg – 150kg
+07. Tropeognathus: 70kg – 150kg
+08. Ornithocheirus: 30kg – 50kg
+09. Pteranodon: 30kg – 50kg
+10. Thalassodromeus: 30kg – 50kg
+11. Anhanguera: 30kg – 50kg
+12. Tupandactylus: 30kg – 50kg
+13. Zhejiangopterus: 5kg – 15kg
+14. Coloborhynchus: 5kg – 15kg
+15. Istiodactylus: 5kg – 15kg
+16. Guidraco: 5kg – 15kg
+17. Ludodactylus: 5kg – 15kg
+18. Boreopterus: 5kg – 15kg
+19. Pterodaustro: 5kg – 15kg
+20. Dsungaripterus: 5kg – 15kg
+21. Nyctosaurus: 1kg – 4kg
+22. Tapejara: 1kg – 4kg
+23. Caiuajara: 1kg – 4kg
+24. Bakonydraco: 1kg – 4kg
+25. Noripterus: 1kg – 4kg
+26. Sinopterus: 1kg – 4kg
+27. Caupedactylus: 1kg – 4kg
+28. Gnathosaurus: 1kg – 4kg
+29. Ctenochasma: 1kg – 4kg
+30. Pterodactylus: 1kg – 4kg
+31. Darwinopterus: < 1kg
+32. Scaphognathus: < 1kg
+33. Campylognathoides: < 1kg
+34. Dimorphodon: < 1kg
+35. Rhamphorhynchus: < 1kg
+36. Sordes: < 1kg
+37. Eudimorphodon: < 1kg
+38. Jeholopterus: < 1kg
+39. Anurognathus: < 1kg
+40. Nemicolopterus: < 1kg

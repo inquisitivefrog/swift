@@ -1,0 +1,16 @@
+[
+  {
+  "id": "GAME_CARD_GUIDRA_SILHOUETTE_001_V2",
+  "species": "Guidraco venator",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette with softened, clean edges; no jagged 'noise'.",
+    "environment": "Clear volcanic ash-motes catching 'god-rays' from the top-right corner.",
+    "backlight_strategy": "Warm amber rim-light to define the forward-leaning crest and the neck ruff.",
+    "facial_silhouette": "The teeth are rendered as clean, vertical ivory pegs of uniform height—organized and distinct."
+  },
+  "pose": "Graceful side profile flight; the neck is arched slightly to highlight the crest, and the teeth are shown as a neat row of 'pins' rather than a chaotic mess.",
+  "negative_constraints": "Avoid overlapping the teeth with the wing-arms; avoid 'scary' low-angle under-lighting."
+  }
+]

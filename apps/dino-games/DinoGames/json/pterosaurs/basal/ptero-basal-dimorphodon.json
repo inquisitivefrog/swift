@@ -1,0 +1,15 @@
+{
+  "id": "GAME_CARD_DIMORPHO_001",
+  "species": "Dimorphodon",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "BLUE_LIAS",
+  "habitat_ref": "COASTAL_CLIFFS",
+  "visual_logic": {
+    "color_palette": "Deep sea-blue back with a vibrant yellow-orange throat pouch and beak highlights.",
+    "pattern_strategy": "Leopard-like spots across the tops of the wings; beak has 'growth rings' textures.",
+    "eyes": "Sharp, avian yellow eyes with a small dark pupil.",
+    "environment": "Crashing waves against grey Jurassic cliffs; misty sea spray adding atmosphere."
+  },
+  "pose": "A powerful quadrupedal stance on a jagged rock; the long tail is held stiffly behind, and the oversized head is tilted down as if spotting prey."
+}

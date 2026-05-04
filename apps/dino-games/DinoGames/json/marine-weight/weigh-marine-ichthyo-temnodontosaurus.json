@@ -1,0 +1,16 @@
+[
+  {
+    "id": "asset_weight_profile_temnodontosaurus_V1",
+    "species": "Temnodontosaurus",
+    "class": "LARGE_REPTILE",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": {
+      "alignment": "BOTTOM_ALIGNED_TO_FRAME",
+      "color_palette": "Twilight Blue: A gradient from indigo on top to a pale lavender on the belly.",
+      "texture": "Highly hydrodynamic, looking almost like polished stone or glass.",
+      "environment_override": "[REF: BLUE_LIAS] - High-contrast light coming from above to catch the curve of the giant eye."
+    },
+    "morphology_hook": "The 'Giant Eye.' The eye should be the focal point of the card, appearing massive relative to the skull size to emphasize its deep-diving capability."
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_STENO_SILHOUETTE_001",
+    "species": "Stenopterygius",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "POSEIDON_SHALE",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a quintessential, medium-sized ichthyosaur.",
+      "environment": "Black oil shale and Deep indigo water colors.",
+      "backlight_strategy": "DUSK_SILHOUETTE to highlight the classic 'fish-lizard' tail curve.",
+      "facial_silhouette": "Refined, narrow snout with a very slender profile."
+    },
+    "pose": "A tight, downward-swimming curve that emphasizes the 'narrow-wing' (Stenopterygius) flippers and the downward-pointing tail spine.",
+    "negative_constraints": "No internal shading or visible scales."
+  }
+]

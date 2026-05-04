@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: BLUE_LIAS]",
+      "layer_3_action": {
+        "subject": "Attenborosaurus",
+        "features": ["Proportionally large head silhouette", "Thick neck base", "Rounded flipper tips"],
+        "action": "A silhouette of Attenborosaurus angled slightly toward the viewer. The head is turned to show the distinct profile of the snout and jawline against the high-contrast sky background."
+      }
+    }
+  }
+]

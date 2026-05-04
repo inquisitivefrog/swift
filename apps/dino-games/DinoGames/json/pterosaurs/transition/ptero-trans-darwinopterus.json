@@ -1,0 +1,13 @@
+{
+  "id": "GAME_CARD_DARWIN_001",
+  "species": "Darwinopterus modularis",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": {
+    "color_palette": "Autumnal copper and deep forest green; the small head crest is a bright 'berry' red.",
+    "skin_logic": "Light, downy pycnofibers around the neck; wing membranes have a soft, 'peach-skin' texture.",
+    "eyes": "Large, dark, soulful eyes with a warm specular highlight.",
+    "environment": "Jurassic forest floor with giant fallen logs and glowing mushrooms; soft, dappled sunlight."
+  },
+  "pose": "Climbing up a mossy tree trunk; the long tail is used for balance, and the advanced head is turned back with an inquisitive 'bird-like' tilt."
+}

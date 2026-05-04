@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_LUDO_SILHOUETTE_001",
+  "species": "Ludodactylus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "CRATO_FORMATION",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette.",
+    "environment": "High-noon tropical light.",
+    "facial_silhouette": "The Pteranodon-style crest paired with a toothy jawline (jagged edges on the beak)."
+  },
+  "pose": "Side profile; the silhouette creates a 'trick' for the player who might mistake it for a Pteranodon until they see the teeth."
+  }
+]

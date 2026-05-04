@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_MALAWANIA_SILHOUETTE_001",
+    "species": "Malawania",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "PAJA",
+    "habitat_ref": "EPICONTINENTAL_SEAWAY",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a small, compact, dolphin-shaped ichthyosaur.",
+      "environment": "High-albedo 'Chalky White' water reflecting a deep 'Muted Blue' sunset.",
+      "backlight_strategy": "Direct backlighting to create a sharp 'cut-out' effect against the sky.",
+      "facial_silhouette": "Short, robust snout and a noticeably large, rounded cranial vault."
+    },
+    "pose": "A dynamic 'breaching' pose with the body curved, highlighting the advanced dorsal fin and the classic 'fish-lizard' tail fluke.",
+    "negative_constraints": "Sharp edges only; no gradient fills within the subject."
+  }
+]

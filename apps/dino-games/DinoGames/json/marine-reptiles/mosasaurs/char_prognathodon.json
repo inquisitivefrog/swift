@@ -1,0 +1,16 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_006",
+    "species": "Prognathodon currii",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”
+    "formation_ref": "MAASTRICHT_FORMATION",
+    "visual_logic": {
+      "color_palette": "Rusty-orange with a pale grey belly; heavy matte-clay skin texture.",
+      "environment": "Dark slate water with silver 'marine snow' floating around."
+      "pattern_strategy": "Solid dark lead-grey with 'scuffed' silver highlights on the brow.",
+      "facial_silhouette": "Heavy, reinforced 'bulldog' jaw with massive vertical depth."
+    }
+    "pose": "A head-on charge; the massive skull is the focal point with glowing, sun-lit eyes."
+  }
+]

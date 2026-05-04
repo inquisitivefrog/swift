@@ -68,6 +68,24 @@ enum GameLevel: String, CaseIterable, Identifiable {
         return names[number - 1]
     }
 
+    /// Asset name for Air (pterosaur) level picker cards: `ptero-level-one` … `ptero-level-ten` in Assets.
+    var pterosaurLevelImageName: String {
+        let names = [
+            "ptero-level-one", "ptero-level-two", "ptero-level-three", "ptero-level-four", "ptero-level-five",
+            "ptero-level-six", "ptero-level-seven", "ptero-level-eight", "ptero-level-nine", "ptero-level-ten",
+        ]
+        return names[number - 1]
+    }
+
+    /// Badge image for land level intermission (`game-level-one` … `game-level-ten` in Assets).
+    var gameLevelBadgeImageName: String {
+        let names = [
+            "game-level-one", "game-level-two", "game-level-three", "game-level-four", "game-level-five",
+            "game-level-six", "game-level-seven", "game-level-eight", "game-level-nine", "game-level-ten",
+        ]
+        return names[number - 1]
+    }
+
     /// Audio key for intro when this level is chosen (e.g. "Level One Really Easy Games"). Map in SpeechManager to Levels/level-*-.m4a.
     var introAudioKey: String {
         switch self {
@@ -99,6 +117,7 @@ enum DinosaurGameCatalog {
                 .weigh(WeighGameConfigs.weighDinosaur),        // Weigh the Dinosaur
                 .whoIsTaller(WhoIsTallerGameConfigs.whoIsTaller), // Which Dino Is Taller
                 .wacky(WackyGameConfigs.wackyDinosaurs),       // Wacky Dinosaurs
+                .dinoPuzzle(DinoPuzzleGameConfigs.dinoPuzzle), // Dino Puzzle
             ]
         case .level2:
             return [

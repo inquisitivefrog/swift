@@ -1,0 +1,18 @@
+{
+  "id": "GAME_CARD_METRIO_3D_028",
+  "species": "Metriorhynchus geoffroyi",
+  "tech_ref": "SQUARE_ASPECT_RATIO",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "WESSEX",
+  "habitat_ref": "COASTAL_LOWLANDS",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "visual_logic": {
+    "surface_detail": "Sleek, 'Oceanic Blue' skin with 'Silver-Grey' countershading on the belly; no visible scales, appearing almost like a dolphin's skin.",
+    "anatomy_focus": "Emphasis on the four paddle-like flippers (front shorter than rear) and the downward-curved tail vertebrae supporting the fluke.",
+    "environment": {
+      "water": "Deep teal water with visible 'marine snow' and diffused sunlight rays.",
+      "biota": "Chasing a school of 'Leptolepis' fish through a forest of kelp-like algae."
+    },
+    "pose": "Captured mid-roll during a high-speed chase, showcasing the grace and agility of a fully marine archosaur."
+  }
+}

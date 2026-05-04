@@ -1,0 +1,13 @@
+{
+  "id": "GAME_CARD_PTERO_001",
+  "species": "Pterodactylus antiquus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": {
+    "color_palette": "Traditional slate-blue and white; the beak tip has a soft pinkish-tan hue.",
+    "teeth_logic": "Teeth are rendered as tiny, uniform 'pearls' along the jaw, barely visible to keep the character looking soft and non-aggressive.",
+    "eyes": "Large, wide-set soulful eyes; high-fidelity catchlights.",
+    "environment": "Solnhofen lagoon at sunset; soft-focus ferns and limestone rocks."
+  },
+  "pose": "Perched on a branch with one wing slightly extended; the pose is reminiscent of a songbird, making it highly relatable and 'heroic'."
+}

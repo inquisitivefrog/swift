@@ -1,0 +1,16 @@
+[
+  {
+    "id": "GAME_CARD_MEGAPTERY_SILHOUETTE_001",
+    "species": "Megapterygius",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "HAKOBUCHI_FORMATION",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette characterized by disproportionately large, wing-like front flippers.",
+      "environment": "High-contrast 'Arctic-Grey' surface light.",
+      "backlight_strategy": "DUSK_SILHOUETTE; lighting emphasizes the 'Big-Wing' (Megapterygius) appendages.",
+      "facial_silhouette": "Classic mosasaur profile with a robust, straight snout."
+    }
+]

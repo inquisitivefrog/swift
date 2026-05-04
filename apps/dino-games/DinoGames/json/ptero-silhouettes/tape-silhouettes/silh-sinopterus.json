@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_SINO_SILHOUETTE_001",
+  "species": "Sinopterus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "JIUFOTANG",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette.",
+    "environment": "Mist-shrouded forest with a soft diffused backlight.",
+    "facial_silhouette": "A shorter, straighter beak compared to the Brazilian tapejarids, with a backward-pointing 'blade' crest."
+  },
+  "pose": "Perched with head tucked; the silhouette highlights the specific angle of the backward-leaning crest."
+  }
+]

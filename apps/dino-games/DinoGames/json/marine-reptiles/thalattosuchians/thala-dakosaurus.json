@@ -1,0 +1,19 @@
+{
+  "id": "GAME_CARD_DAKO_3D_027",
+  "species": "Dakosaurus maximus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SOLNHOFEN",
+  "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "visual_logic": {
+    "surface_detail": "Dark 'Charcoal Grey' leathery skin with 'Burnt Orange' patterns along the flanks; skin is smooth and hydrodynamic, lacking the osteoderms of land crocodiles.",
+    "anatomy_focus": "Hero focus on the 'short and deep' snout and the massive, serrated teeth; a vertical tail fluke similar to a shark’s.",
+    "facial_expression": "Intense and formidable; small, focused eyes with a heavy brow-ridge that gives it a permanent 'glare'.",
+    "environment": {
+      "water": "Crystal-clear turquoise water with sharp caustic patterns reflecting off the white 'Plattenkalk' floor.",
+      "biota": "Distant silhouettes of Plesiosaurs and scattered ammonites on the seabed."
+    },
+    "pose": "A powerful upward lunge from the shadows of a reef, jaws open wide to showcase the specialized 'bone-crunching' teeth."
+  }
+}

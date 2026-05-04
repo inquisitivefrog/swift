@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_CAUPE_SILHOUETTE_001",
+  "species": "Caupedactylus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "SANTANA_ROMUALDO",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette.",
+    "environment": "Low-angle morning light across the mudflats.",
+    "facial_silhouette": "The crest is longer and lower, lacking the high vertical spike of Tupandactylus."
+  },
+  "pose": "Side profile walking; emphasizes the sturdy limbs and the longer, flatter head shape."
+  }
+]

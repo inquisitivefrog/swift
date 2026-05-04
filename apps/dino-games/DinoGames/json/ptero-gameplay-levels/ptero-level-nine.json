@@ -1,0 +1,11 @@
+[
+  {
+    "id": "pterosaur_level_09_v3",
+    "app_image_config": {
+      "layer_1_style": "STYLE_ANIMATED_FEATURE_V3: high-poly 3D character, vibrant saturated colors, warm sunset lighting.",
+      "layer_2_setting": "Setting: [REF: ROMUALDO_FORMATION], simple golden-hour sand dunes. Low-detail environment to keep focus on the character.",
+      "layer_3_action": "Medium Shot of Tropeognathus standing; emphasis on the leathery texture of its wings and the large keel-crest on its snout.",
+      "aspect_ratio": "1:1"
+    }
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_TROPEO_001",
+  "species": "Tropeognathus mesembrinus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SANTANA_ROMUALDO",
+  "habitat_ref": "TROPICAL_WETLAND_LAGOONS",
+  "visual_logic": {
+    "color_palette": "Bright turquoise and orange; the massive keel crests are striped like a tropical fish in yellow and black.",
+    "pattern_strategy": "High-saturation 'character' appeal; smooth clay textures with subsurface scattering on the crest.",
+    "eyes": "Vivid green eyes.",
+    "environment": "Sunny Brazilian coast; high-key lighting emphasizing the 'Flame Orange' palette of the mud."
+  },
+  "pose": "Walking on all fours on the beach; the massive head is held level, showing the huge 'keels' on the snout."
+  }
+]

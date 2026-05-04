@@ -1,0 +1,18 @@
+{
+  "id": "GAME_CARD_HENODUS_3D_018",
+  "species": "Henodus chelyops",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SOLNHOFEN",
+  "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "visual_logic": {
+    "surface_detail": "Top-down view of a broad, square-shaped 'bony shield' with a tactile, weathered stone texture; underside features soft, pale-peach skin.",
+    "anatomy_focus": "The head is broad and extremely flat with a wide, straight mouth designed for filter-feeding or crushing; small, soulful eyes positioned on the sides of the skull.",
+    "environment": {
+      "water": "Shallow, crystalline turquoise water; high visibility with refractive 'caustics' dancing on the armor.",
+      "biota": "Clusters of Triassic algae and small, floating crustaceans."
+    },
+    "pose": "Resting on a white carbonate sand bed, limbs slightly tucked, emphasizing its unique 'box' shape."
+  }
+}

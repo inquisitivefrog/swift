@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_KARIRI_001",
+  "species": "Kariridraco dianae",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SANTANA_ROMUALDO",
+  "habitat_ref": "TROPICAL_WETLAND_LAGOONS",
+  "visual_logic": {
+    "color_palette": "Moss green and mud-brown; the crest is a vibrant, neon-flecked turquoise.",
+    "pattern_strategy": "Dappled 'swamp' camouflage; the crest has a translucent, gelatinous look at the top edge.",
+    "eyes": "Vivid emerald green eyes.",
+    "environment": "Shallow water at the lagoon's edge; ripples around the feet and small armored fish (Vinctifer) visible in the water."
+  },
+  "pose": "Wading through the shallows; the head is held low to the water, making the tall, vertical crest the highest point of the silhouette."
+  }
+]

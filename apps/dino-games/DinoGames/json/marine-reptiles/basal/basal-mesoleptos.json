@@ -1,0 +1,17 @@
+[
+  { 
+    "id": "GAME_CARD_MESOLEP_3D_012", 
+    "species": "Mesoleptos", 
+    "tech_ref": "DEFAULT_SQUARE", 
+    "style_id": "STYLE_ANIMATED_FEATURE_V3", 
+    "formation_ref": "HVAR_DEPOSITS", 
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS", 
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC", 
+    "visual_logic": {
+      "surface_detail": "Fine, smooth scales with 'Turquoise' and 'Oceanic Cyan' dappled patterns for camouflage.",
+      "environment": "Sun-drenched shallow water with 'Ancestral Seagrass' swaying in the current.",
+       "lighting_logic": "Midday sun creating crisp, short shadows on the seafloor to ground the 3D model." 
+    }, 
+    "pose": "Paddling through a school of small prehistoric fish, neck tilted in a dynamic, predatory curve.” 
+  }
+]

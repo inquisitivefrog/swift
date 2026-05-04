@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_AMARGA_SILHOUETTE_015",
+  "species": "Amargasaurus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; emphasize the double row of neck spines.",
+    "facial_silhouette": "Small, boxy sauropod head on a relatively short neck.",
+    "backlight_strategy": "Soft 'dawn-mist' backlight."
+  },
+  "pose": "Side profile with neck lowered for feeding; silhouette clearly defines the split spikes/sail on the neck."
+}

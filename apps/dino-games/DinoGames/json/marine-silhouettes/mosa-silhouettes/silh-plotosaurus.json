@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_PLOTOSAUR_SILHOUETTE_001",
+    "species": "Plotosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "MORENO_FORMATION",
+    "habitat_ref": "OPEN_OCEAN_PELAGIC",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of the most fish-like mosasaur; highly thunniform (tuna-shaped).",
+      "environment": "Deep 'Midnight Blue' water with a silver horizon.",
+      "backlight_strategy": "DUSK_SILHOUETTE to show the deep, stiff front body and flexible tail.",
+      "facial_silhouette": "Streamlined head that blends seamlessly into a thick neck."
+    },
+    "pose": "Horizontal swimming pose showing a very large, crescent-shaped tail fluke, emphasizing its speed.",
+    "negative_constraints": "Sharp edges only; no 'fuzzy' tail fluke boundaries."
+  }
+]

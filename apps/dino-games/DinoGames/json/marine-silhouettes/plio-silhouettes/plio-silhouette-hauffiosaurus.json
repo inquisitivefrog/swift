@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_HAUFFIO_SILHOUETTE_001",
+    "species": "Hauffiosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "POSEIDON_SHALE",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a small, ancestral pliosaur with a slightly longer neck than its later cousins.",
+      "environment": "Deep indigo water with sharp, white surface highlights.",
+      "backlight_strategy": "DUSK_SILHOUETTE to highlight the slender, more 'plesiosaur-like' proportions of the neck.",
+      "facial_silhouette": "Small, tapered head with a delicate snout."
+    },
+    "pose": "Upward swimming angle, emphasizing the transitional morphology—slender flippers and a less bulky torso.",
+    "negative_constraints": "No internal shading; maintain a sharp, thin neck profile."
+  }
+]

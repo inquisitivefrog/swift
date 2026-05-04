@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_PLURIDENS_SILHOUETTE_001",
+    "species": "Pluridens",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "OULAD_ABDOUN_BASIN",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a massive, elongated halisaur (up to 8-9 meters).",
+      "environment": "Intense copper-colored sunset horizon.",
+      "backlight_strategy": "Horizontal backlighting to stretch the silhouette across the frame.",
+      "facial_silhouette": "Exaggeratedly long, slender jaws. The silhouette should show the 'jagged' profile of numerous small, close-set teeth along the jawline."
+    },
+    "pose": "Jaws slightly agape in a lateral profile to highlight the extreme length of the dentary and the 'many-toothed' (Pluridens) morphology that distinguishes it from its smaller cousins.",
+    "negative_constraints": "Maintain a sharp, clean silhouette despite the small tooth detail; no 'fuzzy' jawlines."
+  }
+]

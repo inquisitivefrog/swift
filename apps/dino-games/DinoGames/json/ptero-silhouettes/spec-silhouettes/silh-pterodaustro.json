@@ -1,0 +1,18 @@
+[
+  {
+    "id": "GAME_CARD_PTEROD_SILHOUETTE_001",
+    "species": "Pterodaustro guinazui",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "LOHAN_CURA_FORMATION",
+    "habitat_ref": "TROPICAL_WETLAND_LAGOONS",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette; the lower jaw is rendered as a smooth, thickened curve to represent the dense filter-bristles as a single mass.",
+      "environment": "Soft sunset gradient (Peach to Deep Orange) with subtle 'God-rays' filtering from the top-right corner.",
+      "backlight_strategy": "Warm rim-light highlights the elegant upward curve of the beak and the soft 'fuzz' (pycnofibers) along the neck.",
+      "facial_silhouette": "The primary identifier is the distinct 'up-curved' beak and the thickened lower jaw that looks like a specialized comb."
+    },
+    "pose": "Side profile in a wading stance; one leg is slightly lifted to emphasize a graceful, flamingo-like movement. The wings are folded neatly against the body to keep the focus on the unique head shape.",
+    "negative_constraints": "No individual needle-lines for teeth; avoid sharp, jagged edges; no low-angle 'villain' lighting."
+  }
+]

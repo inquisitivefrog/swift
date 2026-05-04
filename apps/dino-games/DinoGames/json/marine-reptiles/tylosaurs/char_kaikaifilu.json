@@ -1,0 +1,15 @@
+{
+  "id": "GAME_CARD_TYLO_002",
+  "species": "Kaikaifilu hervei",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "LOPEZ_DE_BERTODANO_FORMATION",
+  "habitat_ref": "PELAGIC_SHELF_SEA",
+  "visual_logic": {
+    "color_palette": "Deep indigo and midnight blue with pale silver 'ventral' spots.",
+    "pattern_strategy": "Biological 'frost' patterns—white leopard-like spots concentrated around the flippers and neck.",
+    "eyes": "Large, pitch-black 'low-light' eyes adapted for the dark Antarctic waters.",
+    "environment": "Frigid, deep-blue water with high concentrations of marine snow; faint silhouettes of icebergs visible in the upper background."
+  },
+  "pose": "A powerful upward breach; the massive, blunt head is pointed toward a surface-dwelling prey item, showcasing its unique 'tank-like' skull structure."
+}

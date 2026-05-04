@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_DARWIN_SILHOUETTE_001",
+  "species": "Darwinopterus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette with smooth edges; emphasize the long tail vane.",
+    "facial_silhouette": "The combination of a long, straight Pterodactyloid beak and a long, thin 'Rhamphorhynchoid' tail.",
+    "backlight_strategy": "Warm golden 'forest-canopy' backlight."
+  },
+  "pose": "Side profile in a climbing or perching pose; the silhouette highlights the unique 'mix-and-match' anatomy that defines the transitory group."
+}

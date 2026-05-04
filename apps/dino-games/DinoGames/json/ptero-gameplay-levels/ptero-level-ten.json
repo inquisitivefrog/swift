@@ -1,0 +1,11 @@
+[
+  {
+    "id": "pterosaur_level_10_v3",
+    "app_image_config": {
+      "layer_1_style": "STYLE_ANIMATED_FEATURE_V3: 1024x1024 px, cinematic CGI, Octane render, high-fidelity 3D.",
+      "layer_2_setting": "Setting: [REF: DJADOKHTA], clean orange sand with minimal ripple patterns. Simple, vast horizon line.",
+      "layer_3_action": "Medium Shot of Quetzalcoatlus in a giraffe-like pose; the framing uses the full height of the square image to show the entire towering silhouette from beak to toe.",
+      "aspect_ratio": "1:1"
+    }
+  }
+]

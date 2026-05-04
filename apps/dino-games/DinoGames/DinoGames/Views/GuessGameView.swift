@@ -82,6 +82,50 @@ private enum NameThatDinosaurStorage {
     }
 }
 
+// MARK: - Name That Marine Reptile used-creature / clade persistence
+
+private enum NameThatMarineReptileStorage {
+    static let usedCreatureIdsKey = "nameThatMarineReptileUsedCreatureIds"
+    static let usedCladeRawValuesKey = "nameThatMarineReptileUsedCladeRawValues"
+
+    static func loadUsedCreatureIds() -> Set<Int> {
+        guard let array = UserDefaults.standard.array(forKey: usedCreatureIdsKey) as? [Int] else { return [] }
+        return Set(array)
+    }
+
+    static func appendUsedCreatureIds(_ ids: [Int]) {
+        var current = loadUsedCreatureIds()
+        current.formUnion(ids)
+        UserDefaults.standard.set(Array(current), forKey: usedCreatureIdsKey)
+    }
+
+    static func clearUsedCreaturesIfNeeded(availableCount: Int, roundCount: Int) {
+        if availableCount < roundCount {
+            UserDefaults.standard.removeObject(forKey: usedCreatureIdsKey)
+        }
+    }
+
+    static func loadUsedCladeRawValues() -> Set<String> {
+        guard let array = UserDefaults.standard.array(forKey: usedCladeRawValuesKey) as? [String] else { return [] }
+        return Set(array)
+    }
+
+    static func appendUsedCladeRawValues(_ rawValues: [String], maxCladeCount: Int) {
+        var current = loadUsedCladeRawValues()
+        current.formUnion(rawValues)
+        UserDefaults.standard.set(Array(current), forKey: usedCladeRawValuesKey)
+        if current.count >= maxCladeCount {
+            UserDefaults.standard.removeObject(forKey: usedCladeRawValuesKey)
+        }
+    }
+
+    static func clearUsedCladesIfAllUsed(maxCladeCount: Int) {
+        if maxCladeCount > 0, loadUsedCladeRawValues().count >= maxCladeCount {
+            UserDefaults.standard.removeObject(forKey: usedCladeRawValuesKey)
+        }
+    }
+}
+
 // MARK: - Game Configuration
 
 struct GuessGameConfig {
@@ -160,7 +204,7 @@ struct GuessGameView: View {
         }
         return keys
     }
-    
+
     // Get current round question
     private var currentQuestion: RoundQuestion? {
         gameConfig.rounds.first { $0.id == currentRound }
@@ -187,23 +231,30 @@ struct GuessGameView: View {
                 Text(gameConfig.title)
                     .font(.largeTitle)
                     .padding(.top)
-                
+
                 if let question = currentQuestion, !isGameComplete {
                     // Main game area - one question at a time
                     VStack(spacing: 40) {
                         // Top: Question image (silhouette), then round label below
                         VStack(spacing: 10) {
-                            // Question image: primary, then dino-silhouette-{slug}, then full image with silhouette effect, then placeholder
+                            // Question image: primary silhouette, then dinosaur alternate `dino-silhouette-*`, then tinted body (pterosaurs skip dino path when fallback is `ptero-*`).
                             if UIImage(named: question.questionImageName) != nil {
                                 Image(question.questionImageName)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 250, height: 250)
                             } else {
-                                let baseName = question.questionImageFallback?.replacingOccurrences(of: "dino-", with: "") ?? ""
-                                let silhouetteName = baseName.isEmpty ? "" : "dino-silhouette-\(baseName)"
-                                if !silhouetteName.isEmpty && UIImage(named: silhouetteName) != nil {
-                                    Image(silhouetteName)
+                                let fallbackKey = question.questionImageFallback?.lowercased() ?? ""
+                                let isPterosaurBody = fallbackKey.hasPrefix("ptero-")
+                                let isMarineBody = fallbackKey.hasPrefix("marine-")
+                                let dinoAlt: String? = {
+                                    guard !isPterosaurBody, !isMarineBody else { return nil }
+                                    let baseName = question.questionImageFallback?.replacingOccurrences(of: "dino-", with: "") ?? ""
+                                    guard !baseName.isEmpty else { return nil }
+                                    return "dino-silhouette-\(baseName)"
+                                }()
+                                if let dinoAlt, UIImage(named: dinoAlt) != nil {
+                                    Image(dinoAlt)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 250, height: 250)
@@ -411,13 +462,13 @@ struct GuessGameView: View {
                     }
                 }
             }
-            speechManager.speak("thats-right-you-guessed-it")
+            speechManager.speak(correctGuessAudioKey)
         } else {
             wrongGuessesThisRound += 1
             errorCount += 1
             isAudioPlaying = true
             // No auto-skip: allow unlimited attempts so kids can map sound ↔ image.
-            speechManager.speak("try-again")
+            speechManager.speak(tryAgainAudioKey)
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 DispatchQueue.main.async {
@@ -528,6 +579,16 @@ struct GuessGameView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
+    /// End-sequence success art: name-that games use a larger frame than the level-two list card so `game-*-success` is easy to see.
+    private var guessGameSuccessImageSide: CGFloat {
+        switch gameConfig.id {
+        case "name-that-dinosaur", "name-that-pterosaur", "name-that-marine-reptile":
+            return GameCatalogImageMetrics.nameThatVictorySuccessImageSide
+        default:
+            return 180
+        }
+    }
+
     private var guessGameSuccessImageContent: some View {
         Group {
             let successName = "game-\(gameConfig.id)-success"
@@ -536,12 +597,14 @@ struct GuessGameView: View {
                 Image(successName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 180, height: 180)
+                    .frame(width: guessGameSuccessImageSide, height: guessGameSuccessImageSide)
+                    .layoutPriority(1)
             } else if UIImage(named: fallbackName) != nil {
                 Image(fallbackName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: 180, height: 180)
+                    .frame(width: guessGameSuccessImageSide, height: guessGameSuccessImageSide)
+                    .layoutPriority(1)
             } else {
                 Text("🎉")
                     .font(.system(size: 100))
@@ -594,25 +657,47 @@ struct GuessGameView: View {
     private func playGoodJobAndCrowdThenDismiss() {
         endSequenceStep = 2
         gameConfig.victorySideEffect?()
-        let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
+        let goodJobURL = speechManager.urlForAudio(key: victoryGoodJobAudioKey)
         let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
         if let u1 = goodJobURL, let u2 = crowdURL {
             speechManager.playTogether(url1: u1, url2: u2) {
                 self.speechManager.onAudioFinished = nil
                 LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
+                MarineReptileProgress.notifyCompletionIfMarineGame(configId: self.gameConfig.id)
+                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
                 self.isPresented = false
             }
         } else if let u = goodJobURL ?? crowdURL {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
+                MarineReptileProgress.notifyCompletionIfMarineGame(configId: self.gameConfig.id)
+                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
                 self.isPresented = false
             }
             speechManager.playAudioFile(url: u)
         } else {
             LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
+            MarineReptileProgress.notifyCompletionIfMarineGame(configId: gameConfig.id)
+            PterosaurProgress.notifyCompletionIfPterosaurGame(configId: gameConfig.id)
             isPresented = false
         }
+    }
+
+    private var usesMarineGameSpecificFeedback: Bool {
+        gameConfig.id == "name-that-marine-reptile"
+    }
+
+    private var correctGuessAudioKey: String {
+        usesMarineGameSpecificFeedback ? "game-name-that-marine-reptile-thats-right" : "thats-right-you-guessed-it"
+    }
+
+    private var tryAgainAudioKey: String {
+        usesMarineGameSpecificFeedback ? "game-name-that-marine-reptile-try-again" : "try-again"
+    }
+
+    private var victoryGoodJobAudioKey: String {
+        usesMarineGameSpecificFeedback ? "game-name-that-marine-reptile-good-job" : "good-job-you-got-them-all"
     }
 }
 
@@ -946,32 +1031,13 @@ struct GuessGameConfigs {
         for (roundNumber, questionDinosaur) in questionDinosaurs.enumerated() {
             let roundId = roundNumber + 1
             
-            // Decoys must be from different clades than the question so silhouettes are visually distinct (e.g. avoid Argentinosaurus vs Brachiosaurus — both sauropods look similar).
+            // Decoys: never the question’s clade; prefer two different non-question clades when the pool allows.
             let questionClade = LandDinosaurCladeCatalog.clade(forCreatureId: questionDinosaur.id)
-            let decoyCandidates = questionPool.filter { d in
-                d.id != questionDinosaur.id && LandDinosaurCladeCatalog.clade(forCreatureId: d.id) != questionClade
-            }
-            // Prefer 2 decoys from 2 different clades for maximum visual variety
-            var decoys: [Dinosaur]
-            if decoyCandidates.count >= 2 {
-                let byCladeForDecoys = Dictionary(grouping: decoyCandidates) { LandDinosaurCladeCatalog.clade(forCreatureId: $0.id) }
-                let otherClades = byCladeForDecoys.keys.filter { $0 != questionClade }.shuffled()
-                if otherClades.count >= 2 {
-                    let firstDecoy = (byCladeForDecoys[otherClades[0]] ?? []).shuffled().first!
-                    let secondCladeCandidates = decoyCandidates.filter { LandDinosaurCladeCatalog.clade(forCreatureId: $0.id) != otherClades[0] }
-                    let secondDecoy = secondCladeCandidates.shuffled().first!
-                    decoys = [firstDecoy, secondDecoy]
-                } else {
-                    decoys = Array(decoyCandidates.shuffled().prefix(2))
-                }
-            } else {
-                // Fallback: allow same-clade decoys only if we have too few from other clades
-                let fallbackCandidates = questionPool.filter { $0.id != questionDinosaur.id }
-                guard fallbackCandidates.count >= 2 else {
-                    fatalError("Not enough dinosaurs for decoys in round \(roundId)")
-                }
-                decoys = Array(fallbackCandidates.shuffled().prefix(2))
-            }
+            let decoys = LandDinosaurCladeCatalog.pickTwoDecoysDifferentClades(
+                question: questionDinosaur,
+                questionClade: questionClade,
+                pool: questionPool
+            )
             
             // Verify decoys are unique
             let decoyIds = Set(decoys.map { $0.id })
@@ -1020,54 +1086,102 @@ struct GuessGameConfigs {
         )
     }
     
-    // Name That Pterosaur!: identify by silhouette (ptero-silhouette-* assets).
+    // Name That Pterosaur!: full `AirPterosaurData` pool; `questionImageName` follows `AirPterosaurData.silhouetteAssetName` (bundled silhouette when present, else view uses tinted body).
     static var nameThatPterosaur: GuessGameConfig {
         let pool = MatchingGameConfigs.allPterosaurs
-        guard pool.count >= 5 else {
-            fatalError("Need at least 5 pterosaurs for guess game, but only have \(pool.count)")
+        let roundCount = 3
+        guard pool.count >= roundCount else {
+            fatalError("Need at least \(roundCount) pterosaurs for guess game, but only have \(pool.count)")
         }
         return makeSilhouetteGuessGame(
             id: "name-that-pterosaur",
             title: "Name That Pterosaur!",
             introAudio: "can-you-name-the-pterosaur",
-            bodyImagePrefix: "ptero-",
             pool: pool,
-            roundCount: 5
+            roundCount: roundCount,
+            bodyImagePrefixFor: { AirPterosaurData.bodyImagePrefix(for: $0.imageName ?? "") }
         )
     }
 
     // MARK: - Marine reptiles (sea category)
 
-    static var nameThatMosasaur: GuessGameConfig {
-        makeSilhouetteGuessGame(
-            id: "name-that-mosasaur",
-            title: "Name That Mosasaur!",
-            introAudio: "can-you-name-the-mosasaur",
-            bodyImagePrefix: "mosa-",
-            pool: MarineReptileCreaturePools.allMosasaurs,
-            roundCount: 3
-        )
-    }
+    static var nameThatMarineReptile: GuessGameConfig {
+        let allMarineReptiles = SeaMarineReptileData.allMarineReptiles
+        let roundCount = 3
+        guard allMarineReptiles.count >= roundCount else {
+            fatalError("Need at least \(roundCount) marine reptiles for guess game, but only have \(allMarineReptiles.count)")
+        }
 
-    static var nameThatPlesiosaur: GuessGameConfig {
-        makeSilhouetteGuessGame(
-            id: "name-that-plesiosaur",
-            title: "Name That Plesiosaur!",
-            introAudio: "can-you-name-the-plesiosaur",
-            bodyImagePrefix: "plesio-",
-            pool: MarineReptileCreaturePools.allPlesiosaurs,
-            roundCount: 5
-        )
-    }
+        var usedIds = NameThatMarineReptileStorage.loadUsedCreatureIds()
+        var pool = allMarineReptiles.filter { d in
+            guard let imageName = d.imageName, imageName.hasPrefix("marine-") else { return false }
+            return !usedIds.contains(d.id)
+        }
+        if pool.count < roundCount {
+            NameThatMarineReptileStorage.clearUsedCreaturesIfNeeded(availableCount: pool.count, roundCount: roundCount)
+            usedIds = []
+            pool = allMarineReptiles.filter { $0.imageName?.hasPrefix("marine-") == true }
+        }
+        let questionPool = pool.count >= roundCount ? pool : allMarineReptiles
+        let byClade = Dictionary(grouping: questionPool) { SeaMarineReptileData.marineCladeRawValue(for: $0) }
+        let allCladesWithCreatures = byClade.keys.filter { !(byClade[$0] ?? []).isEmpty }
+        let allMarineClades = Set(allMarineReptiles.map { SeaMarineReptileData.marineCladeRawValue(for: $0) })
+        var usedClades = NameThatMarineReptileStorage.loadUsedCladeRawValues()
+        let maxCladeCount = allMarineClades.count
+        if usedClades.count >= maxCladeCount {
+            NameThatMarineReptileStorage.clearUsedCladesIfAllUsed(maxCladeCount: maxCladeCount)
+            usedClades = []
+        }
+        let availableClades = allCladesWithCreatures.filter { !usedClades.contains($0) }
+        let cladesToUse = (availableClades.count >= roundCount ? availableClades : allCladesWithCreatures).shuffled()
 
-    static var nameThatIchthyosaur: GuessGameConfig {
-        makeSilhouetteGuessGame(
-            id: "name-that-ichthyosaur",
-            title: "Name That Ichthyosaur!",
-            introAudio: "can-you-name-the-ichthyosaur",
-            bodyImagePrefix: "ichthyo-",
-            pool: MarineReptileCreaturePools.allIchthyosaurs,
-            roundCount: 3
+        let questionCreatures: [Dinosaur]
+        if cladesToUse.count >= roundCount {
+            questionCreatures = (0..<roundCount).compactMap { i in
+                let clade = cladesToUse[i]
+                return (byClade[clade] ?? []).shuffled().first
+            }
+        } else {
+            questionCreatures = Array(questionPool.shuffled().prefix(roundCount))
+        }
+        guard questionCreatures.count == roundCount,
+              Set(questionCreatures.map(\.id)).count == roundCount else {
+            fatalError("Need \(roundCount) unique marine reptiles for guess game")
+        }
+
+        var rounds: [RoundQuestion] = []
+        for (roundNumber, questionCreature) in questionCreatures.enumerated() {
+            let roundId = roundNumber + 1
+            let decoys = SeaMarineReptileData.pickTwoDecoysDistinctMarineClades(question: questionCreature, pool: questionPool)
+
+            var options = [questionCreature] + decoys
+            options.shuffle()
+            let bodyImagePrefix = SeaMarineReptileData.marineBodyImagePrefix(for: questionCreature)
+            let baseName = questionCreature.imageName?.replacingOccurrences(of: bodyImagePrefix, with: "") ?? ""
+            let silhouetteImageName = "\(bodyImagePrefix.dropLast())-silhouette-\(baseName)"
+            rounds.append(RoundQuestion(
+                id: roundId,
+                questionImageName: silhouetteImageName,
+                questionImageFallback: questionCreature.imageName,
+                correctAnswerId: questionCreature.id,
+                options: options
+            ))
+        }
+
+        return GuessGameConfig(
+            id: "name-that-marine-reptile",
+            title: "Name That Marine Reptile!",
+            introAudio: "can-you-name-that-marine-reptile",
+            rounds: rounds,
+            availableDinosaurs: allMarineReptiles,
+            victorySideEffect: {
+                let usedIds = rounds.map(\.correctAnswerId)
+                NameThatMarineReptileStorage.appendUsedCreatureIds(usedIds)
+                let usedCladeRawValues = usedIds.compactMap { id in
+                    allMarineReptiles.first(where: { $0.id == id }).map { SeaMarineReptileData.marineCladeRawValue(for: $0) }
+                }
+                NameThatMarineReptileStorage.appendUsedCladeRawValues(usedCladeRawValues, maxCladeCount: maxCladeCount)
+            }
         )
     }
     
@@ -1122,7 +1236,7 @@ struct GuessGameConfigs {
             availableDinosaurs: all
         )
     }
-    
+
     // Dino Bones!: identify dinosaur from museum preparator scene—skeleton on tarp, paleontologist with gift fossil, one bone missing.
     // Clue: nearly articulated skeleton, gift fossil (partially in matrix), skull, or obvious missing bone (skull/foreleg/femur).
     // 3 rounds, 3 options per round. Images: dino-bones-{slug}; fallback: dino-silhouette-{slug}. Pool filtered to dinosaurs with dino-bones images.

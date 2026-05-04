@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: NIOBRARA_CHALK]",
+      "layer_3_action": {
+        "subject": "Dolichorhynchops",
+        "features": ["Short-necked polycotylid profile", "Long, bird-like beak silhouette", "Large, powerful paddle-shaped flippers"],
+        "action": "A high-speed lateral silhouette of Dolichorhynchops. The body is streamlined and aerodynamic, emphasizing the short neck and long snout typical of the species."
+      }
+    }
+  }
+]

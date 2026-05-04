@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_ZHEJI_001",
+  "species": "Zhejiangopterus linhaiensis",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": {
+    "color_palette": "Bright emerald and black; the throat pouch is a soft, inflatable 'signal' yellow.",
+    "eyes": "Friendly, round black eyes.",
+    "environment": "Lush Chinese wetlands; bamboo-like plants in the soft-focus background."
+  },
+  "pose": "Perched on a large log; the sleek, crestless head is turned toward the viewer with a bird-like tilt."
+}

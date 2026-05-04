@@ -1,0 +1,11 @@
+[
+  {
+    "id": "pterosaur_level_02_v3",
+    "app_image_config": {
+      "layer_1_style": "STYLE_ANIMATED_FEATURE_V3: high-fidelity 3D, cinematic CGI, Octane render, smooth clay textures with subsurface scattering.",
+      "layer_2_setting": "Setting: [REF: SOLNHOFEN], clean white limestone ledge, warm golden-hour lighting. Depth-of-field is shallow to blur the horizon.",
+      "layer_3_action": "Medium Shot of Anurognathus in a squatting pose; emphasis on its wide, friendly mouth and large nocturnal eyes with catchlights.",
+      "aspect_ratio": "1:1"
+    }
+  }
+]

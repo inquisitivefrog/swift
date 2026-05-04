@@ -1,0 +1,17 @@
+[
+  { 
+    "id": "GAME_CARD_HUPEH_3D_011", 
+    "species": "Hupehsuchus", 
+    "tech_ref": "DEFAULT_SQUARE", 
+    "style_id": "STYLE_ANIMATED_FEATURE_V3", 
+    "formation_ref": "JIUFOTANG", 
+    "habitat_ref": "FORESTED_VOLCANIC_LAKE_SYSTEM", 
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC", 
+    "visual_logic": {
+      "surface_detail": "Interlocking dermal ossicles along the spine rendered as smooth, rounded 'toy-like' armor plates.",
+      "environment": "Blue-green caldera lake water with suspended volcanic ash particles.", 
+      "color_palette": "Cool grey skin with 'Purple-gray' highlights on the tail fin." 
+    }, 
+    "pose": "A vertical 'breaching' pose, head breaking the water surface to show the toothless, bird-like beak.” 
+  }
+]

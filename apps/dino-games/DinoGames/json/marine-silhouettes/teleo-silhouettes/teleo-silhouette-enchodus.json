@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_ENCHODUS_SILHOUETTE_001",
+    "species": "Enchodus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "NIOBRARA_CHALK",
+    "habitat_ref": "EPICONTINENTAL_SEAWAY",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a mid-sized, slender predatory fish.",
+      "environment": "High-albedo 'Chalky White' water backdrop with shimmering surface light.",
+      "backlight_strategy": "DUSK_SILHOUETTE to emphasize the 'saber-toothed' skull profile.",
+      "facial_silhouette": "Distinctly characterized by two very large, downward-pointing 'fangs' protruding from the upper jaw and upward-pointing fangs from the lower jaw."
+    },
+    "pose": "Side profile with the mouth slightly agape to showcase the 'Saber-Toothed Herring' fangs; the dorsal fin is set far back on the body.",
+    "negative_constraints": "No internal scales; maintain sharp points on the fang silhouettes."
+  }
+]

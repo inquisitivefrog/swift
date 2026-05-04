@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_DAKO_SILHOUETTE_001",
+    "species": "Dakosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "SOLNHOFEN_LIMESTONE",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a robust, deep-bodied marine crocodile known as 'Godzilla of the Sea'.",
+      "environment": "High-contrast 'Silvery-White' water surface reflecting a tropical sunset.",
+      "backlight_strategy": "DUSK_SILHOUETTE to emphasize the unusually short, deep skull.",
+      "facial_silhouette": "A blunt, high-crested snout with large, visible serrated teeth in the silhouette profile; much deeper than a standard crocodile."
+    },
+    "pose": "Side profile in a powerful lunge, highlighting the absence of osteoderms (smooth back) and the distinct tail fluke.",
+    "negative_constraints": "No internal scales; the silhouette must emphasize the 'blunt' rather than 'pointy' face."
+  }
+]

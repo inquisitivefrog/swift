@@ -1,0 +1,11 @@
+[
+  {
+    "id": "level_07_intro",
+    "app_image_config": {
+      "layer_1_style": "STYLE_ANIMATED_FEATURE_V3: high-poly 3D, cinematic CGI, Octane render, smooth clay textures.",
+      "layer_2_setting": "Setting: [REF: PIERRE_SHALE_SW], Dark slate-blue water with sharp light beams.",
+      "layer_3_action": "A massive Styxosaurus glides past, its long neck filling the frame.",
+      "aspect_ratio": "1:1"
+    }
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_PROGNATHO_SILHOUETTE_001",
+    "species": "Prognathodon",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "MAASTRICHT_FORMATION",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a massive, tank-like mosasaur with a 'boxy' skull.",
+      "environment": "High-albedo 'Chalk Yellow' water tones.",
+      "backlight_strategy": "DUSK_SILHOUETTE to highlight the powerful, heavy jaw-set.",
+      "facial_silhouette": "A thick, blunt snout with a massive lower jaw that projects slightly forward (Prognathodon)."
+    },
+    "pose": "Side profile showing the deep, powerful torso and the 'heavy' head that suggests an armored bite.",
+    "negative_constraints": "Zero internal detail; focus on the 'boxy' head shape."
+  }
+]

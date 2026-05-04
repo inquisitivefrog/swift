@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: OXFORD_CLAY]",
+      "layer_3_action": {
+        "subject": "Muraenosaurus",
+        "features": ["Compact torso", "Long, thick neck silhouette", "Wide, flat head shape"],
+        "action": "A lateral silhouette of Muraenosaurus at rest. The four flippers are splayed out horizontally to show the distinctive broad surface area of the limbs."
+      }
+    }
+  }
+]

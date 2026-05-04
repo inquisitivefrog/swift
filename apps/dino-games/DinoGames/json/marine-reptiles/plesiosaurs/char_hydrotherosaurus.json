@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_HYDRO_014",
+    "species": "Hydrotherosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "MORENO_FORMATION",
+    "visual_logic": {
+      "color_palette": "Steel-blue with striking white 'eye-spots' on the neck; pearlescent clay texture.",
+      "action": "Coiling its neck into a tight spiral while descending.",
+      "environment": "Deep indigo water with sharp, prismatic god-rays filtering from the surface."
+    },
+    "pose": "Neck tightly wound like a spring; body angled vertically toward the depths."
+  }
+]

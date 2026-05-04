@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_ISTIO_001",
+  "species": "Istiodactylus latidens",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "WESSEX",
+  "habitat_ref": "COASTAL_LOWLANDS",
+  "visual_logic": {
+    "color_palette": "Scavenger colors: Dull charcoal and rusty orange; the beak is a dark horn color.",
+    "pattern_strategy": "Bare, leathery skin patches; the teeth are small and razor-sharp like a serrated knife.",
+    "eyes": "Beady, intelligent black eyes.",
+    "environment": "A floodplain with a dinosaur carcass in the background; soft, hazy atmosphere."
+  },
+  "pose": "Hunched over, wings folded like a vulture; the head is turned to show the rounded, 'duck-bill' profile."
+  }
+]

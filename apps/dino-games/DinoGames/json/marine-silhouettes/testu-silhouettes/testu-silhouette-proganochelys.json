@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_PROGANO_SILHOUETTE_001",
+    "species": "Proganochelys",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "LOWER_KEUPER",
+    "habitat_ref": "RIVER_FLOODPLAINS",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of an ancient, primitive turtle that cannot retract its head or tail.",
+      "environment": "Deep twilight reflecting off a muddy riverbank.",
+      "backlight_strategy": "DUSK_SILHOUETTE to highlight the unique 'spiky' defenses.",
+      "facial_silhouette": "The head silhouette should show a blunt snout and, critically, prominent spikes or 'tubercular' scales along the neck."
+    },
+    "pose": "Side profile showing the heavily armored, club-like tail (complete with spikes) and the clear definition of the elephantine, clawed feet rather than flippers.",
+    "negative_constraints": "No internal shading; the spikes on the neck and tail must be sharp and clearly visible in the outline."
+  }
+]

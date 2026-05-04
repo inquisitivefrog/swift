@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_PANNONIA_SILHOUETTE_001",
+    "species": "Pannoniasaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "CSEH_BANYA_FORMATION",
+    "habitat_ref": "RIVER_FLOODPLAINS",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a freshwater mosasaur with terrestrial-leaning limbs.",
+      "environment": "Sunset light filtering through 'Submerged Conifers'.",
+      "backlight_strategy": "DUSK_SILHOUETTE to highlight the flatter, wider head profile.",
+      "facial_silhouette": "A wider, flatter skull than marine mosasaurs, resembling a crocodile's top profile."
+    },
+    "pose": "Coiled playfully near the riverbank, showcasing the lizard-like tail and broader-set limbs.",
+    "negative_constraints": "No internal shading."
+  }
+]

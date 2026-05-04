@@ -1,0 +1,30 @@
+{
+  "id": "dino_puzzle_v1_SUCCESS_STATE",
+  "game_title": "Dino Puzzle",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": "SQUARE_1024",
+  "scene_logic": {
+    "composition": "A triumphant close-up shot of the paleontologist celebrating a find.",
+    "character_main": "DINO_BONES_PALEONTOLOGIST_4 standing proudly and smiling broadly at the user.",
+    "action": "Holding up a small, perfectly cleaned fossilized tooth that fits into a larger jaw segment on the ground.",
+    "background": "The successful excavation site with the specimen now fully stabilized and jacketed in the pit."
+  },
+  "typography": {
+    "primary_text": {
+      "content": "Dino Puzzle!",
+      "style": "3D bubble letters",
+      "color": "Bright Sky Blue"
+    },
+    "secondary_text": {
+      "content": "Player Wins!",
+      "style": "3D mixed-case block letters",
+      "color": "Golden-Yellow",
+      "placement": "Directly below primary text"
+    }
+  },
+  "technical_parameters": {
+    "lighting": "SUNNY_EXPOSED_CINEMATIC; warm golden-hour tones to emphasize victory.",
+    "surface_finish": "Satin-matte skin; polished fossil surfaces; signature thin-rimmed BLACK aviator glasses.",
+    "negative_prompt": "dark, gloomy, failure, museum, blurry, realistic, sharp teeth, scary."
+  }
+}

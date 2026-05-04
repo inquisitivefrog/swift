@@ -1,0 +1,18 @@
+{
+  "id": "GAME_CARD_PROTOSTEGA_3D_023",
+  "species": "Protostega gigas",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "NIOBRARA_CHALK",
+  "habitat_ref": "EPICONTINENTAL_SEAWAY",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "visual_logic": {
+    "surface_detail": "Smooth, hydrodynamic skin with 'Teal' and 'Seafoam Green' countershading; shell features visible rib-ridges beneath a leathery surface.",
+    "anatomy_focus": "Hero focus on the powerful, paddle-like rear limbs and the wide, flat skull.",
+    "environment": {
+      "water": "Sun-drenched, turquoise water over a high-albedo 'Cream White' chalk seafloor.",
+      "biota": "Floating rafts of Crinoids (Seirocrinus) and drifting 'Azure' jellyfish."
+    },
+    "pose": "Mid-turn in the water column, the body tilted laterally to showcase the scale of the flippers and the streamlined profile."
+  }
+}

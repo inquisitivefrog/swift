@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_BANGIA_001",
+  "species": "Bangiadraco robustus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "JIUFOTANG",
+  "habitat_ref": "FORESTED_VOLCANIC",
+  "visual_logic": {
+    "color_palette": "Slate grey with white 'frosting' along the wing edges; the crest is a deep teal.",
+    "pattern_strategy": "Speckled camouflage on the limbs; the beak has a 'notched' texture at the midpoint.",
+    "eyes": "Piercing white eyes.",
+    "environment": "Misty, ash-laden forest of the Jiufotang; ginkgo trees in soft focus."
+  },
+  "pose": "Perched on a volcanic rock; the head is tilted down, highlighting the robust nature of the jaw and the sharp crest."
+  }
+]

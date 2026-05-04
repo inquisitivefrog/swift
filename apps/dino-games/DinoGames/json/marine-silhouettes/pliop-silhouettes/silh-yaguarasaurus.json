@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_YAGUARA_SILHOUETTE_001",
+    "species": "Yaguarasaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "LA_FRONTERA_FORMATION",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a primitive, basal plioplatecarpine with a very long, slender body.",
+      "environment": "Vivid orange and 'Rusty-Red' sunset typical of the Turonian tropics.",
+      "backlight_strategy": "DUSK_SILHOUETTE; sharp focus on the limb-to-paddle transition.",
+      "facial_silhouette": "A very straight, elongated skull profile with a slight 'bump' at the back of the head."
+    },
+    "pose": "Side profile in an eel-like 'S' undulation, highlighting the fact that its limbs are still relatively long and lizard-like compared to later mosasaurs.",
+    "negative_constraints": "No internal shading; maintain sharp, thin limb outlines."
+  }
+]

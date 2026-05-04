@@ -1,0 +1,15 @@
+{
+  "id": "GAME_CARD_TYLO_003",
+  "species": "Taniwhasaurus antarcticus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "CONWAY_FORMATION",
+  "habitat_ref": "EPICONTINENTAL_SEAWAY",
+  "visual_logic": {
+    "color_palette": "Muddy brown-green with 'Glauconitic' green highlights along the spine.",
+    "pattern_strategy": "Jagged, vertical 'river-reed' stripes in dark tan to help it camouflage in the silty Conway waters.",
+    "eyes": "Bright copper eyes with high reflectivity.",
+    "environment": "Murky, 'Silt Grey' water with visible organic debris and large, rounded calcareous concretions on the sea floor."
+  },
+  "pose": "An elegant, serpentine S-curve swim; the body is angled to show the transition from the streamlined neck to the powerful, sweeping tail."
+}

@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_ANHAN_SILHOUETTE_001",
+  "species": "Anhanguera",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "SANTANA_ROMUALDO",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; emphasize the 'bulbous' tip of the beak.",
+    "environment": "Early morning sun on the horizon providing a golden rim-light.",
+    "facial_silhouette": "The dual circular crests at the very front of the jaws are the primary morphological clue."
+  },
+  "pose": "Head-on flight profile but slightly angled; highlights the toothy 'rosette' at the tip of the beak."
+  }
+]

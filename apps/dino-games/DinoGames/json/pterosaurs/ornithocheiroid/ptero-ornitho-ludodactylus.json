@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_LUDO_001",
+  "species": "Ludodactylus sibbicki",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "CRATO_FORMATION",
+  "habitat_ref": "COASTAL_LOWLANDS",
+  "visual_logic": {
+    "color_palette": "Bright green and yellow; the crest is a dark forest green.",
+    "pattern_strategy": "Smooth, vibrant clay textures; the jaw has a row of small, needle-like teeth.",
+    "eyes": "Bright yellow eyes.",
+    "environment": "Sunny Crato wetland; vibrant green flora (Ruffordia) in soft focus."
+  },
+  "pose": "Standing on a log; the mouth is slightly open to reveal the teeth, which contradict the 'Pteranodon' crest."
+  }
+]

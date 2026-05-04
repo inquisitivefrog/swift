@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_BOREO_SILHOUETTE_001",
+  "species": "Boreopterus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "YIXIAN_FORMATION",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette.",
+    "environment": "Cold winter morning backlight.",
+    "facial_silhouette": "The exceptionally long, thin beak with a 'fuzzy' edge caused by the many small teeth."
+  },
+  "pose": "Side profile flight; emphasizes the very long, straight beak and the slender, aerodynamic head."
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_SIMIO_SILHOUETTE_001",
+    "species": "Simolestes",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "OXFORD_CLAY",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a pliosaur with a uniquely short, blunt face.",
+      "environment": "High-contrast 'Emerald Green' water surface.",
+      "backlight_strategy": "DUSK_SILHOUETTE to highlight the 'snub-nosed' profile.",
+      "facial_silhouette": "The snout is noticeably shorter and more rounded than any other pliosaur, giving it a 'bulldog' look."
+    },
+    "pose": "Head turned toward the viewer in a 3/4 silhouette to emphasize the wide, blunt snout and the heavy, powerful torso.",
+    "negative_constraints": "No internal texture; focus on the unique facial bluntness."
+  }
+]

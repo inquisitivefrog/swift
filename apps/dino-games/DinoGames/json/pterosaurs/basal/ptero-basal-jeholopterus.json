@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_JEHOLO_001",
+  "species": "Jeholopterus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "TIAOJISHAN_FORMATION",
+  "habitat_ref": "FORESTED_VOLCANIC",
+  "visual_logic": {
+    "color_palette": "Sooty charcoal grey with a stark white 'skull' pattern on the face.",
+    "pattern_strategy": "Heavy, thick pycnofiber texture like a woolly moth; claws have a 'stained bone' look.",
+    "eyes": "Luminous red eyes that glow slightly in the dark.",
+    "environment": "Nighttime in the Tiaojishan forest; gnarled trees covered in thick moss."
+  },
+  "pose": "Latching onto the back of a large dinosaur (blurred in the background); the focus is on the sharp foot claws and the wide-open mouth revealing the fangs."
+  }
+]

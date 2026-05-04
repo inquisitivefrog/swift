@@ -11,7 +11,7 @@ import XCTest
 final class DinoGamesTests: XCTestCase {
 
     func testTestableImportLinksMainTarget() {
-        XCTAssertFalse(MatchingGameLandDinosaurData.allDinosaurs.isEmpty)
+        XCTAssertFalse(LandDinosaurData.allDinosaurs.isEmpty)
         XCTAssertFalse(DinoClade.allCases.isEmpty)
     }
 }

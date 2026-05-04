@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_EUDIMORPHO_001",
+  "species": "Eudimorphodon",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "ZORZINO_LIMESTONE",
+  "habitat_ref": "COASTAL_LOWLANDS",
+  "visual_logic": {
+    "color_palette": "Vibrant teal and forest green; the beak is tipped in a bright coral red.",
+    "pattern_strategy": "Complex scale-like patterns along the wing-arms; the tail-vane has a vein-like 'leaf' pattern.",
+    "eyes": "Amber eyes with a vertical slit pupil.",
+    "environment": "Triassic coastline with early ferns and cycads under a bright midday sun."
+  },
+  "pose": "Snap-turning in mid-air to catch a small fish; the long tail is whipped to the side to aid the maneuver."
+  }
+]

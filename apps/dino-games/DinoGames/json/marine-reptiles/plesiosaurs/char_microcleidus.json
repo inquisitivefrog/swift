@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_MICRO_017",
+    "species": "Microcleidus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "OXFORD_CLAY",
+    "visual_logic": {
+      "color_palette": "Olive-green with muddy-brown mottling and high-contrast white spots on the flippers.",
+      "action": "Hovering near a cluster of large clay ammonites.",
+      "environment": "Deep blue water with olive-green sediment clouds and distant clay-textured fauna."
+    },
+    "pose": "Suspended vertically; head looking upward toward the surface light."
+  }
+]

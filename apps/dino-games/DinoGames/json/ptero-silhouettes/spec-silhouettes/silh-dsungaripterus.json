@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_DSUNGARI_SILHOUETTE_001",
+  "species": "Dsungaripterus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; edges are smooth and clean.",
+    "facial_silhouette": "The distinct upward-curving beak and the low, wavy crest on the snout are the primary identifiers.",
+    "backlight_strategy": "Golden rim-light to define the sturdy, robust neck and the 'pliers' beak."
+  },
+  "pose": "Side profile in a low-walking gait; emphasizes the sturdy limbs and the unique 'tool-like' beak shape."
+}

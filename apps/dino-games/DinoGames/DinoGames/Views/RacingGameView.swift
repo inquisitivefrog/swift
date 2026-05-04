@@ -375,7 +375,10 @@ struct RacingGameView: View {
         let (outsideRacer, insideRacer) = racer1.speed >= racer2.speed ? (racer1, racer2) : (racer2, racer1)
         return Group {
             if step == 0 || step == 1 {
+                // Each pre-race step must run its own audio chain. Reusing the same subtree without a changing
+                // identity often skips `onAppear` when `preRaceStep` goes 0 → 1, so the inside racer never speaks.
                 preRaceContestantsView(geometry: geometry, outsideRacer: outsideRacer, insideRacer: insideRacer, highlightedRacer: step == 0 ? outsideRacer : insideRacer)
+                    .id(step)
                     .onAppear {
                         if step == 0 {
                             // Step 0: outside racer highlighted — name then "on the outside track"
@@ -1532,17 +1535,20 @@ struct RacingGameView: View {
             speechManager.playTogether(url1: u1, url2: u2) {
                 self.speechManager.onAudioFinished = nil
                 LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.config.id)
+                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.config.id)
                 self.isPresented = false
             }
         } else if let u = goodJobURL ?? crowdURL {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.config.id)
+                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.config.id)
                 self.isPresented = false
             }
             speechManager.playAudioFile(url: u)
         } else {
             LandDinosaurProgress.notifyCompletionIfLandGame(configId: config.id)
+            PterosaurProgress.notifyCompletionIfPterosaurGame(configId: config.id)
             isPresented = false
         }
     }

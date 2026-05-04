@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_PHOSPHO_SILHOUETTE_001",
+    "species": "Phosphosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "HAKOBUCHI_FORMATION",
+    "habitat_ref": "DEEP_BENTHIC_ZONE",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a small, compact halisaur.",
+      "environment": "Deep, dark indigo water with a single bright light source from above to create a stark silhouette.",
+      "backlight_strategy": "Top-down 'God-ray' backlighting to emphasize the skull's unique proportions.",
+      "facial_silhouette": "Characterized by an exceptionally large, circular orbital (eye socket) bulge and a shorter, blunt snout compared to other halisaurines."
+    },
+    "pose": "Tilted slightly upward toward the light source, emphasizing the oversized eye sockets which indicate its adaptation for low-light/nocturnal hunting.",
+    "negative_constraints": "No internal eye detail; the eye must be represented only by the outward bulge of the skull silhouette."
+  }
+]

@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Broad morphological / phylogenetic bucket for a land dinosaur in the app’s main pool (`MatchingGameLandDinosaurData.allDinosaurs`, ids 1–57).
+/// Broad morphological / phylogenetic bucket for a land dinosaur in the app’s main pool (`LandDinosaurData.allDinosaurs`, ids 1–69).
 enum DinoClade: String, CaseIterable {
     case theropod
     case sauropod
@@ -21,7 +21,7 @@ enum DinoClade: String, CaseIterable {
 }
 
 enum LandDinosaurCladeCatalog {
-    /// Clade for each creature id in the land dinosaur pool. Keys align with `MatchingGameLandDinosaurData.allDinosaurs`.
+    /// Clade for each creature id in the land dinosaur pool. Keys align with `LandDinosaurData.allDinosaurs`.
     static let cladeByCreatureId: [Int: DinoClade] = [
         1: .theropod, 2: .ceratopsian, 3: .stegosaur, 4: .theropod, 5: .theropod, 6: .spinosaurid,
         7: .sauropod, 8: .ankylosaurid, 9: .hadrosaur, 10: .hadrosaur, 11: .ornithopod, 12: .theropod, 13: .hadrosaur,
@@ -31,11 +31,33 @@ enum LandDinosaurCladeCatalog {
         35: .ceratopsian, 36: .theropod, 37: .theropod, 38: .theropod, 39: .theropod, 40: .sauropod, 41: .theropod,
         42: .theropod, 43: .theropod, 44: .sauropod, 45: .stegosaur, 46: .ankylosaurid, 47: .hadrosaur, 48: .hadrosaur,
         49: .pachycephalosaur, 50: .pachycephalosaur, 51: .ankylosaurid, 52: .stegosaur, 53: .ornithopod,
-        54: .spinosaurid, 55: .ankylosaurid, 56: .ankylosaurid, 57: .ceratopsian,
+        54: .spinosaurid, 55: .ankylosaurid, 56: .ankylosaurid, 57: .ceratopsian, 58: .theropod, 59: .sauropod,
+        60: .theropod, 61: .theropod, 62: .theropod, 63: .theropod, 64: .ornithopod, 65: .theropod,
+        66: .sauropod, 67: .theropod, 68: .spinosaurid, 69: .theropod,
     ]
 
     /// Fallback `.theropod` when id is missing from the map (defensive; pool ids should all be present).
     static func clade(forCreatureId id: Int) -> DinoClade {
         cladeByCreatureId[id] ?? .theropod
+    }
+
+    /// Two decoys for silhouette guess rounds: never the question’s clade, and from two different non-question clades when the pool allows (reduces same-shape confusion).
+    static func pickTwoDecoysDifferentClades(question: Dinosaur, questionClade: DinoClade, pool: [Dinosaur]) -> [Dinosaur] {
+        let decoyCandidates = pool.filter {
+            $0.id != question.id && clade(forCreatureId: $0.id) != questionClade
+        }
+        guard decoyCandidates.count >= 2 else {
+            return Array(pool.filter { $0.id != question.id }.shuffled().prefix(2))
+        }
+        let byClade = Dictionary(grouping: decoyCandidates) { clade(forCreatureId: $0.id) }
+        let otherClades = byClade.keys.shuffled()
+        if otherClades.count >= 2 {
+            let firstDecoy = (byClade[otherClades[0]] ?? []).shuffled().first!
+            let secondPool = decoyCandidates.filter { clade(forCreatureId: $0.id) != otherClades[0] }
+            if let secondDecoy = secondPool.shuffled().first {
+                return [firstDecoy, secondDecoy]
+            }
+        }
+        return Array(decoyCandidates.shuffled().prefix(2))
     }
 }

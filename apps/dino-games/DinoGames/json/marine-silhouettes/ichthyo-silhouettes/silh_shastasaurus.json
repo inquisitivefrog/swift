@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_SHASTA_SILHOUETTE_001",
+    "species": "Shastasaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "HOSS_ELBA_FORMATION",
+    "habitat_ref": "OPEN_OCEAN_PELAGIC",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of the world's largest marine reptile, characterized by an incredibly deep, barrel-shaped torso.",
+      "environment": "Deep indigo-to-black water with shimmering 'god-rays' from the surface.",
+      "backlight_strategy": "Strong backlighting to emphasize the massive 20-meter scale and the toothless, suction-feeding jaw profile.",
+      "facial_silhouette": "Surprisingly short and blunt snout for such a massive body."
+    },
+    "pose": "A majestic, slow-moving lateral pose that highlights the extreme depth of the ribcage and the relatively small flippers.",
+    "negative_constraints": "No internal shading or bone structure detail; sharp edges only."
+  }
+]

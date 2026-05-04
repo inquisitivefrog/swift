@@ -1,0 +1,15 @@
+{
+  "id": "GAME_CARD_ANURO_001",
+  "species": "Anurognathus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SOLNHOFEN",
+  "habitat_ref": "TROPICAL_COASTAL_LAGOONS",
+  "visual_logic": {
+    "color_palette": "Dusty mauve body with soft cream 'pycnofiber' fluff; dark indigo wing membranes.",
+    "pattern_strategy": "Counter-shaded belly; subtle darker vertical stripes along the short tail to mimic tree bark.",
+    "eyes": "Massive, glossy black nocturnal eyes that dominate the face, catching a warm sunset glint.",
+    "environment": "Solnhofen at dusk; warm amber light hitting the limestone cliffs."
+  },
+  "pose": "Clinging vertically to a limestone rock face, wings folded tight; head turned toward the viewer with a curious, wide-mouthed expression."
+}

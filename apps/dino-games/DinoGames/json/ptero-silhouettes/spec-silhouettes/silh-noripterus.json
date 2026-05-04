@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_NORI_SILHOUETTE_001",
+  "species": "Noripterus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette.",
+    "facial_silhouette": "The straight beak (distinguishing it from the curved Dsungaripterus) and the small, pointed crest at the back of the head.",
+    "backlight_strategy": "Cool blue rim-light from the top-left."
+  },
+  "pose": "Side profile standing; highlights the more slender, graceful proportions compared to its heavier cousin."
+}

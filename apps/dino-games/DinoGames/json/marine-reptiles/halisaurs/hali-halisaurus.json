@@ -1,0 +1,18 @@
+{
+  "id": "GAME_CARD_HALI_3D_015",
+  "species": "Halisaurus platyspondylus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "NAVESINK_FORMATION",
+  "habitat_ref": "PELAGIC_SHELF_SEA",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "visual_logic": {
+    "surface_detail": "Smooth, hydrodynamic skin with a 'Slate Blue' dorsal palette and 'Creamy White' underbelly; very fine, almost invisible scale texture.",
+    "anatomy_focus": "Emphasis on the snake-like, elongated body and the small, primitive flippers that retain visible digit structure.",
+    "environment": {
+      "water": "Cold, olive-tinted 'Greensand' water with high nutrient density and floating marine snow.",
+      "biota": "Clusters of coiled ammonites and 'Ancestral Seagrass' in the lower third of the frame."
+    },
+    "pose": "An elegant, eel-like undulation; the body is captured in a wide 'S-curve' to show off its flexibility."
+  }
+}

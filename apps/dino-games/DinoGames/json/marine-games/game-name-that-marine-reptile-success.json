@@ -1,0 +1,40 @@
+{
+  "id": "GAME_CONFIRM_MOSA_001_SILHOUETTE",
+  "title": "Player Wins (Marine Reptile Silhouette Reveal)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "style_id": "STYLE_SILHOUETTE_PRO",
+  "formation_ref": "PIERRE_SHALE",
+  "habitat_ref": "PELAGIC_SHELF_SEA_SUNSET",
+  "app_image_config": {
+    "layer_1_style": "[REF: STYLE_SILHOUETTE_PRO]",
+    "layer_2_setting": "[REF: PIERRE_SHALE_SURFACE]",
+    "layer_3_action": {
+      "subject": "Mosasaurus hoffmannii",
+      "features": [
+        "Solid, pitch-black silhouette with zero internal detail for a sharp 'logo' effect.",
+        "The distinctive downward-curved tail fluke is clearly defined at the top of the frame.",
+        "The blocky, powerful snout is aimed toward the bottom-right corner, creating a strong diagonal.",
+        "The pectoral and pelvic flippers are sharp and crisp, tucked close to the body."
+      ],
+      "action": "A 1:1 square composition featuring the Mosasaur in a high-speed, vertical breach-dive from the top-left to the bottom-right.",
+      "text_overlay": [
+        {
+          "content": "Name that Marine Reptile",
+          "style": "Bright red, 3D extruded clay-style lettering, playful bold sans-serif.",
+          "placement": "Top center, arched."
+        },
+        {
+          "content": "Player Wins!",
+          "style": "Bright red, 3D extruded clay-style lettering, larger 'bouncing' celebratory font.",
+          "placement": "Center, angled at a 45-degree slope to parallel the Mosasaur's dive."
+        }
+      ]
+    }
+  },
+  "visual_logic": {
+    "background": "Vibrant, saturated sunset orange gradient with a glowing white-hot sun disk directly behind the subject.",
+    "lighting": "Extreme rim lighting effect on the very edges of the black silhouette to separate it from the orange sky.",
+    "negative_constraints": "No textures, no eyes, no skin detail; strictly a clean vector-style silhouette."
+  }
+}

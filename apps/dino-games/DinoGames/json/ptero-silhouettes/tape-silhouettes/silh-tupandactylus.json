@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_TUPAN_SILHOUETTE_001",
+  "species": "Tupandactylus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "CRATO_FORMATION",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; focus on the verticality.",
+    "environment": "Sunset backlight (vibrant orange sky) with high-intensity rim lighting.",
+    "facial_silhouette": "The massive, sail-like rectangle of the crest is unmistakable."
+  },
+  "pose": "Walking profile; the silhouette emphasizes how the crest is nearly larger than the rest of the body."
+  }
+]

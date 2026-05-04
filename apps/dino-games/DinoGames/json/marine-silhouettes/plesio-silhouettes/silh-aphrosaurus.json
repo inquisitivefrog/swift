@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: MORENO_FORMATION]",
+      "layer_3_action": {
+        "subject": "Aphrosaurus",
+        "features": ["Slender, medium-length neck", "Symmetrical four-flipper layout", "Tapered tail-fin silhouette"],
+        "action": "A lateral profile silhouette of an Aphrosaurus gliding horizontally. The long neck is held straight to emphasize total body length. No internal detail."
+      }
+    }
+  }
+]

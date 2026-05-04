@@ -1,0 +1,15 @@
+{
+  "id": "GAME_CARD_GNATHO_001",
+  "species": "Gnathosaurus subulatus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SOLNHOFEN",
+  "habitat_ref": "TROPICAL_COASTAL_LAGOONS",
+  "visual_logic": {
+    "color_palette": "Deep sea-foam green with a pale yellow underbelly; the 'spoon' beak is a polished tan.",
+    "bristle_logic": "The teeth are rendered as short, tidy, uniform bristles that look like a clean brush.",
+    "eyes": "Bright, curious amber eyes.",
+    "environment": "Midday Solnhofen; turquoise water with visible sandy ripples on the bottom."
+  },
+  "pose": "Standing in the shallows, looking down at a school of small fish; the spoon-shaped tip of the beak is the focus."
+}

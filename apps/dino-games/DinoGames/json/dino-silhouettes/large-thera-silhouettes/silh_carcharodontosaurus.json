@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_CARCHAR_SILHOUETTE_013",
+  "species": "Carcharodontosaurus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; massive, elongated proportions.",
+    "facial_silhouette": "Blade-like, straight-snouted skull; emphasize the sheer length of the head.",
+    "backlight_strategy": "Harsh, high-contrast 'desert-heat' backlight."
+  },
+  "pose": "Standing tall with head slightly lowered; silhouette highlights the massive skull-to-body ratio."
+}

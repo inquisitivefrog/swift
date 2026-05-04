@@ -1,0 +1,18 @@
+[
+  {
+    "id": "GAME_CARD_MESOLEP_SILHOUETTE_012",
+    "species": "Mesoleptos",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "HVAR_DEPOSITS",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette. A long-bodied lizard with slender, dainty limbs.",
+      "environment": "Crystalline 'Oceanic Cyan' lagoon environment.",
+      "backlight_strategy": "Sharp rim lighting from a high Cretaceous sun.",
+      "facial_silhouette": "Short, blunt head compared to Dolichosaurus."
+    },
+    "pose": "Active 'paddling' motion, showcasing the semi-aquatic nature of the limbs and the length of the torso.",
+    "negative_constraints": "Absolutely no internal detail; morphology study only."
+  }
+]

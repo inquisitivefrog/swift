@@ -415,8 +415,12 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Feedback/great-match"
         case "thats-right-you-guessed-it", "that's right you guessed it":
             return "Feedback/thats-right-you-guessed-it"
+        case "game-name-that-marine-reptile-thats-right":
+            return "Games/game-name-that-marine-reptile-thats-right"
         case "try-again", "try again":
             return "Feedback/try-again"
+        case "game-name-that-marine-reptile-try-again":
+            return "Games/game-name-that-marine-reptile-try-again"
         case "thats-not-right-try-again", "that's not right try again":
             return "Feedback/thats-not-right-try-again"
         case "thats-still-not-right", "that's still not right":
@@ -457,6 +461,8 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Feedback/you-didnt-get-them-all-right"
         case "good-job-you-got-them-all", "good job you got them all", "good job":
             return "Feedback/good-job-you-got-them-all"
+        case "game-name-that-marine-reptile-good-job":
+            return "Games/game-name-that-marine-reptile-good-job"
         case "starting-whistle", "starting whistle", "starting-gun", "starting gun":
             return "Feedback/starting-whistle"
         case "crowd-cheering", "we-have-a-winner", "we have a winner":
@@ -507,7 +513,8 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         case "marine reptiles", "marine-reptiles", "category-sea", "sea",
              "mosasaurs", "category-mosasaurs",
              "plesiosaurs", "category-plesiosaurs",
-             "ichthyosaurs", "category-ichthyosaurs":
+             "ichthyosaurs", "category-ichthyosaurs",
+             "category-marine-reptiles":
             return "Cover/cover-marine-reptiles"
         case "pterosaurs", "category-air", "air":
             return "Cover/cover-pterosaurs"
@@ -523,6 +530,8 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-guess-which-dinosaur-is-heavier"
         case "guess-which-pterosaur-is-heavier", "guess which pterosaur is heavier":
             return "Games/game-guess-which-pterosaur-is-heavier"
+        case "game-weigh-marine-reptile", "game weight marine reptile", "game-weight-marine-reptile":
+            return "Games/game-weigh-marine-reptile"
         case "can-you-name-the-dinosaur", "can you name the dinosaur", "game-intro-guess-dinosaur":
             return "Games/game-can-you-name-the-dinosaur"
         case "name-that-dinosaur", "name that dinosaur":
@@ -543,6 +552,11 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-can-you-name-the-ichthyosaur"
         case "name-that-ichthyosaur", "name that ichthyosaur":
             return "Games/name-that-ichthyosaur"
+        case "can-you-name-the-marine-reptile", "can you name the marine reptile",
+             "can-you-name-that-marine-reptile", "can you name that marine reptile":
+            return "Games/game-can-you-name-that-marine-reptile"
+        case "name-that-marine-reptile", "name that marine reptile":
+            return "Games/name-that-marine-reptile"
         case "toothache", "dino-toothache", "game-dino-toothache":
             return "Games/game-dino-toothache"
         case "game-dino-smile", "dino-smile", "smiling-dinos":
@@ -792,7 +806,10 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         // Pterosaurs: Audio/Pterosaurs/{key}.m4a for any ptero-* key (e.g. ptero-pteranodon) so Match the Pterosaur uses recorded name audio
         case _ where normalized.hasPrefix("ptero-"):
             return "Pterosaurs/\(normalized)"
-        // Marine reptiles (Name That *): Audio/Marine/{key}.m4a for mosa- / plesio- / ichthyo- imageName keys
+        // Marine reptiles: use explicit marine-* keys from Assets/Audio/Marine-Reptiles/.
+        case _ where normalized.hasPrefix("marine-"):
+            return "Marine-Reptiles/\(normalized)"
+        // Legacy marine keys kept for compatibility with old data.
         case _ where normalized.hasPrefix("mosa-"):
             return "Marine/\(normalized)"
         case _ where normalized.hasPrefix("plesio-"):
@@ -876,7 +893,10 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
     
     /// Re-activate audio session before playback. Handles cases where session was deactivated (app update, YouTube, phone call).
     private func ensureAudioSessionActive() {
-        try? AVAudioSession.sharedInstance().setActive(true)
+        let session = AVAudioSession.sharedInstance()
+        // Use non-mixing playback so game audio interrupts background apps instead of mixing.
+        try? session.setCategory(.playback, mode: .default, options: [])
+        try? session.setActive(true)
     }
 
     func playAudioFile(url: URL, fallbackSpeakText: String? = nil) {
@@ -1383,17 +1403,20 @@ struct MatchingGameView: View {
             speechManager.playTogether(url1: u1, url2: u2) {
                 self.speechManager.onAudioFinished = nil
                 LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
+                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
                 self.isPresented = false
             }
         } else if let u = goodJobURL ?? crowdURL {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
+                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
                 self.isPresented = false
             }
             speechManager.playAudioFile(url: u)
         } else {
             LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
+            PterosaurProgress.notifyCompletionIfPterosaurGame(configId: gameConfig.id)
             isPresented = false
         }
     }
@@ -2184,9 +2207,9 @@ struct CharacteristicCard: View {
 // MARK: - Game Configurations
 
 struct MatchingGameConfigs {
-    static let allDinosaurs = MatchingGameLandDinosaurData.allDinosaurs
-    static let dinosaurDietById = MatchingGameLandDinosaurData.dinosaurDietById
-    static let dinosaurEstimatedWeightKgById = MatchingGameLandDinosaurData.dinosaurEstimatedWeightKgById
+    static let allDinosaurs = LandDinosaurData.allDinosaurs
+    static let dinosaurDietById = LandDinosaurData.dinosaurDietById
+    static let dinosaurEstimatedWeightKgById = LandDinosaurData.dinosaurEstimatedWeightKgById
     // Full pool of available characteristics (can be expanded)
     // Image sets: dino-char-<characteristic> (e.g. dino-char-teeth, dino-char-crest)
     // Feathers: we use one type, "Feathers", with image dino-char-proto-feathers (proto-feathers). Diet traits (carnivore, herbivore, etc.) are not used here; reserved for a future game.
@@ -2437,6 +2460,36 @@ struct MatchingGameConfigs {
         Characteristic(id: 192, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 53),
         Characteristic(id: 193, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 54),
         Characteristic(id: 194, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 54),
+        Characteristic(id: 198, type: "Armor", icon: "🛡️", imageName: "dino-char-armor", dinosaurId: 55),
+        Characteristic(id: 199, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 55),
+        Characteristic(id: 200, type: "Armor", icon: "🛡️", imageName: "dino-char-armor", dinosaurId: 56),
+        Characteristic(id: 201, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 56),
+        Characteristic(id: 202, type: "Horns", icon: "🦏", imageName: "dino-char-horns", dinosaurId: 57),
+        Characteristic(id: 203, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 57),
+        Characteristic(id: 204, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 58),
+        Characteristic(id: 205, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 58),
+        Characteristic(id: 206, type: "Long Neck", icon: "🦒", imageName: "dino-char-long-neck", dinosaurId: 59),
+        Characteristic(id: 207, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 59),
+        Characteristic(id: 208, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 60),
+        Characteristic(id: 209, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 60),
+        Characteristic(id: 210, type: "Horns", icon: "🦏", imageName: "dino-char-horns", dinosaurId: 61),
+        Characteristic(id: 211, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 61),
+        Characteristic(id: 212, type: "Beak", icon: "🦜", imageName: "dino-char-beak", dinosaurId: 62),
+        Characteristic(id: 213, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 62),
+        Characteristic(id: 214, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 63),
+        Characteristic(id: 215, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 63),
+        Characteristic(id: 216, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 64),
+        Characteristic(id: 217, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 64),
+        Characteristic(id: 218, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 65),
+        Characteristic(id: 219, type: "Big", icon: "🐘", imageName: "dino-char-big", dinosaurId: 65),
+        Characteristic(id: 220, type: "Long Neck", icon: "🦒", imageName: "dino-char-long-neck", dinosaurId: 66),
+        Characteristic(id: 221, type: "Four Feet", icon: "🦎", imageName: "dino-char-four-feet", dinosaurId: 66),
+        Characteristic(id: 222, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 67),
+        Characteristic(id: 223, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 67),
+        Characteristic(id: 224, type: "Long Snout", icon: "🐊", imageName: "dino-char-long-snout", dinosaurId: 68),
+        Characteristic(id: 225, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 68),
+        Characteristic(id: 226, type: "Two Feet", icon: "🦖", imageName: "dino-char-two-feet", dinosaurId: 69),
+        Characteristic(id: 227, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 69),
     ]
     
     /// Diet characteristics for Dino Diets!: one per dinosaur (type = Herbivore/Carnivore/etc.). Images from Assets/Dinosaur-Diets with prefix diet- (e.g. diet-herbivore).
@@ -2491,64 +2544,10 @@ struct MatchingGameConfigs {
         )
     }
     
-    // Full pool of available pterosaurs (flying reptiles) — 10 total
-    static let allPterosaurs: [Dinosaur] = [
-        Dinosaur(id: 101, name: "Pterodactylus", icon: "🦅", imageName: "ptero-pteradactylus", characteristicIds: [101, 102, 103]),
-        Dinosaur(id: 102, name: "Pteranodon", icon: "🦅", imageName: "ptero-pteranodon", characteristicIds: [104, 105, 106]),
-        Dinosaur(id: 103, name: "Quetzalcoatlus", icon: "🦅", imageName: "ptero-quetzacoatlus", characteristicIds: [107, 108, 109]),
-        Dinosaur(id: 104, name: "Rhamphorhynchus", icon: "🦅", imageName: "ptero-rhamphorhynchus", characteristicIds: [110, 111, 112]),
-        Dinosaur(id: 105, name: "Dimorphodon", icon: "🦅", imageName: "ptero-dimorphodon", characteristicIds: [113, 114, 115]),
-        Dinosaur(id: 106, name: "Anurognathus", icon: "🦅", imageName: "ptero-anurognathus", characteristicIds: [116, 117, 118]),
-        Dinosaur(id: 107, name: "Dsungaripterus", icon: "🦅", imageName: "ptero-dsungaripterus", characteristicIds: [119, 120, 121]),
-        Dinosaur(id: 108, name: "Nyctosaurus", icon: "🦅", imageName: "ptero-nyctosaurus", characteristicIds: [122, 123, 124]),
-        Dinosaur(id: 109, name: "Tapejara", icon: "🦅", imageName: "ptero-tapejara", characteristicIds: [125, 126, 127]),
-        Dinosaur(id: 110, name: "Tupandactylus", icon: "🦅", imageName: "ptero-tupandactylus", characteristicIds: [128, 129, 130]),
-    ]
-    
-    // Full pool of available pterosaur characteristics
-    // Image sets: ptero-char-<characteristic> (e.g. ptero-char-wings, ptero-char-crest)
-    static let allPterosaurCharacteristics: [Characteristic] = [
-        // Pterodactylus characteristics
-        Characteristic(id: 101, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 101),
-        Characteristic(id: 102, type: "Small", icon: "🐦", imageName: "ptero-char-small", dinosaurId: 101),
-        Characteristic(id: 103, type: "Teeth", icon: "🦷", imageName: "ptero-char-teeth", dinosaurId: 101),
-        // Pteranodon characteristics
-        Characteristic(id: 104, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 102),
-        Characteristic(id: 105, type: "Crest", icon: "🪖", imageName: "ptero-char-crest", dinosaurId: 102),
-        Characteristic(id: 106, type: "No Teeth", icon: "🦷", imageName: "ptero-char-no-teeth", dinosaurId: 102),
-        // Quetzalcoatlus characteristics
-        Characteristic(id: 107, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 103),
-        Characteristic(id: 108, type: "Huge", icon: "🐘", imageName: "ptero-char-huge", dinosaurId: 103),
-        Characteristic(id: 109, type: "Long Neck", icon: "🦒", imageName: "ptero-char-long-neck", dinosaurId: 103),
-        // Rhamphorhynchus characteristics
-        Characteristic(id: 110, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 104),
-        Characteristic(id: 111, type: "Long Tail", icon: "🦎", imageName: "ptero-char-long-tail", dinosaurId: 104),
-        Characteristic(id: 112, type: "Teeth", icon: "🦷", imageName: "ptero-char-teeth", dinosaurId: 104),
-        // Dimorphodon characteristics
-        Characteristic(id: 113, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 105),
-        Characteristic(id: 114, type: "Big Head", icon: "🧠", imageName: "ptero-char-big-head", dinosaurId: 105),
-        Characteristic(id: 115, type: "Teeth", icon: "🦷", imageName: "ptero-char-teeth", dinosaurId: 105),
-        // Anurognathus characteristics
-        Characteristic(id: 116, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 106),
-        Characteristic(id: 117, type: "Small", icon: "🐦", imageName: "ptero-char-small", dinosaurId: 106),
-        Characteristic(id: 118, type: "Teeth", icon: "🦷", imageName: "ptero-char-teeth", dinosaurId: 106),
-        // Dsungaripterus characteristics
-        Characteristic(id: 119, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 107),
-        Characteristic(id: 120, type: "Crest", icon: "🪖", imageName: "ptero-char-crest", dinosaurId: 107),
-        Characteristic(id: 121, type: "Teeth", icon: "🦷", imageName: "ptero-char-teeth", dinosaurId: 107),
-        // Nyctosaurus characteristics
-        Characteristic(id: 122, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 108),
-        Characteristic(id: 123, type: "Crest", icon: "🪖", imageName: "ptero-char-crest", dinosaurId: 108),
-        Characteristic(id: 124, type: "No Teeth", icon: "🦷", imageName: "ptero-char-no-teeth", dinosaurId: 108),
-        // Tapejara characteristics
-        Characteristic(id: 125, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 109),
-        Characteristic(id: 126, type: "Crest", icon: "🪖", imageName: "ptero-char-crest", dinosaurId: 109),
-        Characteristic(id: 127, type: "Teeth", icon: "🦷", imageName: "ptero-char-teeth", dinosaurId: 109),
-        // Tupandactylus characteristics
-        Characteristic(id: 128, type: "Wings", icon: "🪽", imageName: "ptero-char-wings", dinosaurId: 110),
-        Characteristic(id: 129, type: "Crest", icon: "🪖", imageName: "ptero-char-crest", dinosaurId: 110),
-        Characteristic(id: 130, type: "Big Head", icon: "🧠", imageName: "ptero-char-big-head", dinosaurId: 110),
-    ]
+    static let allPterosaurs = AirPterosaurData.allPterosaurs
+
+    /// Image sets: `ptero-char-*` (e.g. ptero-char-wings, ptero-char-crest). Rows live in `AirPterosaurData` with the expanded pool.
+    static let allPterosaurCharacteristics: [Characteristic] = AirPterosaurData.allPterosaurCharacteristics
     
     // Create a random pterosaur game configuration (3 pterosaurs, 5 characteristics)
     // Image: add game-match-the-pterosaur.imageset with match-the-pterosaur-1024.png

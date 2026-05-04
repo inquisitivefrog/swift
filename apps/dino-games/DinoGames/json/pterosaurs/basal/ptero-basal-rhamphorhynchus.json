@@ -1,0 +1,18 @@
+[
+  {
+  "id": "GAME_CARD_RHAMPHO_001",
+  "species": "Rhamphorhynchus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SOLNHOFEN",
+  "habitat_ref": "TROPICAL_COASTAL_LAGOONS",
+  "visual_logic": {
+    "color_palette": "Sleek slate-blue dorsal side with a shimmering silver underbelly; tail vane is a vibrant 'hazard' orange.",
+    "pattern_strategy": "High-gloss 'wet' skin texture; horizontal counter-shading to mimic modern seabirds.",
+    "eyes": "Piercing icy-blue eyes with a high-shine finish.",
+    "environment": "Moonlit Solnhofen lagoon; calm water with bioluminescent algae ripples."
+  },
+  "pose": "Skimming just above the water surface, jaw dipped low; the long tail is held perfectly horizontal to provide aerodynamic stability."
+  }
+]
+

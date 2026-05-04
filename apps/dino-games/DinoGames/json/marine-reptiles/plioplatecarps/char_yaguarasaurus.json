@@ -1,0 +1,18 @@
+{
+  "id": "GAME_CARD_YAGUARA_3D_046",
+  "species": "Yaguarasaurus columbianus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "VACA_MUERTA",
+  "habitat_ref": "COASTAL_LOWLANDS",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "visual_logic": {
+    "surface_detail": "Sleek 'Sandy Gold' skin with 'Olive' lateral stripes, mimicking the patterns of a modern tiger shark.",
+    "anatomy_focus": "Hero focus on the elongated, slender skull and the slightly more lizard-like, flexible neck.",
+    "environment": {
+      "water": "Warm, silt-rich coastal water with 'River-Silt Brown' particulates near the surface.",
+      "biota": "Navigating through submerged tree roots and large prehistoric turtles (Araripemys)."
+    },
+    "pose": "Curling through a tight space in a submerged mangrove-like environment, highlighting its eel-like flexibility."
+  }
+}

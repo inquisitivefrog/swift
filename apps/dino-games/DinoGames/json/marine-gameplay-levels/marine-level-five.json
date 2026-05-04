@@ -1,0 +1,11 @@
+[
+  {
+    "id": "level_05_intro",
+    "app_image_config": {
+      "layer_1_style": "STYLE_ANIMATED_FEATURE_V3: high-poly 3D, cinematic CGI, Octane render, smooth clay textures.",
+      "layer_2_setting": "Setting: [REF: NIOBRARA_CHALK], Azure blue water over a chalky white seafloor.",
+      "layer_3_action": "A high-speed Dolichorhynchops is blazing a path in the water.",
+      "aspect_ratio": "1:1"
+    }
+  }
+]

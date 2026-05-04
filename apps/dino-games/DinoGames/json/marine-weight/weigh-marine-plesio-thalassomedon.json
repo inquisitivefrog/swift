@@ -1,0 +1,16 @@
+[
+  {
+    "id": "asset_weight_profile_thalassomedon_V1",
+    "species": "Thalassomedon",
+    "class": "LARGE_REPTILE",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": {
+      "alignment": "BOTTOM_ALIGNED_TO_FRAME",
+      "color_palette": "Spotted Sands: A pale buff/yellow base with dark brown 'rosette' spots (like a leopard).",
+      "texture": "Fine-scaled clay texture, matte finish.",
+      "environment_override": "[REF: CARLILE_SHALE] - Shallow, sun-drenched water with visible ripple patterns on the animal's back."
+    },
+    "morphology_hook": "A balance of length and bulk. The flippers should be emphasized as large 'underwater wings'."
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_PLIO_SILHOUETTE_001",
+    "species": "Pliosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "KIMMERIDGE_CLAY",
+    "habitat_ref": "OPEN_OCEAN_PELAGIC",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of the quintessential 'Predator X' type pliosaur.",
+      "environment": "Dark slate and indigo water with high-contrast horizon light.",
+      "backlight_strategy": "DUSK_SILHOUETTE focusing on the deep, powerful torso and wide-set paddles.",
+      "facial_silhouette": "Triangular head with a very robust jaw and a high cranial vault."
+    },
+    "pose": "Power-swim pose with all four paddles at the top of their stroke, creating a 'diamond' silhouette around the central body.",
+    "negative_constraints": "No internal shading; must be 100% black."
+  }
+]

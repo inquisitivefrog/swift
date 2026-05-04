@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_HAINOSAUR_3D_001",
+    "species": "Hainosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "CHALK_GROUP",
+    "habitat_ref": "OPEN_OCEAN_PELAGIC",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Durable, fine-grained scales with a 'counter-shaded' palette: slate-grey dorsal surface with subtle dappled light patterns, transitioning to a soft pearlescent white underbelly.",
+      "environment": "Crystal clear blue water of the Late Cretaceous shelf sea, populated by distant schools of 'Enchodus'.",
+      "cinematic_effect": "Strong 'caustic' light patterns dancing across the creature's back from the surface above, emphasizing its massive 12-meter length."
+    },
+    "pose": "An imposing lateral view showing the creature mid-undulation. The massive head is slightly turned toward the viewer, showcasing its specialized 'suction-feeding' snout and a calm, apex-predator gaze."
+  }
+]

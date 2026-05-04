@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_ARAMB_SILHOUETTE_001",
+  "species": "Arambourgiania",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette.",
+    "facial_silhouette": "The longest, thinnest neck silhouette in the game.",
+    "backlight_strategy": "Harsh white desert backlight to create a stark, impressive rim."
+  },
+  "pose": "Standing profile with the neck held at a 45-degree angle; emphasizes the incredible reach and spear-like beak."
+}

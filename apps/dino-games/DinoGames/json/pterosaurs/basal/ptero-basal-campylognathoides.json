@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_CAMPYLO_001",
+  "species": "Campylognathoides",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "POSIDONIA_SHALE",
+  "habitat_ref": "PELAGIC_SHELF_SEA",
+  "visual_logic": {
+    "color_palette": "Iridescent oil-slick purple and black; the interior of the mouth is a fleshy pink.",
+    "pattern_strategy": "Metallic sheen on the wing membranes; smooth, almost hairless clay texture.",
+    "eyes": "Pure white eyes with no visible pupil for an 'alien' look.",
+    "environment": "Stormy grey seas with dark, heavy clouds and rain-slicked rocks."
+  },
+  "pose": "Launching from a cliff edge; the massive wings are fully extended downwards, showing their incredible length."
+  }
+]

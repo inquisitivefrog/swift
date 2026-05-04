@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_APHRO_012",
+    "species": "Aphrosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "MORENO_FORMATION",
+    "visual_logic": {
+      "color_palette": "Deep sea-foam green with silvery-white high-contrast underbelly markings.",
+      "action": "Gliding horizontally; neck held in a soft, elegant curve.",
+      "environment": "Deep Cobalt water with suspended marine snow and distant silhouetted squid."
+    },
+    "pose": "A graceful side-profile view; flippers are positioned in a powerful downward stroke, creating visible white-clay cavitation bubbles."
+  }
+]

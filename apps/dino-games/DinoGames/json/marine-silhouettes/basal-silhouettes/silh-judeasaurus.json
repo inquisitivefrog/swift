@@ -1,0 +1,17 @@
+[{
+    "id": "GAME_CARD_JUDEA_SILHOUETTE_009",
+    "species": "Judeasaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "HVAR_DEPOSITS",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a varanoid marine lizard. Balanced proportions between a lizard-like torso and aquatic tail.",
+      "environment": "Shallow, high-visibility 'Turquoise' lagoon water over 'Coral White' sand.",
+      "backlight_strategy": "Direct overhead light causing a sharp silhouette against the bright seafloor.",
+      "facial_silhouette": "Broad, slightly flattened varanid skull profile."
+    },
+    "pose": "Side profile, stationary on a submerged limestone ledge, highlighting the transition from terrestrial-style limbs to an aquatic frame.",
+    "negative_constraints": "No transparency in the water; the subject must remain 100% black."
+  }
+]

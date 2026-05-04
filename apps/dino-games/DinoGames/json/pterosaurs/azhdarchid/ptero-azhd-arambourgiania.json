@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_ARAMB_001",
+  "species": "Arambourgiania philadelphiae",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": {
+    "color_palette": "Pale sand and terracotta; the long neck has soft horizontal white stripes.",
+    "eyes": "Bright orange eyes.",
+    "environment": "Arid coastal dunes; the wind is kicking up a soft, non-obscuring 'sand-mist' around the feet."
+  },
+  "pose": "Neck fully extended upward, looking like a living skyscraper; the pose emphasizes the sheer elegance and height of the animal."
+}

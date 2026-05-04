@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_CTENO_001",
+  "species": "Ctenochasma elegans",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SOLNHOFEN",
+  "habitat_ref": "TROPICAL_COASTAL_LAGOONS",
+  "visual_logic": {
+    "color_palette": "Soft lavender and periwinkle; the 'comb' teeth are a translucent pearlescent white.",
+    "bristle_logic": "Individual teeth are rendered as soft, flexible cilia. They form a clean, shimmering 'fringe' along the jawline.",
+    "eyes": "Wide, dark, friendly eyes with a single soft 'glint' of moonlight.",
+    "environment": "Moonlit Solnhofen lagoon; the water has a soft, glowing bioluminescent shimmer."
+  },
+  "pose": "Gracefully floating on the water surface like a swan; the beak is slightly parted to show the shimmering 'comb' of teeth catching the moonlight."
+  }
+]

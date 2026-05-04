@@ -1,0 +1,15 @@
+[
+  {
+    "id": "char_megacephalosaurus_v3",
+    "species": "Megacephalosaurus",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”,
+    "tech_ref": "DEFAULT_SQUARE",
+    "formation_ref": "CARLILE_SHALE",
+    "visual_identity": {
+      "pattern_strategy": "Bold 'Racing Stripes' in oxide-red running from the brow to the shoulders.",
+      "integument": "Rugged, pebbled texture particularly thick around the massive neck transition.",
+      "facial_silhouette": "Oversized 'Block-Head' silhouette; the skull depth is massive, creating a 'Bulldog' facial profile."
+    },
+    "pose": "Rising vertically through the water column, emphasizing the sheer volume of the skull against the light."
+  }
+]

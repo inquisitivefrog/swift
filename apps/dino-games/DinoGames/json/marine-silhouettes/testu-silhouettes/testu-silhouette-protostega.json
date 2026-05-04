@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_PROTOSTEGA_SILHOUETTE_001",
+    "species": "Protostega",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "NIOBRARA_CHALK",
+    "habitat_ref": "OPEN_OCEAN_PELAGIC",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a giant marine turtle, slightly smaller and more 'circular' than Archelon.",
+      "environment": "High-albedo 'Chalky White' water backdrop.",
+      "backlight_strategy": "Direct backlighting to differentiate its body depth from its more famous cousin.",
+      "facial_silhouette": "A robust head with a less pronounced hook on the beak compared to Archelon."
+    },
+    "pose": "A slight 3/4 angle from below, emphasizing the circular nature of the carapace and the powerful, wing-like strokes of the front flippers.",
+    "negative_constraints": "Zero internal detail; ensure the silhouette edge is smoother and more rounded than Archelon's jagged rib-edge."
+  }
+]

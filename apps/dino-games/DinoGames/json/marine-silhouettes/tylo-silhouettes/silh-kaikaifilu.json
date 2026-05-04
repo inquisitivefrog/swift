@@ -1,0 +1,18 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_SILHOUETTE_006",
+    "species": "Kaikaifilu hervei",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "LOPEZ_DE_BERTODANO_FORMATION",
+    "habitat_ref": "ANTARCTIC_SHELF_SEA",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette, emphasizing the massive proportions and heavy skull structure of the largest Southern Hemisphere mosasaur.",
+      "environment": "Frigid, deep-indigo Antarctic waters filled with 'marine snow' and micro-bubbles. Intense, narrow 'god-rays' pierce through the surface ice above.",
+      "backlight_strategy": "Dramatic bottom-to-top lighting, casting the silhouette against a shimmering surface of broken sea-ice to highlight the animal's dorsal outline.",
+      "facial_silhouette": "A distinctively robust and tall skull profile (1.2 meters in scale) with a straight, powerful rostrum and massive jaw depth, differentiating it from the more slender Tylosaurus."
+    },
+    "pose": "A menacing vertical ascent from the lightless depths toward the surface; the silhouette captures the broad, powerful chest and the unique 'straight-edge' profile of the skull.",
+    "negative_constraints": "No internal features, no eyes, and no scale textures. The focus must be entirely on the heavy, 'tank-like' silhouette of this polar predator."
+  }
+]

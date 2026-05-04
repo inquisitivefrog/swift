@@ -1,0 +1,13 @@
+{
+  "id": "GAME_CARD_THANATO_001",
+  "species": "Thanatosdrakon ammaru",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": {
+    "color_palette": "Deep obsidian and crimson; the beak has a faint metallic sheen.",
+    "skin_logic": "Dark, sleek pycnofibers that shimmer in the light.",
+    "eyes": "Glowing red-orange eyes (like embers, not monsters).",
+    "environment": "South American canyon at sunset; the red rocks match the creature's highlights."
+  },
+  "pose": "Spreading its wings in a massive 'sun-bathing' pose; the scale is overwhelming but the mood is peaceful and majestic."
+}

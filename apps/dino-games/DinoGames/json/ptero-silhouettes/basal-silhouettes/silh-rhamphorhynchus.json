@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_RHAMPHO_SILHOUETTE_001",
+  "species": "Rhamphorhynchus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "SOLNHOFEN",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; sharp focus on the interlocking teeth.",
+    "environment": "Bright moonlight creating a sharp 'rim' on the wings.",
+    "facial_silhouette": "The protruding, forward-slanting teeth and the diamond-shaped tail vane are the mandatory identifiers."
+  },
+  "pose": "Side profile in flight; wings arched upward to reveal the full length of the tail and the characteristic diamond vane."
+  }
+]

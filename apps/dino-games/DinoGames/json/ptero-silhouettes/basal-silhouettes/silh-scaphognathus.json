@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_SCAPHO_SILHOUETTE_001",
+  "species": "Scaphognathus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "SOLNHOFEN",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette.",
+    "environment": "Harsh desert-style light with long shadows.",
+    "facial_silhouette": "The 'blunt' end of the beak is the distinguishing feature vs the pointed Rhamphorhynchus."
+  },
+  "pose": "Profile walking pose; emphasizes the shorter, deeper skull and the very long, thin tail."
+  }
+]

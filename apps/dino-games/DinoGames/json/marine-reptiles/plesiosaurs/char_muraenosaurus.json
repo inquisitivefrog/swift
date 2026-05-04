@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_MURAE_018",
+    "species": "Muraenosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "OXFORD_CLAY",
+    "visual_logic": {
+      "color_palette": "Pale lavender-grey with dark navy-blue 'dappled' spots; high-gloss highlights on skin.",
+      "action": "Slowly cruising through the mid-water column.",
+      "environment": "Murky greenish-grey water with high-detail suspended particulates (marine snow)."
+    },
+    "pose": "Neck extended horizontally; flippers splayed out like wings for stability."
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "pterosaur_level_07_v3",
+    "app_image_config": {
+      "layer_1_style": "STYLE_ANIMATED_FEATURE_V3: 1024x1024 px, Octane render, high-fidelity cinematic CGI.",
+      "layer_2_setting": "Setting: [REF: SANTANA_FORMATION], simple rocky sea-stack under high-key blue sky.",
+      "layer_3_action": "Medium Shot of Anhanguera with wings partially unfurled; emphasis on the rounded crests on its snout and its intelligent, bird-like gaze.",
+      "aspect_ratio": "1:1"
+    }
+  }
+]

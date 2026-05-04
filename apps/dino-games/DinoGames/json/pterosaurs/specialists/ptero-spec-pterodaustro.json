@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_PTEROD_001_V2",
+  "species": "Pterodaustro guinazui",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": {
+    "color_palette": "Dusty rose and peach body; wing membranes have a sunset-orange glow.",
+    "bristle_logic": "Render the lower teeth as a uniform, golden-yellow 'comb'. No individual jagged spikes; the top of the 'comb' is a soft, level line.",
+    "eyes": "Wide, curious hazel eyes with a friendly sparkle.",
+    "skin": "Velvety 'peach-fuzz' pycnofibers across the neck and torso."
+  },
+  "pose": "Gracefully sifting water in a shallow lagoon; the posture is calm and elegant, mimicking a swan or flamingo."
+  }
+]

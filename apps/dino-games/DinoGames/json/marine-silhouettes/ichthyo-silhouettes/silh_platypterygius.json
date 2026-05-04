@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_PLATY_SILHOUETTE_001",
+    "species": "Platypterygius",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "MAASTRICHT_FORMATION",
+    "habitat_ref": "EPICONTINENTAL_SEAWAY",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a large, cosmopolitan ichthyosaur with 'over-developed' flippers.",
+      "environment": "Soft Chalk Yellow and Oceanic Cyan backlight.",
+      "backlight_strategy": "Intense backlighting to show the elongated, finger-heavy fins.",
+      "facial_silhouette": "Robust snout with a high, sloping forehead."
+    },
+    "pose": "The front flippers are tilted to show their extreme length and 'broad-fin' (Platypterygius) structure.",
+    "negative_constraints": "Sharp edges only; no gradient fills."
+  }
+]

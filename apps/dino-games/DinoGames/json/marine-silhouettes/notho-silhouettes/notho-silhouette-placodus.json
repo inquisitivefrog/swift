@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_PLACODUS_SILHOUETTE_001",
+    "species": "Placodus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "MUSCHELKALK",
+    "habitat_ref": "BENTHIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a barrel-chested reptile with a short neck and a thick, heavy tail.",
+      "environment": "Murky 'Seafoam Green' water with high-contrast light filtering from above.",
+      "backlight_strategy": "Direct backlighting to show the thick, stocky proportions of the torso.",
+      "facial_silhouette": "A short, robust head. The profile should emphasize the protruding, forward-facing 'peg-teeth' used for plucking shellfish."
+    },
+    "pose": "Side profile in a slow, bottom-dwelling swim, emphasizing the stocky limbs and the unique 'bumpy' ridge of osteoderms along the spine's silhouette.",
+    "negative_constraints": "No internal detail; focus on the chunky, almost 'newt-like' body outline."
+  }
+]

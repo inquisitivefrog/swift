@@ -1,0 +1,21 @@
+{
+  "id": "GAME_CARD_MOSA_3D_010",
+  "species": "Dallasaurus turneri",
+  "tech_ref": "SQUARE_ASPECT_RATIO",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "NIOBRARA_CHALK",
+  "habitat_ref": "EPICONTINENTAL_SEAWAY",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "visual_logic": {
+    "surface_detail": "Glistening, damp skin with fine, pebbled textures; a vibrant lime-green base featuring sunflower-yellow dappled spots.",
+    "pattern_strategy": "Subtle 'Smoky Grey' and 'Soft Yellow' mottling along the flanks to provide camouflage against the chalky seafloor.",
+    "facial_expression": "Large, dark, expressive eyes with a signature friendly smirk; a short, blunt snout profile.",
+    "anatomy_focus": "The primitive flippers clearly show the transition of digits, rendered with soft, rounded edges rather than sharp claws.",
+    "environment": {
+      "water": "Sun-drenched 'Azure Blue' water with refractive 'caustic' light patterns dancing across the animal's back.",
+      "biota": "Abundant 'Thalassotaenia' seagrass swaying in the current with realistic suspended marine snow."
+    },
+    "pose": "Actively navigating through a thicket of seagrass; one flipper is shown gently brushing against a 'Chalky White' limestone outcrop to ground the character."
+  },
+  "negative_constraints": "Avoid the 'chibi' or toy-like proportions of the clay style; ensure adult-proportioned, cinematic 3D fidelity."
+}

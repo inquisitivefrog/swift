@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_SHONI_SILHOUETTE_001",
+    "species": "Shonisaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "LUNING_FORMATION",
+    "habitat_ref": "OPEN_OCEAN_PELAGIC",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a whale-sized ichthyosaur with an extremely rotund, 'pot-bellied' torso profile.",
+      "environment": "High-contrast 'Silvery-White' water surface seen from a low angle.",
+      "backlight_strategy": "DUSK_SILHOUETTE to highlight the uniquely long, equal-sized front and back flippers.",
+      "facial_silhouette": "Long, narrow snout—distinctly longer than the Shastasaurus."
+    },
+    "pose": "Swimming upward at a 45-degree angle to show the symmetrical arrangement of its four massive flippers and the thick, heavy tail base.",
+    "negative_constraints": "Zero internal surface detail; no transparency."
+  }
+]

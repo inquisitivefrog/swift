@@ -1,0 +1,19 @@
+[
+  {
+    "id": "char_brachauchenius_001_v2",
+    "species": "Brachauchenius lucasi",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”,
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "CARLILE_SHALE",
+    "pose": "Lateral profile emphasizing extreme 'Short-Necked' morphology. The head is nearly 1/4 the total body length.",
+    "morphology_overrides": {
+      "neck": "Thick, powerful, and extremely short; appears as a seamless transition from head to torso.",
+      "skull": "Massive, elongated triangular head with a heavy, reinforced lower jaw.",
+      "body": "Barrel-chested and robust; designed for high-mass momentum.",
+      "patterning": "Mottled grey and silver 'scumbled' texture to create a sense of ancient, weathered skin."
+      "negative_prompt": "long neck, slender neck, flexible neck, small head"
+    }
+  }
+]
+

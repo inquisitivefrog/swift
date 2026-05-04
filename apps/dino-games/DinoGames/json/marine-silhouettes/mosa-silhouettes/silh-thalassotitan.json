@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_THALASSO_SILHOUETTE_001",
+    "species": "Thalassotitan",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "OULAD_ABDOUN_BASIN",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a 'top-tier' apex predator with a massive, conical skull.",
+      "environment": "Intense 'Rusty Orange' sunset sky.",
+      "backlight_strategy": "Direct backlighting to show the 'warship' proportions of the torso.",
+      "facial_silhouette": "A very large, straight skull with an incredibly robust jaw base."
+    },
+    "pose": "Charging toward the viewer at an angle, highlighting the massive width of the head and the heavy front flippers.",
+    "negative_constraints": "No internal detail; must be 100% black."
+  }
+]

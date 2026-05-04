@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_TAPEJARA_001",
+  "species": "Tapejara wellnhoferi",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SANTANA_ROMUALDO",
+  "habitat_ref": "TROPICAL_WETLAND_LAGOONS",
+  "visual_logic": {
+    "color_palette": "Sunshine yellow body with a vibrant crimson and black 'target' pattern on the head crest.",
+    "pattern_strategy": "Speckled egg-shell texture on the belly; the soft-tissue sail has visible 'vein' structures and a leathery sheen.",
+    "eyes": "Intelligent, bird-like amber eyes with a dark round pupil.",
+    "environment": "Midday sun over a Santana lagoon; light reflecting off iron-rich red mud and turquoise pools."
+  },
+  "pose": "Perched on a conifer branch (Brachyphyllum); head turned to show the full vertical profile of the crest, one wing slightly tucked."
+  }
+]

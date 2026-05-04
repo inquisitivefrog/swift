@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_WOOLU_021",
+    "species": "Woolungasaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "PAJA",
+    "visual_logic": {
+      "color_palette": "Rusty-orange with deep iron-grey counter-shading and a pale buff throat.",
+      "action": "Charging forward with high-energy flipper strokes.",
+      "environment": "Deep Sea Blue water with orange sediment clouds and large coiled ammonites."
+    },
+    "pose": "Powerful diagonal lunge toward the viewer; a wide, friendly smile showing blunt clay teeth."
+  }
+]

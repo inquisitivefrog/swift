@@ -1,0 +1,11 @@
+[
+  {
+    "id": "pterosaur_level_01_v3",
+    "app_image_config": {
+      "layer_1_style": "STYLE_ANIMATED_FEATURE_V3: 1024x1024 px, high-poly 3D animated film style, Octane render, cinematic lighting, soft clay textures, vibrant saturated colors.",
+      "layer_2_setting": "Setting: [REF: JIUFOTANG], a single stylized mossy branch against a soft-focus misty pale grey sky. Minimalist background.",
+      "layer_3_action": "Medium Shot of Nemicolopterus perched; the character has soft rounded edges, expressive large eyes, and a tactile 'downy' clay texture on its body.",
+      "aspect_ratio": "1:1"
+    }
+  }
+]

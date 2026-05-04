@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_SINO_001",
+  "species": "Sinopterus dongi",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "JIUFOTANG",
+  "habitat_ref": "FORESTED_VOLCANIC",
+  "visual_logic": {
+    "color_palette": "Pale grey and white with a stark black crest and wing tips.",
+    "pattern_strategy": "Delicate 'ink-wash' style feathering patterns along the neck; smooth clay finish on the beak.",
+    "eyes": "Bright orange eyes.",
+    "environment": "Lush Jiufotang forest; birch-like trees and a soft volcanic haze."
+  },
+  "pose": "In mid-hop between stones in a shallow stream; wings are half-furled for balance."
+  }
+]

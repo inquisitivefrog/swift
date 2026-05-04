@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_CRYO_SILHOUETTE_001",
+    "species": "Cryodrakon boreas",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "DINOSAUR_PARK_FORMATION",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette with slightly 'fluffy' edges to imply a thick coat of winter pycnofibers.",
+      "environment": "Cold, pale blue morning mist; distant snowflakes catching the light as soft white orbs.",
+      "backlight_strategy": "Cool, crisp silver rim-light from the top-left to define the powerful neck and heavy jaw.",
+      "facial_silhouette": "The identifier is a robust, straight beak and a noticeably thicker neck than Quetzalcoatlus."
+    },
+    "pose": "Side profile in a steady, slow walk; the head is held slightly forward, creating a sense of calm, ancient wisdom.",
+    "negative_constraints": "Avoid thin, 'scary' neck proportions; avoid sharp, jagged bone-like edges."
+  }
+]

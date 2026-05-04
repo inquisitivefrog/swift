@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_OPHTHALMO_SILHOUETTE_001",
+    "species": "Ophthalmosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "OXFORD_CLAY",
+    "habitat_ref": "OPEN_OCEAN_PELAGIC",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a highly streamlined, 'tear-drop' shaped ichthyosaur.",
+      "environment": "Deep Blue and Greenish-grey water profile.",
+      "backlight_strategy": "DUSK_SILHOUETTE focusing on the circular orbital region.",
+      "facial_silhouette": "Dominated by an enormous, perfectly circular orbital bulge (eye socket) that takes up much of the skull profile."
+    },
+    "pose": "Lateral view highlighting the 'Big Eye' morphology and the almost dolphin-like, compact tail fluke.",
+    "negative_constraints": "Zero internal detail; the eye is only visible as a skeletal bulge in the silhouette."
+  }
+]

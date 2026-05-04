@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_BAKONY_001",
+  "species": "Bakonydraco galaczi",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "CSEHBANYA_FORMATION",
+  "habitat_ref": "WOODLAND_FLOODPLAINS",
+  "visual_logic": {
+    "color_palette": "Deep forest green and slate; the jaw has a pale 'ivory' bone color at the tip.",
+    "pattern_strategy": "Mottled grey patches on the wings; the crest is a subtle deep purple with silver veins.",
+    "eyes": "Intelligent, pale green eyes.",
+    "environment": "Misty floodplains with large gnarled trees and ferns."
+  },
+  "pose": "Standing over a pile of prehistoric fruit/cones; the focus is on the thick, powerful lower jaw and the sturdy neck."
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_BRACHY_SILHOUETTE_001",
+    "species": "Brachypterygius",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "KIMMERIDGE_CLAY",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a robust, medium-sized ichthyosaur with notably short, wide front flippers.",
+      "environment": "Dark Grey and Bituminous Black water profile.",
+      "backlight_strategy": "DUSK_SILHOUETTE to emphasize the 'paddle' shape of the unique, wide forelimbs.",
+      "facial_silhouette": "Strong, moderately long snout with a thick base."
+    },
+    "pose": "Lateral view with the front flipper angled toward the viewer to show its broad, 'fan-like' width.",
+    "negative_constraints": "No internal shading; sharp edges only."
+  }
+]

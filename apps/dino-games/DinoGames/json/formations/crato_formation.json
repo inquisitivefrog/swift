@@ -1,0 +1,15 @@
+[
+  {
+    "CRATO_FORMATION": {
+      "period": "EARLY_CRETACEOUS",
+      "flora_manifest": ["EARLY_CRETACEOUS_BASE", "CRATO_ADDITIONS"],
+      "fauna_manifest": ["EARLY_CRETACEOUS_BASE", "CRATO_ADDITIONS"],
+      "habitat_default": "COASTAL_LOWLANDS",
+      "manifest": "CRETACEOUS_BASE",
+      "geology": {
+        "primary_rocks": ["Platy limestone", "Laminated micrite"],
+        "mineral_palette": ["Pale Buff", "Soft Sulphur Yellow", "Cream", "Light Grey"]
+      }
+    }
+  }
+]

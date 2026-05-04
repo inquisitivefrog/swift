@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_BRACHAU_SILHOUETTE_001",
+    "species": "Brachauchenius",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "GREENHORN_LIMESTONE",
+    "habitat_ref": "EPICONTINENTAL_SEAWAY",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a large, short-necked pliosaur.",
+      "environment": "High-contrast silver surface light reflecting off deep blue-grey water.",
+      "backlight_strategy": "DUSK_SILHOUETTE to emphasize the 'triangular' transition from the head to the wide shoulders.",
+      "facial_silhouette": "A very long, straight, and robust snout profile."
+    },
+    "pose": "Side profile swimming horizontally, showing a very flat dorsal line and massive front flippers.",
+    "negative_constraints": "No internal detail; sharp edges only."
+  }
+]

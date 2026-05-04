@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_STRUTHIO_SILHOUETTE_018",
+  "species": "Struthiomimus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; almost identical to Ornithomimus but with slightly longer arms.",
+    "facial_silhouette": "Tiny head, toothless beak, and very large eye orbit silhouette.",
+    "backlight_strategy": "Amber 'prairie-fire' backlight."
+  },
+  "pose": "Feeding or pecking at the ground; silhouette focuses on the three-fingered hand claws and tail rigidity."
+}

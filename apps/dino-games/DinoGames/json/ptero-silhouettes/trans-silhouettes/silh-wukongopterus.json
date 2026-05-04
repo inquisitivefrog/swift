@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_WUKONG_SILHOUETTE_001",
+  "species": "Wukongopterus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; emphasize the 'S-curve' of the neck.",
+    "facial_silhouette": "The identifier is the longer neck compared to Darwinopterus, and the straight, needle-like beak.",
+    "backlight_strategy": "Rainbow-tinted 'sun-shower' backlight."
+  },
+  "pose": "Side profile mid-leap; highlights the dynamic energy and the long, elegant neck-to-tail ratio."
+}

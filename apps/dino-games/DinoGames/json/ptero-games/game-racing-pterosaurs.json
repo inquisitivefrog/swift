@@ -1,0 +1,62 @@
+{
+  "image_manifest": {
+    "filename": "pterosaur_race_start_001.png",
+    "description": "An asset manifest for a stylized 3D rendered scene of four unique racing pterosaurs and a referee at a cliffside takeoff starting line.",
+    "assets": [
+      {
+        "id": "A1",
+        "name": "Header Text",
+        "description": "Blue and yellow, stylized, irregular 3D block text reading 'RACING PTEROSAURS!' located at the top of the image.",
+        "type": "text_element"
+      },
+      {
+        "id": "A2",
+        "name": "Tupandactylus Racer Character",
+        "description": "A highly colorful Tupandactylus, crouched bipedally just behind the starting line, its distinctive multi-color iridescent head crest held poised and level for launch.",
+        "type": "character"
+      },
+      {
+        "id": "A3",
+        "name": "Quetzalcoatlus Racer Character",
+        "description": "A gigantic, slender Quetzalcoatlus, crouched bipedally in the center-left, towering over the others, its massive body ready to uncoil for a powerful sky launch.",
+        "type": "character"
+      },
+      {
+        "id": "A4",
+        "name": "Cearadactylus Racer Character",
+        "description": "A more compact Cearadactylus, crouched bipedally on the right, its eyes fixed with intense, competitive focus on the referee's flag.",
+        "type": "character"
+      },
+      {
+        "id": "A5",
+        "name": "Pterodaustro Referee Character",
+        "description": "A standing Pterodaustro on the far right, wearing a black and white striped referee shirt and a cap, its specialized filter-beak snout visible, acting as the ref.",
+        "type": "character"
+      },
+      {
+        "id": "A6",
+        "name": "Checkered Flag Item",
+        "description": "A black and white checkered finish/start flag on a pole, held high and steady by the Pterodaustro referee.",
+        "type": "item"
+      },
+      {
+        "id": "A7",
+        "name": "Cliffside Starting Line Environment",
+        "description": "White painted start lines on the edge of a sheer cliff, with specific markings to guide takeoff direction, and a dust kick-up effect near the launching racers.",
+        "type": "environment"
+      },
+      {
+        "id": "A8",
+        "name": "Vertiginous Cliff/Sky Background Environment",
+        "description": "A dramatic cliff face descending to a canyon floor where a distant aerial racecourse is visible, under an open, vibrant-blue sky with sparse white clouds.",
+        "type": "environment"
+      },
+      {
+        "id": "A9",
+        "name": "Bottom Right Watermark",
+        "description": "A small, translucent lens-flare type logo/watermark located in the bottom-right corner.",
+        "type": "watermark"
+      }
+    ]
+  }
+}

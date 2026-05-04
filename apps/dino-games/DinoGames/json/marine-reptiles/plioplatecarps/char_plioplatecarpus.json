@@ -1,0 +1,18 @@
+{
+  "id": "GAME_CARD_PLIOPLATE_3D_045",
+  "species": "Plioplatecarpus marshi",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "MAASTRICHT_FORMATION",
+  "habitat_ref": "PELAGIC_SHELF_SEA",
+  "lighting_ref": "DUSK_SILHOUETTE",
+  "visual_logic": {
+    "surface_detail": "Leathery skin with 'Deep Teal' and 'Charcoal' mottling for low-light camouflage.",
+    "anatomy_focus": "Emphasis on the 'short, robust' snout and the unusually large, forward-facing orbits (eyes) for binocular depth perception.",
+    "environment": {
+      "water": "Deep indigo-green water with heavy 'marine snow' and diffused moonlight rays.",
+      "biota": "Floating 'Belemnitella' (squid-like cephalopods) silhouettes in the background."
+    },
+    "pose": "Vertical strike position; the mosasaur is coming up from the depths, jaws beginning to open, targeting a silhouette at the surface."
+  }
+}

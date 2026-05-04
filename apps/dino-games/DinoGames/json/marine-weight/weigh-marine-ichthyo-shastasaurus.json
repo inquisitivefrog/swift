@@ -1,0 +1,15 @@
+[
+  {
+    "id": "asset_weight_profile_shastasaurus_V2",
+    "species": "Shastasaurus",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "visual_logic": {
+      "alignment": "BOTTOM_ALIGNED_TO_FRAME",
+      "color_palette": "Warm Mottled Teal: A base of sea-foam green with dark mossy-green 'splotches' along the spine. No white markings.",
+      "texture": "Matte, leathery texture like a Sperm Whale. Subtle 'wrinkles' around the flipper joints to show massive weight.",
+      "environment_override": "[REF: OPEN_OCEAN_PELAGIC] - Vibrant turquoise water with golden god-rays to pop the green skin tones."
+    },
+    "morphology_hook": "The 'Deep Barrel' torso. This animal should look twice as deep vertically as the others."
+  }
+]

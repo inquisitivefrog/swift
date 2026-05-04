@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_TROPEO_SILHOUETTE_001",
+  "species": "Tropeognathus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "SANTANA_ROMUALDO",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette.",
+    "environment": "Harsh midday tropical sun.",
+    "facial_silhouette": "The massive, arched 'keel' on the snout is significantly larger and more prominent than any other Ornithocheirid."
+  },
+  "pose": "Side profile standing; emphasizes the extreme 'top-heavy' look of the oversized keel crests."
+  }
+]

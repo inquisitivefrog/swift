@@ -1,0 +1,13 @@
+{
+  "id": "GAME_CARD_WUKONG_001",
+  "species": "Wukongopterus lii",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": {
+    "color_palette": "Bright sapphire blue and white; the beak is a striking polished ebony.",
+    "skin_logic": "Velvety, dense fuzz on the torso; wings have a slight translucent shimmer when held to the light.",
+    "eyes": "Bright, playful orange eyes.",
+    "environment": "Jurassic forest canopy during a light sun-shower; raindrops are visible as sparkling gems in the air."
+  },
+  "pose": "Leaping from one branch to another; the wings are partially open for gliding, and the long tail is trailed behind like a ribbon."
+}

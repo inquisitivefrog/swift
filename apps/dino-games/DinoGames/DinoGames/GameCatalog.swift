@@ -22,21 +22,11 @@ enum GameCatalog {
                 return PterosaurGameCatalog.games(level: level)
             }
             return PterosaurGameCatalog.games
-        case .mosasaurs:
+        case .marineReptiles:
             if let level = level {
-                return MosasaurGameCatalog.games(level: level)
+                return MarineReptileGameCatalog.games(level: level)
             }
-            return MosasaurGameCatalog.games
-        case .plesiosaurs:
-            if let level = level {
-                return PlesiosaurGameCatalog.games(level: level)
-            }
-            return PlesiosaurGameCatalog.games
-        case .ichthyosaurs:
-            if let level = level {
-                return IchthyosaurGameCatalog.games(level: level)
-            }
-            return IchthyosaurGameCatalog.games
+            return MarineReptileGameCatalog.games
         }
     }
 }

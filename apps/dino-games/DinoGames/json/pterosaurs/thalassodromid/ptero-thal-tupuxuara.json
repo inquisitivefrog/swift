@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_TUPUX_001",
+  "species": "Tupuxuara leonardii",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SANTANA_ROMUALDO",
+  "habitat_ref": "TROPICAL_WETLAND_LAGOONS",
+  "visual_logic": {
+    "color_palette": "Warm terracotta body; the crest is a gradient of golden yellow to deep burnt-orange.",
+    "pattern_strategy": "White 'sunburst' patterns on the crest; soft, short pycnofibers along the back of the neck.",
+    "eyes": "Bright, intelligent orange eyes.",
+    "environment": "Late afternoon sun; the orange light blends the creature into the 'Flame Orange' mineral palette of the formation."
+  },
+  "pose": "Captured mid-stride during a terrestrial walk; the head is held high, and the crest flows back into the line of the neck."
+  }
+]

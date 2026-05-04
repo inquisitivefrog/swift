@@ -3,7 +3,7 @@
 //  DinoGames
 //
 //  Who Is Taller?: Compare two dinosaurs by height. Three rounds; each round 9 dinosaurs (dino-* images) in a 3×3 grid; measure-dino-* only in comparison slots.
-//  Player selects two; smaller is scaled down with paleontologist as official. "Too small" combinations are rejected.
+//  Player selects two; both dinosaurs and the paleontologist scale from max(dino₁, dino₂, ladder height). "Too small" pairs are rejected.
 //
 
 import SwiftUI
@@ -28,12 +28,13 @@ struct WhoIsTallerGameConfig {
 
 // MARK: - Height Data (shared with Measure)
 
+/// Standing / at-the-hip height (m) for game scaling — keep in sync with `dinosaurEstimatedHeightMetersById` in MeasureGameView.
 private let whoIsTallerHeightMetersById: [Int: Double] = [
-    1: 12,  2: 9,   3: 9,   4: 0.6,  5: 12,  6: 15,  7: 22,  8: 8,
+    1: 12,  2: 9,   3: 9,   4: 0.55,  5: 12,  6: 15,  7: 22,  8: 8,
     9: 9,   10: 8,  11: 9,  12: 1.5, 13: 9,  14: 18, 15: 2,  16: 5,
-    17: 4,  18: 6,  19: 0.2, 20: 0.2, 21: 26, 22: 6,  23: 20, 24: 5,
-    25: 7,  26: 0.5, 27: 3,  28: 18, 29: 1,  30: 0.2, 31: 16, 32: 6,
-    33: 0.4, 34: 0.2, 35: 8,  36: 4,  37: 0.2, 38: 0.6, 39: 6,  40: 18,
+    17: 4,  18: 6,  19: 0.25, 20: 0.22, 21: 26, 22: 6,  23: 20, 24: 5,
+    25: 7,  26: 0.35, 27: 1.75,  28: 18, 29: 1,  30: 0.22, 31: 16, 32: 6,
+    33: 0.32, 34: 0.22, 35: 8,  36: 4,  37: 0.25, 38: 0.6, 39: 6,  40: 18,
     41: 7,  42: 6,  43: 1.2, 44: 20, 45: 6,  46: 7,  47: 9,  48: 7,
     49: 1.2, 50: 2,  51: 7,  52: 5,  53: 6,  54: 7,
 ]
@@ -169,30 +170,22 @@ struct WhoIsTallerGameView: View {
         .padding(.horizontal, 24)
     }
 
-    /// Scale for left, right, and paleontologist: all relative to max(dino heights, human). When both dinos are small (< human), use the larger dino as reference so they fill the slot and detail is visible (e.g. Archaeopteryx vs Eosinopteryx).
+    /// Left dino, right dino, and paleontologist all scale from one reference height = max(left m, right m, ladder m).
+    /// So the ladder always represents ~`paleontologistHeightMeters` and small theropods never render as tall as a 4.5 m ladder (previously dinos used max(dino) while the ladder stayed at full slot height).
     private func whoIsTallerSlotScales() -> (left: CGFloat, right: CGFloat, center: CGFloat) {
         let humanH = paleontologistHeightMeters
         guard let first = selectedFirst else { return (1.0, 1.0, 1.0) }
         let h1 = first.heightMeters
         if let second = selectedSecond {
             let h2 = second.heightMeters
-            let maxDino = max(h1, h2)
-            // When both dinosaurs are smaller than the paleontologist, use the larger dino as reference so both are visible (not ~4% of slot)
-            let ref: Double
-            let centerS: CGFloat
-            if maxDino < humanH {
-                ref = maxDino
-                centerS = 1.0 // Paleontologist at full size for reference
-            } else {
-                ref = max(h1, h2, humanH)
-                centerS = CGFloat(humanH / ref)
-            }
+            let ref = max(h1, h2, humanH)
             guard ref > 0 else { return (1.0, 1.0, 1.0) }
-            let leftS = CGFloat(h1 / ref)
-            let rightS = CGFloat(h2 / ref)
-            return (leftS, rightS, centerS)
+            return (
+                CGFloat(h1 / ref),
+                CGFloat(h2 / ref),
+                CGFloat(humanH / ref)
+            )
         }
-        // Only first selected: scale relative to human so small dinos appear smaller than paleontologist
         let ref = max(h1, humanH)
         guard ref > 0 else { return (1.0, 1.0, 1.0) }
         return (CGFloat(h1 / ref), 1.0, CGFloat(humanH / ref))

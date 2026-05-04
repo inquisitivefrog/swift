@@ -1,0 +1,58 @@
+
+Basal: Long-Tails
+1. anurognathus
+2. dimorphodon
+3. rhamphorhynchus
+4. sordes
+5. eudimorphodon
+6. scaphognathus
+7. campylognathoides
+8. jeholopterus
+
+Tapejarids
+1. tapejara
+2. tupandactylus
+3. caiuajara
+4. caupedactylus
+5. sinopterus
+6. bakonydraco
+
+Thalassodromids
+1. thalassodromeus
+2. tupuxuara
+3. bangiadraco
+4. kariridraco
+
+Ornithocheiroids
+01. pteranodon
+02. nyctosaurus
+03. anhanguera
+04. ornithocheirus
+05. tropeognathus
+06. coloborhynchus
+07. istiodactylus
+08. guidraco
+09. ludodactylus
+10. boreopterus
+
+Specialists
+1. pterodaustro
+2. ctenochasma
+3. gnathosaurus
+4. dsungaripterus
+5. noripterus
+6. pterodactylus
+
+Azhdarchids
+1. quetzalcoatlus
+2. hatzegopteryx
+3. arambourgiania
+4. cryodrakon
+5. zhejiangopterus
+6. thanatosdrakon
+
+Transitory
+1. darwinopterus
+2. nemicolopterus
+3. kunpengopterus
+4. wukongopterus

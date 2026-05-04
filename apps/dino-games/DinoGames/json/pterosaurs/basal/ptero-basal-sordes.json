@@ -1,0 +1,16 @@
+[
+  "id": "GAME_CARD_SORDES_001",
+  "species": "Sordes",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "KARATAU_FORMATION",
+  "habitat_ref": "FORESTED_VOLCANIC",
+  "visual_logic": {
+    "color_palette": "Warm chestnut brown with a cream-colored 'ruff' around the neck; wing membranes are a leathery tan.",
+    "pattern_strategy": "Mottled forest-floor camouflage; thick tactile clay-texture for the 'fur'.",
+    "eyes": "Large, dark, expressive mammalian-style eyes.",
+    "environment": "Dense Jurassic conifer forest with thick moss and volcanic ash on the ground."
+  },
+  "pose": "Curled up on a branch like a bat, using its wings as a cloak; only the head and the long tail are visible."
+  }
+]

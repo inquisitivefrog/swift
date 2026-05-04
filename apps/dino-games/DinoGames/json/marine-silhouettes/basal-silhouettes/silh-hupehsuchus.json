@@ -1,0 +1,18 @@
+[
+  {
+    "id": "GAME_CARD_HUPEH_SILHOUETTE_011",
+    "species": "Hupehsuchus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "JIALINGJIANG_FORMATION",
+    "habitat_ref": "COASTAL_FLOODPLAINS",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette. Notable for the 'tri-partite' body: long snout, stiff trunk with dermal ossicles, and high-finned tail.",
+      "environment": "Murky, 'Siltstone Tan' tidal flats.",
+      "backlight_strategy": "Diffused glow emphasizing the jagged 'saw-tooth' profile of the armored back.",
+      "facial_silhouette": "Extremely slender, bird-like beak, toothless and pointed."
+    },
+    "pose": "Lateral view to maximize the visibility of the dorsal armor plates and the unique height of the tail fins.",
+    "negative_constraints": "No eye-glint; focus entirely on the strange, non-ichthyosaurian proportions."
+  }
+]

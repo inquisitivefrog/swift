@@ -1,0 +1,15 @@
+[
+  {
+    "id": "char_liopleurodon_v3",
+    "species": "Liopleurodon",
+    "style_id": "STYLE_CLAY_MASTER”,
+    "tech_ref": "SQUARE_HERO_CARD",
+    "formation_ref": "OXFORD_CLAY",
+    "visual_identity": {
+      "pattern_strategy": "Jagged 'Shattered' vertical stripes in charcoal and deep indigo for ambush camouflage in muddy waters.",
+      "integument": "Smooth but thick hide with prominent sensory pits along the snout tip.",
+      "facial_silhouette": "Hydrodynamic triangular head with a slightly upturned 'predatory' snout."
+    },
+    "pose": "Stalking through the Oxford Clay silts, body partially obscured by suspended particulates."
+  }
+]

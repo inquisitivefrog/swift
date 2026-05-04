@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_MIXO_SILHOUETTE_001",
+    "species": "Mixosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "BESANO_FORMATION",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a small (1-meter) ichthyosaur with a distinct, tall dorsal fin.",
+      "environment": "Vibrant sunset orange sky reflected in turquoise-to-cobalt shallow waters.",
+      "backlight_strategy": "Low-angle horizon light to emphasize the small size relative to the frame.",
+      "facial_silhouette": "Pointed snout with a very straight jawline."
+    },
+    "pose": "Side profile showing the small, delicate flippers and the unique 'half-moon' tail shape that marks it as a 'mixed' or transitional form.",
+    "negative_constraints": "No internal detail; subject must be 100% black silhouette."
+  }
+]

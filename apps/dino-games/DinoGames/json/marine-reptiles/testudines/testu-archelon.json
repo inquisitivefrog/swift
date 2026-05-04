@@ -1,0 +1,19 @@
+{
+  "id": "GAME_CARD_ARCHELON_3D_021",
+  "species": "Archelon ischyros",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "PIERRE_SHALE_SW",
+  "habitat_ref": "PELAGIC_SHELF_SEA",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "visual_logic": {
+    "surface_detail": "Thick, leathery 'Slate Grey' skin covering the dorsal ribs; skin has a tactile, weathered-tarp texture with barnacle-like scarring.",
+    "anatomy_focus": "Emphasis on the massive, hooked raptorial beak and the oversized front flippers that span nearly 5 meters tip-to-tip.",
+    "facial_expression": "Wise and ancient; large, dark eyes with heavy, drooping lids and a calm, methodical gaze.",
+    "environment": {
+      "water": "Deep indigo water with high-key 'god-rays' illuminating the suspended marine snow.",
+      "biota": "A school of small Enchodus fish darting beneath its massive shell for protection."
+    },
+    "pose": "Gliding majestically at a slight upward angle toward the sunlit surface, flippers fully extended like wings."
+  }
+}

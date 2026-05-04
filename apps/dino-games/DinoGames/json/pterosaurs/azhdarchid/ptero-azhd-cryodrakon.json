@@ -1,0 +1,13 @@
+{
+  "id": "GAME_CARD_CRYO_001",
+  "species": "Cryodrakon boreas",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": {
+    "color_palette": "Icy blue-grey and white; the beak is a dark, frost-bitten navy.",
+    "skin_logic": "Thick, woolly white pycnofibers for a cold-climate look.",
+    "eyes": "Pale, silver-blue eyes.",
+    "environment": "Frosty river valley with a light dusting of snow on the rocks."
+  },
+  "pose": "Walking through a shallow, icy stream; the posture is calm and steady, like a silent guardian of the north."
+}

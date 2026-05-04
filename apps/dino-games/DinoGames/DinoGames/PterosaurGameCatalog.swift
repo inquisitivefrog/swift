@@ -2,7 +2,7 @@
 //  PterosaurGameCatalog.swift
 //  DinoGames
 //
-//  Games for Air category (Pterosaurs). Ten levels; same structure as dinosaur catalog.
+//  Games for Air category (Pterosaurs). Same level structure as the dinosaur catalog; pool size comes from `AirPterosaurData`.
 //
 
 import Foundation
@@ -16,14 +16,20 @@ enum PterosaurGameCatalog {
         switch level {
         case .level1:
             return [
-                .matching(MatchingGameConfigs.pterosaurFeatures),
                 .weigh(WeighGameConfigs.weighPterosaur),
-                .balance(BalanceGameConfigs.balancePterosaur),
             ]
         case .level2:
             return [
                 .guess(GuessGameConfigs.nameThatPterosaur),
                 .racing(RacingGameConfigs.racingPterosaursCardConfig),
+            ]
+        case .level6:
+            return [
+                .balance(BalanceGameConfigs.balancePterosaur),
+            ]
+        case .level7:
+            return [
+                .matching(MatchingGameConfigs.pterosaurFeatures),
             ]
         default:
             return []

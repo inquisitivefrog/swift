@@ -1,0 +1,13 @@
+{
+  "id": "GAME_CARD_KUNPENG_001",
+  "species": "Kunpengopterus sinensis",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": {
+    "color_palette": "Soft dove-grey and cream; the head crest is a subtle, iridescent violet.",
+    "skin_logic": "Silky, smooth-touch pycnofibers; the animal looks elegant and clean.",
+    "eyes": "Intelligent, dark eyes with a friendly, soft-lidded expression.",
+    "environment": "Lakeside fern grove; misty, atmospheric lighting with soft pinks and purples."
+  },
+  "pose": "Nesting near a cluster of leathery eggs; the pose is protective and gentle, emphasizing the 'family' aspect for younger players."
+}

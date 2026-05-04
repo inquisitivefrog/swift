@@ -1,0 +1,15 @@
+[
+  {
+    "id": "char_peloneustes_v3",
+    "species": "Peloneustes",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”,
+    "tech_ref": "DEFAULT_SQUARE",
+    "formation_ref": "OXFORD_CLAY",
+    "visual_identity": {
+      "pattern_strategy": "Translucent 'Leopard-Seal' rosettes clustered near the flippers and tail.",
+      "integument": "Sleek and oily-looking skin texture optimized for high-speed diving.",
+      "facial_silhouette": "Very long, thin, needle-point snout for precision fish-snatching."
+    },
+    "pose": "Mid-dive, neck fully extended toward a school of belemnites, showcasing the slender, gracile frame."
+  }
+]

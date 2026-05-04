@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: PAJA]",
+      "layer_3_action": {
+        "subject": "Woolungasaurus",
+        "features": ["Robust neck base silhouette", "Small head", "Large, wide-spanning flippers"],
+        "action": "A diagonal silhouette of Woolungasaurus diving. The body is angled from the top-left to bottom-right to maximize the use of the square frame and emphasize scale."
+      }
+    }
+  }
+]

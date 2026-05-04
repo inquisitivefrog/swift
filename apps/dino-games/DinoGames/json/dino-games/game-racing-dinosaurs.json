@@ -1,0 +1,62 @@
+{
+  "image_manifest": {
+    "filename": "image_31.png",
+    "description": "An asset manifest for a stylized 3D rendered scene of three racing dinosaurs and a referee at a desert starting line.",
+    "assets": [
+      {
+        "id": "A1",
+        "name": "Header Text",
+        "description": "Red, stylized, irregular 3D block text reading 'RACING DINOSAURS!' located at the top of the image.",
+        "type": "text_element"
+      },
+      {
+        "id": "A2",
+        "name": "Tyrannosaurus Rex Character",
+        "description": "A light-brown, bipedal, stylized T-Rex with its mouth open in an eager, competitive expression, positioned on the left side of the starting line.",
+        "type": "character"
+      },
+      {
+        "id": "A3",
+        "name": "Brachiosaurus Character",
+        "description": "A blue, long-necked, stylized Brachiosaurus, smiling gently and standing behind and between the T-Rex and the Stegosaurus.",
+        "type": "character"
+      },
+      {
+        "id": "A4",
+        "name": "Stegosaurus Character",
+        "description": "A green, stylized Stegosaurus with distinct orange-brown back plates, standing in the foreground center-right on the starting line.",
+        "type": "character"
+      },
+      {
+        "id": "A5",
+        "name": "Humanoid Theropod Referee Character",
+        "description": "A small, upright, bipedal dinosaur-like creature on the far right, wearing a black and white striped referee shirt, a hat, and tan shorts.",
+        "type": "character"
+      },
+      {
+        "id": "A6",
+        "name": "Checkered Flag Item",
+        "description": "A black and white checkered finish/start flag on a pole, held high by the humanoid theropod referee.",
+        "type": "item"
+      },
+      {
+        "id": "A7",
+        "name": "Desert Starting Line Environment",
+        "description": "The red desert sand ground with white painted start lines and a dust kick-up effect near the racers.",
+        "type": "environment"
+      },
+      {
+        "id": "A8",
+        "name": "Desert Mesa Background Environment",
+        "description": "Distant reddish rock formations and desert mesas under a light-blue sky with sparse white clouds.",
+        "type": "environment"
+      },
+      {
+        "id": "A9",
+        "name": "Bottom Right Watermark",
+        "description": "A small, translucent lens-flare type logo/watermark located in the bottom-right corner.",
+        "type": "watermark"
+      }
+    ]
+  }
+}

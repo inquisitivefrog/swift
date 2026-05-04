@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_CYMBO_SILHOUETTE_001",
+    "species": "Cymbospondylus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "FAVRET_FORMATION",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of an exceptionally long, slender ichthyosaur (up to 10 meters) lacking a dorsal fin.",
+      "environment": "High-contrast 'Silvery-White' horizon light to elongate the subject's profile.",
+      "backlight_strategy": "DUSK_SILHOUETTE; intense backlighting to emphasize the lack of a fish-like dorsal hump.",
+      "facial_silhouette": "Very long, thin snout with a slight upward tilt."
+    },
+    "pose": "Full lateral view with a slight eel-like undulation in the tail to emphasize its primitive, non-crescent-shaped tail fin.",
+    "negative_constraints": "No internal shading or visible texture."
+  }
+]

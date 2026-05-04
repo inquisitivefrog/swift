@@ -1,0 +1,14 @@
+{
+  "id": "GAME_CARD_QUETZAL_001",
+  "species": "Quetzalcoatlus northropi",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "JAVELINA_FORMATION",
+  "visual_logic": {
+    "color_palette": "Sunset gold and creamy white; the beak is a polished, dark mahogany.",
+    "skin_logic": "Thick, soft coat of pale-gold pycnofibers (fuzz) makes the neck look sturdy and warm.",
+    "eyes": "Large, soulful golden eyes with a bright 'spark' of intelligence.",
+    "environment": "Open floodplains at golden hour; the massive shadow of the creature is soft and long."
+  },
+  "pose": "Standing tall in a 3/4 profile; the head is tilted slightly down toward a small lizard, showing a gentle, curious nature."
+}

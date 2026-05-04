@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_001",
+    "species": "Aigialosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”
+    "formation_ref": "HVAR_DEPOSITS",
+    "visual_logic": {
+      "color_palette": "Dark slate-blue with a creamy-yellow underbelly and a subtle 'frill' of dark clay scales along the spine.",
+      "pattern_strategy": "Sun-dappled camouflage; pale sand-colored body with dark 'fractal' spots.",
+      "facial_silhouette": "Small, lizard-like head with large, alert eyes; transitional semi-aquatic features."
+      "texture": "Small, overlapping diamond-shaped clay scales; glossy black eyes.",
+      "environment": "Vibrant blue water with massive white 'clay' splashes."
+    }
+    "pose": "Basking on a submerged limestone ledge; part of the body is above the waterline with wet-look impasto highlights."
+  }
+]

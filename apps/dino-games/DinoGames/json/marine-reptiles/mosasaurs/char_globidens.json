@@ -1,0 +1,16 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_004",
+    "species": "Globidens alabamaensis",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”
+    "formation_ref": "PIERRE_SHALE",
+    "visual_logic": {
+      "pattern_strategy": "Large, dark 'pebble' rosettes on a tan/ochre base.",
+      "color_palette": "Deep violet-grey with white 'pebbled' spots on the flippers; rounded bulbous molar teeth.",
+      "facial_silhouette": "Short, rounded muzzle; visible blunt, globe-shaped crushing teeth."
+      "environment": "Deep blue water with a silty seafloor scattered with shell fragments."
+    }
+    "pose": "Crushing an inoceramid shell; fragments of shell are sharp, geometric flecks of paint."
+  }
+]

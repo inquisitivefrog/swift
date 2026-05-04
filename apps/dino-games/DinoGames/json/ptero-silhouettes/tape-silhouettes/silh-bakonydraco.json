@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_BAKONY_SILHOUETTE_001",
+  "species": "Bakonydraco",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "CSEHBANYA_FORMATION",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette.",
+    "environment": "Dappled forest light filtering through heavy canopy.",
+    "facial_silhouette": "The notably thick, deep lower jaw is the primary morphological clue."
+  },
+  "pose": "Profile head-down feeding pose; emphasizes the weight and depth of the skull compared to the more delicate Sinopterus."
+  }
+]

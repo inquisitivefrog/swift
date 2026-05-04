@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: PIERRE_SHALE_SW]",
+      "layer_3_action": {
+        "subject": "Styxosaurus",
+        "features": ["Ultra-thin neck silhouette", "Sharp, narrow beak", "Streamlined body"],
+        "action": "A silhouette of Styxosaurus surfacing. The head and upper neck break the horizontal plane of the 'horizon line' in the background to emphasize its vertical reach."
+      }
+    }
+  }
+]

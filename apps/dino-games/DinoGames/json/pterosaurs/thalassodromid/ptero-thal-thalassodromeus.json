@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_THALASSO_001",
+  "species": "Thalassodromeus sethi",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SANTANA_ROMUALDO",
+  "habitat_ref": "TROPICAL_WETLAND_LAGOONS",
+  "visual_logic": {
+    "color_palette": "Pale ash-grey body; the crest is a startling blood-red with dark charcoal 'vein' tracery.",
+    "pattern_strategy": "Leathery wing texture with subtle 'scuff' marks; the beak has a polished, bone-like sheen.",
+    "eyes": "Cold, pale yellow eyes positioned low on the skull.",
+    "environment": "Midday heat shimmer over a red-mud flat; the turquoise water of the lagoon is visible in the background."
+  },
+  "pose": "Standing in a proud, upright stance; the head is tilted slightly to the side to showcase the immense, flat profile of the 'cleaver' crest."
+  }
+]

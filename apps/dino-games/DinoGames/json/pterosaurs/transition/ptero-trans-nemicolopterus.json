@@ -1,0 +1,13 @@
+{
+  "id": "GAME_CARD_NEMICO_001",
+  "species": "Nemicolopterus crypticus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": {
+    "color_palette": "Vibrant emerald and mint green to blend with ginkgo leaves; the beak is a translucent amber.",
+    "skin_logic": "Very fine, moth-like fuzz; the body looks soft and delicate.",
+    "eyes": "Relatively large, wide-set eyes for a 'cute' and friendly character appeal.",
+    "environment": "High canopy of a Jiufotang forest; soft-focus ginkgo leaves with morning dew drops."
+  },
+  "pose": "Tucked away inside a cluster of leaves, peeking out; the curved toes are shown gripping a small twig."
+}

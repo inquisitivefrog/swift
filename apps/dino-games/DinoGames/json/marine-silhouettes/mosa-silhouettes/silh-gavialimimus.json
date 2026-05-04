@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_GAVIALI_SILHOUETTE_001",
+    "species": "Gavialimimus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "OULAD_ABDOUN_BASIN",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a mosasaur with an extremely elongated, gharial-like snout.",
+      "environment": "Deep copper-colored sunset horizon.",
+      "backlight_strategy": "Horizontal backlighting to maximize the length of the facial profile.",
+      "facial_silhouette": "The snout is exceptionally thin and needle-like, taking up nearly 1/3 of the total head length."
+    },
+    "pose": "Profile view with the head turned toward the light to emphasize the 'fish-snatcher' morphology.",
+    "negative_constraints": "Maintain a clean, sharp line on the needle-thin snout; no blurring."
+  }
+]

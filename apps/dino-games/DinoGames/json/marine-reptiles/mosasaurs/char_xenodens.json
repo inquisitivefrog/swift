@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_001",
+    "species": "Xenodens calminechari",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”
+    "formation_ref": "OULED_ABDOUN_BASIN",
+    "visual_logic": {
+      "color_palette": "Dark slate-blue with a creamy-yellow underbelly and a subtle 'frill' of dark clay scales along the spine.",
+      "pattern_strategy": "Aposematic 'warning' rings in bright teal and black.",
+      "facial_silhouette": "Tiny skull but with 'saw-blade' serrated teeth rendered as sharp white nicks."
+      "texture": "Small, overlapping diamond-shaped clay scales; glossy black eyes.",
+      "environment": "Vibrant blue water with massive white 'clay' splashes."
+    }
+    "pose": "Darting from a seagrass thicket; the small body is a blur of motion-streaks."
+  }
+]

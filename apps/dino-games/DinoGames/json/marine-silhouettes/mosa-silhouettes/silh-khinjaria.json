@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_KHINJARIA_SILHOUETTE_001",
+    "species": "Khinjaria",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "OULAD_ABDOUN_BASIN",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a medium-sized predator with a uniquely 'short-faced' but deep skull.",
+      "environment": "Deep 'Muted Blue' twilight.",
+      "backlight_strategy": "Side-lighting to show the 'dagger-like' (Khinjar) profile of the teeth if the mouth is open.",
+      "facial_silhouette": "A short, very deep skull with a 'bulldog' jawline profile."
+    },
+    "pose": "Jaws agape in a vertical lunge, emphasizing the terrifyingly deep, short head shape.",
+    "negative_constraints": "Maintain sharp edges on the teeth in the jaw silhouette."
+  }
+]

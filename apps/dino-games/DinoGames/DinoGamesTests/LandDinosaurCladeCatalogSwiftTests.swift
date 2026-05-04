@@ -12,14 +12,14 @@ struct LandDinosaurCladeCatalogSwiftTests {
 
     @Test("All land pool ids have a clade entry")
     func landPoolHasCladeForEachId() {
-        for dino in MatchingGameLandDinosaurData.allDinosaurs {
+        for dino in LandDinosaurData.allDinosaurs {
             #expect(LandDinosaurCladeCatalog.cladeByCreatureId[dino.id] != nil)
         }
     }
 
     @Test("Helper matches dictionary for every pooled id")
     func cladeHelperMatchesMap() {
-        for id in MatchingGameLandDinosaurData.allDinosaurs.map(\.id) {
+        for id in LandDinosaurData.allDinosaurs.map(\.id) {
             let mapped = LandDinosaurCladeCatalog.cladeByCreatureId[id]
             #expect(mapped != nil)
             #expect(LandDinosaurCladeCatalog.clade(forCreatureId: id) == mapped)

@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_TUPUX_SILHOUETTE_001",
+  "species": "Tupuxuara",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "SANTANA_ROMUALDO",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette.",
+    "environment": "Sunset backlight creating a glowing 'halo' effect around the crest edges.",
+    "facial_silhouette": "The crest is more rounded and integrated with the skull line compared to the 'cleaver' of Thalassodromeus."
+  },
+  "pose": "Three-quarter flight profile; emphasizes the sweeping, curved silhouette of the crest as it cuts through the air."
+  }
+]

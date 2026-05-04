@@ -1,0 +1,18 @@
+[
+  {
+    "id": "GAME_CARD_TANY_SILHOUETTE_013",
+    "species": "Tanystropheus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "BESANO_FORMATION",
+    "habitat_ref": "COASTAL_LOWLANDS",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette. Impossible proportions: a neck twice as long as the entire body and tail combined.",
+      "environment": "Deep, 'Dark Organic Mud' substrate with tea-colored water.",
+      "backlight_strategy": "Strong diagonal lighting to frame the incredible length of the stiff, rod-like neck.",
+      "facial_silhouette": "Small head at the end of a long, straight neck; narrow snout."
+    },
+    "pose": "Neck extended diagonally toward the surface from the bottom, body anchored near a rock, illustrating its unique ambush-predator morphology.",
+    "negative_constraints": "The neck must not bend like a snake; it should remain relatively rigid to reflect its unique vertebrae."
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_DOLIC_015",
+    "species": "Dolichorhynchops",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "NIOBRARA_CHALK",
+    "visual_logic": {
+      "color_palette": "Azure-blue body with a high-contrast black 'mask' around the eyes; pale cream underbelly.",
+      "action": "Darting at lightning speed through a school of silver clay fish.",
+      "environment": "Bright azure water with a high-albedo chalky white seafloor visible below."
+    },
+    "pose": "A sleek, aerodynamic lateral lunge; flippers tucked tight against the body for speed."
+  }
+]

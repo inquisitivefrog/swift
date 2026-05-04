@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_ORNITHO_SILHOUETTE_017",
+  "species": "Ornithomimus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; slender, bird-like frame.",
+    "facial_silhouette": "Small head with a toothless, pointed beak and S-curve neck.",
+    "backlight_strategy": "Crisp 'midday-glare' backlight."
+  },
+  "pose": "Alert standing pose; silhouette emphasizes the 'ostrich' mimic silhouette and long, slender legs."
+}

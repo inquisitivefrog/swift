@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_PLIOPLATE_SILHOUETTE_001",
+    "species": "Plioplatecarpus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "PIERRE_SHALE_FW",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a robust, 'heavy' plioplatecarpine with an exceptionally short torso.",
+      "environment": "Deep 'Muted Blue' and 'Indigo' twilight water.",
+      "backlight_strategy": "Direct backlighting to highlight the disproportionately large, broad paddles.",
+      "facial_silhouette": "A large skull with a very distinct, curved jawline profile."
+    },
+    "pose": "Side view showing the 'compact' morphology—the body appears much shorter and deeper than *Yaguarasaurus*, emphasizing its evolution toward paddle-driven swimming.",
+    "negative_constraints": "Zero internal detail; focus on the high-contrast 'wing' shape of the flippers."
+  }
+]

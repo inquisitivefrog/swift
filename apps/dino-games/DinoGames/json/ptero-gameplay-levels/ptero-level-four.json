@@ -1,0 +1,11 @@
+[
+  {
+    "id": "pterosaur_level_04_v3",
+    "app_image_config": {
+      "layer_1_style": "STYLE_ANIMATED_FEATURE_V3: high-poly 3D animation, cinematic rim lighting to highlight character silhouette.",
+      "layer_2_setting": "Setting: [REF: SOLNHOFEN], a single smooth driftwood log against a simplified turquoise sea background.",
+      "layer_3_action": "Medium Shot of Rhamphorhynchus resting; the long tail is curled forward slightly, showcasing the diamond-shaped rudder with smooth, rubbery edges.",
+      "aspect_ratio": "1:1"
+    }
+  }
+]

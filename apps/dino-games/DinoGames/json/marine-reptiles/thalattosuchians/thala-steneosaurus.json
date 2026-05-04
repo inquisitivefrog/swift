@@ -1,0 +1,19 @@
+{
+  "id": "GAME_CARD_STENEO_3D_029",
+  "species": "Steneosaurus bollensis",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SOLNHOFEN",
+  "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "visual_logic": {
+    "surface_detail": "Mottled 'Olive Green' and 'Sandy Tan' skin; unlike the Metriorhynchids, it features visible, flattened osteoderms along its back.",
+    "anatomy_focus": "Hero focus on the 'needle-thin' snout filled with numerous small, interlocking teeth.",
+    "facial_expression": "Observational and patient; large, upward-facing eyes.",
+    "environment": {
+      "water": "Shallow, sun-lit lagoon water over 'Creamy White' carbonate mud.",
+      "biota": "Resting near a cluster of 'Ancestral Seagrass' with small crustaceans nearby."
+    },
+    "pose": "Stationary near the seabed in an ambush position, the long snout perfectly still while the tail gently undulates."
+  }
+}

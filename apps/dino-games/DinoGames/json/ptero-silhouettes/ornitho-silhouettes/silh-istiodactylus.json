@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_ISTIO_SILHOUETTE_001",
+  "species": "Istiodactylus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "WESSEX",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette.",
+    "environment": "Low-angle sunset creating long shadows.",
+    "facial_silhouette": "The rounded, blunt 'pills-shaped' beak (not pointed) is the key morphology."
+  },
+  "pose": "Side profile crouched; emphasizes the shorter, rounded head and the vulture-like posture."
+  }
+]

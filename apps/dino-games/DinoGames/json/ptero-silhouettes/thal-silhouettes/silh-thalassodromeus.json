@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_THALASSO_SILHOUETTE_001",
+  "species": "Thalassodromeus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "SANTANA_ROMUALDO",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; emphasize the straight, sharp line of the beak.",
+    "environment": "Harsh, direct tropical light with high-contrast rim lighting.",
+    "facial_silhouette": "The large 'V' notch at the posterior end of the crest and the razor-straight jawline are the key identifiers."
+  },
+  "pose": "Side profile standing; the silhouette emphasizes the top-heavy nature of the animal where the head seems larger than the torso."
+  }
+]

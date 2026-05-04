@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_ATTEN_013",
+    "species": "Attenborosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "BLUE_LIAS",
+    "visual_logic": {
+      "color_palette": "Slate-grey skin with sharp, charcoal-blue dorsal patches and a brilliant white throat.",
+      "action": "Curiously peering into the camera with large, soulful expressive eyes.",
+      "environment": "Turquoise shallow water with high-detail floating crinoid rafts and belemnites."
+    },
+    "pose": "Head and neck tilted at a 45-degree angle; a friendly 'smirk' visible on the snout."
+  }
+]

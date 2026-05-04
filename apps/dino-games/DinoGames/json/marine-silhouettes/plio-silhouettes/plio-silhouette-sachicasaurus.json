@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_SACHICA_SILHOUETTE_001",
+    "species": "Sachicasaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "PAJA",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of an ultra-massive, late-surviving pliosaur.",
+      "environment": "Deep golden sunset filtering through clear tropical water.",
+      "backlight_strategy": "DUSK_SILHOUETTE to show the incredible bulk of the body—wider and thicker than *Kronosaurus*.",
+      "facial_silhouette": "Immense, boxy skull with a very straight, wide jawline."
+    },
+    "pose": "Direct lateral profile, emphasizing that the neck is almost as thick as the head itself, creating a seamless, powerful 'torpedo' shape.",
+    "negative_constraints": "No internal detail; must look exceptionally heavy."
+  }
+]

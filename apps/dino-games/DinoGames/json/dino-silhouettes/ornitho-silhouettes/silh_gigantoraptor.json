@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_GIGANTO_SILHOUETTE_019",
+  "species": "Gigantoraptor",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; giant feathered bird-like proportions.",
+    "facial_silhouette": "Parrot-like, deep toothless beak and rounded skull crest.",
+    "backlight_strategy": "High-key 'savanna-noon' backlight."
+  },
+  "pose": "Tall standing posture; silhouette emphasizes the feathered wing-fans on the arms and the tail fan."
+}

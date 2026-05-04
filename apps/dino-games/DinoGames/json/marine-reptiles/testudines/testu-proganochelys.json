@@ -1,0 +1,19 @@
+{
+  "id": "GAME_CARD_PROGANO_3D_022",
+  "species": "Proganochelys quenstedti",
+  "tech_ref": "SQUARE_ASPECT_RATIO",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SOLNHOFEN",
+  "habitat_ref": "COASTAL_LOWLANDS",
+  "lighting_ref": "DAPPLED_OPEN",
+  "visual_logic": {
+    "surface_detail": "Rugged, high-dome shell with individual 'scute' plates rendered in 'Rusty Iron-Orange' and 'Dirty Ochre'.",
+    "anatomy_focus": "Emphasis on the long, non-retractable neck covered in bony defensive spikes and the club-like, spiked tail.",
+    "facial_expression": "Alert and somewhat grumpy; small amber eyes with a focused, cautious glint.",
+    "environment": {
+      "ground": "Damp, leafy forest floor near a riverbank with mossy limestone outcrops.",
+      "biota": "Triassic ferns and a curious early mammal (Vincelestes) peeking from the foliage."
+    },
+    "pose": "Low-slung crawl across a muddy bank, head turned sharply to the side as if sensing a predator."
+  }
+}

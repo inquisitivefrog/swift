@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_AIGIALO_SILHOUETTE_001",
+    "species": "Aigialosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "HVAR_MUDSTONE",
+    "habitat_ref": "COASTAL_LOWLANDS",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a primitive, lizard-like mosasaur with a visible neck and distinct limbs.",
+      "environment": "Golden sunset reflecting off shallow, brackish water.",
+      "backlight_strategy": "DUSK_SILHOUETTE to highlight the transition between a terrestrial lizard and a marine reptile.",
+      "facial_silhouette": "Pointed, monitor-lizard-like head."
+    },
+    "pose": "Resting on a submerged limestone shelf with the tail trailing into the water, emphasizing the feet which are not yet fully transformed into paddles.",
+    "negative_constraints": "No internal scales; ensure the 'toed' limb profile is sharp."
+  }
+]

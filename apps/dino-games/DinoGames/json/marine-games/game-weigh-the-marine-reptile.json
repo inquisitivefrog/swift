@@ -1,0 +1,34 @@
+{
+  "id": "card_marine_weight_01",
+  "title": "Weigh the Marine Reptile",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat_ref": "EPICONTINENTAL_SEAWAY",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "character_manifest": {
+    "referee": {
+      "character_id": "dino_bones_paleontologist_3",
+      "description": "Adult male, Black race, curly black hair.",
+      "outfit": "Full black and grey neoprene wet suit, twin silver air tanks, yellow flippers, and a black scuba mask.",
+      "pose": "Floating vertically in front of the center pivot of the scale, holding an underwater tablet."
+    },
+    "left_subject": {
+      "species": "Archelon",
+      "weight_kg": 2200,
+      "pose": "Full lateral profile resting on the left stone slab."
+    },
+    "right_subject": {
+      "species": "Plesiosaurus",
+      "weight_kg": 450,
+      "pose": "Resting on the right stone slab with its neck in an expressive S-curve."
+    }
+  },
+  "ui_elements": {
+    "header_text": {
+      "content": "Weigh the Marine Reptile",
+      "style": "Bright 3D mixed-case red letters",
+      "position": "Top center"
+    }
+  },
+  "tool_ref": "tool_buoyancy_scale_01"
+}

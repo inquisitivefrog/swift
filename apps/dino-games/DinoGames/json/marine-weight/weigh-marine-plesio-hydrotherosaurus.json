@@ -1,0 +1,16 @@
+[
+  {
+    "id": "asset_weight_profile_hydrotherosaurus_V1",
+    "species": "Hydrotherosaurus",
+    "class": "LARGE_REPTILE",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": {
+      "alignment": "BOTTOM_ALIGNED_TO_FRAME",
+      "color_palette": "Kelpy Camo: An olive-green base with thin, wavy vertical yellow lines (mimicking kelp stalks).",
+      "texture": "Soft, rubbery clay texture with a matte finish.",
+      "environment_override": "[REF: MORENO_FORMATION] - Murky green water with dense kelp forests in the background."
+    },
+    "morphology_hook": "The 'Serpentine Elasmosaur.' Highlight the extreme number of neck vertebrae—this animal should look like a literal 'snake in a turtle shell'."
+  }
+]

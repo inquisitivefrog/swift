@@ -781,17 +781,20 @@ struct BalanceGameView: View {
             speechManager.playTogether(url1: u1, url2: u2) {
                 self.speechManager.onAudioFinished = nil
                 LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
+                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
                 self.isPresented = false
             }
         } else if let u = goodJobURL ?? crowdURL {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
+                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
                 self.isPresented = false
             }
             speechManager.playAudioFile(url: u)
         } else {
             LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
+            PterosaurProgress.notifyCompletionIfPterosaurGame(configId: gameConfig.id)
             isPresented = false
         }
     }
@@ -972,18 +975,11 @@ private struct BalancePoolEntry {
     let estimatedWeightKg: Double
 }
 
-private let balancePterosaurPool: [BalancePoolEntry] = [
-    BalancePoolEntry(id: 1, name: "Anurognathus", imageName: "ptero-anurognathus", emoji: "🦅", estimatedWeightKg: 0.2),
-    BalancePoolEntry(id: 2, name: "Rhamphorhynchus", imageName: "ptero-rhamphorhynchus", emoji: "🦅", estimatedWeightKg: 1.5),
-    BalancePoolEntry(id: 3, name: "Dimorphodon", imageName: "ptero-dimorphodon", emoji: "🦅", estimatedWeightKg: 2),
-    BalancePoolEntry(id: 4, name: "Pterodactylus", imageName: "ptero-pteradactylus", emoji: "🦅", estimatedWeightKg: 2),
-    BalancePoolEntry(id: 5, name: "Nyctosaurus", imageName: "ptero-nyctosaurus", emoji: "🦅", estimatedWeightKg: 2),
-    BalancePoolEntry(id: 6, name: "Tapejara", imageName: "ptero-tapejara", emoji: "🦅", estimatedWeightKg: 15),
-    BalancePoolEntry(id: 7, name: "Tupandactylus", imageName: "ptero-tupandactylus", emoji: "🦅", estimatedWeightKg: 15),
-    BalancePoolEntry(id: 8, name: "Dsungaripterus", imageName: "ptero-dsungaripterus", emoji: "🦅", estimatedWeightKg: 20),
-    BalancePoolEntry(id: 9, name: "Pteranodon", imageName: "ptero-pteranodon", emoji: "🦅", estimatedWeightKg: 25),
-    BalancePoolEntry(id: 10, name: "Quetzalcoatlus", imageName: "ptero-quetzacoatlus", emoji: "🦅", estimatedWeightKg: 200),
-]
+private let balancePterosaurPool: [BalancePoolEntry] = AirPterosaurData.allPterosaurs.compactMap { d in
+    guard let img = d.imageName,
+          let kg = AirPterosaurData.pterosaurEstimatedWeightKgById[d.id] else { return nil }
+    return BalancePoolEntry(id: d.id, name: d.name, imageName: img, emoji: d.icon, estimatedWeightKg: kg)
+}
 
 struct BalanceGameConfigs {
     static let balanceDinosaur = BalanceGameConfig(

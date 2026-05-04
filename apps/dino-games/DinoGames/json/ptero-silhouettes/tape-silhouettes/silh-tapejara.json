@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_TAPE_SILHOUETTE_001",
+  "species": "Tapejara",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "SANTANA_ROMUALDO",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; emphasize the 'hook' of the beak.",
+    "environment": "High-key tropical sun creating a stark backlight.",
+    "facial_silhouette": "The distinct 'shark-fin' shape of the combined bony and soft-tissue crest is the primary identifier."
+  },
+  "pose": "Perfect side profile standing; highlights the downturned beak and the crest extending both up and back from the skull."
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_MAMENCHI_SILHOUETTE_016",
+  "species": "Mamenchisaurus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; emphasize the extreme neck length.",
+    "facial_silhouette": "Standard small sauropod beak and head profile.",
+    "backlight_strategy": "Distant 'horizon-line' golden backlight."
+  },
+  "pose": "Neck extended horizontally across the frame; silhouette highlights a neck that is nearly half the body length."
+}

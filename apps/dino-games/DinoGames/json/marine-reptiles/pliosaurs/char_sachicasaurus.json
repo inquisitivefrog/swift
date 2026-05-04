@@ -1,0 +1,15 @@
+[
+  {
+    "id": "char_sachicasaurus_v3",
+    "species": "Sachicasaurus",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”,
+    "tech_ref": "DEFAULT_SQUARE",
+    "formation_ref": "PAJA",
+    "visual_identity": {
+      "pattern_strategy": "Mottled 'Lichen-like' patches of rusty orange on a dark grey base, mimicking sea-floor concretions.",
+      "integument": "Extremely weathered hide; deep dermal folds around the shoulder joints.",
+      "facial_silhouette": "Massive, boxy muzzle; the lower jaw is particularly deep and powerful."
+    },
+    "pose": "Slow, powerful patrol along the seafloor, kicking up 'Paja Formation' silt clouds."
+  }
+]

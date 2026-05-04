@@ -1,0 +1,15 @@
+[
+  { 
+    "id": "char_plesiosaurus_v3",
+    "species": "Plesiosaurus",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”,
+    "tech_ref": "DEFAULT_SQUARE",
+    "formation_ref": "BLUE_LIAS",
+    "visual_identity": {
+      "pattern_strategy": "Dappled 'Fawn-like' spots in pale lavender-grey across the back; no counter-shading.",
+      "integument": "Soft, dolphin-like skin with high specular highlights.",
+      "facial_silhouette": "Tiny, delicate head no larger than the neck's width; bird-like beady eyes and needle-thin teeth."
+    },
+    "pose": "Extreme S-curve neck pose, head peering directly into the camera with curiosity." 
+  }
+]

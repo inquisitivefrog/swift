@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_ICHTHY_3D_037",
+    "species": "Mixosaurus cornalianus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "BESANO_FORMATION",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Mottled 'Olive' and 'Yellow' skin for camouflage in shallow reefs.",
+      "anatomy_focus": "The 'mixed' anatomy—part primitive lizard-like tail, part fish-like fluke.",
+      "environment": "Shallow, turquoise lagoon with coral-like Triassic structures.",
+      "pose": "A quick, darting motion among rocks, showcasing its small, agile frame."
+    }
+  }
+]

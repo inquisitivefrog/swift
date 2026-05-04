@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_NYCTO_SILHOUETTE_001",
+  "species": "Nyctosaurus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "NIOBRARA_CHALK",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; zero internal detail.",
+    "environment": "Stark moonlight creating a glowing rim light on the thin antler-crest.",
+    "facial_silhouette": "The massive, branching vertical crest structure is unmistakable."
+  },
+  "pose": "Profile flight; the silhouette emphasizes the extreme height of the crest compared to the tiny body."
+  }
+]

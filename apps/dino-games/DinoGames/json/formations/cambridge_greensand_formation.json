@@ -1,0 +1,15 @@
+[
+  {
+    "CAMBRIDGE_GREENSAND": {
+      "period": "EARLY_CRETACEOUS",
+      "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE"],
+      "fauna_manifest": ["EARLY_CRETACEOUS_BASE", "GREENSAND_LAG_DEPOSITS"],
+      "habitat_default": "PELAGIC_SHELF_SEA",
+      "manifest": "CRETAECEOUS_BASE",
+      "geology": {
+        "primary_rocks": ["Glauconitic marl", "Phosphatic nodules", "Sandy mudstone"],
+        "mineral_palette": ["Olive Green", "Chocolate Brown", "Gunmetal Grey", "Sandy Tan"]
+      }
+    }
+  }
+]

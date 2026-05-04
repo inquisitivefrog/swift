@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: MORENO_FORMATION]",
+      "layer_3_action": {
+        "subject": "Hydrotherosaurus",
+        "features": ["Impossibly long neck (60+ vertebrae silhouette)", "Small, delicate skull", "Pointed tail tip"],
+        "action": "The Hydrotherosaurus is silhouetted with its neck in a vertical 'S-shape' to highlight the extreme flexibility and length of the morphology. No internal shading."
+      }
+    }
+  }
+]

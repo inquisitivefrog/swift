@@ -1,0 +1,18 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_SILHOUETTE_005",
+    "species": "Tylosaurus (Hainosaurus variant)",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "MAASTRICHT_FORMATION",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette with zero internal detail to hide the military-olive skin and amber eyes.",
+      "environment": "Muted Oceanic Cyan water with high-intensity 'god-rays' filtering from the top-left to create a stark backlight.",
+      "backlight_strategy": "The sun is positioned directly behind the Tylosaurus on the horizon, creating a glowing rim-light effect to emphasize its unique anatomy.",
+      "facial_silhouette": "The elongated, bony 'ramming' rostrum is clearly defined in profile, providing the key visual clue for the player."
+    },
+    "pose": "Lateral stalk through the depths; the powerful, thick tail fluke and streamlined blocky head are positioned to create a recognizable but challenging diagonal profile.",
+    "negative_constraints": "No internal shading, no transparency, and no visible skin patterns or textures within the silhouette."
+  }
+]

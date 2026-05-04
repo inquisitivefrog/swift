@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_XENODENS_SILHOUETTE_001",
+    "species": "Xenodens",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "OULAD_ABDOUN_BASIN",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a small, bizarrely jawed mosasaur.",
+      "environment": "High-contrast 'Indigo and Gold' water surface.",
+      "backlight_strategy": "DUSK_SILHOUETTE to highlight the 'saw-like' jaw profile.",
+      "facial_silhouette": "Short snout. The jaw silhouette should clearly show the unique, serrated, rectangular 'saw-blade' teeth."
+    },
+    "pose": "Head-on profile with the jaw slightly open to display the 'Xeno-tooth' (Strange-tooth) saw-blade silhouette.",
+    "negative_constraints": "Sharp edges only on the tooth profile."
+  }
+]

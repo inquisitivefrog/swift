@@ -1,0 +1,15 @@
+[
+  {
+    "id": "asset_weight_profile_pliosaurus_V2",
+    "species": "Pliosaurus",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "visual_logic": {
+      "alignment": "BOTTOM_ALIGNED_TO_FRAME",
+      "color_palette": "High-contrast 'Orca' logic: Jet black dorsal side with a brilliant, stark white underbelly and white 'eye-patch' markings.",
+      "texture": "High-gloss, wet clay look. Extremely smooth with sharp light reflections.",
+      "environment_override": "[REF: KIMMERIDGE_CLAY] - Deep indigo water with bright white floating marine snow for high-key contrast."
+    },
+    "morphology_hook": "Focus on the massive, triangular 'crushing' head and the shortest neck in the game."
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_STENEO_SILHOUETTE_001",
+    "species": "Steneosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "OXFORD_CLAY",
+    "habitat_ref": "COASTAL_LOWLANDS",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a gharial-like marine crocodyliform with a very long body.",
+      "environment": "High-albedo water reflecting off a shallow limestone reef.",
+      "backlight_strategy": "DUSK_SILHOUETTE to emphasize the 'armored' ridge along the back.",
+      "facial_silhouette": "Extremely long, narrow, needle-like snout (longirostrine) with a slight bulbous tip."
+    },
+    "pose": "Resting in shallow water or swimming slowly, highlighting the semi-aquatic limbs (still look somewhat like legs) and the bumpy osteoderms along the spine.",
+    "negative_constraints": "No internal shading; the 'jagged' back ridge must be visible in the silhouette."
+  }
+]

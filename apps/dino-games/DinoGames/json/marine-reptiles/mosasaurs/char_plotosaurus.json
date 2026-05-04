@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_PLOTOSAUR_3D_001",
+    "species": "Plotosaurus",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "MORENO_FORMATION",
+    "habitat_ref": "OPEN_OCEAN_PELAGIC",
+    "lighting_ref": "DUSK_SILHOUETTE_CONTRAST",
+    "visual_logic": {
+      "surface_detail": "Highly specialized, tightly packed scales that appear almost smooth and skin-like; a deep navy-blue body with high-visibility silver 'racing stripes' along the lateral line.",
+      "environment": "Deep oceanic water with a heavy 'marine snow' effect to provide a sense of speed and depth.",
+      "cinematic_effect": "Motion blur on the tail fluke to emphasize its high-speed 'thunniform' swimming style, with bubbles trailing from the leading edges of the flippers."
+    },
+    "pose": "A dynamic 'torpedo' lunge toward the upper corner of the frame. The body is rigid and muscular, highlighting its advanced evolution into a tuna-like shape, with the large, crescent tail fluke providing a powerful push."
+  }
+]

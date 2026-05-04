@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_KRONO_SILHOUETTE_001",
+    "species": "Kronosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "TORENA_FORMATION",
+    "habitat_ref": "OPEN_OCEAN_PELAGIC",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a massive, 10-meter apex predator.",
+      "environment": "Intense 'Rusty Orange' sunset sky reflecting on the ocean surface.",
+      "backlight_strategy": "Direct backlighting to show the sheer scale and thickness of the neck and chest.",
+      "facial_silhouette": "Huge, elongated skull (nearly 1/3 of the body length) with a slightly 'hooked' snout tip."
+    },
+    "pose": "Lateral view with a slight downward tilt, highlighting the enormous four-paddle propulsion system and the massive, boxy head.",
+    "negative_constraints": "Zero internal detail; must look like a solid 'tank' in the water."
+  }
+]

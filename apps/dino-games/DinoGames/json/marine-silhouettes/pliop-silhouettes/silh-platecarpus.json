@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_PLATECARPUS_SILHOUETTE_001",
+    "species": "Platecarpus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "NIOBRARA_CHALK",
+    "habitat_ref": "EPICONTINENTAL_SEAWAY",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a highly specialized, medium-sized mosasaur with a deep, powerful tail.",
+      "environment": "High-albedo 'Chalky White' water backdrop for maximum contrast.",
+      "backlight_strategy": "DUSK_SILHOUETTE; intense backlighting to emphasize the downward-curved tail vertebrae.",
+      "facial_silhouette": "A short, blunt snout and a very large, rounded cranium."
+    },
+    "pose": "Captured mid-turn to show off the downward-pointing tail fluke (hypocercal tail) and the broad, fan-like front paddles.",
+    "negative_constraints": "No internal detail; the 'kink' in the tail must be clearly visible in the silhouette."
+  }
+]

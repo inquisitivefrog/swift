@@ -1,0 +1,14 @@
+[ 
+  { "id": "char_kronosaurus_v3", 
+    "species": "Kronosaurus", 
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”,
+    "tech_ref": "DEFAULT_SQUARE",
+    "formation_ref": "PAJA", 
+    "visual_identity": { 
+      "pattern_strategy": "Disruptive Orca-style masking; stark, large white patches over eyes and along the lower flank.", 
+      "integument": "Rough, leathery shark-skin with visible battle-scarring and parasite marks.",
+      "facial_silhouette": "Industrial-beam straight jawline; massive, exposed interlocking conical teeth even when mouth is closed." 
+    }, 
+    "pose": "Dominant horizontal sprint, flippers mid-stroke, water rippling over a high-contrast black and white hide.” 
+  }
+]

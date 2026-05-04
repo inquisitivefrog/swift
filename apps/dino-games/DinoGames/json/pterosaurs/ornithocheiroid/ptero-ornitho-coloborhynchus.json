@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_COLOBO_001",
+  "species": "Coloborhynchus clavirostris",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "WESSEX",
+  "habitat_ref": "COASTAL_LOWLANDS",
+  "visual_logic": {
+    "color_palette": "Ochre and dark brown; the flat tip of the snout is a stark bone-white.",
+    "pattern_strategy": "Coarse, weathered clay textures; visible 'pits' in the bone of the snout.",
+    "eyes": "Pale, calculating blue eyes.",
+    "environment": "Muddy Cretaceous estuary; overcast sky with soft, diffused light."
+  },
+  "pose": "Head-on view showing the flat, wide 'face' of the snout and the teeth splaying outwards."
+  }
+]

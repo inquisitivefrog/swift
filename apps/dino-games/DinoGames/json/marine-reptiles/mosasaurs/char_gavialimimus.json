@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_001",
+    "species": "Gavialimimus almaghribensis",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”
+    "formation_ref": "OULED_ABDOUN_BASIN",
+    "visual_logic": {
+      "color_palette": "Dark slate-blue with a creamy-yellow underbelly and a subtle 'frill' of dark clay scales along the spine.",
+      "pattern_strategy": "Thin 'needle-stripes' of Phosphatic Gold running horizontally.",
+      "facial_silhouette": "Extremely long, gavial-like snout; delicate and needle-thin."
+      "texture": "Small, overlapping diamond-shaped clay scales; glossy black eyes.",
+      "environment": "Vibrant blue water with massive white 'clay' splashes."
+    }
+    "pose": "Slicing through a school of Enchodus with a quick, lateral head-snap."
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_JEHOLO_SILHOUETTE_001",
+  "species": "Jeholopterus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "TIAOJISHAN_FORMATION",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; emphasize the 'moth-like' furry outline.",
+    "environment": "Distant volcanic eruption providing a deep red backlight.",
+    "facial_silhouette": "The two long 'fang' teeth protruding from the upper jaw are the morphological giveaway."
+  },
+  "pose": "Tucked into a ball with wings wrapped around; the long, curved claws of the feet are splayed out in silhouette."
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "GAME_CARD_ANURO_SILHOUETTE_001",
+    "species": "Anurognathus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "SOLNHOFEN",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette; emphasize the 'flat' face and lack of a long snout.",
+      "environment": "High-contrast golden sunset backlight.",
+      "backlight_strategy": "Rim light highlighting the 'fuzzy' outline of the body fluff.",
+      "facial_silhouette": "The profile must show the blunt, non-tapered head and the tiny, stubby tail."
+    },
+    "pose": "Mid-flight 'starfish' pose with wings and legs splayed, showing the membrane connecting to the ankles; emphasizes the unique 'boxy' silhouette."
+  }
+]

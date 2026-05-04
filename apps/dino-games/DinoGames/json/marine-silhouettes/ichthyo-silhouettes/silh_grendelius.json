@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_GRENDEL_SILHOUETTE_001",
+    "species": "Grendelius",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "KIMMERIDGE_CLAY",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a heavy-set ichthyosaur with a massive, robust skull.",
+      "environment": "Slate Blue and Charcoal water palette.",
+      "backlight_strategy": "DUSK_SILHOUETTE; sun positioned to highlight the thick, powerful neck transition.",
+      "facial_silhouette": "Distinctly 'heavy' jawline and a shorter snout compared to typical ophthalmosaurids."
+    },
+    "pose": "Side profile with the mouth slightly open to show the powerful, thick silhouette of the jaw.",
+    "negative_constraints": "No internal shading; sharp edges only."
+  }
+]

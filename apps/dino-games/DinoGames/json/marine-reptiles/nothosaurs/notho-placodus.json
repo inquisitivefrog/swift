@@ -1,0 +1,19 @@
+{
+  "id": "GAME_CARD_PLACO_3D_020",
+  "species": "Placodus gigas",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SOLNHOFEN",
+  "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "visual_logic": {
+    "surface_detail": "Thick, leathery skin with 'Dull Ochre' and 'Sandy Tan' tones; a row of small, rounded bony knobs along the spine.",
+    "anatomy_focus": "Hero focus on the 'forward-jutting' incisors and the massive, flat crushing plates inside the jaw.",
+    "facial_expression": "A slightly comical, 'stout' expression with a signature friendly smirk.",
+    "environment": {
+      "water": "Shallow water over a rocky sea floor with abundant brachiopods and bivalve clusters.",
+      "biota": "Scattered shells and 'Ancestral Seagrass'."
+    },
+    "pose": "Horizontal dive toward the seabed, snout just about to engage with a cluster of shellfish."
+  }
+}

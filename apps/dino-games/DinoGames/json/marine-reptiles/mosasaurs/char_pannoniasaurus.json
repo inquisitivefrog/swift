@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_001",
+    "species": "Pannoniasaurus inexpectatus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”
+    "formation_ref": "CSEHBANYA_FORMATION",
+    "visual_logic": {
+      "color_palette": "Dark slate-blue with a creamy-yellow underbelly and a subtle 'frill' of dark clay scales along the spine.",
+      "facial_silhouette": "Massive, powerful jaw with a prominent 'pterygoid' tooth row visible in the throat."
+      "pattern_strategy": "Jagged, mud-brown 'bark' patterns to blend with Metasequoia roots.",
+      "facial_silhouette": "Flattened, croc-like skull with eyes positioned slightly more upward."
+      "environment": "Vibrant blue water with massive white 'clay' splashes."
+    }
+    "pose": "Resting on a riverbed silty substrate; camouflaged among Metasequoia leaf litter."
+  }
+]

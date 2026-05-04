@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_QUETZAL_SILHOUETTE_001",
+  "species": "Quetzalcoatlus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; clean, flowing lines.",
+    "facial_silhouette": "The iconic 'giraffe-neck' and the incredibly long, straight, toothless beak.",
+    "backlight_strategy": "Warm amber rim-light from above."
+  },
+  "pose": "The 'terrestrial launch' pose—crouched on all fours with the neck coiled slightly, ready to spring; emphasizes the unique quadrupedal power."
+}

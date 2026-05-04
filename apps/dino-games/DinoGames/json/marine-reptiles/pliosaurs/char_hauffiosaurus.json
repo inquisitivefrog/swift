@@ -1,0 +1,18 @@
+[
+{
+    "id": "char_hauffiosaurus_001_v2",
+    "species": "Hauffiosaurus zanoni",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”,
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED",
+    "formation_ref": "POSEIDON_SHALE",
+    "pose": "Dynamic 'S-Curve' banking turn to showcase the 'Intermediate' neck length and slender frame.",
+    "morphology_overrides": {
+      "neck": "Distinctly long and slender for a pliosaur; significantly longer than the skull.",
+      "skull": "Small, narrow, and needle-like; optimized for snatching small fish and cephalopods.",
+      "body": "Aerodynamic and gracile; visible transition between the neck and the shoulder girdle.",
+      "patterning": "Dainty, stippled spots that look like ink-flicks concentrated along the spine."
+      "negative_prompt": "thick neck, blocky head, massive skull, heavy torso"
+    }
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: OXFORD_CLAY]",
+      "layer_3_action": {
+        "subject": "Microcleidus",
+        "features": ["Small body size silhouette", "Slender neck", "Interlocking tooth fringe visible in open-mouth profile"],
+        "action": "A 1:1 square silhouette of a Microcleidus in an active hunt pose, neck arched downward with jaws slightly open to show the toothy silhouette fringe."
+      }
+    }
+  }
+]

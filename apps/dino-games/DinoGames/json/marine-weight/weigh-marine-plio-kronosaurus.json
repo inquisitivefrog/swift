@@ -1,0 +1,15 @@
+[
+  {
+    "id": "asset_weight_profile_kronosaurus_V2",
+    "species": "Kronosaurus",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "visual_logic": {
+      "alignment": "BOTTOM_ALIGNED_TO_FRAME",
+      "color_palette": "Sandy Ambush: A dusty tan/ochre body with vertical charcoal-grey 'tiger stripes' cascading down the sides.",
+      "texture": "Pebbled, 'shark-skin' texture. Rougher and less reflective than the Pliosaur.",
+      "environment_override": "[REF: MORENO_FORMATION] - Murky greenish-grey water with silhouetted kelp in the far background to match the tan camo."
+    },
+    "morphology_hook": "The 'Power Prowler.' Highlight the thick, muscular neck that bridges the massive head and torso."
+  }
+]

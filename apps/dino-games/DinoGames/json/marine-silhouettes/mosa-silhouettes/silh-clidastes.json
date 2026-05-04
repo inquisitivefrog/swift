@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_CLIDASTES_SILHOUETTE_001",
+    "species": "Clidastes",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "NIOBRARA_CHALK",
+    "habitat_ref": "EPICONTINENTAL_SEAWAY",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a small, sleek, and highly streamlined mosasaur.",
+      "environment": "High-albedo 'Chalky White' water backdrop.",
+      "backlight_strategy": "Direct backlighting to emphasize the narrow, 'bullet-shaped' torso.",
+      "facial_silhouette": "Narrow, elegant snout with a very straight jawline."
+    },
+    "pose": "A tight, high-speed 'darting' pose with the small paddles tucked close to the body.",
+    "negative_constraints": "Zero internal detail; sharp edges only."
+  }
+]

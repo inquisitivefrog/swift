@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_HENODUS_SILHOUETTE_001",
+    "species": "Henodus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "GIPSKEUPER_FORMATION",
+    "habitat_ref": "LAGOONAL_HYPERSALINE",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a highly specialized placodont with a square, turtle-like shell and a boxy head.",
+      "environment": "Shallow, shimmering hypersaline water reflecting a pale violet sunset.",
+      "backlight_strategy": "DUSK_SILHOUETTE; light positioned to emphasize the extreme flatness and width of the carapace.",
+      "facial_silhouette": "A very broad, square-shaped snout profile with no visible neck, as it is tucked into the shell line."
+    },
+    "pose": "Top-down 'plan' view swimming just below the surface to maximize the square-shaped silhouette of the shell and the tiny, protruding tail.",
+    "negative_constraints": "No internal shell patterns; the silhouette must appear as a solid, slightly rounded square with four small flippers."
+  }
+]

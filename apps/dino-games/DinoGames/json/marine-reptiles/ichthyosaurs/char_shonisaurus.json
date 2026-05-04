@@ -1,0 +1,17 @@
+[ 
+  {
+    "id": "GAME_CARD_ICHTHY_3D_041",
+    "species": "Shonisaurus popularis",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "LUNING_FORMATION",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Deep 'Midnight Blue' skin with 'Copper-Orange' dappled spots along the lateral line. Skin appears dense and high-pressure resistant.",
+      "anatomy_focus": "Emphasis on the massive, deep-bodied 'rotund' profile and the exceptionally long, equal-sized front and rear flippers.",
+      "environment": "The 'Berlin-Ichthyosaur' sea environment; deep, clear water with high-visibility 'god-rays'.",
+      "pose": "Cruising majestically with three smaller individuals in the background, establishing its social and massive presence."
+    }
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "id": "asset_weight_profile_tylosaurus",
+    "species": "Tylosaurus",
+    "class": "TITAN",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": {
+      "alignment": "BOTTOM_ALIGNED_TO_FRAME",
+      "pose": "A long, heavy horizontal stretch. The lower jaw and chest are perfectly aligned to the frame's bottom.",
+      "mass_emphasis": "Focus on the extreme length combined with the heavy, powerful tail base.",
+      "environment": "[REF: NIOBRARA_CHALK] - High visibility azure water over white seafloor."
+    }
+  }
+]

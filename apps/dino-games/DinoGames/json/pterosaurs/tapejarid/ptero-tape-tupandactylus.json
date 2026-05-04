@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_TUPAN_001",
+  "species": "Tupandactylus imperator",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "CRATO_FORMATION",
+  "habitat_ref": "COASTAL_LOWLANDS",
+  "visual_logic": {
+    "color_palette": "Electric violet body; the crest is a sunset gradient of deep orange to magenta with black borders.",
+    "pattern_strategy": "Iridescent 'clay' shimmer on the crest; soft downy pycnofibers around the neck ruff.",
+    "eyes": "Pale blue eyes that contrast sharply with the warm crest colors.",
+    "environment": "Soft-focus Crato landscape; pale buff limestone and vibrant green ferns (Ruffordia)."
+  },
+  "pose": "Full display pose; standing on the ground with wings partially spread, head tilted back to maximize the visual impact of the towering sail."
+  }
+]

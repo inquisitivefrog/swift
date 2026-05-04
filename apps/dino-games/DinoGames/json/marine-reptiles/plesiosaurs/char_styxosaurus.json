@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_STYXO_019",
+    "species": "Styxosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "PIERRE_SHALE_SW",
+    "visual_logic": {
+      "color_palette": "Slate-blue with a high-contrast white 'racing stripe' from eye to tail-fin.",
+      "action": "Lifting its head out of the water; splashing water droplets rendered in clear clay-style resin.",
+      "environment": "Deep indigo water with a hazy glow on the horizon and distant silhouetted birds."
+    },
+    "pose": "The neck is arched high; water drips from the beak as it looks directly at the camera."
+  }
+]

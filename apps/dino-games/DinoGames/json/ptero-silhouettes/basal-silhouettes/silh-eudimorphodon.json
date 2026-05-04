@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_EUDIMORPHO_SILHOUETTE_001",
+  "species": "Eudimorphodon",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "ZORZINO_LIMESTONE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; crisp edges.",
+    "environment": "High-noon sun directly overhead.",
+    "facial_silhouette": "The 'bulge' in the jaw where the complex teeth reside is a subtle but key detail."
+  },
+  "pose": "A sharp, banking turn in flight; one wing pointed directly at the viewer to create a dynamic, jagged silhouette."
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_HAINO_SILHOUETTE_001",
+    "species": "Hainosaurus",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "CHALK_GROUP",
+    "habitat_ref": "OPEN_OCEAN_PELAGIC",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a titan-sized mosasaur with an extremely long tail and body.",
+      "environment": "Vibrant 'Silvery-White' surface highlights against deep blue.",
+      "backlight_strategy": "DUSK_SILHOUETTE; sun positioned to highlight the sheer 12+ meter length.",
+      "facial_silhouette": "Large, elongated skull with a slightly upturned snout."
+    },
+    "pose": "A slow, majestic lateral undulation that highlights the massive tail fluke and enormous front flippers.",
+    "negative_constraints": "No internal shading; must be 100% black."
+  }
+]

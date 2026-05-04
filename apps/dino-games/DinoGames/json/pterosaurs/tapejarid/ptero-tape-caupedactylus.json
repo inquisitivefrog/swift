@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_CAUPE_001",
+  "species": "Caupedactylus yebatara",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SANTANA_ROMUALDO",
+  "habitat_ref": "TROPICAL_WETLAND_LAGOONS",
+  "visual_logic": {
+    "color_palette": "Olive and moss green; crest is a deep mahogany brown.",
+    "pattern_strategy": "Horizontal 'tiger stripes' on the hind limbs; thicker, more leathery wing textures.",
+    "eyes": "Dark brown, focused eyes.",
+    "environment": "Edge of a muddy lagoon; Vinctifer fish jumping in the background pools."
+  },
+  "pose": "A low-slung walking gait; the head is held forward, showing the unique elongated, lower-profile crest."
+  }
+]

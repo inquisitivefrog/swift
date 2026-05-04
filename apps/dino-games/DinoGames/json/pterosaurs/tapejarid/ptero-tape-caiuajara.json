@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_CAIU_001",
+  "species": "Caiuajara dobruskii",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "GOIO_ERE_FORMATION",
+  "habitat_ref": "DESERT_DUNE_FIELDS",
+  "visual_logic": {
+    "color_palette": "Pale tan and cream to blend with sand; crest is a 'burnt sienna' with white lace-like patterns.",
+    "pattern_strategy": "Dotted patterns along the wing edges; dry, matte clay texture to match the arid environment.",
+    "eyes": "Golden-yellow eyes.",
+    "environment": "Orange sand dunes of a desert oasis; sharp ripple patterns in the sand and a clear, harsh blue sky."
+  },
+  "pose": "Crouched on a dune; several other Caiuajara are blurred in the background to hint at their colonial nature."
+  }
+]

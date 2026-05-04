@@ -1,0 +1,18 @@
+{
+  "id": "GAME_CARD_ENCHODUS_3D_025",
+  "species": "Enchodus petrosus",
+  "tech_ref": "SQUARE_ASPECT_RATIO",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "NAVESINK_FORMATION",
+  "habitat_ref": "PELAGIC_SHELF_SEA",
+  "lighting_ref": "DUSK_SILHOUETTE",
+  "visual_logic": {
+    "surface_detail": "Slender, needle-like body with 'Iridescent Violet' and 'Slate' tones; very smooth, small-scale texture.",
+    "anatomy_focus": "Emphasis on the 'Saber-Teeth'—two oversized fangs at the front of the jaw that overlap the lower lip.",
+    "environment": {
+      "water": "Deep olive-tinted 'Greensand' water with high particulate marine snow.",
+      "biota": "Distant silhouettes of giant mosasaurs, making the Enchodus look small but scrappy."
+    },
+    "pose": "Darting through a cloud of bubbles, its body straight as an arrow to emphasize speed and precision."
+  }
+}

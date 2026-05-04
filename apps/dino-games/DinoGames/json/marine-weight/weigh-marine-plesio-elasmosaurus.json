@@ -1,0 +1,16 @@
+[
+  {
+    "id": "asset_weight_profile_elasmosaurus_V1",
+    "species": "Elasmosaurus",
+    "class": "LARGE_REPTILE",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": {
+      "alignment": "BOTTOM_ALIGNED_TO_FRAME",
+      "color_palette": "Pearlescent Silver: A shimmering, light-grey body with iridescent violet highlights along the neck.",
+      "texture": "Slick, dolphin-like skin with high specularity (shiny).",
+      "environment_override": "[REF: NIOBRARA_CHALK] - Bright azure water. The silver body should almost glow against the blue."
+    },
+    "morphology_hook": "The 'Neck Hero.' The neck should take up 60% of the horizontal frame, looking thin and delicate compared to the 'Titan' torsos."
+  }
+]

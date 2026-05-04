@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_PTERAN_001",
+  "species": "Pteranodon longiceps",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "NIOBRARA_CHALK",
+  "habitat_ref": "PELAGIC_SHELF_SEA",
+  "visual_logic": {
+    "color_palette": "Albatross-white body with slate-grey wing tips; the head crest is a vibrant sunset yellow-to-red gradient.",
+    "pattern_strategy": "Subtle counter-shading; the beak has a polished, keratinous yellow texture.",
+    "eyes": "Sharp, focused black eyes with a white highlight.",
+    "environment": "Brilliant midday sun over the Western Interior Seaway; pure white chalk cliffs in the far distance."
+  },
+  "pose": "Banking sharply over a wave crest; the wings are fully extended, and the long crest is angled to act as a rudder."
+  }
+]

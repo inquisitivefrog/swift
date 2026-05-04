@@ -1,0 +1,16 @@
+[
+  {
+    "id": "GAME_CARD_DIMORPHO_SILHOUETTE_001",
+    "species": "Dimorphodon",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "BLUE_LIAS",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette; zero internal detail.",
+      "environment": "Cold, bright morning light filtering through sea mist (pale teal-grey).",
+      "backlight_strategy": "Sharp rim light on the tall curve of the skull and the tip of the tail.",
+      "facial_silhouette": "The distinct 'tall' profile of the skull (not long and thin) is the primary identifier."
+    },
+    "pose": "Side profile in a walking stance; the silhouette clearly separates the large head, the thick neck, and the straight, needle-like tail."
+  }
+]

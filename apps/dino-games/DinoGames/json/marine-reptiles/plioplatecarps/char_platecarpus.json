@@ -1,0 +1,19 @@
+{
+  "id": "GAME_CARD_PLATECARP_3D_044",
+  "species": "Platecarpus tympaniticus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "NIOBRARA_CHALK",
+  "habitat_ref": "EPICONTINENTAL_SEAWAY",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "visual_logic": {
+    "surface_detail": "Hydrodynamic skin with 'Azure Blue' dorsal tones and 'Creamy White' countershading. Features very fine, diamond-shaped scales that create a subtle shimmering texture under direct light.",
+    "anatomy_focus": "Hero focus on the 'hypocercal' tail fluke (the tail bends down into a powerful paddle) and the large, rounded flippers used for sharp steering.",
+    "facial_expression": "Intelligent and alert; soulful amber eyes with a focused predatory gaze.",
+    "environment": {
+      "water": "Crystal-clear turquoise water over a high-albedo 'Cream White' chalk floor.",
+      "biota": "Darting through a school of silvery 'Gillicus' fish."
+    },
+    "pose": "An aggressive, high-speed banking turn; the body is tilted 45 degrees to showcase the surface area of the flippers and the power of the tail fluke."
+  }
+}

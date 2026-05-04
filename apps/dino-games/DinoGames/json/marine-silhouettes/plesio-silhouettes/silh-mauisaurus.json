@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: CONWAY_FORMATION]",
+      "layer_3_action": {
+        "subject": "Mauisaurus",
+        "features": ["Extremely elongated neck silhouette", "Robust torso", "Large rear flippers"],
+        "action": "A silhouette showing Mauisaurus from a top-down perspective to emphasize the flipper span and the serpentine nature of the neck trailing behind the head. No text."
+      }
+    }
+  }
+]

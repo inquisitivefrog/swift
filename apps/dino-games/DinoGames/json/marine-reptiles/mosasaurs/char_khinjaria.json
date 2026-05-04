@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_001",
+    "species": "Khinjaria acuta",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”
+    "formation_ref": "OULED_ABDOUN_BASIN",
+    "visual_logic": {
+      "color_palette": "Dark slate-blue with a creamy-yellow underbelly and a subtle 'frill' of dark clay scales along the spine.",
+      "pattern_strategy": "High-contrast 'Phosphatic Gold' tiger-striping on a near-black hide.",
+      "facial_silhouette": "Nightmarish, shortened face with exceptionally high, forward-facing eyes and huge teeth."
+      "texture": "Small, overlapping diamond-shaped clay scales; glossy black eyes.",
+      "environment": "Vibrant blue water with massive white 'clay' splashes."
+    }
+    "pose": "Vertical descent toward the viewer; the 'demon-face' silhouette is emphasized by dramatic bottom-up lighting."
+  }
+]

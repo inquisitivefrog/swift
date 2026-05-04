@@ -1,0 +1,14 @@
+{
+  "id": "GAME_CARD_HATZEG_001",
+  "species": "Hatzegopteryx thambema",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "DENSU_CIULA_FORMATION",
+  "visual_logic": {
+    "color_palette": "Deep forest green and slate; the thick beak has a 'bone-white' tip.",
+    "skin_logic": "Coarser, darker pycnofibers; the neck looks incredibly muscular and powerful.",
+    "eyes": "Sharp, intense amber eyes.",
+    "environment": "Lush tropical island forest; dappled sunlight filtering through giant ferns."
+  },
+  "pose": "Standing firmly on a rocky outcrop; the pose is powerful and 'heroic', like a king overlooking his domain."
+}

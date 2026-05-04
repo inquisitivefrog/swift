@@ -1,0 +1,13 @@
+{
+  "id": "GAME_CARD_NORI_001",
+  "species": "Noripterus complicidens",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": {
+    "color_palette": "Muted teal and cream; the small head crest is a bright coral red.",
+    "pattern_strategy": "Speckled 'river-stone' patterns on the wings; soft, velvety pycnofibers around the shoulders.",
+    "eyes": "Bright, friendly green eyes.",
+    "environment": "Shallow riverbank with clear water and smooth pebbles; soft morning light."
+  },
+  "pose": "Standing on a river stone; wings are folded in a sturdy quadrupedal stance, looking alert and ready for discovery."
+}

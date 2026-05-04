@@ -1,0 +1,15 @@
+[{ 
+  "id": "GAME_CARD_MESO_3D_010_V2", 
+  "species": "Mesosaurus", 
+  "tech_ref": “DEFAULT_SQUARE", 
+  "style_id": "STYLE_ANIMATED_FEATURE_V3", 
+  "formation_ref": "LA_AMARGA", 
+  "habitat_ref": "WARM_FLUVIAL_PLAINS", 
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC", 
+  "visual_logic": { 
+    "surface_detail": "Glistening, semi-aquatic skin with deep terracotta and rusty orange patterns.",
+    "environment": "Sluggish stream with thick clusters of Charophytes and giant Equisetites (horsetails).",
+    "anatomy_focus": "Single, continuous serpentine spine; needle-teeth visible in a long, slender snout; limbs are small, flat aquatic paddles." 
+  }, 
+  "pose": "The slender body is stretched horizontally in a graceful 'S' shape across a Soft Terracotta mudbank, with the tip of the whip-like tail submerged in tea-colored water." 
+}]

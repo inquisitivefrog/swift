@@ -1,0 +1,18 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_SILHOUETTE_007",
+    "species": "Taniwhasaurus antarcticus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "CONWAY_FORMATION",
+    "habitat_ref": "EPICONTINENTAL_SEAWAY",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette emphasizing a mid-sized, highly aerodynamic mosasaurid frame. No internal highlights.",
+      "environment": "Deep, murky 'Silt Grey' water characteristic of the Conway Formation. The water is thick with suspended sediment and organic marine snow.",
+      "backlight_strategy": "A soft, diffused glow from above (filtered through heavy silt) creates a 'halo' effect around the silhouette rather than sharp rim lighting, making the guess slightly harder.",
+      "facial_silhouette": "The skull features a distinctive 'kink' or slight downward curve in the snout profile, differentiating it from the straight-rostrum Tylosaurus."
+    },
+    "pose": "A horizontal 'S-curve' swimming motion, captured from a 3/4 top-down angle to showcase the length of the body and the sweeping reach of the flippers.",
+    "negative_constraints": "Absolutely no eye-glint or skin texture. The silhouette must rely on the specific curvature of the spine and the unique skull-to-neck ratio."
+  }
+]

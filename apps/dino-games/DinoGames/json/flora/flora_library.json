@@ -1,9 +1,11 @@
 {
   "flora_library": {
     "ANACLETO_ADDITIONS": [""Liverworts", "Dense Mosses", "Broad-leafed Angiosperms", "Podocarp Conifers", "Early Araucaria"],
+    "CAMBRIDGE_GREENSAND": ["Thalassotaenia (Seagrass)"],
     "CANDELEROS_ADDITIONS": ["Paleopus", "Early flowering reeds"],
     "CEDAR_MOUNTAIN_ADDITIONS": ["Paleopus in damp cracks", "Shrubby angiosperms"],
     "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
+    "CRATO_ADDITIONS": ["Ruffordia (fern)", "Endressinia (early flower)"],
     "DAOHUGOU_BEDS_ADDITIONS": ["Evergreen conifers", "Alpine ferns"],
     "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
     "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
@@ -25,6 +27,7 @@
     "NAVESINK_ADDITIONS": ["Thalassotaenia (Ancestral Seagrass)", "Abundant Phytoplankton"],
     "NKPORO_SHALE_ADDITIONS": ["Submerged Mangrove-like roots", "Floating Water Ferns (Salviniales)", "Nypa-like palms"],
     "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
+    "SANTANA_ADDITIONS": ["Brachyphyllum (Conifer)", "Early Angiosperm lily-pads"],
     "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
     "TIAOJISHAN_ADDITIONS": ["Giant Horsetails", "Dense Conifer forest"],
     "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"]

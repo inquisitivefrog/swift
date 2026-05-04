@@ -1,0 +1,11 @@
+[
+  {
+    "id": "level_10_intro",
+    "app_image_config": {
+      "layer_1_style": "STYLE_ANIMATED_FEATURE_V3: high-poly 3D, cinematic CGI, Octane render, smooth clay textures.",
+      "layer_2_setting": "Setting: [REF: OPEN_OCEAN_PELAGIC], Endless deep cobalt water.",
+      "layer_3_action": "A gargantuan, whale-sized Shastasaurus dominates the screen.",
+      "aspect_ratio": "1:1"
+    }
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_NYCTO_001",
+  "species": "Nyctosaurus gracilis",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "NIOBRARA_CHALK",
+  "habitat_ref": "PELAGIC_SHELF_SEA",
+  "visual_logic": {
+    "color_palette": "Pale lavender and silver-grey; the giant antler-crest is a translucent, veined pinkish-tan.",
+    "pattern_strategy": "Speckled 'sea-foam' patterns on the wings; the crest looks like delicate, reinforced cartilage.",
+    "eyes": "Large, dark nocturnal eyes.",
+    "environment": "Dusk over the open ocean; deep purple sky reflecting off calm, dark water."
+  },
+  "pose": "Soaring effortlessly; the head is held steady so the massive vertical 'antler' crest can catch the wind."
+  }
+]

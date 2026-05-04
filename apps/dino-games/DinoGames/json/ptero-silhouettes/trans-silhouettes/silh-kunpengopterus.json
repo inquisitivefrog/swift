@@ -1,0 +1,18 @@
+[
+  {
+    "id": "GAME_CARD_KUNPENG_SILHOUETTE_001",
+    "species": "Kunpengopterus sinensis",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "TIAOJISHAN_FORMATION",
+    "habitat_ref": "FORESTED_VOLCANIC",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette with softened, high-fidelity edges; the long tail ends in a distinct, rounded leaf-shaped vane.",
+      "environment": "A soft, twilight forest glow with tiny 'firefly' light-motes floating in the air.",
+      "backlight_strategy": "Warm lavender rim-lighting that catches the soft fuzz (pycnofibers) along the back and the elegant curve of the head crest.",
+      "facial_silhouette": "The identifier is the 'Darwinopterus-style' elongated beak paired with a small, rounded crest that sits further back on the skull than its relatives."
+    },
+    "pose": "Side profile in a gentle soaring glide; the wings are slightly arched to create a peaceful, swan-like silhouette. The long tail is held in a graceful, soft curve rather than a stiff line.",
+    "negative_constraints": "No sharp, needle-like teeth; avoid jagged wing edges; no aggressive or 'monstrous' under-lighting."
+  }
+]

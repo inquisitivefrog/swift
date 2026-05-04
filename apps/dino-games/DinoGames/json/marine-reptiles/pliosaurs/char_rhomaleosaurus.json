@@ -1,0 +1,15 @@
+[
+  {
+    "id": "char_rhomaleosaurus_v4",
+    "species": "Rhomaleosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”
+    "formation_ref": "BLUE_LIAS",
+    "visual_identity": {
+      "technique": "Layered dry-brushing; highlights use 'Pyrite Gold' impasto to create a metallic, mineral-flecked skin texture.",
+      "lighting": "Atmospheric scattering; soft, diffused 'Limestone White' glow from above hitting the powerful neck muscles.",
+      "patterning": "High-contrast 'Charcoal' banding on the flippers, rendered with aggressive, quick palette-knife swipes."
+    },
+    "pose": "Mid-water column hover in an 'S-curve' banking turn, showcasing the intermediate neck length characteristic of Rhomaleosaurids."
+  }
+]

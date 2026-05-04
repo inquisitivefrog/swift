@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_NOTHO_SILHOUETTE_001",
+    "species": "Nothosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "MUSCHELKALK",
+    "habitat_ref": "COASTAL_LOWLANDS",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a long-necked, slender-bodied marine reptile with distinct, webbed limbs.",
+      "environment": "High-contrast 'Silvery-White' horizon light reflecting off a calm Triassic sea.",
+      "backlight_strategy": "DUSK_SILHOUETTE to emphasize the 'seal-like' neck-to-torso transition.",
+      "facial_silhouette": "An elongated head with a visible 'underbite' or jagged teeth-fringe profile in the silhouette."
+    },
+    "pose": "Resting on a jagged limestone rock in a 'sun-basking' pose, highlighting the long neck arched upward and the clear definition of the webbed feet.",
+    "negative_constraints": "No internal detail; the silhouette should clearly distinguish between the fleshy tail and the distinct limbs."
+  }
+]

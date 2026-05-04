@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_ANHAN_001",
+  "species": "Anhanguera blittersdorffi",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SANTANA_ROMUALDO",
+  "habitat_ref": "TROPICAL_WETLAND_LAGOONS",
+  "visual_logic": {
+    "color_palette": "Sea-foam green with dark teal mottling; jaw crests are a bright, warning coral-pink.",
+    "pattern_strategy": "Tactile 'pebbled' skin texture; teeth have a yellowed, ivory-bone finish.",
+    "eyes": "Intense, reptilian yellow eyes.",
+    "environment": "Tropical lagoon at sunrise; mist rising from the water and lush green ferns on the bank."
+  },
+  "pose": "Perched on a sea-stack; the head is tilted up to show the matching circular crests on the tip of the snout."
+  }
+]

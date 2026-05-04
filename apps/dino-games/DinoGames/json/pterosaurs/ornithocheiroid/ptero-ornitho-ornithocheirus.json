@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_ORNITHO_001",
+  "species": "Ornithocheirus simus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "CAMBRIDGE_GREENSAND",
+  "habitat_ref": "PELAGIC_SHELF_SEA",
+  "visual_logic": {
+    "color_palette": "Dull bronze and brown; the crest is a dark, leathery mahogany.",
+    "pattern_strategy": "Rugged, scarred skin texture; wings have a thick, 'heavy' appearance.",
+    "eyes": "Small, deep-set amber eyes.",
+    "environment": "Stormy English Channel; dark green water and grey, overcast skies."
+  },
+  "pose": "Flying low over white-capped waves; the massive wingspan is emphasized by the camera angle."
+  }
+]

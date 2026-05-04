@@ -1,0 +1,16 @@
+[
+  {
+    "id": "asset_weight_profile_brachauchenius_V1",
+    "species": "Brachauchenius",
+    "class": "LARGE_REPTILE",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": {
+      "alignment": "BOTTOM_ALIGNED_TO_FRAME",
+      "color_palette": "Abyssal Crimson: A deep burgundy-red dorsal side fading to a charcoal grey belly.",
+      "texture": "Rough, thick-skinned clay look. Visible 'battle scars' or scratches to show it's a veteran predator.",
+      "environment_override": "[REF: PIERRE_SHALE_SW] - Dim, moody lighting with high-contrast shadows."
+    },
+    "morphology_hook": "The 'Heavyweight Pliosaur' of the Large class. A thick, powerful neck base and a wide, flat skull."
+  }
+]

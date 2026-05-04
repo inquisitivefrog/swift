@@ -1,0 +1,13 @@
+{
+  "id": "GAME_CARD_DSUNGARI_001",
+  "species": "Dsungaripterus weii",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": {
+    "color_palette": "Deep sea-blue and sandy ochre; the beak is a vibrant 'parrot' orange.",
+    "jaw_logic": "The beak tips are smooth and rounded like a pair of pliers; the crushing teeth are hidden inside the jaw to maintain a friendly exterior silhouette.",
+    "eyes": "Large, intelligent amber eyes with a warm 'hero' highlight.",
+    "environment": "Lakeside mudflats with scattered prehistoric clams; warm, saturated midday sun."
+  },
+  "pose": "Tilted head-down, inspecting a colorful shell on the ground; the upward curve of the beak gives the impression of a curious smile."
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_THALA_020",
+    "species": "Thalassomedon",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "CARLILE_SHALE",
+    "visual_logic": {
+      "color_palette": "Silver-grey skin with buff-colored 'orca-style' patches on the flanks.",
+      "action": "Inspecting an inoceramid shell on the seafloor.",
+      "environment": "Chalky-white water with high visibility and sharp, direct midday god-rays."
+    },
+    "pose": "Neck bent sharply downward; tail tilted upward to maintain buoyancy."
+  }
+]

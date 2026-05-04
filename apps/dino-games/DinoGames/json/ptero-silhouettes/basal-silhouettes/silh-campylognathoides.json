@@ -1,0 +1,15 @@
+[
+  {
+    "id": "GAME_CARD_CAMPYLO_SILHOUETTE_001",
+    "species": "Campylognathoides",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "POSIDONIA_SHALE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette; focus on the wing proportions.",
+      "environment": "Lightning strike in the background providing a momentary strobe-light effect.",
+      "facial_silhouette": "The 'snub' nose and upwardly curved jawline must be clear."
+    },
+    "pose": "Symmetrical 'M' wing pose in flight; emphasizes the extreme wingspan-to-body ratio."
+  }
+]

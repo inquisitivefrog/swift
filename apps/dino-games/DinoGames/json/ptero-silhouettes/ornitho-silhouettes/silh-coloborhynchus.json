@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_COLOBO_SILHOUETTE_001",
+  "species": "Coloborhynchus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "WESSEX",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette.",
+    "environment": "Foggy morning backlight.",
+    "facial_silhouette": "The 'squared-off' or flat front of the beak is the unique identifier."
+  },
+  "pose": "Three-quarter view standing; the silhouette highlights the blunt, non-pointed tip of the beak."
+  }
+]

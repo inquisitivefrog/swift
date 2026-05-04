@@ -1,0 +1,15 @@
+[
+  {
+    "id": "asset_weight_profile_mosasaurus",
+    "species": "Mosasaurus",
+    "class": "TITAN",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": {
+      "alignment": "BOTTOM_ALIGNED_TO_FRAME",
+      "pose": "Horizontal profile with the heavy tail fluke slightly raised, while the massive, muscular underbelly rests flat against the bottom edge.",
+      "mass_emphasis": "Emphasis on the thick neck and heavy jaw musculature. Lighting highlights the 'Orca-style' high-contrast markings.",
+      "environment": "[REF: EPICONTINENTAL_SEAWAY] - Azure water with sharp god-rays."
+    }
+  }
+]

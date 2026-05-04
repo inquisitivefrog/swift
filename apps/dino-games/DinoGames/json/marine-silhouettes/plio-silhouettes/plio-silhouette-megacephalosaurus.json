@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_MEGACEPH_SILHOUETTE_001",
+    "species": "Megacephalosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "CARLILE_SHALE",
+    "habitat_ref": "EPICONTINENTAL_SEAWAY",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette emphasizing a disproportionately large head (Big-headed Lizard).",
+      "environment": "Muted copper and charcoal water tones.",
+      "backlight_strategy": "Side-lighting to show the deep, powerful jawline in silhouette.",
+      "facial_silhouette": "Extremely robust skull with a very thick lower jaw profile."
+    },
+    "pose": "Jaws slightly agape, emphasizing the massive volume of the head relative to the short, thick neck.",
+    "negative_constraints": "Sharp edges only on the jawline."
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_CAIU_SILHOUETTE_001",
+  "species": "Caiuajara",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "GOIO_ERE_FORMATION",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette.",
+    "environment": "Harsh desert noon-day sun directly overhead.",
+    "facial_silhouette": "The crest shape, which looks like an equilateral triangle or a shark fin sitting on the snout."
+  },
+  "pose": "Taking off; wings in a 'power-stroke' downward position, emphasizing the wide triangular crest silhouette."
+  }
+]

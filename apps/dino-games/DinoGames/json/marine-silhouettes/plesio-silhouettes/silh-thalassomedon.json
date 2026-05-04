@@ -1,0 +1,14 @@
+[
+  {
+    "app_image_config": {
+      "layer_1_style": "[REF: STYLE_SILHOUETTE]",
+      "tech_ref": "DEFAULT_SQUARE",
+      "layer_2_setting": "[REF: CARLILE_SHALE]",
+      "layer_3_action": {
+        "subject": "Thalassomedon",
+        "features": ["Massive flipper silhouettes", "Broad torso", "Neck length equal to body length"],
+        "action": "A lateral silhouette of Thalassomedon cruising. The pose is symmetrical, showing both front and rear flippers at the peak of a downward stroke."
+      }
+    }
+  }
+]

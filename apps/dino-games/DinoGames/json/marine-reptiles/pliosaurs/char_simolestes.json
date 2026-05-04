@@ -1,0 +1,15 @@
+[
+  {
+    "id": "char_simolestes_v3",
+    "species": "Simolestes",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”,
+    "tech_ref": "DEFAULT_SQUARE",
+    "formation_ref": "OXFORD_CLAY",
+    "visual_identity": {
+      "pattern_strategy": "High-contrast zebra-like banding on the flippers only; solid dark charcoal body.",
+      "integument": "Thick, armor-like skin on the dorsal side.",
+      "facial_silhouette": "Comically blunt, short snout; looks like a 'Pitbull' of the sea."
+    },
+    "pose": "Aggressive lunge toward the viewer, mouth wide to show the unique, blunt crushing teeth."
+  }
+]

@@ -1,0 +1,18 @@
+[
+{
+    "id": "GAME_CARD_MESO_SILHOUETTE_010",
+    "species": "Mesosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "IRATI_FORMATION",
+    "habitat_ref": "COASTAL_LOWLANDS",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a basal parareptile. Long snout, slender body, and deep, powerful tail.",
+      "environment": "Dark, stagnant 'Brackish Water' with high organic content.",
+      "backlight_strategy": "DUSK_SILHOUETTE; sun on the horizon creates a high-contrast orange background.",
+      "facial_silhouette": "Elongated rostrum with hints of the needle-like teeth visible as a serrated edge on the silhouette."
+    },
+    "pose": "Mid-water strike pose; neck slightly arched and tail beginning a powerful lateral sweep.",
+    "negative_constraints": "Avoid blurring the 'tooth-comb' silhouette; the snout edges must remain crisp."
+  }
+]

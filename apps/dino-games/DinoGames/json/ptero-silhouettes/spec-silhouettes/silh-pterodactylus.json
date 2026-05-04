@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_PTERO_SILHOUETTE_001",
+  "species": "Pterodactylus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; exceptionally clean and simple outline.",
+    "facial_silhouette": "A long, perfectly straight beak and a small, rounded 'bump' of a crest on the back of the skull.",
+    "backlight_strategy": "Warm amber backlight to emphasize the small, delicate proportions."
+  },
+  "pose": "Profile flight pose; wings in a mid-flap position to show the 'classic' pterosaur shape that players will find most familiar."
+}

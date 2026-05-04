@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_THANATO_SILHOUETTE_001",
+  "species": "Thanatosdrakon",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette.",
+    "facial_silhouette": "A very large, straight head with a subtle, low crest running the length of the snout.",
+    "backlight_strategy": "Deep crimson 'blood-moon' backlight."
+  },
+  "pose": "Full wingspan spread while standing; the silhouette creates a massive, imposing 'T' shape that shows off its incredible size."
+}

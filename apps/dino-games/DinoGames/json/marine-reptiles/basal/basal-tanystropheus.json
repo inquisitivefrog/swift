@@ -1,0 +1,16 @@
+{
+    "id": "GAME_CARD_TANY_3D_013",
+    "species": "Tanystropheus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "SOLNHOFEN",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Leathery, 'Ivory' and 'Soft Beige' skin with subtle specular highlights on the neck vertebrae.",
+      "environment": "White limestone 'Plattenkalk' floor with high-key ground reflection.",
+      "anatomy_focus": "The impossibly long, stiff neck is the hero element, rendered with clean, appealing curves."
+    },
+    "pose": "Stationary on a white sand bar, its massive neck reaching out over deep water like a fishing crane."
+  }
+]

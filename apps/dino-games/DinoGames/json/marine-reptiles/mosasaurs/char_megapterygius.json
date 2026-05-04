@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_001",
+    "species": "Megapterygius wakayamaensis",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3”
+    "formation_ref": "MORENO_FORMATION",
+    "visual_logic": {
+      "color_palette": "Dark slate-blue with a creamy-yellow underbelly and a subtle 'frill' of dark clay scales along the spine.",
+      "pattern_strategy": "Solid 'Steel Grey' with 'cobalt' iridescent patches on the massive flippers.",
+      "facial_silhouette": "Wing-like oversized flippers dominate the silhouette, dwarfing the tapered head."
+      "texture": "Small, overlapping diamond-shaped clay scales; glossy black eyes.",
+      "environment": "Vibrant blue water with massive white 'clay' splashes."
+    }
+    "pose": "A banking turn reminiscent of a humpback whale; the massive paddles are rendered with thick, directional impasto."
+  }
+]

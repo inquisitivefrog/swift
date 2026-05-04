@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_NEMICO_SILHOUETTE_001",
+  "species": "Nemicolopterus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; exceptionally small and compact.",
+    "facial_silhouette": "A short, pointed, toothless beak and a rounded, 'sweet' cranium shape.",
+    "backlight_strategy": "Bright morning sun filtered through leaves (dappled light)."
+  },
+  "pose": "Perched on a single thin twig; the silhouette emphasizes the tiny scale and the specialized 'perching' feet."
+}

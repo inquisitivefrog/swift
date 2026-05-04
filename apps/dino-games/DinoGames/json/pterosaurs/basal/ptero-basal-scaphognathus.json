@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_SCAPHO_001",
+  "species": "Scaphognathus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SOLNHOFEN",
+  "habitat_ref": "TROPICAL_COASTAL_LAGOONS",
+  "visual_logic": {
+    "color_palette": "Sandy yellow with dark brown 'tiger stripes' across the back and wings.",
+    "pattern_strategy": "Rough, matte clay textures; the 'tub' snout has visible keratinous ridges.",
+    "eyes": "Intelligent green eyes.",
+    "environment": "Dry limestone inland plateau with sparse scrub vegetation."
+  },
+  "pose": "Standing in a high-walking quadrupedal gait; the blunt snout is tilted up as if sniffing the air."
+  }
+]

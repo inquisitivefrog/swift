@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_KYHYTY_SILHOUETTE_001",
+    "species": "Kyhytysuka",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "PAJA",
+    "habitat_ref": "EPICONTINENTAL_SEAWAY",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a macropredatory ichthyosaur with 'swordfish-like' proportions.",
+      "environment": "Deep Sea Blue and Rusty Orange horizon.",
+      "backlight_strategy": "Low-angle light to emphasize the long, serrated-looking jawline.",
+      "facial_silhouette": "Extremely long, straight snout. Silhouette should show a slightly 'notched' jawline indicating large teeth."
+    },
+    "pose": "Lunging forward with the snout as the focal point, emphasizing the 'Kyhytysuka' (the one that cuts with something sharp) morphology.",
+    "negative_constraints": "No internal texture; no transparency."
+  }
+]

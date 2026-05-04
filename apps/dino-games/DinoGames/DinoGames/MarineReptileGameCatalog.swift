@@ -2,12 +2,12 @@
 //  MarineReptileGameCatalog.swift
 //  DinoGames
 //
-//  Per-lineage marine game lists with the same level ladder as land dinosaurs.
+//  Marine reptile games (Name That Marine Reptile!, Weigh the Marine Reptile!, …) with the same level ladder as land dinosaurs.
 //
 
 import Foundation
 
-enum MosasaurGameCatalog {
+enum MarineReptileGameCatalog {
     static var games: [GameType] {
         GameLevel.allCases.flatMap { games(level: $0) }
     }
@@ -15,37 +15,13 @@ enum MosasaurGameCatalog {
     static func games(level: GameLevel) -> [GameType] {
         switch level {
         case .level1:
-            return [.guess(GuessGameConfigs.nameThatMosasaur)]
-        default:
-            return []
-        }
-    }
-}
-
-enum PlesiosaurGameCatalog {
-    static var games: [GameType] {
-        GameLevel.allCases.flatMap { games(level: $0) }
-    }
-
-    static func games(level: GameLevel) -> [GameType] {
-        switch level {
-        case .level1:
-            return [.guess(GuessGameConfigs.nameThatPlesiosaur)]
-        default:
-            return []
-        }
-    }
-}
-
-enum IchthyosaurGameCatalog {
-    static var games: [GameType] {
-        GameLevel.allCases.flatMap { games(level: $0) }
-    }
-
-    static func games(level: GameLevel) -> [GameType] {
-        switch level {
-        case .level1:
-            return [.guess(GuessGameConfigs.nameThatIchthyosaur)]
+            return [
+                .weigh(WeighGameConfigs.weighMarineReptile),
+            ]
+        case .level2:
+            return [
+                .guess(GuessGameConfigs.nameThatMarineReptile),
+            ]
         default:
             return []
         }

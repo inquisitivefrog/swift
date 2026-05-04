@@ -1,0 +1,12 @@
+{
+  "id": "GAME_CARD_CARNO_SILHOUETTE_014",
+  "species": "Carnotaurus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette; emphasize the snub-nosed face and horns.",
+    "facial_silhouette": "Short, deep skull with two distinct conical horns above the eyes.",
+    "backlight_strategy": "Vibrant 'sunset-crimson' backlight."
+  },
+  "pose": "Mid-stride sprint; silhouette emphasizes the bull-like head and vestigial, tiny arms."
+}

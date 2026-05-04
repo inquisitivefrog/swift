@@ -1,0 +1,16 @@
+[
+  {
+    "id": "asset_weight_profile_hainosaurus_V1",
+    "species": "Hainosaurus",
+    "class": "TITAN",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": {
+      "alignment": "BOTTOM_ALIGNED_TO_FRAME",
+      "color_palette": "Bioluminescent Hunter: Midnight black skin with rows of glowing cyan 'photophores' (spots) along the lateral line.",
+      "texture": "Sleek and oily appearance with very fine, tight scales.",
+      "environment_override": "[REF: EPICONTINENTAL_SEAWAY] - Night-time deep water lighting (dark blues/purples) to make the glow-spots pop."
+    },
+    "morphology_hook": "The 'Abyssal Mosasaur.' Longer and more eel-like than the standard Mosasaurus, but with a massive, reinforced snout."
+  }
+]

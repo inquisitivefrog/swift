@@ -1,0 +1,18 @@
+{
+  "id": "GAME_CARD_NOTHO_3D_019",
+  "species": "Nothosaurus mirabilis",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "SOLNHOFEN",
+  "habitat_ref": "COASTAL_LOWLANDS",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "visual_logic": {
+    "surface_detail": "Smooth, seal-like skin with a dark 'Navy Blue' dorsal pattern and dappled 'Silver-Grey' spots for light-refractive camouflage.",
+    "anatomy_focus": "Emphasis on the long, slender neck and the 'interlocking needle-teeth' that protrude even when the mouth is closed.",
+    "environment": {
+      "water": "Warm, shallow coastal water with 'Ivory' limestone outcrops breaking the surface.",
+      "biota": "Schools of small prehistoric fish fleeing in the wake of its movement."
+    },
+    "pose": "Basking on a sun-drenched rock ledge, one webbed foot dipping into the water, head alert and scanning the shoreline."
+  }
+}

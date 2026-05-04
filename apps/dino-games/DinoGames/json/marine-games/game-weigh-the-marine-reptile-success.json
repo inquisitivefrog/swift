@@ -1,0 +1,38 @@
+{
+  "id": "card_marine_weight_02",
+  "title": "Weigh the Marine Reptile - Victory",
+  "tech_ref": “DEFAULT_SQUARE",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "habitat_ref": "EPICONTINENTAL_SEAWAY",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "character_manifest": {
+    "referee": {
+      "character_id": "dino_bones_paleontologist_3",
+      "outfit": "Full black and grey neoprene wet suit, twin silver air tanks, yellow flippers, and a black scuba mask.",
+      "pose": "Floating vertically in front of the center pivot."
+    },
+    "left_subject": {
+      "species": "Mosasaurus",
+      "weight_kg": 20000,
+      "pose": "Massive lateral profile occupying the left stone slab."
+    },
+    "right_subject": {
+      "species": "Prognathodon",
+      "weight_kg": 7000,
+      "pose": "Full lateral profile resting on the right stone slab."
+    }
+  },
+  "ui_elements": {
+    "header_text": {
+      "content": "Weigh the Marine Reptile",
+      "style": "Bright 3D mixed-case red letters",
+      "position": "Top center"
+    },
+    "footer_text": {
+      "content": "Player Wins!",
+      "style": "Bright 3D mixed-case red letters",
+      "position": "Bottom center"
+    }
+  },
+  "tool_ref": "tool_buoyancy_scale_01"
+}

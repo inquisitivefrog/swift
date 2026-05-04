@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_KARIRI_SILHOUETTE_001",
+  "species": "Kariridraco",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "SANTANA_ROMUALDO",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette.",
+    "environment": "Distant tropical storm clouds with high-contrast lightning flash providing the backlight.",
+    "facial_silhouette": "The tall, almost 'comb-like' vertical crest situated far forward on the snout is the key clue."
+  },
+  "pose": "Side profile wading; emphasizes the long legs and the unique vertical placement of the crest compared to the backward-sweeping Tupuxuara."
+  }
+]

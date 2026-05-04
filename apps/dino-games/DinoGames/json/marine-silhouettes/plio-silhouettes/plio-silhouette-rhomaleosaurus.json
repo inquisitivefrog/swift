@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_RHOMALEO_SILHOUETTE_001",
+    "species": "Rhomaleosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "WHITBY_MUDSTONE",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of a sturdy, mid-sized pliosaur with a distinct neck-to-shoulder curve.",
+      "environment": "Cold, grey-blue water with sharp surface reflections.",
+      "backlight_strategy": "DUSK_SILHOUETTE to emphasize the 'strong' (Rhomaleo) neck and large head.",
+      "facial_silhouette": "Broad, triangular head that is shorter and blunter than *Peloneustes*."
+    },
+    "pose": "Classic side-profile swim, highlighting the balanced proportions between the head, neck, and tail.",
+    "negative_constraints": "Sharp edges only."
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "GAME_CARD_ARCHELON_SILHOUETTE_001",
+    "species": "Archelon",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "style_id": "STYLE_SILHOUETTE",
+    "formation_ref": "PIERRE_SHALE_FW",
+    "habitat_ref": "EPICONTINENTAL_SEAWAY",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette of the largest sea turtle ever documented, reaching over 4 meters in width.",
+      "environment": "High-contrast 'Muted Blue' and 'Iron-Rust' sunset sky.",
+      "backlight_strategy": "DUSK_SILHOUETTE; intense backlighting to emphasize the 'star-shaped' skeletal frame of the leathery shell.",
+      "facial_silhouette": "A large, distinct bird-like hooked beak and a relatively short, thick neck."
+    },
+    "pose": "Top-down view with the massive, paddle-like front flippers fully extended to maximize the width of the silhouette and highlight the pointed tip of the tail.",
+    "negative_constraints": "No internal shell detail; the silhouette must show the slight 'notches' along the edge of the carapace where the ribs meet the leather."
+  }
+]

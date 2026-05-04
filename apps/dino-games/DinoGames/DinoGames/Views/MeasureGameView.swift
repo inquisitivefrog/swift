@@ -40,13 +40,13 @@ struct MeasureGameConfig {
 
 // MARK: - Dinosaur height (for measure comparison; same IDs as Weigh game)
 
-/// Estimated body length in meters per dinosaur id (1–54). Used to compare heights and scale images.
+/// Standing / at-the-hip height (m) per id (1–54). Keep in sync with `whoIsTallerHeightMetersById` in WhoIsTallerGameView.
 private let dinosaurEstimatedHeightMetersById: [Int: Double] = [
-    1: 12,  2: 9,   3: 9,   4: 0.6,  5: 12,  6: 15,  7: 22,  8: 8,
+    1: 12,  2: 9,   3: 9,   4: 0.55,  5: 12,  6: 15,  7: 22,  8: 8,
     9: 9,   10: 8,  11: 9,  12: 1.5, 13: 9,  14: 18, 15: 2,  16: 5,
-    17: 4,  18: 6,  19: 0.2, 20: 0.2, 21: 26, 22: 6,  23: 20, 24: 5,
-    25: 7,  26: 0.5, 27: 3,  28: 18, 29: 1,  30: 0.2, 31: 16, 32: 6,
-    33: 0.4, 34: 0.2, 35: 8,  36: 4,  37: 0.2, 38: 0.6, 39: 6,  40: 18,
+    17: 4,  18: 6,  19: 0.25, 20: 0.22, 21: 26, 22: 6,  23: 20, 24: 5,
+    25: 7,  26: 0.35, 27: 1.75,  28: 18, 29: 1,  30: 0.22, 31: 16, 32: 6,
+    33: 0.32, 34: 0.22, 35: 8,  36: 4,  37: 0.25, 38: 0.6, 39: 6,  40: 18,
     41: 7,  42: 6,  43: 1.2, 44: 20, 45: 6,  46: 7,  47: 9,  48: 7,
     49: 1.2, 50: 2,  51: 7,  52: 5,  53: 6,  54: 7,
 ]

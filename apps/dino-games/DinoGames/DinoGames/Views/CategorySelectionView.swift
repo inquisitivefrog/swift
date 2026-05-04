@@ -8,90 +8,112 @@
 import SwiftUI
 import UIKit
 
-enum GameCategory: String, CaseIterable, Identifiable {
+/// Leaf category used by `GameCatalog` and game views (land / air / marine reptiles).
+enum GameCategory: String, CaseIterable, Identifiable, Hashable {
     case land
     case air
-    case mosasaurs
-    case plesiosaurs
-    case ichthyosaurs
-    
+    case marineReptiles
+
     var id: String { rawValue }
-    
+
     var title: String {
         switch self {
         case .land: return "Dinosaurs"
         case .air: return "Pterosaurs"
-        case .mosasaurs: return "Mosasaurs"
-        case .plesiosaurs: return "Plesiosaurs"
-        case .ichthyosaurs: return "Ichthyosaurs"
+        case .marineReptiles: return "Marine Reptiles"
         }
     }
-    
+
     /// Expected asset name (add these images to `Assets.xcassets` when ready).
     var imageAssetName: String {
         switch self {
         case .land: return "category-land"
         case .air: return "category-air"
-        case .mosasaurs: return "category-mosasaurs"
-        case .plesiosaurs: return "category-plesiosaurs"
-        case .ichthyosaurs: return "category-ichthyosaurs"
+        case .marineReptiles: return "category-sea"
         }
     }
-    
+
     var fallbackSystemImageName: String {
         switch self {
         case .land: return "leaf.fill"
         case .air: return "wind"
-        case .mosasaurs: return "lizard.fill"
-        case .plesiosaurs: return "tortoise.fill"
-        case .ichthyosaurs: return "fish.fill"
+        case .marineReptiles: return "water.waves"
         }
     }
 }
 
-struct CategorySelectionView: View {
-    @State private var selectedCategory: GameCategory?
-    @State private var navigateToGames = false
-    @State private var showCredits = false
-    @State private var speechManager = SpeechManager()
-    /// Each category image is disabled until its cover message has played.
-    @State private var enabledLand = false
-    @State private var enabledAir = false
-    @State private var enabledMosasaurs = false
-    @State private var enabledPlesiosaurs = false
-    @State private var enabledIchthyosaurs = false
-    /// True only after the fourth clip (marine reptiles) has finished; prevents tapping during that clip and overlapping audio.
-    @State private var coverSequenceComplete = false
-    @State private var hasStartedCoverSequence = false
-    
-    private func isEnabled(_ category: GameCategory) -> Bool {
-        switch category {
-        case .land: return enabledLand
-        case .air: return enabledAir
-        case .mosasaurs: return enabledMosasaurs
-        case .plesiosaurs: return enabledPlesiosaurs
-        case .ichthyosaurs: return enabledIchthyosaurs
+/// Top-level choice on the splash screen (three cards: Dinosaurs, Pterosaurs, Sea).
+private enum RootGameType: String, CaseIterable, Identifiable {
+    case dinosaurs
+    case pterosaurs
+    case sea
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .dinosaurs: return "Dinosaurs"
+        case .pterosaurs: return "Pterosaurs"
+        case .sea: return "Sea"
         }
     }
-    
+
+    var imageAssetName: String {
+        switch self {
+        case .dinosaurs: return "category-land"
+        case .pterosaurs: return "category-air"
+        case .sea: return "category-sea"
+        }
+    }
+
+    var fallbackSystemImageName: String {
+        switch self {
+        case .dinosaurs: return "leaf.fill"
+        case .pterosaurs: return "wind"
+        case .sea: return "water.waves"
+        }
+    }
+}
+
+private enum CategoryNavRoute: Hashable {
+    case gameLevels(GameCategory)
+}
+
+struct CategorySelectionView: View {
+    @State private var navigationPath: [CategoryNavRoute] = []
+    @State private var selectedRoot: RootGameType?
+    @State private var speechManager = SpeechManager()
+    @State private var enabledDinosaurs = false
+    @State private var enabledPterosaurs = false
+    @State private var enabledSea = false
+    @State private var coverSequenceComplete = false
+    @State private var hasStartedCoverSequence = false
+
+    private func isEnabled(_ root: RootGameType) -> Bool {
+        switch root {
+        case .dinosaurs: return enabledDinosaurs
+        case .pterosaurs: return enabledPterosaurs
+        case .sea: return enabledSea
+        }
+    }
+
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navigationPath) {
             VStack(spacing: 0) {
-                // Title fixed at top so it isn't pushed off by larger cards
                 Text("Choose A Game Type")
                     .font(.title2)
                     .fontWeight(.semibold)
                     .padding(.top, 16)
                     .padding(.bottom, 8)
-                
+
                 ScrollView(.vertical, showsIndicators: true) {
                     VStack(spacing: 12) {
-                        ForEach(GameCategory.allCases) { category in
-                            CategoryCard(
-                                category: category,
-                                isSelected: selectedCategory == category,
-                                isDisabled: !isEnabled(category),
-                                onTap: { handleTap(category) }
+                        ForEach(RootGameType.allCases) { root in
+                            RootCategoryCard(
+                                root: root,
+                                isSelected: selectedRoot == root,
+                                isDisabled: !isEnabled(root),
+                                onTap: { handleRootTap(root) }
                             )
                         }
                     }
@@ -101,14 +123,6 @@ struct CategorySelectionView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button("Credits") { showCredits = true }
-                }
-            }
-            .sheet(isPresented: $showCredits) {
-                CreditsView()
-            }
             .onAppear {
                 if !hasStartedCoverSequence {
                     hasStartedCoverSequence = true
@@ -118,15 +132,17 @@ struct CategorySelectionView: View {
             .onDisappear {
                 speechManager.stopCurrentAudio()
             }
-            .navigationDestination(isPresented: $navigateToGames) {
-                GameSelectionView(category: selectedCategory ?? .land, navigateToCategories: $navigateToGames)
-            }
-            // Ignore taps until all four cover clips have finished (avoids overlapping audio when user taps right after sea is enabled)
             .allowsHitTesting(coverSequenceComplete)
+            .navigationDestination(for: CategoryNavRoute.self) { route in
+                switch route {
+                case .gameLevels(let category):
+                    GameSelectionView(category: category)
+                }
+            }
         }
     }
-    
-    /// Four-step cover: welcome → enable land + dinosaurs → enable air + pterosaurs → enable sea + marine. Chain with short delay to avoid clicks.
+
+    /// Welcome → Dinosaurs → Pterosaurs → Sea (marine), then allow taps.
     private func startCoverSequence() {
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
@@ -134,71 +150,77 @@ struct CategorySelectionView: View {
         }
         speechManager.speak("cover-choose-a-game-type")
     }
-    
+
     private func coverWelcomeDone() {
-        enabledLand = true
+        enabledDinosaurs = true
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
             self.coverLandDone()
         }
         speechManager.speak("cover-dinosaurs-on-land", chainDelay: true)
     }
-    
+
     private func coverLandDone() {
-        enabledAir = true
+        enabledPterosaurs = true
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
             self.coverAirDone()
         }
         speechManager.speak("cover-pterosaurs-in-the-sky", chainDelay: true)
     }
-    
+
     private func coverAirDone() {
-        enabledMosasaurs = true
-        enabledPlesiosaurs = true
-        enabledIchthyosaurs = true
+        enabledSea = true
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
             self.coverSequenceComplete = true
         }
         speechManager.speak("cover-and-marine-reptiles-in-the-sea", chainDelay: true)
     }
-    
-    private func handleTap(_ category: GameCategory) {
-        selectedCategory = category
-        speechManager.speak(category.title)
+
+    private func handleRootTap(_ root: RootGameType) {
+        selectedRoot = root
+        speechManager.speak(root.title)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            navigateToGames = true
+            switch root {
+            case .dinosaurs:
+                navigationPath.append(.gameLevels(.land))
+            case .pterosaurs:
+                navigationPath.append(.gameLevels(.air))
+            case .sea:
+                navigationPath.append(.gameLevels(.marineReptiles))
+            }
         }
     }
 }
 
-private struct CategoryCard: View {
-    let category: GameCategory
+// MARK: - Root splash cards (Dinosaurs / Pterosaurs / Sea)
+
+private struct RootCategoryCard: View {
+    let root: RootGameType
     let isSelected: Bool
     let isDisabled: Bool
     let onTap: () -> Void
-    
+
     var body: some View {
         Button(action: onTap) {
             VStack(spacing: 12) {
-                if UIImage(named: category.imageAssetName) != nil {
-                    Image(category.imageAssetName)
+                if UIImage(named: root.imageAssetName) != nil {
+                    Image(root.imageAssetName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(minHeight: 160, maxHeight: 200)
                         .padding(.top, 6)
                 } else {
-                    Image(systemName: category.fallbackSystemImageName)
+                    Image(systemName: root.fallbackSystemImageName)
                         .font(.system(size: 56, weight: .semibold))
                         .foregroundColor(.accentColor)
                         .frame(height: 160)
                         .padding(.top, 6)
                 }
-                
-                // Subtitle appears when tapped/selected (for accessibility + parents).
+
                 if isSelected {
-                    Text(category.title)
+                    Text(root.title)
                         .font(.headline)
                         .foregroundColor(.primary)
                         .transition(.opacity.combined(with: .move(edge: .bottom)))
@@ -225,4 +247,3 @@ private struct CategoryCard: View {
 #Preview {
     CategorySelectionView()
 }
-

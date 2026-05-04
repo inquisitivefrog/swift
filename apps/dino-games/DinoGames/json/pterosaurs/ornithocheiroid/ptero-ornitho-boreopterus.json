@@ -1,0 +1,17 @@
+[
+  {
+  "id": "GAME_CARD_BOREO_001",
+  "species": "Boreopterus cuiae",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_ANIMATED_FEATURE_V3",
+  "formation_ref": "YIXIAN_FORMATION",
+  "habitat_ref": "FORESTED_VOLCANIC",
+  "visual_logic": {
+    "color_palette": "Deep navy blue and silver; the beak has a metallic, steel-like sheen.",
+    "pattern_strategy": "Fine, dense pycnofibers; the teeth are so numerous they look like a comb.",
+    "eyes": "Piercing silver eyes.",
+    "environment": "Lake-side forest with a dusting of snow/ash; cold, blue-tinted lighting."
+  },
+  "pose": "Dipping the long beak into a lake; the focus is on the incredible density of the needle-teeth."
+  }
+]

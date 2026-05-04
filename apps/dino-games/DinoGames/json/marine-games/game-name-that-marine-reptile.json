@@ -1,0 +1,32 @@
+{
+  "id": "GAME_START_MOSA_001_SILHOUETTE",
+  "title": "Start Game: Marine Reptile Guessing Level",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "style_id": "STYLE_CLAY_MASTER",
+  "formation_ref": "PIERRE_SHALE",
+  "habitat_ref": "PELAGIC_SHELF_SEA",
+  "app_image_config": {
+    "layer_1_style": "[REF: STYLE_CLAY_MASTER]",
+    "layer_2_setting": "[REF: PIERRE_SHALE]",
+    "layer_3_action": {
+      "subject": "A mysterious gathering of Marine Reptile silhouettes",
+      "features": [
+        "A massive Mosasaurus hoffmannii in the center foreground, rendered as a solid, dark teal-to-black silhouette with sharp, recognizable outlines of its fins and snout.",
+        "A smaller, agile Clidastes silhouette darting in the upper right, its sleek profile contrasting against the light rays.",
+        "A Globidens silhouette near the bottom left, identifiable by its more robust, blunt head shape, positioned near high-contrast ammonites.",
+        "All characters are completely backlit, hiding colors and facial features to create a 'Who's that Pokemon?' style mystery."
+      ],
+      "action": "The silhouettes are arranged in a dynamic formation, swimming toward the viewer, backlit by intense surface light.",
+      "text_overlay": {
+        "content": "Name that Marine Reptile",
+        "style": "Bright red, 3D extruded clay-style lettering, mixed case, playful bold sans-serif font.",
+        "placement": "Center, slightly arched over the main central silhouette."
+      }
+    }
+  },
+  "visual_logic": {
+    "water": "Deep slate-blue water with high-contrast, shimmering 'god-rays' coming from directly behind the central Mosasaur to emphasize its silhouette.",
+    "atmosphere": "Abundant silver bubbles and floating marine snow to catch the light, framing the dark shapes of the predators."
+  }
+}

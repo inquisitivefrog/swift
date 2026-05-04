@@ -1,0 +1,15 @@
+[
+  {
+  "id": "GAME_CARD_SORDES_SILHOUETTE_001",
+  "species": "Sordes",
+  "tech_ref": "DEFAULT_SQUARE",
+  "style_id": "STYLE_SILHOUETTE",
+  "formation_ref": "KARATAU_FORMATION",
+  "visual_logic": {
+    "subject_appearance": "Solid black silhouette with a slightly 'fuzzy' edge to represent the pycnofibers.",
+    "environment": "Dense forest canopy with shafts of light breaking through.",
+    "facial_silhouette": "A simple, rounded head with a moderately long, straight beak."
+  },
+  "pose": "Full wing-span 'spread-eagle' pose to show how the membrane extends all the way to the legs, creating a unique 'kite' shape."
+  }
+]
