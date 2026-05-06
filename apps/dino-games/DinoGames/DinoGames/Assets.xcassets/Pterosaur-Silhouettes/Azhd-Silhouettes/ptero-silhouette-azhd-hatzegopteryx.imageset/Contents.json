@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "silh-hatzegopteryx-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "silh-hatzegopteryx-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "silh-hatzegopteryx-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
