@@ -53,13 +53,38 @@ final class MarineReptileAudioFilesXCTests: XCTestCase {
             "game-name-that-marine-reptile-try-again",
             "game-name-that-marine-reptile-good-job",
             "game-weigh-marine-reptile",
-            "game-weight-marine-reptile",
             "game-choose-your-first-marine-reptile",
             "game-choose-your-second-marine-reptile",
+            "game-marine-reptile-puzzle",
+            "game-marine-reptile-puzzle-gameplay-directions",
+            "game-marine-reptile-puzzle-guess-the-marine-reptile-in-clade",
         ]
 
         let missing = expectedStems.subtracting(availableStems).sorted()
         XCTAssertTrue(missing.isEmpty, "Missing marine gameplay audio files in Games/: \(missing)")
+    }
+
+    func testMarineCladeAudioFilesExist() throws {
+        let directory = projectRootURL().appendingPathComponent("DinoGames/Assets/Audio/Marine-Clades")
+        XCTAssertTrue(directoryExists(directory), "Missing directory: \(directory.path)")
+
+        let audioFiles = try recursiveFiles(in: directory, allowedExtensions: ["m4a", "mp3", "wav"])
+        let availableStems = Set(audioFiles.map { $0.deletingPathExtension().lastPathComponent.lowercased() })
+        let expectedStems: Set<String> = [
+            "clade-halisaur",
+            "clade-ichthyosaur",
+            "clade-mosasaur",
+            "clade-nothosaur",
+            "clade-plesiosaur",
+            "clade-plioplatecarp",
+            "clade-pliosaur",
+            "clade-teleostei",
+            "clade-testudine",
+            "clade-thalattosuchia",
+            "clade-tylosaur",
+        ]
+        let missing = expectedStems.subtracting(availableStems).sorted()
+        XCTAssertTrue(missing.isEmpty, "Missing marine clade audio under Marine-Clades/: \(missing)")
     }
 
     private func marineAudioDirectoryURL() -> URL {

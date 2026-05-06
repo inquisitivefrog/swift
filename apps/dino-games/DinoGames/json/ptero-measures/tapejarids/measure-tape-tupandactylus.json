@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_tupandactylus",
+    "species": "Tupandactylus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "CRATO_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_LOWLANDS",
+    "pose": "The Pterosaur is standing on a platy limestone slab. Its massive, sail-like head crest is the focal point, spanning the upper half of the card to emphasize its height.",
+    "environmental_details": {
+      "ground": "Pale Buff and Soft Sulphur Yellow micrite.",
+      "flora": "Ruffordia ferns and early Endressinia flowers in the distant background."
+    }
+  }
+]

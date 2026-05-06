@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_jeholopterus",
+    "species": "Jeholopterus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TIAOJISHAN_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "SUBTROPICAL_WOODLANDS",
+    "pose": "Macro TALL_MEASURE framing. This small, furry, 'bat-like' pterosaur is clinging to a vertical branch. Despite its small size, it fills the frame vertically to allow for the 'Which is Taller' comparison.",
+    "environmental_details": {
+      "ground": "Volcanic ash-rich soil.",
+      "flora": "Cycad leaves in the immediate background."
+    }
+  }
+]

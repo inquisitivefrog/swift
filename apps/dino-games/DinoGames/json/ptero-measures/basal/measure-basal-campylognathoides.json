@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_campylognathoides",
+    "species": "Campylognathoides",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "POSIDONIA_SHALE",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_SHELF",
+    "pose": "Vertical stance on a beach outcropping. The long, powerful wings are folded along its sides, creating a tall, narrow silhouette that spans the 1024px height.",
+    "environmental_details": {
+      "ground": "Black Posidonia shale with ammonite impressions.",
+      "palette": ["Charcoal Black", "Steel Grey", "Azure"]
+    }
+  }
+]

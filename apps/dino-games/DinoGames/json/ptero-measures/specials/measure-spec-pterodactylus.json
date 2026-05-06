@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_pterodactylus",
+    "species": "Pterodactylus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SOLNHOFEN",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "TROPICAL_ISLAND_LAGOONS",
+    "pose": "The small Pterodactylus is perched on a tall, vertical limestone pillar. This fills the TALL_MEASURE slot from top to bottom.",
+    "environmental_details": {
+      "ground": "Cream white and ivory Plattenkalk.",
+      "flora": "Small Pandanus-like shrubs in the far distance."
+    }
+  }
+]

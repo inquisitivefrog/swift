@@ -1,0 +1,23 @@
+{
+  "id": "marine_reptile_puzzle_v1_BASE_CARD",
+  "game_title": "Marine Reptile Puzzle",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "scene_logic": {
+    "composition": "A dynamic close-up action shot of a paleontologist working in a specialized coastal research lab.",
+    "character_main": "DINO_BONES_PALEONTOLOGIST_6 (African female, braided black hair) leaning in with focused precision.",
+    "action": "Using a fine dental pick to clear dark silty mud from the paddle-fin of a Plesiosaur, revealing the intricate interlocking flipper bones.",
+    "background": "The CONWAY_FORMATION research site; the background features a large water-immersion tank and various calcareous concretions resting on steel prep tables."
+  },
+  "typography": {
+    "text_content": "Marine Reptile Puzzle!",
+    "style": "3D thick, rounded bubble letters with a slight 'wave' distortion.",
+    "color": "Bright Red",
+    "placement": "Centered at the bottom."
+  },
+  "technical_parameters": {
+    "lighting": "SUNNY_EXPOSED_CINEMATIC; bright, high-key light reflecting off wet stone and glass surfaces to create a crisp, airy atmosphere.",
+    "surface_finish": "High-fidelity 3D; tactile 'slick' bone textures; character wearing a white tee UNDER a khaki safari vest.",
+    "negative_prompt": "realistic, scary, grit, desert, 90s CGI, grainy, blurry text, low resolution, land dinosaurs."
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "id": "marine_reptile_puzzle_v1_SUCCESS_STATE",
+  "game_title": "Marine Reptile Puzzle",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "scene_logic": {
+    "composition": "A triumphant close-up shot of the paleontologist celebrating a major discovery.",
+    "character_main": "DINO_BONES_PALEONTOLOGIST_5 (Asian female, short black hair) smiling radiantly at the viewer.",
+    "action": "Holding up a large, pointed Mosasaur tooth that perfectly slots into a massive, partially prepped jawbone on her workbench.",
+    "background": "The NIOBRARA_CHALK research site; the background shows a bright, clean coastal laboratory with large windows overlooking a sunlit ocean."
+  },
+  "typography": {
+    "primary_text": {
+      "content": "Marine Reptile Puzzle!",
+      "style": "3D bubble letters with a slight 'wave' distortion",
+      "color": "Bright Red"
+    },
+    "secondary_text": {
+      "content": "Player Wins!",
+      "style": "3D mixed-case block letters",
+      "color": "Bright Red",
+      "placement": "Directly below primary text"
+    }
+  },
+  "technical_parameters": {
+    "lighting": "SUNNY_EXPOSED_CINEMATIC; warm, golden sunlight filtering through lab windows to emphasize victory.",
+    "surface_finish": "High-fidelity 3D with satin-matte skin; polished, glass-like enamel on the fossil tooth; character wearing a light red tee UNDER a khaki safari vest.",
+    "negative_prompt": "dark, gloomy, failure, blurry, realistic, scary, land-based dinosaurs, sharp aggressive angles."
+  }
+}

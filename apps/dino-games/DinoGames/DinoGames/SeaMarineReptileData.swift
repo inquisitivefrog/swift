@@ -45,12 +45,51 @@ enum SeaMarineReptileData {
             .joined(separator: " ")
     }
 
+    /// Maps `marine-<group>-*` segment (e.g. `mosa`) to spoken-name audio stem under `Marine-Clades/clade-{stem}.m4a`.
+    static func audioSlugForMarineGroupRaw(_ raw: String) -> String {
+        switch raw.lowercased() {
+        case "mosa": return "mosasaur"
+        case "plesio": return "plesiosaur"
+        case "ichthyo": return "ichthyosaur"
+        case "plio": return "pliosaur"
+        case "pliop": return "plioplatecarp"
+        case "hali": return "halisaur"
+        case "notho": return "nothosaur"
+        case "thala": return "thalattosuchia"
+        case "tylo": return "tylosaur"
+        case "teleo": return "teleostei"
+        case "testu": return "testudine"
+        default:
+            return raw.lowercased()
+        }
+    }
+
     /// Marine group segment from `marine-<group>-…` image names (e.g. `mosa`, `plesio`).
     static func marineCladeRawValue(for creature: Dinosaur) -> String {
         guard let name = creature.imageName else { return "mosa" }
         let parts = name.split(separator: "-", omittingEmptySubsequences: false)
         guard parts.count >= 3, parts[0] == "marine" else { return "mosa" }
         return String(parts[1])
+    }
+
+    /// Short UI label for the `marine-<group>-*` segment (puzzle rounds, etc.).
+    static func displayTitleForMarineGroup(_ raw: String) -> String {
+        switch raw.lowercased() {
+        case "mosa": return "Mosasaur"
+        case "plesio": return "Plesiosaur"
+        case "ichthyo": return "Ichthyosaur"
+        case "plio": return "Pliosaur"
+        case "pliop": return "Plioplatecarpine"
+        case "hali": return "Halisaur"
+        case "notho": return "Nothosaur"
+        case "thala": return "Thalattosuchian"
+        case "tylo": return "Tylosaur"
+        case "teleo": return "Teleost fish"
+        case "testu": return "Sea turtle"
+        case "basal": return "Basal"
+        default:
+            return raw.replacingOccurrences(of: "-", with: " ").capitalized
+        }
     }
 
     static func marineBodyImagePrefix(for creature: Dinosaur) -> String {

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ptero_taller_v2_boreopterus",
+    "species": "Boreopterus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "YIXIAN_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "SUBTROPICAL_WOODLANDS",
+    "pose": "TALL_MEASURE framing. The Boreopterus is perched upright on a volcanic rock. Its long, slender snout filled with needle-like teeth is pointed upward, with the tip reaching the top 5% of the 1024px frame.",
+    "environmental_details": {
+      "ground": "Dark grey basalt and siliciclastic sediment.",
+      "flora": "Lush Liaoning-style ferns and early flowering plants in the background.",
+      "palette": ["Dark Grey", "Emerald Green", "Soft Lavender Sky"]
+    }
+  }
+]

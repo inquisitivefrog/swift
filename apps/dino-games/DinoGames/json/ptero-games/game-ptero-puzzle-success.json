@@ -1,0 +1,30 @@
+{
+  "id": "ptero_puzzle_v1_SUCCESS_STATE",
+  "game_title": "Ptero Puzzle",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "scene_logic": {
+    "composition": "A high-energy, triumphant close-up of a museum preparator celebrating a completed assembly.",
+    "character_main": "DINO_BONES_PREPARATOR_1 (Adult male, short dark hair) giving a thumbs-up and smiling warmly.",
+    "action": "Holding the final, delicate crest fragment of a Tupandactylus that perfectly snaps into the skull on the workbench.",
+    "background": "A brightly lit museum lab; in the background, a fully articulated pterosaur skeleton hangs from the ceiling in a flight pose."
+  },
+  "typography": {
+    "primary_text": {
+      "content": "Ptero Puzzle!",
+      "style": "3D bubble letters with a slight aerodynamic tilt",
+      "color": "Bright Red"
+    },
+    "secondary_text": {
+      "content": "Player Wins!",
+      "style": "3D mixed-case block letters",
+      "color": "Bright Red",
+      "placement": "Directly below primary text"
+    }
+  },
+  "technical_parameters": {
+    "lighting": "SUNNY_EXPOSED_CINEMATIC; warm, vibrant sunlight streaming through large lab windows.",
+    "surface_finish": "High-fidelity 3D; signature thin-rimmed BLACK RECTANGULAR lens glasses; light blue tee UNDER a white lab coat.",
+    "negative_prompt": "dark, failure, outdoors, grit, scary, realistic, low-poly, grainy."
+  }
+}

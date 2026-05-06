@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_coloborhynchus",
+    "species": "Coloborhynchus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "TROPICAL_ISLAND_LAGOONS",
+    "pose": "Standing erect on a weathered Romualdo limestone block. The tip of its snout, featuring a prominent, rounded vertical crest, serves as the highest point for the tape measure comparison.",
+    "environmental_details": {
+      "ground": "Iron-oxide red sand with golden ochre highlights.",
+      "atmosphere": "Vibrant, high-key midday sun typical of the Santana formation."
+    }
+  }
+]

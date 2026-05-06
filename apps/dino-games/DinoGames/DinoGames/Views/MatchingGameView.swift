@@ -64,6 +64,47 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
     
     /// Returns bundle URL for a given audio key (e.g. "crowd-cheering", "Allosaurus") if found; nil otherwise.
     func urlForAudio(key: String) -> URL? {
+        let normalized = key.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: " ", with: "-")
+        // Prefer `Dinosaur-Clades/clade-{slug}.m4a` (clear stem on disk); fall back to legacy `Dinosaur-Clades/{slug}.m4a`.
+        if normalized.hasPrefix("dino-clade-") {
+            let slug = String(normalized.dropFirst("dino-clade-".count))
+            let preferredPath = "Dinosaur-Clades/clade-\(slug)"
+            if let url = resolveURL(forPath: preferredPath) { return url }
+            if let legacyPath = audioFilePath(for: key) {
+                return resolveURL(forPath: legacyPath)
+            }
+            return nil
+        }
+        if normalized.hasPrefix("ptero-clade-") {
+            let slug = String(normalized.dropFirst("ptero-clade-".count))
+            let preferredPath = "Pterosaur-Clades/clade-\(slug)"
+            if let url = resolveURL(forPath: preferredPath) { return url }
+            if let legacyPath = audioFilePath(for: key) {
+                return resolveURL(forPath: legacyPath)
+            }
+            return nil
+        }
+        if normalized.hasPrefix("marine-clade-") {
+            let slug = String(normalized.dropFirst("marine-clade-".count))
+            let preferredPath = "Marine-Clades/clade-\(slug)"
+            if let url = resolveURL(forPath: preferredPath) { return url }
+            if let legacyPath = audioFilePath(for: key) {
+                return resolveURL(forPath: legacyPath)
+            }
+            return nil
+        }
+        // Weigh the Marine Reptile card / transition uses `game-weigh-the-marine-reptile`; allow alternate stem without “the”.
+        if normalized == "game-weigh-the-marine-reptile" {
+            let candidates = [
+                "Games/game-weigh-the-marine-reptile",
+                "Games/game-weigh-marine-reptile",
+            ]
+            for path in candidates {
+                if let url = resolveURL(forPath: path) { return url }
+            }
+            return nil
+        }
         guard let path = audioFilePath(for: key) else { return nil }
         return resolveURL(forPath: path)
     }
@@ -120,11 +161,40 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             }
         }
         if let resourcePath = Bundle.main.resourcePath, let enumerator = FileManager.default.enumerator(atPath: resourcePath) {
+            // Require the parent folder in the match path so e.g. `Dinosaur-Clades/stegosaur` does not pick up
+            // `Eggs/dino-eggs-stegosaur.m4a` (same basename suffix) during fuzzy search.
+            let requiredSubdir: String?
+            if audioPath.contains("/") {
+                let dir = ((audioPath as NSString).deletingLastPathComponent as String).lowercased()
+                requiredSubdir = "/\(dir)/"
+            } else {
+                requiredSubdir = nil
+            }
+            let fileStem = fileName.lowercased()
+            var suffixFallbackMatches: [String] = []
             while let file = enumerator.nextObject() as? String {
                 let lower = file.lowercased()
-                if lower.hasSuffix("\(fileName).m4a") || lower.hasSuffix("\(fileName).mp3") || lower.hasSuffix("\(fileName).wav") {
+                if let sub = requiredSubdir, !lower.contains(sub) { continue }
+                let basename = (file as NSString).lastPathComponent.lowercased()
+                let ext = (basename as NSString).pathExtension.lowercased()
+                guard ["m4a", "mp3", "wav"].contains(ext) else { continue }
+                let stem = (basename as NSString).deletingPathExtension
+                // Prefer exact basename stem so we never pick the wrong species when multiple files share a suffix.
+                if stem == fileStem {
                     return URL(fileURLWithPath: (resourcePath as NSString).appendingPathComponent(file))
                 }
+                // Legacy: longer stems that end with the requested stem (e.g. `ptero-basal-rhamphorhynchus` for key `ptero-rhamphorhynchus`).
+                if stem.hasSuffix(fileStem), stem.count > fileStem.count {
+                    suffixFallbackMatches.append(file)
+                }
+            }
+            // If several suffix matches exist (e.g. `ptero-pteranodon` vs `ptero-ornitho-pteranodon` for key `ptero-pteranodon`), prefer the shortest stem.
+            if let best = suffixFallbackMatches.min(by: {
+                let a = (($0 as NSString).lastPathComponent as NSString).deletingPathExtension.count
+                let b = (($1 as NSString).lastPathComponent as NSString).deletingPathExtension.count
+                return a < b
+            }) {
+                return URL(fileURLWithPath: (resourcePath as NSString).appendingPathComponent(best))
             }
         }
         return nil
@@ -530,8 +600,10 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-guess-which-dinosaur-is-heavier"
         case "guess-which-pterosaur-is-heavier", "guess which pterosaur is heavier":
             return "Games/game-guess-which-pterosaur-is-heavier"
-        case "game-weigh-marine-reptile", "game weight marine reptile", "game-weight-marine-reptile":
+        case "game-weigh-marine-reptile", "game weight marine reptile":
             return "Games/game-weigh-marine-reptile"
+        case "game-weigh-the-marine-reptile":
+            return "Games/game-weigh-the-marine-reptile"
         case "can-you-name-the-dinosaur", "can you name the dinosaur", "game-intro-guess-dinosaur":
             return "Games/game-can-you-name-the-dinosaur"
         case "name-that-dinosaur", "name that dinosaur":
@@ -741,6 +813,18 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Footprints/ceratopsian"
         case "footprint-ankylosaur", "ankylosaur":
             return "Footprints/ankylosaur"
+        // Pterosaur clades: key `ptero-clade-{slug}` → `Pterosaur-Clades/clade-{slug}.m4a` (see `urlForAudio` preferred path)
+        case _ where normalized.hasPrefix("ptero-clade-"):
+            let slug = String(normalized.dropFirst("ptero-clade-".count))
+            return "Pterosaur-Clades/clade-\(slug)"
+        // Marine reptile groups: key `marine-clade-{slug}` → `Marine-Clades/clade-{slug}.m4a` (see `urlForAudio` preferred path)
+        case _ where normalized.hasPrefix("marine-clade-"):
+            let slug = String(normalized.dropFirst("marine-clade-".count))
+            return "Marine-Clades/clade-\(slug)"
+        // Dinosaur clades: key `dino-clade-{slug}` → prefer `Dinosaur-Clades/clade-{slug}.m4a` (see `urlForAudio`), legacy `Dinosaur-Clades/{slug}.m4a`
+        case _ where normalized.hasPrefix("dino-clade-"):
+            let slug = String(normalized.dropFirst("dino-clade-".count))
+            return "Dinosaur-Clades/\(slug)"
 
         // Game name-only intros (walk + transition): game-{slug} → Games/game-{slug}
         case _ where normalized.hasPrefix("game-"):
@@ -832,14 +916,17 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
     }
     
     /// - Parameter chainDelay: If true, use a shorter delay (e.g. when chaining name + "is heavier") so the gap between clips is smaller.
+    /// When `chainDelay` is true, rate limiting is skipped so scripted sequences (e.g. speak → `playAudioFile` → speak) are not dropped.
     func speak(_ text: String, chainDelay: Bool = false) {
-        // Rate limiting: prevent audio overload from rapid taps
         let now = Date()
-        guard now.timeIntervalSince(lastPlayTime) >= minimumPlayInterval else {
-            print("⏸️ Skipping audio (too soon after last): \(text)")
-            // Still notify so sequences (e.g. intro walk) don't get stuck with a permanent highlight
-            onAudioFinished?()
-            return
+        if !chainDelay {
+            // Rate limiting: prevent audio overload from rapid taps (not applied to intentional chains).
+            guard now.timeIntervalSince(lastPlayTime) >= minimumPlayInterval else {
+                print("⏸️ Skipping audio (too soon after last): \(text)")
+                // Still notify so sequences (e.g. intro walk) don't get stuck with a permanent highlight
+                onAudioFinished?()
+                return
+            }
         }
         lastPlayTime = now
         
@@ -847,15 +934,12 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         stopCurrentAudio()
         
         let playBlock = {
-            if let audioPath = self.audioFilePath(for: text) {
-                let foundURL = self.resolveURL(forPath: audioPath)
-                if let url = foundURL {
-                    self.playAudioFile(url: url, fallbackSpeakText: text)
-                    print("🔊 Playing audio: \(url.lastPathComponent)")
-                } else {
-                    print("⚠️ No audio file found for '\(text)' (path: \(audioPath))")
-                    self.startSpeaking(text)
-                }
+            if let url = self.urlForAudio(key: text) {
+                self.playAudioFile(url: url, fallbackSpeakText: text)
+                print("🔊 Playing audio: \(url.lastPathComponent)")
+            } else if let audioPath = self.audioFilePath(for: text) {
+                print("⚠️ No audio file found for '\(text)' (path: \(audioPath))")
+                self.startSpeaking(text)
             } else {
                 print("🔊 No mapping for '\(text)', using TTS")
                 self.startSpeaking(text)
@@ -871,9 +955,11 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
     /// Use when playing dinosaur (or creature) name audio: look up by audioKey (e.g. dino imageName) so Audio/Dinosaurs/*.m4a is used when present; use fallbackText for TTS if no file is found.
     func speak(audioKey: String, fallbackText: String, chainDelay: Bool = false) {
         let now = Date()
-        guard now.timeIntervalSince(lastPlayTime) >= minimumPlayInterval else {
-            onAudioFinished?()
-            return
+        if !chainDelay {
+            guard now.timeIntervalSince(lastPlayTime) >= minimumPlayInterval else {
+                onAudioFinished?()
+                return
+            }
         }
         lastPlayTime = now
         stopCurrentAudio()
@@ -917,6 +1003,8 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             player.play()
             currentPlayer = player
             isPlaying = true
+            // Keep rate limiting aligned with `speak` so a file clip after `speak` does not leave `lastPlayTime` stale.
+            lastPlayTime = Date()
             
             // If file has no duration (empty/corrupt), fall back to TTS so we don't get stuck
             if player.duration <= 0 {

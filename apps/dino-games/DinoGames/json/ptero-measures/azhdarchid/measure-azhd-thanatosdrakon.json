@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ptero_taller_v2_thanatosdrakon",
+    "species": "Thanatosdrakon",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "PLOTTIER_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "WOODLAND_FLOODPLAINS",
+    "pose": "TALL_MEASURE framing. The 'Dragon of Death' stands in an imposing, tall quadrupedal stance. Its massive skull and neck rise vertically to the top edge of the 1024px frame. The wings are folded tightly to emphasize its height and powerful build.",
+    "environmental_details": {
+      "ground": "Reddish mudstone and yellow-grey sandstone of the Plottier formation.",
+      "flora": "Sparse conifers and ferns in the distant background.",
+      "palette": ["Terracotta Red", "Sandstone Yellow", "Clear Sky Blue"]
+    }
+  }
+]

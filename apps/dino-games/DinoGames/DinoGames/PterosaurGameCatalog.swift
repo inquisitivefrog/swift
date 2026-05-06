@@ -17,6 +17,8 @@ enum PterosaurGameCatalog {
         case .level1:
             return [
                 .weigh(WeighGameConfigs.weighPterosaur),
+                .whoIsTaller(WhoIsTallerGameConfigs.whoIsTallerPterosaur),
+                .pteroPuzzle(PteroPuzzleGameConfigs.pteroPuzzle),
             ]
         case .level2:
             return [

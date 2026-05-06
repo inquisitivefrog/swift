@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_ctenochasma",
+    "species": "Ctenochasma",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SOLNHOFEN",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "TROPICAL_ISLAND_LAGOONS",
+    "pose": "Macro vertical profile. Perched on a vertical limestone slab. Its snout, featuring hundreds of fine, comb-like teeth, is pointed toward the upper corner of the frame.",
+    "environmental_details": {
+      "ground": "Ivory and cream-white Plattenkalk.",
+      "palette": ["Ivory", "Soft Yellow", "Turquoise Water"]
+    }
+  }
+]

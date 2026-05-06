@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ptero_taller_v2_guidraco",
+    "species": "Guidraco",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "JIUFOTANG_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "SUBTROPICAL_WOODLANDS",
+    "pose": "TALL_MEASURE framing. The Guidraco stands erect on a mossy Jiufotang rock. Its skull features a large, upward-pointing crest and long, interlocking 'ghost' teeth. The tip of the crest is aligned with the top edge of the 1024px frame.",
+    "environmental_details": {
+      "ground": "Grey-green tuffaceous sandstone.",
+      "flora": "Distant Ginkgo trees and conifers in a soft-focus forest background.",
+      "palette": ["Grey-Green", "Teal", "Soft Gold"]
+    }
+  }
+]

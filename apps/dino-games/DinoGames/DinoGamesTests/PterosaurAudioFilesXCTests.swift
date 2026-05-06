@@ -46,10 +46,30 @@ final class PterosaurAudioFilesXCTests: XCTestCase {
             "game-weigh-pterosaur",
             "game-choose-your-first-pterosaur",
             "game-choose-your-second-pterosaur",
+            "game-which-ptero-is-taller",
         ]
 
         let missing = expectedStems.subtracting(availableStems).sorted()
         XCTAssertTrue(missing.isEmpty, "Missing pterosaur gameplay audio files in Games/: \(missing)")
+    }
+
+    func testPterosaurCladeAudioFilesExist() throws {
+        let directory = projectRootURL().appendingPathComponent("DinoGames/Assets/Audio/Pterosaur-Clades")
+        XCTAssertTrue(directoryExists(directory), "Missing directory: \(directory.path)")
+
+        let audioFiles = try recursiveFiles(in: directory, allowedExtensions: ["m4a", "mp3", "wav"])
+        let availableStems = Set(audioFiles.map { $0.deletingPathExtension().lastPathComponent.lowercased() })
+        let expectedStems: Set<String> = [
+            "clade-azhdarchid",
+            "clade-basal",
+            "clade-ornithocheiroid",
+            "clade-specialist",
+            "clade-tapejarid",
+            "clade-thalassodromid",
+            "clade-transition",
+        ]
+        let missing = expectedStems.subtracting(availableStems).sorted()
+        XCTAssertTrue(missing.isEmpty, "Missing pterosaur clade audio under Pterosaur-Clades/: \(missing)")
     }
 
     private func pterosaurAudioDirectoryURL() -> URL {

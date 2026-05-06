@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_arambourgiania",
+    "species": "Arambourgiania",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MAASTRICHT_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_SHELF",
+    "pose": "TALL_MEASURE framing. The Arambourgiania stands in a tall, quadrupedal posture with its exceptionally long neck reaching the very top edge of the 1024px frame. The feet are planted at the bottom safety margin.",
+    "environmental_details": {
+      "ground": "Pale Ochre sand and Ash Grey flint nodules from the Maastricht.",
+      "sky": "Clear, high-contrast blue sky to facilitate height comparison."
+    }
+  }
+]

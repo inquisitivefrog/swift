@@ -1,0 +1,9 @@
+{
+  "image_generation_request": {
+    "prompt": "A high-fidelity 3D animated scene of a Pterosaur and a Velociraptor standing side-by-side to determine who is taller. The Pterosaur features vibrant skin with a fine, tactile pebbled texture and a large, rounded head crest. The Velociraptor has slate-grey skin with dark, charcoal-grey vertical 'shattered' stripes and a crimson red feather mohawk running from the head down the neck. It accurately features three-fingered hands with long, dexterous fingers and sharp black talons. Both characters have rounded, toy-like proportions and soulful, expressive eyes. They are standing on the iron-oxide red and golden ochre ground of the SANTANA_ROMUALDO formation, with early lily-pads in shallow turquoise pools nearby. A caption in Bright Red 3D mixed case letters reads 'Which Ptero Is Taller?'",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1"
+  }
+}

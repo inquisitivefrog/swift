@@ -29,6 +29,15 @@ enum PterosaurGuessGroup: String, CaseIterable {
         }
     }
 
+    /// Stem for `Pterosaur-Clades/clade-{stem}.m4a` (matches bundled `clade-*.m4a` names).
+    var cladeAudioSlug: String {
+        switch self {
+        case .transitional: return "transition"
+        default:
+            return rawValue
+        }
+    }
+
     static func guessGroup(forImageName imageName: String) -> PterosaurGuessGroup? {
         let b = imageName.lowercased()
         if b.hasPrefix("ptero-azhd-") { return .azhdarchid }
@@ -138,6 +147,23 @@ enum AirPterosaurData {
         143: 0.25,
         144: 1,
     ]
+
+    /// Approximate standing height (m) for Which Ptero Is Taller — scaled from mass^(1/3) so heavier species rank taller (game comparison only).
+    static let pterosaurStandingHeightMetersById: [Int: Double] = {
+        let w = pterosaurEstimatedWeightKgById
+        let kgVals = w.values
+        guard let minKg = kgVals.min(), let maxKg = kgVals.max(), maxKg > minKg else { return [:] }
+        let minC = pow(max(minKg, 1e-9), 1.0 / 3.0)
+        let maxC = pow(maxKg, 1.0 / 3.0)
+        let denom = max(maxC - minC, 1e-9)
+        let minH = 0.1
+        let maxH = 5.5
+        return Dictionary(uniqueKeysWithValues: w.map { id, kg in
+            let c = pow(max(kg, 1e-9), 1.0 / 3.0)
+            let t = (c - minC) / denom
+            return (id, minH + t * (maxH - minH))
+        })
+    }()
 
     /// Trait rows for Match the Pterosaur (`ptero-char-*` images).
     static let allPterosaurCharacteristics: [Characteristic] = [

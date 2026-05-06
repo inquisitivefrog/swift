@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_darwinopterus",
+    "species": "Darwinopterus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TIAOJISHAN_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "SUBTROPICAL_WOODLANDS",
+    "pose": "The Darwinopterus is standing erect on a rocky moss-covered outcropping. Its unique head (combining a long snout with a primitive body) is tilted slightly upward to maximize the vertical measurement.",
+    "environmental_details": {
+      "ground": "Laminated siltstone with patches of green bryophytes.",
+      "atmosphere": "Atmospheric woodland mist in the far background to create depth."
+    }
+  }
+]

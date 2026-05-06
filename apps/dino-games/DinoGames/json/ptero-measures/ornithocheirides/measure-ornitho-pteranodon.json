@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_pteranodon",
+    "species": "Pteranodon",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "NIOBRARA_CHALK",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "EPICONTINENTAL_SEAWAY",
+    "pose": "The Pteranodon stands on a chalky ledge, its long backward-pointing head crest creating a high vertical point for measurement.",
+    "environmental_details": {
+      "ground": "Off-white and soft yellow pure chalk.",
+      "palette": ["Cream White", "Smoky Grey", "Azure Blue"]
+    }
+  }
+]

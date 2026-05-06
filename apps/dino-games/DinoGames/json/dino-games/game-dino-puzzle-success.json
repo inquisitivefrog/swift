@@ -13,12 +13,12 @@
     "primary_text": {
       "content": "Dino Puzzle!",
       "style": "3D bubble letters",
-      "color": "Bright Sky Blue"
+      "color": "Bright Red"
     },
     "secondary_text": {
       "content": "Player Wins!",
       "style": "3D mixed-case block letters",
-      "color": "Golden-Yellow",
+      "color": "Bright Red",
       "placement": "Directly below primary text"
     }
   },

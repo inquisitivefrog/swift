@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_anurognathus",
+    "species": "Anurognathus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SOLNHOFEN",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "TROPICAL_ISLAND_LAGOONS",
+    "pose": "Macro close-up. The tiny Anurognathus is perched on a fossilized branch that stands vertically. The creature's rounded, toy-like body is centered to fill the TALL_MEASURE slot.",
+    "environmental_details": {
+      "ground": "Ivory and Cream White fine-grained limestone.",
+      "flora": "Pandanus-like shrubs in the far distance."
+    }
+  }
+]

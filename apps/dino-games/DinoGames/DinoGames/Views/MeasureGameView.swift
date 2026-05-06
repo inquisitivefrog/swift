@@ -252,7 +252,7 @@ struct MeasureGameView: View {
     /// Measure comparison slot: 140×340 pt to match game-specific rectangular assets (140×340 px @1x; some up to 200 wide).
     private let measureSlotWidth: CGFloat = 140
     private let measureAreaHeight: CGFloat = 340
-    /// Paleontologist ladder: increased from 70 to 110 pt width so it displays larger (room for 2×140 slots + center).
+    /// Paleontologist (tape pose): increased from 70 to 110 pt width so it displays larger (room for 2×140 slots + center).
     private let measureCenterWidth: CGFloat = 110
     private let measureHorizontalPadding: CGFloat = 24
     /// Minimal spacing so dinosaurs almost touch the paleontologist (match Who Is Taller).
@@ -373,10 +373,10 @@ struct MeasureGameView: View {
         return max(rawScale, minScale)
     }
 
-    /// Center image: paleontologist on ladder holding tape measure. Use asset "measure-paleontologist-ladder" (110×340 pt for larger display).
+    /// Center image: paleontologist standing with tape measure. Use asset "measure-paleontologist-tape" (110×340 pt for larger display).
     /// Bottom-aligned so it lines up with left/right dinosaurs for height comparison.
     private var measureCenterImage: some View {
-        let name = "measure-paleontologist-ladder"
+        let name = "measure-paleontologist-tape"
         return Group {
             if ImageAssetCache.imageExists(named: name) {
                 Image(name)

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_dimorphodon",
+    "species": "Dimorphodon",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "BLUE_LIAS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_LOWLANDS",
+    "pose": "The Dimorphodon is perched on a vertical sea-cliff face. Its large, puffin-like head is centered at the top of the frame. Its thick, sturdy legs are planted on a ledge at the bottom 15% safety line.",
+    "environmental_details": {
+      "ground": "Blue-grey limestone and shale layers.",
+      "atmosphere": "Bright, sunny coastal lighting with sea spray in the far distance."
+    }
+  }
+]

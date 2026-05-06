@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_sordes",
+    "species": "Sordes",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "KARABASTAU_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "SUBTROPICAL_WOODLANDS",
+    "pose": "The Sordes is positioned vertically on a tree trunk. The high-fidelity 3D textures emphasize its thick covering of 'pycnofibers' (proto-feathers). Its head is at the top margin, showing a friendly, expressive face.",
+    "environmental_details": {
+      "ground": "Laminated dark shale.",
+      "atmosphere": "Soft, hazy woodland light filtering through the canopy."
+    }
+  }
+]

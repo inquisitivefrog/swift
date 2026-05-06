@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_caiuajara",
+    "species": "Caiuajara",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "GOIO_ERE_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "DESERT_DUNE_FIELDS",
+    "pose": "The Caiuajara is perched on a desert rock. Its massive, shark-fin shaped head crest is the focal point, spanning the upper 30% of the vertical frame. The skin texture is high-fidelity 3D with vibrant, desert-themed patterns.",
+    "environmental_details": {
+      "ground": "Fine-grained reddish-pink desert sand.",
+      "palette": ["Reddish-Pink", "Sandy Ochre", "Deep Blue"]
+    }
+  }
+]

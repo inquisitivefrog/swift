@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_bangiadraco",
+    "species": "Bangiadraco",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "JIUFOTANG_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "SUBTROPICAL_WOODLANDS",
+    "pose": "TALL_MEASURE framing. This Thalassodromid relative stands on a rocky outcrop. Its large, distinctively shaped crest is centered at the top of the frame, showing expressive 3D physical comedy in its posture.",
+    "environmental_details": {
+      "ground": "Laminated grey siltstone.",
+      "flora": "Distant Ginkgo trees in soft focus."
+    }
+  }
+]

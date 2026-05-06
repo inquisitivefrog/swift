@@ -61,6 +61,8 @@ final class PterosaurImageAssetsXCTests: XCTestCase {
         let requiredGameCards: Set<String> = [
             "game-name-that-pterosaur",
             "game-weigh-pterosaur",
+            "game-which-ptero-is-taller",
+            "game-which-ptero-is-taller-success",
         ]
 
         for gameCard in requiredGameCards {

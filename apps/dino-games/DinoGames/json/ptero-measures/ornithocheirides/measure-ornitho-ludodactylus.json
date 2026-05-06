@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_ludodactylus",
+    "species": "Ludodactylus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "CRATO_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_LOWLANDS",
+    "pose": "Vertical stance. This species is unique for having both teeth and a Pteranodon-like head crest. The crest reaches the top margin, while the clawed feet are firmly planted at the bottom 15% safety line.",
+    "environmental_details": {
+      "ground": "Pale buff and soft sulphur yellow micrite.",
+      "palette": ["Buff", "Sulphur Yellow", "Deep Teal"]
+    }
+  }
+]

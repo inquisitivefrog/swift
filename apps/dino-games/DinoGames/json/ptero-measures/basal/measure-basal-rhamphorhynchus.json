@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v1_rhamphorhynchus",
+    "species": "Rhamphorhynchus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SOLNHOFEN",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "TROPICAL_ISLAND_LAGOONS",
+    "pose": "The Rhamphorhynchus is on the ground standing tall, its long tail with the diamond-shaped vane extending toward the viewer.",
+    "environmental_details": {
+      "ground": "Soft beige and Light grey limestone.",
+      "fauna": ["Small crocodilians", "Jurassic insects"].
+    }
+  }
+]

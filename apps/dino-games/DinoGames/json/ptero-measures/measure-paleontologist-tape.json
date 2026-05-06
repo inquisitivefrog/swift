@@ -1,0 +1,28 @@
+{ 
+  "id": "ptero_puzzle_v1_CENTRAL_MEASURE_REF",
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "visual_identity": "High-poly 3D animation style, smooth clay textures, tactile handmade feel, vibrant saturated colors."
+    },
+    "layer_2_setting": {
+      "formation": "SANTANA_ROMUALDO",
+      "description": "Setting: Coastal tropical floodplain with iron-oxide red sand and golden ochre highlights. Soft studio lighting with clean ambient occlusion."
+    },
+    "layer_3_action": {
+      "subject": "DINO_BONES_PALEONTOLOGIST_4",
+      "features": [
+        "Latino female",
+        "short brown hair",
+        "khaki safari vest over a white tee",
+        "metal measuring tape",
+        "friendly expressive face"
+      ],
+      "action": "Standing perfectly erect and centered in the frame. She holds a silver measuring tape housing at chest height; the yellow tape measure extends straight down, touching the red sandy ground in front of her. She is looking forward with a friendly, welcoming expression, ready to compare the heights of the pterosaurs on either side."
+    },
+    "technical_parameters": {
+        "aspect_ratio": "TALL_MEASUREMENT_CARD",
+        "negative_prompt": "ladder, male, beard, blurry, realistic, grit, messy, 90s CGI, dark shadows."
+    }
+  } 
+}

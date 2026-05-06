@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ptero_taller_v2_nemicolopterus",
+    "species": "Nemicolopterus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "JIUFOTANG_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "SUBTROPICAL_WOODLANDS",
+    "pose": "Macro TALL_MEASURE framing. This tiny, toothless pterosaur is perched upright on a vertical Ginkgo branch. Despite its small size, it fills the 1024px vertical span to allow for side-by-side height comparison. Its curved toes are wrapped around the bark, and its head is centered at the top safety margin.",
+    "environmental_details": {
+      "ground": "Grey-green tuffaceous sandstone visible in the far-focus bottom.",
+      "flora": "Close-up detail of Ginkgo leaves; vibrant forest greens in the background.",
+      "palette": ["Grey-Green", "Vibrant Emerald", "Soft Gold"],
+      "atmosphere": "Dappled sunlight filtering through a thick canopy."
+    }
+  }
+]

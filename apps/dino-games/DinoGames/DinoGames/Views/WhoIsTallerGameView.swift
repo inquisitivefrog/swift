@@ -2,8 +2,8 @@
 //  WhoIsTallerGameView.swift
 //  DinoGames
 //
-//  Who Is Taller?: Compare two dinosaurs by height. Three rounds; each round 9 dinosaurs (dino-* images) in a 3×3 grid; measure-dino-* only in comparison slots.
-//  Player selects two; both dinosaurs and the paleontologist scale from max(dino₁, dino₂, ladder height). "Too small" pairs are rejected.
+//  Who Is Taller?: Compare two creatures by height. Three rounds; 3×3 grid (dino-* or ptero-*); comparison slots use measure-dino-* or ptero-measure-{clade}-{slug} when bundled.
+//  Player selects two; both creatures and the paleontologist scale from max(creature₁, creature₂, reference human height). "Too small" pairs are rejected.
 //
 
 import SwiftUI
@@ -19,11 +19,17 @@ struct WhoIsTallerItem: Identifiable, Equatable {
     let heightMeters: Double
 }
 
+enum WhoIsTallerPoolKind {
+    case dinosaurs
+    case pterosaurs
+}
+
 struct WhoIsTallerGameConfig {
     let id: String
     let title: String
     let introAudio: String
     let items: [WhoIsTallerItem]
+    let poolKind: WhoIsTallerPoolKind
 }
 
 // MARK: - Height Data (shared with Measure)
@@ -42,8 +48,12 @@ private let whoIsTallerHeightMetersById: [Int: Double] = [
 private let sameHeightRelativeThreshold = 0.08
 /// Minimum scale for smaller dinosaur (e.g. 0.1 = 10% of full size). Below this, combination is "too small to see". Relaxed from 0.2 so small dinosaurs can compare with more options.
 private let minVisibleScale: CGFloat = 0.1
-/// Paleontologist on ladder: total height in meters (ladder + person reaching up) for scaling. ~4.5m so the ladder setup stays visible next to large dinosaurs.
+/// Reference height (m) for the standing paleontologist in the center slot, used with creature heights for scaling. ~4.5m so the figure stays readable next to large taxa.
 private let paleontologistHeightMeters: Double = 4.5
+/// Which Ptero Is Taller: keep small pterosaurs visible (avoid "tiny dots" next to the center figure).
+private let minVisiblePterosaurScale: CGFloat = 0.22
+/// Which Ptero Is Taller: keep the center figure around mid-size instead of full-height giant when comparing very small pterosaurs.
+private let maxPterosaurCenterScale: CGFloat = 0.72
 
 // MARK: - Main View
 
@@ -69,6 +79,7 @@ struct WhoIsTallerGameView: View {
 
     private var isGameOver: Bool { roundsCompleted >= maxRounds }
     private var displayItems: [WhoIsTallerItem] { currentRoundItems.isEmpty ? gameConfig.items : currentRoundItems }
+    private var isPterosaurPool: Bool { gameConfig.poolKind == .pterosaurs }
     private var introWalkComplete: Bool { displayItems.isEmpty || introWalkStep >= displayItems.count }
     private var canTapGrid: Bool { introWalkComplete && !isChooseFirstAudioPlaying }
 
@@ -105,8 +116,7 @@ struct WhoIsTallerGameView: View {
                             if !displayItems.isEmpty {
                                 let columns = [GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6)]
                                 LazyVGrid(columns: columns, spacing: 6) {
-                                    ForEach(0..<displayItems.count, id: \.self) { index in
-                                        let item = displayItems[index]
+                                    ForEach(Array(displayItems.enumerated()), id: \.element.id) { index, item in
                                         WhoIsTallerItemCard(
                                             item: item,
                                             displayImageName: gridImageName(for: item),
@@ -123,7 +133,7 @@ struct WhoIsTallerGameView: View {
                                 .padding(.horizontal, 10)
                                 .frame(height: 330)
 
-                                // Bottom: left slot | paleontologist-ladder | right slot (dinosaurs appear here as chosen; same layout throughout)
+                                // Bottom: left slot | paleontologist (tape) | right slot (chosen creatures; same layout throughout)
                                 whoIsTallerMeasureArea
                                     .padding(.top, 8)
                             } else {
@@ -170,25 +180,30 @@ struct WhoIsTallerGameView: View {
         .padding(.horizontal, 24)
     }
 
-    /// Left dino, right dino, and paleontologist all scale from one reference height = max(left m, right m, ladder m).
-    /// So the ladder always represents ~`paleontologistHeightMeters` and small theropods never render as tall as a 4.5 m ladder (previously dinos used max(dino) while the ladder stayed at full slot height).
+    /// Left creature, right creature, and paleontologist all scale from one reference height = max(left m, right m, human m).
+    /// The center figure represents ~`paleontologistHeightMeters` so small taxa never render as tall as that reference (previously creatures used max(creature) while the center stayed at full slot height).
     private func whoIsTallerSlotScales() -> (left: CGFloat, right: CGFloat, center: CGFloat) {
         let humanH = paleontologistHeightMeters
         guard let first = selectedFirst else { return (1.0, 1.0, 1.0) }
         let h1 = first.heightMeters
+        let creatureFloor: CGFloat = isPterosaurPool ? minVisiblePterosaurScale : 0
         if let second = selectedSecond {
             let h2 = second.heightMeters
             let ref = max(h1, h2, humanH)
             guard ref > 0 else { return (1.0, 1.0, 1.0) }
+            let rawCenter = CGFloat(humanH / ref)
+            let centerScale = isPterosaurPool ? min(rawCenter, maxPterosaurCenterScale) : rawCenter
             return (
-                CGFloat(h1 / ref),
-                CGFloat(h2 / ref),
-                CGFloat(humanH / ref)
+                max(CGFloat(h1 / ref), creatureFloor),
+                max(CGFloat(h2 / ref), creatureFloor),
+                centerScale
             )
         }
         let ref = max(h1, humanH)
         guard ref > 0 else { return (1.0, 1.0, 1.0) }
-        return (CGFloat(h1 / ref), 1.0, CGFloat(humanH / ref))
+        let rawCenter = CGFloat(humanH / ref)
+        let centerScale = isPterosaurPool ? min(rawCenter, maxPterosaurCenterScale) : rawCenter
+        return (max(CGFloat(h1 / ref), creatureFloor), 1.0, centerScale)
     }
 
     /// Slot with optional item: empty when nil, else measure-dino-* scaled. alignTowardCenter: true = left slot (trailing), false = right slot (leading).
@@ -221,9 +236,9 @@ struct WhoIsTallerGameView: View {
         .frame(width: measureSlotWidth, height: measureAreaHeight, alignment: alignment)
     }
 
-    /// Paleontologist ladder: bottom-aligned so it lines up with left/right dinosaurs for height comparison. Scaled relative to max(dino heights, human).
+    /// Paleontologist (tape pose): bottom-aligned with left/right creatures for height comparison. Scaled relative to max(creature heights, human).
     private func whoIsTallerCenterImage(scale: CGFloat) -> some View {
-        let name = "measure-paleontologist-ladder"
+        let name = "measure-paleontologist-tape"
         let contentW = measureCenterWidth * scale
         let contentH = measureAreaHeight * scale
         return Group {
@@ -242,16 +257,55 @@ struct WhoIsTallerGameView: View {
 
     // MARK: - Logic
 
-    /// Grid: use dino-* (square) images with names below; measure-dino-* only in comparison slots.
+    /// Grid: use dino-* or ptero-* (square) images; comparison slots use measure-* (dinosaurs) or ptero-measure-* (pterosaurs) when present.
     private func gridImageName(for item: WhoIsTallerItem) -> String? {
-        let base = item.imageName ?? "dino-\(item.name.lowercased().replacingOccurrences(of: " ", with: "-"))"
+        let base = item.imageName ?? nameFallbackStem(item)
         return ImageAssetCache.imageExists(named: base) ? base : nil
     }
 
+    /// Which Ptero Is Taller: bundled height poses use `ptero-measure-{clade}-{slug}` (same `{clade}-{slug}` tail as square `ptero-*` art under `Pterosaur-Height/`).
+    private func pteroMeasureImageName(forSquareBase base: String) -> String? {
+        let prefix = "ptero-"
+        guard base.hasPrefix(prefix) else { return nil }
+        let tail = String(base.dropFirst(prefix.count))
+        guard !tail.isEmpty else { return nil }
+        let measureName = "ptero-measure-\(tail)"
+        return ImageAssetCache.imageExists(named: measureName) ? measureName : nil
+    }
+
     private func measureDinoImageName(for item: WhoIsTallerItem) -> String? {
-        let base = item.imageName ?? "dino-\(item.name.lowercased().replacingOccurrences(of: " ", with: "-"))"
+        let base = item.imageName ?? nameFallbackStem(item)
+        if isPterosaurPool {
+            if let name = pteroMeasureImageName(forSquareBase: base) { return name }
+            return ImageAssetCache.imageExists(named: base) ? base : nil
+        }
         let measureName = "measure-\(base)"
         return ImageAssetCache.imageExists(named: measureName) ? measureName : (ImageAssetCache.imageExists(named: base) ? base : nil)
+    }
+
+    private func nameFallbackStem(_ item: WhoIsTallerItem) -> String {
+        let slug = item.name.lowercased().replacingOccurrences(of: " ", with: "-")
+        return isPterosaurPool ? "ptero-\(slug)" : "dino-\(slug)"
+    }
+
+    private func audioStem(for item: WhoIsTallerItem) -> String {
+        item.imageName ?? nameFallbackStem(item)
+    }
+
+    private func playChooseFirstCreaturePrompt() {
+        if isPterosaurPool {
+            speechManager.speak(audioKey: "game-choose-your-first-pterosaur", fallbackText: "Choose your first pterosaur")
+        } else {
+            speechManager.speak("game-choose-your-first-dinosaur")
+        }
+    }
+
+    private func playChooseSecondCreaturePrompt() {
+        if isPterosaurPool {
+            speechManager.speak(audioKey: "game-choose-your-second-pterosaur", fallbackText: "Choose your second pterosaur")
+        } else {
+            speechManager.speak("game-choose-your-second-dinosaur")
+        }
     }
 
     /// True when the second dinosaur (the one being selected) would be the smaller one and scaled below minVisibleScale.
@@ -272,7 +326,7 @@ struct WhoIsTallerGameView: View {
         if selectedFirst == nil {
             selectedFirst = item
             canSelectSecond = false
-            speechManager.speak(audioKey: item.imageName ?? "dino-\(item.name.lowercased().replacingOccurrences(of: " ", with: "-"))", fallbackText: item.name)
+            speechManager.speak(audioKey: audioStem(for: item), fallbackText: item.name)
             speechManager.onAudioFinished = {
                 DispatchQueue.main.async {
                     self.speechManager.onAudioFinished = nil
@@ -282,7 +336,7 @@ struct WhoIsTallerGameView: View {
                             self.speechManager.onAudioFinished = nil
                         }
                     }
-                    self.speechManager.speak("game-choose-your-second-dinosaur")
+                    self.playChooseSecondCreaturePrompt()
                 }
             }
         } else if selectedSecond == nil {
@@ -304,7 +358,7 @@ struct WhoIsTallerGameView: View {
                     }
                 }
             }
-            speechManager.speak(audioKey: item.imageName ?? "dino-\(item.name.lowercased().replacingOccurrences(of: " ", with: "-"))", fallbackText: item.name)
+            speechManager.speak(audioKey: audioStem(for: item), fallbackText: item.name)
         }
     }
 
@@ -330,7 +384,7 @@ struct WhoIsTallerGameView: View {
                 advanceAfterDelay()
             }
         } else {
-            let audioKey = taller.imageName ?? "dino-\(taller.name.lowercased().replacingOccurrences(of: " ", with: "-"))"
+            let audioKey = audioStem(for: taller)
             speechManager.speak(audioKey: audioKey, fallbackText: taller.name)
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
@@ -355,7 +409,10 @@ struct WhoIsTallerGameView: View {
     }
 
     private func startRound() {
-        let items = WhoIsTallerGameConfigs.makeRoundItems(excluding: Set(dinosaursCompared.map(\.id)))
+        let items = WhoIsTallerGameConfigs.makeRoundItems(
+            excluding: Set(dinosaursCompared.map(\.id)),
+            poolKind: gameConfig.poolKind
+        )
         currentRoundItems = items
         selectedFirst = nil
         selectedSecond = nil
@@ -376,7 +433,7 @@ struct WhoIsTallerGameView: View {
         }
         let item = displayItems[introWalkStep]
         let isLast = introWalkStep + 1 >= displayItems.count
-        speechManager.speak(audioKey: item.imageName ?? "dino-\(item.name.lowercased().replacingOccurrences(of: " ", with: "-"))", fallbackText: item.name)
+        speechManager.speak(audioKey: audioStem(for: item), fallbackText: item.name)
         speechManager.onAudioFinished = {
             DispatchQueue.main.async {
                 self.introWalkStep += 1
@@ -388,7 +445,7 @@ struct WhoIsTallerGameView: View {
                             self.speechManager.onAudioFinished = nil
                         }
                     }
-                    self.speechManager.speak("game-choose-your-first-dinosaur")
+                    self.playChooseFirstCreaturePrompt()
                 } else {
                     self.runIntroWalk()
                 }
@@ -489,7 +546,7 @@ struct WhoIsTallerGameView: View {
                 endSequenceStep = 2
             } else {
                 let item = dinosaursCompared[0]
-                speechManager.speak(audioKey: item.imageName ?? "dino-\(item.name.lowercased().replacingOccurrences(of: " ", with: "-"))", fallbackText: item.name)
+                speechManager.speak(audioKey: audioStem(for: item), fallbackText: item.name)
                 speechManager.onAudioFinished = { advanceVictoryHighlight() }
             }
         }
@@ -521,7 +578,7 @@ struct WhoIsTallerGameView: View {
         endHighlightIndex += 1
         if endHighlightIndex < dinosaursCompared.count {
             let item = dinosaursCompared[endHighlightIndex]
-            speechManager.speak(audioKey: item.imageName ?? "dino-\(item.name.lowercased().replacingOccurrences(of: " ", with: "-"))", fallbackText: item.name)
+            speechManager.speak(audioKey: audioStem(for: item), fallbackText: item.name)
             speechManager.onAudioFinished = { advanceVictoryHighlight() }
         } else {
             endSequenceStep = 2
@@ -534,19 +591,27 @@ struct WhoIsTallerGameView: View {
         if let u1 = goodJobURL, let u2 = crowdURL {
             speechManager.playTogether(url1: u1, url2: u2) {
                 self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
+                self.notifyCategoryCompletion()
                 self.isPresented = false
             }
         } else if let u = goodJobURL ?? crowdURL {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
+                self.notifyCategoryCompletion()
                 self.isPresented = false
             }
             speechManager.playAudioFile(url: u)
         } else {
-            LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
+            notifyCategoryCompletion()
             isPresented = false
+        }
+    }
+
+    private func notifyCategoryCompletion() {
+        if isPterosaurPool {
+            PterosaurProgress.notifyCompletionIfPterosaurGame(configId: gameConfig.id)
+        } else {
+            LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
         }
     }
 }
@@ -616,19 +681,40 @@ enum WhoIsTallerGameConfigs {
         id: "which-dino-is-taller",
         title: "Which Dino Is Taller",
         introAudio: "game-which-dino-is-taller",
-        items: []
+        items: [],
+        poolKind: .dinosaurs
     )
 
-    /// Returns 9 dinosaurs with measure-dino-* imageset, random selection, excluding already used this game.
-    static func makeRoundItems(excluding alreadyUsedIds: Set<Int> = []) -> [WhoIsTallerItem] {
-        let pool = MatchingGameConfigs.allDinosaurs.filter { d in
-            guard let imageName = d.imageName, imageName.hasPrefix("dino-"),
-                  whoIsTallerHeightMetersById[d.id] != nil,
-                  !alreadyUsedIds.contains(d.id) else { return false }
-            let measureName = "measure-\(imageName)"
-            return ImageAssetCache.imageExists(named: measureName)
-        }
-        guard pool.count >= 9 else {
+    static let whoIsTallerPterosaur = WhoIsTallerGameConfig(
+        id: "which-ptero-is-taller",
+        title: "Which Ptero Is Taller",
+        introAudio: "game-which-ptero-is-taller",
+        items: [],
+        poolKind: .pterosaurs
+    )
+
+    /// Returns 9 creatures for the pool kind; dinosaurs require `measure-dino-*`; pterosaurs use standing heights from `AirPterosaurData`, square `ptero-*` on the grid, and `ptero-measure-{clade}-{slug}` in comparison slots when present.
+    static func makeRoundItems(excluding alreadyUsedIds: Set<Int> = [], poolKind: WhoIsTallerPoolKind) -> [WhoIsTallerItem] {
+        switch poolKind {
+        case .dinosaurs:
+            let pool = MatchingGameConfigs.allDinosaurs.filter { d in
+                guard let imageName = d.imageName, imageName.hasPrefix("dino-"),
+                      whoIsTallerHeightMetersById[d.id] != nil,
+                      !alreadyUsedIds.contains(d.id) else { return false }
+                let measureName = "measure-\(imageName)"
+                return ImageAssetCache.imageExists(named: measureName)
+            }
+            guard pool.count >= 9 else {
+                return pool.shuffled().prefix(9).map { d in
+                    WhoIsTallerItem(
+                        id: d.id,
+                        name: d.name,
+                        imageName: d.imageName,
+                        emoji: d.icon,
+                        heightMeters: whoIsTallerHeightMetersById[d.id] ?? 1
+                    )
+                }
+            }
             return pool.shuffled().prefix(9).map { d in
                 WhoIsTallerItem(
                     id: d.id,
@@ -638,25 +724,53 @@ enum WhoIsTallerGameConfigs {
                     heightMeters: whoIsTallerHeightMetersById[d.id] ?? 1
                 )
             }
-        }
-        return pool.shuffled().prefix(9).map { d in
-            WhoIsTallerItem(
-                id: d.id,
-                name: d.name,
-                imageName: d.imageName,
-                emoji: d.icon,
-                heightMeters: whoIsTallerHeightMetersById[d.id] ?? 1
-            )
+        case .pterosaurs:
+            let pool = MatchingGameConfigs.allPterosaurs.filter { d in
+                guard let imageName = d.imageName, imageName.hasPrefix("ptero-"),
+                      AirPterosaurData.pterosaurStandingHeightMetersById[d.id] != nil,
+                      !alreadyUsedIds.contains(d.id),
+                      ImageAssetCache.imageExists(named: imageName) else { return false }
+                return true
+            }
+            guard pool.count >= 9 else {
+                return pool.shuffled().prefix(9).map { d in
+                    WhoIsTallerItem(
+                        id: d.id,
+                        name: d.name,
+                        imageName: d.imageName,
+                        emoji: d.icon,
+                        heightMeters: AirPterosaurData.pterosaurStandingHeightMetersById[d.id] ?? 1
+                    )
+                }
+            }
+            return pool.shuffled().prefix(9).map { d in
+                WhoIsTallerItem(
+                    id: d.id,
+                    name: d.name,
+                    imageName: d.imageName,
+                    emoji: d.icon,
+                    heightMeters: AirPterosaurData.pterosaurStandingHeightMetersById[d.id] ?? 1
+                )
+            }
         }
     }
 
-    static func whoIsTallerRandomized() -> WhoIsTallerGameConfig {
+    static func randomized(from template: WhoIsTallerGameConfig) -> WhoIsTallerGameConfig {
         WhoIsTallerGameConfig(
-            id: "which-dino-is-taller",
-            title: "Which Dino Is Taller",
-            introAudio: "game-which-dino-is-taller",
-            items: makeRoundItems()
+            id: template.id,
+            title: template.title,
+            introAudio: template.introAudio,
+            items: makeRoundItems(poolKind: template.poolKind),
+            poolKind: template.poolKind
         )
+    }
+
+    static func whoIsTallerRandomized() -> WhoIsTallerGameConfig {
+        randomized(from: whoIsTaller)
+    }
+
+    static func whoIsTallerPterosaurRandomized() -> WhoIsTallerGameConfig {
+        randomized(from: whoIsTallerPterosaur)
     }
 }
 

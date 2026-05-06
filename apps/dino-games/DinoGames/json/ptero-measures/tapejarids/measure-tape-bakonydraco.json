@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ptero_taller_v2_bakonydraco",
+    "species": "Bakonydraco",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "CSEHBANYA_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "WOODLAND_FLOODPLAINS",
+    "pose": "TALL_MEASURE framing. The Bakonydraco stands tall on a muddy riverbank. Its deep, pointed lower jaw and crestless but high-profile skull are centered vertically. The wings are tucked tight to create a slim, pillar-like silhouette.",
+    "environmental_details": {
+      "ground": "Variegated clay and greyish-brown siltstone.",
+      "flora": "Floodplain vegetation with distant conifers.",
+      "palette": ["Brown", "Greyish-Brown", "Vibrant Blue Sky"]
+    }
+  }
+]

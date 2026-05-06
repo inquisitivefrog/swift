@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_dsungaripterus",
+    "species": "Dsungaripterus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SHISHUGOU_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "DESERT_DUNE_FIELDS",
+    "pose": "The Dsungaripterus stands tall on a desert outcropping. Its unique head with an upward-curving beak and thick bony crest reaches the top edge. The sturdy, thick-walled wing bones are emphasized in the 3D render.",
+    "environmental_details": {
+      "ground": "Reddish-brown sand and mudstone.",
+      "palette": ["Flame Orange", "Reddish-Brown", "Deep Blue Sky"]
+    }
+  }
+]

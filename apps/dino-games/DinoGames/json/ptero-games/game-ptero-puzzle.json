@@ -1,0 +1,23 @@
+{
+  "id": "ptero_puzzle_v1_BASE_CARD",
+  "game_title": "Ptero Puzzle",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "scene_logic": {
+    "composition": "A dynamic close-up of a museum preparator at a laboratory workbench.",
+    "character_main": "DINO_BONES_PREPARATOR_6 (Asian female, long black hair) with an expression of intense discovery.",
+    "action": "Using a precision air-scribe to delicately remove iron-rich matrix from the wing-finger bone of a Pterosaur fossil.",
+    "background": "A museum prep lab inspired by the SANTANA_ROMUALDO formation; scattered calcareous concretions and technical diagrams of flight membranes are visible in the soft-focus background."
+  },
+  "typography": {
+    "text_content": "Ptero Puzzle!",
+    "style": "3D thick, rounded bubble letters with a subtle aerodynamic slant.",
+    "color": "Oceanic Cyan.",
+    "placement": "Centered at the bottom."
+  },
+  "technical_parameters": {
+    "lighting": "STUDIO_SOFT; clean laboratory lighting with ambient occlusion to highlight the 3D volume of the fossil.",
+    "surface_finish": "High-fidelity 3D; tactile 'pebbly' bone texture; character wearing a yellow unicorn tee UNDER a white lab coat.",
+    "negative_prompt": "realistic, scary, grit, outdoor excavation, 90s CGI, grainy, blurry text, low resolution."
+  }
+}

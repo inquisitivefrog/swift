@@ -1,0 +1,9 @@
+{
+  "image_generation_request": {
+    "prompt": "A high-fidelity 3D animated scene in STYLE_ANIMATED_FEATURE_V3 with rounded, toy-like proportions and expressive physical comedy. Two pterosaurs are standing back-to-back to determine who is taller. One features vibrant, leathery skin with high-fidelity 3D textures and a long, slender head crest. The other has soft, downy proto-feathers and a tall, rounded crest. Both have soulful, expressive eyes and a signature friendly smirk. They are standing on the ivory and cream-white limestone of the SOLNHOFEN formation, with small early palm trees and pandanus-like shrubs in the background under a clear sky. A caption in Bright Red 3D mixed case letters reads 'Which Ptero Is Taller?'. A second caption, also in Bright Red 3D mixed case letters, reads 'Player Wins!'",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1"
+  }
+}

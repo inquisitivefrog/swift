@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_anhanguera",
+    "species": "Anhanguera",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "TROPICAL_ISLAND_LAGOONS",
+    "pose": "Vertical stance on Romualdo iron-oxide red rocks. The large toothy snout with its rounded crest is aligned with the top of the frame.",
+    "environmental_details": {
+      "ground": "Terracotta and Golden Ochre limestone.",
+      "flora": "Early Angiosperm lily-pads in turquoise lagoon water."
+    }
+  }
+]

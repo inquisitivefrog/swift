@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_cryodrakon",
+    "species": "Cryodrakon",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DINOSAUR_PARK",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_LOWLANDS",
+    "pose": "Extreme vertical profile centered in the frame. The head and beak are level with the top 15% margin.",
+    "environmental_details": {
+      "ground": "Olive Gray and Pale Gray mudstone characteristic of Dinosaur Park.",
+      "flora": "Distant Cycad palms in soft-focus background."
+    }
+  }
+]

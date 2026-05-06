@@ -158,6 +158,8 @@ struct RacingGameView: View {
     @State private var isAudioPlaying = false
     /// Pre-race: 0 = outside track dino (name + outside-track audio), 1 = inside track dino (name + inside-track audio), 2 = referee + ready-set + whistle
     @State private var preRaceStep: Int? = nil
+    /// Ensures each contestants lane (0 / 1) starts audio exactly once; `onAppear` can skip step 1 when `preRaceStep` advances.
+    @State private var preRaceContestantsLaneStarted: Int? = nil
     /// Post-race: "referee" = dino-racer-referee-finish image, "winner" = dino-winner-race-{slug}
     @State private var postRaceStep: String? = nil
     @State private var hasPlayedStartingGun = false
@@ -367,7 +369,57 @@ struct RacingGameView: View {
     private func beginPreRaceSequence() {
         progress1 = 0
         progress2 = 0
+        preRaceContestantsLaneStarted = nil
         preRaceStep = 0
+    }
+
+    /// Drives the “Contestants” audio for outside (0) then inside (1). Triggered from `onChange(of: preRaceStep)` so step 1 cannot be skipped when SwiftUI omits `onAppear`.
+    private func runPreRaceContestantsLaneIfNeeded(step: Int, outsideRacer: RacingRacer, insideRacer: RacingRacer) {
+        guard step == 0 || step == 1 else { return }
+        guard preRaceContestantsLaneStarted != step else { return }
+        preRaceContestantsLaneStarted = step
+
+        if step == 0 {
+            speechManager.onAudioFinished = {
+                Task { @MainActor in
+                    self.speechManager.onAudioFinished = nil
+                    if let url = self.speechManager.urlForAudio(key: "game-racing-outside-track") {
+                        self.speechManager.onAudioFinished = {
+                            Task { @MainActor in
+                                self.speechManager.onAudioFinished = nil
+                                self.preRaceStep = 1
+                            }
+                        }
+                        self.speechManager.playAudioFile(url: url)
+                    } else {
+                        self.preRaceStep = 1
+                    }
+                }
+            }
+            speechManager.speak(audioKey: outsideRacer.effectiveFallbackImageName(prefix: config.assetPrefix), fallbackText: outsideRacer.name, chainDelay: true)
+        } else {
+            speechManager.onAudioFinished = {
+                Task { @MainActor in
+                    self.speechManager.onAudioFinished = nil
+                    if let url = self.speechManager.urlForAudio(key: "game-racing-inside-track") {
+                        self.speechManager.onAudioFinished = {
+                            Task { @MainActor in
+                                self.speechManager.onAudioFinished = nil
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                    self.preRaceStep = 2
+                                }
+                            }
+                        }
+                        self.speechManager.playAudioFile(url: url)
+                    } else {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                            self.preRaceStep = 2
+                        }
+                    }
+                }
+            }
+            speechManager.speak(audioKey: insideRacer.effectiveFallbackImageName(prefix: config.assetPrefix), fallbackText: insideRacer.name, chainDelay: true)
+        }
     }
 
     private func preRaceView(geometry: GeometryProxy, racer1: RacingRacer, racer2: RacingRacer) -> some View {
@@ -375,55 +427,16 @@ struct RacingGameView: View {
         let (outsideRacer, insideRacer) = racer1.speed >= racer2.speed ? (racer1, racer2) : (racer2, racer1)
         return Group {
             if step == 0 || step == 1 {
-                // Each pre-race step must run its own audio chain. Reusing the same subtree without a changing
-                // identity often skips `onAppear` when `preRaceStep` goes 0 → 1, so the inside racer never speaks.
                 preRaceContestantsView(geometry: geometry, outsideRacer: outsideRacer, insideRacer: insideRacer, highlightedRacer: step == 0 ? outsideRacer : insideRacer)
                     .id(step)
                     .onAppear {
-                        if step == 0 {
-                            // Step 0: outside racer highlighted — name then "on the outside track"
-                            speechManager.onAudioFinished = {
-                                Task { @MainActor in
-                                    self.speechManager.onAudioFinished = nil
-                                    if let url = self.speechManager.urlForAudio(key: "game-racing-outside-track") {
-                                        self.speechManager.onAudioFinished = {
-                                            Task { @MainActor in
-                                                self.speechManager.onAudioFinished = nil
-                                                self.preRaceStep = 1
-                                            }
-                                        }
-                                        self.speechManager.playAudioFile(url: url)
-                                    } else {
-                                        self.preRaceStep = 1
-                                    }
-                                }
-                            }
-                            speechManager.speak(audioKey: outsideRacer.effectiveFallbackImageName(prefix: config.assetPrefix), fallbackText: outsideRacer.name, chainDelay: true)
-                        } else {
-                            // Step 1: inside racer highlighted — name then "on the inside track"
-                            speechManager.onAudioFinished = {
-                                Task { @MainActor in
-                                    self.speechManager.onAudioFinished = nil
-                                    if let url = self.speechManager.urlForAudio(key: "game-racing-inside-track") {
-                                        self.speechManager.onAudioFinished = {
-                                            Task { @MainActor in
-                                                self.speechManager.onAudioFinished = nil
-                                                // Slight pause before shifting to referee view
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                                                    self.preRaceStep = 2
-                                                }
-                                            }
-                                        }
-                                        self.speechManager.playAudioFile(url: url)
-                                    } else {
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                                            self.preRaceStep = 2
-                                        }
-                                    }
-                                }
-                            }
-                            speechManager.speak(audioKey: insideRacer.effectiveFallbackImageName(prefix: config.assetPrefix), fallbackText: insideRacer.name, chainDelay: true)
+                        if let s = preRaceStep, s == 0 || s == 1 {
+                            runPreRaceContestantsLaneIfNeeded(step: s, outsideRacer: outsideRacer, insideRacer: insideRacer)
                         }
+                    }
+                    .onChange(of: preRaceStep) { _, newStep in
+                        guard let s = newStep, s == 0 || s == 1 else { return }
+                        runPreRaceContestantsLaneIfNeeded(step: s, outsideRacer: outsideRacer, insideRacer: insideRacer)
                     }
             } else {
                 Group {

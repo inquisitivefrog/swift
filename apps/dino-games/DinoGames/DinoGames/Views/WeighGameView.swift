@@ -207,25 +207,23 @@ struct WeighGameView: View {
                         }
                         .frame(height: 56)
                         VStack(spacing: 6) {
-                            ForEach(0..<((displayItems.count + 2) / 3), id: \.self) { row in
-                                HStack(spacing: 6) {
-                                    ForEach(0..<3, id: \.self) { col in
-                                        let index = row * 3 + col
-                                        if index < displayItems.count {
-                                            let item = displayItems[index]
-                                            ItemCard(
-                                                item: item,
-                                                displayImageName: nil, // Grid: dino-* (square); seesaw: weigh-dino-* (wide poses)
-                                                isSelected: selectedLeftItem?.id == item.id || selectedRightItem?.id == item.id,
-                                                isDisabled: isWeighing || isGameOver || isChooseFirstAudioPlaying || (!introWalkComplete) || (selectedLeftItem != nil && selectedRightItem != nil) || (selectedLeftItem != nil && selectedRightItem == nil && !canSelectSecondDinosaur),
-                                                isIntroHighlighted: usesIntroWalkAndFirstPickPrompt && introWalkStep >= 0 && introWalkStep < displayItems.count && introWalkStep == index
-                                            ) {
-                                                handleItemTap(item)
-                                            }
-                                        } else {
-                                            Color.clear
-                                                .aspectRatio(1, contentMode: .fit)
-                                        }
+                            LazyVGrid(
+                                columns: [
+                                    GridItem(.flexible(), spacing: 6),
+                                    GridItem(.flexible(), spacing: 6),
+                                    GridItem(.flexible(), spacing: 6),
+                                ],
+                                spacing: 6
+                            ) {
+                                ForEach(displayItems) { item in
+                                    ItemCard(
+                                        item: item,
+                                        displayImageName: nil, // Grid: dino-* / ptero-* (square); seesaw: weigh-dino-* (wide poses)
+                                        isSelected: selectedLeftItem?.id == item.id || selectedRightItem?.id == item.id,
+                                        isDisabled: isWeighing || isGameOver || isChooseFirstAudioPlaying || (!introWalkComplete) || (selectedLeftItem != nil && selectedRightItem != nil) || (selectedLeftItem != nil && selectedRightItem == nil && !canSelectSecondDinosaur),
+                                        isIntroHighlighted: usesIntroWalkAndFirstPickPrompt && introWalkStep >= 0 && introWalkStep < displayItems.count && displayItems[introWalkStep].id == item.id
+                                    ) {
+                                        handleItemTap(item)
                                     }
                                 }
                             }
@@ -1040,8 +1038,9 @@ struct ItemCard: View {
                     .font(.subheadline)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.65)
+                    // Keep all grid cards the same height: shrink long names instead of wrapping to two lines.
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
                     .allowsTightening(true)
             }
         }
@@ -1100,6 +1099,8 @@ struct SeesawSupportView: View {
 // MARK: - Pterosaur Weight Pool (for Weigh the Pterosaur)
 
 private struct WeighablePterosaurPoolEntry {
+    /// Same ids as `AirPterosaurData` (101+). Must be used as `WeighableItem.id` so SwiftUI and round logic don’t reuse rows 1…6 for different species.
+    let creatureId: Int
     let name: String
     let imageName: String
     let emoji: String
@@ -1109,7 +1110,7 @@ private struct WeighablePterosaurPoolEntry {
 private let allWeighablePterosaurs: [WeighablePterosaurPoolEntry] = AirPterosaurData.allPterosaurs.compactMap { d in
     guard let img = d.imageName,
           let kg = AirPterosaurData.pterosaurEstimatedWeightKgById[d.id] else { return nil }
-    return WeighablePterosaurPoolEntry(name: d.name, imageName: img, emoji: d.icon, estimatedWeightKg: kg)
+    return WeighablePterosaurPoolEntry(creatureId: d.id, name: d.name, imageName: img, emoji: d.icon, estimatedWeightKg: kg)
 }
 
 // MARK: - Game Configurations
@@ -1128,7 +1129,7 @@ struct WeighGameConfigs {
     static func randomizedItems(forId id: String, excludingDinosaurIds: Set<Int> = []) -> [WeighableItem] {
         switch id {
         case "weigh-dinosaur": return makeRandomDinosaurItems(excluding: excludingDinosaurIds)
-        case "weigh-pterosaur": return makeRandomPterosaurItems()
+        case "weigh-pterosaur": return makeRandomPterosaurItems(excluding: excludingDinosaurIds)
         case "weigh-marine-reptile": return makeRandomMarineReptileItems(excluding: excludingDinosaurIds)
         default: return []
         }
@@ -1185,28 +1186,52 @@ struct WeighGameConfigs {
         items: []
     )
 
-    /// Returns 6 pterosaurs chosen at random from the pool, ordered by estimated weight. Used at game start and each new round.
-    static func makeRandomPterosaurItems() -> [WeighableItem] {
-        let chosen = allWeighablePterosaurs.shuffled().prefix(6).sorted { $0.estimatedWeightKg < $1.estimatedWeightKg }
+    /// Count of pterosaurs on the grid (3×3 to match Weigh the Dinosaur).
+    private static let weighPterosaurGridCount = 9
+
+    /// Returns 9 pterosaurs: one per `PterosaurGuessGroup` where the pool still has a candidate (same pattern as Weigh the Dinosaur’s `DinoClade` pass), then random extras from the remaining pool until `weighPterosaurGridCount`. Excludes ids already weighed this game when possible.
+    static func makeRandomPterosaurItems(excluding alreadyUsedIds: Set<Int> = []) -> [WeighableItem] {
+        let candidates = allWeighablePterosaurs.filter { !alreadyUsedIds.contains($0.creatureId) }
+        let pool = candidates.isEmpty ? allWeighablePterosaurs : candidates
+        let tagged = pool.compactMap { entry -> (WeighablePterosaurPoolEntry, PterosaurGuessGroup)? in
+            guard let g = PterosaurGuessGroup.guessGroup(forImageName: entry.imageName) else { return nil }
+            return (entry, g)
+        }
+        let byClade = Dictionary(grouping: tagged, by: { $0.1 }).mapValues { pairs in pairs.map(\.0) }
+        var chosen: [WeighablePterosaurPoolEntry] = []
+        for clade in PterosaurGuessGroup.allCases {
+            guard let groupList = byClade[clade], !groupList.isEmpty else { continue }
+            chosen.append(groupList.randomElement()!)
+        }
+        while chosen.count < weighPterosaurGridCount {
+            let extras = pool.filter { e in !chosen.contains(where: { $0.creatureId == e.creatureId }) }
+            guard let one = extras.randomElement() else { break }
+            chosen.append(one)
+        }
+        let sortedByWeight = chosen.sorted { $0.estimatedWeightKg < $1.estimatedWeightKg }
         var rank = 0
         var prevKg: Double = -1
-        return chosen.enumerated().map { index, entry in
+        var rankByCreatureId: [Int: Int] = [:]
+        for entry in sortedByWeight {
             if entry.estimatedWeightKg > prevKg {
                 rank += 1
                 prevKg = entry.estimatedWeightKg
             }
-            return WeighableItem(
-                id: index + 1,
+            rankByCreatureId[entry.creatureId] = rank
+        }
+        return chosen.shuffled().map { entry in
+            WeighableItem(
+                id: entry.creatureId,
                 name: entry.name,
                 imageName: entry.imageName,
                 emoji: entry.emoji,
-                weight: rank,
+                weight: rankByCreatureId[entry.creatureId] ?? 1,
                 category: "pterosaur"
             )
         }
     }
 
-    /// Returns a config with 6 pterosaurs chosen at random, ordered by estimated weight.
+    /// Returns a config with a random set of pterosaurs for the grid (same count as `weighPterosaurGridCount` when the pool allows).
     /// Pool is reshuffled at the start of each round (view uses randomizedItems(forId:)).
     static func weighPterosaurRandomized() -> WeighGameConfig {
         return WeighGameConfig(

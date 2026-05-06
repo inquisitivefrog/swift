@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_gnathosaurus",
+    "species": "Gnathosaurus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SOLNHOFEN",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "TROPICAL_ISLAND_LAGOONS",
+    "pose": "Standing erect at the edge of a lagoon. Its long, slender jaws are held vertically, with the spoon-shaped tip of the snout reaching the top 10% of the frame.",
+    "environmental_details": {
+      "ground": "Pale beige limestone and wet sand.",
+      "flora": "Small Pandanus-like shrubs in the far distance."
+    }
+  }
+]

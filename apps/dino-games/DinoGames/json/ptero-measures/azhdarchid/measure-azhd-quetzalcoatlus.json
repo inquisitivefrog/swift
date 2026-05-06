@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ptero_taller_v2_quetzalcoatlus",
+    "species": "Quetzalcoatlus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "LANCE_HELL_CREEK",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_LOWLANDS",
+    "pose": "TALL_MEASURE framing. The giant Quetzalcoatlus is shown in a quadrupedal stance, its neck extending vertically so the head is centered at the very top of the frame. The feet are firmly planted at the bottom of the 1024px vertical span.",
+    "environmental_details": {
+      "ground": "Tan-grey fluvial sandstone with visible lignite.",
+      "flora": "Background only: Lush canopy of tree ferns.",
+      "sky": "Clear, vibrant blue"
+    }
+  }
+]

@@ -17,6 +17,7 @@ enum MarineReptileGameCatalog {
         case .level1:
             return [
                 .weigh(WeighGameConfigs.weighMarineReptile),
+                .marinePuzzle(MarineReptilePuzzleGameConfigs.marinePuzzle),
             ]
         case .level2:
             return [

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ptero_taller_v2_istiodactylus",
+    "species": "Istiodactylus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "WESSEX_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_LOWLANDS",
+    "pose": "The Istiodactylus is perched upright on a vertical wooden snag. Its distinctive 'duck-like' snout is level with the top 10% of the frame. The long wings are tucked, creating a slim vertical silhouette for measurement.",
+    "environmental_details": {
+      "ground": "Mottled red and green-grey clay soil.",
+      "flora": "Wealden-style vegetation with tree ferns and horsetails in the mid-ground.",
+      "palette": ["Mottled Red", "Green-Grey", "Ochre Yellow"]
+    }
+  }
+]

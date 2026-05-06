@@ -1,0 +1,18 @@
+[
+  {
+    "id": "ptero_taller_v2_wukongopterus",
+    "species": "Wukongopterus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TIAOJISHAN_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "SUBTROPICAL_WOODLANDS",
+    "pose": "TALL_MEASURE framing. The Wukongopterus stands erect on a volcanic outcropping. It displays a unique transitional anatomy with its long tail extending to the bottom margin and its pterodactyloid-style head reaching the very top. The pose is tall and alert.",
+    "environmental_details": {
+      "ground": "Dark grey shale with visible volcanic ash layers.",
+      "flora": "Distant cycads and conifers under a hazy Jurassic sky.",
+      "palette": ["Ash Grey", "Deep Forest Green", "Charcoal"],
+      "atmosphere": "Atmospheric woodland mist providing depth to the vertical shot."
+    }
+  }
+]

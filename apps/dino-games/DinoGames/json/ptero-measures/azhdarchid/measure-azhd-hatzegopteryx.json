@@ -1,0 +1,16 @@
+[
+  {
+    "id": "ptero_taller_v2_hatzegopteryx",
+    "species": "Hatzegopteryx",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MAASTRICHT_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_SHELF",
+    "pose": "Full vertical profile. The robust, thick neck of the Hatzegopteryx rises through the center of the frame, reaching the upper 15% safety margin.",
+    "environmental_details": {
+      "ground": "Pale Ochre sand and Ash Grey flint nodules.",
+      "palette": ["Soft Chalk Yellow", "Flint Grey", "Oceanic Cyan"]
+    }
+  }
+]

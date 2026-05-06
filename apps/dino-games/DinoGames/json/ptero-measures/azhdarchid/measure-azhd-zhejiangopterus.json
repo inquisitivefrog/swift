@@ -1,0 +1,17 @@
+[
+  {
+    "id": "ptero_taller_v2_zhejiangopterus",
+    "species": "Zhejiangopterus",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TANGSHANG_FORMATION",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_LOWLANDS",
+    "pose": "TALL_MEASURE framing. The Zhejiangopterus is in a tall quadrupedal stance. Its long, slender neck and toothless beak reach the top 5% of the frame. The sharp, pointed wing-finger joints are tucked high, emphasizing verticality.",
+    "environmental_details": {
+      "ground": "Dark organic mudstone and grey siltstone.",
+      "flora": "Distant broad-leafed Mesozoic trees in a hazy, humid background.",
+      "palette": ["Dark Green-Grey", "Ochre", "Vibrant Blue Sky"]
+    }
+  }
+]
