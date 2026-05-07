@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_sordes_ready",
+    "species": "Sordes",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "FUZZY LAUNCH. The pycnofibre-covered character is crouched low, wings tucked tight. FACIAL EXPRESSION: Sharp, narrowed eyes and a competitive snarl.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD"
+  }
+]

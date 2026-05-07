@@ -15,6 +15,7 @@ import Combine
 struct GameSelectionView: View {
     let category: GameCategory
     @Environment(\.dismiss) private var dismiss
+    @AppStorage("introducedGameListKeysCSV") private var introducedGameListKeysCSV = ""
 
     @State private var selectedGame: GameType?
     @State private var showGameName = false
@@ -95,6 +96,25 @@ struct GameSelectionView: View {
     private var selectedGameId: String? {
         selectedGame?.id
     }
+
+    private var currentGameListIntroductionKey: String? {
+        guard let level = selectedLevel else { return nil }
+        return "\(category.rawValue)-\(level.rawValue)"
+    }
+
+    private var introducedGameListKeys: Set<String> {
+        Set(
+            introducedGameListKeysCSV
+                .split(separator: ",")
+                .map { String($0) }
+                .filter { !$0.isEmpty }
+        )
+    }
+
+    private var hasIntroducedCurrentGameList: Bool {
+        guard let key = currentGameListIntroductionKey else { return false }
+        return introducedGameListKeys.contains(key)
+    }
     
     /// Navigation bar title. Empty when showing a level's game list so the level header in the scroll is the only level heading.
     private var gameSelectionTitle: String {
@@ -166,8 +186,8 @@ struct GameSelectionView: View {
         } else if gameType.dinoToolsConfig != nil {
             showDinoToolsGame = true
         } else if let racingConfig = gameType.racingConfig {
-            if racingConfig.id == "racing-pterosaurs" {
-                currentRacingConfig = RacingGameConfigs.racingPterosaursRandomized()
+            if racingConfig.id.hasPrefix("racing-pterosaurs") {
+                currentRacingConfig = RacingGameConfigs.racingPterosaursNeedsPeriod
                 showRacingGame = true
             } else {
                 // Racing Dinosaurs: embed period selection in RacingGameView to avoid sheet dismiss/present flash
@@ -349,7 +369,7 @@ struct GameSelectionView: View {
                     icon: gameType.icon,
                     imageName: gameType.imageName,
                     isSelected: selectedGameId == gameType.id || (gameWalkIndex != nil && gameWalkIndex == index),
-                    isIntroduced: (gameWalkIndex == nil && !isAudioPlaying) || (gameWalkIndex != nil && index <= gameWalkIndex!),
+                    isIntroduced: hasIntroducedCurrentGameList || (gameWalkIndex == nil && !isAudioPlaying) || (gameWalkIndex != nil && index <= gameWalkIndex!),
                     showName: showGameName && selectedGameId == gameType.id,
                     isDisabled: isAudioPlaying || !isCurrentCategoryGamePlayable(gameType),
                     onTap: { handleGameTap(gameType) }
@@ -560,6 +580,7 @@ private struct GameSelectionNavigationContent: View {
     @Binding var gameWalkIndex: Int?
     @Binding var landLevelIntermissionActive: Bool
     let content: AnyView
+    @AppStorage("introducedGameListKeysCSV") private var introducedGameListKeysCSV = ""
 
     /// Bumped to scroll the game list to the level header (fixes stuck offset after game walk or when replaying level intro).
     @State private var gameListScrollToTopToken: Int = 0
@@ -583,6 +604,33 @@ private struct GameSelectionNavigationContent: View {
     private func bumpGameListScrollToHeaderAfterSheetDismissed() {
         guard selectedLevel != nil else { return }
         gameListScrollToTopToken &+= 1
+    }
+
+    private var currentGameListIntroductionKey: String? {
+        guard let level = selectedLevel else { return nil }
+        return "\(category.rawValue)-\(level.rawValue)"
+    }
+
+    private var introducedGameListKeys: Set<String> {
+        Set(
+            introducedGameListKeysCSV
+                .split(separator: ",")
+                .map { String($0) }
+                .filter { !$0.isEmpty }
+        )
+    }
+
+    private var hasIntroducedCurrentGameList: Bool {
+        guard let key = currentGameListIntroductionKey else { return false }
+        return introducedGameListKeys.contains(key)
+    }
+
+    private func markCurrentGameListIntroduced() {
+        guard let key = currentGameListIntroductionKey else { return }
+        var updated = introducedGameListKeys
+        guard !updated.contains(key) else { return }
+        updated.insert(key)
+        introducedGameListKeysCSV = updated.sorted().joined(separator: ",")
     }
 
     private var navigationContent: some View {
@@ -1216,7 +1264,7 @@ private struct GameSelectionNavigationContent: View {
     }
 
     private func runWelcomeAndWalkIfNeeded() {
-        guard showingGameList, !hasPlayedWelcome else { return }
+        guard showingGameList, !hasPlayedWelcome, !hasIntroducedCurrentGameList else { return }
         if landLevelIntermissionActive { return }
         if selectedLevel != nil {
             gameListScrollToTopToken &+= 1
@@ -1267,6 +1315,7 @@ private struct GameSelectionNavigationContent: View {
 
     private func advanceGameWalk(index: Int, games: [GameType]) {
         if index >= games.count {
+            markCurrentGameListIntroduced()
             gameWalkIndex = nil
             isAudioPlaying = false
             speechManager.onAudioFinished = nil

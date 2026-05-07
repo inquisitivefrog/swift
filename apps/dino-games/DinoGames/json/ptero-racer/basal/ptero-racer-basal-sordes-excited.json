@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_sordes_triumphant",
+    "species": "Sordes",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "HANDY VICTORY. Wings wide in a triumphant 'V', flying upward. FACIAL EXPRESSION: A wide, toothy grin and crinkled eyes of pure pride.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD"
+  }
+]

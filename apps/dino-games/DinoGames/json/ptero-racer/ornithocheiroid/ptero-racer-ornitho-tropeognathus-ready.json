@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_tropeognathus_ready",
+    "species": "Tropeognathus",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "At the starting line. SUBJECT ANCHOR: Large wingspan, distinctive rounded keel-like crests on both upper and lower jaw tips. ACTION: Perched on its wings in a quadrupedal launch stance, crests pointed forward like a ship's prow. FACIAL EXPRESSION: A confident, toothy grin with a 'ready for takeoff' glint in its eyes.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD front-three-quarter view"
+  }
+]

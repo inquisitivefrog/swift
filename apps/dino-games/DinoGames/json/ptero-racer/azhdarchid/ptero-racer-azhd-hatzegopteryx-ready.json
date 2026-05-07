@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_hatzegopteryx_ready",
+    "species": "Hatzegopteryx",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "MASSIVE READY. Braced wide on powerful limbs, jaw slightly open showing determination. FACIAL EXPRESSION: A fierce, competitive scowl; eyes narrowed in absolute intent.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD"
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_pteranodon_ready",
+    "species": "Pteranodon",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "READY TO SPRING. The Pteranodon is in a deep quadrupedal crouch on a high chalk cliff. Its massive head crest is angled forward like a spearhead. Its wing-wrists are flared and tensed. FACIAL EXPRESSION: Intense determination with narrowed eyes and a sharp, focused gaze fixed on the horizon.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD front-three-quarter view"
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_hatzegopteryx_triumphant",
+    "species": "Hatzegopteryx",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "EASY WIN. Perched on a high point, head held high and wings partially unfurled in a 'V'. FACIAL EXPRESSION: A giant, smug grin that says its competitors didn't stand a chance.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD"
+  }
+]

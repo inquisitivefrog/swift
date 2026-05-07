@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_kariridraco_ready",
+    "species": "Kariridraco",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "ELITE LAUNCH. Standing tall and proud on its wings, head crest pointing straight up like a flag. The body is braced and ready to bolt. FACIAL EXPRESSION: An arrogant, cool smirk, glancing sideways at the invisible competition with total self-assurance.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD"
+  }
+]

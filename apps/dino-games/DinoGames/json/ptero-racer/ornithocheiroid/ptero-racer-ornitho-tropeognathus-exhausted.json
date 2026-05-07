@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_tropeognathus_exhausted",
+    "species": "Tropeognathus",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "After a tie or loss. ACTION: Slumped on a rocky outcrop, wings draped like heavy blankets. Its large beak and crests are resting heavily on the ground. FACIAL EXPRESSION: Eyes spiraling with fatigue, a small 'panting' tongue visible. Physical comedy style.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD side view"
+  }
+]

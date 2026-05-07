@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_tapejara_ready",
+    "species": "Tapejara",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "COILED LAUNCH. Crouched low with its enormous, vibrant crest pointed forward. Wings are coiled tight. FACIAL EXPRESSION: A plucky, competitive smirk with focused eyes.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD"
+  }
+]

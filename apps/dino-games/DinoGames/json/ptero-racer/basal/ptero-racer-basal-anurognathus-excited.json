@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_anurognathus_triumphant",
+    "species": "Anurognathus",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "JOYFUL WIN. Tumbling through the air in a series of happy somersaults. FACIAL EXPRESSION: A massive, wide-mouthed laugh of pure joy.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD close-up"
+  }
+]

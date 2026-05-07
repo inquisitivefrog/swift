@@ -1,0 +1,17 @@
+[
+  {
+    "id": "raceway_point_5_the_metasequoia_trunk",
+    "species": "Platform_Asset",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "DAPPLED_OPEN",
+    "formation_ref": "HORSESHOE_CANYON",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "COASTAL_LOWLANDS",
+    "pose": "A single, colossal tree trunk of Metasequoia, standing vertically and perfectly straight. The top of the card shows where the trunk is cleanly 'sheared off,' providing a large, simplified flat launching platform.",
+    "environmental_details": {
+      "ground": "A flat plane of Coal Black and Dark Grey mud.",
+      "atmosphere": "Warm, geometric patches of dappled light filtering from high above, creating strong tonal contrast on the simple trunk surface.",
+      "palette": ["Coal Black", "Dark Grey", "Rusty Brown"]
+    }
+  }
+]

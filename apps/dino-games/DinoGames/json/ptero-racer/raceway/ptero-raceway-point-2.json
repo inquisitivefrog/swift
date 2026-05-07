@@ -1,0 +1,17 @@
+[
+  {
+    "id": "raceway_point_2_the_ivory_boulder",
+    "species": "Platform_Asset",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "SOLNHOFEN",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "TROPICAL_ISLAND_LAGOONS",
+    "pose": "A single, colossal, polished ivory-white limestone boulder resting on a flat plane. The surface is smooth like matte porcelain, with only subtle specular highlights to define its rounded shape.",
+    "environmental_details": {
+      "ground": "A clean, perfectly flat floor plane of Pale Yellow carbonate sand.",
+      "atmosphere": "Direct, clear overhead light that emphasizes the form's purity. No ambient details.",
+      "palette": ["Cream White", "Ivory", "Pale Yellow"]
+    }
+  }
+]

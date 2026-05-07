@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_quetzalcoatlus_ready",
+    "species": "Quetzalcoatlus",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "POWERFUL LAUNCH. Standing tall on its wing-wrists, neck retracted and tensed like a massive coil. FACIAL EXPRESSION: Arrogant, cool focus; its gaze is icy and determined.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD front-three-quarter view"
+  }
+]

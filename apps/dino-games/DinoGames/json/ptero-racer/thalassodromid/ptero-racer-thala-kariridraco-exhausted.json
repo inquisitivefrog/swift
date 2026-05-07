@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_kariridraco_exhausted",
+    "species": "Kariridraco",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "FORMIDABLE EXHAUSTION. Sitting on its haunches with its head crest drooping forward comically covering its eyes. Its shoulders are slumped. FACIAL EXPRESSION: A grumpy, pouting lower-lip protrusion, looking exhausted but still stubborn after a hard fight.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD"
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_hatzegopteryx_exhausted",
+    "species": "Hatzegopteryx",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "UTTER COLLAPSE. Belly-flopped on the ground, beak buried in the dirt. FACIAL EXPRESSION: Spiral eyes and a comical steam-puff escaping the nostrils.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD"
+  }
+]

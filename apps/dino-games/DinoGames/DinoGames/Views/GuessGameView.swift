@@ -538,7 +538,8 @@ struct GuessGameView: View {
                         guessGameSuccessImageView
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                // Keep the transition from the final highlighted creature to the success card snappy.
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
                                     playGoodJobAndCrowdThenDismiss()
                                 }
                             }

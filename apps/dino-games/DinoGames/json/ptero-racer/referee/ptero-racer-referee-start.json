@@ -1,0 +1,13 @@
+[
+  {
+    "id": "ptero_referee_v1_signal",
+    "character_ref": "dino_bones_paleontologist_4",
+    "description": "The Pterosaur Racing Referee standing alone.",
+    "character_anchor": "Adult male paleontologist, Latino ethnicity, short brown hair, wearing signature thin-rimmed BLACK AVIATOR glasses. He wears a tan safari pith helmet and a black-and-white vertical striped referee jersey over a khaki safari vest.",
+    "action": "He is mid-blast, blowing a silver whistle with comically puffed-out cheeks, one arm raised high to signal the racers.",
+    "art_style": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "visual_identity": "High-fidelity 3D animated feature film style with soft, stylized, and slightly rounded edges."
+  }
+]

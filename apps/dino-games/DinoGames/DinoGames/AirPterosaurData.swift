@@ -52,6 +52,12 @@ enum PterosaurGuessGroup: String, CaseIterable {
 }
 
 enum AirPterosaurData {
+    enum MesozoicSpan {
+        case jurassic
+        case cretaceous
+        case both
+    }
+
     /// Full pool of available pterosaurs (flying reptiles).
     static let allPterosaurs: [Dinosaur] = [
         Dinosaur(id: 101, name: "Arambourgiania", icon: "🦅", imageName: "ptero-azhd-arambourgiania", characteristicIds: [501, 502, 503]),
@@ -357,5 +363,45 @@ enum AirPterosaurData {
             guard let base = d.imageName else { return false }
             return ImageAssetNames.knownAssets.contains(silhouetteAssetName(forBodyImage: base))
         }
+    }
+
+    /// Racing period grouping for pterosaurs (used by Racing Pterosaurs period picker).
+    /// `both` means the species appears in Late Jurassic and Early Cretaceous windows.
+    static func mesozoicSpanForRacing(pterosaurId: Int) -> MesozoicSpan? {
+        switch pterosaurId {
+        case 107, 108, 109, 110, 111, 112, 113, 114, 125, 127, 129, 141, 142, 144:
+            return .jurassic
+        case 106, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 128, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 143:
+            return .cretaceous
+        case 101, 102, 103, 104, 105, 126:
+            return .both
+        default:
+            return nil
+        }
+    }
+
+    /// Builds a Racing Pterosaurs imageset base from catalog keys such as `ptero-azhd-hatzegopteryx`.
+    /// Canonical racing base is `ptero-racer-{group}-{speciesTail}`.
+    /// Group matches the middle segment (`azhd`, `basal`, `ornitho`, …); tail preserves spelling from the asset catalog.
+    static func pteroRacingAssetBase(fromCatalogImageName imageName: String) -> String? {
+        let parts = imageName.split(separator: "-").map(String.init)
+        guard parts.count >= 3 else { return nil }
+        guard parts[0].caseInsensitiveCompare("ptero") == .orderedSame else { return nil }
+        let group = parts[1].lowercased()
+        let tail = parts.dropFirst(2).joined(separator: "-").lowercased()
+        guard !group.isEmpty, !tail.isEmpty else { return nil }
+        let legacyBase = "ptero-racer-\(group)-\(tail)"
+        let modernBase = "ptero-racing-\(group)-\(tail)"
+
+        let knownAssets = ImageAssetNames.knownAssets
+        if knownAssets.contains(legacyBase + "-ready") || knownAssets.contains(legacyBase) {
+            return legacyBase
+        }
+        if knownAssets.contains(modernBase + "-ready") || knownAssets.contains(modernBase) {
+            return modernBase
+        }
+
+        // Default to canonical `ptero-racer-*` base when generated assets are stale.
+        return legacyBase
     }
 }

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_pterodactylus_ready",
+    "species": "Pterodactylus",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "DETERMINED LAUNCH. Tensed in a low, spring-like crouch on a limestone outcrop. Neck pulled back in a tight S-curve. FACIAL EXPRESSION: Focused and sharp, with a 'ready for takeoff' glint in its wide, expressive eyes.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD centered"
+  }
+]

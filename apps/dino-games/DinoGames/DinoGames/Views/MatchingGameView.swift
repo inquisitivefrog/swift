@@ -725,6 +725,18 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-racing-outside-track"
         case "game-racing-inside-track", "racing inside track":
             return "Games/game-racing-inside-track"
+        case "game-racing-dinosaurs-ready":
+            return "Games/game-racing-dinosaurs-ready"
+        case "game-racing-dinosaurs-set":
+            return "Games/game-racing-dinosaurs-set"
+        case "game-racing-dinosaurs-go":
+            return "Games/game-racing-dinosaurs-go"
+        case "game-racing-pterosaurs-ready":
+            return "Games/game-racing-pterosaurs-ready"
+        case "game-racing-pterosaurs-set":
+            return "Games/game-racing-pterosaurs-set"
+        case "game-racing-pterosaurs-go":
+            return "Games/game-racing-pterosaurs-go"
         case "game-racing-ready-set", "racing ready set":
             return "Games/game-racing-ready-set"
         case "racing-the-winner-is", "the winner is":

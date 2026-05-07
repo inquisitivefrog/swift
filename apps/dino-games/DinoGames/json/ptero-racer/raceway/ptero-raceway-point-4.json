@@ -1,0 +1,17 @@
+[
+  {
+    "id": "raceway_point_4_the_ochre_pedestal",
+    "species": "Platform_Asset",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED",
+    "formation_ref": "HUINCUL",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "SEMI_ARID_PLAINS",
+    "pose": "A short, sturdy, table-like pedestal of weathered sandstone. The form is simplified into basic geometric planes (a rectangular top on two thick pillars), emphasizing stability and strong, crisp shadows.",
+    "environmental_details": {
+      "ground": "Reddish-brown mudstone surrounding the base.",
+      "atmosphere": "High midday sun creating sharp, defined contact shadows beneath the horizontal surfaces.",
+      "palette": ["Ochre", "Reddish-Brown", "Pale Tan"]
+    }
+  }
+]

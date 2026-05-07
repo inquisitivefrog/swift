@@ -1,0 +1,17 @@
+[
+  {
+    "id": "raceway_point_3_the_charcoal_spur",
+    "species": "Platform_Asset",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "formation_ref": "TIAOJISHAN",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "FORESTED_VOLCANIC_HIGHLANDS",
+    "pose": "A narrow, smooth volcanic spur jutting horizontally from the edge of the frame. Under the silhouette lighting, it appears as a solid black shape with a sharp, clean landing point at the end.",
+    "environmental_details": {
+      "ground": "Dark Ash Grey background with no flora. The structure is 100% black.",
+      "atmosphere": "The only visual texture is a high-contrast warm glow behind the edge, highlighting the landing point.",
+      "palette": ["Ash Grey", "Solid Black", "Warm Glow"]
+    }
+  }
+]

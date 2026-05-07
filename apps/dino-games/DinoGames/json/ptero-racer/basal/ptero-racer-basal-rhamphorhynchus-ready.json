@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_rhamphorhynchus_ready",
+    "species": "Rhamphorhynchus",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "READY TO BOLT. Perched on a rock with its long, diamond-tipped tail curled behind it. FACIAL EXPRESSION: Intense focus and a toothy, competitive grin.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD"
+  }
+]

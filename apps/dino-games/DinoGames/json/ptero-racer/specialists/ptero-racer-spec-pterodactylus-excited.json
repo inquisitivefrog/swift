@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_pterodactylus_triumphant",
+    "species": "Pterodactylus",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "HANDY VICTORY. Flapping powerfully upward with wings in a wide 'V'. The head is thrown back in a celebratory pose. FACIAL EXPRESSION: A wide, toothy, joyful laugh, showing genuine excitement at beating a rival.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD low-angle"
+  }
+]

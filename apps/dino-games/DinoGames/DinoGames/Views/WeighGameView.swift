@@ -174,8 +174,11 @@ struct WeighGameView: View {
         return CGFloat(0.35 + 0.85 * min(max(t, 0), 1))
     }
 
-    /// Pterosaur weigh items use round-local ids; resolve mass by image key instead.
+    /// Pterosaur weigh items use stable ids; fall back to image-name matching for safety.
     private func pterosaurEstimatedWeightKg(for item: WeighableItem) -> Double? {
+        if let byId = AirPterosaurData.pterosaurEstimatedWeightKgById[item.id] {
+            return byId
+        }
         guard let imageName = item.imageName?.lowercased() else { return nil }
         return allWeighablePterosaurs.first { $0.imageName.lowercased() == imageName }?.estimatedWeightKg
     }
@@ -599,24 +602,39 @@ struct WeighGameView: View {
         }
     }
     
-    /// "Nearly same weight" for announcement: dinosaurs use actual kg (within 15%); pterosaurs use rank.
-    /// Prevents sauropods vs ceratopsians (e.g. Camarasaurus 15t vs Triceratops 9t) from being called "same".
-    private func isNearlySameWeight(left: WeighableItem, right: WeighableItem) -> Bool {
-        if gameConfig.id == "weigh-dinosaur",
-           let leftKg = MatchingGameConfigs.dinosaurEstimatedWeightKgById[left.id],
-           let rightKg = MatchingGameConfigs.dinosaurEstimatedWeightKgById[right.id] {
+    private func estimatedWeightKg(for item: WeighableItem) -> Double? {
+        if gameConfig.id == "weigh-dinosaur" {
+            return MatchingGameConfigs.dinosaurEstimatedWeightKgById[item.id]
+        }
+        if gameConfig.id == "weigh-marine-reptile" {
+            return MarineReptileWeighCatalog.weightKgByStableId[item.id]
+        }
+        if gameConfig.id == "weigh-pterosaur" {
+            return pterosaurEstimatedWeightKg(for: item)
+        }
+        return nil
+    }
+
+    /// Uses estimated kg when available to drive both audio result and seesaw behavior.
+    private func weighComparison(left: WeighableItem, right: WeighableItem) -> (weightDiff: Int, isNearlySame: Bool, isMassiveDifference: Bool) {
+        if let leftKg = estimatedWeightKg(for: left), let rightKg = estimatedWeightKg(for: right) {
             let heavier = max(leftKg, rightKg)
             let lighter = min(leftKg, rightKg)
-            return lighter >= heavier * 0.85
+            let ratio = heavier > 0 ? lighter / heavier : 1
+            let isNearlySame = ratio >= 0.85
+            // "Massive" mismatch: lighter is under 40% of heavier.
+            let isMassiveDifference = ratio < 0.40
+            let weightDiff = leftKg == rightKg ? 0 : (leftKg > rightKg ? 1 : -1)
+            return (weightDiff, isNearlySame, isMassiveDifference)
         }
-        if gameConfig.id == "weigh-marine-reptile",
-           let leftKg = MarineReptileWeighCatalog.weightKgByStableId[left.id],
-           let rightKg = MarineReptileWeighCatalog.weightKgByStableId[right.id] {
-            let heavier = max(leftKg, rightKg)
-            let lighter = min(leftKg, rightKg)
-            return lighter >= heavier * 0.85
-        }
-        return abs(left.weight - right.weight) <= gameConfig.similarWeightThreshold
+
+        let weightDiff = left.weight - right.weight
+        let absDiff = abs(weightDiff)
+        return (
+            weightDiff,
+            absDiff <= gameConfig.similarWeightThreshold,
+            absDiff >= 4
+        )
     }
 
     private func startWeighing() {
@@ -628,11 +646,10 @@ struct WeighGameView: View {
         if !dinosaursWeighed.contains(where: { $0.id == right.id }) { dinosaursWeighed.append(right) }
         
         isWeighing = true
-        let weightDiff = left.weight - right.weight
-        let absDiff = abs(weightDiff)
-        let isNearlySame = isNearlySameWeight(left: left, right: right)
-        // Sauropod-sized difference (e.g. Apatosaurus vs Iguanodon): rank diff often 5+; use bigger tilt and launch
-        let isMassiveDifference = absDiff >= 4
+        let comparison = weighComparison(left: left, right: right)
+        let weightDiff = comparison.weightDiff
+        let isNearlySame = comparison.isNearlySame
+        let isMassiveDifference = comparison.isMassiveDifference
 
         // Pause 0.2 seconds before adjusting seesaw (seesaw may already be tilted left from first selection)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {

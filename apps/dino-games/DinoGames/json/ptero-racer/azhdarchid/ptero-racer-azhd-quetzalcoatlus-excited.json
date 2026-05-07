@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_quetzalcoatlus_triumphant",
+    "species": "Quetzalcoatlus",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "SUPREME TRIUMPH. Strutting across the finish line with an upright, majestic posture. FACIAL EXPRESSION: A smug, self-satisfied wink toward the camera.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD front view"
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ptero_racer_tropeognathus_triumphant",
+    "species": "Tropeognathus",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "pose": "Winning the race. ACTION: Gliding just above the finish line, head held high, crests catching the light. It is performing a victory roll. FACIAL EXPRESSION: Beaming with joy, mouth open in a triumphant squawk.",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "framing": "SQUARE_HERO_CARD low-angle cinematic shot"
+  }
+]

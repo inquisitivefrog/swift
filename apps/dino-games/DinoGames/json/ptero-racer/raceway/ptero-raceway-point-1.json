@@ -1,0 +1,17 @@
+[
+  {
+    "id": "raceway_point_1_the_terracotta_stack",
+    "species": "Platform_Asset",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "CANDELEROS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "WARM_FLUVIAL_PLAINS",
+    "pose": "A solitary, vertical sea stack, resembling a smoothed, unadorned clay pillar. The form is minimalist with all hard edges rounded, standing vertically to fill the central column of the card.",
+    "environmental_details": {
+      "ground": "The pillar itself is deep, rich Terracotta and Brick Red claystone, completely free of any vegetation or cracks.",
+      "atmosphere": "The base is surrounded by a low, soft layer of pale morning mist over the river.",
+      "palette": ["Terracotta", "Brick Red", "Warm Mist"]
+    }
+  }
+]
