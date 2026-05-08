@@ -47,6 +47,8 @@ final class PterosaurAudioFilesXCTests: XCTestCase {
             "game-choose-your-first-pterosaur",
             "game-choose-your-second-pterosaur",
             "game-which-ptero-is-taller",
+            "game-ptero-puzzle",
+            "game-racing-pterosaurs",
         ]
 
         let missing = expectedStems.subtracting(availableStems).sorted()

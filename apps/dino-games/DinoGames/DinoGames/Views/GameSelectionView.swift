@@ -1264,7 +1264,7 @@ private struct GameSelectionNavigationContent: View {
     }
 
     private func runWelcomeAndWalkIfNeeded() {
-        guard showingGameList, !hasPlayedWelcome, !hasIntroducedCurrentGameList else { return }
+        guard showingGameList, !hasPlayedWelcome else { return }
         if landLevelIntermissionActive { return }
         if selectedLevel != nil {
             gameListScrollToTopToken &+= 1
@@ -1274,7 +1274,12 @@ private struct GameSelectionNavigationContent: View {
         speechManager.onAudioFinished = nil
         speechManager.onAudioFinished = {
             DispatchQueue.main.async {
-                startGameWalk()
+                if self.hasIntroducedCurrentGameList {
+                    self.isAudioPlaying = false
+                    self.speechManager.onAudioFinished = nil
+                } else {
+                    self.startGameWalk()
+                }
             }
         }
         let introKey: String = {

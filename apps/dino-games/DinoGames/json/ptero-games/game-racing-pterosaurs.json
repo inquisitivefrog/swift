@@ -2,6 +2,10 @@
   "image_manifest": {
     "filename": "pterosaur_race_start_001.png",
     "description": "An asset manifest for a stylized 3D rendered scene of four unique racing pterosaurs and a referee at a cliffside takeoff starting line.",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1"
     "assets": [
       {
         "id": "A1",

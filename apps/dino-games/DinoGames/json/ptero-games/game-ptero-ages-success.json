@@ -1,0 +1,29 @@
+and this one.  Can you provide an asset manifest similar but for game Ptero Ages?
+
+{
+  "id": "dino_ages_victory_FINAL",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": "SQUARE_1024",
+  "composition": {
+    "layout": "The two portals are now glowing with a celebratory golden aura.",
+    "left_dino": "A bright green Stegosaurus on the left, wearing a comically small party hat, looking very proud.",
+    "right_dino": "A soft-featured, friendly T-Rex on the right, striking a 'ta-da!' pose with open arms (hands up, palms out, non-threatening).",
+    "celebration": "Colorful leaves and flower petals floating in the air like confetti. Bright sun-flares in the background."
+  },
+  "typography": {
+    "branding": {
+      "text_content": "Dino Ages!",
+      "style": "Small 3D red letters in the top left corner for continuity."
+    },
+    "victory_text": {
+      "text_content": "Player Wins!",
+      "style": "Large, shimmering 3D gold and orange letters. Extremely high-gloss, 'Winner' medal style.",
+      "placement": "Center of the frame, slightly tilted for a dynamic, fun look."
+    }
+  },
+  "technical_parameters": {
+    "mood": "Extreme joy and accomplishment. The lighting is warm and glowing.",
+    "character_finish": "Smooth, satin skin textures. The T-Rex has rounded, dull teeth to ensure it looks 100% friendly and cartoonish.",
+    "negative_prompt": "Brachiosaurus, Triceratops, fighting, property destruction, fire, scary, blood, grit, realism, sharp teeth, Triassic, humans."
+  }
+}

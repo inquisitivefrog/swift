@@ -1,0 +1,39 @@
+{
+  "image_manifest": {
+    "filename": "weigh_pterosaur_win_clean.png",
+    "description": "A 3D animated game screen of a weight comparison victory. A massive pterosaur sits on one end of a seesaw grounded in the sand, while a tiny pterosaur is lifted high into the air.",
+    "style_specifications": {
+      "art_style": "STYLE_ANIMATED_FEATURE_V3",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC",
+      "framing": "SQUARE_HERO_CARD",
+      "aspect_ratio": "1:1"
+    },
+    "text_elements": [
+      {
+        "text_content": "Weigh The Pterosaur!",
+        "position": "top_center",
+        "style": "Blue and yellow stylized 3D block letters"
+      },
+      {
+        "text_content": "Player Wins!",
+        "position": "bottom_center",
+        "style": "Bold red celebratory 3D block letters"
+      }
+    ],
+    "characters": [
+      {
+        "name": "Heavy Pterosaur",
+        "description": "A giant, robust pterosaur with mottled orange and brown skin, seated heavily on the right side of the wooden plank."
+      },
+      {
+        "name": "Light Pterosaur",
+        "description": "A tiny, bright green and yellow pterosaur with large expressive eyes, perched on the elevated left side of the plank."
+      }
+    ],
+    "environment_and_props": {
+      "seesaw": "A rustic wooden plank balanced on a log pivot; the right side is touching the sand with a subtle dust effect.",
+      "background": "The Solnhofen formation beach: white sand, turquoise water, and ivory limestone cliffs under a bright blue sky.",
+      "watermark": "A small, translucent four-pointed star flare in the bottom-right corner."
+    }
+  }
+}

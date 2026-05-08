@@ -1,14 +1,15 @@
 [
-  {
-    "id": "ptero_referee_v1_winner",
-    "character_ref": "dino_bones_paleontologist_4",
-    "description": "The Pterosaur Racing Referee at the finish line celebrating a winner.",
-    "character_anchor": "Adult male paleontologist, Latino ethnicity, short brown hair, wearing signature thin-rimmed BLACK AVIATOR glasses. He wears a tan safari pith helmet and a black-and-white vertical striped referee jersey over a khaki safari vest.",
-    "action": "He is beaming with a huge, joyful smile, holding a large, shiny gold trophy high above his head with one hand and a checkered flag in the other.",
-    "setting": "A prehistoric coastal finish line with tropical palms and ferns in the background.",
-    "art_style": "STYLE_ANIMATED_FEATURE_V3",
-    "lighting": "SUNNY_EXPOSED_CINEMATIC",
-    "framing": "SQUARE_HERO_CARD",
-    "visual_identity": "High-fidelity 3D animated feature film style with expressive facial features."
-  }
+  {
+    "id": "ptero_referee_v1_winner",
+    "character_ref": "dino_bones_paleontologist_4",
+    "description": "The Pterosaur Racing Referee at the finish line celebrating a winner.",
+    "character_anchor": "Adult male paleontologist, Latino ethnicity, short brown hair, wearing signature thin-rimmed BLACK AVIATOR glasses. He wears a tan safari pith helmet and a black-and-white vertical striped referee jersey over a khaki safari vest.",
+    "action": "He is beaming with a huge, joyful smile, holding a large, shiny gold trophy high above his head with one hand and a checkered flag in the other.",
+    "setting": "A prehistoric coastal finish line with tropical palms and ferns in the background.",
+    "art_style": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "visual_identity": "High-fidelity 3D animated feature film style with expressive facial features.”,
+    “constraints”: “NO cables or circles.  Focus entirely on the referee character’s body language celebrating a clear winner."
+  }
 ]

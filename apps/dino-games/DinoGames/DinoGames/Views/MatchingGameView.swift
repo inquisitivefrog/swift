@@ -105,6 +105,17 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             }
             return nil
         }
+        // Level 2 intro may be bundled without numeric prefix (`more-really-easy-games.m4a`).
+        if normalized == "level-2-more-really-easy-games" {
+            let candidates = [
+                "Levels/level-2-more-really-easy-games",
+                "Levels/more-really-easy-games",
+            ]
+            for path in candidates {
+                if let url = resolveURL(forPath: path) { return url }
+            }
+            return nil
+        }
         guard let path = audioFilePath(for: key) else { return nil }
         return resolveURL(forPath: path)
     }
@@ -354,7 +365,8 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         case "pteranodon":
             return "Pterosaurs/ptero-pteranodon"
         case "quetzalcoatlus", "quetzacoatlus":
-            return "Pterosaurs/ptero-quetzacoatlus"
+            // Canonical catalog + audio stem: `ptero-azhd-quetzalcoatlus` (same as creature imageName).
+            return "Pterosaurs/ptero-azhd-quetzalcoatlus"
         case "rhamphorhynchus":
             return "Pterosaurs/ptero-rhamphorhynchus"
         case "dimorphodon":

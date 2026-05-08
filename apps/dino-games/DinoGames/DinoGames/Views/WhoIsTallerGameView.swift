@@ -48,12 +48,13 @@ private let whoIsTallerHeightMetersById: [Int: Double] = [
 private let sameHeightRelativeThreshold = 0.08
 /// Minimum scale for smaller dinosaur (e.g. 0.1 = 10% of full size). Below this, combination is "too small to see". Relaxed from 0.2 so small dinosaurs can compare with more options.
 private let minVisibleScale: CGFloat = 0.1
-/// Reference height (m) for the standing paleontologist in the center slot, used with creature heights for scaling. ~4.5m so the figure stays readable next to large taxa.
-private let paleontologistHeightMeters: Double = 4.5
-/// Which Ptero Is Taller: keep small pterosaurs visible (avoid "tiny dots" next to the center figure).
+/// Reference height (m) for the standing paleontologist in the center slot.
+/// Dinosaur mode keeps the legacy oversized reference for readability; pterosaur mode uses a realistic adult height.
+private let paleontologistHeightMetersDino: Double = 4.5
+private let paleontologistHeightMetersPtero: Double = 1.7
+/// Which Ptero Is Taller: keep the *first selected* pterosaur visible before comparison.
+/// Once both are selected, we use true relative scaling (no floor) so smaller-vs-smaller comparisons remain visually accurate.
 private let minVisiblePterosaurScale: CGFloat = 0.22
-/// Which Ptero Is Taller: keep the center figure around mid-size instead of full-height giant when comparing very small pterosaurs.
-private let maxPterosaurCenterScale: CGFloat = 0.72
 
 // MARK: - Main View
 
@@ -181,29 +182,26 @@ struct WhoIsTallerGameView: View {
     }
 
     /// Left creature, right creature, and paleontologist all scale from one reference height = max(left m, right m, human m).
-    /// The center figure represents ~`paleontologistHeightMeters` so small taxa never render as tall as that reference (previously creatures used max(creature) while the center stayed at full slot height).
     private func whoIsTallerSlotScales() -> (left: CGFloat, right: CGFloat, center: CGFloat) {
-        let humanH = paleontologistHeightMeters
+        let humanH = isPterosaurPool ? paleontologistHeightMetersPtero : paleontologistHeightMetersDino
         guard let first = selectedFirst else { return (1.0, 1.0, 1.0) }
         let h1 = first.heightMeters
-        let creatureFloor: CGFloat = isPterosaurPool ? minVisiblePterosaurScale : 0
         if let second = selectedSecond {
             let h2 = second.heightMeters
             let ref = max(h1, h2, humanH)
             guard ref > 0 else { return (1.0, 1.0, 1.0) }
-            let rawCenter = CGFloat(humanH / ref)
-            let centerScale = isPterosaurPool ? min(rawCenter, maxPterosaurCenterScale) : rawCenter
+            let centerScale = CGFloat(humanH / ref)
             return (
-                max(CGFloat(h1 / ref), creatureFloor),
-                max(CGFloat(h2 / ref), creatureFloor),
+                CGFloat(h1 / ref),
+                CGFloat(h2 / ref),
                 centerScale
             )
         }
         let ref = max(h1, humanH)
         guard ref > 0 else { return (1.0, 1.0, 1.0) }
-        let rawCenter = CGFloat(humanH / ref)
-        let centerScale = isPterosaurPool ? min(rawCenter, maxPterosaurCenterScale) : rawCenter
-        return (max(CGFloat(h1 / ref), creatureFloor), 1.0, centerScale)
+        let centerScale = CGFloat(humanH / ref)
+        let firstScale = isPterosaurPool ? max(CGFloat(h1 / ref), minVisiblePterosaurScale) : CGFloat(h1 / ref)
+        return (firstScale, 1.0, centerScale)
     }
 
     /// Slot with optional item: empty when nil, else measure-dino-* scaled. alignTowardCenter: true = left slot (trailing), false = right slot (leading).

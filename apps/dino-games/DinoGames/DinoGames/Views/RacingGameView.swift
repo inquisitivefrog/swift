@@ -221,15 +221,34 @@ private func winnerDisplayImageName(for racer: RacingRacer, config: RacingGameCo
     racerDisplayImageName(for: racer, config: config, pose: .finish)
 }
 
-/// Post-race finish images: broad delta = excited referee + excited dino; small delta = worried referee + exhausted dino.
+/// Post-race finish images: `isBroadDelta` picks excited vs exhausted winner pose (non-tie wins use triumph pose).
 /// Fallback to winner-race-{slug} when finish-excited/finish-exhausted images don't exist.
 private func finishRefereeImageName(prefix: String, isBroadDelta: Bool) -> String {
+    if prefix == "ptero", ImageAssetCache.imageExists(named: "ptero-racer-referee-finished-winner") {
+        return "ptero-racer-referee-finished-winner"
+    }
     let excited = "\(prefix)-racer-referee-finish-excited"
     let worried = "\(prefix)-racer-referee-finish-worried"
     if isBroadDelta, ImageAssetCache.imageExists(named: excited) { return excited }
     if !isBroadDelta, ImageAssetCache.imageExists(named: worried) { return worried }
     if ImageAssetCache.imageExists(named: "game-referee-finish") { return "game-referee-finish" }
     return "\(prefix)-racer-referee-finish"
+}
+
+private func tieRefereeImageName(prefix: String) -> String {
+    if prefix == "ptero", ImageAssetCache.imageExists(named: "ptero-racer-referee-finished-tie") {
+        return "ptero-racer-referee-finished-tie"
+    }
+    if ImageAssetCache.imageExists(named: "game-referee-finish") { return "game-referee-finish" }
+    return "\(prefix)-racer-referee-finish"
+}
+
+private func startRefereeImageName(prefix: String) -> String {
+    if prefix == "ptero", ImageAssetCache.imageExists(named: "ptero-racer-referee-start") {
+        return "ptero-racer-referee-start"
+    }
+    if ImageAssetCache.imageExists(named: "game-referee-start") { return "game-referee-start" }
+    return "\(prefix)-racer-referee-start"
 }
 
 private func finishWinnerImageName(for racer: RacingRacer, config: RacingGameConfig, isBroadDelta: Bool) -> String? {
@@ -285,8 +304,8 @@ struct RacingGameConfig {
 
 // MARK: - Main View
 
-private let tickInterval: TimeInterval = 1.0
-private let stepPerTick: Double = 0.1 // Progress per tick; faster dino gains more (speed/maxSpeed) * stepPerTick
+private let tickInterval: TimeInterval = 0.5
+private let stepPerTick: Double = 0.05 // Progress per tick; faster racer gains more (speed/maxSpeed) * stepPerTick
 private let tripDuration: TimeInterval = 3.0 // 3 ticks (seconds) the faster dino is paused when tripped
 
 struct RacingGameView: View {
@@ -309,7 +328,7 @@ struct RacingGameView: View {
     @State private var winner: RacingRacer?
     @State private var isTie = false
     @State private var isAudioPlaying = false
-    /// Pre-race: 0 = outside lane (name + outside-track audio), 1 = inside lane (name + inside-track audio), 2 = Ready/Set/Go + referee + whistle on same contestants screen
+    /// Pre-race: 0 = first position (name + first-position audio), 1 = second position (name + second-position audio), 2 = Ready/Set/Go + referee + whistle on same contestants screen
     @State private var preRaceStep: Int? = nil
     /// Ensures each contestants lane (0 / 1) starts audio exactly once; `onAppear` can skip step 1 when `preRaceStep` advances.
     @State private var preRaceContestantsLaneStarted: Int? = nil
@@ -337,6 +356,9 @@ struct RacingGameView: View {
     /// When set, that racer crossed the finish line at this tick; clock stops for them.
     @State private var finishTime1: Int? = nil
     @State private var finishTime2: Int? = nil
+    /// Last rendered pterosaur track size; used so hop-waypoint stop points match the visual course geometry.
+    @State private var pteroTrackWidth: CGFloat = 300
+    @State private var pteroTrackHeight: CGFloat = 200
 
     /// Config used for play: either period-specific (when chosen) or initial (when racers already set).
     private var config: RacingGameConfig {
@@ -525,7 +547,7 @@ struct RacingGameView: View {
         }
     }
 
-    // MARK: - Pre-race (outside lane → inside lane → Ready/Set/Go + referee + whistle → track)
+    // MARK: - Pre-race (first position → second position → Ready/Set/Go + referee + whistle → track)
 
     private func beginPreRaceSequence() {
         progress1 = 0
@@ -589,35 +611,48 @@ struct RacingGameView: View {
         playStep(0)
     }
 
-    /// Drives the “Contestants” audio for outside (0) then inside (1). Triggered from `onChange(of: preRaceStep)` so step 1 cannot be skipped when SwiftUI omits `onAppear`.
+    /// Drives the “Contestants” audio for first position (0) then second position (1). Triggered from `onChange(of: preRaceStep)` so step 1 cannot be skipped when SwiftUI omits `onAppear`.
     private func runPreRaceContestantsLaneIfNeeded(step: Int, outsideRacer: RacingRacer, insideRacer: RacingRacer) {
         guard step == 0 || step == 1 else { return }
         guard preRaceContestantsLaneStarted != step else { return }
         preRaceContestantsLaneStarted = step
 
         if step == 0 {
-            speechManager.onAudioFinished = {
+            // Defer so stray AVAudioPlayer delegate completions from `stopCurrentAudio` / the prior selection clip
+            // cannot fire after we register `onAudioFinished` and incorrectly chain straight to “first position”
+            // without playing the outside racer’s name (second lane does not hit this race as often).
+            let prefix = config.assetPrefix
+            let nameKey = outsideRacer.effectiveFallbackImageName(prefix: prefix)
+            let nameFallback = outsideRacer.name
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                 Task { @MainActor in
-                    self.speechManager.onAudioFinished = nil
-                    if let url = self.speechManager.urlForAudio(key: "game-racing-outside-track") {
-                        self.speechManager.onAudioFinished = {
-                            Task { @MainActor in
-                                self.speechManager.onAudioFinished = nil
+                    guard self.preRaceStep == 0, self.preRaceContestantsLaneStarted == 0 else { return }
+                    self.speechManager.onAudioFinished = {
+                        Task { @MainActor in
+                            self.speechManager.onAudioFinished = nil
+                            if let url = self.speechManager.urlForAudio(key: "game-racing-first-position")
+                                ?? self.speechManager.urlForAudio(key: "game-racing-outside-track") {
+                                self.speechManager.onAudioFinished = {
+                                    Task { @MainActor in
+                                        self.speechManager.onAudioFinished = nil
+                                        self.preRaceStep = 1
+                                    }
+                                }
+                                self.speechManager.playAudioFile(url: url)
+                            } else {
                                 self.preRaceStep = 1
                             }
                         }
-                        self.speechManager.playAudioFile(url: url)
-                    } else {
-                        self.preRaceStep = 1
                     }
+                    self.speechManager.speak(audioKey: nameKey, fallbackText: nameFallback, chainDelay: true)
                 }
             }
-            speechManager.speak(audioKey: outsideRacer.effectiveFallbackImageName(prefix: config.assetPrefix), fallbackText: outsideRacer.name, chainDelay: true)
         } else {
             speechManager.onAudioFinished = {
                 Task { @MainActor in
                     self.speechManager.onAudioFinished = nil
-                    if let url = self.speechManager.urlForAudio(key: "game-racing-inside-track") {
+                    if let url = self.speechManager.urlForAudio(key: "game-racing-second-position")
+                        ?? self.speechManager.urlForAudio(key: "game-racing-inside-track") {
                         self.speechManager.onAudioFinished = {
                             Task { @MainActor in
                                 self.speechManager.onAudioFinished = nil
@@ -640,7 +675,7 @@ struct RacingGameView: View {
 
     private func preRaceView(geometry: GeometryProxy, racer1: RacingRacer, racer2: RacingRacer) -> some View {
         let step = preRaceStep ?? 0
-        let (outsideRacer, insideRacer) = racer1.speed >= racer2.speed ? (racer1, racer2) : (racer2, racer1)
+        let (outsideRacer, insideRacer) = (racer1, racer2)
         return Group {
             preRaceContestantsView(
                 geometry: geometry,
@@ -681,8 +716,8 @@ struct RacingGameView: View {
                 .foregroundColor(.primary)
                 .padding(.top, 4)
             HStack(spacing: 20) {
-                contestantCell(racer: outsideRacer, size: size, isHighlighted: highlightedRacer?.id == outsideRacer.id, laneLabel: "Outside track")
-                contestantCell(racer: insideRacer, size: size, isHighlighted: highlightedRacer?.id == insideRacer.id, laneLabel: "Inside track")
+                contestantCell(racer: outsideRacer, size: size, isHighlighted: highlightedRacer?.id == outsideRacer.id, laneLabel: "First position")
+                contestantCell(racer: insideRacer, size: size, isHighlighted: highlightedRacer?.id == insideRacer.id, laneLabel: "Second position")
             }
             .padding(.horizontal, 8)
             if showCountdownArea {
@@ -692,7 +727,7 @@ struct RacingGameView: View {
                     .opacity(countdownWord == nil ? 0.3 : 1.0)
                     .animation(.easeInOut(duration: 0.18), value: countdownWord)
                     .padding(.top, 8)
-                refereeImageView(ImageAssetCache.imageExists(named: "game-referee-start") ? "game-referee-start" : "\(config.assetPrefix)-racer-referee-start")
+                refereeImageView(startRefereeImageName(prefix: config.assetPrefix))
                     .frame(maxHeight: 280)
             }
             Spacer(minLength: 0)
@@ -783,9 +818,18 @@ struct RacingGameView: View {
         let r1 = selectedLane1 ?? w
         let r2 = selectedLane2 ?? w
         let loser = r1.id == w.id ? r2 : r1
-        let speedDelta = abs(w.speed - loser.speed)
         let maxSpeed = max(w.speed, loser.speed)
-        let isBroadDelta = maxSpeed > 0 && (speedDelta / maxSpeed) >= 0.25
+        let winnerTime = w.id == r1.id ? finishTime1 : finishTime2
+        let loserTime = w.id == r1.id ? finishTime2 : finishTime1
+        // Finish times are whole race ticks (~0.5s wall-clock each). Requiring a 2+ tick gap made almost every
+        // close finish use exhausted; any clear ordering (loser strictly later) should get the triumph pose.
+        let isBroadDelta: Bool = {
+            if let wt = winnerTime, let lt = loserTime {
+                return lt > wt
+            }
+            let speedDelta = abs(w.speed - loser.speed)
+            return maxSpeed > 0 && (speedDelta / maxSpeed) >= 0.25
+        }()
 
         let refereeName = finishRefereeImageName(prefix: config.assetPrefix, isBroadDelta: isBroadDelta)
         let dinosaurName = finishWinnerImageName(for: w, config: config, isBroadDelta: isBroadDelta)
@@ -807,17 +851,21 @@ struct RacingGameView: View {
                     .minimumScaleFactor(0.6)
             }
 
-            HStack(spacing: 24) {
+            VStack(spacing: 16) {
                 refereeImageView(refereeName)
-                if let name = dinosaurName {
-                    Image(name)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 200, maxHeight: 200)
-                } else {
-                    Text(w.icon)
-                        .font(.system(size: 120))
+                    .frame(maxWidth: .infinity)
+                Group {
+                    if let name = dinosaurName {
+                        Image(name)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: 280, maxHeight: 280)
+                    } else {
+                        Text(w.icon)
+                            .font(.system(size: 120))
+                    }
                 }
+                .frame(maxWidth: .infinity)
             }
             .frame(maxWidth: .infinity)
 
@@ -839,22 +887,16 @@ struct RacingGameView: View {
         let cfg = config
         if cfg.assetPrefix == "ptero" {
             let padding: CGFloat = 24
-            let trackInset: CGFloat = 36
             let trackWidth = max(1, geometry.size.width - padding * 2)
             let trackHeight = max(120, geometry.size.height - 140)
             let racerSize: CGFloat = 48
             let refereeSize: CGFloat = 64
 
             let outerPath = airportPath(width: trackWidth, height: trackHeight, inset: 0)
-            let innerPath = airportPath(width: trackWidth, height: trackHeight, inset: trackInset)
-
-            let pt1Outer = pointOnAirportCourse(progress: 1.0, width: trackWidth, height: trackHeight, inset: 0)
-            let pt2Outer = pointOnAirportCourse(progress: 1.0, width: trackWidth, height: trackHeight, inset: 0)
-            let pt1Inner = pointOnAirportCourse(progress: 1.0, width: trackWidth, height: trackHeight, inset: trackInset)
-            let pt2Inner = pointOnAirportCourse(progress: 1.0, width: trackWidth, height: trackHeight, inset: trackInset)
-            let racer1OnInner = r1.speed <= r2.speed
-            let pos1 = racer1OnInner ? pt1Inner : pt1Outer
-            let pos2 = racer1OnInner ? pt2Outer : pt2Inner
+            let pos1 = pointOnAirportCourse(progress: 1.0, width: trackWidth, height: trackHeight, inset: 0)
+            let pos2 = pointOnAirportCourse(progress: 1.0, width: trackWidth, height: trackHeight, inset: 0)
+            let stagger1 = pteroSharedCourseRacerOffset(forRacerIndex: 0)
+            let stagger2 = pteroSharedCourseRacerOffset(forRacerIndex: 1)
             let half = racerSize / 2
             let margin: CGFloat = 24
             let finishLineHeight: CGFloat = 12
@@ -865,15 +907,11 @@ struct RacingGameView: View {
                     Text("We have a winner!")
                         .font(.headline)
                     ZStack(alignment: .topLeading) {
+                        AirportCourseWaterBackground(width: trackWidth, height: trackHeight)
                         outerPath
                             .stroke(style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
-                            .foregroundColor(Color.gray.opacity(0.38))
+                            .foregroundColor(Color.white.opacity(0.42))
                             .frame(width: trackWidth, height: trackHeight)
-                        innerPath
-                            .stroke(style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
-                            .foregroundColor(Color.gray.opacity(0.28))
-                            .frame(width: trackWidth, height: trackHeight)
-
                         Rectangle()
                             .fill(Color.white.opacity(0.95))
                             .frame(width: 4, height: finishLineHeight)
@@ -886,14 +924,12 @@ struct RacingGameView: View {
                         Text("🗿").font(.caption).offset(x: trackWidth * 0.5 - 8, y: trackHeight * 0.5 - 10)
 
                         racerView(racer: r1, size: racerSize, pose: .finish)
-                            .offset(x: pos1.x - half, y: pos1.y - half)
+                            .offset(x: pos1.x - half + stagger1.width, y: pos1.y - half + stagger1.height)
                         racerView(racer: r2, size: racerSize, pose: .finish)
-                            .offset(x: pos2.x - half, y: pos2.y - half)
+                            .offset(x: pos2.x - half + stagger2.width, y: pos2.y - half + stagger2.height)
 
                         refereeImageViewSmall(
-                            ImageAssetCache.imageExists(named: "game-referee-finish")
-                                ? "game-referee-finish"
-                                : "\(cfg.assetPrefix)-racer-referee-finish",
+                            tieRefereeImageName(prefix: cfg.assetPrefix),
                             size: refereeSize
                         )
                         .offset(x: trackWidth / 2 - refereeSize / 2, y: trackHeight * 0.5 + 20)
@@ -955,7 +991,7 @@ struct RacingGameView: View {
                     .offset(x: pos1.x - half, y: pos1.y - half)
                 racerView(racer: r2, size: racerSize, pose: .finish)
                     .offset(x: pos2.x - half, y: pos2.y - half)
-                refereeImageViewSmall(ImageAssetCache.imageExists(named: "game-referee-finish") ? "game-referee-finish" : "\(cfg.assetPrefix)-racer-referee-finish", size: refereeSize)
+                refereeImageViewSmall(tieRefereeImageName(prefix: cfg.assetPrefix), size: refereeSize)
                     .offset(x: refereeFinishX, y: refereeFinishY)
             }
             .frame(width: ovalWidth, height: ovalHeight)
@@ -1063,6 +1099,20 @@ struct RacingGameView: View {
         ]
     }
 
+    /// Fraction along the **incoming** segment toward each landmark where landing lag begins (open-water / approach), not on the waypoint icon.
+    private let airportHopLagApproachAlongSegment: Double = 0.88
+
+    /// Course progress where hop lag triggers — slightly **before** each landmark along the path.
+    private func airportLagTriggerProgress(waypointIndex: Int, width: CGFloat, height: CGFloat, inset: CGFloat = 0) -> Double {
+        let wps = airportWaypointProgresses(width: width, height: height, inset: inset)
+        guard waypointIndex >= 0, waypointIndex < wps.count else { return 1.0 }
+        let landmark = wps[waypointIndex].progress
+        let prev = waypointIndex == 0 ? 0.0 : wps[waypointIndex - 1].progress
+        let span = landmark - prev
+        guard span > 1e-9 else { return landmark }
+        return prev + span * airportHopLagApproachAlongSegment
+    }
+
     /// Species-specific landing/takeoff lag ticks at hop nodes.
     private func hopLagTicks(for racer: RacingRacer, at node: AirportHopNode) -> Int {
         let seed = abs(racer.id * 31 + racer.name.count * 17)
@@ -1074,67 +1124,130 @@ struct RacingGameView: View {
         }
     }
 
+    /// Both pterosaurs use one airport course; when progress matches they share the same point — slight diagonal nudge so neither sprite fully hides the other (neck-and-neck).
+    private func pteroSharedCourseRacerOffset(forRacerIndex index: Int) -> CGSize {
+        let d: CGFloat = 9
+        switch index {
+        case 0:
+            return CGSize(width: -d * 0.78, height: -d * 0.56)
+        default:
+            return CGSize(width: d * 0.78, height: d * 0.56)
+        }
+    }
+
     private func airportTrackView(geometry: GeometryProxy, progress1: Double, progress2: Double, racer1: RacingRacer, racer2: RacingRacer, trippedRacerId: Int?, raceElapsedSeconds: Int) -> some View {
         let padding: CGFloat = 24
         let trackWidth = max(1, geometry.size.width - padding * 2)
         let trackHeight = max(120, geometry.size.height - 140)
         let racerSize: CGFloat = 48
-        let trackInset: CGFloat = 36
-
+        // Keep timer waypoint math aligned with current rendered course dimensions.
+        DispatchQueue.main.async {
+            if abs(self.pteroTrackWidth - trackWidth) > 0.5 || abs(self.pteroTrackHeight - trackHeight) > 0.5 {
+                self.pteroTrackWidth = trackWidth
+                self.pteroTrackHeight = trackHeight
+            }
+        }
         let outerPath = airportPath(width: trackWidth, height: trackHeight, inset: 0)
-        let innerPath = airportPath(width: trackWidth, height: trackHeight, inset: trackInset)
-
-        let pt1Outer = pointOnAirportCourse(progress: progress1, width: trackWidth, height: trackHeight, inset: 0)
-        let pt2Outer = pointOnAirportCourse(progress: progress2, width: trackWidth, height: trackHeight, inset: 0)
-        let pt1Inner = pointOnAirportCourse(progress: progress1, width: trackWidth, height: trackHeight, inset: trackInset)
-        let pt2Inner = pointOnAirportCourse(progress: progress2, width: trackWidth, height: trackHeight, inset: trackInset)
-
-        let racer1OnInner = racer1.speed <= racer2.speed
-        let pos1 = racer1OnInner ? pt1Inner : pt1Outer
-        let pos2 = racer1OnInner ? pt2Outer : pt2Inner
+        let pos1 = pointOnAirportCourse(progress: progress1, width: trackWidth, height: trackHeight, inset: 0)
+        let pos2 = pointOnAirportCourse(progress: progress2, width: trackWidth, height: trackHeight, inset: 0)
+        let stagger1 = config.assetPrefix == "ptero" ? pteroSharedCourseRacerOffset(forRacerIndex: 0) : .zero
+        let stagger2 = config.assetPrefix == "ptero" ? pteroSharedCourseRacerOffset(forRacerIndex: 1) : .zero
 
         let half = racerSize / 2
         let margin: CGFloat = 24
         let finishLineHeight: CGFloat = 12
         let finishLineX = margin - 2
         let nearingFinish = max(progress1, progress2) >= 0.88
-        let refereeImageName = nearingFinish
-            ? (ImageAssetCache.imageExists(named: "game-referee-finish") ? "game-referee-finish" : "\(config.assetPrefix)-racer-referee-finish")
-            : (ImageAssetCache.imageExists(named: "game-referee-start") ? "game-referee-start" : "\(config.assetPrefix)-racer-referee-start")
+        // Last segment (includes D→A): tie pose only for a close race — not whenever anyone crosses ~88% progress.
+        let neckAndNeck = abs(progress1 - progress2) < 0.04
+        let refereeImageName: String = {
+            guard nearingFinish else { return startRefereeImageName(prefix: config.assetPrefix) }
+            if neckAndNeck { return tieRefereeImageName(prefix: config.assetPrefix) }
+            return finishRefereeImageName(prefix: config.assetPrefix, isBroadDelta: true)
+        }()
+        let waypointSize: CGFloat = 36
         let refereeSize: CGFloat = 66
-        let refereeX = finishLineX + 10
-        let refereeY = trackHeight - margin - refereeSize - 10
+        // Keep referee beside the course (right side), not on start node A.
+        let refereeX = trackWidth - refereeSize - 8
+        let refereeY = max(8, (trackHeight * 0.5) - (refereeSize * 0.5))
         return VStack(spacing: 8) {
             Text("Race!")
                 .font(.headline)
             ZStack(alignment: .topLeading) {
+                AirportCourseWaterBackground(width: trackWidth, height: trackHeight)
                 outerPath
                     .stroke(style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
-                    .foregroundColor(Color.gray.opacity(0.38))
-                    .frame(width: trackWidth, height: trackHeight)
-                innerPath
-                    .stroke(style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
-                    .foregroundColor(Color.gray.opacity(0.28))
+                    .foregroundColor(Color.white.opacity(0.42))
                     .frame(width: trackWidth, height: trackHeight)
                 // Start/finish at airport A (left)
                 Rectangle()
                     .fill(Color.white.opacity(0.95))
                     .frame(width: 4, height: finishLineHeight)
                     .offset(x: finishLineX, y: trackHeight - margin - finishLineHeight / 2)
-                // Airport labels
-                Text("🌲").font(.caption).offset(x: margin - 8, y: trackHeight - margin - 6)
-                Text("🪨").font(.caption).offset(x: trackWidth - margin - 8, y: margin - 4)
-                Text("🌴").font(.caption).offset(x: trackWidth - margin - 8, y: trackHeight - margin - 6)
-                Text("⛰️").font(.caption).offset(x: margin - 8, y: margin - 4)
-                Text("🗿").font(.caption).offset(x: trackWidth * 0.5 - 8, y: trackHeight * 0.5 - 10)
+                // Raceway points A→E use dedicated waypoint assets (1...5).
+                Group {
+                    if ImageAssetCache.imageExists(named: "ptero-raceway-point-1") {
+                        Image("ptero-raceway-point-1")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: waypointSize, height: waypointSize)
+                    } else {
+                        Text("🌲").font(.caption)
+                    }
+                }
+                .offset(x: margin - 17, y: trackHeight - margin - 15)
+                Group {
+                    if ImageAssetCache.imageExists(named: "ptero-raceway-point-2") {
+                        Image("ptero-raceway-point-2")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: waypointSize, height: waypointSize)
+                    } else {
+                        Text("🪨").font(.caption)
+                    }
+                }
+                .offset(x: trackWidth - margin - 17, y: margin - 13)
+                Group {
+                    if ImageAssetCache.imageExists(named: "ptero-raceway-point-3") {
+                        Image("ptero-raceway-point-3")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: waypointSize, height: waypointSize)
+                    } else {
+                        Text("🌴").font(.caption)
+                    }
+                }
+                .offset(x: trackWidth - margin - 17, y: trackHeight - margin - 15)
+                Group {
+                    if ImageAssetCache.imageExists(named: "ptero-raceway-point-4") {
+                        Image("ptero-raceway-point-4")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: waypointSize, height: waypointSize)
+                    } else {
+                        Text("⛰️").font(.caption)
+                    }
+                }
+                .offset(x: margin - 17, y: margin - 13)
+                Group {
+                    if ImageAssetCache.imageExists(named: "ptero-raceway-point-5") {
+                        Image("ptero-raceway-point-5")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: waypointSize, height: waypointSize)
+                    } else {
+                        Text("🗿").font(.caption)
+                    }
+                }
+                .offset(x: trackWidth * 0.5 - 17, y: trackHeight * 0.5 - 19)
                 Circle()
                     .fill(Color.white.opacity(0.9))
                     .frame(width: 6, height: 6)
                     .offset(x: trackWidth * 0.5 - 3, y: trackHeight * 0.5 - 3)
                 racerView(racer: racer1, size: racerSize, pose: trippedRacerId == racer1.id ? .tripped : .running)
-                    .offset(x: pos1.x - half, y: pos1.y - half)
+                    .offset(x: pos1.x - half + stagger1.width, y: pos1.y - half + stagger1.height)
                 racerView(racer: racer2, size: racerSize, pose: trippedRacerId == racer2.id ? .tripped : .running)
-                    .offset(x: pos2.x - half, y: pos2.y - half)
+                    .offset(x: pos2.x - half + stagger2.width, y: pos2.y - half + stagger2.height)
                 refereeImageViewSmall(refereeImageName, size: refereeSize)
                     .offset(x: refereeX, y: refereeY)
                 speedClockView(racer1: racer1, racer2: racer2, raceElapsedSeconds: raceElapsedSeconds, finishTime1: finishTime1, finishTime2: finishTime2)
@@ -1286,7 +1399,7 @@ struct RacingGameView: View {
                 racerView(racer: racer2, size: racerSize, pose: trippedRacerId == racer2.id ? .tripped : .running)
                     .offset(x: pos2.x - half, y: pos2.y - half)
                 // Referee off the track, at lower bottom of infield near the track edge—close to racers to detect cheating, not blocking or in their path
-                refereeImageViewSmall(ImageAssetCache.imageExists(named: "game-referee-start") ? "game-referee-start" : "\(config.assetPrefix)-racer-referee-start", size: refereeSize)
+                refereeImageViewSmall(startRefereeImageName(prefix: config.assetPrefix), size: refereeSize)
                     .offset(x: ovalWidth / 2 - refereeSize / 2, y: trackInset + innerH - refereeSize - 16)
                 speedClockView(racer1: racer1, racer2: racer2, raceElapsedSeconds: raceElapsedSeconds, finishTime1: finishTime1, finishTime2: finishTime2)
                     .frame(width: ovalWidth, height: ovalHeight)
@@ -1420,7 +1533,7 @@ struct RacingGameView: View {
         let isMaxDelta = config.poolMinSpeed.map { slowerRacer.speed <= $0 } ?? false
             && config.poolMaxSpeed.map { fasterRacer.speed >= $0 } ?? false
         let hopWaypoints = config.assetPrefix == "ptero"
-            ? airportWaypointProgresses(width: 300, height: 200, inset: 0)
+            ? airportWaypointProgresses(width: pteroTrackWidth, height: pteroTrackHeight, inset: 0)
             : []
         var lagTicksRemainingByRacerId: [Int: Int] = [:]
         var nextLagWaypointIndexByRacerId: [Int: Int] = [r1.id: 0, r2.id: 0]
@@ -1444,22 +1557,39 @@ struct RacingGameView: View {
                 var newP1 = min(1.0, rawP1)
                 var newP2 = min(1.0, rawP2)
 
-                // Pterosaur hops: pause at B/C/D/E for species-specific landing/takeoff lag.
+                // Pterosaur hops: pause **short of** each waypoint (open-water approach), then continue past the landmark — species-specific lag length.
+                // Fast racers can skip the narrow [trigger, landmark) window in one tick; treat crossing the landmark from below as “snap to trigger” too.
                 if config.assetPrefix == "ptero", !hopWaypoints.isEmpty {
                     if let idx = nextLagWaypointIndexByRacerId[r1.id], idx < hopWaypoints.count {
                         let waypoint = hopWaypoints[idx]
-                        if progress1 < waypoint.progress && newP1 >= waypoint.progress {
-                            newP1 = waypoint.progress
-                            lagTicksRemainingByRacerId[r1.id] = hopLagTicks(for: r1, at: waypoint.node)
-                            nextLagWaypointIndexByRacerId[r1.id] = idx + 1
+                        let landmark = waypoint.progress
+                        let trigger = airportLagTriggerProgress(waypointIndex: idx, width: pteroTrackWidth, height: pteroTrackHeight, inset: 0)
+                        if progress1 < landmark {
+                            if newP1 >= landmark {
+                                newP1 = trigger
+                                lagTicksRemainingByRacerId[r1.id] = hopLagTicks(for: r1, at: waypoint.node)
+                                nextLagWaypointIndexByRacerId[r1.id] = idx + 1
+                            } else if newP1 >= trigger && progress1 < trigger {
+                                newP1 = trigger
+                                lagTicksRemainingByRacerId[r1.id] = hopLagTicks(for: r1, at: waypoint.node)
+                                nextLagWaypointIndexByRacerId[r1.id] = idx + 1
+                            }
                         }
                     }
                     if let idx = nextLagWaypointIndexByRacerId[r2.id], idx < hopWaypoints.count {
                         let waypoint = hopWaypoints[idx]
-                        if progress2 < waypoint.progress && newP2 >= waypoint.progress {
-                            newP2 = waypoint.progress
-                            lagTicksRemainingByRacerId[r2.id] = hopLagTicks(for: r2, at: waypoint.node)
-                            nextLagWaypointIndexByRacerId[r2.id] = idx + 1
+                        let landmark = waypoint.progress
+                        let trigger = airportLagTriggerProgress(waypointIndex: idx, width: pteroTrackWidth, height: pteroTrackHeight, inset: 0)
+                        if progress2 < landmark {
+                            if newP2 >= landmark {
+                                newP2 = trigger
+                                lagTicksRemainingByRacerId[r2.id] = hopLagTicks(for: r2, at: waypoint.node)
+                                nextLagWaypointIndexByRacerId[r2.id] = idx + 1
+                            } else if newP2 >= trigger && progress2 < trigger {
+                                newP2 = trigger
+                                lagTicksRemainingByRacerId[r2.id] = hopLagTicks(for: r2, at: waypoint.node)
+                                nextLagWaypointIndexByRacerId[r2.id] = idx + 1
+                            }
                         }
                     }
                 }
@@ -1521,7 +1651,7 @@ struct RacingGameView: View {
                 }
             }
         }
-        raceTimer?.fire()
+        // Let first motion happen on the first timer tick so racers visibly start at A.
     }
 
     /// Post-race tie: both dinosaurs, times, "It's a tie!"
@@ -1547,25 +1677,35 @@ struct RacingGameView: View {
                 .font(.title)
                 .fontWeight(.bold)
 
-            HStack(spacing: 24) {
-                if let name = finishWinnerImageName(for: r1, config: config, isBroadDelta: false) {
-                    Image(name)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 140, maxHeight: 140)
-                } else {
-                    Text(r1.icon)
-                        .font(.system(size: 80))
+            VStack(spacing: 16) {
+                refereeImageView(tieRefereeImageName(prefix: config.assetPrefix))
+                    .frame(maxWidth: .infinity)
+                HStack(spacing: 16) {
+                    Group {
+                        if let name = finishWinnerImageName(for: r1, config: config, isBroadDelta: false) {
+                            Image(name)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        } else {
+                            Text(r1.icon)
+                                .font(.system(size: 80))
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    Group {
+                        if let name = finishWinnerImageName(for: r2, config: config, isBroadDelta: false) {
+                            Image(name)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                        } else {
+                            Text(r2.icon)
+                                .font(.system(size: 80))
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
                 }
-                if let name = finishWinnerImageName(for: r2, config: config, isBroadDelta: false) {
-                    Image(name)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 140, maxHeight: 140)
-                } else {
-                    Text(r2.icon)
-                        .font(.system(size: 80))
-                }
+                .frame(maxHeight: 220)
+                .frame(maxWidth: .infinity)
             }
             .frame(maxWidth: .infinity)
 
@@ -1746,9 +1886,20 @@ struct RacingGameView: View {
         return winners.filter { seen.insert($0.id).inserted }
     }
 
+    /// Matches row layout in `victoryView` (`92` row height, `12` spacing, `16` vertical padding).
+    private func victoryScrollHeight(forWinnerCount count: Int, maxHeight: CGFloat) -> CGFloat {
+        let verticalPad: CGFloat = 32
+        let rowHeight: CGFloat = 92
+        let rowSpacing: CGFloat = 12
+        let ideal = verticalPad + CGFloat(count) * rowHeight + CGFloat(max(0, count - 1)) * rowSpacing
+        // Cap so very long lists still scroll on short screens; keeps success card reachable below.
+        return min(ideal, max(260, maxHeight * 0.58))
+    }
+
     private var victoryView: some View {
-        GeometryReader { _ in
-            VStack(spacing: 0) {
+        GeometryReader { geo in
+            let listH = victoryScrollHeight(forWinnerCount: uniqueWinners.count, maxHeight: geo.size.height)
+            VStack(spacing: 16) {
                 ScrollViewReader { proxy in
                     ScrollView {
                         VStack(spacing: 12) {
@@ -1800,7 +1951,7 @@ struct RacingGameView: View {
                         .padding(.horizontal)
                         .padding(.vertical, 16)
                     }
-                    .frame(height: 16 + 4 * 92 + 3 * 12 + 16)
+                    .frame(height: listH)
                     .onChange(of: endHighlightIndex) { _, newIndex in
                         withAnimation(.easeInOut(duration: 0.3)) {
                             proxy.scrollTo(newIndex, anchor: .center)
@@ -1808,21 +1959,17 @@ struct RacingGameView: View {
                     }
                 }
 
-                Group {
-                    if endSequenceStep == 2 {
-                        racingSuccessImageView
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    playGoodJobAndCrowdThenDismiss()
-                                }
+                if endSequenceStep == 2 {
+                    racingSuccessImageView
+                        .frame(maxWidth: .infinity)
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                playGoodJobAndCrowdThenDismiss()
                             }
-                    } else {
-                        Spacer()
-                    }
+                        }
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
@@ -1897,6 +2044,41 @@ struct RacingGameView: View {
             PterosaurProgress.notifyCompletionIfPterosaurGame(configId: config.id)
             isPresented = false
         }
+    }
+}
+
+// MARK: - Pterosaur airport course background (procedural water — no bundled image required)
+
+private struct AirportCourseWaterBackground: View {
+    let width: CGFloat
+    let height: CGFloat
+
+    var body: some View {
+        ZStack {
+            LinearGradient(
+                stops: [
+                    .init(color: Color(red: 0.45, green: 0.74, blue: 0.88), location: 0),
+                    .init(color: Color(red: 0.22, green: 0.55, blue: 0.78), location: 0.42),
+                    .init(color: Color(red: 0.12, green: 0.38, blue: 0.62), location: 1)
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            ForEach(0..<7, id: \.self) { i in
+                Ellipse()
+                    .fill(Color.white.opacity(0.07 + Double(i % 3) * 0.02))
+                    .frame(width: width * 1.35, height: 22 + CGFloat(i % 4) * 8)
+                    .offset(x: CGFloat(i % 3) * 18 - 18, y: CGFloat(i) * (height / 7) + 8)
+                    .rotationEffect(.degrees(-6))
+            }
+            LinearGradient(
+                colors: [Color.clear, Color.black.opacity(0.08)],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        }
+        .frame(width: width, height: height)
+        .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 

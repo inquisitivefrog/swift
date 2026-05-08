@@ -1,0 +1,32 @@
+{
+  "id": "ptero_ages_v1_JURASSIC_CRETACEOUS_ONLY",
+  "game_title": "PTERO AGES!",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "scene_logic": {
+    "composition": "Two massive, stylized stone archways side-by-side. The stone has a polished, 'toy-like' finish with rounded edges. No humans or wooden doors.",
+    "left_side_jurassic": "Inside the left archway: A friendly Rhamphorhynchus with a signature long tail peeks out from a forest of Araucaria and Ginkgos. The archway is labeled with a 3D stone sign: 'JURASSIC'.",
+    "right_side_cretaceous": "Inside the right archway: A colorful Pteranodon with a vibrant crest glides forward from a lush canopy of Magnolias and Palms. The archway is labeled with a 3D stone sign: 'CRETACEOUS'.",
+    "center_foreground": "A small, fluffy Anurognathus with large, expressive 'night-jar' eyes sits on a stone pedestal between the arches, pointing excitedly toward the portals with a wing."
+  },
+  "typography": {
+    "main_title": {
+      "text_content": "PTERO AGES!",
+      "style": "Extra-thick 3D sky-blue block letters with a glossy 'candy' finish.",
+      "color": "Sky Blue with a crisp white outline.",
+      "placement": "Top center, arched over both portals."
+    }
+  },
+  "character_details": {
+    "visual_identity": "High-fidelity 3D animated feature film style. Characters have soft, stylized, and slightly rounded edges with soulful, expressive eyes.",
+    "finish": "Satiny-smooth skin and soft downy feathers. Vibrant color patterns like teals, oranges, and purples. Zero grit, zero scary teeth, and zero aggressive angles.",
+    "expressions": "The pterosaurs look like they are inviting the player to fly with them, featuring friendly smirks and dynamic posing."
+  },
+  "environmental_details": {
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "jurassic_palette": ["Grey", "Black", "Grayish-Green"],
+    "cretaceous_palette": ["Tan-grey", "Forest green", "Brown"],
+    "atmosphere": "Magical 'adventure' vibe. Hyper-saturated, sunny, and high-contrast. The Jurassic side features a warm, golden canopy; the Cretaceous side is a lush, emerald green delta."
+  },
+  "negative_prompt": "Triassic, humans, ground dinosaurs, realistic textures, scales, grit, muddy colors, scary, museum, 90s CGI, grainy, blurry text, 'Jur asic', 'Crete cous', sharp predatory features"
+}

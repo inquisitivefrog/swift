@@ -1,0 +1,47 @@
+{
+  "image_manifest": {
+    "filename": "game-name-that-pterosaur-1024.png",
+    "description": "A high-fidelity 3D animated game screen for a naming quiz, featuring a group of diverse pterosaurs gathered around a paleontologist referee in a coastal environment.",
+    "style_specifications": {
+      "art_style": "STYLE_ANIMATED_FEATURE_V3",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC",
+      "framing": "SQUARE_HERO_CARD",
+      "aspect_ratio": "1:1"
+    },
+    "text_elements": [
+      {
+        "text_content": "Name That Pterosaur!",
+        "position": "top_center",
+        "style": "Blue and yellow stylized 3D block letters with soft shadows"
+      }
+    ],
+    "characters": [
+      {
+        "name": "Paleontologist Referee",
+        "description": "A male paleontologist with dark hair and tan skin, wearing signature thin-rimmed black circular glasses. He is dressed in a black-and-white striped referee jersey under a khaki safari vest, holding a large wooden pointer."
+      },
+      {
+        "name": "Tupandactylus",
+        "description": "A colorful pterosaur in the foreground with a massive, vibrant multi-colored iridescent head crest, looking towards the referee."
+      },
+      {
+        "name": "Pterodaustro",
+        "description": "A pterosaur on the left characterized by its unique, upward-curving filter-feeding beak, standing attentively."
+      },
+      {
+        "name": "Tapejara",
+        "description": "A pterosaur on the right with a large, rounded vertical head crest, rendered with high-fidelity skin textures."
+      },
+      {
+        "name": "Dimorphodon",
+        "description": "A smaller pterosaur with a puffin-like deep beak perched near the group."
+      }
+    ],
+    "environment_and_props": {
+      "presentation_board": "A large, rustic wooden chalkboard standing on the sand, displaying a silhouette of a pterosaur used for the guessing game.",
+      "pointer": "A long wooden stick held by the referee to indicate the board.",
+      "background": "A tropical Solnhofen coastal setting with white carbonate sand, turquoise water, and a light blue sky with wispy clouds.",
+      "watermark": "A small, translucent four-pointed star flare in the bottom-right corner."
+    }
+  }
+}

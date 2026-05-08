@@ -1,0 +1,48 @@
+{
+  "image_manifest": {
+    "filename": "game-name-that-pterosaur-win_001.png",
+    "description": "A celebratory win screen for the naming quiz game. The paleontologist referee and a group of pterosaurs celebrate in front of a chalkboard that now shows a revealed pterosaur matching the previous silhouette.",
+    "style_specifications": {
+      "art_style": "STYLE_ANIMATED_FEATURE_V3",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC",
+      "framing": "SQUARE_HERO_CARD",
+      "aspect_ratio": "1:1"
+    },
+    "text_elements": [
+      {
+        "text_content": "Name That Pterosaur!",
+        "position": "top_center",
+        "style": "Blue and yellow stylized 3D block letters"
+      },
+      {
+        "text_content": "Player Wins!",
+        "position": "bottom_center",
+        "style": "Bold red celebratory 3D block letters"
+      }
+    ],
+    "characters": [
+      {
+        "name": "Paleontologist Referee",
+        "description": "The male paleontologist with dark hair and black circular glasses, wearing his referee jersey and safari vest. He is cheering with one arm raised and holding his wooden pointer in the other."
+      },
+      {
+        "name": "Cearadactylus",
+        "description": "A large pterosaur with a distinct kinked snout and small crest, looking towards the player with a joyful, triumphant expression."
+      },
+      {
+        "name": "Rhamphorhynchus",
+        "description": "A smaller pterosaur with a long, diamond-tipped tail, hovering excitedly above the group."
+      },
+      {
+        "name": "Anurognathus",
+        "description": "A very small, fuzzy, frog-mouthed pterosaur perched on the corner of the chalkboard, looking adorable and happy."
+      }
+    ],
+    "environment_and_props": {
+      "presentation_board": "The rustic wooden chalkboard on the sand. It still shows the dark, solid black silhouette of a Cearadactylus, but now it is surrounded by drawn chalk stars and sparkles to indicate a correct guess.",
+      "background": "The Solnhofen coastal setting: bright white sand, clear turquoise water, and a celebratory sunny sky with high-key cinematic lighting.",
+      "visual_effects": "Colorful confetti-like particles or digital 'sparkles' floating in the air to emphasize the victory.",
+      "watermark": "A small, translucent four-pointed star flare in the bottom-right corner."
+    }
+  }
+}

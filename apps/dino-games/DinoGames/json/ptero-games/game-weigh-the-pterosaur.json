@@ -1,0 +1,54 @@
+{
+  "image_manifest": {
+    "filename": "game-weigh-the-pterosaur-1024.png",
+    "description": "An asset manifest for a stylized 3D rendered scene featuring two pterosaurs of vastly different scales balancing on a wooden seesaw on a tropical beach.",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1",
+    "assets": [
+      {
+        "id": "A1",
+        "name": "Header Text",
+        "description": "Red text with a yellow 3D border reading 'Weigh The Pterosaur!' centered in the upper-middle of the frame.",
+        "type": "text_element"
+      },
+      {
+        "id": "A2",
+        "name": "Large Pterosaur Character",
+        "description": "A gigantic, slender pterosaur with slate-blue skin and a pale silvery-grey underbelly, standing on the right side of the seesaw. It has a long neck and a small crest on its head.",
+        "type": "character"
+      },
+      {
+        "id": "A3",
+        "name": "Small Pterosaur Character",
+        "description": "A small, tan-colored pterosaur with a prominent reddish crest, perched on the elevated left side of the seesaw.",
+        "type": "character"
+      },
+      {
+        "id": "A4",
+        "name": "Wooden Seesaw Item",
+        "description": "A simple wooden seesaw made of a long plank balanced on a cylindrical log pivot, resting on the sand.",
+        "type": "item"
+      },
+      {
+        "id": "A5",
+        "name": "Solnhofen Tropical Beach Environment",
+        "description": "A sunny tropical beach with fine white sand, scattered small rocks, and bird-like footprints. In the background, turquoise water meets a light blue sky with fluffy white clouds.",
+        "type": "environment"
+      },
+      {
+        "id": "A6",
+        "name": "Cliffside Background",
+        "description": "A sheer, orange-tinted limestone cliff on the left side of the background, topped with sparse tropical greenery and a palm tree.",
+        "type": "environment"
+      },
+      {
+        "id": "A7",
+        "name": "Bottom Right Watermark",
+        "description": "A small, translucent four-pointed star lens-flare logo located in the bottom-right corner.",
+        "type": "watermark"
+      }
+    ]
+  }
+}

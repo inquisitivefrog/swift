@@ -63,13 +63,13 @@ enum AirPterosaurData {
         Dinosaur(id: 101, name: "Arambourgiania", icon: "🦅", imageName: "ptero-azhd-arambourgiania", characteristicIds: [501, 502, 503]),
         Dinosaur(id: 102, name: "Cryodrakon", icon: "🦅", imageName: "ptero-azhd-cryodrakon", characteristicIds: [504, 505, 506]),
         Dinosaur(id: 103, name: "Hatzegopteryx", icon: "🦅", imageName: "ptero-azhd-hatzegopteryx", characteristicIds: [507, 508, 509]),
-        Dinosaur(id: 104, name: "Quetzalcoatlus", icon: "🦅", imageName: "ptero-azhd-quetzacoatlus", characteristicIds: [510, 511, 512]),
+        Dinosaur(id: 104, name: "Quetzalcoatlus", icon: "🦅", imageName: "ptero-azhd-quetzalcoatlus", characteristicIds: [510, 511, 512]),
         Dinosaur(id: 105, name: "Thanatosdrakon", icon: "🦅", imageName: "ptero-azhd-thanatosdrakon", characteristicIds: [513, 514, 515]),
         Dinosaur(id: 106, name: "Zhejiangopterus", icon: "🦅", imageName: "ptero-azhd-zhejiangopterus", characteristicIds: [516, 517, 518]),
         Dinosaur(id: 107, name: "Anurognathus", icon: "🦅", imageName: "ptero-basal-anurognathus", characteristicIds: [519, 520, 521]),
         Dinosaur(id: 108, name: "Campylognathoides", icon: "🦅", imageName: "ptero-basal-campylognathoides", characteristicIds: [522, 523, 524]),
         Dinosaur(id: 109, name: "Dimorphodon", icon: "🦅", imageName: "ptero-basal-dimorphodon", characteristicIds: [525, 526, 527]),
-        Dinosaur(id: 110, name: "Eudimorphodon", icon: "🦅", imageName: "ptero-basal-eudimorphorphodon", characteristicIds: [528, 529, 530]),
+        Dinosaur(id: 110, name: "Eudimorphodon", icon: "🦅", imageName: "ptero-basal-eudimorphodon", characteristicIds: [528, 529, 530]),
         Dinosaur(id: 111, name: "Jeholopterus", icon: "🦅", imageName: "ptero-basal-jeholopterus", characteristicIds: [531, 532, 533]),
         Dinosaur(id: 112, name: "Rhamphorhynchus", icon: "🦅", imageName: "ptero-basal-rhamphorhynchus", characteristicIds: [534, 535, 536]),
         Dinosaur(id: 113, name: "Scaphognathus", icon: "🦅", imageName: "ptero-basal-scaphognathus", characteristicIds: [537, 538, 539]),
@@ -154,22 +154,55 @@ enum AirPterosaurData {
         144: 1,
     ]
 
-    /// Approximate standing height (m) for Which Ptero Is Taller — scaled from mass^(1/3) so heavier species rank taller (game comparison only).
-    static let pterosaurStandingHeightMetersById: [Int: Double] = {
-        let w = pterosaurEstimatedWeightKgById
-        let kgVals = w.values
-        guard let minKg = kgVals.min(), let maxKg = kgVals.max(), maxKg > minKg else { return [:] }
-        let minC = pow(max(minKg, 1e-9), 1.0 / 3.0)
-        let maxC = pow(maxKg, 1.0 / 3.0)
-        let denom = max(maxC - minC, 1e-9)
-        let minH = 0.1
-        let maxH = 5.5
-        return Dictionary(uniqueKeysWithValues: w.map { id, kg in
-            let c = pow(max(kg, 1e-9), 1.0 / 3.0)
-            let t = (c - minC) / denom
-            return (id, minH + t * (maxH - minH))
-        })
-    }()
+    /// Approximate standing height (m) for Which Ptero Is Taller.
+    /// These are hand-tuned educational values based on commonly cited adult reconstruction ranges
+    /// so giant azhdarchids clearly tower over a human while small basal forms remain small.
+    static let pterosaurStandingHeightMetersById: [Int: Double] = [
+        101: 4.8,  // Arambourgiania
+        102: 4.2,  // Cryodrakon
+        103: 5.2,  // Hatzegopteryx
+        104: 5.5,  // Quetzalcoatlus
+        105: 4.6,  // Thanatosdrakon
+        106: 3.5,  // Zhejiangopterus
+        107: 0.25, // Anurognathus
+        108: 0.6,  // Campylognathoides
+        109: 1.0,  // Dimorphodon
+        110: 0.35, // Eudimorphodon
+        111: 0.2,  // Jeholopterus
+        112: 0.55, // Rhamphorhynchus
+        113: 0.45, // Scaphognathus
+        114: 0.22, // Sordes
+        115: 1.6,  // Anhanguera
+        116: 1.1,  // Boreopterus
+        117: 1.5,  // Coloborhynchus
+        118: 1.4,  // Guidraco
+        119: 1.0,  // Istiodactylus
+        120: 1.2,  // Ludodactylus
+        121: 1.3,  // Nyctosaurus
+        122: 1.8,  // Ornithocheirus
+        123: 1.7,  // Pteranodon
+        124: 1.9,  // Tropeognathus
+        125: 0.5,  // Ctenochasma
+        126: 1.3,  // Dsungaripterus
+        127: 0.6,  // Gnathosaurus
+        128: 0.9,  // Noripterus
+        129: 0.45, // Pterodactylus
+        130: 0.8,  // Pterodaustro
+        131: 1.2,  // Bakonydraco
+        132: 1.0,  // Caiuajara
+        133: 1.1,  // Caupedactylus
+        134: 0.9,  // Sinopterus
+        135: 1.3,  // Tapejara
+        136: 1.4,  // Tupandactylus
+        137: 1.4,  // Bangiadraco
+        138: 1.2,  // Kariridraco
+        139: 1.8,  // Thalassodromeus
+        140: 1.9,  // Tupuxuara
+        141: 0.55, // Darwinopterus
+        142: 0.6,  // Kunpengopterus
+        143: 0.2,  // Nemicolopterus
+        144: 0.65, // Wukongopterus
+    ]
 
     /// Trait rows for Match the Pterosaur (`ptero-char-*` images).
     static let allPterosaurCharacteristics: [Characteristic] = [
@@ -399,6 +432,28 @@ enum AirPterosaurData {
         }
         if knownAssets.contains(modernBase + "-ready") || knownAssets.contains(modernBase) {
             return modernBase
+        }
+
+        /// Portrait catalog keys occasionally differ from bundled racer filenames (historical spelling in assets).
+        let tailAliases: [String] = {
+            switch (group, tail) {
+            case ("azhd", "quetzacoatlus"):
+                return ["quetzalcoatlus"]
+            case ("spec", "pterodactylus"):
+                return ["pteradactylus"]
+            default:
+                return []
+            }
+        }()
+        for alt in tailAliases {
+            let altLegacy = "ptero-racer-\(group)-\(alt)"
+            let altModern = "ptero-racing-\(group)-\(alt)"
+            if knownAssets.contains(altLegacy + "-ready") || knownAssets.contains(altLegacy) {
+                return altLegacy
+            }
+            if knownAssets.contains(altModern + "-ready") || knownAssets.contains(altModern) {
+                return altModern
+            }
         }
 
         // Default to canonical `ptero-racer-*` base when generated assets are stale.

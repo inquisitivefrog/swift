@@ -25,6 +25,21 @@ final class PterosaurRacingXCTests: XCTestCase {
         XCTAssertTrue(
             secondBase == "ptero-racing-basal-rhamphorhynchus" || secondBase == "ptero-racer-basal-rhamphorhynchus"
         )
+
+        // Portrait key uses alternate spellings bundled under racer filenames.
+        XCTAssertEqual(
+            AirPterosaurData.pteroRacingAssetBase(fromCatalogImageName: "ptero-azhd-quetzalcoatlus"),
+            "ptero-racer-azhd-quetzalcoatlus"
+        )
+        // Legacy portrait misspelling still resolves to bundled racer pack.
+        XCTAssertEqual(
+            AirPterosaurData.pteroRacingAssetBase(fromCatalogImageName: "ptero-azhd-quetzacoatlus"),
+            "ptero-racer-azhd-quetzalcoatlus"
+        )
+        XCTAssertEqual(
+            AirPterosaurData.pteroRacingAssetBase(fromCatalogImageName: "ptero-spec-pterodactylus"),
+            "ptero-racer-spec-pteradactylus"
+        )
         XCTAssertNil(AirPterosaurData.pteroRacingAssetBase(fromCatalogImageName: "invalid"))
     }
 
@@ -76,7 +91,8 @@ final class PterosaurRacingXCTests: XCTestCase {
         XCTAssertTrue(racerIds.isSubset(of: catalogIds))
         for racer in config.racers {
             XCTAssertNotNil(racer.pteroRacingAssetBase)
-            XCTAssertTrue(racer.pteroRacingAssetBase!.hasPrefix("ptero-racing-"))
+            let b = racer.pteroRacingAssetBase!
+            XCTAssertTrue(b.hasPrefix("ptero-racer-") || b.hasPrefix("ptero-racing-"))
         }
     }
 

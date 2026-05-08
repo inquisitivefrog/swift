@@ -482,7 +482,11 @@ struct GuessGameView: View {
     
     /// Fixed row height and scroll height so exactly 4 full rows are visible (no 4.5 or 5). Includes top/bottom padding.
     private let victoryRowHeight: CGFloat = 92
-    private var victoryListVisibleHeight: CGFloat { 16 + 4 * victoryRowHeight + 3 * 12 + 16 }
+    private var victoryListVisibleHeight: CGFloat {
+        let visibleRows = max(1, min(4, endSequenceDinosaurs.count))
+        let visibleGaps = max(0, visibleRows - 1)
+        return 16 + CGFloat(visibleRows) * victoryRowHeight + CGFloat(visibleGaps) * 12 + 16
+    }
 
     // MARK: - End sequence: same as Dino Diets / Match the Dinosaur — top half list (highlight + name audio), bottom half "Good job!" then success image (centered, no wrapper), then good-job + crowd and dismiss
     private var guessGameEndSequenceView: some View {
