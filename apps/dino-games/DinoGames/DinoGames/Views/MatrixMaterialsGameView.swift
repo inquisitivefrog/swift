@@ -61,10 +61,29 @@ struct MatrixMaterialsGameView: View {
         gameConfig.rounds.first { $0.id == currentRound }
     }
 
+    /// Correct material per round (same order as `gameConfig.rounds`) for recap audio and labels.
     private var endSequenceMaterials: [MatrixMaterial] {
         gameConfig.rounds.compactMap { r in
             gameConfig.allMaterials.first { $0.id == r.correctMaterialId }
         }
+    }
+
+    /// Round + material for victory recap thumbnails (composite `matrix-{stone}-{dino}` when bundled).
+    private var endRecapRows: [(round: MatrixMaterialsRound, material: MatrixMaterial)] {
+        gameConfig.rounds.compactMap { r in
+            guard let mat = gameConfig.allMaterials.first(where: { $0.id == r.correctMaterialId }) else { return nil }
+            return (r, mat)
+        }
+    }
+
+    /// Prefer the same composite image shown during the round; fall back to generic `matrix-{stone}` when present.
+    private func matrixRecapThumbnailAssetName(round: MatrixMaterialsRound, material: MatrixMaterial) -> String? {
+        if let dino = round.dinosaur, let slug = dinosaurAssetSlug(dino) {
+            let composite = "matrix-\(material.materialSlug)-\(slug)"
+            if ImageAssetCache.imageExists(named: composite) { return composite }
+        }
+        if let base = material.imageName, ImageAssetCache.imageExists(named: base) { return base }
+        return nil
     }
 
     private func resetGameState() {
@@ -80,9 +99,11 @@ struct MatrixMaterialsGameView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 24) {
-                Text(gameConfig.title)
-                    .font(.largeTitle)
-                    .padding(.top)
+                if !isGameComplete {
+                    Text(gameConfig.title)
+                        .font(.largeTitle)
+                        .padding(.top)
+                }
 
                 if let question = currentQuestion, !isGameComplete {
                     VStack(spacing: 28) {
@@ -120,8 +141,10 @@ struct MatrixMaterialsGameView: View {
                     .frame(maxWidth: .infinity)
                 } else if isGameComplete {
                     matrixMaterialsEndSequenceView
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding()
             .onAppear {
                 resetGameState()
@@ -306,13 +329,13 @@ struct MatrixMaterialsGameView: View {
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
             scrollRows: {
-                ForEach(Array(endSequenceMaterials.enumerated()), id: \.element.id) { index, material in
+                ForEach(Array(endRecapRows.enumerated()), id: \.offset) { index, row in
                     let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
                     StandardVictoryRecapRowView(
                         item: VictoryRecapDisplayItem(
-                            id: "\(material.id)",
-                            title: material.name,
-                            imageAssetName: material.imageName,
+                            id: "\(row.material.id)-\(row.round.id)",
+                            title: row.material.name,
+                            imageAssetName: matrixRecapThumbnailAssetName(round: row.round, material: row.material),
                             fallbackEmoji: "🪨"
                         ),
                         isHighlighted: isHighlighted

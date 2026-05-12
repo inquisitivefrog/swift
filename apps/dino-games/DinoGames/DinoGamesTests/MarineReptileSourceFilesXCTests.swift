@@ -8,21 +8,21 @@ import XCTest
 final class MarineReptileSourceFilesXCTests: XCTestCase {
 
     func testMarineReptileAndSilhouetteSourceFoldersExistAndContainFiles() throws {
-        let root = projectRootURL()
+        let root = TestBundleHelpers.projectRootURL()
         let marineReptileJSON = root.appendingPathComponent("json/marine-reptiles")
         let marineSilhouetteJSON = root.appendingPathComponent("json/marine-silhouettes")
         let marineReptileImages = root.appendingPathComponent("images/marine-reptiles")
         let marineSilhouetteImages = root.appendingPathComponent("images/marine-silhouettes")
 
-        XCTAssertTrue(directoryExists(marineReptileJSON), "Missing directory: \(marineReptileJSON.path)")
-        XCTAssertTrue(directoryExists(marineSilhouetteJSON), "Missing directory: \(marineSilhouetteJSON.path)")
-        XCTAssertTrue(directoryExists(marineReptileImages), "Missing directory: \(marineReptileImages.path)")
-        XCTAssertTrue(directoryExists(marineSilhouetteImages), "Missing directory: \(marineSilhouetteImages.path)")
+        XCTAssertTrue(TestBundleHelpers.directoryExists(marineReptileJSON), "Missing directory: \(marineReptileJSON.path)")
+        XCTAssertTrue(TestBundleHelpers.directoryExists(marineSilhouetteJSON), "Missing directory: \(marineSilhouetteJSON.path)")
+        XCTAssertTrue(TestBundleHelpers.directoryExists(marineReptileImages), "Missing directory: \(marineReptileImages.path)")
+        XCTAssertTrue(TestBundleHelpers.directoryExists(marineSilhouetteImages), "Missing directory: \(marineSilhouetteImages.path)")
 
-        let marineReptileJSONFiles = try recursiveFiles(in: marineReptileJSON, allowedExtensions: ["json"])
-        let marineSilhouetteJSONFiles = try recursiveFiles(in: marineSilhouetteJSON, allowedExtensions: ["json"])
-        let marineReptileImageFiles = try recursiveFiles(in: marineReptileImages, allowedExtensions: ["png", "jpg", "jpeg", "webp"])
-        let marineSilhouetteImageFiles = try recursiveFiles(in: marineSilhouetteImages, allowedExtensions: ["png", "jpg", "jpeg", "webp"])
+        let marineReptileJSONFiles = try TestBundleHelpers.recursiveFiles(in: marineReptileJSON, allowedExtensions: ["json"])
+        let marineSilhouetteJSONFiles = try TestBundleHelpers.recursiveFiles(in: marineSilhouetteJSON, allowedExtensions: ["json"])
+        let marineReptileImageFiles = try TestBundleHelpers.recursiveFiles(in: marineReptileImages, allowedExtensions: ["png", "jpg", "jpeg", "webp"])
+        let marineSilhouetteImageFiles = try TestBundleHelpers.recursiveFiles(in: marineSilhouetteImages, allowedExtensions: ["png", "jpg", "jpeg", "webp"])
 
         XCTAssertFalse(marineReptileJSONFiles.isEmpty, "Expected JSON files under \(marineReptileJSON.path)")
         XCTAssertFalse(marineSilhouetteJSONFiles.isEmpty, "Expected JSON files under \(marineSilhouetteJSON.path)")
@@ -31,16 +31,16 @@ final class MarineReptileSourceFilesXCTests: XCTestCase {
     }
 
     func testMarineJSONSlugsHaveMatchingImageFiles() throws {
-        let root = projectRootURL()
+        let root = TestBundleHelpers.projectRootURL()
         let marineReptileJSON = root.appendingPathComponent("json/marine-reptiles")
         let marineSilhouetteJSON = root.appendingPathComponent("json/marine-silhouettes")
         let marineReptileImages = root.appendingPathComponent("images/marine-reptiles")
         let marineSilhouetteImages = root.appendingPathComponent("images/marine-silhouettes")
 
-        let marineReptileJSONFiles = try recursiveFiles(in: marineReptileJSON, allowedExtensions: ["json"])
-        let marineSilhouetteJSONFiles = try recursiveFiles(in: marineSilhouetteJSON, allowedExtensions: ["json"])
-        let marineReptileImageFiles = try recursiveFiles(in: marineReptileImages, allowedExtensions: ["png", "jpg", "jpeg", "webp"])
-        let marineSilhouetteImageFiles = try recursiveFiles(in: marineSilhouetteImages, allowedExtensions: ["png", "jpg", "jpeg", "webp"])
+        let marineReptileJSONFiles = try TestBundleHelpers.recursiveFiles(in: marineReptileJSON, allowedExtensions: ["json"])
+        let marineSilhouetteJSONFiles = try TestBundleHelpers.recursiveFiles(in: marineSilhouetteJSON, allowedExtensions: ["json"])
+        let marineReptileImageFiles = try TestBundleHelpers.recursiveFiles(in: marineReptileImages, allowedExtensions: ["png", "jpg", "jpeg", "webp"])
+        let marineSilhouetteImageFiles = try TestBundleHelpers.recursiveFiles(in: marineSilhouetteImages, allowedExtensions: ["png", "jpg", "jpeg", "webp"])
 
         let marineImageNames = Set(marineReptileImageFiles.map { $0.lastPathComponent.lowercased() })
         let silhouetteImageNames = Set(marineSilhouetteImageFiles.map { $0.lastPathComponent.lowercased() })
@@ -60,31 +60,6 @@ final class MarineReptileSourceFilesXCTests: XCTestCase {
             imagePrefix: "silh-"
         )
         XCTAssertTrue(missingSilhouettes.isEmpty, "Missing marine silhouette images for JSON slugs: \(missingSilhouettes.sorted())")
-    }
-
-    private func projectRootURL() -> URL {
-        URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent() // DinoGamesTests
-            .deletingLastPathComponent() // DinoGames project root
-    }
-
-    private func directoryExists(_ url: URL) -> Bool {
-        var isDirectory: ObjCBool = false
-        return FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue
-    }
-
-    private func recursiveFiles(in root: URL, allowedExtensions: Set<String>) throws -> [URL] {
-        let keys: [URLResourceKey] = [.isRegularFileKey]
-        let enumerator = FileManager.default.enumerator(at: root, includingPropertiesForKeys: keys)
-        var output: [URL] = []
-        while let item = enumerator?.nextObject() as? URL {
-            let values = try item.resourceValues(forKeys: Set(keys))
-            guard values.isRegularFile == true else { continue }
-            if allowedExtensions.contains(item.pathExtension.lowercased()) {
-                output.append(item)
-            }
-        }
-        return output
     }
 
     private func missingSlugs(

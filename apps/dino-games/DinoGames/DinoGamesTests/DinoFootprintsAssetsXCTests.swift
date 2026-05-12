@@ -144,11 +144,10 @@ final class DinoFootprintsAssetsXCTests: XCTestCase {
     // MARK: - Audio (repo files)
 
     func testFootprintsNarrationDirectoryExistsAndHasCladeFiles() throws {
-        let directory = footprintsAudioDirectoryURL()
-        XCTAssertTrue(directoryExists(directory), "Missing directory: \(directory.path)")
+        let directory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Footprints")
+        XCTAssertTrue(TestBundleHelpers.directoryExists(directory), "Missing directory: \(directory.path)")
 
-        let audioFiles = try recursiveFiles(in: directory, allowedExtensions: ["m4a", "mp3", "wav"])
-        let stems = Set(audioFiles.map { $0.deletingPathExtension().lastPathComponent.lowercased() })
+        let stems = try TestBundleHelpers.audioStems(in: directory)
         XCTAssertFalse(stems.isEmpty, "Expected narration files under \(directory.path)")
 
         let expected = Set(footprintCladeNarrationStems.map { $0.lowercased() })
@@ -157,11 +156,10 @@ final class DinoFootprintsAssetsXCTests: XCTestCase {
     }
 
     func testDinoFootprintsGameplayGameAudioFilesExist() throws {
-        let directory = projectRootURL().appendingPathComponent("DinoGames/Assets/Audio/Games")
-        XCTAssertTrue(directoryExists(directory), "Missing directory: \(directory.path)")
+        let directory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Games")
+        XCTAssertTrue(TestBundleHelpers.directoryExists(directory), "Missing directory: \(directory.path)")
 
-        let audioFiles = try recursiveFiles(in: directory, allowedExtensions: ["m4a", "mp3", "wav"])
-        let stems = Set(audioFiles.map { $0.deletingPathExtension().lastPathComponent.lowercased() })
+        let stems = try TestBundleHelpers.audioStems(in: directory)
         let expected = Set(gameplayGameAudioOnDiskStems.map { $0.lowercased() })
         let missing = expected.subtracting(stems).sorted()
         XCTAssertTrue(missing.isEmpty, "Missing Dino Footprints gameplay audio under Games/: \(missing)")
@@ -190,34 +188,4 @@ final class DinoFootprintsAssetsXCTests: XCTestCase {
         }
     }
 
-    // MARK: - Helpers
-
-    private func footprintsAudioDirectoryURL() -> URL {
-        projectRootURL().appendingPathComponent("DinoGames/Assets/Audio/Footprints")
-    }
-
-    private func projectRootURL() -> URL {
-        URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent()
-            .deletingLastPathComponent()
-    }
-
-    private func directoryExists(_ url: URL) -> Bool {
-        var isDirectory: ObjCBool = false
-        return FileManager.default.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue
-    }
-
-    private func recursiveFiles(in root: URL, allowedExtensions: Set<String>) throws -> [URL] {
-        let keys: [URLResourceKey] = [.isRegularFileKey]
-        let enumerator = FileManager.default.enumerator(at: root, includingPropertiesForKeys: keys)
-        var output: [URL] = []
-        while let item = enumerator?.nextObject() as? URL {
-            let values = try item.resourceValues(forKeys: Set(keys))
-            guard values.isRegularFile == true else { continue }
-            if allowedExtensions.contains(item.pathExtension.lowercased()) {
-                output.append(item)
-            }
-        }
-        return output
-    }
 }

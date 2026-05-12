@@ -980,6 +980,7 @@ enum ImageAssetNames {
         "game-match-the-dinosaur-success",
         "game-match-the-pterosaur",
         "game-matrix-materials",
+        "game-matrix-materials-success",
         "game-measure-the-dinosaur",
         "game-measure-the-dinosaur-success",
         "game-name-that-dinosaur",

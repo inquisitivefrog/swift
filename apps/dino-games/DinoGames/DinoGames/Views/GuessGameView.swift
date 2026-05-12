@@ -284,10 +284,12 @@ struct GuessGameView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 30) {
-                // Title
-                Text(gameConfig.title)
-                    .font(.largeTitle)
-                    .padding(.top)
+                // Title (hidden during victory — `VictorySplitColumnView` shows `gameTitle` there)
+                if !isGameComplete {
+                    Text(gameConfig.title)
+                        .font(.largeTitle)
+                        .padding(.top)
+                }
 
                 if let question = currentQuestion, !isGameComplete {
                     // Main game area - one question at a time
@@ -354,8 +356,10 @@ struct GuessGameView: View {
                 } else if isGameComplete {
                     // End sequence: darkened row of 3 dinosaurs → walk row (highlight + name audio) → good-job + crowd → dismiss
                     guessGameEndSequenceView
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding()
             .onAppear {
                 if !hasInitiallyAppeared {
