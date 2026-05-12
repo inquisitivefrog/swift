@@ -1,0 +1,17 @@
+{
+  "asset_manifest": {
+    "id": "ptero_ornithocheiroid_track_01",
+    "project": "PteroFootprints",
+    "clade": "ornithocheiroid",
+    "character_ref": "dino_bones_paleontologist_1",
+    "formation_ref": "SOLNHOFEN",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "pose": "dino_bones_paleontologist_1 (female grad student, blonde hair, pink blouse) stands over a trackway in white limestone silt, holding a camera to document the tracks.",
+    "visual_notes": {
+      "ichnology": "The tracks are asymmetrical. The hand prints (manus) are shallow, three-fingered V-shapes pointing outward. The rear footprints are slender and plantigrade. Ensure deep shadow within the negative impressions to show depth against the high-albedo white sand.",
+      "ground": "Fine-grained white carbonate silt with soft water-ripple marks."
+    }
+  }
+}

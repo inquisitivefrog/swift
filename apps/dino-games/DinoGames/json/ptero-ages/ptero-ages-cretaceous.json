@@ -1,0 +1,21 @@
+{
+  "project": "Ptero Ages Game Assets",
+  "id": "ptero_ages_CRETACEOUS_HERO",
+  "period": "LATE_CRETACEOUS",
+  "location": "NIOBRARA_CHALK_FORMATION",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "final_style_anchor": "STYLE_ANIMATED_FEATURE_V3",
+  "prompt": {
+    "composition": "Widescreen cinematic tableau above a sparkling seaway. Left: A colony of Pteranodons nesting on a high chalk pillar. Center: A massive Quetzalcoatlus standing tall on a beach, towering like a giraffe. Right: A trio of Nyctosaurus in a coordinated bank-turn. Background: A distant hazy horizon of the Interior Seaway. Foreground: Small, fluffy feathered birds (Hesperornis) bobbing in the water.",
+    "lighting": "SUNNY_EXPOSED_CINEMATIC. Brilliant midday sun reflecting off white chalk cliffs and turquoise water, creating high-albedo ground reflection.",
+    "texture_standard": "High-end 3D character groom. Satiny skin on wings, velvety 'pycnofibers' (fur-like fluff) on bodies, and polished, translucent colorful crests. Zero grit, zero scales.",
+    "color_palette": {
+      "pteranodons": "Teal bodies with vibrant 'sunset' orange and red crests.",
+      "quetzalcoatlus": "Royal purple skin with a pale cream underbelly and a bright yellow beak.",
+      "nyctosaurus": "Slate blue with striking white-and-black striped 'sail' crests.",
+      "environment": "Chalky white cliffs, turquoise water, and deep green palm-fringed shorelines."
+    },
+    "environment": "EPICONTINENTAL_SEAWAY habitat. High-visibility turquoise water with refractive ripples and pale, high-albedo chalky seafloors.",
+    "negative_prompt": "photorealistic, ground dinosaurs, grainy, lumpy, grit, scary, horror, blood, open mouths, aggressive, 90s CGI, plastic toy, museum model, grey sky, muddy"
+  }
+}

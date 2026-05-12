@@ -1,0 +1,17 @@
+{
+  "asset_manifest": {
+    "id": "ptero_basal_track_01",
+    "project": "PteroFootprints",
+    "clade": "basal",
+    "character_ref": "dino_bones_paleontologist_5",
+    "formation_ref": "TIAOJISHAN",
+    "habitat_ref": "FORESTED_VOLCANIC_HIGHLANDS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "pose": "dino_bones_paleontologist_5 (female grad student, Asian ethnicity, red shorts) is kneeling on dark charcoal-grey rocky terrain, using a magnifying glass to look at a faint trackway.",
+    "visual_notes": {
+      "ichnology": "Primitive track morphology: very long, thin toe impressions on the rear feet. The hand prints are small and shallow. Tracks are rendered as depressions in a thin layer of light-grey volcanic ash dusting the dark rock.",
+      "ground": "Dark charcoal-grey rocky terrain with light-grey ash dusting and small alpine ferns."
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "starting_line_race_01_v2",
+  "tech_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "LANCE_HELL_CREEK",
+  "characters": [
+    "dino_racer_referee_1",
+    "dino_racer_trex",
+    "dino_racer_triceratops",
+    "dino_racer_velociraptor"
+  ],
+  "scene_description": "A high-stakes starting line scene at the LANCE_HELL_CREEK formation. A start line is carved into the dark organic dirt of a lush forest clearing. Three dinosaurs—the T-Rex, Triceratops, and Velociraptor—are crouched in starting positions, muscles tensed. To the right, Referee 1 (with his signature perfectly round black glasses and striped jersey) holds a checkered flag at the apex of his reach. The composition accounts for a 15% negative space buffer at the bottom for UI overlap.",
+  "captions": [
+    {
+      "text": "Racing Dinosaurs!",
+      "style": "Bright red, 3D extruded lettering, Mixed Case, glossy finish",
+      "placement": "Top center, arched slightly"
+    },
+    {
+      "text": "Player Wins!",
+      "style": "Bright red, 3D extruded lettering, Mixed Case, high-impact drop shadow",
+      "placement": "Lower third, overlapping the negative space"
+    }
+  ],
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3"
+}

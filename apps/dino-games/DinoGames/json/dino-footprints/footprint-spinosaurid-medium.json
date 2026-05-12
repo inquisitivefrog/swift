@@ -1,0 +1,10 @@
+{
+    "id": "footprint_spinosaurid_medium",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "DAPPLED_OPEN",
+    "formation_ref": "ELRHAZ",
+    "character_ref": "dino_bones_paleontologist_4",
+    "pose": "A single character, dino_bones_paleontologist_4, is kneeling by a riverbank. He is alone. He holds a field notebook and is sketching a (Suchomimus) footprint that is exactly the size of his own boot. The camera is at a medium distance to show he is the only person there."
+}

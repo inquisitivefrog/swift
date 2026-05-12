@@ -300,11 +300,15 @@ struct DinoLunchGameView: View {
         }
     }
 
-    // MARK: - End sequence (3 rows: image left, name right → highlight each + name audio → good-job + crowd → dismiss)
+    // MARK: - End sequence (recap list → success + optional stinger → good-job + crowd → dismiss)
 
     private var dinoLunchEndSequenceView: some View {
-        VStack(spacing: 16) {
-            VStack(spacing: 12) {
+        VictorySplitColumnView(
+            listScrollHeight: StandardVictoryLayout.recapListScrollHeight(itemCount: endSequenceDinosaurs.count),
+            showSuccessPhase: endSequenceStep == 2,
+            endHighlightIndex: endHighlightIndex,
+            gameTitle: gameConfig.title,
+            scrollRows: {
                 ForEach(Array(endSequenceDinosaurs.enumerated()), id: \.element.id) { index, dinosaur in
                     let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
                     HStack(spacing: 16) {
@@ -321,6 +325,7 @@ struct DinoLunchGameView: View {
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 10)
+                    .frame(height: StandardVictoryLayout.rowHeight)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
                             .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
@@ -329,18 +334,24 @@ struct DinoLunchGameView: View {
                         RoundedRectangle(cornerRadius: 12)
                             .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
                     )
+                    .id(index)
                 }
+            },
+            successPhase: {
+                LandGameVictorySuccessStingerThenContinue(
+                    gameConfigId: gameConfig.id,
+                    speechManager: speechManager,
+                    onContinue: playGoodJobAndCrowdThenDismiss
+                )
             }
-            .padding(.horizontal)
-            Spacer()
-        }
+        )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             guard endSequenceStep == -1 else { return }
             endSequenceStep = 1
             endHighlightIndex = 0
             if endSequenceDinosaurs.isEmpty {
-                playGoodJobAndCrowdThenDismiss()
+                endSequenceStep = 2
             } else {
                 let d = endSequenceDinosaurs[0]
                 speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
@@ -391,12 +402,11 @@ struct DinoLunchGameView: View {
             speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
             speechManager.onAudioFinished = { advanceDinoLunchEndHighlight() }
         } else {
-            playGoodJobAndCrowdThenDismiss()
+            endSequenceStep = 2
         }
     }
 
     private func playGoodJobAndCrowdThenDismiss() {
-        endSequenceStep = 2
         let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
         let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
         if let u1 = goodJobURL, let u2 = crowdURL {

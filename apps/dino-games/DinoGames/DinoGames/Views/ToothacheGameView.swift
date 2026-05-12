@@ -320,50 +320,30 @@ struct ToothacheGameView: View {
 
     // MARK: - End sequence
 
-    private let victoryRowHeight: CGFloat = 72
-    private var victoryListVisibleHeight: CGFloat { 16 + 3 * victoryRowHeight + 2 * 12 + 16 }
-
     private var endSequenceView: some View {
-        GeometryReader { _ in
-            VStack(spacing: 0) {
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        VStack(spacing: 12) {
-                            ForEach(Array(victoryWalkDinosaurs.enumerated()), id: \.element.id) { index, dino in
-                                DinoToothacheEndRowView(dino: dino, isHighlighted: endHighlightIndex == index)
-                                    .id(index)
-                            }
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 10)
-                    }
-                    .frame(height: min(CGFloat(victoryWalkDinosaurs.count) * (victoryRowHeight + 12) + 32, victoryListVisibleHeight))
-                    .onChange(of: endHighlightIndex) { _, newValue in
-                        if newValue >= 0, newValue < victoryWalkDinosaurs.count {
-                            withAnimation(.easeInOut(duration: 0.3)) {
-                                proxy.scrollTo(newValue, anchor: .center)
-                            }
-                        }
-                    }
+        VictorySplitColumnView(
+            listScrollHeight: StandardVictoryLayout.recapListScrollHeight(itemCount: victoryWalkDinosaurs.count),
+            showSuccessPhase: endSequenceStep == 2,
+            endHighlightIndex: endHighlightIndex,
+            gameTitle: gameConfig.title,
+            scrollRows: {
+                ForEach(Array(victoryWalkDinosaurs.enumerated()), id: \.element.id) { index, dino in
+                    DinoToothacheEndRowView(
+                        dino: dino,
+                        isHighlighted: endSequenceStep >= 1 && index == endHighlightIndex
+                    )
+                    .id(index)
                 }
-                .frame(maxWidth: .infinity)
-
-                Group {
-                    if endSequenceStep == 2 {
-                        dinoToothacheSuccessImageView
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    playGoodJobAndCrowdThenDismiss()
-                                }
-                            }
-                    } else {
-                        Spacer()
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            },
+            successPhase: {
+                LandGameVictorySuccessStingerThenContinue(
+                    candidateSuccessImageNames: ["game-dino-toothache-success", "game-dino-toothache"],
+                    catalogGameIdForStinger: gameConfig.id,
+                    speechManager: speechManager,
+                    onContinue: playGoodJobAndCrowdThenDismiss
+                )
             }
-        }
+        )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             guard endSequenceStep == -1 else { return }
@@ -377,21 +357,6 @@ struct ToothacheGameView: View {
                 speechManager.onAudioFinished = { self.advanceEndHighlight() }
             }
         }
-    }
-
-    private var dinoToothacheSuccessImageView: some View {
-        Group {
-            if ImageAssetCache.imageExists(named: "game-dino-toothache-success") {
-                Image("game-dino-toothache-success")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else {
-                Text("🦷")
-                    .font(.system(size: 100))
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private func advanceEndHighlight() {

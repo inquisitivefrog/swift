@@ -1,0 +1,17 @@
+{
+  "asset_manifest": {
+    "id": "ptero_thalassodromid_track_01",
+    "project": "PteroFootprints",
+    "clade": "thalassodromid",
+    "character_ref": "dino_bones_paleontologist_4",
+    "formation_ref": "KEM_KEM",
+    "habitat_ref": "RIVER_DELTA_WETLANDS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "pose": "dino_bones_paleontologist_4 (Latino male grad student, black aviators) is pointing at a series of tracks on a golden-yellow sandbar.",
+    "visual_notes": {
+      "ichnology": "Large, deeply impressed quadrupedal tracks. The weight of the large head-crest is reflected in very deep manual (hand) impressions. Each toe tip ends in a clean, sharp puncture hole in the damp sand.",
+      "ground": "Golden yellow fluvial sand with iron-oxide red streaks and willow-like shrubs in the background."
+    }
+  }
+}

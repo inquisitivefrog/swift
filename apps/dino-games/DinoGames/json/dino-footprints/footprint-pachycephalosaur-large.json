@@ -1,0 +1,10 @@
+[
+  {
+    "id": "footprint_pachycephalosaur_large",
+    "technical_correction": "REJECT_PHOTOREALISM, BLUNT_TOES, NO_SHARP_CLAWS",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "character_ref": "dino_bones_paleontologist_3",
+    "pose": "Wide shot. dino_bones_paleontologist_3 is standing *inside* one single toe-print of a massive tridactyl (Pachycephalosaurus) track. The track is three times larger than the one in the previous image. The toes end in massive, rounded, blunt hoof-shapes. He is holding a long measuring tape that stretches across the width of the entire footprint."
+  }
+]

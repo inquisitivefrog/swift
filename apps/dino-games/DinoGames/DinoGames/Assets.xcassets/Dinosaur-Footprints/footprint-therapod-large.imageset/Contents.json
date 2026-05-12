@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "footprint-therapod-large-80.png",
+      "filename" : "footprint-theropod-large-80.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "footprint-therapod-large-160.png",
+      "filename" : "footprint-theropod-large-160.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "footprint-therapod-large-240.png",
+      "filename" : "footprint-theropod-large-240.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

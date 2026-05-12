@@ -134,9 +134,67 @@ struct BalanceGameView: View {
         return CGFloat(max(0.55, 0.35 + 0.85 * min(max(t, 0), 1)))
     }
 
-    /// Victory list row height and visible area (show ~4 rows).
-    private let victoryRowHeight: CGFloat = 92
-    private var victoryListVisibleHeight: CGFloat { 16 + 4 * victoryRowHeight + 3 * 12 + 16 }
+    /// Victory / ran-out: game title, recap list, then success + optional stinger.
+    private var victoryOrRanOutView: some View {
+        let participants = allRoundParticipants.isEmpty ? allDinosaursUsed : allRoundParticipants
+        return VictorySplitColumnView(
+                listScrollHeight: StandardVictoryLayout.recapListScrollHeight(itemCount: participants.count),
+                showSuccessPhase: endSequenceStep == 2,
+                endHighlightIndex: endHighlightIndex,
+                gameTitle: gameConfig.title,
+                scrollRows: {
+                    ForEach(Array(participants.enumerated()), id: \.element.id) { index, item in
+                        let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                        HStack(spacing: 16) {
+                            balanceVictoryImage(item: item, isHighlighted: isHighlighted)
+                            Text(item.name)
+                                .font(.title2)
+                                .fontWeight(isHighlighted ? .semibold : .regular)
+                                .foregroundColor(.primary)
+                                .multilineTextAlignment(.leading)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.8)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .opacity(isHighlighted ? 1.0 : 0.5)
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .frame(height: StandardVictoryLayout.rowHeight)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                        )
+                        .id(index)
+                    }
+                },
+                successPhase: {
+                    LandGameVictorySuccessStingerThenContinue(
+                        gameConfigId: gameConfig.id,
+                        speechManager: speechManager,
+                        onContinue: { playCelebrationAndDismiss(useGoodJob: phase == .victory) }
+                    )
+                }
+            )
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            if phase == .ranOut && endSequenceStep == 0 && !hasStartedRanOutEndAudio {
+                hasStartedRanOutEndAudio = true
+                endSequenceStep = 1
+                endHighlightIndex = 0
+                if participants.isEmpty {
+                    endSequenceStep = 2
+                } else {
+                    let p = participants[0]
+                    speechManager.speak(audioKey: p.imageName ?? p.name, fallbackText: p.name)
+                    speechManager.onAudioFinished = { advanceEndHighlight() }
+                }
+            }
+        }
+    }
 
     /// Extra vertical space between "available to add" and scale when 3rd, 5th, or 7th dinosaur on right.
     private var addingPhaseExtraSpacing: CGFloat {
@@ -796,109 +854,6 @@ struct BalanceGameView: View {
             LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
             PterosaurProgress.notifyCompletionIfPterosaurGame(configId: gameConfig.id)
             isPresented = false
-        }
-    }
-
-    /// Success image for end sequence: game-balance-the-dinosaur-success or game-balance-the-pterosaur-success.
-    private var balanceSuccessImageView: some View {
-        Group {
-            let successName = "game-\(gameConfig.id)-success"
-            let fallbackName = "game-\(gameConfig.id)"
-            if ImageAssetCache.imageExists(named: successName) {
-                Image(successName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else if ImageAssetCache.imageExists(named: fallbackName) {
-                Image(fallbackName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else {
-                Text("🎉")
-                    .font(.system(size: 100))
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    private var victoryOrRanOutView: some View {
-        let participants = allRoundParticipants.isEmpty ? allDinosaursUsed : allRoundParticipants
-        return VStack(spacing: 0) {
-                Text(gameConfig.title)
-                    .font(.largeTitle)
-                    .padding(.top, 8)
-                    .padding(.bottom, 8)
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        VStack(spacing: 12) {
-                            ForEach(Array(participants.enumerated()), id: \.element.id) { index, item in
-                                let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                                HStack(spacing: 16) {
-                                    balanceVictoryImage(item: item, isHighlighted: isHighlighted)
-                                    Text(item.name)
-                                        .font(.title2)
-                                        .fontWeight(isHighlighted ? .semibold : .regular)
-                                        .foregroundColor(.primary)
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(2)
-                                        .minimumScaleFactor(0.8)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .opacity(isHighlighted ? 1.0 : 0.5)
-                                }
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
-                                .frame(height: victoryRowHeight)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
-                                )
-                                .id(index)
-                            }
-                        }
-                        .padding(.horizontal)
-                        .padding(.vertical, 16)
-                    }
-                    .frame(height: victoryListVisibleHeight)
-                    .onChange(of: endHighlightIndex) { _, newIndex in
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            proxy.scrollTo(newIndex, anchor: .center)
-                        }
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                Group {
-                    if endSequenceStep == 2 {
-                        balanceSuccessImageView
-                            .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    playCelebrationAndDismiss(useGoodJob: phase == .victory)
-                                }
-                            }
-                    } else {
-                        Spacer()
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear {
-            if phase == .ranOut && endSequenceStep == 0 && !hasStartedRanOutEndAudio {
-                hasStartedRanOutEndAudio = true
-                endSequenceStep = 1
-                endHighlightIndex = 0
-                if participants.isEmpty {
-                    endSequenceStep = 2
-                } else {
-                    let p = participants[0]
-                    speechManager.speak(audioKey: p.imageName ?? p.name, fallbackText: p.name)
-                    speechManager.onAudioFinished = { advanceEndHighlight() }
-                }
-            }
         }
     }
 

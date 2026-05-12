@@ -1,0 +1,12 @@
+[
+  {
+    "id": "track_hadrosaur_medium",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "DAPPLED_OPEN",
+    "formation_ref": "DINOSAUR_PARK",
+    "character_ref": "dino_bones_paleontologist_2",
+    "pose": "She uses a digital inclinometer to measure the slope of a padded tridactyl (Lambeosaurus) track in olive-grey silt. The tracks are thick and clover-like in shape."
+  }
+]

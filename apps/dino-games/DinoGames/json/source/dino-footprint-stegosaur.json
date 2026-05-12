@@ -1,0 +1,8 @@
+{ 
+  "app_image_config": {
+    "layer_1_style": "1024x1024 px. STYLE_ANIMATED_FEATURE_V3 aesthetic: High-fidelity 3D animated feature film style, cinematic CGI, Octane render, vibrant saturated colors.", 
+    "layer_2_setting": "Setting: Sunny Australian Outback, red sand. Character: dino_bones_paleontologist_2, an adult female grad student with short black hair and tanned skin. Gear: She is wearing a green sun hat. Uniform: A light green blouse worn UNDER a khaki safari vest, green skirt, and black hiking boots.",
+    "layer_3_action": "A high-angle shot looking down at the ground. The paleontologist (dino_bones_paleontologist_2) is kneeling and studying a Stegosaur trackway. She is wearing her green sun hat, holding a magnifying glass and a small checkered scale. In the foreground, there is a distinct pair of tracks: a small, crescent-shaped front footprint with three short toe stubs, and a much larger, heavy, blunt-toed rear footprint directly behind it. There are no lines or paths connecting them; they are individual depressions in the undisturbed red sand. A grove of ferns and Araucaria conifers is visible in the distance.",
+    "aspect_ratio": "1:1"
+  }
+}

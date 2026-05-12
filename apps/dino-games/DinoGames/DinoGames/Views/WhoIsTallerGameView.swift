@@ -453,88 +453,71 @@ struct WhoIsTallerGameView: View {
 
     // MARK: - Victory
 
-    private let victoryRowHeight: CGFloat = 92
-    private var victoryListVisibleHeight: CGFloat { 16 + 4 * victoryRowHeight + 3 * 12 + 16 }
+    private var victoryListVisibleHeight: CGFloat {
+        StandardVictoryLayout.recapListScrollHeight(itemCount: dinosaursCompared.count)
+    }
 
     private var victoryView: some View {
-        GeometryReader { _ in
-            VStack(spacing: 0) {
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        VStack(spacing: 12) {
-                            ForEach(Array(dinosaursCompared.enumerated()), id: \.offset) { index, item in
-                                let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                                HStack(spacing: 16) {
-                                    Group {
-                                        if let name = gridImageName(for: item) ?? item.imageName, ImageAssetCache.imageExists(named: name) {
-                                            Image(name)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 72, height: 72)
-                                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                        } else {
-                                            Text(item.emoji)
-                                                .font(.system(size: 40))
-                                                .frame(width: 72, height: 72)
-                                        }
-                                    }
-                                    .opacity(isHighlighted ? 1.0 : 0.4)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
-                                    )
-
-                                    Text(item.name)
-                                        .font(.title2)
-                                        .fontWeight(isHighlighted ? .semibold : .regular)
-                                        .foregroundColor(.primary)
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(2)
-                                        .minimumScaleFactor(0.8)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .opacity(isHighlighted ? 1.0 : 0.5)
-                                }
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
-                                .frame(height: victoryRowHeight)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
-                                )
-                                .id(index)
+        VictorySplitColumnView(
+            listScrollHeight: victoryListVisibleHeight,
+            showSuccessPhase: endSequenceStep == 2,
+            endHighlightIndex: endHighlightIndex,
+            gameTitle: gameConfig.title,
+            scrollRows: {
+                ForEach(Array(dinosaursCompared.enumerated()), id: \.offset) { index, item in
+                    let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                    HStack(spacing: 16) {
+                        Group {
+                            if let name = gridImageName(for: item) ?? item.imageName, ImageAssetCache.imageExists(named: name) {
+                                Image(name)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 72, height: 72)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                            } else {
+                                Text(item.emoji)
+                                    .font(.system(size: 40))
+                                    .frame(width: 72, height: 72)
                             }
                         }
-                        .padding(.horizontal)
-                        .padding(.vertical, 16)
-                    }
-                    .frame(height: victoryListVisibleHeight)
-                    .onChange(of: endHighlightIndex) { _, newIndex in
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            proxy.scrollTo(newIndex, anchor: .center)
-                        }
-                    }
-                }
+                        .opacity(isHighlighted ? 1.0 : 0.4)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
+                        )
 
-                Group {
-                    if endSequenceStep == 2 {
-                        whoIsTallerSuccessImageView
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    playGoodJobAndCrowdThenDismiss()
-                                }
-                            }
-                    } else {
-                        Spacer()
+                        Text(item.name)
+                            .font(.title2)
+                            .fontWeight(isHighlighted ? .semibold : .regular)
+                            .foregroundColor(.primary)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.8)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .opacity(isHighlighted ? 1.0 : 0.5)
                     }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
+                    .frame(height: StandardVictoryLayout.rowHeight)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                    )
+                    .id(index)
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            },
+            successPhase: {
+                LandGameVictorySuccessStingerThenContinue(
+                    gameConfigId: gameConfig.id,
+                    speechManager: speechManager,
+                    onContinue: playGoodJobAndCrowdThenDismiss
+                )
             }
-        }
+        )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             guard endSequenceStep == -1 else { return }
@@ -546,27 +529,6 @@ struct WhoIsTallerGameView: View {
                 let item = dinosaursCompared[0]
                 speechManager.speak(audioKey: audioStem(for: item), fallbackText: item.name)
                 speechManager.onAudioFinished = { advanceVictoryHighlight() }
-            }
-        }
-    }
-
-    private var whoIsTallerSuccessImageView: some View {
-        Group {
-            let successName = "game-\(gameConfig.id)-success"
-            let fallbackName = "game-\(gameConfig.id)"
-            if ImageAssetCache.imageExists(named: successName) {
-                Image(successName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else if ImageAssetCache.imageExists(named: fallbackName) {
-                Image(fallbackName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else {
-                Text("🎉")
-                    .font(.system(size: 100))
             }
         }
     }

@@ -1,0 +1,8 @@
+{ 
+  "app_image_config": {
+    "layer_1_style": "1024x1024 px. STYLE_ANIMATED_FEATURE_V3 aesthetic: High-fidelity 3D animated feature film style, cinematic CGI, Octane render, vibrant saturated colors. Characters have adult human proportions with soft, stylized, and slightly rounded edges; soulful, expressive eyes; avoid 'chibi' or overtly child-like proportions.", 
+    "layer_2_setting": "Setting: Sunny Australian Outback, red sand. Character: dino_bones_paleontologist_1, an adult female grad student with long blonde hair and tanned skin. Gear: She is wearing a white sun hat. Uniform: A light pink blouse worn UNDER a khaki safari vest, white shorts, and pink hiking boots.",
+    "layer_3_action": "A high-angle shot looking down at the ground. The paleontologist (dino_bones_paleontologist_1) is kneeling and studying a trackway. She is wearing her white sun hat, holding a magnifying glass and a small checkered scale. In the foreground, there are exactly three large bird-like footprints: each footprint must have exactly three long, slender, pointed toe depressions arranged in a narrow 'V' shape. There are no lines or paths connecting them; they are individual depressions in the undisturbed red sand. A grove of Ginkgo trees and ferns is visible in the distance.",
+    "aspect_ratio": "1:1"
+  }
+}

@@ -43,6 +43,7 @@ final class PterosaurAudioFilesXCTests: XCTestCase {
         // narration files.
         let expectedStems: Set<String> = [
             "game-name-that-pterosaur",
+            "game-ptero-footprints",
             "game-weigh-pterosaur",
             "game-choose-your-first-pterosaur",
             "game-choose-your-second-pterosaur",

@@ -1,0 +1,12 @@
+[
+  {
+    "id": "track_basal_small",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED",
+    "formation_ref": "SOLNHOFEN",
+    "character_ref": "dino_bones_paleontologist_2",
+    "pose": "She mists a fine limestone slab with a water sprayer, revealing a tiny, delicate (Rhamphorhynchus) trackway. The five long, slender toes of the hind foot are clearly visible alongside the curved, clawed impressions of the forelimbs."
+  }
+]

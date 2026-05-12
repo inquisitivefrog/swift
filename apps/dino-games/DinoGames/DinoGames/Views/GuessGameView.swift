@@ -126,6 +126,59 @@ private enum NameThatMarineReptileStorage {
     }
 }
 
+// MARK: - Dino Footprints slot rotation (clade × size footprint images)
+
+private enum DinoFootprintsStorage {
+    static let usedSlotKeysKey = "dinoFootprintsUsedSlotKeys"
+
+    static func loadUsedSlotKeys() -> Set<String> {
+        guard let array = UserDefaults.standard.array(forKey: usedSlotKeysKey) as? [String] else { return [] }
+        return Set(array)
+    }
+
+    /// Marks slots used after a completed game; clears storage once every occupiable (clade|size) slot has been seen.
+    static func appendUsedSlotKeys(_ keys: [String], allPossibleSlotKeys: Set<String>) {
+        guard !allPossibleSlotKeys.isEmpty else { return }
+        var current = loadUsedSlotKeys()
+        current.formUnion(keys)
+        if allPossibleSlotKeys.isSubset(of: current) {
+            UserDefaults.standard.removeObject(forKey: usedSlotKeysKey)
+        } else {
+            UserDefaults.standard.set(Array(current), forKey: usedSlotKeysKey)
+        }
+    }
+
+    static func clearUsedSlots() {
+        UserDefaults.standard.removeObject(forKey: usedSlotKeysKey)
+    }
+}
+
+// MARK: - Ptero Footprints slot rotation (morphotype × size, matches `ptero-footprint-{stem}-*` assets)
+
+private enum PteroFootprintsStorage {
+    static let usedSlotKeysKey = "pteroFootprintsUsedSlotKeys"
+
+    static func loadUsedSlotKeys() -> Set<String> {
+        guard let array = UserDefaults.standard.array(forKey: usedSlotKeysKey) as? [String] else { return [] }
+        return Set(array)
+    }
+
+    static func appendUsedSlotKeys(_ keys: [String], allPossibleSlotKeys: Set<String>) {
+        guard !allPossibleSlotKeys.isEmpty else { return }
+        var current = loadUsedSlotKeys()
+        current.formUnion(keys)
+        if allPossibleSlotKeys.isSubset(of: current) {
+            UserDefaults.standard.removeObject(forKey: usedSlotKeysKey)
+        } else {
+            UserDefaults.standard.set(Array(current), forKey: usedSlotKeysKey)
+        }
+    }
+
+    static func clearUsedSlots() {
+        UserDefaults.standard.removeObject(forKey: usedSlotKeysKey)
+    }
+}
+
 // MARK: - Game Configuration
 
 struct GuessGameConfig {
@@ -177,8 +230,12 @@ struct GuessGameView: View {
     /// Options walk: highlight each of the 3 choices and play name before allowing selection (each round).
     @State private var optionsWalkIndex: Int? = nil
 
-    /// When true, show the Source Footprints hints overlay (Dino Footprints only).
+    /// When true, show the Source Footprints / pterosaur track hints overlay (footprint guess games).
     @State private var showSourceFootprintsHints = false
+
+    private var isFootprintsGuessGame: Bool {
+        gameConfig.id == "dino-footprints" || gameConfig.id == "ptero-footprints"
+    }
 
     /// Tracks first appearance so we only reset on initial load, not when advancing rounds (avoids resetting currentRound when SwiftUI re-invokes onAppear).
     @State private var hasInitiallyAppeared = false
@@ -328,7 +385,7 @@ struct GuessGameView: View {
             .allowsHitTesting(!isAudioPlaying && !isProcessingAnswer && optionsWalkIndex == nil)
             // No dimming when audio plays — keep full brightness so dinosaurs are easy to see during intro walk
             .overlay(alignment: .topTrailing) {
-                if gameConfig.id == "dino-footprints", currentQuestion != nil, !isGameComplete {
+                if isFootprintsGuessGame, currentQuestion != nil, !isGameComplete {
                     Button {
                         showSourceFootprintsHints = true
                     } label: {
@@ -345,7 +402,11 @@ struct GuessGameView: View {
                 }
             }
             .fullScreenCover(isPresented: $showSourceFootprintsHints) {
-                SourceFootprintsHintsView(onDismiss: { showSourceFootprintsHints = false })
+                if gameConfig.id == "ptero-footprints" {
+                    SourcePteroFootprintsHintsView(onDismiss: { showSourceFootprintsHints = false })
+                } else {
+                    SourceFootprintsHintsView(onDismiss: { showSourceFootprintsHints = false })
+                }
             }
             .navigationBarTitleDisplayMode(.inline)
         }
@@ -354,13 +415,13 @@ struct GuessGameView: View {
     /// Starts the round: for Dino Footprints plays "identify the footprint" then options walk; for Dino Bones plays "identify the skeleton" then options walk; for other guess games goes straight to options walk.
     private func startRoundIfNeeded() {
         guard let question = currentQuestion, !question.options.isEmpty, optionsWalkIndex == nil else { return }
-        if gameConfig.id == "dino-footprints" {
+        if gameConfig.id == "dino-footprints" || gameConfig.id == "ptero-footprints" {
             isAudioPlaying = true
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 self.playFootprintsHintThenStartOptionsWalk()
             }
-            speechManager.speak("game-dino-footprints-identify-the-footprint")
+            speechManager.speak("game-footprints-identify-the-footprint")
         } else if gameConfig.id == "dino-bones" {
             isAudioPlaying = true
             speechManager.onAudioFinished = {
@@ -480,80 +541,56 @@ struct GuessGameView: View {
         }
     }
     
-    /// Fixed row height and scroll height so exactly 4 full rows are visible (no 4.5 or 5). Includes top/bottom padding.
-    private let victoryRowHeight: CGFloat = 92
+    /// Recap list height: up to `StandardVictoryLayout.maxVisibleRecapRows` rows visible; longer lists scroll.
     private var victoryListVisibleHeight: CGFloat {
-        let visibleRows = max(1, min(4, endSequenceDinosaurs.count))
-        let visibleGaps = max(0, visibleRows - 1)
-        return 16 + CGFloat(visibleRows) * victoryRowHeight + CGFloat(visibleGaps) * 12 + 16
+        StandardVictoryLayout.recapListScrollHeight(itemCount: endSequenceDinosaurs.count)
     }
 
     // MARK: - End sequence: same as Dino Diets / Match the Dinosaur — top half list (highlight + name audio), bottom half "Good job!" then success image (centered, no wrapper), then good-job + crowd and dismiss
     private var guessGameEndSequenceView: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                // Top half: scrolling list of the 3 dinosaurs, highlight + name audio, scroll to center — fixed height so ~4 visible (consistent across games)
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        VStack(spacing: 12) {
-                            ForEach(Array(endSequenceDinosaurs.enumerated()), id: \.element.id) { index, dinosaur in
-                                let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                                HStack(spacing: 16) {
-                                    guessGameEndSequenceImage(dinosaur: dinosaur, isHighlighted: isHighlighted)
-                                    Text(dinosaur.name)
-                                        .font(.title2)
-                                        .fontWeight(isHighlighted ? .semibold : .regular)
-                                        .foregroundColor(.primary)
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(2)
-                                        .minimumScaleFactor(0.8)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .opacity(isHighlighted ? 1.0 : 0.5)
-                                }
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
-                                .frame(height: victoryRowHeight)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
-                                )
-                                .id(index)
-                            }
-                        }
-                        .padding(.horizontal)
-                        .padding(.vertical, 16)
+        VictorySplitColumnView(
+            listScrollHeight: victoryListVisibleHeight,
+            showSuccessPhase: endSequenceStep == 2,
+            endHighlightIndex: endHighlightIndex,
+            gameTitle: gameConfig.title,
+            scrollRows: {
+                ForEach(Array(endSequenceDinosaurs.enumerated()), id: \.element.id) { index, dinosaur in
+                    let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                    HStack(spacing: 16) {
+                        guessGameEndSequenceImage(dinosaur: dinosaur, isHighlighted: isHighlighted)
+                        Text(dinosaur.name)
+                            .font(.title2)
+                            .fontWeight(isHighlighted ? .semibold : .regular)
+                            .foregroundColor(.primary)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.8)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .opacity(isHighlighted ? 1.0 : 0.5)
                     }
-                    .frame(height: victoryListVisibleHeight)
-                    .onChange(of: endHighlightIndex) { _, newIndex in
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            proxy.scrollTo(newIndex, anchor: .center)
-                        }
-                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
+                    .frame(height: StandardVictoryLayout.rowHeight)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                    )
+                    .id(index)
                 }
-                .frame(maxWidth: .infinity)
-
-                // Bottom half: during walk show empty; after walk show success image only (centered, no wrapper)
-                Group {
-                    if endSequenceStep == 2 {
-                        guessGameSuccessImageView
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .onAppear {
-                                // Keep the transition from the final highlighted creature to the success card snappy.
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
-                                    playGoodJobAndCrowdThenDismiss()
-                                }
-                            }
-                    } else {
-                        Spacer()
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            },
+            successPhase: {
+                LandGameVictorySuccessStingerThenContinue(
+                    gameConfigId: gameConfig.id,
+                    imageSide: guessGameSuccessImageSide,
+                    speechManager: speechManager,
+                    onContinue: playGoodJobAndCrowdThenDismiss
+                )
             }
-        }
+        )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             guard endSequenceStep == -1 else { return }
@@ -576,47 +613,17 @@ struct GuessGameView: View {
         }
     }
 
-    /// Success image only (no card wrapper); centered in victory bottom half. Same pattern as Match the Dinosaur / Dino Diets.
-    private var guessGameSuccessImageView: some View {
-        ZStack {
-            guessGameSuccessImageContent
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    /// End-sequence success art: name-that games use a larger frame than the level-two list card so `game-*-success` is easy to see.
+    /// End-sequence success art: catalog guess games with `game-{id}-success` use the same large frame as Name That Dinosaur so the card reads clearly (smaller default was legacy for list-style games).
     private var guessGameSuccessImageSide: CGFloat {
         switch gameConfig.id {
-        case "name-that-dinosaur", "name-that-pterosaur", "name-that-marine-reptile":
+        case "name-that-dinosaur", "name-that-pterosaur", "name-that-marine-reptile",
+             "dino-footprints", "ptero-footprints", "dino-bones", "whose-bones":
             return GameCatalogImageMetrics.nameThatVictorySuccessImageSide
         default:
             return 180
         }
     }
 
-    private var guessGameSuccessImageContent: some View {
-        Group {
-            let successName = "game-\(gameConfig.id)-success"
-            let fallbackName = "game-\(gameConfig.id)"
-            if UIImage(named: successName) != nil {
-                Image(successName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: guessGameSuccessImageSide, height: guessGameSuccessImageSide)
-                    .layoutPriority(1)
-            } else if UIImage(named: fallbackName) != nil {
-                Image(fallbackName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: guessGameSuccessImageSide, height: guessGameSuccessImageSide)
-                    .layoutPriority(1)
-            } else {
-                Text("🎉")
-                    .font(.system(size: 100))
-            }
-        }
-    }
-    
     private func guessGameEndSequenceImage(dinosaur: Dinosaur, isHighlighted: Bool) -> some View {
         Group {
             if let imageName = dinosaur.imageName, UIImage(named: imageName) != nil {
@@ -660,7 +667,6 @@ struct GuessGameView: View {
     }
     
     private func playGoodJobAndCrowdThenDismiss() {
-        endSequenceStep = 2
         gameConfig.victorySideEffect?()
         let goodJobURL = speechManager.urlForAudio(key: victoryGoodJobAudioKey)
         let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
@@ -762,20 +768,24 @@ struct DinosaurOptionCard: View {
 
 // MARK: - Source Footprints Hints (Dino Footprints)
 
-/// One clade entry for the 2×2 source-footprints hints grid. Uses image set source-footprints-{clade} and audio Footprints/{clade}.m4a.
+/// One clade entry for the 2×2 source-footprints hints grid. Uses image set source-footprints-{clade} and audio `Footprints/dino-{clade}.m4a` (land); reserve `ptero-` / `marine-` prefixes in the same folder for future games.
 private struct SourceFootprintCladeHint: Identifiable {
     let id: String
-    let imageName: String  // e.g. source-footprints-therapod
+    let imageName: String  // e.g. source-footprints-theropod (imageset name in Assets)
     let displayName: String
-    let audioKey: String  // e.g. footprint-therapod → Footprints/therapod.m4a
+    let audioKey: String  // e.g. footprint-therapod → Footprints/dino-theropod.m4a (audio file uses correct “theropod” spelling)
 }
 
 private let sourceFootprintsHintClades: [SourceFootprintCladeHint] = [
-    SourceFootprintCladeHint(id: "therapod", imageName: "source-footprints-therapod", displayName: "Theropod", audioKey: "footprint-therapod"),
-    SourceFootprintCladeHint(id: "sauropod", imageName: "source-footprints-sauropod", displayName: "Sauropod", audioKey: "footprint-sauropod"),
-    SourceFootprintCladeHint(id: "hadrosaur", imageName: "source-footprints-hadrosaur", displayName: "Hadrosaur", audioKey: "footprint-hadrosaur"),
-    SourceFootprintCladeHint(id: "ceratopsian", imageName: "source-footprints-ceratopsian", displayName: "Ceratopsian", audioKey: "footprint-ceratopsian"),
     SourceFootprintCladeHint(id: "ankylosaur", imageName: "source-footprints-ankylosaur", displayName: "Ankylosaur", audioKey: "footprint-ankylosaur"),
+    SourceFootprintCladeHint(id: "ceratopsian", imageName: "source-footprints-ceratopsian", displayName: "Ceratopsian", audioKey: "footprint-ceratopsian"),
+    SourceFootprintCladeHint(id: "hadrosaur", imageName: "source-footprints-hadrosaur", displayName: "Hadrosaur", audioKey: "footprint-hadrosaur"),
+    SourceFootprintCladeHint(id: "ornithischian", imageName: "source-footprints-ornithischian", displayName: "Ornithischian", audioKey: "footprint-ornithischian"),
+    SourceFootprintCladeHint(id: "ornithomimid", imageName: "source-footprints-ornithomimid", displayName: "Ornithomimid", audioKey: "footprint-ornithomimid"),
+    SourceFootprintCladeHint(id: "sauropod", imageName: "source-footprints-sauropod", displayName: "Sauropod", audioKey: "footprint-sauropod"),
+    SourceFootprintCladeHint(id: "spinosaurid", imageName: "source-footprints-spinosaurid", displayName: "Spinosaurid", audioKey: "footprint-spinosaurid"),
+    SourceFootprintCladeHint(id: "stegosaur", imageName: "source-footprints-stegosaur", displayName: "Stegosaur", audioKey: "footprint-stegosaur"),
+    SourceFootprintCladeHint(id: "theropod", imageName: "source-footprints-theropod", displayName: "Theropod", audioKey: "footprint-therapod"),
 ]
 
 struct SourceFootprintsHintsView: View {
@@ -867,7 +877,7 @@ struct SourceFootprintsHintsView: View {
     private func playIntroOnce() {
         guard !introPlayed else { return }
         introPlayed = true
-        if let url = speechManager.urlForAudio(key: "game-dino-footprints-tap-the-footprint-to-hear-description") {
+        if let url = speechManager.urlForAudio(key: "game-footprints-tap-the-footprint-to-hear-description") {
             speechManager.onAudioFinished = nil
             speechManager.playAudioFile(url: url)
         }
@@ -892,17 +902,151 @@ struct SourceFootprintsHintsView: View {
     }
 }
 
+// MARK: - Source Pterosaur Footprints Hints (Ptero Footprints)
+
+private struct SourcePteroFootprintMorphHint: Identifiable {
+    let id: String
+    let imageName: String
+    let displayName: String
+    /// `SpeechManager` key → `Pterosaur-Clades/clade-*.m4a`
+    let audioKey: String
+}
+
+private let sourcePteroFootprintsHintMorphs: [SourcePteroFootprintMorphHint] = PterosaurGuessGroup.allCases.map { group in
+    let stem = group == .transitional ? "transition" : group.rawValue
+    return SourcePteroFootprintMorphHint(
+        id: stem,
+        imageName: "source-footprint-\(stem)",
+        displayName: group.displayName,
+        audioKey: "ptero-clade-\(group.cladeAudioSlug)"
+    )
+}
+
+struct SourcePteroFootprintsHintsView: View {
+    let onDismiss: () -> Void
+    @State private var speechManager = SpeechManager()
+    @State private var selectedMorph: SourcePteroFootprintMorphHint?
+    @State private var introPlayed = false
+
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            if selectedMorph == nil {
+                gridView
+            } else {
+                detailView
+            }
+
+            Button {
+                onDismiss()
+            } label: {
+                Text("<")
+                    .font(.system(size: 28, weight: .medium))
+                    .foregroundColor(.blue)
+                    .frame(width: 44, height: 44)
+            }
+            .padding(.leading, 8)
+            .padding(.top, 8)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(.systemBackground))
+        .onAppear {
+            playIntroOnce()
+        }
+    }
+
+    private var gridView: some View {
+        VStack(spacing: 20) {
+            Text("Pterosaur track types")
+                .font(.title2.weight(.semibold))
+                .padding(.top, 44)
+            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
+                ForEach(sourcePteroFootprintsHintMorphs) { morph in
+                    Button {
+                        showMorphDetail(morph)
+                    } label: {
+                        if UIImage(named: morph.imageName) != nil {
+                            Image(morph.imageName)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 120)
+                                .clipped()
+                        } else {
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.gray.opacity(0.3))
+                                .frame(height: 120)
+                                .overlay(Text(morph.displayName).font(.caption).foregroundColor(.secondary))
+                        }
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding(.horizontal, 24)
+            Spacer()
+        }
+    }
+
+    @ViewBuilder
+    private var detailView: some View {
+        if let morph = selectedMorph {
+            VStack(spacing: 20) {
+                Spacer()
+                if UIImage(named: morph.imageName) != nil {
+                    Image(morph.imageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 320, maxHeight: 320)
+                }
+                Text(morph.displayName)
+                    .font(.title2.weight(.semibold))
+                    .foregroundColor(.primary)
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+
+    private func playIntroOnce() {
+        guard !introPlayed else { return }
+        introPlayed = true
+        if let url = speechManager.urlForAudio(key: "game-footprints-tap-the-footprint-to-hear-description") {
+            speechManager.onAudioFinished = nil
+            speechManager.playAudioFile(url: url)
+        }
+    }
+
+    private func showMorphDetail(_ morph: SourcePteroFootprintMorphHint) {
+        selectedMorph = morph
+        speechManager.onAudioFinished = nil
+        speechManager.onAudioFinished = {
+            speechManager.onAudioFinished = nil
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                selectedMorph = nil
+            }
+        }
+        if let url = speechManager.urlForAudio(key: morph.audioKey) {
+            speechManager.playAudioFile(url: url)
+        } else {
+            speechManager.speak(morph.displayName)
+        }
+    }
+}
+
 // MARK: - Dino Footprints (clade + size)
 
-/// Footprint image sets: footprint-{clade}-{size} or footprint-{clade}-{variant}-{size}. For variety, use up to 3 variants per clade (e.g. footprint-therapod-1-medium, footprint-therapod-2-medium, footprint-therapod-3-medium); the game randomly picks one to reduce memorization.
+/// Footprint image sets: `footprint-{clade}-{size}` (small|medium|large) or `footprint-{clade}-{variant}-medium` for variety; gameplay picks the tier that matches the correct dinosaur’s map entry.
 /// Use imageNameForAsset for lookup; asset names use "therapod" (common misspelling) for theropod.
-/// Separate from `DinoClade` / `LandDinosaurCladeCatalog` (9 buckets for land games); this is the 5-clade set for Dino Footprints assets.
+/// Separate from `DinoClade` / `LandDinosaurCladeCatalog` (9 buckets for land games); morphological buckets for Dino Footprints assets.
 private enum FootprintClade: String, CaseIterable {
-    case theropod
-    case sauropod
-    case hadrosaur
-    case ceratopsian
     case ankylosaur
+    case ceratopsian
+    case hadrosaur
+    case ornithischian
+    case ornithomimid
+    case sauropod
+    case spinosaurid
+    case stegosaur
+    case theropod
 
     /// Name used in footprint image set names (footprint-{this}-{size}). Matches Assets.xcassets spelling.
     var imageNameForAsset: String {
@@ -917,14 +1061,22 @@ private enum DinoSize: String, CaseIterable {
     case small
     case medium
     case large
+
+    /// Stable ordering for sorting dinosaurs within a clade (small → large).
+    fileprivate var sortOrder: Int {
+        switch self {
+        case .small: return 0
+        case .medium: return 1
+        case .large: return 2
+        }
+    }
 }
 
 /// Map of dinosaur slug (dino-* suffix) → (clade, presumed footprint size). Only dinosaurs listed here are playable in Dino Footprints. Add new species here when you add them to the app.
 private let footprintDinosaurMap: [String: (clade: FootprintClade, size: DinoSize)] = [
-    // Theropods
+    // Theropods (non-spinosaurid, non-ornithomimid)
     "trex": (.theropod, .large),
     "velociraptor": (.theropod, .small),
-    "spinosaurus": (.theropod, .large),
     "troodon": (.theropod, .small),
     "therizinosaurus": (.theropod, .medium),
     "masiakasaurus": (.theropod, .small),
@@ -936,24 +1088,64 @@ private let footprintDinosaurMap: [String: (clade: FootprintClade, size: DinoSiz
     "microraptor": (.theropod, .small),
     "giganotosaurus": (.theropod, .large),
     "deinonychus": (.theropod, .medium),
-    "dromeosaurus": (.theropod, .medium),
+    "dromaeosaurus": (.theropod, .medium),
+    "albertosaurus": (.theropod, .large),
+    "anchiornis": (.theropod, .small),
+    "archaeopteryx": (.theropod, .small),
+    "ceratosaurus": (.theropod, .medium),
+    "eosinopteryx": (.theropod, .small),
+    "pedopenna": (.theropod, .small),
+    "utahraptor": (.theropod, .medium),
+    "xiaotingia": (.theropod, .small),
+    "acrocanthosaurus": (.theropod, .large),
+    "carcharodontosaurus": (.theropod, .large),
+    "carnotaurus": (.theropod, .medium),
+    "fukuiraptor": (.theropod, .small),
+    "gigantoraptor": (.theropod, .medium),
+    // Spinosaurids
+    "spinosaurus": (.spinosaurid, .large),
+    "baryonyx": (.spinosaurid, .medium),
+    "suchomimus": (.spinosaurid, .large),
+    "riparovenator": (.spinosaurid, .medium),
+    // Ornithomimids / ornithomimosaurs
+    "gallimimus": (.ornithomimid, .medium),
+    "ornithomimus": (.ornithomimid, .medium),
+    "struthiomimus": (.ornithomimid, .medium),
+    "deinocheirus": (.ornithomimid, .large),
     // Sauropods
     "apatosaurus": (.sauropod, .large),
     "diplodocus": (.sauropod, .large),
     "camarasaurus": (.sauropod, .large),
     "rapetosaurus": (.sauropod, .large),
+    "argentinosaurus": (.sauropod, .large),
+    "brachiosaurus": (.sauropod, .large),
+    "brontosaurus": (.sauropod, .large),
+    "amargasaurus": (.sauropod, .medium),
+    "mamenchisaurus": (.sauropod, .large),
     // Ceratopsians
     "triceratops": (.ceratopsian, .large),
     "chasmosaurus": (.ceratopsian, .medium),
     "torosaurus": (.ceratopsian, .large),
     "kosmoceratops": (.ceratopsian, .medium),
-    // Hadrosaurs and other ornithopods
-    "stegosaurus": (.hadrosaur, .medium),
+    "styracosaurus": (.ceratopsian, .medium),
+    // Hadrosaurs and other iguanodont-grade ornithopods (broad three-toed herbivore tracks)
     "corythosaurus": (.hadrosaur, .medium),
     "parasaurolophus": (.hadrosaur, .medium),
     "iguanodon": (.hadrosaur, .medium),
     "edmontosaurus": (.hadrosaur, .large),
+    "lambeosaurus": (.hadrosaur, .medium),
+    "maiasaura": (.hadrosaur, .medium),
+    "ouranosaurus": (.hadrosaur, .medium),
+    // Basal / small ornithopods — generic ornithischian track morphotype (`footprint-ornithischian-*`)
+    "dryosaurus": (.ornithischian, .small),
+    "gasparinisaura": (.ornithischian, .small),
     "pachycephalosaurus": (.hadrosaur, .small),
+    "stegoceras": (.hadrosaur, .small),
+    "stygimoloch": (.hadrosaur, .small),
+    // Stegosaurs
+    "stegosaurus": (.stegosaur, .medium),
+    "kentrosaurus": (.stegosaur, .medium),
+    "huayangosaurus": (.stegosaur, .medium),
     // Ankylosaurs
     "ankylosaurus": (.ankylosaur, .large),
     "euoplocephalus": (.ankylosaur, .medium),
@@ -962,22 +1154,217 @@ private let footprintDinosaurMap: [String: (clade: FootprintClade, size: DinoSiz
     "polacanthus": (.ankylosaur, .medium),
 ]
 
-private func clade(forDinosaurSlug slug: String) -> FootprintClade? {
-    footprintDinosaurMap[slug]?.clade
-}
-
 private func size(forDinosaurSlug slug: String) -> DinoSize? {
     footprintDinosaurMap[slug]?.size
 }
 
-/// Returns a random footprint image name for the clade. Supports 3 variants per clade (footprint-{clade}-1-medium, -2-, -3-) to reduce memorization; falls back to footprint-{clade}-medium when variants are missing.
-private func footprintImageNameForClade(_ clade: FootprintClade) -> String {
+private func slugForFootprint(_ dinosaur: Dinosaur) -> String? {
+    guard let imageName = dinosaur.imageName, imageName.hasPrefix("dino-") else { return nil }
+    return imageName.replacingOccurrences(of: "dino-", with: "").lowercased()
+}
+
+/// Dinosaurs in one morphotype clade, ordered small → medium → large, then name.
+private func sortDinosaursWithinCladeByFootprintSize(_ dinosaurs: [Dinosaur]) -> [Dinosaur] {
+    dinosaurs.sorted { a, b in
+        let oa = slugForFootprint(a).flatMap { size(forDinosaurSlug: $0)?.sortOrder } ?? 99
+        let ob = slugForFootprint(b).flatMap { size(forDinosaurSlug: $0)?.sortOrder } ?? 99
+        if oa != ob { return oa < ob }
+        return a.name < b.name
+    }
+}
+
+private func parseFootprintSlotKey(_ key: String) -> (clade: FootprintClade, size: DinoSize)? {
+    let parts = key.split(separator: "|", maxSplits: 1).map(String.init)
+    guard parts.count == 2,
+          let clade = FootprintClade(rawValue: parts[0]),
+          let size = DinoSize(rawValue: parts[1]) else { return nil }
+    return (clade, size)
+}
+
+/// Groups playable dinosaurs by `(clade|size)` slot; each bucket sorted by name (same tier).
+private func footprintSlotBuckets(for dinosaurs: [Dinosaur]) -> [String: [Dinosaur]] {
+    var buckets: [String: [Dinosaur]] = [:]
+    for d in dinosaurs {
+        guard let slug = slugForFootprint(d), let pair = footprintDinosaurMap[slug] else { continue }
+        let key = "\(pair.clade.rawValue)|\(pair.size.rawValue)"
+        buckets[key, default: []].append(d)
+    }
+    for key in buckets.keys {
+        buckets[key]?.sort { $0.name < $1.name }
+    }
+    return buckets
+}
+
+/// Footprint art for this morphotype + size tier (`footprint-{clade}-{size}`). Medium tier still prefers numbered variants when bundled.
+private func footprintImageName(clade: FootprintClade, size: DinoSize) -> String {
     let base = clade.imageNameForAsset
-    let fallback = "footprint-\(base)-medium"
-    let variants = (1...3).map { "footprint-\(base)-\($0)-medium" }
-    let available = variants.filter { UIImage(named: $0) != nil }
-    if available.isEmpty { return fallback }
-    return available.randomElement() ?? fallback
+    if size == .medium {
+        let variants = (1...3).map { "footprint-\(base)-\($0)-medium" }
+        let available = variants.filter { UIImage(named: $0) != nil }
+        if let pick = available.randomElement() { return pick }
+    }
+    let direct = "footprint-\(base)-\(size.rawValue)"
+    if UIImage(named: direct) != nil { return direct }
+    return "footprint-\(base)-medium"
+}
+
+/// Picks three `(clade|size)` slots for one game: prefers three different clades when available slots allow.
+private func pickThreeFootprintSlots(
+    availableSlotKeys: [String],
+    buckets: [String: [Dinosaur]]
+) -> [String] {
+    guard !availableSlotKeys.isEmpty else { return [] }
+    let keys = availableSlotKeys.shuffled()
+    var byClade: [FootprintClade: [String]] = [:]
+    for key in keys {
+        guard let parsed = parseFootprintSlotKey(key) else { continue }
+        byClade[parsed.clade, default: []].append(key)
+    }
+    var picked: [String] = []
+    let cladeOrder = FootprintClade.allCases.filter { (byClade[$0]?.isEmpty == false) }.shuffled()
+    for clade in cladeOrder {
+        guard picked.count < 3 else { break }
+        guard let slotKey = byClade[clade]?.randomElement(),
+              buckets[slotKey]?.isEmpty == false else { continue }
+        if !picked.contains(slotKey) {
+            picked.append(slotKey)
+        }
+    }
+    var remaining = keys.filter { !picked.contains($0) && (buckets[$0]?.isEmpty == false) }
+    remaining.shuffle()
+    while picked.count < 3, let next = remaining.popLast() {
+        if !picked.contains(next) {
+            picked.append(next)
+        }
+    }
+    return Array(picked.prefix(3))
+}
+
+// MARK: - Ptero Footprints (pterosaur morphotype track family + size tier)
+
+/// Asset stem `ptero-footprint-{rawValue}-*`; `transition` matches `PterosaurGuessGroup.transitional`.
+private enum PteroFootprintMorphotype: String, CaseIterable {
+    case azhdarchid, basal, ornithocheiroid, specialist, tapejarid, thalassodromid, transition
+
+    static func from(guessGroup: PterosaurGuessGroup) -> PteroFootprintMorphotype {
+        switch guessGroup {
+        case .transitional: return .transition
+        default:
+            return PteroFootprintMorphotype(rawValue: guessGroup.rawValue)!
+        }
+    }
+
+    var guessGroup: PterosaurGuessGroup {
+        switch self {
+        case .transition: return .transitional
+        default:
+            return PterosaurGuessGroup(rawValue: rawValue)!
+        }
+    }
+}
+
+/// Per-creature size tier within its guess group (small → large by weight rank), so each `(morphotype|size)` slot can fill.
+private let pteroFootprintSizeByCreatureId: [Int: DinoSize] = {
+    var result: [Int: DinoSize] = [:]
+    for group in PterosaurGuessGroup.allCases {
+        let members = AirPterosaurData.allPterosaurs.filter { PterosaurGuessGroup.guessGroup(forImageName: $0.imageName ?? "") == group }
+        let sorted = members.sorted {
+            (AirPterosaurData.pterosaurEstimatedWeightKgById[$0.id] ?? 0) < (AirPterosaurData.pterosaurEstimatedWeightKgById[$1.id] ?? 0)
+        }
+        let n = sorted.count
+        guard n > 0 else { continue }
+        if n == 1 {
+            result[sorted[0].id] = .medium
+            continue
+        }
+        for (idx, d) in sorted.enumerated() {
+            let f = Double(idx) / Double(n - 1)
+            let tier: DinoSize
+            if f <= 1.0 / 3.0 {
+                tier = .small
+            } else if f <= 2.0 / 3.0 {
+                tier = .medium
+            } else {
+                tier = .large
+            }
+            result[d.id] = tier
+        }
+    }
+    return result
+}()
+
+private func pteroFootprintPair(for dinosaur: Dinosaur) -> (morph: PteroFootprintMorphotype, size: DinoSize)? {
+    guard let group = PterosaurGuessGroup.guessGroup(forImageName: dinosaur.imageName ?? ""),
+          let size = pteroFootprintSizeByCreatureId[dinosaur.id] else { return nil }
+    return (PteroFootprintMorphotype.from(guessGroup: group), size)
+}
+
+private func sortPterosaursWithinMorphByFootprintSize(_ pterosaurs: [Dinosaur]) -> [Dinosaur] {
+    pterosaurs.sorted { a, b in
+        let oa = pteroFootprintPair(for: a).map { $0.size.sortOrder } ?? 99
+        let ob = pteroFootprintPair(for: b).map { $0.size.sortOrder } ?? 99
+        if oa != ob { return oa < ob }
+        return a.name < b.name
+    }
+}
+
+private func parsePteroFootprintSlotKey(_ key: String) -> (morph: PteroFootprintMorphotype, size: DinoSize)? {
+    let parts = key.split(separator: "|", maxSplits: 1).map(String.init)
+    guard parts.count == 2,
+          let morph = PteroFootprintMorphotype(rawValue: parts[0]),
+          let size = DinoSize(rawValue: parts[1]) else { return nil }
+    return (morph, size)
+}
+
+private func pteroFootprintSlotBuckets(for pterosaurs: [Dinosaur]) -> [String: [Dinosaur]] {
+    var buckets: [String: [Dinosaur]] = [:]
+    for d in pterosaurs {
+        guard let pair = pteroFootprintPair(for: d) else { continue }
+        let key = "\(pair.morph.rawValue)|\(pair.size.rawValue)"
+        buckets[key, default: []].append(d)
+    }
+    for key in buckets.keys {
+        buckets[key]?.sort { $0.name < $1.name }
+    }
+    return buckets
+}
+
+private func pteroFootprintImageName(morph: PteroFootprintMorphotype, size: DinoSize) -> String {
+    let stem = morph.rawValue
+    let direct = "ptero-footprint-\(stem)-\(size.rawValue)"
+    if UIImage(named: direct) != nil { return direct }
+    return "ptero-footprint-\(stem)-medium"
+}
+
+private func pickThreePteroFootprintSlots(
+    availableSlotKeys: [String],
+    buckets: [String: [Dinosaur]]
+) -> [String] {
+    guard !availableSlotKeys.isEmpty else { return [] }
+    let keys = availableSlotKeys.shuffled()
+    var byMorph: [PteroFootprintMorphotype: [String]] = [:]
+    for key in keys {
+        guard let parsed = parsePteroFootprintSlotKey(key) else { continue }
+        byMorph[parsed.morph, default: []].append(key)
+    }
+    var picked: [String] = []
+    let morphOrder = PteroFootprintMorphotype.allCases.filter { (byMorph[$0]?.isEmpty == false) }.shuffled()
+    for morph in morphOrder {
+        guard picked.count < 3 else { break }
+        guard let slotKey = byMorph[morph]?.randomElement(),
+              buckets[slotKey]?.isEmpty == false else { continue }
+        if !picked.contains(slotKey) {
+            picked.append(slotKey)
+        }
+    }
+    var remaining = keys.filter { !picked.contains($0) && (buckets[$0]?.isEmpty == false) }
+    remaining.shuffle()
+    while picked.count < 3, let next = remaining.popLast() {
+        if !picked.contains(next) {
+            picked.append(next)
+        }
+    }
+    return Array(picked.prefix(3))
 }
 
 // MARK: - Game Configurations
@@ -1190,7 +1577,7 @@ struct GuessGameConfigs {
         )
     }
     
-    // Dino Footprints!: match footprint morphology (clade only). One clade footprint shown per round; options = 1 from that clade + 2 from two different other clades so the child matches shape, not size.
+    // Dino Footprints!: Each round shows `footprint-{clade}-{size}` for one footprint tier. Pool is sorted by size within each morphotype clade. Rotation cycles every occupiable (clade×size) slot so all bundled footprint tiers surface over time; each game prefers three distinct clades for decoys (two other morphotypes).
     static var dinoFootprints: GuessGameConfig {
         let landDinosaurs = MatchingGameConfigs.allDinosaurs.filter { $0.imageName?.hasPrefix("dino-") == true }
         let all = landDinosaurs.filter { d in
@@ -1200,45 +1587,215 @@ struct GuessGameConfigs {
         guard all.count >= 5 else {
             fatalError("Need at least 5 dinosaurs in footprintDinosaurMap for Dino Footprints, but only have \(all.count)")
         }
-        let byClade: [FootprintClade: [Dinosaur]] = Dictionary(grouping: all) { d -> FootprintClade in
+
+        let slotBuckets = footprintSlotBuckets(for: all)
+        let allPossibleSlotKeys = Set(slotBuckets.keys.filter { (slotBuckets[$0]?.isEmpty == false) })
+        guard allPossibleSlotKeys.count >= 3 else {
+            fatalError("Need at least 3 distinct (clade|size) slots with dinosaurs for Dino Footprints (have \(allPossibleSlotKeys.count))")
+        }
+
+        let byCladeGrouped = Dictionary(grouping: all) { d -> FootprintClade in
             let slug = d.imageName?.replacingOccurrences(of: "dino-", with: "").lowercased() ?? ""
             return footprintDinosaurMap[slug]!.clade
         }
+        var byClade: [FootprintClade: [Dinosaur]] = [:]
+        for clade in FootprintClade.allCases {
+            guard let group = byCladeGrouped[clade] else { continue }
+            byClade[clade] = sortDinosaursWithinCladeByFootprintSize(group)
+        }
+
         let cladesWithOneOrMore = FootprintClade.allCases.filter { (byClade[$0] ?? []).count >= 1 }
         guard cladesWithOneOrMore.count >= 3 else {
             fatalError("Need at least 3 clades with 1+ dinosaur for Dino Footprints (have \(cladesWithOneOrMore.count))")
         }
-        // One clade per round; show one footprint image per clade. Randomly picks from up to 3 variants per clade to reduce memorization.
-        let cladesForRounds = Array(cladesWithOneOrMore.shuffled().prefix(3))
+
+        var availableKeys: [String] = allPossibleSlotKeys.filter { !DinoFootprintsStorage.loadUsedSlotKeys().contains($0) }
+        if availableKeys.count < 3 {
+            DinoFootprintsStorage.clearUsedSlots()
+            availableKeys = Array(allPossibleSlotKeys)
+        }
+
+        let pickedSlotKeys = pickThreeFootprintSlots(availableSlotKeys: availableKeys, buckets: slotBuckets)
+        guard pickedSlotKeys.count == 3 else {
+            fatalError("Dino Footprints: expected 3 rounds (picked \(pickedSlotKeys.count) slots)")
+        }
+
         var usedQuestionIds: Set<Int> = []
         var rounds: [RoundQuestion] = []
         for roundId in 1...3 {
-            let clade = cladesForRounds[roundId - 1]
-            let sameClade = byClade[clade] ?? []
-            let correct = sameClade.shuffled().first { !usedQuestionIds.contains($0.id) } ?? sameClade.first!
+            let slotKey = pickedSlotKeys[roundId - 1]
+            guard let parsed = parseFootprintSlotKey(slotKey),
+                  var candidates = slotBuckets[slotKey], !candidates.isEmpty else {
+                fatalError("Dino Footprints: empty slot \(slotKey)")
+            }
+            candidates.shuffle()
+            let correct = candidates.first { !usedQuestionIds.contains($0.id) } ?? candidates[0]
             usedQuestionIds.insert(correct.id)
-            let otherClades = cladesForRounds.filter { $0 != clade }
-            let decoyClade1 = otherClades[0]
-            let decoyClade2 = otherClades[1]
-            let decoy1 = (byClade[decoyClade1] ?? []).randomElement()!
-            let decoy2 = (byClade[decoyClade2] ?? []).randomElement()!
-            var options = [correct, decoy1, decoy2]
+
+            let questionClade = parsed.clade
+            let otherClades = FootprintClade.allCases.filter { $0 != questionClade && (byClade[$0]?.isEmpty == false) }.shuffled()
+            guard otherClades.count >= 2 else {
+                fatalError("Dino Footprints: need 2 decoy clades for \(questionClade)")
+            }
+
+            var excluded: Set<Int> = [correct.id]
+            var decoy1: Dinosaur?
+            var decoy2: Dinosaur?
+            outerDecoys: for i in 0..<otherClades.count {
+                for j in (i + 1)..<otherClades.count {
+                    let c1 = otherClades[i], c2 = otherClades[j]
+                    let pool1 = byClade[c1] ?? []
+                    let pool2 = byClade[c2] ?? []
+                    guard let d1 = pool1.filter({ !excluded.contains($0.id) }).randomElement() else { continue }
+                    excluded.insert(d1.id)
+                    guard let d2 = pool2.filter({ !excluded.contains($0.id) }).randomElement() else {
+                        excluded.remove(d1.id)
+                        continue
+                    }
+                    decoy1 = d1
+                    decoy2 = d2
+                    break outerDecoys
+                }
+            }
+            guard let d1 = decoy1, let d2 = decoy2 else {
+                fatalError("Dino Footprints: could not pick decoys for round \(roundId)")
+            }
+
+            var options = [correct, d1, d2]
             options.shuffle()
-            let footprintImageName = footprintImageNameForClade(clade)
+            let imageName = footprintImageName(clade: parsed.clade, size: parsed.size)
             rounds.append(RoundQuestion(
                 id: roundId,
-                questionImageName: footprintImageName,
+                questionImageName: imageName,
                 questionImageFallback: correct.imageName,
                 correctAnswerId: correct.id,
                 options: options
             ))
         }
+
         return GuessGameConfig(
             id: "dino-footprints",
             title: "Dino Footprints!",
             introAudio: "game-dino-footprints",
             rounds: rounds,
-            availableDinosaurs: all
+            availableDinosaurs: all,
+            victorySideEffect: {
+                let keys = rounds.compactMap { round -> String? in
+                    guard let d = all.first(where: { $0.id == round.correctAnswerId }),
+                          let slug = slugForFootprint(d),
+                          let pair = footprintDinosaurMap[slug] else { return nil }
+                    return "\(pair.clade.rawValue)|\(pair.size.rawValue)"
+                }
+                DinoFootprintsStorage.appendUsedSlotKeys(keys, allPossibleSlotKeys: allPossibleSlotKeys)
+            }
+        )
+    }
+
+    // Ptero Footprints!: Same rotation pattern as Dino Footprints — `ptero-footprint-{morphotype}-{size}`; pool is all pterosaurs with guess-group + weight-tier slots; decoys from two other morphotypes when possible.
+    static var pteroFootprints: GuessGameConfig {
+        let all = MatchingGameConfigs.allPterosaurs.filter { pteroFootprintPair(for: $0) != nil }
+        guard all.count >= 5 else {
+            fatalError("Need at least 5 pterosaurs for Ptero Footprints, but only have \(all.count)")
+        }
+
+        let slotBuckets = pteroFootprintSlotBuckets(for: all)
+        let allPossibleSlotKeys = Set(slotBuckets.keys.filter { (slotBuckets[$0]?.isEmpty == false) })
+        guard allPossibleSlotKeys.count >= 3 else {
+            fatalError("Need at least 3 distinct (morphotype|size) slots with pterosaurs for Ptero Footprints (have \(allPossibleSlotKeys.count))")
+        }
+
+        let byMorphGrouped = Dictionary(grouping: all) { d -> PteroFootprintMorphotype in
+            pteroFootprintPair(for: d)!.morph
+        }
+        var byMorph: [PteroFootprintMorphotype: [Dinosaur]] = [:]
+        for morph in PteroFootprintMorphotype.allCases {
+            guard let group = byMorphGrouped[morph] else { continue }
+            byMorph[morph] = sortPterosaursWithinMorphByFootprintSize(group)
+        }
+
+        let morphsWithOneOrMore = PteroFootprintMorphotype.allCases.filter { (byMorph[$0] ?? []).count >= 1 }
+        guard morphsWithOneOrMore.count >= 3 else {
+            fatalError("Need at least 3 morphotypes with 1+ pterosaur for Ptero Footprints (have \(morphsWithOneOrMore.count))")
+        }
+
+        var availableKeys: [String] = allPossibleSlotKeys.filter { !PteroFootprintsStorage.loadUsedSlotKeys().contains($0) }
+        if availableKeys.count < 3 {
+            PteroFootprintsStorage.clearUsedSlots()
+            availableKeys = Array(allPossibleSlotKeys)
+        }
+
+        let pickedSlotKeys = pickThreePteroFootprintSlots(availableSlotKeys: availableKeys, buckets: slotBuckets)
+        guard pickedSlotKeys.count == 3 else {
+            fatalError("Ptero Footprints: expected 3 rounds (picked \(pickedSlotKeys.count) slots)")
+        }
+
+        var usedQuestionIds: Set<Int> = []
+        var rounds: [RoundQuestion] = []
+        for roundId in 1...3 {
+            let slotKey = pickedSlotKeys[roundId - 1]
+            guard let parsed = parsePteroFootprintSlotKey(slotKey),
+                  var candidates = slotBuckets[slotKey], !candidates.isEmpty else {
+                fatalError("Ptero Footprints: empty slot \(slotKey)")
+            }
+            candidates.shuffle()
+            let correct = candidates.first { !usedQuestionIds.contains($0.id) } ?? candidates[0]
+            usedQuestionIds.insert(correct.id)
+
+            let questionMorph = parsed.morph
+            let otherMorphs = PteroFootprintMorphotype.allCases.filter { $0 != questionMorph && (byMorph[$0]?.isEmpty == false) }.shuffled()
+            guard otherMorphs.count >= 2 else {
+                fatalError("Ptero Footprints: need 2 decoy morphotypes for \(questionMorph)")
+            }
+
+            var excluded: Set<Int> = [correct.id]
+            var decoy1: Dinosaur?
+            var decoy2: Dinosaur?
+            outerDecoys: for i in 0..<otherMorphs.count {
+                for j in (i + 1)..<otherMorphs.count {
+                    let m1 = otherMorphs[i], m2 = otherMorphs[j]
+                    let pool1 = byMorph[m1] ?? []
+                    let pool2 = byMorph[m2] ?? []
+                    guard let d1 = pool1.filter({ !excluded.contains($0.id) }).randomElement() else { continue }
+                    excluded.insert(d1.id)
+                    guard let d2 = pool2.filter({ !excluded.contains($0.id) }).randomElement() else {
+                        excluded.remove(d1.id)
+                        continue
+                    }
+                    decoy1 = d1
+                    decoy2 = d2
+                    break outerDecoys
+                }
+            }
+            guard let d1 = decoy1, let d2 = decoy2 else {
+                fatalError("Ptero Footprints: could not pick decoys for round \(roundId)")
+            }
+
+            var options = [correct, d1, d2]
+            options.shuffle()
+            let imageName = pteroFootprintImageName(morph: parsed.morph, size: parsed.size)
+            rounds.append(RoundQuestion(
+                id: roundId,
+                questionImageName: imageName,
+                questionImageFallback: correct.imageName,
+                correctAnswerId: correct.id,
+                options: options
+            ))
+        }
+
+        return GuessGameConfig(
+            id: "ptero-footprints",
+            title: "Ptero Footprints!",
+            introAudio: "game-ptero-footprints",
+            rounds: rounds,
+            availableDinosaurs: all,
+            victorySideEffect: {
+                let keys = rounds.compactMap { round -> String? in
+                    guard let d = all.first(where: { $0.id == round.correctAnswerId }),
+                          let pair = pteroFootprintPair(for: d) else { return nil }
+                    return "\(pair.morph.rawValue)|\(pair.size.rawValue)"
+                }
+                PteroFootprintsStorage.appendUsedSlotKeys(keys, allPossibleSlotKeys: allPossibleSlotKeys)
+            }
         )
     }
 

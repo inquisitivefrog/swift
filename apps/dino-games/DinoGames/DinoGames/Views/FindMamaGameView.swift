@@ -417,69 +417,44 @@ struct FindMamaGameView: View {
     // MARK: - End sequence (3 rows: image left, name right → highlight each + name audio → good-job + crowd → dismiss)
 
     private var findMamaEndSequenceView: some View {
-        VStack(spacing: 16) {
-            VStack(spacing: 12) {
+        VictorySplitColumnView(
+            listScrollHeight: StandardVictoryLayout.recapListScrollHeight(itemCount: endSequenceMothers.count),
+            showSuccessPhase: endSequenceStep == 2,
+            endHighlightIndex: endHighlightIndex,
+            gameTitle: gameConfig.title,
+            scrollRows: {
                 ForEach(Array(endSequenceMothers.enumerated()), id: \.element.id) { index, dinosaur in
                     let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                    HStack(spacing: 16) {
-                        findMamaEndImage(dinosaur: dinosaur, isHighlighted: isHighlighted)
-                        Text(dinosaur.name)
-                            .font(.title2)
-                            .fontWeight(isHighlighted ? .semibold : .regular)
-                            .foregroundColor(.primary)
-                            .multilineTextAlignment(.leading)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.8)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .opacity(isHighlighted ? 1.0 : 0.5)
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
+                    StandardVictoryRecapRowView(
+                        item: VictoryRecapDisplayItem(
+                            id: "\(dinosaur.id)",
+                            title: dinosaur.name,
+                            imageAssetName: dinosaur.imageName,
+                            fallbackEmoji: dinosaur.icon
+                        ),
+                        isHighlighted: isHighlighted
                     )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
-                    )
+                    .id(index)
                 }
+            },
+            successPhase: {
+                LandGameVictorySuccessStingerThenContinue(
+                    gameConfigId: gameConfig.id,
+                    speechManager: speechManager,
+                    onContinue: playGoodJobAndCrowdThenDismiss
+                )
             }
-            .padding(.horizontal)
-            Spacer()
-        }
+        )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             guard endSequenceStep == -1 else { return }
             endSequenceStep = 1
             endHighlightIndex = 0
             if endSequenceMothers.isEmpty {
-                playGoodJobAndCrowdThenDismiss()
+                endSequenceStep = 2
             } else {
                 speechManager.speak(endSequenceMothers[0].name)
                 speechManager.onAudioFinished = { advanceFindMamaEndHighlight() }
-            }
-        }
-    }
-
-    private func findMamaEndImage(dinosaur: Dinosaur, isHighlighted: Bool) -> some View {
-        Group {
-            if let imageName = dinosaur.imageName, UIImage(named: imageName) != nil {
-                Image(imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 72, height: 72)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .opacity(isHighlighted ? 1.0 : 0.4)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
-                    )
-            } else {
-                Text(dinosaur.icon)
-                    .font(.system(size: 40))
-                    .frame(width: 72, height: 72)
-                    .opacity(isHighlighted ? 1.0 : 0.4)
             }
         }
     }
@@ -491,12 +466,11 @@ struct FindMamaGameView: View {
             speechManager.speak(endSequenceMothers[endHighlightIndex].name)
             speechManager.onAudioFinished = { advanceFindMamaEndHighlight() }
         } else {
-            playGoodJobAndCrowdThenDismiss()
+            endSequenceStep = 2
         }
     }
 
     private func playGoodJobAndCrowdThenDismiss() {
-        endSequenceStep = 2
         let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
         let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
         if let u1 = goodJobURL, let u2 = crowdURL {

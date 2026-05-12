@@ -1,0 +1,12 @@
+[
+  {
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TWO_MEDICINE",
+    "character_ref": "dino_bones_paleontologist_3",
+    "asset_id": "pachy_medium_v3_fixed",
+    "pose_instructions": "A single character, dino_bones_paleontologist_3, is kneeling on one knee. He is alone in the frame. He is using a silver metal caliper to measure a single tridactyl footprint in the tan sand. The footprint is exactly the same length as his hiking boot. The toes of the print are thick and end in rounded, blunt tips, not sharp claws. A single sun-bleached hat lies on the sand nearby to anchor the scale."
+  }
+]

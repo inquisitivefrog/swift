@@ -21,6 +21,7 @@ private enum DinoAgesPeriod: String, CaseIterable {
     case cretaceous
 
     var imageName: String { "period-\(rawValue)" }
+    var pteroImageName: String { "ptero-ages-\(rawValue)" }
     var coverAudioKey: String { "cover-\(rawValue)" }
     /// e.g. game-dino-ages-find-in-jurassic / game-dino-ages-find-in-cretaceous
     var findInPeriodAudioKey: String { "game-dino-ages-find-in-\(rawValue)" }
@@ -95,6 +96,25 @@ private let dinoAgesPeriodById: [Int: DinoAgesPeriod] = {
     return map
 }()
 
+/// Pterosaur pool: all bundled pterosaur portraits.
+private let pteroAgesPool: [Dinosaur] = AirPterosaurData.allPterosaurs.filter { $0.imageName?.hasPrefix("ptero-") == true }
+
+/// Pterosaur id → period for Ptero Ages.
+/// Species marked `.both` are treated as Jurassic for this game so each card still has one target period.
+private let pteroAgesPeriodById: [Int: DinoAgesPeriod] = {
+    var map: [Int: DinoAgesPeriod] = [:]
+    for p in pteroAgesPool {
+        guard let span = AirPterosaurData.mesozoicSpanForRacing(pterosaurId: p.id) else { continue }
+        switch span {
+        case .jurassic, .both:
+            map[p.id] = .jurassic
+        case .cretaceous:
+            map[p.id] = .cretaceous
+        }
+    }
+    return map
+}()
+
 /// Diameter of each dinosaur circle in the star layout (and victory list).
 private let dinoAgesCircleSize: CGFloat = 96
 
@@ -157,6 +177,15 @@ struct DinoAgesGameView: View {
     /// When true, show the Source Ages hints overlay.
     @State private var showSourceAgesHints = false
 
+    private var isPteroAges: Bool { gameConfig.id == "ptero-ages" }
+    private var currentPool: [Dinosaur] { isPteroAges ? pteroAgesPool : dinoAgesPool }
+    private var currentPeriodById: [Int: DinoAgesPeriod] { isPteroAges ? pteroAgesPeriodById : dinoAgesPeriodById }
+
+    private func findInPeriodAudioKey(for period: DinoAgesPeriod) -> String {
+        let prefix = isPteroAges ? "ptero" : "dino"
+        return "game-\(prefix)-ages-find-in-\(period.rawValue)"
+    }
+
     /// Matched dinosaurs this round in the order they were tapped (for adding to victory walk).
     private var matchedDinosaursThisRoundInTapOrder: [Dinosaur] {
         matchedOrderThisRound.compactMap { id in slots.first { $0.id == id } }
@@ -192,7 +221,7 @@ struct DinoAgesGameView: View {
                     }
                 }
                 .fullScreenCover(isPresented: $showSourceAgesHints) {
-                    SourceAgesHintsView(onDismiss: { showSourceAgesHints = false })
+                    SourceAgesHintsView(isPteroAges: isPteroAges, onDismiss: { showSourceAgesHints = false })
                 }
         }
     }
@@ -240,9 +269,16 @@ struct DinoAgesGameView: View {
     }
 
     private func periodImage(_ p: DinoAgesPeriod) -> some View {
-        Group {
-            if ImageAssetCache.imageExists(named: p.imageName) {
-                Image(p.imageName)
+        let preferredImageName = isPteroAges ? p.pteroImageName : p.imageName
+        let fallbackImageName = p.imageName
+        return Group {
+            if ImageAssetCache.imageExists(named: preferredImageName) {
+                Image(preferredImageName)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 340, maxHeight: 180)
+            } else if ImageAssetCache.imageExists(named: fallbackImageName) {
+                Image(fallbackImageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(maxWidth: 340, maxHeight: 180)
@@ -284,7 +320,7 @@ struct DinoAgesGameView: View {
 
     private func handleTap(dino: Dinosaur) {
         guard !isAudioPlaying else { return }
-        guard let p = period, let dinoPeriod = dinoAgesPeriodById[dino.id] else { return }
+        guard let p = period, let dinoPeriod = currentPeriodById[dino.id] else { return }
         let isCorrect = (dinoPeriod == p)
         if isCorrect {
             if matchedIds.contains(dino.id) { return }
@@ -327,8 +363,8 @@ struct DinoAgesGameView: View {
     /// Build slots for one round: 3 from chosen period, 2 from other period. Prefer dinosaurs not yet used; allow reuse if pool is small.
     private func buildSlotsForRound(using rng: inout SeededRandomNumberGenerator) {
         guard let p = period else { return }
-        let inPeriodPool = dinoAgesPool.filter { dinoAgesPeriodById[$0.id] == p }
-        let outOfPeriodPool = dinoAgesPool.filter { dinoAgesPeriodById[$0.id] != p }
+        let inPeriodPool = currentPool.filter { currentPeriodById[$0.id] == p }
+        let outOfPeriodPool = currentPool.filter { currentPeriodById[$0.id] != p }
         let inPeriodPreferred = inPeriodPool.filter { !usedDinosaurIds.contains($0.id) }
         let outOfPeriodPreferred = outOfPeriodPool.filter { !usedDinosaurIds.contains($0.id) }
         let inPeriod = inPeriodPreferred.count >= 3 ? inPeriodPreferred : inPeriodPool
@@ -376,7 +412,8 @@ struct DinoAgesGameView: View {
         if let url = speechManager.urlForAudio(key: p.coverAudioKey) {
             speechManager.playAudioFile(url: url)
         } else {
-            speechManager.speak(p.coverAudioKey)
+            // chainDelay: skip rate limit so cover always plays after prior clip (e.g. great-match).
+            speechManager.speak(p.coverAudioKey, chainDelay: true)
         }
     }
 
@@ -384,25 +421,47 @@ struct DinoAgesGameView: View {
         guard let p = period else { return }
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
-            self.startIntroWalk()
+            self.playHintReminderThenStartIntroWalk()
         }
-        if let url = speechManager.urlForAudio(key: p.findInPeriodAudioKey) {
+        let findKey = findInPeriodAudioKey(for: p)
+        if let url = speechManager.urlForAudio(key: findKey) {
             speechManager.playAudioFile(url: url)
         } else {
-            speechManager.speak(p.findInPeriodAudioKey)
+            speechManager.speak(findKey, chainDelay: true)
+        }
+    }
+
+    /// Match Dino Footprints pattern: short hint reminder before the intro walk.
+    private func playHintReminderThenStartIntroWalk() {
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.startIntroWalk()
+        }
+        let hintKey = isPteroAges
+            ? "game-ptero-ages-tap-the-period-to-hear-description"
+            : "game-dino-ages-tap-the-period-to-hear-description"
+        if let url = speechManager.urlForAudio(key: hintKey) {
+            speechManager.playAudioFile(url: url)
+        } else if let url = speechManager.urlForAudio(key: "game-hint") {
+            speechManager.playAudioFile(url: url)
+        } else {
+            startIntroWalk()
         }
     }
 
     /// Walk the five circles, speaking each dinosaur’s name; then allow taps.
     private func startIntroWalk() {
         guard slots.count >= 5 else {
+            displayedDinoName = nil
             isAudioPlaying = false
             return
         }
         introWalkIndex = 0
+        displayedDinoName = slots[0].name
         isAudioPlaying = true
         speechManager.onAudioFinished = { advanceIntroWalk() }
-        speechManager.speak(audioKey: slots[0].imageName ?? slots[0].name, fallbackText: slots[0].name)
+        // chainDelay: after a short hint/find clip, lastPlayTime can be under 0.3s ago; without this, speak skips audio and fires onAudioFinished immediately, fast-forwarding the whole walk.
+        speechManager.speak(audioKey: slots[0].imageName ?? slots[0].name, fallbackText: slots[0].name, chainDelay: true)
     }
 
     private func advanceIntroWalk() {
@@ -410,12 +469,14 @@ struct DinoAgesGameView: View {
         let next = (introWalkIndex ?? 0) + 1
         if next >= 5 {
             introWalkIndex = nil
+            displayedDinoName = nil
             isAudioPlaying = false
             return
         }
         introWalkIndex = next
+        displayedDinoName = slots[next].name
         speechManager.onAudioFinished = { advanceIntroWalk() }
-        speechManager.speak(audioKey: slots[next].imageName ?? slots[next].name, fallbackText: slots[next].name)
+        speechManager.speak(audioKey: slots[next].imageName ?? slots[next].name, fallbackText: slots[next].name, chainDelay: true)
     }
 
     private func startGame() {
@@ -436,65 +497,50 @@ struct DinoAgesGameView: View {
                 self.speechManager.onAudioFinished = nil
                 self.startIntroWalk()
             }
-            if let url = self.speechManager.urlForAudio(key: p.findInPeriodAudioKey) {
+            let findKey = self.findInPeriodAudioKey(for: p)
+            if let url = self.speechManager.urlForAudio(key: findKey) {
                 self.speechManager.playAudioFile(url: url)
             } else {
-                self.speechManager.speak(p.findInPeriodAudioKey)
+                self.speechManager.speak(findKey, chainDelay: true)
             }
         }
         speechManager.speak(p.coverAudioKey)
     }
 
-    // MARK: - End sequence (victory: walk 9 selected dinosaurs, then success image + good-job + crowd-cheering)
-
-    private let victoryRowHeight: CGFloat = 72
-    /// Show 3 rows to leave room for success card (was 4; smaller rows + fewer visible = less crowding).
-    private var victoryListVisibleHeight: CGFloat { 16 + 3 * victoryRowHeight + 2 * 12 + 16 }
+    // MARK: - End sequence (victory: walk selected dinosaurs, then success card + optional stinger → good-job + crowd)
 
     private var dinoAgesEndSequenceView: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                // Top half: scrolling list (fixed height ~4 rows), highlight + name audio, scroll to center
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        VStack(spacing: 12) {
-                            ForEach(Array(victoryWalkDinosaurs.enumerated()), id: \.element.id) { index, dino in
-                                DinoAgesEndRowView(
-                                    dino: dino,
-                                    isHighlighted: endSequenceStep >= 1 && index == endHighlightIndex
-                                )
-                                .id(index)
-                            }
-                        }
-                        .padding(.horizontal)
-                        .padding(.vertical, 16)
-                    }
-                    .frame(height: victoryListVisibleHeight)
-                    .onChange(of: endHighlightIndex) { _, newIndex in
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            proxy.scrollTo(newIndex, anchor: .center)
-                        }
-                    }
+        VictorySplitColumnView(
+            listScrollHeight: StandardVictoryLayout.recapListScrollHeight(itemCount: victoryWalkDinosaurs.count),
+            showSuccessPhase: endSequenceStep == 2,
+            endHighlightIndex: endHighlightIndex,
+            gameTitle: gameConfig.title,
+            scrollRows: {
+                ForEach(Array(victoryWalkDinosaurs.enumerated()), id: \.element.id) { index, dino in
+                    let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                    StandardVictoryRecapRowView(
+                        item: VictoryRecapDisplayItem(
+                            id: "\(dino.id)",
+                            title: dino.name,
+                            imageAssetName: dino.imageName,
+                            fallbackEmoji: dino.icon
+                        ),
+                        isHighlighted: isHighlighted
+                    )
+                    .id(index)
                 }
-                .frame(maxWidth: .infinity)
-
-                // Bottom half: during walk show empty space; after walk show success image
-                Group {
-                    if endSequenceStep == 2 {
-                        dinoAgesSuccessImageView
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    playGoodJobAndCrowdThenDismiss()
-                                }
-                            }
-                    } else {
-                        Spacer()
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            },
+            successPhase: {
+                LandGameVictorySuccessStingerThenContinue(
+                    candidateSuccessImageNames: isPteroAges
+                        ? ["game-ptero-ages-success", "game-ptero-ages"]
+                        : ["game-dino-ages-success", "game-dino-ages"],
+                    catalogGameIdForStinger: gameConfig.id,
+                    speechManager: speechManager,
+                    onContinue: playGoodJobAndCrowdThenDismiss
+                )
             }
-        }
+        )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             guard endSequenceStep == -1 else { return }
@@ -508,21 +554,6 @@ struct DinoAgesGameView: View {
                 speechManager.onAudioFinished = { advanceEndHighlight() }
             }
         }
-    }
-
-    private var dinoAgesSuccessImageView: some View {
-        Group {
-            if ImageAssetCache.imageExists(named: "game-dino-ages-success") {
-                Image("game-dino-ages-success")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else {
-                Text("🎉")
-                    .font(.system(size: 100))
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private func advanceEndHighlight() {
@@ -543,18 +574,30 @@ struct DinoAgesGameView: View {
         if let u1 = goodJobURL, let u2 = crowdURL {
             speechManager.playTogether(url1: u1, url2: u2) {
                 self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
+                if self.isPteroAges {
+                    PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
+                } else {
+                    LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
+                }
                 self.isPresented = false
             }
         } else if let u = goodJobURL ?? crowdURL {
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
+                if self.isPteroAges {
+                    PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
+                } else {
+                    LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
+                }
                 self.isPresented = false
             }
             speechManager.playAudioFile(url: u)
         } else {
-            LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
+            if isPteroAges {
+                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: gameConfig.id)
+            } else {
+                LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
+            }
             isPresented = false
         }
     }
@@ -671,59 +714,6 @@ private struct DinoAgesCircleView: View {
     }
 }
 
-/// Victory list: square images (72×72) like Match the Dinosaur, not circles — consistent across all games.
-private let dinoAgesVictoryImageSize: CGFloat = 72
-
-private struct DinoAgesEndRowView: View {
-    let dino: Dinosaur
-    let isHighlighted: Bool
-    private let rowHeight: CGFloat = 72
-
-    var body: some View {
-        HStack(spacing: 16) {
-            Group {
-                if let name = dino.imageName, ImageAssetCache.imageExists(named: name) {
-                    Image(name)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: dinoAgesVictoryImageSize, height: dinoAgesVictoryImageSize)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .opacity(isHighlighted ? 1.0 : 0.4)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
-                        )
-                } else {
-                    Text(dino.icon)
-                        .font(.system(size: 40))
-                        .frame(width: dinoAgesVictoryImageSize, height: dinoAgesVictoryImageSize)
-                        .opacity(isHighlighted ? 1.0 : 0.4)
-                }
-            }
-            Text(dino.name)
-                .font(.title2)
-                .fontWeight(isHighlighted ? .semibold : .regular)
-                .foregroundColor(.primary)
-                .multilineTextAlignment(.leading)
-                .lineLimit(2)
-                .minimumScaleFactor(0.65)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .opacity(isHighlighted ? 1.0 : 0.5)
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 10)
-        .frame(height: rowHeight)
-        .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
-        )
-    }
-}
-
 // MARK: - Source Ages Hints (Dino Ages)
 
 private struct SourceAgesPeriodHint: Identifiable {
@@ -739,6 +729,7 @@ private let sourceAgesHintPeriods: [SourceAgesPeriodHint] = [
 ]
 
 struct SourceAgesHintsView: View {
+    var isPteroAges: Bool = false
     let onDismiss: () -> Void
     @State private var speechManager = SpeechManager()
     @State private var selectedPeriod: SourceAgesPeriodHint?
@@ -774,7 +765,7 @@ struct SourceAgesHintsView: View {
                 .font(.title2.weight(.semibold))
                 .padding(.top, 44)
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                ForEach(sourceAgesHintPeriods) { period in
+                ForEach(hintPeriods) { period in
                     Button {
                         showPeriodDetail(period)
                     } label: {
@@ -820,10 +811,23 @@ struct SourceAgesHintsView: View {
         }
     }
 
+    private var hintPeriods: [SourceAgesPeriodHint] {
+        if isPteroAges {
+            return [
+                SourceAgesPeriodHint(id: "jurassic", imageName: "ptero-ages-jurassic", displayName: "Jurassic", audioKey: "game-ptero-ages-jurassic-pterosaurs"),
+                SourceAgesPeriodHint(id: "cretaceous", imageName: "ptero-ages-cretaceous", displayName: "Cretaceous", audioKey: "game-ptero-ages-cretaceous-pterosaurs"),
+            ]
+        }
+        return sourceAgesHintPeriods
+    }
+
     private func playIntroOnce() {
         guard !introPlayed else { return }
         introPlayed = true
-        if let url = speechManager.urlForAudio(key: "game-dino-ages-tap-the-period-to-hear-description") {
+        let introKey = isPteroAges
+            ? "game-ptero-ages-tap-the-period-to-hear-description"
+            : "game-dino-ages-tap-the-period-to-hear-description"
+        if let url = speechManager.urlForAudio(key: introKey) {
             speechManager.onAudioFinished = nil
             speechManager.playAudioFile(url: url)
         }
@@ -853,6 +857,11 @@ enum DinoAgesGameConfigs {
         id: "dino-ages",
         title: "Dino Ages!",
         introAudio: "game-dino-ages"
+    )
+    static let pteroAges = DinoAgesGameConfig(
+        id: "ptero-ages",
+        title: "Ptero Ages!",
+        introAudio: "game-ptero-ages"
     )
 }
 

@@ -20,7 +20,6 @@ final class MarineReptileAudioFilesXCTests: XCTestCase {
         let directory = marineAudioDirectoryURL()
         let audioFiles = try recursiveFiles(in: directory, allowedExtensions: ["m4a", "mp3", "wav"])
         let availableStems = Set(audioFiles.map { $0.deletingPathExtension().lastPathComponent.lowercased() })
-
         // Creature-name coverage is derived from marine base assets (excluding level-card art),
         // so every playable marine reptile asset must have a matching spoken-name file.
         let expectedStems = Set(

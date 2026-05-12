@@ -1,0 +1,12 @@
+[
+  {
+    "id": "track_basal_large",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "ZORZINO_LIMESTONE",
+    "character_ref": "dino_bones_paleontologist_1",
+    "pose": "He uses a large broom to sweep dust off a robust (Eudimorphodon) track on a pale limestone shelf. The tracks are large and deeply impressed, showing the transition from four-toed manus to five-toed pes."
+  }
+]

@@ -1,0 +1,12 @@
+[
+  {
+    "id": "track_specialist_small",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED",
+    "formation_ref": "WEALDEN",
+    "character_ref": "dino_bones_paleontologist_1",
+    "pose": "In mottled red clay, he points to a series of unusual, circular impressions left by a specialized filter-feeding pterosaur. The lack of distinct toe marks suggests a specialized soft-tissue padding on the feet."
+  }
+]

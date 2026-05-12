@@ -1,0 +1,27 @@
+{
+  "id": "ptero_ages_JURASSIC_HORIZON",
+  "scene_name": "The Golden Solnhofen Lagoon",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "period": "LATE_JURASSIC",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "pose_constraints": {
+    "composition": "Layered depth in a coastal forest. Foreground: A Rhamphorhynchus with its signature long tail-vane perched on a mossy branch. Midground: A cluster of Pterodactylus 'jogging' along a sandy beach. Background: Anurognathus swarms silhouetted against a golden sky.",
+    "rhamphorhynchus_logic": "Sleek, athletic profile with a 'diamond' tail vane clearly visible. Large, soulful eyes (not scary).",
+    "background_logic": "Verticality provided by towering Araucaria trees and Pandanus-like shrubs."
+  },
+  "character_details": {
+    "texture": "Ultra-clean, satin-finish skin and soft downy feathers. Smooth light falloff consistent with STYLE_ANIMATED_FEATURE_V3. ZERO scales, ZERO grit.",
+    "expression": "Friendly, curious, and intelligent. Soft amber eyes for all flyers.",
+    "colors": {
+      "rhamphorhynchus": "Deep charcoal wings with a striking crimson head and tail vane.",
+      "pterodactylus": "Pale mint-green with soft lavender-purple dappled spots.",
+      "anurognathus": "Sandy tan with 'bumblebee' yellow stripes on a fluffy body."
+    }
+  },
+  "environmental_details": {
+    "lighting": "DAPPLED_OPEN. Warm afternoon sun filtered through thin ginkgo leaves, creating golden rim-lighting to separate the flyers from the forest.",
+    "atmosphere": "Vibrant and saturated. The ground is a mix of Ivory and Pale Yellow limestone sand.",
+    "flora": "JURASSIC_BASE flora: Araucaria, Brachyphyllum, and Tree Ferns with a 'painted' feel."
+  },
+  "negative_prompt": "photorealistic, hyper-detailed skin, scales, bumps, grit, dirt, dull colors, grey skies, scary, horror, 1990s CGI, plastic toy, museum replica, sharp teeth, blood, aggression"
+}

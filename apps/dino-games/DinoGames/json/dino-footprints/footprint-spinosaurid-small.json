@@ -1,0 +1,12 @@
+[
+  {
+    "id": "track_spinosaurid_small",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "DAPPLED_OPEN",
+    "formation_ref": "WESSEX",
+    "character_ref": "dino_bones_paleontologist_1",
+    "pose": "Using a water sprayer to moisten a patch of purple mudstone, she highlights a series of slender tridactyl (Riparovenator) tracks. The prints are narrow and elongated, typical of a semi-aquatic hunter."
+  }
+]

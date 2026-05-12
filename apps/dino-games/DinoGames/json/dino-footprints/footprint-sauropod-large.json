@@ -1,0 +1,12 @@
+[
+  {
+    "id": "track_sauropod_large",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "HUINCUL",
+    "character_ref": "dino_bones_paleontologist_6",
+    "pose": "Worm's eye view. She stands inside the 'heel' of a titan-sized (Argentinosaurus) track in terracotta-colored sandstone, holding a long tape measure across the diameter. The track is a massive, deep basin that dwarfs her."
+  }
+]

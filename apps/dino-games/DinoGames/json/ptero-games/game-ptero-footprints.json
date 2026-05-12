@@ -1,0 +1,24 @@
+{
+  "asset_manifest": [
+    {
+      "id": "ptero_footprints_promo_v1",
+      "project": "PteroFootprints",
+      "species_primary": "ptero_racer_pteranodon",
+      "species_secondary": "juvenile_unspecified_pterosaur",
+      "character_ref": "dino_bones_paleontologist_2",
+      "tech_ref": "SQUARE_ASPECT_RATIO",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+      "formation_ref": "SOLNHOFEN",
+      "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+      "pose": "An adult female grad student with short black hair and tanned skin, wearing a green sun hat, light green blouse, and khaki safari vest, kneels with excitement on a cream-white limestone shore. She is pointing at a strange, asymmetrical trackway in the damp silt. Nearby, a stylized Pteranodon with a giant colorful head-crest and leather-textured wings is perched on its knuckles, tilting its head curiously at her.",
+      "visual_notes": {
+        "text_overlay": "Ptero Footprints!",
+        "text_style": "Bright Teal, high-poly 3D mixed case text with a glossy finish to match the STYLE_ANIMATED_FEATURE_V3 aesthetic.",
+        "ground_texture": "Smooth, cream-white fine-grained limestone silt (Plattenkalk) with ripple marks from the SOLNHOFEN formation.",
+        "ichnology_spec": "The trackway must show quadrupedal Pterosaur marks: Front 'manus' prints are deep, three-fingered asymmetrical 'V' shapes pointing outward. Rear 'pes' prints are slender, elongated, and plantigrade (flat-footed). All tracks are sunken NEGATIVE IMPRESSIONS with soft mud-heave edges.",
+        "character_consistency": "The paleontologist wears the ID-accurate green sun hat, green skirt, and black hiking boots."
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{ 
+  "app_image_config": {
+    "layer_1_style": "1024x1024 px. STYLE_ANIMATED_FEATURE_V3 aesthetic: High-fidelity 3D animated feature film style, cinematic CGI, Octane render, vibrant saturated colors. Characters have adult human proportions with soft, stylized, and slightly rounded edges; soulful, expressive eyes; avoid 'chibi' or overtly child-like proportions.", 
+    "layer_2_setting": "Setting: Sunny Australian Outback, red sand. Character: dino_bones_paleontologist_6, an adult female grad student of African ethnicity with braided black hair. Uniform: A white tee shirt worn UNDER a khaki safari vest, white shorts, and black hiking boots.",
+    "layer_3_action": "A high-angle shot looking down at the ground. The paleontologist (dino_bones_paleontologist_6) is kneeling and studying a trackway. She is holding a magnifying glass and a small checkered scale. In the foreground, there are exactly two large, broad footprints: each footprint must have exactly three wide, rounded toe depressions with deep heel marks, creating a 'clover' or 'duck-foot' appearance. There are no lines or paths connecting them; they are individual depressions in the undisturbed red sand. A grove of Araucaria conifers and tree ferns is visible in the distance.",
+    "aspect_ratio": "1:1"
+  }
+}

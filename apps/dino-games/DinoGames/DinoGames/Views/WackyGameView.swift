@@ -50,9 +50,6 @@ struct WackyGameView: View {
     @State private var endSequenceStep = -1
     @State private var endHighlightIndex = 0
     
-    private let victoryRowHeight: CGFloat = 92
-    private var victoryListVisibleHeight: CGFloat { 16 + 3 * victoryRowHeight + 2 * 12 + 16 }
-    
     var body: some View {
         NavigationView {
             Group {
@@ -99,66 +96,55 @@ struct WackyGameView: View {
     // MARK: - Victory (standard: scroll list → success image → good-job + crowd → dismiss)
     
     private var victoryView: some View {
-        VStack(spacing: 0) {
-            Text(gameConfig.title)
-                .font(.largeTitle)
-                .padding(.top, 8)
-                .padding(.bottom, 8)
-            ScrollViewReader { proxy in
-                ScrollView {
-                    VStack(spacing: 12) {
-                        ForEach(Array(selectedItems.enumerated()), id: \.offset) { index, item in
-                            let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                            HStack(spacing: 16) {
-                                wackyVictoryImage(item: item, isHighlighted: isHighlighted)
-                                Text(item.displayName)
-                                    .font(.title2)
-                                    .fontWeight(isHighlighted ? .semibold : .regular)
-                                    .foregroundColor(.primary)
-                                    .multilineTextAlignment(.leading)
-                                    .lineLimit(2)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .opacity(isHighlighted ? 1.0 : 0.5)
-                            }
-                            .padding(.horizontal, 20)
-                            .padding(.vertical, 10)
-                            .frame(height: victoryRowHeight)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
-                            )
-                            .id(index)
+        VictorySplitColumnView(
+                listScrollHeight: StandardVictoryLayout.recapListScrollHeight(itemCount: selectedItems.count),
+                showSuccessPhase: endSequenceStep == 2,
+                endHighlightIndex: endHighlightIndex,
+                gameTitle: gameConfig.title,
+                scrollRows: {
+                    ForEach(Array(selectedItems.enumerated()), id: \.offset) { index, item in
+                        let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                        HStack(spacing: 16) {
+                            wackyVictoryImage(item: item, isHighlighted: isHighlighted)
+                            Text(item.displayName)
+                                .font(.title2)
+                                .fontWeight(isHighlighted ? .semibold : .regular)
+                                .foregroundColor(.primary)
+                                .multilineTextAlignment(.leading)
+                                .lineLimit(2)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .opacity(isHighlighted ? 1.0 : 0.5)
                         }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .frame(height: StandardVictoryLayout.rowHeight)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                        )
+                        .id(index)
                     }
-                    .padding(.horizontal)
-                    .padding(.vertical, 16)
+                },
+                successPhase: {
+                    LandGameVictorySuccessStingerThenContinue(
+                        candidateSuccessImageNames: ["game-wacky-dinosaurs-success", "game-wacky-dinosaurs", "wacky-trex"],
+                        catalogGameIdForStinger: gameConfig.id,
+                        speechManager: speechManager,
+                        onContinue: playGoodJobAndCrowdThenDismiss
+                    )
                 }
-                .frame(height: victoryListVisibleHeight)
-                .onChange(of: endHighlightIndex) { _, newValue in
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        proxy.scrollTo(newValue, anchor: .center)
-                    }
-                }
-            }
-            .frame(maxWidth: .infinity)
-            VStack(spacing: 0) {
-                Spacer(minLength: 16)
-                wackySuccessImageView
-                Spacer(minLength: 40)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-        }
+            )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             guard endSequenceStep == -1 else { return }
             endSequenceStep = 1
             endHighlightIndex = 0
             if selectedItems.isEmpty {
-                playGoodJobAndCrowdThenDismiss()
+                endSequenceStep = 2
             } else {
                 let item = selectedItems[0]
                 let audioKey = "dino-\(item.imageName.replacingOccurrences(of: "wacky-", with: ""))"
@@ -191,26 +177,6 @@ struct WackyGameView: View {
         }
     }
     
-    private var wackySuccessImageView: some View {
-        Group {
-            if ImageAssetCache.imageExists(named: "game-wacky-dinosaurs-success") {
-                Image("game-wacky-dinosaurs-success")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else if ImageAssetCache.imageExists(named: "wacky-trex") {
-                Image("wacky-trex")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else {
-                Text("🎉")
-                    .font(.system(size: 100))
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-    
     private func advanceVictoryHighlight() {
         speechManager.onAudioFinished = nil
         endHighlightIndex += 1
@@ -221,9 +187,6 @@ struct WackyGameView: View {
             speechManager.onAudioFinished = { advanceVictoryHighlight() }
         } else {
             endSequenceStep = 2
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                playGoodJobAndCrowdThenDismiss()
-            }
         }
     }
     

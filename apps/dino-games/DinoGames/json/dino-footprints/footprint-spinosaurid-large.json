@@ -1,0 +1,12 @@
+[
+  {
+    "id": "footprint_spinosaurid_large",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "KEM_KEM",
+    "character_ref": "dino_bones_paleontologist_6",
+    "pose": "Extreme close-up of a (Spinosaurus) footprint. The footprint is so large that dino_bones_paleontologist_6 is sitting down inside the 'palm' area of the track, and her entire body fits within it. The toes extend far past her. A massive, deep tail-drag trench runs through the center of the frame, deeper than the tracks themselves."
+}
+]

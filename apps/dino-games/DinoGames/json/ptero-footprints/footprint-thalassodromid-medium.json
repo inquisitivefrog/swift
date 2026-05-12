@@ -1,0 +1,12 @@
+[
+  {
+    "id": "track_thalassodromid_medium",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "DAPPLED_OPEN",
+    "formation_ref": "CRATO_FORMATION",
+    "character_ref": "dino_bones_paleontologist_4",
+    "pose": "He outlines a medium-sized trackway in fine limestone. The tracks are deep and close together, indicating a focused, terrestrial search pattern."
+  }
+]

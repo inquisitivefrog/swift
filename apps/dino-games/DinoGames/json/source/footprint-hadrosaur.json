@@ -1,8 +1,0 @@
-{ 
-  "app_image_config": {
-    "layer_1_style": "1024x1024 px, high-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures.", 
-    "layer_2_setting": "Setting: Sunny Australian Outback, red sand. Character: Middle-aged male paleontologist, short beard, khaki explorer outfit.",
-    "layer_3_action": "A high-angle shot looking down at the ground.  The paleontologist is kneeling and studying a Hadrosaur trackway with his magnifying glass and a short checkered scale stick in the center of the frame. To his left is one four-toed rhino print. To his right, two feet away is another four-toed rhino print.  In the distant background left, is a separate, smaller fan-shaped five-toed print. In the distant background right, another smaller fan-shaped five-toed print is visible. There are no lines or paths connecting them; they are individual depressions in the undisturbed red sand. All tracks lead to a lake just ahead.",
-    "aspect_ratio": "1:1"
-  }
-}

@@ -735,11 +735,6 @@ struct PortraitJigsawPuzzleGameView: View {
     private var puzzleEndSequenceView: some View {
         let creatures = rounds.map(\.creature)
         return VStack(spacing: 16) {
-            Text("You solved all three!")
-                .font(.title2)
-                .fontWeight(.semibold)
-                .multilineTextAlignment(.center)
-                .padding(.top, 8)
             VStack(spacing: 12) {
                 ForEach(Array(creatures.enumerated()), id: \.offset) { index, creature in
                     let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex

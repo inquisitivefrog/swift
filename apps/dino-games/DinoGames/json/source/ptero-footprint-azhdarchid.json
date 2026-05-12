@@ -1,0 +1,17 @@
+{
+  "asset_manifest": {
+    "id": "ptero_azhdarchid_track_01",
+    "project": "PteroFootprints",
+    "clade": "azhdarchid",
+    "character_ref": "dino_bones_paleontologist_3",
+    "formation_ref": "DJADOKHTA",
+    "habitat_ref": "DESERT_DUNE_FIELDS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "pose": "dino_bones_paleontologist_3 (Black male grad student, purple tee, white sun hat) is kneeling in high-relief orange sand. He is using a brush to clear sand from a deep, elongated rear footprint (pes).",
+    "visual_notes": {
+      "ichnology": "The trackway shows a narrow, purposeful stride. The hand prints (manus) are deep, compact, and oriented forward. The rear footprints are long and narrow. All marks are SUNKEN NEGATIVE IMPRESSIONS with sharp, deep puncture cavities at the claw tips.",
+      "ground": "Flame orange sand dunes with distinct ripple marks."
+    }
+  }
+}

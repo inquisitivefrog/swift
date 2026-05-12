@@ -1,0 +1,12 @@
+[
+  {
+    "id": "track_basal_medium",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "DAPPLED_OPEN",
+    "formation_ref": "BLUE_LIAS",
+    "character_ref": "dino_bones_paleontologist_4",
+    "pose": "He clears wet blue-grey clay from a medium-sized (Campylognathoides) trackway. The prints show a distinct dragging of the long tail between the footprints, characteristic of basal gait."
+  }
+]

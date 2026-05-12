@@ -97,7 +97,9 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | `Games/games-dino-toothache-this-dinosaur-lost-its-tooth.m4a` | Dino Toothache round intro (all rounds) |
 | `Dinosaurs/dino-{slug}.m4a` | Dino Toothache: dinosaur name when round starts |
 | `Toothache/dino-toothache-{toothType}.m4a` | Dino Toothache: tooth intro when walking each of 5 options, and when tapping an option |
-| `Games/game-dino-footprints-tap-the-footprint-to-hear-description.m4a` | Dino Footprints: Source Footprints hints intro (e.g. “Tap the footprint to hear its description”) |
+| `Games/game-footprints-identify-the-footprint.m4a` | Footprints games (Dino / Pterosaur / Marine): round start — “identify the footprint” before options walk; key `game-footprints-identify-the-footprint` (legacy alias `game-dino-footprints-identify-the-footprint`) |
+| `Games/game-footprints-tap-the-footprint-to-hear-description.m4a` | Footprints games: Source Footprints–style hints intro (“Tap the footprint…”); key `game-footprints-tap-the-footprint-to-hear-description` (legacy alias `game-dino-footprints-tap-the-footprint-to-hear-description`) |
+| `Footprints/dino-{clade}.m4a` | Dino Footprints (hints) & Match: keys `footprint-therapod`, `footprint-sauropod`, etc. → `Footprints/dino-theropod.m4a` (theropod in filename), `Footprints/dino-sauropod.m4a`, … Same folder reserved for `ptero-*` / `marine-*` filenames later. |
 | `Games/game-dino-ages-tap-the-period-to-hear-description.m4a` | Dino Ages: Source Ages hints intro (e.g. “Tap the period to hear which dinosaurs lived there”) |
 | `Games/game-dino-ages-jurassic-dinosaurs.m4a` | Dino Ages: Source Ages — Jurassic period description (clades/dinosaurs found) |
 | `Games/game-dino-ages-cretaceous-dinosaurs.m4a` | Dino Ages: Source Ages — Cretaceous period description (clades/dinosaurs found) |

@@ -1,0 +1,8 @@
+{ 
+  "app_image_config": {
+    "layer_1_style": "1024x1024 px. STYLE_ANIMATED_FEATURE_V3 aesthetic: High-fidelity 3D animated feature film style, cinematic CGI, Octane render, vibrant saturated colors. Characters have adult human proportions with soft, stylized, and slightly rounded edges; soulful, expressive eyes; avoid 'chibi' or overtly child-like proportions.", 
+    "layer_2_setting": "Setting: Sunny Australian Outback, red sand. Character: dino_bones_paleontologist_3, an adult male grad student (Black race, curly black hair). Gear: He is wearing a white sun hat. Uniform: A light purple tee shirt worn UNDER a khaki safari vest, white shorts, and black hiking boots.",
+    "layer_3_action": "A high-angle shot looking down at the ground. The paleontologist (dino_bones_paleontologist_3) is kneeling and studying a Hadrosaur trackway. He is wearing his white sun hat, holding a magnifying glass and a short checkered scale stick in the center of the frame. To his left is one four-toed rhino-like print. To his right, two feet away is another four-toed rhino-like print. In the distant background left, is a separate, smaller fan-shaped five-toed print. In the distant background right, another smaller fan-shaped five-toed print is visible. There are no lines or paths connecting them; they are individual depressions in the undisturbed red sand. All tracks lead to a lake just ahead.",
+    "aspect_ratio": "1:1"
+  }
+}

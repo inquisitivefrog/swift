@@ -773,8 +773,13 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-give-this-nutritious-lunch"
         case "game-dino-footprints", "dino footprints":
             return "Games/game-dino-footprints"
-        case "game-dino-footprints-identify-the-footprint", "identify the footprint":
-            return "Games/game-dino-footprints-identify-the-footprint"
+        case "game-ptero-footprints", "ptero footprints":
+            return "Games/game-ptero-footprints"
+        // Shared by Dino / Pterosaur / Marine “Footprints” games (generic filenames under Games/).
+        case "game-footprints-identify-the-footprint", "game-dino-footprints-identify-the-footprint", "identify the footprint":
+            return "Games/game-footprints-identify-the-footprint"
+        case "game-footprints-tap-the-footprint-to-hear-description", "game-dino-footprints-tap-the-footprint-to-hear-description":
+            return "Games/game-footprints-tap-the-footprint-to-hear-description"
         case "game-whose-bones", "whose bones", "whose bones?":
             return "Games/game-whose-bones"
         case "game-whose-bones-gameplay":
@@ -827,16 +832,24 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-dino-push-choose-second"
         case "game-hint", "game dino footprints hint", "dino footprints hint":
             return "Games/game-hint"
-        case "footprint-therapod", "therapod":
-            return "Footprints/therapod"
+        case "footprint-therapod", "therapod", "theropod":
+            return "Footprints/dino-theropod"
         case "footprint-sauropod", "sauropod":
-            return "Footprints/sauropod"
+            return "Footprints/dino-sauropod"
         case "footprint-hadrosaur", "hadrosaur":
-            return "Footprints/hadrosaur"
+            return "Footprints/dino-hadrosaur"
         case "footprint-ceratopsian", "ceratopsian":
-            return "Footprints/ceratopsian"
+            return "Footprints/dino-ceratopsian"
         case "footprint-ankylosaur", "ankylosaur":
-            return "Footprints/ankylosaur"
+            return "Footprints/dino-ankylosaur"
+        case "footprint-ornithischian", "ornithischian":
+            return "Footprints/dino-ornithischian"
+        case "footprint-ornithomimid", "ornithomimid":
+            return "Footprints/dino-ornithomimid"
+        case "footprint-spinosaurid", "spinosaurid":
+            return "Footprints/dino-spinosaurid"
+        case "footprint-stegosaur", "stegosaur":
+            return "Footprints/dino-stegosaur"
         // Pterosaur clades: key `ptero-clade-{slug}` → `Pterosaur-Clades/clade-{slug}.m4a` (see `urlForAudio` preferred path)
         case _ where normalized.hasPrefix("ptero-clade-"):
             let slug = String(normalized.dropFirst("ptero-clade-".count))
@@ -1338,83 +1351,43 @@ struct MatchingGameView: View {
         } // End NavigationView
     } // End body
     
-    /// Fixed row height and scroll height so exactly 3 full rows are visible. Includes top/bottom padding.
-    private let victoryRowHeight: CGFloat = 92
-    private var victoryListVisibleHeight: CGFloat { 16 + 3 * victoryRowHeight + 2 * 12 + 16 }
+    /// Fixed viewport: up to `StandardVictoryLayout.maxVisibleRecapRows` recap rows visible; longer lists scroll.
+    private var victoryListVisibleHeight: CGFloat {
+        StandardVictoryLayout.recapListScrollHeight(itemCount: victoryDinosaurs.count)
+    }
 
-    // MARK: - Victory: scrolling list in top half (highlight + name audio); bottom half shows "Good job!" then success image (no clear, image centered, no wrapper); then audio and dismiss
+    // MARK: - Victory: scrolling list in top half (highlight + name audio); bottom half success card + optional stinger, then good-job + crowd and dismiss
     private var victoryView: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                Text(gameConfig.id == "match-the-diet" ? "Dino Diets!" : currentConfig.title)
-                    .font(.largeTitle)
-                    .padding(.top, 8)
-                    .padding(.bottom, 8)
-                // Top half: scrolling list of dinosaurs (9 total), highlight + name audio, scroll to center — fixed height so ~3 visible
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        VStack(spacing: 12) {
-                            ForEach(Array(victoryDinosaurs.enumerated()), id: \.offset) { index, dinosaur in
-                                let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                                HStack(spacing: 16) {
-                                    matchingEndImage(dinosaur: dinosaur, isHighlighted: isHighlighted)
-                                    Text(dinosaur.name)
-                                        .font(.title2)
-                                        .fontWeight(isHighlighted ? .semibold : .regular)
-                                        .foregroundColor(.primary)
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(2)
-                                        .minimumScaleFactor(0.65)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .opacity(isHighlighted ? 1.0 : 0.5)
-                                }
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
-                                .frame(height: victoryRowHeight)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
-                                )
-                                .id(index)
-                            }
-                        }
-                        .padding(.horizontal)
-                        .padding(.vertical, 16)
+        VictorySplitColumnView(
+                listScrollHeight: victoryListVisibleHeight,
+                showSuccessPhase: endSequenceStep == 2,
+                endHighlightIndex: endHighlightIndex,
+                gameTitle: gameConfig.id == "match-the-diet" ? "Dino Diets!" : currentConfig.title,
+                scrollRows: {
+                    ForEach(Array(victoryDinosaurs.enumerated()), id: \.element.id) { index, dinosaur in
+                        let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                        StandardVictoryRecapRowView(
+                            item: VictoryRecapDisplayItem(
+                                id: "\(dinosaur.id)",
+                                title: dinosaur.name,
+                                imageAssetName: dinosaur.imageName,
+                                fallbackEmoji: dinosaur.icon
+                            ),
+                            isHighlighted: isHighlighted
+                        )
+                        .id(index)
                     }
-                    .frame(height: victoryListVisibleHeight)
-                    .onChange(of: endHighlightIndex) { _, newIndex in
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            proxy.scrollTo(newIndex, anchor: .center)
-                        }
-                    }
+                },
+                successPhase: {
+                    LandGameVictorySuccessStingerThenContinue(
+                        candidateSuccessImageNames: matchingVictorySuccessCandidateAssetNames(),
+                        catalogGameIdForStinger: gameConfig.id,
+                        imageSide: GameCatalogImageMetrics.nameThatVictorySuccessImageSide,
+                        speechManager: speechManager,
+                        onContinue: playMatchingGoodJobAndCrowdThenDismiss
+                    )
                 }
-                .frame(maxWidth: .infinity)
-
-                // Bottom half: during walk show empty space; after walk show success image with space below (matches Dino Eggs layout)
-                Group {
-                    if endSequenceStep == 2 {
-                        VStack(spacing: 0) {
-                            Spacer(minLength: 16)
-                            successImageView
-                            Spacer(minLength: 40)
-                        }
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                playMatchingGoodJobAndCrowdThenDismiss()
-                            }
-                        }
-                    } else {
-                        Spacer()
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-        }
+            )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             guard endSequenceStep == -1 else { return }
@@ -1430,67 +1403,11 @@ struct MatchingGameView: View {
         }
     }
 
-    /// Success image only (no card wrapper); used in victory bottom half, centered.
-    private var successImageView: some View {
-        ZStack {
-            successImageContent
+    private func matchingVictorySuccessCandidateAssetNames() -> [String] {
+        if gameConfig.id == "match-the-diet" {
+            return ["game-dino-diets-success", "game-dino-diets", "game-match-the-diet-success", "game-match-the-diet"]
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    private var successImageContent: some View {
-        Group {
-            let successImageName = successImageNameForGame()
-            if let imageName = successImageName, UIImage(named: imageName) != nil {
-                Image(imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else {
-                let fallbackImageName = currentConfig.id == "match-the-diet" ? "game-dino-diets" : "game-\(currentConfig.id)"
-                if UIImage(named: fallbackImageName) != nil {
-                    Image(fallbackImageName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 280, height: 280)
-                } else {
-                    Text("🎉")
-                        .font(.system(size: 100))
-                }
-            }
-        }
-    }
-    
-    // Get success image name for current game (e.g., "game-dino-diets-success")
-    private func successImageNameForGame() -> String? {
-        // Try game-specific success image (e.g., game-dino-diets-success)
-        if currentConfig.id == "match-the-diet" {
-            return "game-dino-diets-success"
-        }
-        // For other games, construct from config id (e.g., match-the-dinosaur -> game-match-the-dinosaur-success)
-        return "game-\(currentConfig.id)-success"
-    }
-
-    private func matchingEndImage(dinosaur: Dinosaur, isHighlighted: Bool) -> some View {
-        Group {
-            if let imageName = dinosaur.imageName, UIImage(named: imageName) != nil {
-                Image(imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 72, height: 72)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .opacity(isHighlighted ? 1.0 : 0.4)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
-                    )
-            } else {
-                Text(dinosaur.icon)
-                    .font(.system(size: 40))
-                    .frame(width: 72, height: 72)
-                    .opacity(isHighlighted ? 1.0 : 0.4)
-            }
-        }
+        return ["game-\(currentConfig.id)-success", "game-\(currentConfig.id)"]
     }
 
     private func advanceMatchingEndHighlight() {
@@ -1507,7 +1424,6 @@ struct MatchingGameView: View {
     }
 
     private func playMatchingGoodJobAndCrowdThenDismiss() {
-        endSequenceStep = 2
         // Uniform: good-job + crowd then dismiss (all matching games)
         let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
         let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")

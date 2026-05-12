@@ -1,0 +1,12 @@
+[
+  {
+    "id": "footprint_ornithischian_dryosaurus_medium",
+    "technical_correction": "REJECT_PHOTOREALISM, NO_HUMAN_HANDS, NO_FIVE_FINGERS",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "DAPPLED_OPEN",
+    "formation_ref": "MORRISON_LJ",
+    "character_ref": "dino_bones_paleontologist_5",
+    "pose": "Crouched in greenish mud, she uses a fine detail brush to sweep away loose tan sand from a single, deeply impressed (Dryosaurus) THREE-TOED bird-like footprint. The toes are slender and symmetrical with small, blunt tips. The track is the size of her boot."
+  }
+]

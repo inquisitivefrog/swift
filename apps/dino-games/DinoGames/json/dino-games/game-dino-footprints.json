@@ -1,0 +1,23 @@
+{
+  "asset_manifest": [
+    {
+      "id": "dino_footprints_promo_updated_v2",
+      "project": "DinoGames",
+      "species_primary": "dino_racer_trex",
+      "species_secondary": "juvenile_unspecified_theropod",
+      "character_ref": "dino_bones_paleontologist_3",
+      "tech_ref": "SQUARE_ASPECT_RATIO",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+      "formation_ref": "DJADOKHTA",
+      "habitat_ref": "DESERT_DUNE_FIELDS",
+      "pose": "An adult male grad student (Black race, curly black hair) wearing a white sun hat, light purple tee shirt, khaki safari vest, and white shorts laughs and points at a massive T-Rex footprint in the sand. A small green juvenile dinosaur is napping inside the track, while a stylized T-Rex with a comically expressive grin stands nearby.",
+      "visual_notes": {
+        "text_overlay": "Dino Footprints!",
+        "text_style": "Bright Red, high-poly 3D mixed case text with a glossy finish to match the STYLE_ANIMATED_FEATURE_V3 aesthetic.",
+        "ground_texture": "High-relief orange sand dunes with deep tridactyl footprint impressions consistent with the DJADOKHTA formation.",
+        "character_consistency": "The T-Rex maintains its blocky head and tiny two-fingered hands; the paleontologist follows the specific uniform and physical description of character ID dino_bones_paleontologist_3."
+      }
+    }
+  ]
+}

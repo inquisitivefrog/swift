@@ -300,58 +300,41 @@ struct MatrixMaterialsGameView: View {
     // MARK: - End sequence
 
     private var matrixMaterialsEndSequenceView: some View {
-        VStack(spacing: 16) {
-            VStack(spacing: 12) {
+        VictorySplitColumnView(
+            listScrollHeight: StandardVictoryLayout.recapListScrollHeight(itemCount: endSequenceMaterials.count),
+            showSuccessPhase: endSequenceStep == 2,
+            endHighlightIndex: endHighlightIndex,
+            gameTitle: gameConfig.title,
+            scrollRows: {
                 ForEach(Array(endSequenceMaterials.enumerated()), id: \.element.id) { index, material in
                     let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                    HStack(spacing: 16) {
-                        if let imageName = material.imageName, UIImage(named: imageName) != nil {
-                            Image(imageName)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 56, height: 56)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                .opacity(isHighlighted ? 1.0 : 0.4)
-                        } else {
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(Color.brown.opacity(0.3))
-                                .frame(width: 56, height: 56)
-                                .overlay(
-                                    Text(material.name.prefix(1))
-                                        .font(.title2.weight(.semibold))
-                                        .foregroundColor(.secondary)
-                                )
-                                .opacity(isHighlighted ? 1.0 : 0.4)
-                        }
-                        Text(material.name)
-                            .font(.title2)
-                            .fontWeight(isHighlighted ? .semibold : .regular)
-                            .foregroundColor(.primary)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .opacity(isHighlighted ? 1.0 : 0.5)
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
+                    StandardVictoryRecapRowView(
+                        item: VictoryRecapDisplayItem(
+                            id: "\(material.id)",
+                            title: material.name,
+                            imageAssetName: material.imageName,
+                            fallbackEmoji: "🪨"
+                        ),
+                        isHighlighted: isHighlighted
                     )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
-                    )
+                    .id(index)
                 }
+            },
+            successPhase: {
+                LandGameVictorySuccessStingerThenContinue(
+                    gameConfigId: gameConfig.id,
+                    speechManager: speechManager,
+                    onContinue: playGoodJobAndCrowdThenDismiss
+                )
             }
-            .padding(.horizontal)
-            Spacer()
-        }
+        )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             guard endSequenceStep == -1 else { return }
             endSequenceStep = 1
             endHighlightIndex = 0
             if endSequenceMaterials.isEmpty {
-                playGoodJobAndCrowdThenDismiss()
+                endSequenceStep = 2
             } else {
                 speechManager.speak(endSequenceMaterials[0].name)
                 speechManager.onAudioFinished = { advanceEndHighlight() }
@@ -366,12 +349,11 @@ struct MatrixMaterialsGameView: View {
             speechManager.speak(endSequenceMaterials[endHighlightIndex].name)
             speechManager.onAudioFinished = { advanceEndHighlight() }
         } else {
-            playGoodJobAndCrowdThenDismiss()
+            endSequenceStep = 2
         }
     }
 
     private func playGoodJobAndCrowdThenDismiss() {
-        endSequenceStep = 2
         let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
         let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
         if let u1 = goodJobURL, let u2 = crowdURL {

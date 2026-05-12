@@ -1,0 +1,8 @@
+{ 
+  "app_image_config": {
+    "layer_1_style": "1024x1024 px. STYLE_ANIMATED_FEATURE_V3 aesthetic: High-fidelity 3D animated feature film style, cinematic CGI, Octane render. Focus on smooth clay textures for the sand. Important: Footprints must be rendered as deep, sunken NEGATIVE IMPRESSIONS with displaced sand at the edges, not as raised objects.", 
+    "layer_2_setting": "Setting: Sunny Australian Outback, red sand, dinosaur dig site. Character: dino_bones_paleontologist_4, an adult male grad student of Latino ethnicity with short brown hair. Eyewear: Signature thin-rimmed BLACK aviator lens glasses. Uniform: A light white tee shirt worn UNDER a khaki safari vest, khaki shorts, and brown hiking boots.",
+    "layer_3_action": "A high-angle shot. The paleontologist (dino_bones_paleontologist_4) is kneeling and studying a Theropod trackway. He is wearing his signature black aviators, holding a magnifying glass and a short checkered scale stick. The trackway shows a clear walking sequence of three alternating prints: left, right, left, trailing into the distance. Each print is a sharp, slender three-toed tridactyl track. At the tip of each toe, there is a narrow, deep PUNCTURE CAVITY representing the negative claw impression in the sand. No physical nails should be visible, only the holes left behind.",
+    "aspect_ratio": "1:1"
+  }
+}

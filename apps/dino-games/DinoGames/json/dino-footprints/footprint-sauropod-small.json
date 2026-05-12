@@ -1,0 +1,12 @@
+[
+  {
+    "id": "track_sauropod_small",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED",
+    "formation_ref": "LA_AMARGA",
+    "character_ref": "dino_bones_paleontologist_3",
+    "pose": "Standing between a series of rounded, medium-depth (Amargasaurus) tracks in dusty tan soil, he logs the coordinates on a hand-held GPS. The tracks are simple, circular, and show soft displacement rims."
+  }
+]

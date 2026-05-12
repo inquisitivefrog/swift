@@ -446,18 +446,8 @@ struct GameSelectionView: View {
                 speechManager.stopCurrentAudio()
             }
         }
-        .onReceive(NotificationCenter.default.publisher(for: .landDinosaurGameCompleted)) { note in
-            guard category == .land, let id = note.userInfo?["gameId"] as? String else { return }
-            landProgress.markPlayed(canonicalGameId: id)
-        }
-        .onReceive(NotificationCenter.default.publisher(for: .marineReptileGameCompleted)) { note in
-            guard category == .marineReptiles, let id = note.userInfo?["gameId"] as? String else { return }
-            marineProgress.markPlayed(canonicalGameId: id)
-        }
-        .onReceive(NotificationCenter.default.publisher(for: .pterosaurGameCompleted)) { note in
-            guard category == .air, let id = note.userInfo?["gameId"] as? String else { return }
-            pterosaurProgress.markPlayed(canonicalGameId: id)
-        }
+        // Land / marine / pterosaur completion → `UserDefaults` is handled by `*Progress.shared` notification observers
+        // so progress still updates if this view is off-screen during sheet dismiss or transition.
     }
 
     private func handleGameTap(_ gameType: GameType) {
@@ -776,7 +766,10 @@ private struct GameSelectionNavigationContent: View {
                 if let config = currentDinoAgesConfig {
                     DinoAgesGameView(isPresented: $showDinoAgesGame, gameConfig: config)
                 } else {
-                    DinoAgesGameView(isPresented: $showDinoAgesGame, gameConfig: DinoAgesGameConfigs.dinoAges)
+                    DinoAgesGameView(
+                        isPresented: $showDinoAgesGame,
+                        gameConfig: category == .air ? DinoAgesGameConfigs.pteroAges : DinoAgesGameConfigs.dinoAges
+                    )
                 }
             }
             .sheet(isPresented: $showDinoFormationsGame) {
@@ -1119,7 +1112,7 @@ private struct GameSelectionNavigationContent: View {
                         }
                     }
                 } else {
-                    currentDinoAgesConfig = DinoAgesGameConfigs.dinoAges
+                    currentDinoAgesConfig = category == .air ? DinoAgesGameConfigs.pteroAges : DinoAgesGameConfigs.dinoAges
                 }
             }
             .onChange(of: showDinoFormationsGame) { _, newValue in
@@ -1446,8 +1439,8 @@ enum GameType {
             return "Sumo-style push face-off!"
         case .matrixMaterials:
             return "Identify the matrix material encasing the fossil"
-        case .dinoAges:
-            return "Discover when dinosaurs lived"
+        case .dinoAges(let config):
+            return config.id == "ptero-ages" ? "Discover when pterosaurs lived" : "Discover when dinosaurs lived"
         case .dinoFormations:
             return "Pick dinosaurs found in the formation shown"
         case .dinoHabitats:
@@ -1887,7 +1880,7 @@ private struct LevelCard: View {
 /// Sizes for catalog game art vs name-that guess victory (list stays compact; end-sequence success reads larger).
 enum GameCatalogImageMetrics {
     static let levelTwoListGameImageSide: CGFloat = 180
-    /// Name That Dinosaur / Pterosaur / Marine Reptile victory `game-*-success` (matches Match the Dinosaur / Weigh success treatment).
+    /// Name That Dinosaur / Pterosaur / Marine Reptile / Racing victory `game-*-success` (matches Match the Dinosaur / Weigh success treatment).
     static let nameThatVictorySuccessImageSide: CGFloat = 280
 }
 

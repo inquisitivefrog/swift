@@ -885,6 +885,10 @@ struct RacingGameView: View {
     private func refereeFinishTrackView(geometry: GeometryProxy) -> some View {
         guard let r1 = selectedLane1, let r2 = selectedLane2 else { return AnyView(EmptyView()) }
         let cfg = config
+        let finishHeadline = isTie ? "It's a tie!" : "We have a winner!"
+        let finishRefereeName = isTie
+            ? tieRefereeImageName(prefix: cfg.assetPrefix)
+            : finishRefereeImageName(prefix: cfg.assetPrefix, isBroadDelta: true)
         if cfg.assetPrefix == "ptero" {
             let padding: CGFloat = 24
             let trackWidth = max(1, geometry.size.width - padding * 2)
@@ -904,7 +908,7 @@ struct RacingGameView: View {
 
             return AnyView(
                 VStack(spacing: 8) {
-                    Text("We have a winner!")
+                    Text(finishHeadline)
                         .font(.headline)
                     ZStack(alignment: .topLeading) {
                         AirportCourseWaterBackground(width: trackWidth, height: trackHeight)
@@ -928,10 +932,7 @@ struct RacingGameView: View {
                         racerView(racer: r2, size: racerSize, pose: .finish)
                             .offset(x: pos2.x - half + stagger2.width, y: pos2.y - half + stagger2.height)
 
-                        refereeImageViewSmall(
-                            tieRefereeImageName(prefix: cfg.assetPrefix),
-                            size: refereeSize
-                        )
+                        refereeImageViewSmall(finishRefereeName, size: refereeSize)
                         .offset(x: trackWidth / 2 - refereeSize / 2, y: trackHeight * 0.5 + 20)
                     }
                     .frame(width: trackWidth, height: trackHeight)
@@ -969,7 +970,7 @@ struct RacingGameView: View {
         let refereeFinishX = ovalWidth / 2 - refereeSize / 2
         let refereeFinishY = trackInset + innerH - refereeSize - 16
         return AnyView(VStack(spacing: 8) {
-            Text("We have a winner!")
+            Text(finishHeadline)
                 .font(.headline)
             ZStack(alignment: .topLeading) {
                 outerPath
@@ -991,7 +992,7 @@ struct RacingGameView: View {
                     .offset(x: pos1.x - half, y: pos1.y - half)
                 racerView(racer: r2, size: racerSize, pose: .finish)
                     .offset(x: pos2.x - half, y: pos2.y - half)
-                refereeImageViewSmall(tieRefereeImageName(prefix: cfg.assetPrefix), size: refereeSize)
+                refereeImageViewSmall(finishRefereeName, size: refereeSize)
                     .offset(x: refereeFinishX, y: refereeFinishY)
             }
             .frame(width: ovalWidth, height: ovalHeight)
@@ -1259,12 +1260,12 @@ struct RacingGameView: View {
         .padding(.horizontal, padding)
     }
 
-    /// Total path length for oval (rounded rect). Same formula as pointOnRoundedRect.
-    private func ovalPathLength(width: CGFloat, height: CGFloat) -> CGFloat {
+    /// Total path length for oval (rounded rect). Same segment breakdown as `pointOnRoundedRect`.
+    private func ovalPathLength(width: CGFloat, height: CGFloat, cornerRadius: CGFloat? = nil) -> CGFloat {
         let w = width
         let h = height
         let cx = w / 2
-        let r = min(min(w, h) * 0.18, min(w, h) / 4)
+        let r = cornerRadius ?? min(min(w, h) * 0.18, min(w, h) / 4)
         let arcLen = .pi * r / 2
         let L1 = (w - r) - cx
         let L2 = h - 2 * r
@@ -1273,9 +1274,22 @@ struct RacingGameView: View {
         return L1 + arcLen + L2 + arcLen + L3 + arcLen + L2 + arcLen + L4
     }
 
-    /// Progress offset so race progress 0 = finish line (center bottom). Path starts at center; both lanes start on the same line.
+    /// Fraction of one outer lap that equals the extra arc length vs inner (0…1). Outer runner starts this far ahead so both lanes run the same distance per lap (track-and-field stagger).
+    private func ovalOuterLaneStaggerFraction(innerPathLength: CGFloat, outerPathLength: CGFloat) -> Double {
+        guard outerPathLength > 0, innerPathLength > 0, outerPathLength > innerPathLength else { return 0 }
+        return 1.0 - Double(innerPathLength / outerPathLength)
+    }
+
+    /// Map race progress [0,1] to outer-lane path progress so outer covers the same distance as inner from gun to finish (`stagger` = head start as a fraction of one outer lap).
+    private func ovalOuterPathProgress(raceProgress: Double, outerStart: Double, outerSpan: Double, staggerFraction: Double) -> Double {
+        let p = max(0, min(1, raceProgress))
+        let s = max(0, min(0.95, staggerFraction))
+        return outerStart + (p * (1.0 - s) + s) * outerSpan
+    }
+
+    /// Progress offset so race progress 0 = finish line (center bottom). Path origin is center bottom for both lanes.
     private func ovalPathStartOffset(width: CGFloat, height: CGFloat) -> Double {
-        return 0  // Start at path origin = center bottom = finish line; no head start for inner lane
+        0
     }
 
     /// Rounded-rectangle path: start/finish at center bottom; clockwise lap (right → up → left → down → right to center).
@@ -1346,18 +1360,22 @@ struct RacingGameView: View {
         let innerPath = RoundedRectangle(cornerRadius: innerCornerRadius).path(in: CGRect(x: 0, y: 0, width: innerW, height: innerH))
 
         // Outer and inner positions: progress 0 = finish line (center bottom), progress 1 = finish line after one lap.
-        // Both use same progress so they start on the same line; inner lane has shorter path so no head start.
+        // Outer lane is longer; outer runner gets a staggered start (same arc distance per lap as inner — like track and field).
+        let innerR = min(innerCornerRadius, min(innerW, innerH) / 2)
+        let innerPathLength = ovalPathLength(width: innerW, height: innerH, cornerRadius: innerR)
+        let outerPathLength = ovalPathLength(width: ovalWidth, height: ovalHeight, cornerRadius: cornerRadius)
+        let stagger = ovalOuterLaneStaggerFraction(innerPathLength: innerPathLength, outerPathLength: outerPathLength)
+
         let outerStart = ovalPathStartOffset(width: ovalWidth, height: ovalHeight)
         let innerStart = ovalPathStartOffset(width: innerW, height: innerH)
         let outerSpan = 1.0 - outerStart
         let innerSpan = 1.0 - innerStart
-        let p1Outer = outerStart + progress1 * outerSpan
-        let p2Outer = outerStart + progress2 * outerSpan
+        let p1Outer = ovalOuterPathProgress(raceProgress: progress1, outerStart: outerStart, outerSpan: outerSpan, staggerFraction: stagger)
+        let p2Outer = ovalOuterPathProgress(raceProgress: progress2, outerStart: outerStart, outerSpan: outerSpan, staggerFraction: stagger)
         let p1Inner = innerStart + progress1 * innerSpan
         let p2Inner = innerStart + progress2 * innerSpan
         let pt1Outer = pointOnRoundedRect(progress: p1Outer, width: ovalWidth, height: ovalHeight)
         let pt2Outer = pointOnRoundedRect(progress: p2Outer, width: ovalWidth, height: ovalHeight)
-        let innerR = min(innerCornerRadius, min(innerW, innerH) / 2)
         let pt1InnerRaw = pointOnRoundedRect(progress: p1Inner, width: innerW, height: innerH, cornerRadius: innerR)
         let pt2InnerRaw = pointOnRoundedRect(progress: p2Inner, width: innerW, height: innerH, cornerRadius: innerR)
         let pt1Inner = CGPoint(x: pt1InnerRaw.x + trackInset, y: pt1InnerRaw.y + trackInset)
@@ -1634,7 +1652,8 @@ struct RacingGameView: View {
                     stopRace()
                     let t1 = finishTime1 ?? tickEndSeconds
                     let t2 = finishTime2 ?? tickEndSeconds
-                    // Winner is determined by finish tick, not by final in-tick progress values.
+                    // Primary winner decision is finish tick. If both cross in the same tick,
+                    // use in-tick overflow past 1.0 to break apparent visual ties.
                     if t1 < t2 {
                         winner = r1
                         isTie = false
@@ -1642,8 +1661,18 @@ struct RacingGameView: View {
                         winner = r2
                         isTie = false
                     } else {
-                        winner = nil
-                        isTie = true
+                        let overflow1 = max(0, rawP1 - 1.0)
+                        let overflow2 = max(0, rawP2 - 1.0)
+                        if overflow1 > overflow2 + 0.0001 {
+                            winner = r1
+                            isTie = false
+                        } else if overflow2 > overflow1 + 0.0001 {
+                            winner = r2
+                            isTie = false
+                        } else {
+                            winner = nil
+                            isTie = true
+                        }
                     }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                         postRaceStep = "referee-track"
@@ -1886,90 +1915,81 @@ struct RacingGameView: View {
         return winners.filter { seen.insert($0.id).inserted }
     }
 
-    /// Matches row layout in `victoryView` (`92` row height, `12` spacing, `16` vertical padding).
+    /// Matches row layout in `victoryView` (`92` row height); list viewport caps at `maxVisibleRecapRows` (3) then scrolls.
     private func victoryScrollHeight(forWinnerCount count: Int, maxHeight: CGFloat) -> CGFloat {
-        let verticalPad: CGFloat = 32
-        let rowHeight: CGFloat = 92
-        let rowSpacing: CGFloat = 12
-        let ideal = verticalPad + CGFloat(count) * rowHeight + CGFloat(max(0, count - 1)) * rowSpacing
-        // Cap so very long lists still scroll on short screens; keeps success card reachable below.
-        return min(ideal, max(260, maxHeight * 0.58))
+        StandardVictoryLayout.listScrollHeightRacing(rowCount: count, maxScreenHeight: maxHeight)
     }
 
     private var victoryView: some View {
         GeometryReader { geo in
             let listH = victoryScrollHeight(forWinnerCount: uniqueWinners.count, maxHeight: geo.size.height)
-            VStack(spacing: 16) {
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        VStack(spacing: 12) {
-                            ForEach(Array(uniqueWinners.enumerated()), id: \.offset) { index, racer in
-                                let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                                HStack(spacing: 16) {
-                                    Group {
-                                        if let imageName = winnerDisplayImageName(for: racer, config: config) ?? racerDisplayImageName(for: racer, config: config) {
-                                            Image(imageName)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(width: 72, height: 72)
-                                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                        } else {
-                                            Text(racer.icon)
-                                                .font(.system(size: 40))
-                                                .frame(width: 72, height: 72)
-                                        }
-                                    }
-                                    .opacity(isHighlighted ? 1.0 : 0.4)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
-                                    )
-
-                                    Text("\(racer.name) – \(formatSpeed(racer.speed)) mph")
-                                        .font(.system(size: nameLength(racer.name) > 10 ? 18 : 22, weight: isHighlighted ? .semibold : .regular))
-                                        .foregroundColor(.primary)
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(1)
-                                        .minimumScaleFactor(0.6)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .opacity(isHighlighted ? 1.0 : 0.5)
+            VictorySplitColumnView(
+                listScrollHeight: listH,
+                showSuccessPhase: endSequenceStep == 2,
+                endHighlightIndex: endHighlightIndex,
+                gameTitle: config.title,
+                scrollRows: {
+                    ForEach(Array(uniqueWinners.enumerated()), id: \.offset) { index, racer in
+                        let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                        HStack(spacing: 16) {
+                            Group {
+                                if let imageName = winnerDisplayImageName(for: racer, config: config) ?? racerDisplayImageName(for: racer, config: config) {
+                                    Image(imageName)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 72, height: 72)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                } else {
+                                    Text(racer.icon)
+                                        .font(.system(size: 40))
+                                        .frame(width: 72, height: 72)
                                 }
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
-                                .frame(height: 92)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
-                                )
-                                .id(index)
                             }
-                        }
-                        .padding(.horizontal)
-                        .padding(.vertical, 16)
-                    }
-                    .frame(height: listH)
-                    .onChange(of: endHighlightIndex) { _, newIndex in
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            proxy.scrollTo(newIndex, anchor: .center)
-                        }
-                    }
-                }
+                            .opacity(isHighlighted ? 1.0 : 0.4)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
+                            )
 
-                if endSequenceStep == 2 {
-                    racingSuccessImageView
-                        .frame(maxWidth: .infinity)
-                        .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                playGoodJobAndCrowdThenDismiss()
-                            }
+                            Text("\(racer.name) – \(formatSpeed(racer.speed)) mph")
+                                .font(.system(size: nameLength(racer.name) > 10 ? 18 : 22, weight: isHighlighted ? .semibold : .regular))
+                                .foregroundColor(.primary)
+                                .multilineTextAlignment(.leading)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.6)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .opacity(isHighlighted ? 1.0 : 0.5)
                         }
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 10)
+                        .frame(height: StandardVictoryLayout.rowHeight)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                        )
+                        .id(index)
+                    }
+                },
+                successPhase: {
+                    LandGameVictorySuccessStingerThenContinue(
+                        candidateSuccessImageNames: [
+                            "game-\(config.id)-success",
+                            config.id.contains("ptero") ? "game-racing-pterosaurs-success" : "game-racing-dinosaurs-success",
+                            config.id.contains("ptero") ? "game-racing-pterosaurs" : "game-racing-dinosaurs",
+                        ],
+                        catalogGameIdForStinger: config.id,
+                        imageSide: GameCatalogImageMetrics.nameThatVictorySuccessImageSide,
+                        missingPolicy: .empty,
+                        speechManager: speechManager,
+                        onContinue: playGoodJobAndCrowdThenDismiss
+                    )
                 }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            )
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
@@ -1983,27 +2003,6 @@ struct RacingGameView: View {
                 let racer = unique[0]
                 speechManager.speak(audioKey: racer.effectiveFallbackImageName(prefix: config.assetPrefix), fallbackText: racer.name)
                 speechManager.onAudioFinished = { advanceVictoryHighlight() }
-            }
-        }
-    }
-
-    private var racingSuccessImageView: some View {
-        Group {
-            let successName = "game-\(config.id)-success"
-            let fallbackName = config.id.contains("ptero") ? "game-racing-pterosaurs" : "game-racing-dinosaurs"
-            if ImageAssetCache.imageExists(named: successName) {
-                Image(successName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else if ImageAssetCache.imageExists(named: fallbackName) {
-                Image(fallbackName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else {
-                Text("🎉")
-                    .font(.system(size: 100))
             }
         }
     }

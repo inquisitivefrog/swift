@@ -114,6 +114,7 @@ enum DinosaurGameCatalog {
         switch level {
         case .level1:
             return [
+                .guess(GuessGameConfigs.dinoFootprints),        // Dino Footprints
                 .weigh(WeighGameConfigs.weighDinosaur),        // Weigh the Dinosaur
                 .whoIsTaller(WhoIsTallerGameConfigs.whoIsTaller), // Which Dino Is Taller
                 .dinoPuzzle(DinoPuzzleGameConfigs.dinoPuzzle), // Dino Puzzle
@@ -126,7 +127,6 @@ enum DinosaurGameCatalog {
             ]
         case .level3:
             return [
-                .guess(GuessGameConfigs.dinoFootprints),        // Dino Footprints
                 .dinoFlora(DinoFloraGameConfigs.dinoFlora),    // Dino Flora!
                 .dinoEggs(DinoEggsGameConfigs.dinoEggs),       // Dino Eggs!
             ]

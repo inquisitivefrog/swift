@@ -1,0 +1,12 @@
+[
+  {
+    "id": "track_stegosaur_medium",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "DAPPLED_OPEN",
+    "formation_ref": "TENDAGURU",
+    "character_ref": "dino_bones_paleontologist_3",
+    "pose": "Standing between two parallel rows of medium-depth (Kentrosaurus) tracks in light gray clay, he uses a laser rangefinder to measure stride length. The tracks are blunt and roughly circular."
+  }
+]

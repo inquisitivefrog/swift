@@ -1,0 +1,12 @@
+[
+  {
+    "id": "track_transition_large",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "WURTEMBERG",
+    "character_ref": "dino_bones_paleontologist_1",
+    "pose": "He documents a large, sprawling trackway in dark grey siltstone. The tracks show a mixture of basal tail-dragging and more advanced, erect limb-posture."
+  }
+]

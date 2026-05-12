@@ -60,6 +60,8 @@ final class PterosaurImageAssetsXCTests: XCTestCase {
     func testPterosaurGameCardAssetsExist() {
         let requiredGameCards: Set<String> = [
             "game-name-that-pterosaur",
+            "game-ptero-footprints",
+            "game-ptero-footprints-success",
             "game-weigh-pterosaur",
             "game-which-ptero-is-taller",
             "game-which-ptero-is-taller-success",
@@ -70,6 +72,33 @@ final class PterosaurImageAssetsXCTests: XCTestCase {
                 ImageAssetNames.knownAssets.contains(gameCard),
                 "Missing game card asset: \(gameCard)"
             )
+        }
+    }
+
+    func testPteroFootprintsGuessConfigAndTierImages() {
+        let config = GuessGameConfigs.pteroFootprints
+        XCTAssertEqual(config.id, "ptero-footprints")
+        XCTAssertEqual(config.rounds.count, 3)
+        let known = ImageAssetNames.knownAssets
+        for round in config.rounds {
+            XCTAssertTrue(
+                known.contains(round.questionImageName),
+                "Round \(round.id) question image missing: \(round.questionImageName)"
+            )
+            if let fallback = round.questionImageFallback {
+                XCTAssertTrue(known.contains(fallback), "Round \(round.id) fallback missing: \(fallback)")
+            }
+        }
+        for group in PterosaurGuessGroup.allCases {
+            let stem = group == .transitional ? "transition" : group.rawValue
+            XCTAssertTrue(
+                known.contains("source-footprint-\(stem)"),
+                "Missing pterosaur source-footprint hint imageset for \(group.rawValue)"
+            )
+            for size in ["small", "medium", "large"] {
+                let tier = "ptero-footprint-\(stem)-\(size)"
+                XCTAssertTrue(known.contains(tier), "Missing pterosaur footprint tier: \(tier)")
+            }
         }
     }
 

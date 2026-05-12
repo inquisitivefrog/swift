@@ -1,0 +1,17 @@
+{
+  "asset_manifest": {
+    "id": "ptero_tapejarid_track_01",
+    "project": "PteroFootprints",
+    "clade": "tapejarid",
+    "character_ref": "dino_bones_paleontologist_2",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "habitat_ref": "TROPICAL_WETLAND_LAGOONS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "pose": "dino_bones_paleontologist_2 (female grad student, green sun hat, green skirt) is measuring a broad, fleshy footprint in reddish-brown mud with her checkered scale bar.",
+    "visual_notes": {
+      "ichnology": "Tracks are broad and robust. The hand prints are rotated significantly outward. The rear feet show deep, wide toe depressions. All claw marks are rendered as V-shaped cavities where mud has been displaced and pushed upward around the hole.",
+      "ground": "Variegated reddish-brown iron-rich clay with small shallow turquoise pools."
+    }
+  }
+}

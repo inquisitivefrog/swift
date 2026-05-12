@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "footprint-ornithischian-small-80.png",
+      "filename" : "footprint-hadrosaur-small-80.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "footprint-ornithischian-small-160.png",
+      "filename" : "footprint-hadrosaur-small-160.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "footprint-ornithischian-small-240.png",
+      "filename" : "footprint-hadrosaur-small-240.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

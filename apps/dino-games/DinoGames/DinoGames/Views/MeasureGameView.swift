@@ -270,8 +270,6 @@ struct MeasureGameView: View {
     /// Victory sequence: -1 none, 1 = walking list (highlight + name), 2 = success image then good-job + crowd.
     @State private var measureEndSequenceStep: Int = -1
     @State private var measureEndHighlightIndex: Int = 0
-    private let victoryRowHeight: CGFloat = 92
-    private var victoryListVisibleHeight: CGFloat { 16 + 4 * victoryRowHeight + 3 * 12 + 16 }
 
     var body: some View {
         GeometryReader { geometry in
@@ -922,6 +920,11 @@ struct MeasureGameView: View {
     private var measureVictoryView: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
+                Text(gameConfig.title)
+                    .font(.largeTitle)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 8)
+                    .padding(.bottom, 8)
                 ScrollViewReader { proxy in
                     ScrollView {
                         VStack(spacing: 12) {
@@ -941,7 +944,7 @@ struct MeasureGameView: View {
                                 }
                                 .padding(.horizontal, 20)
                                 .padding(.vertical, 10)
-                                .frame(height: victoryRowHeight)
+                                .frame(height: StandardVictoryLayout.rowHeight)
                                 .background(
                                     RoundedRectangle(cornerRadius: 12)
                                         .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
@@ -956,7 +959,7 @@ struct MeasureGameView: View {
                         .padding(.horizontal)
                         .padding(.vertical, 16)
                     }
-                    .frame(height: victoryListVisibleHeight)
+                    .frame(height: StandardVictoryLayout.recapListScrollHeight(itemCount: victoryCreatures.count))
                     .onChange(of: measureEndHighlightIndex) { _, newIndex in
                         withAnimation(.easeInOut(duration: 0.3)) {
                             proxy.scrollTo(newIndex, anchor: .center)

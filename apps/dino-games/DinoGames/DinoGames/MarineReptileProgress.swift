@@ -32,9 +32,19 @@ final class MarineReptileProgress: ObservableObject {
 
     @Published private(set) var playedCanonicalGameIds: Set<String>
 
+    private let gameCompletedObserver: NSObjectProtocol
+
     private init() {
         let stored = UserDefaults.standard.stringArray(forKey: defaultsKey) ?? []
         playedCanonicalGameIds = Set(stored)
+        gameCompletedObserver = NotificationCenter.default.addObserver(
+            forName: .marineReptileGameCompleted,
+            object: nil,
+            queue: .main
+        ) { note in
+            guard let id = note.userInfo?["gameId"] as? String else { return }
+            MarineReptileProgress.shared.markPlayed(canonicalGameId: id)
+        }
     }
 
     func markPlayed(canonicalGameId: String) {

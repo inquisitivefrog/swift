@@ -73,9 +73,23 @@ final class LandDinosaurProgress: ObservableObject {
 
     @Published private(set) var playedCanonicalGameIds: Set<String>
 
+    /// Keeps the notification subscription alive for the lifetime of the singleton.
+    private let gameCompletedObserver: NSObjectProtocol
+
     private init() {
         let stored = UserDefaults.standard.stringArray(forKey: defaultsKey) ?? []
         playedCanonicalGameIds = Set(stored)
+        // Record here (not only from `GameSelectionView`) so completions still count when a game sheet
+        // dismisses during navigation transitions or when that view is temporarily off-screen.
+        gameCompletedObserver = NotificationCenter.default.addObserver(
+            forName: .landDinosaurGameCompleted,
+            object: nil,
+            queue: .main
+        ) { note in
+            guard let id = note.userInfo?["gameId"] as? String else { return }
+            // Use `shared` here (not `[weak self]`) so the closure is not built before `gameCompletedObserver` is stored.
+            LandDinosaurProgress.shared.markPlayed(canonicalGameId: id)
+        }
     }
 
     func markPlayed(canonicalGameId: String) {

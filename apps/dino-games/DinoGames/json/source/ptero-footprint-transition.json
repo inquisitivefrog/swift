@@ -1,0 +1,17 @@
+{
+  "asset_manifest": {
+    "id": "ptero_transition_track_01",
+    "project": "PteroFootprints",
+    "clade": "transition",
+    "character_ref": "dino_bones_paleontologist_6",
+    "formation_ref": "WESSEX",
+    "habitat_ref": "SEASONAL_SUBTROPICAL_FLOODPLAIN",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "pose": "dino_bones_paleontologist_6 (African female grad student, braided hair) is documenting a sequence of prints on a mottled red and white clay surface.",
+    "visual_notes": {
+      "ichnology": "Standard 'four-point' walking sequence. Alternating manus-pes pairs. The tracks are sharp and well-defined. Puncture cavities from the claws show high-contrast shadows against the red mottled clay.",
+      "ground": "Mottled red and purple mudstone with patches of white sand and charcoal-grey plant debris."
+    }
+  }
+}

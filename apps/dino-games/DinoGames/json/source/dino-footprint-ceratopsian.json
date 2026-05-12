@@ -1,0 +1,10 @@
+Note: this paleontologist is examining dinosaur footprints not human footprints.
+
+{ 
+  "app_image_config": {
+    "layer_1_style": "1024x1024 px. STYLE_ANIMATED_FEATURE_V3 aesthetic: High-fidelity 3D animated feature film style, cinematic CGI, Octane render, vibrant saturated colors. Characters have adult human proportions with soft, stylized, and slightly rounded edges; soulful, expressive eyes; avoid 'chibi' or overtly child-like proportions.", 
+    "layer_2_setting": "Setting: Sunny Australian Outback, red sand. Character: dino_bones_paleontologist_4, an adult male grad student of Latino ethnicity with short brown hair. Eyewear: Signature thin-rimmed BLACK aviator lens glasses. Uniform: A light white tee shirt worn UNDER a khaki safari vest, khaki shorts, and brown hiking boots.",
+    "layer_3_action": "A high-angle shot looking down at the ground. The paleontologist (dino_bones_paleontologist_4) is kneeling and studying a trackway. He is wearing his signature black aviator glasses, holding a magnifying glass and a small checkered scale. In the foreground, there are exactly two large footprints: each footprint must have exactly four distinct, separate toe depressions (one inner toe, two middle toes, one outer toe). In the background, there are two smaller footprints: each must have exactly five distinct toe depressions arranged in a fan shape. There are no lines or paths connecting them; they are individual depressions in the undisturbed red sand. A grove of Cycad plants and ferns is visible in the distance.",
+    "aspect_ratio": "1:1"
+  }
+}

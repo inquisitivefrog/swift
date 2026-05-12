@@ -1,0 +1,12 @@
+[
+  {
+    "id": "track_sauropod_medium",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "DAPPLED_OPEN",
+    "formation_ref": "MORRISON_LJ",
+    "character_ref": "dino_bones_paleontologist_5",
+    "pose": "Crouched by a bowl-shaped impression in variegated red earth, she sifts through the loose sediment inside the (Camarasaurus) track with a sifting screen, looking for fallen Ginkgo seeds trapped in the mud."
+  }
+]

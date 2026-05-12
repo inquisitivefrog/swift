@@ -765,75 +765,58 @@ struct WeighGameView: View {
         }
     }
 
-    /// Fixed row height and scroll height so exactly 4 full rows are visible (no 4.5 or 5). Includes top/bottom padding.
-    private let victoryRowHeight: CGFloat = 92
-    private var victoryListVisibleHeight: CGFloat { 16 + 4 * victoryRowHeight + 3 * 12 + 16 }
+    /// Recap list height: up to `StandardVictoryLayout.maxVisibleRecapRows` rows visible; longer lists scroll.
+    private var victoryListVisibleHeight: CGFloat {
+        StandardVictoryLayout.recapListScrollHeight(itemCount: dinosaursWeighed.count)
+    }
 
     /// Victory screen: same as Dino Diets / Match the Dinosaur — top half list (highlight + name audio), bottom half success image (centered, no wrapper), then good-job + crowd and dismiss.
     private var weighVictoryView: some View {
-        GeometryReader { geometry in
-            VStack(spacing: 0) {
-                // Top half: scrolling list of dinosaurs weighed, highlight + name audio, scroll to center — fixed height so ~4 visible (consistent across games)
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        VStack(spacing: 12) {
-                            ForEach(Array(dinosaursWeighed.enumerated()), id: \.offset) { index, item in
-                                let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                                HStack(spacing: 16) {
-                                    weighVictoryImage(item: item, isHighlighted: isHighlighted)
-                                    Text(item.name)
-                                        .font(.title2)
-                                        .fontWeight(isHighlighted ? .semibold : .regular)
-                                        .foregroundColor(.primary)
-                                        .multilineTextAlignment(.leading)
-                                        .lineLimit(2)
-                                        .minimumScaleFactor(0.8)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .opacity(isHighlighted ? 1.0 : 0.5)
-                                }
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
-                                .frame(height: victoryRowHeight)
-                                .background(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
-                                )
-                                .id(index)
-                            }
-                        }
-                        .padding(.horizontal)
-                        .padding(.vertical, 16)
+        VictorySplitColumnView(
+            listScrollHeight: victoryListVisibleHeight,
+            showSuccessPhase: endSequenceStep == 2,
+            endHighlightIndex: endHighlightIndex,
+            gameTitle: gameConfig.title,
+            scrollRows: {
+                ForEach(Array(dinosaursWeighed.enumerated()), id: \.offset) { index, item in
+                    let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                    HStack(spacing: 16) {
+                        weighVictoryImage(item: item, isHighlighted: isHighlighted)
+                        Text(item.name)
+                            .font(.title2)
+                            .fontWeight(isHighlighted ? .semibold : .regular)
+                            .foregroundColor(.primary)
+                            .multilineTextAlignment(.leading)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.8)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .opacity(isHighlighted ? 1.0 : 0.5)
                     }
-                    .frame(height: victoryListVisibleHeight)
-                    .onChange(of: endHighlightIndex) { _, newIndex in
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            proxy.scrollTo(newIndex, anchor: .center)
-                        }
-                    }
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 10)
+                    .frame(height: StandardVictoryLayout.rowHeight)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                    )
+                    .id(index)
                 }
-                .frame(maxWidth: .infinity)
-
-                // Bottom half: during walk show empty space; after walk show success image only (centered, no wrapper)
-                Group {
-                    if endSequenceStep == 2 {
-                        weighSuccessImageView
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    playWeighGoodJobAndCrowdThenDismiss()
-                                }
-                            }
-                    } else {
-                        Spacer()
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            },
+            successPhase: {
+                LandGameVictorySuccessStingerThenContinue(
+                    candidateSuccessImageNames: gameConfig.id == "weigh-marine-reptile"
+                        ? ["game-weigh-the-marine-reptile-success", "game-weigh-the-marine-reptile"]
+                        : ["game-\(gameConfig.id)-success", "game-\(gameConfig.id)"],
+                    catalogGameIdForStinger: gameConfig.id,
+                    speechManager: speechManager,
+                    onContinue: playWeighGoodJobAndCrowdThenDismiss
+                )
             }
-        }
+        )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             guard endSequenceStep == -1 else { return }
@@ -848,40 +831,6 @@ struct WeighGameView: View {
         }
     }
 
-    /// Success image only (no card wrapper); centered in victory bottom half. Same pattern as Match the Dinosaur / Dino Diets.
-    private var weighSuccessImageView: some View {
-        ZStack {
-            weighSuccessImageContent
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-
-    private var weighSuccessImageContent: some View {
-        Group {
-            let successName = gameConfig.id == "weigh-marine-reptile"
-                ? "game-weigh-the-marine-reptile-success"
-                : "game-\(gameConfig.id)-success"
-            let fallbackName = gameConfig.id == "weigh-marine-reptile"
-                ? "game-weigh-the-marine-reptile"
-                : "game-\(gameConfig.id)"
-            if ImageAssetCache.imageExists(named: successName) {
-                Image(successName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else if ImageAssetCache.imageExists(named: fallbackName) {
-                Image(fallbackName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else {
-                Text("🎉")
-                    .font(.system(size: 100))
-            }
-        }
-    }
-    
-    /// Victory list: use dino-* (square poses); seesaw uses weigh-dino-* (wide poses).
     private func weighVictoryImage(item: WeighableItem, isHighlighted: Bool) -> some View {
         Group {
             if let name = item.imageName, ImageAssetCache.imageExists(named: name) {
@@ -916,7 +865,6 @@ struct WeighGameView: View {
     }
     
     private func playWeighGoodJobAndCrowdThenDismiss() {
-        endSequenceStep = 2
         let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
         let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
         if let u1 = goodJobURL, let u2 = crowdURL {

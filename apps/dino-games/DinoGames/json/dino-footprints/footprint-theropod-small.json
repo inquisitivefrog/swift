@@ -1,0 +1,12 @@
+[
+  {
+    "id": "track_theropod_small",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED",
+    "formation_ref": "SOLNHOFEN",
+    "character_ref": "dino_bones_paleontologist_1",
+    "pose": "Kneeling on fine-grained ivory limestone, she uses a magnifying loupe to inspect tiny, delicate three-toed (Compsognathus) prints. The tracks are bird-like with sharp, pin-prick claw marks."
+  }
+]
