@@ -113,6 +113,7 @@ final class LandDinosaurProgress: ObservableObject {
     }
 
     func isLevelUnlocked(_ level: GameLevel) -> Bool {
+        if DeveloperSessionFlags.unlockAllGameLevels { return true }
         let ord = level.zeroOrderedIndex
         if ord <= 0 { return true }
         let prev = GameLevel.allCases[ord - 1]
@@ -131,6 +132,7 @@ final class LandDinosaurProgress: ObservableObject {
 
     /// Within an unlocked level: playable only when every concept prerequisite has been completed at least once.
     func canPlayLandGame(_ game: GameType, at level: GameLevel) -> Bool {
+        if DeveloperSessionFlags.unlockAllGameLevels { return true }
         guard isLevelUnlocked(level) else { return false }
         guard let rawId = game.id else { return true }
         let canonical = Self.canonicalId(for: rawId)

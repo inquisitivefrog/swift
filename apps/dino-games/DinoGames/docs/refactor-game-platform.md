@@ -35,7 +35,7 @@ Roughly **6–10** reviewable PRs total (see *Notes*). Order can shift if discov
 | # | Title (working) | Status | Owner / notes |
 |---|-----------------|--------|----------------|
 | 1 | Shared XCTest bundle helpers (`projectRootURL`, `recursiveFiles`, audio stem scans) | Done | `DinoGamesTests/TestBundleHelpers.swift`; seven test files migrated off duplicated FS helpers |
-| 2 | `GameCatalog` (or equivalent) — flatten all `(category, level, game)` for tests | Not started | Single iterator for cross-category contracts |
+| 2 | `GameCatalog` (or equivalent) — flatten all `(category, level, game)` for tests | Done | `GameCatalogPlacedGame`, `GameCatalog.allPlacedGames()`; `GameCatalogFlattenXCTests` |
 | 3 | Unified media-contract test (skeleton) — one test, expand coverage per slice | Not started | May start land-only, then air + marine |
 | 4 | `BundledJSONRepository` / shared `JSONDecoder` bundle load helper | Not started | Adopt in one existing consumer (e.g. formations or habitats) first |
 | 5 | `VictorySequenceManifest` types + bundle load (no game wired) | Not started | Codable manifest alongside `StandardVictorySequenceViews.swift` usage |
@@ -45,7 +45,7 @@ Roughly **6–10** reviewable PRs total (see *Notes*). Order can shift if discov
 | 9 | Extract one shared *engine* (e.g. silhouette guess) shared by land + air | Not started | Protocol + taxonomy-agnostic inputs |
 | 10 | Optional capstone: registry / unified `GameType` factory behind catalogs | Not started | Largest; defer until manifests stable |
 
-**Next up:** PR **2** (`GameCatalog` flatten / cross-category test iterator).
+**Next up:** PR **3** (unified media-contract test skeleton).
 
 ---
 
@@ -53,6 +53,7 @@ Roughly **6–10** reviewable PRs total (see *Notes*). Order can shift if discov
 
 | Date | PR | Summary |
 |------|-----|---------|
+| 2026-05-12 | — | PR 2: `GameCatalogPlacedGame` + `GameCatalog.allPlacedGames()`; `GameCatalogFlattenXCTests` (order vs per-category flatMap, unique `placementKey`, non-nil config ids). |
 | 2026-05-09 | — | PR 1: Added `TestBundleHelpers` (`projectRootURL`, `urlUnderProjectRoot`, `directoryExists`, `recursiveFiles`, `audioStems` / `audioExtensions`); migrated Dino/Ptero/Marine audio + source + Dino Footprints asset tests. |
 
 ---
@@ -63,6 +64,7 @@ Append **newest first** when something unexpectedly widens scope or changes dire
 
 | Date | Note |
 |------|------|
+| 2026-05-12 | PR 2 landed in tree; add GitHub PR link when opened/merged. |
 | 2026-05-09 | PR 1 merged locally; add GitHub PR link in changelog when opened/merged. |
 
 ---
@@ -70,7 +72,7 @@ Append **newest first** when something unexpectedly widens scope or changes dire
 ## Key code references (update if files move)
 
 - Shared victory UI: `DinoGames/Views/StandardVictorySequenceViews.swift` (`VictorySplitColumnView`, `LandGameVictorySuccessStingerThenContinue`, …)
-- Catalog entry: `DinoGames/GameCatalog.swift`
+- `GameCatalog` flatten: `GameCatalog.swift` (`GameCatalogPlacedGame`, `allPlacedGames()`)
 - Land / air / marine lists: `DinosaurGameCatalog.swift`, `PterosaurGameCatalog.swift`, `MarineReptileGameCatalog.swift`
 - Example JSON-driven flows: `DinoGames/Views/DinoFormationsGameView.swift`, `DinoGames/Views/DinoHabitatsGameView.swift`
 - Asset name set: `DinoGames/ImageAssetNames.generated.swift` (regenerate via `Scripts/regenerate-asset-names.sh` when catalog changes)

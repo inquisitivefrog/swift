@@ -67,6 +67,7 @@ final class MarineReptileProgress: ObservableObject {
     }
 
     func isLevelUnlocked(_ level: GameLevel) -> Bool {
+        if DeveloperSessionFlags.unlockAllGameLevels { return true }
         guard let ord = GameLevel.allCases.firstIndex(of: level) else { return true }
         if ord <= 0 { return true }
         // Keep future marine levels locked until they actually have games configured.
@@ -85,6 +86,7 @@ final class MarineReptileProgress: ObservableObject {
     }
 
     func canPlayMarineGame(_ game: GameType, at level: GameLevel) -> Bool {
+        if DeveloperSessionFlags.unlockAllGameLevels { return true }
         guard isLevelUnlocked(level) else { return false }
         guard let rawId = game.id else { return true }
         return Self.allMarineGameCanonicalIds.contains(Self.canonicalId(for: rawId))
