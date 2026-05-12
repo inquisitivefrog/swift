@@ -623,44 +623,45 @@ private struct GameSelectionNavigationContent: View {
         introducedGameListKeysCSV = updated.sorted().joined(separator: ",")
     }
 
+    /// No nested `NavigationView` here: `GameSelectionView` is already inside `CategorySelectionView`’s `NavigationStack`.
+    /// An inner navigation container caused two UIKit nav controllers to observe the same `HostingScrollView` (console:
+    /// “UIScrollView does not support multiple observers implementing _observeScrollView:willEndDragging…”).
     private var navigationContent: some View {
-        NavigationView {
-            ScrollViewReader { proxy in
-                ScrollView {
-                    VStack(spacing: 20) {
-                        content
-                    }
-                    .padding()
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(spacing: 20) {
+                    content
                 }
-                .onChange(of: gameListScrollToTopToken) { _, _ in
+                .padding()
+            }
+            .onChange(of: gameListScrollToTopToken) { _, _ in
+                scrollGameListToTop(proxy: proxy)
+            }
+            .onChange(of: gameWalkIndex) { oldIndex, newValue in
+                if let idx = newValue {
+                    let games = GameCatalog.games(for: category, level: selectedLevel)
+                    let targetId: String
+                    if idx == 0, selectedLevel != nil {
+                        targetId = "levelHeader"
+                    } else if idx < games.count, let id = games[idx].id {
+                        targetId = id
+                    } else {
+                        return
+                    }
+                    func doScroll() {
+                        withAnimation(.easeInOut(duration: 0.35)) {
+                            proxy.scrollTo(targetId, anchor: idx == 0 && selectedLevel != nil ? .top : .center)
+                        }
+                    }
+                    DispatchQueue.main.async { doScroll() }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { doScroll() }
+                } else if oldIndex != nil, selectedLevel != nil {
                     scrollGameListToTop(proxy: proxy)
                 }
-                .onChange(of: gameWalkIndex) { oldIndex, newValue in
-                    if let idx = newValue {
-                        let games = GameCatalog.games(for: category, level: selectedLevel)
-                        let targetId: String
-                        if idx == 0, selectedLevel != nil {
-                            targetId = "levelHeader"
-                        } else if idx < games.count, let id = games[idx].id {
-                            targetId = id
-                        } else {
-                            return
-                        }
-                        func doScroll() {
-                            withAnimation(.easeInOut(duration: 0.35)) {
-                                proxy.scrollTo(targetId, anchor: idx == 0 && selectedLevel != nil ? .top : .center)
-                            }
-                        }
-                        DispatchQueue.main.async { doScroll() }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { doScroll() }
-                    } else if oldIndex != nil, selectedLevel != nil {
-                        scrollGameListToTop(proxy: proxy)
-                    }
-                }
             }
-            .navigationTitle(gameSelectionTitle)
-            .navigationBarTitleDisplayMode(.inline)
         }
+        .navigationTitle(gameSelectionTitle)
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     private var contentWithSheets: some View {
