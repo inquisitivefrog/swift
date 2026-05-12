@@ -45,7 +45,7 @@ enum SeaMarineReptileData {
             .joined(separator: " ")
     }
 
-    /// Maps `marine-<group>-*` segment (e.g. `mosa`) to spoken-name audio stem under `Marine-Clades/clade-{stem}.m4a`.
+    /// Maps `marine-<group>-*` segment (e.g. `mosa`) to spoken-name audio stem under `Marine-Reptile-Clades/clade-{stem}.m4a`.
     static func audioSlugForMarineGroupRaw(_ raw: String) -> String {
         switch raw.lowercased() {
         case "mosa": return "mosasaur"

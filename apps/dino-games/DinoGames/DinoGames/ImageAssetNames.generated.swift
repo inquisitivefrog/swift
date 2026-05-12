@@ -4,6 +4,8 @@ import Foundation
 
 enum ImageAssetNames {
     static let knownAssets: Set<String> = [
+        "CoverImage",
+        "Dental-Morphology-4",
         "category-air",
         "category-land",
         "category-sea",
@@ -29,8 +31,6 @@ enum ImageAssetNames {
         "clue-nesting-type-mound",
         "clue-nesting-type-open-ground",
         "clue-question-mark",
-        "CoverImage",
-        "Dental-Morphology-4",
         "diet-carnivore",
         "diet-herbivore",
         "diet-insectivore",
@@ -408,6 +408,7 @@ enum ImageAssetNames {
         "dino-silhouette-chasmosaurus",
         "dino-silhouette-compsognathus",
         "dino-silhouette-corythosaurus",
+        "dino-silhouette-deinocheirus",
         "dino-silhouette-deinonychus",
         "dino-silhouette-diplodocus",
         "dino-silhouette-dromaeosaurus",
@@ -416,6 +417,7 @@ enum ImageAssetNames {
         "dino-silhouette-edmontosaurus",
         "dino-silhouette-eosinopteryx",
         "dino-silhouette-euoplocephalus",
+        "dino-silhouette-fukuiraptor",
         "dino-silhouette-gallimimus",
         "dino-silhouette-gasparinisaura",
         "dino-silhouette-giganotosaurus",
@@ -440,6 +442,7 @@ enum ImageAssetNames {
         "dino-silhouette-polacanthus",
         "dino-silhouette-rapetosaurus",
         "dino-silhouette-riparorvenator",
+        "dino-silhouette-riparovenator",
         "dino-silhouette-spinosaurus",
         "dino-silhouette-stegoceras",
         "dino-silhouette-stegosaurus",

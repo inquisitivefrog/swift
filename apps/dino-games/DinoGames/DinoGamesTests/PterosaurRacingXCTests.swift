@@ -38,7 +38,7 @@ final class PterosaurRacingXCTests: XCTestCase {
         )
         XCTAssertEqual(
             AirPterosaurData.pteroRacingAssetBase(fromCatalogImageName: "ptero-spec-pterodactylus"),
-            "ptero-racer-spec-pteradactylus"
+            "ptero-racer-spec-pterodactylus"
         )
         XCTAssertNil(AirPterosaurData.pteroRacingAssetBase(fromCatalogImageName: "invalid"))
     }

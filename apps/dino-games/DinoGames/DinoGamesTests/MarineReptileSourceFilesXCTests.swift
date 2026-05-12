@@ -53,13 +53,28 @@ final class MarineReptileSourceFilesXCTests: XCTestCase {
         )
         XCTAssertTrue(missingMarine.isEmpty, "Missing marine base images for JSON slugs: \(missingMarine.sorted())")
 
-        let missingSilhouettes = missingSlugs(
-            in: marineSilhouetteJSONFiles,
-            expectedPrefix: "silh-",
-            matchInImageNames: silhouetteImageNames,
-            imagePrefix: "silh-"
-        )
+        let missingSilhouettes = missingMarineSilhouetteSlugs(jsonFiles: marineSilhouetteJSONFiles, imageNames: silhouetteImageNames)
         XCTAssertTrue(missingSilhouettes.isEmpty, "Missing marine silhouette images for JSON slugs: \(missingSilhouettes.sorted())")
+    }
+
+    private func missingMarineSilhouetteSlugs(jsonFiles: [URL], imageNames: Set<String>) -> [String] {
+        var missing: [String] = []
+        for file in jsonFiles {
+            let stemRaw = file.deletingPathExtension().lastPathComponent
+            let stem = stemRaw.lowercased()
+            let slug: String
+            if stem.hasPrefix("silh-") {
+                slug = String(stem.dropFirst("silh-".count))
+            } else if stem.hasPrefix("silh_") {
+                slug = String(stem.dropFirst("silh_".count))
+            } else {
+                continue
+            }
+            if !TestBundleHelpers.marineSilhouetteJsonSlugHasMatchingSourceImage(slug: slug, imageBasenamesLowercased: imageNames) {
+                missing.append(slug)
+            }
+        }
+        return missing
     }
 
     private func missingSlugs(

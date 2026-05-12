@@ -52,4 +52,54 @@ enum TestBundleHelpers {
         let files = try recursiveFiles(in: directory, allowedExtensions: audioExtensions)
         return Set(files.map { $0.deletingPathExtension().lastPathComponent.lowercased() })
     }
+
+    // MARK: - Source tree (json ↔ images) slug matching
+
+    /// JSON `char_{slug}` stems whose on-disk dinosaur body PNGs use alternate spellings in filenames.
+    private static let dinosaurBaseImageFilenameSlugVariants: [String: [String]] = [
+        "microraptor": ["microraptor", "microcraptor"],
+        "triceratops": ["triceratops", "tricerators"],
+    ]
+
+    /// JSON `silh_{slug}` stems whose on-disk pterosaur silhouette PNGs use alternate spellings.
+    private static let pterosaurSilhouetteJsonSlugFilenameVariants: [String: [String]] = [
+        "darwinpterus": ["darwinpterus", "darwinopterus"],
+        "eudimorphodon": ["eudimorphodon", "eudimorphorphodon"],
+        "quetzalcoatlus": ["quetzalcoatlus", "quetzacoatlus"],
+    ]
+
+    /// True when some exported dinosaur body image filename contains `"-{variant}-"` for a known variant of `slug`.
+    static func dinosaurBaseJsonSlugHasMatchingSourceImage(slug: String, imageBasenamesLowercased: Set<String>) -> Bool {
+        let variants = dinosaurBaseImageFilenameSlugVariants[slug] ?? [slug]
+        return variants.contains { variant in
+            imageBasenamesLowercased.contains { $0.contains("-\(variant)-") }
+        }
+    }
+
+    /// True when some exported pterosaur silhouette image matches this JSON slug (incl. historical filename spellings).
+    static func pterosaurSilhouetteJsonSlugHasMatchingSourceImage(slug: String, imageBasenamesLowercased: Set<String>) -> Bool {
+        let variants = pterosaurSilhouetteJsonSlugFilenameVariants[slug] ?? [slug]
+        return variants.contains { variant in
+            imageBasenamesLowercased.contains { name in
+                name.contains("-\(variant)-") || name.contains("silh-\(variant)-")
+            }
+        }
+    }
+
+    /// Marine silhouette JSON stems whose exported PNGs use alternate spellings (historical filenames).
+    private static let marineSilhouetteJsonSlugFilenameVariants: [String: [String]] = [
+        "elasmosaurus": ["elasmosaurus", "elasomosaurus"],
+        "phosphosaurus": ["phosphosaurus", "phosphorosaurus"],
+        "tylosaur": ["tylosaur", "tylosaurus"],
+    ]
+
+    /// Marine silhouette JSON uses `silh-` / `silh_` stems; exported PNGs use `{clade}-silhouette-{slug}-` or `silh-{slug}-`.
+    static func marineSilhouetteJsonSlugHasMatchingSourceImage(slug: String, imageBasenamesLowercased: Set<String>) -> Bool {
+        let variants = marineSilhouetteJsonSlugFilenameVariants[slug] ?? [slug]
+        return variants.contains { variant in
+            imageBasenamesLowercased.contains { name in
+                name.contains("-\(variant)-") || name.contains("silh-\(variant)-")
+            }
+        }
+    }
 }

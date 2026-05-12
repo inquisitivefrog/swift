@@ -45,12 +45,7 @@ final class DinosaurSourceFilesXCTests: XCTestCase {
         let dinosaurImageNames = Set(dinosaurImageFiles.map { $0.lastPathComponent.lowercased() })
         let silhouetteImageNames = Set(silhouetteImageFiles.map { $0.lastPathComponent.lowercased() })
 
-        let missingDinos = missingSlugs(
-            in: dinosaurJSONFiles,
-            expectedPrefix: "char_",
-            matchInImageNames: dinosaurImageNames,
-            imagePrefix: nil
-        )
+        let missingDinos = missingDinosaurBaseSlugs(jsonFiles: dinosaurJSONFiles, imageNames: dinosaurImageNames)
         XCTAssertTrue(missingDinos.isEmpty, "Missing dinosaur base images for JSON slugs: \(missingDinos.sorted())")
 
         let missingSilhouettes = missingSlugs(
@@ -60,6 +55,19 @@ final class DinosaurSourceFilesXCTests: XCTestCase {
             imagePrefix: "silh-"
         )
         XCTAssertTrue(missingSilhouettes.isEmpty, "Missing dinosaur silhouette images for JSON slugs: \(missingSilhouettes.sorted())")
+    }
+
+    private func missingDinosaurBaseSlugs(jsonFiles: [URL], imageNames: Set<String>) -> [String] {
+        var missing: [String] = []
+        for file in jsonFiles {
+            let stem = file.deletingPathExtension().lastPathComponent
+            guard stem.hasPrefix("char_") else { continue }
+            let slug = String(stem.dropFirst("char_".count)).lowercased()
+            if !TestBundleHelpers.dinosaurBaseJsonSlugHasMatchingSourceImage(slug: slug, imageBasenamesLowercased: imageNames) {
+                missing.append(slug)
+            }
+        }
+        return missing
     }
 
     private func missingSlugs(

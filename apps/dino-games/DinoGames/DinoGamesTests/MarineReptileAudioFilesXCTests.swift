@@ -62,7 +62,7 @@ final class MarineReptileAudioFilesXCTests: XCTestCase {
     }
 
     func testMarineCladeAudioFilesExist() throws {
-        let directory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Marine-Clades")
+        let directory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Marine-Reptile-Clades")
         XCTAssertTrue(TestBundleHelpers.directoryExists(directory), "Missing directory: \(directory.path)")
 
         let availableStems = try TestBundleHelpers.audioStems(in: directory)
@@ -80,6 +80,6 @@ final class MarineReptileAudioFilesXCTests: XCTestCase {
             "clade-tylosaur",
         ]
         let missing = expectedStems.subtracting(availableStems).sorted()
-        XCTAssertTrue(missing.isEmpty, "Missing marine clade audio under Marine-Clades/: \(missing)")
+        XCTAssertTrue(missing.isEmpty, "Missing marine clade audio under Marine-Reptile-Clades/: \(missing)")
     }
 }

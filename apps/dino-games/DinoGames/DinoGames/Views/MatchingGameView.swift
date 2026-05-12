@@ -87,7 +87,7 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         }
         if normalized.hasPrefix("marine-clade-") {
             let slug = String(normalized.dropFirst("marine-clade-".count))
-            let preferredPath = "Marine-Clades/clade-\(slug)"
+            let preferredPath = "Marine-Reptile-Clades/clade-\(slug)"
             if let url = resolveURL(forPath: preferredPath) { return url }
             if let legacyPath = audioFilePath(for: key) {
                 return resolveURL(forPath: legacyPath)
@@ -854,10 +854,10 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         case _ where normalized.hasPrefix("ptero-clade-"):
             let slug = String(normalized.dropFirst("ptero-clade-".count))
             return "Pterosaur-Clades/clade-\(slug)"
-        // Marine reptile groups: key `marine-clade-{slug}` → `Marine-Clades/clade-{slug}.m4a` (see `urlForAudio` preferred path)
+        // Marine reptile groups: key `marine-clade-{slug}` → `Marine-Reptile-Clades/clade-{slug}.m4a` (see `urlForAudio` preferred path)
         case _ where normalized.hasPrefix("marine-clade-"):
             let slug = String(normalized.dropFirst("marine-clade-".count))
-            return "Marine-Clades/clade-\(slug)"
+            return "Marine-Reptile-Clades/clade-\(slug)"
         // Dinosaur clades: key `dino-clade-{slug}` → prefer `Dinosaur-Clades/clade-{slug}.m4a` (see `urlForAudio`), legacy `Dinosaur-Clades/{slug}.m4a`
         case _ where normalized.hasPrefix("dino-clade-"):
             let slug = String(normalized.dropFirst("dino-clade-".count))

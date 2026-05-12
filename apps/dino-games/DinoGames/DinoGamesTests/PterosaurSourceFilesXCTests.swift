@@ -53,13 +53,21 @@ final class PterosaurSourceFilesXCTests: XCTestCase {
         )
         XCTAssertTrue(missingPterosaurs.isEmpty, "Missing pterosaur base images for JSON slugs: \(missingPterosaurs.sorted())")
 
-        let missingSilhouettes = missingSlugs(
-            in: silhouetteJSONFiles,
-            expectedPrefix: "silh-",
-            matchInImageNames: silhouetteImageNames,
-            imagePrefix: "silh-"
-        )
+        let missingSilhouettes = missingPterosaurSilhouetteSlugs(jsonFiles: silhouetteJSONFiles, imageNames: silhouetteImageNames)
         XCTAssertTrue(missingSilhouettes.isEmpty, "Missing pterosaur silhouette images for JSON slugs: \(missingSilhouettes.sorted())")
+    }
+
+    private func missingPterosaurSilhouetteSlugs(jsonFiles: [URL], imageNames: Set<String>) -> [String] {
+        var missing: [String] = []
+        for file in jsonFiles {
+            let stem = file.deletingPathExtension().lastPathComponent.lowercased()
+            guard stem.hasPrefix("silh-") else { continue }
+            let slug = String(stem.dropFirst("silh-".count))
+            if !TestBundleHelpers.pterosaurSilhouetteJsonSlugHasMatchingSourceImage(slug: slug, imageBasenamesLowercased: imageNames) {
+                missing.append(slug)
+            }
+        }
+        return missing
     }
 
     private func missingSlugs(

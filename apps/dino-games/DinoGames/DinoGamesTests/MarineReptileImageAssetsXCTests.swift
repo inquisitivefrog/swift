@@ -16,7 +16,9 @@ final class MarineReptileImageAssetsXCTests: XCTestCase {
         XCTAssertFalse(baseAssets.isEmpty, "Expected marine base assets to be present.")
         XCTAssertFalse(silhouetteAssets.isEmpty, "Expected marine silhouette assets to be present.")
 
-        for base in baseAssets {
+        // Level picker cards (`marine-level-*`) are not creature bodies; they do not use `-silhouette-` pairs.
+        let baseAssetsRequiringSilhouettes = baseAssets.filter { !$0.hasPrefix("marine-level-") }
+        for base in baseAssetsRequiringSilhouettes {
             let silhouette = silhouetteName(fromBase: base)
             XCTAssertTrue(
                 silhouetteAssets.contains(silhouette),

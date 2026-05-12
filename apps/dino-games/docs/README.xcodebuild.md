@@ -112,3 +112,7 @@ CreateBuildOperation
 
 ** CLEAN SUCCEEDED **
 
+
+xcrun xcresulttool get object --legacy \
+  --path "/Users/tim/Library/Developer/Xcode/DerivedData/DinoGames-fbndtrzwkgwdmeenaxdvgclfeolw/Logs/Test/Test-DinoGames-2026.05.12_14-21-30--0700.xcresult" \
+  --format json
