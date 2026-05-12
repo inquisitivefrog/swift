@@ -43,13 +43,13 @@ enum GameCatalog {
         }
     }
 
-    /// Every non-empty `(category, level, game)` slot in display order: `GameCategory.allCases` × `GameLevel.allCases` × catalog row order.
+    /// Every non-empty `(category, level, game)` slot in display order: `GameCategory.allCases` × `GameLevel.visibleInGamePicker` × catalog row order.
     /// Empty levels (no games configured) are skipped — the slice has no rows for that level.
     static func allPlacedGames() -> [GameCatalogPlacedGame] {
         var out: [GameCatalogPlacedGame] = []
         out.reserveCapacity(64)
         for category in GameCategory.allCases {
-            for level in GameLevel.allCases {
+            for level in GameLevel.visibleInGamePicker {
                 for game in games(for: category, level: level) {
                     out.append(GameCatalogPlacedGame(category: category, level: level, game: game))
                 }

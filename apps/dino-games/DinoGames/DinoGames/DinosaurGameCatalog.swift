@@ -103,10 +103,15 @@ enum GameLevel: String, CaseIterable, Identifiable {
     }
 }
 
+extension GameLevel {
+    /// Levels shown in each category’s level picker (land / air / marine). Levels 5+ remain on the enum for assets and future releases but are omitted from the picker and from catalog `games` aggregation until re-enabled.
+    static let visibleInGamePicker: [GameLevel] = [.level1, .level2, .level3, .level4]
+}
+
 enum DinosaurGameCatalog {
     /// All dinosaur games in difficulty order (used when no level filter).
     static var games: [GameType] {
-        GameLevel.allCases.flatMap { games(level: $0) }
+        GameLevel.visibleInGamePicker.flatMap { games(level: $0) }
     }
 
     /// Games for a specific level. Order = display order. Empty levels return [] (UI shows “coming soon”).

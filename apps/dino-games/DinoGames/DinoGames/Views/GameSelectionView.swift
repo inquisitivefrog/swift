@@ -232,7 +232,7 @@ struct GameSelectionView: View {
     private var levelPickerContent: some View {
         ScrollView {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 4), spacing: 16) {
-                ForEach(GameLevel.allCases) { level in
+                ForEach(GameLevel.visibleInGamePicker) { level in
                     LevelCard(
                         category: category,
                         level: level,

@@ -9,7 +9,7 @@ import Foundation
 
 enum MarineReptileGameCatalog {
     static var games: [GameType] {
-        GameLevel.allCases.flatMap { games(level: $0) }
+        GameLevel.visibleInGamePicker.flatMap { games(level: $0) }
     }
 
     static func games(level: GameLevel) -> [GameType] {
