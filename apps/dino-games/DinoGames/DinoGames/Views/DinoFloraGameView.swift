@@ -19,9 +19,9 @@ struct DinoFloraGameConfig {
 struct DinoFloraPlant: Identifiable {
     let id: String
     let displayName: String
-    /// Image set: flora-{slug}-habitat (plant in habitat)
+    /// Image set: dino-flora-{slug}-habitat (plant in habitat)
     let treeImageName: String
-    /// Image set: flora-{slug}-seeds (derived from treeImageName)
+    /// Image set: dino-flora-{slug}-seeds (derived from treeImageName)
     var seedsImageName: String { treeImageName.replacingOccurrences(of: "-habitat", with: "-seeds") }
     /// Audio key for plant intro, e.g. "flora-horsetails" → Flora/flora-horsetails.m4a
     let audioKey: String
@@ -30,25 +30,25 @@ struct DinoFloraPlant: Identifiable {
 // MARK: - Data (from DINO_FLORA_DATA_MODEL.md)
 
 private let dinoFloraPlants: [DinoFloraPlant] = [
-    DinoFloraPlant(id: "horsetails", displayName: "Horsetails", treeImageName: "flora-horsetail-habitat", audioKey: "flora-horsetails"),
-    DinoFloraPlant(id: "moss", displayName: "Moss", treeImageName: "flora-moss-habitat", audioKey: "flora-moss"),
-    DinoFloraPlant(id: "araucaria", displayName: "Araucaria", treeImageName: "flora-araucaria-habitat", audioKey: "flora-araucaria"),
-    DinoFloraPlant(id: "ginkgo", displayName: "Ginkgo", treeImageName: "flora-ginkgo-habitat", audioKey: "flora-ginkgo"),
-    DinoFloraPlant(id: "cycads", displayName: "Cycads", treeImageName: "flora-cycad-habitat", audioKey: "flora-cycads"),
-    DinoFloraPlant(id: "tree-fern", displayName: "Tree Fern", treeImageName: "flora-tree-fern-habitat", audioKey: "flora-tree-fern"),
-    DinoFloraPlant(id: "fern", displayName: "Fern", treeImageName: "flora-herbaceous-fern-habitat", audioKey: "flora-fern"),
-    DinoFloraPlant(id: "charophytes", displayName: "Charophytes", treeImageName: "flora-charophytes-habitat", audioKey: "flora-charophytes"),
-    DinoFloraPlant(id: "clubmoss", displayName: "Clubmoss", treeImageName: "flora-clubmoss-habitat", audioKey: "flora-clubmoss"),
-    DinoFloraPlant(id: "equisetites", displayName: "Equisetites", treeImageName: "flora-equisetites-habitat", audioKey: "flora-equisetites"),
-    DinoFloraPlant(id: "fungi", displayName: "Fungi", treeImageName: "flora-fungi-habitat", audioKey: "flora-fungi"),
-    DinoFloraPlant(id: "ginkgoites", displayName: "Ginkgoites", treeImageName: "flora-ginkgoites-habitat", audioKey: "flora-ginkgoites"),
-    DinoFloraPlant(id: "liverwort", displayName: "Liverwort", treeImageName: "flora-liverwort-habitat", audioKey: "flora-liverwort"),
-    DinoFloraPlant(id: "magnoliid", displayName: "Magnoliid", treeImageName: "flora-magnoliid-habitat", audioKey: "flora-magnoliid"),
-    DinoFloraPlant(id: "paleopus", displayName: "Paleopus", treeImageName: "flora-paleopus-habitat", audioKey: "flora-paleopus"),
-    DinoFloraPlant(id: "taxodium", displayName: "Taxodium", treeImageName: "flora-taxodium-habitat", audioKey: "flora-taxodium"),
-    DinoFloraPlant(id: "totara", displayName: "Totara", treeImageName: "flora-totara-habitat", audioKey: "flora-totara"),
-    DinoFloraPlant(id: "walnut", displayName: "Walnut", treeImageName: "flora-walnut-habitat", audioKey: "flora-walnut"),
-    DinoFloraPlant(id: "water-lilies", displayName: "Water Lilies", treeImageName: "flora-water-lilies-habitat", audioKey: "flora-water-lilies"),
+    DinoFloraPlant(id: "horsetails", displayName: "Horsetails", treeImageName: "dino-flora-horsetail-habitat", audioKey: "flora-horsetails"),
+    DinoFloraPlant(id: "moss", displayName: "Moss", treeImageName: "dino-flora-moss-habitat", audioKey: "flora-moss"),
+    DinoFloraPlant(id: "araucaria", displayName: "Araucaria", treeImageName: "dino-flora-araucaria-habitat", audioKey: "flora-araucaria"),
+    DinoFloraPlant(id: "ginkgo", displayName: "Ginkgo", treeImageName: "dino-flora-ginkgo-habitat", audioKey: "flora-ginkgo"),
+    DinoFloraPlant(id: "cycads", displayName: "Cycads", treeImageName: "dino-flora-cycad-habitat", audioKey: "flora-cycads"),
+    DinoFloraPlant(id: "tree-fern", displayName: "Tree Fern", treeImageName: "dino-flora-tree-fern-habitat", audioKey: "flora-tree-fern"),
+    DinoFloraPlant(id: "fern", displayName: "Fern", treeImageName: "dino-flora-herbaceous-fern-habitat", audioKey: "flora-fern"),
+    DinoFloraPlant(id: "charophytes", displayName: "Charophytes", treeImageName: "dino-flora-charophytes-habitat", audioKey: "flora-charophytes"),
+    DinoFloraPlant(id: "clubmoss", displayName: "Clubmoss", treeImageName: "dino-flora-clubmoss-habitat", audioKey: "flora-clubmoss"),
+    DinoFloraPlant(id: "equisetites", displayName: "Equisetites", treeImageName: "dino-flora-equisetites-habitat", audioKey: "flora-equisetites"),
+    DinoFloraPlant(id: "fungi", displayName: "Fungi", treeImageName: "dino-flora-fungi-habitat", audioKey: "flora-fungi"),
+    DinoFloraPlant(id: "ginkgoites", displayName: "Ginkgoites", treeImageName: "dino-flora-ginkgoites-habitat", audioKey: "flora-ginkgoites"),
+    DinoFloraPlant(id: "liverwort", displayName: "Liverwort", treeImageName: "dino-flora-liverwort-habitat", audioKey: "flora-liverwort"),
+    DinoFloraPlant(id: "magnoliid", displayName: "Magnoliid", treeImageName: "dino-flora-magnoliid-habitat", audioKey: "flora-magnoliid"),
+    DinoFloraPlant(id: "paleopus", displayName: "Paleopus", treeImageName: "dino-flora-paleopus-habitat", audioKey: "flora-paleopus"),
+    DinoFloraPlant(id: "taxodium", displayName: "Taxodium", treeImageName: "dino-flora-taxodium-habitat", audioKey: "flora-taxodium"),
+    DinoFloraPlant(id: "totara", displayName: "Totara", treeImageName: "dino-flora-totara-habitat", audioKey: "flora-totara"),
+    DinoFloraPlant(id: "walnut", displayName: "Walnut", treeImageName: "dino-flora-walnut-habitat", audioKey: "flora-walnut"),
+    DinoFloraPlant(id: "water-lilies", displayName: "Water Lilies", treeImageName: "dino-flora-water-lilies-habitat", audioKey: "flora-water-lilies"),
 ]
 
 /// Plant slug → dinosaur IDs that eat it. Low/ground plants: low browsers; tree plants: high browsers (sauropods).
