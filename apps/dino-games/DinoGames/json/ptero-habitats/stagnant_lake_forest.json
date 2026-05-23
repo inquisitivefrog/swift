@@ -1,0 +1,21 @@
+{
+  "id": "habitat_karabastau_stagnant_lake_025",
+  "species": "General_Habitat_Flora",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "HUMID_OVERCAST_DIFFUSED",
+  "formation_ref": "KARABASTAU_FORMATION",
+  "environment_details": {
+    "habitat": "STAGNANT_LAKE_FOREST",
+    "flora": [
+      "Dense Araucarian forest (dark green, overlapping canopy)",
+      "Thick mats of liverworts and mosses on fallen logs",
+      "Ginkgoales with heavy leaf-litter at the water's edge"
+    ],
+    "ground_palette": ["Deep Umber", "Dark Moss Green", "Slate Grey"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; claustrophobic and ancient; heavy atmospheric mist rising from the still water surface."
+  },
+  "visual_logic": {
+    "composition": "A view from within the tree line looking out onto a dark, mirror-still lake. The foreground is dominated by rotting, mossy wood.",
+    "ground": "Saturated forest floor with layers of dark, decaying organic matter."
+  }
+}

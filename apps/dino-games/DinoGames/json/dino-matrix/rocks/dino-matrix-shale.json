@@ -1,0 +1,67 @@
+{
+  "asset_id": "matrix_layout_shale_multi_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Rock_Sample_Match_Card"
+  },
+  "canvas_constraints": {
+    "aspect_ratio": "1:1 (Square Layout)",
+    "target_resolution": "1024x1024"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Three-quarter angled perspective",
+      "angle": "Angled view highlighting the fine horizontal splitting planes, tracking back to an eroding mud basin cliff"
+    },
+    "foreground_element": {
+      "type": "Multiple Material Blocks Array",
+      "rock_type": "Shale Variant Set",
+      "placement": "Three blocks grouped together on a flat, compacted grey clay ground plane",
+      "blocks": [
+        {
+          "block_id": "shale_color_x",
+          "geometry": "3D stylized block with fine, horizontal fissile plate splitting",
+          "color": "Deep Charcoal Black",
+          "texture": "Carbon-rich, ultra-fine mudstone compression sheet"
+        },
+        {
+          "block_id": "shale_color_y",
+          "geometry": "3D stylized block with fine, horizontal fissile plate splitting",
+          "color": "Mottled Rust Red",
+          "texture": "Highly oxidized floodplain mud layer, brittle and flaky"
+        },
+        {
+          "block_id": "shale_color_z",
+          "geometry": "3D stylized block with fine, horizontal fissile plate splitting",
+          "color": "Dull Olive-Green",
+          "texture": "Low-oxygen ferrous mud compression sheet"
+        }
+      ]
+    },
+    "background_environment": {
+      "habitat_archetype": "Eroding Lacustrine / Marine Mud Basin",
+      "geological_mapping": [
+        {
+          "zone_name": "Lower Basin Outcrop Floor",
+          "color_profile": "Deep Charcoal Black (Matches Block Color X)",
+          "description": "An organic-rich bottom-stratum forming a dark, exposed ledge near the valley floor."
+        },
+        {
+          "zone_name": "Upper Cliff Ridge",
+          "color_profile": "Mottled Rust Red (Matches Block Color Y)",
+          "description": "A deeply weathered, iron-rich oxidized mudstone ridge lining the top of the horizon."
+        },
+        {
+          "zone_name": "Excavated Canyon Wall",
+          "color_profile": "Dull Olive-Green (Matches Block Color Z)",
+          "description": "A vertical cliff face cutting across the right side, exposing sheets of unoxidized green shale."
+        }
+      ],
+      "lighting": "Direct, crisp daylight casting subtle micro-shadows beneath each shale flake layer to highlight its fragile architecture."
+    }
+  }
+}

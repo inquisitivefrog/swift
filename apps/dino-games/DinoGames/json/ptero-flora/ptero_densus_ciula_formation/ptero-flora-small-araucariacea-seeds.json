@@ -1,0 +1,22 @@
+{
+  "id": "small_araucariaceae_lifecycle_022",
+  "species": "Small Araucariaceae",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "DENSUS_CIULA_FORMATION",
+  "environment_details": {
+    "habitat": "SUBTROPICAL_ISLAND_FLOODPLAIN",
+    "flora": [
+      "Seed (wedge-shaped, large, reddish-brown, with a subtle wing-like edge)",
+      "Cone (spherical, compact, heavy interlocking woody scales)",
+      "Twig section (with spirally arranged, thick triangular leaves)",
+      "Trunk bark (dark brown, peeling in horizontal strips)"
+    ],
+    "ground_palette": ["Red silty clay", "Charcoal", "Deep Brown"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; geometric symmetry emphasized; tactile, chunky textures on the scales and bark."
+  },
+  "visual_logic": {
+    "composition": "A clean tiled grid. One large cone is displayed central; individual seeds are shown spilling from the scales; a twig section emphasizes the 'monkey-puzzle' leaf pattern; a bark close-up shows the texture.",
+    "ground": "Neutral, damp red clay surface."
+  }
+}

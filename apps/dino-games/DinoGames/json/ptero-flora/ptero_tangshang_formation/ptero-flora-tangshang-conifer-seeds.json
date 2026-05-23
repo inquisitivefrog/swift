@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tangshang_conifer_quad_001",
+    "species": "Conifers",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "TANGSHANG",
+    "environment_details": {
+      "habitat": "SUBTROPICAL_RIVER_VALLEY",
+      "flora": [
+        "Flattened needle cluster (short, blunt, linear evergreen leaves arranged like a double-sided comb)",
+        "Pendulous seed cone (elongated woody cone hanging downwards with thick, rounded scales)",
+        "Branching joint (chunky wood knuckle where smooth twigs divide)",
+        "Fossilized cone impression (relief template embedded clearly within charcoal-tinted clay)"
+      ],
+      "ground_palette": ["Rich Silt Brown", "Rusty Ochre", "Dark Charcoal Clay"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; needles must look like thick, rounded strips rather than razor-sharp spikes; wood features must have a solid, toy-like chunky structure; highlight the waxy, dark-green surface of the foliage."
+    },
+    "visual_logic": {
+      "composition": "Quadrant composition: Top-Left: a detailed close-up of a flattened, comb-like needle arrangement; Top-Right: a solitary, hanging woody seed cone; Bottom-Left: a macro shot of a thick branch division node; Bottom-Right: a crisp fossil impression of a cone in dark charcoal clay.",
+      "ground": "A clean layer of rusty ochre silt, elevating the dark greens and browns of the conifer specimens.",
+      "lighting": "Even, high-key diffused light, highlighting the deep texture of the cone scales and the clean relief lines of the fossil."
+    }
+  }
+]

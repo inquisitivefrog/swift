@@ -17,7 +17,7 @@ final class LandDinosaurProgressXCTests: XCTestCase {
     func testConceptPrerequisiteLists() {
         XCTAssertEqual(LandDinosaurGamePairing.prerequisites(before: "balance-the-dinosaur"), ["weigh-dinosaur"])
         XCTAssertEqual(LandDinosaurGamePairing.prerequisites(before: "measure-the-dinosaur"), ["which-dino-is-taller"])
-        XCTAssertEqual(LandDinosaurGamePairing.prerequisites(before: "dino-formations"), ["matrix-materials", "dino-habitats"])
+        XCTAssertEqual(LandDinosaurGamePairing.prerequisites(before: "dino-formations"), ["dino-matrix", "dino-habitats"])
         XCTAssertEqual(LandDinosaurGamePairing.prerequisites(before: "dino-habitats"), ["dino-flora", "dino-fauna"])
         XCTAssertTrue(LandDinosaurGamePairing.prerequisites(before: "wacky-dinosaurs").isEmpty)
         XCTAssertTrue(LandDinosaurGamePairing.prerequisites(before: "dino-footprints").isEmpty)

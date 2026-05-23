@@ -1,0 +1,67 @@
+{
+  "asset_id": "matrix_layout_conglomerate_multi_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Rock_Sample_Match_Card"
+  },
+  "canvas_constraints": {
+    "aspect_ratio": "1:1 (Square Layout)",
+    "target_resolution": "1024x1024"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Three-quarter angled perspective",
+      "angle": "Low-angle close perspective highlighting the bumpy surface relief of the pebble blocks"
+    },
+    "foreground_element": {
+      "type": "Multiple Material Blocks Array",
+      "rock_type": "Conglomerate Channel Variant Set",
+      "placement": "Three blocks arranged together on a flat, sunlit sandy plain",
+      "blocks": [
+        {
+          "block_id": "congl_profile_x",
+          "geometry": "3D stylized block with bumpy, asymmetrical protruding clasts",
+          "color_profile": "Quartz White & Tan Pebbles in Sandy Grey Matrix",
+          "texture": "Coarse-grained clastic blend with smooth, rounded river quartz stones"
+        },
+        {
+          "block_id": "congl_profile_y",
+          "geometry": "3D stylized block with bumpy, asymmetrical protruding clasts",
+          "color_profile": "Dark Charcoal & Purple Basalt Pebbles in Grey Sand Matrix",
+          "texture": "Dense volcaniclastic gravel mix with high-relief angular stones"
+        },
+        {
+          "block_id": "congl_profile_z",
+          "geometry": "3D stylized block with bumpy, asymmetrical protruding clasts",
+          "color_profile": "Pale Grey & Buff Limestone Pebbles in Cream Mud Matrix",
+          "texture": "Fine carbonate mud cement matrix packing rounded limestone fragments"
+        }
+      ]
+    },
+    "background_environment": {
+      "habitat_archetype": "Prehistoric Floodplain Excavation Site",
+      "geological_mapping": [
+        {
+          "zone_name": "Ancient Braided Channel Lens",
+          "color_profile": "Quartz White & Tan Pebbles (Matches Block Profile X)",
+          "description": "A prominent horizontal river channel cut passing straight through the middle of a background sandstone cliff."
+        },
+        {
+          "zone_name": "High-Energy Torrent Mountain Strata",
+          "color_profile": "Dark Charcoal & Purple Basalt Pebbles (Matches Block Profile Y)",
+          "description": "A dark, rugged rock ledge jutting out from an old upland drainage ridge on the far left."
+        },
+        {
+          "zone_name": "Alluvial Fan Basin Margin",
+          "color_profile": "Pale Grey & Buff Limestone Pebbles (Matches Block Profile Z)",
+          "description": "A light-colored, rocky outwash deposit sloping gently along the right baseline horizon."
+        }
+      ],
+      "lighting": "Strong morning side-lighting, casting prominent three-dimensional drop shadows beneath individual embedded stones across the entire scene."
+    }
+  }
+}

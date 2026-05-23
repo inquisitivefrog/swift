@@ -1,0 +1,7 @@
+[
+  {
+    "id": "ui_nest_clue_ankylosaur_square",
+    "clade": "ankylosaur",
+    "prompt": "High-fidelity 3D animated feature film style educational game clue graphic. A subterranean cross-section of a dinosaur nest located in a damp river siltbank. Inside a dug-out hollow underground, a clutch of oblong-oval, heavily pebbled cream-colored eggs are packed closely together, covered completely by thick mud and silt. At the surface level directly above the buried nest, a single bright orange sits resting on the dark soil for scale. Background shows dense fern thickets and riverbeds under dappled tarp-filtered sunlight. Perfectly centered 1:1 square composition, formatted as a square hero card with a strict 25% negative space buffer on all boundaries. STUDIO_GROUNDED lighting with deep contact shadows on the ground plane.",
+    "visual_logic": "Shows an ankylosaur nest clue: a buried silt pit with no exposed eggs, using an orange at the surface for size scale.",
+    "style_notes": "SQUARE_HERO_CARD, STYLE_ANIMATED_FEATURE_V3. No scale bars. The focus is on the environmental clue showing that the nest is completely underground."

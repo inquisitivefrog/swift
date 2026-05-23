@@ -1,0 +1,25 @@
+[
+  {
+    "id": "muwaqqar_coccolith_quad_001",
+    "species": "Coccoliths",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "MUWAQQAR_CHALK",
+    "environment_details": {
+      "habitat": "TETHYS_COASTAL_MARGIN",
+      "flora": [
+        "Coccolithophore (complete spherical cell covered in plates)",
+        "Individual Coccolith (a single shield-shaped calcite plate)",
+        "Chalk deposit (clump of discarded plates in sediment)",
+        "Milky bloom (high-level view of water saturation)"
+      ],
+      "ground_palette": ["Pure White", "Deep Ocean Blue", "Light Grey", "Golden Sand"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; pearlescent and iridescent textures; plates have a smooth, porcelain-like finish; rounded edges on the microscopic geometry to ensure a 'soft-touch' appeal."
+    },
+    "visual_logic": {
+      "composition": "A quadrant layout: Top-Left: the full spherical organism; Top-Right: a hero shot of a single intricate calcite plate; Bottom-Left: a cluster of plates settling into grey marl; Bottom-Right: a wide shot of the milky-white water surface.",
+      "ground": "Soft, fine-grained white chalk dust, providing a bright and clean educational background.",
+      "lighting": "Bright, even diffused light to highlight the interlocking patterns of the calcite shields."
+    }
+  }
+]

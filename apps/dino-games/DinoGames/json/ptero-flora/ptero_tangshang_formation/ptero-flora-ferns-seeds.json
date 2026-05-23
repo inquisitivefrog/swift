@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tangshang_ferns_quad_001",
+    "species": "Ferns",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "TANGSHANG",
+    "environment_details": {
+      "habitat": "SUBTROPICAL_RIVER_VALLEY",
+      "flora": [
+        "Unfurling fiddlehead (thick, tightly wound green spiral covered in fine, velvety bronze fuzz)",
+        "Fern pinna close-up (a segment of the frond showcasing perfectly repeating rounded leaflets)",
+        "Spore clusters / sori (pattern of neat, raised circular dots on the golden-brown underside of a leaf)",
+        "Rhizome segment (fuzzy, thick underground stem with stumpy rootlets branching off)"
+      ],
+      "ground_palette": ["Rich Silt Brown", "Vibrant Emerald Green", "Mossy Green"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; structural repetition; avoid thin, wispy stems; the fiddlehead must feel plump, juicy, and deliberately stylized; clear contrast between the fuzzy bronze base and waxy green leaves."
+    },
+    "visual_logic": {
+      "composition": "Tiled layout: Top-Left: a hero macro shot of a plump, spiraling fiddlehead; Top-Right: a detailed grid-like view of a single frond leaflet arrangement; Bottom-Left: the underside of a leaf showing the geometric pattern of brown spore circles; Bottom-Right: a short, thick segment of the fuzzy root rhizome.",
+      "ground": "A crisp, flat backdrop of dark river moss, framing the emerald green structures.",
+      "lighting": "Bright, omnidirectional light to separate the bronze velvety texture from the smooth, waxy leaf surfaces."
+    }
+  }
+]

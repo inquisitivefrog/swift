@@ -2,8 +2,8 @@
 //  DinoFloraGameView.swift
 //  DinoGames
 //
-//  Dino Flora: Pick a plant. Five rounds; each round: 5 dinos (3 that ate it, 2 that didn't).
-//  Player selects the 3 that ate the plant. No repeat dinosaurs across rounds. Victory: walk 15 selected, then success card + good-job + crowd-cheering.
+//  Dino Flora: Pick a plant. Three rounds; each round: 5 dinos (3 that ate it, 2 that didn't).
+//  Player selects the 3 that ate the plant. No repeat dinosaurs across rounds. Victory: shared `VictorySplitColumnView` + `LandGameVictorySuccessStingerThenContinue`.
 //
 
 import SwiftUI
@@ -23,7 +23,7 @@ struct DinoFloraPlant: Identifiable {
     let treeImageName: String
     /// Image set: dino-flora-{slug}-seeds (derived from treeImageName)
     var seedsImageName: String { treeImageName.replacingOccurrences(of: "-habitat", with: "-seeds") }
-    /// Audio key for plant intro, e.g. "flora-horsetails" → Flora/flora-horsetails.m4a
+    /// Audio key for plant intro, e.g. "flora-horsetails" → Flora/Dinosaurs/dino-flora-horsetails.m4a
     let audioKey: String
 }
 
@@ -39,7 +39,7 @@ private let dinoFloraPlants: [DinoFloraPlant] = [
     DinoFloraPlant(id: "fern", displayName: "Fern", treeImageName: "dino-flora-herbaceous-fern-habitat", audioKey: "flora-fern"),
     DinoFloraPlant(id: "charophytes", displayName: "Charophytes", treeImageName: "dino-flora-charophytes-habitat", audioKey: "flora-charophytes"),
     DinoFloraPlant(id: "clubmoss", displayName: "Clubmoss", treeImageName: "dino-flora-clubmoss-habitat", audioKey: "flora-clubmoss"),
-    DinoFloraPlant(id: "equisetites", displayName: "Equisetites", treeImageName: "dino-flora-equisetites-habitat", audioKey: "flora-equisetites"),
+    DinoFloraPlant(id: "equisetites", displayName: "Equisetites", treeImageName: "dino-flora-jiufotang-equisetites-habitat", audioKey: "flora-equisetites"),
     DinoFloraPlant(id: "fungi", displayName: "Fungi", treeImageName: "dino-flora-fungi-habitat", audioKey: "flora-fungi"),
     DinoFloraPlant(id: "ginkgoites", displayName: "Ginkgoites", treeImageName: "dino-flora-ginkgoites-habitat", audioKey: "flora-ginkgoites"),
     DinoFloraPlant(id: "liverwort", displayName: "Liverwort", treeImageName: "dino-flora-liverwort-habitat", audioKey: "flora-liverwort"),
@@ -147,7 +147,7 @@ struct DinoFloraGameView: View {
     @State private var currentRound = 1
     @State private var usedDinosaurIds: Set<Int> = []
     @State private var usedPlantIds: Set<String> = []
-    @State private var victoryWalkDinosaurs: [Dinosaur] = []
+    @State private var victoryWalkPlants: [DinoFloraPlant] = []
     @State private var matchedOrderThisRound: [Int] = []
     @State private var introWalkIndex: Int? = nil
     @State private var displayedDinoName: String? = nil
@@ -157,14 +157,10 @@ struct DinoFloraGameView: View {
     /// When true, show habitat image; oscillates between habitat and seeds every N seconds.
     @State private var showPlantHabitatImage = true
 
-    private let totalRounds = 5
+    private let totalRounds = 3
     /// Seconds to show each image before toggling. Oscillates habitat ↔ seeds until round ends. 3s is well below photosensitive epilepsy trigger range (5–30 Hz); 0.4s fade is safe.
     private let plantHabitatDisplaySeconds: Double = 3.0
     private let matchesNeededPerRound = 3
-
-    private var matchedDinosaursThisRoundInTapOrder: [Dinosaur] {
-        matchedOrderThisRound.compactMap { id in slots.first { $0.id == id } }
-    }
 
     var body: some View {
         NavigationView {
@@ -209,9 +205,12 @@ struct DinoFloraGameView: View {
     @ViewBuilder
     private var mainContent: some View {
         VStack(spacing: 20) {
-            Text(gameConfig.title)
-                .font(.largeTitle)
-                .padding(.top, 8)
+            // Hidden during victory — `VictorySplitColumnView` shows `gameTitle` in recap; success card art includes the title.
+            if !isGameComplete {
+                Text(gameConfig.title)
+                    .font(.largeTitle)
+                    .padding(.top, 8)
+            }
             gameBody
         }
     }
@@ -259,10 +258,26 @@ struct DinoFloraGameView: View {
         }
     }
 
+    /// Jiufotang Equisetites imagesets use `dino-flora-jiufotang-equisetites-*`; keep legacy `dino-flora-equisetites-*` as fallback for older catalogs.
+    private func dinoFloraResolvedAssetName(for p: DinoFloraPlant, habitat: Bool) -> String? {
+        let primaryHabitat = p.treeImageName
+        let primarySeeds = p.seedsImageName
+        let candidates: [String] = {
+            if p.id == "equisetites" {
+                let legacyHabitat = "dino-flora-equisetites-habitat"
+                let legacySeeds = "dino-flora-equisetites-seeds"
+                return habitat ? [primaryHabitat, legacyHabitat] : [primarySeeds, legacySeeds]
+            }
+            return [habitat ? primaryHabitat : primarySeeds]
+        }()
+        return candidates.first { ImageAssetCache.imageExists(named: $0) }
+    }
+
     private func plantImage(_ p: DinoFloraPlant) -> some View {
-        let imageName = showPlantHabitatImage ? p.treeImageName : p.seedsImageName
+        let habitat = showPlantHabitatImage
+        let imageName = dinoFloraResolvedAssetName(for: p, habitat: habitat)
         return Group {
-            if ImageAssetCache.imageExists(named: imageName) {
+            if let imageName {
                 Image(imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -366,8 +381,9 @@ struct DinoFloraGameView: View {
     }
 
     private func finishRound() {
-        let matchedOrdered = matchedDinosaursThisRoundInTapOrder
-        victoryWalkDinosaurs.append(contentsOf: matchedOrdered)
+        if let p = plant {
+            victoryWalkPlants.append(p)
+        }
         if currentRound >= totalRounds {
             isGameComplete = true
             return
@@ -449,7 +465,7 @@ struct DinoFloraGameView: View {
         usedPlantIds.insert(plant!.id)
         currentRound = 1
         usedDinosaurIds = []
-        victoryWalkDinosaurs = []
+        victoryWalkPlants = []
         isGameComplete = false
         endSequenceStep = -1
         endHighlightIndex = 0
@@ -458,92 +474,65 @@ struct DinoFloraGameView: View {
         playPlantIntroThenWhichThreeDinosaurs()
     }
 
-    // MARK: - End sequence
-
-    /// 3 rows visible to leave room for success image (matches Dino Ages pattern).
-    private let victoryRowHeight: CGFloat = 72
-    private var victoryListVisibleHeight: CGFloat { 16 + 3 * victoryRowHeight + 2 * 12 + 16 }
+    // MARK: - End sequence (shared victory: recap walk → success stinger → good-job + crowd)
 
     private var endSequenceView: some View {
-        GeometryReader { _ in
-            VStack(spacing: 0) {
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        VStack(spacing: 12) {
-                            ForEach(Array(victoryListDinosaurs.enumerated()), id: \.offset) { index, dino in
-                                DinoFloraEndRowView(dino: dino, isHighlighted: endSequenceStep >= 1 && index == endHighlightIndex)
-                                    .id(index)
-                            }
-                        }
-                        .padding(.horizontal)
-                        .padding(.vertical, 16)
-                    }
-                    .scrollIndicators(.visible)
-                    .frame(height: victoryListVisibleHeight)
-                    .onChange(of: endHighlightIndex) { _, newValue in
-                        guard newValue < victoryListDinosaurs.count else { return }
-                        withAnimation(.easeInOut(duration: 0.3)) {
-                            proxy.scrollTo(newValue, anchor: .center)
-                        }
-                    }
+        VictorySplitColumnView(
+            listScrollHeight: StandardVictoryLayout.recapListScrollHeight(itemCount: victoryWalkPlants.count),
+            showSuccessPhase: endSequenceStep == 2,
+            endHighlightIndex: endHighlightIndex,
+            gameTitle: gameConfig.title,
+            scrollRows: {
+                ForEach(Array(victoryWalkPlants.enumerated()), id: \.element.id) { index, flora in
+                    let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                    StandardVictoryRecapRowView(
+                        item: VictoryRecapDisplayItem(
+                            id: flora.id,
+                            title: flora.displayName,
+                            imageAssetName: flora.treeImageName,
+                            fallbackEmoji: "🌿"
+                        ),
+                        isHighlighted: isHighlighted
+                    )
+                    .id(index)
                 }
-                .frame(maxWidth: .infinity)
-
-                Group {
-                    if endSequenceStep == 2 {
-                        dinoFloraSuccessImageView
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    playGoodJobAndCrowdThenDismiss()
-                                }
-                            }
-                    } else {
-                        Spacer()
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            },
+            successPhase: {
+                LandGameVictorySuccessStingerThenContinue(
+                    candidateSuccessImageNames: ["game-dino-flora-success", "game-dino-flora"],
+                    catalogGameIdForStinger: gameConfig.id,
+                    speechManager: speechManager,
+                    onContinue: playGoodJobAndCrowdThenDismiss
+                )
             }
-        }
+        )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             guard endSequenceStep == -1 else { return }
             endSequenceStep = 1
             endHighlightIndex = 0
-            if victoryListDinosaurs.isEmpty {
+            if victoryWalkPlants.isEmpty {
                 endSequenceStep = 2
             } else {
-                let d = victoryListDinosaurs[0]
-                speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
+                speakVictoryPlant(victoryWalkPlants[0])
                 speechManager.onAudioFinished = { self.advanceEndHighlight() }
             }
         }
     }
 
-    private var dinoFloraSuccessImageView: some View {
-        Group {
-            if ImageAssetCache.imageExists(named: "game-dino-flora-success") {
-                Image("game-dino-flora-success")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else {
-                Text("🌿")
-                    .font(.system(size: 100))
-            }
+    private func speakVictoryPlant(_ flora: DinoFloraPlant) {
+        if let url = speechManager.urlForAudio(key: flora.audioKey) {
+            speechManager.playAudioFile(url: url)
+        } else {
+            speechManager.speak(flora.displayName)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
-
-    /// Victory list: 15 dinosaurs in selection order (3 per round × 5 rounds). No deduplication—show all as selected.
-    private var victoryListDinosaurs: [Dinosaur] { victoryWalkDinosaurs }
 
     private func advanceEndHighlight() {
         speechManager.onAudioFinished = nil
         endHighlightIndex += 1
-        if endHighlightIndex < victoryListDinosaurs.count {
-            let d = victoryListDinosaurs[endHighlightIndex]
-            speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
+        if endHighlightIndex < victoryWalkPlants.count {
+            speakVictoryPlant(victoryWalkPlants[endHighlightIndex])
             speechManager.onAudioFinished = { advanceEndHighlight() }
         } else {
             endSequenceStep = 2
@@ -637,52 +626,6 @@ private struct DinoFloraCircleView: View {
     }
 }
 
-private let dinoFloraVictoryImageSize: CGFloat = 72
-
-private struct DinoFloraEndRowView: View {
-    let dino: Dinosaur
-    let isHighlighted: Bool
-    private let rowHeight: CGFloat = 92
-
-    var body: some View {
-        HStack(spacing: 16) {
-            Group {
-                if let name = dino.imageName, ImageAssetCache.imageExists(named: name) {
-                    Image(name)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: dinoFloraVictoryImageSize, height: dinoFloraVictoryImageSize)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .opacity(isHighlighted ? 1.0 : 0.4)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
-                        )
-                } else {
-                    Text(dino.icon)
-                        .font(.system(size: 40))
-                        .frame(width: dinoFloraVictoryImageSize, height: dinoFloraVictoryImageSize)
-                        .opacity(isHighlighted ? 1.0 : 0.4)
-                }
-            }
-            Text(dino.name)
-                .font(.title2)
-                .fontWeight(isHighlighted ? .semibold : .regular)
-                .foregroundColor(.primary)
-                .multilineTextAlignment(.leading)
-                .lineLimit(2)
-                .minimumScaleFactor(0.65)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .opacity(isHighlighted ? 1.0 : 0.5)
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 10)
-        .frame(height: rowHeight)
-        .background(RoundedRectangle(cornerRadius: 12).fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear))
-        .overlay(RoundedRectangle(cornerRadius: 12).stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2))
-    }
-}
-
 // MARK: - Source Flora Hints (Dino Flora)
 
 /// One hint category for the Source Flora hints grid. Uses image set source-flora-{id} and audio Flora/hint-{id}.m4a.
@@ -701,6 +644,8 @@ private let sourceFloraHints: [SourceFloraHint] = [
 
 struct SourceFloraHintsView: View {
     let onDismiss: () -> Void
+    /// Optional audio when the hints grid opens (e.g. Dino Flora `game-dino-flora-tap-the-image`, Ptero Flora `game-ptero-flora-tap-the-plant-to-hear-description`). nil = silent.
+    var hintGridIntroAudioKey: String? = "game-dino-flora-tap-the-image"
     @State private var speechManager = SpeechManager()
     @State private var selectedHint: SourceFloraHint?
     @State private var introPlayed = false
@@ -786,7 +731,7 @@ struct SourceFloraHintsView: View {
     private func playIntroOnce() {
         guard !introPlayed else { return }
         introPlayed = true
-        if let url = speechManager.urlForAudio(key: "game-dino-flora-tap-the-image") {
+        if let key = hintGridIntroAudioKey, let url = speechManager.urlForAudio(key: key) {
             speechManager.onAudioFinished = nil
             speechManager.playAudioFile(url: url)
         }

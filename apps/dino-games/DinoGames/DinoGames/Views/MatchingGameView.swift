@@ -116,6 +116,44 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             }
             return nil
         }
+        if normalized.hasPrefix("ptero-flora-") {
+            let rest = String(normalized.dropFirst("ptero-flora-".count))
+            let candidates = [
+                "Flora/Pterosaurs/karabastau/ptero-flora-\(rest)",
+                "Flora/Pterosaurs/ptero-flora-\(rest)",
+            ]
+            for path in candidates {
+                if let url = resolveURL(forPath: path) { return url }
+            }
+            return nil
+        }
+        // Racing clips: `Games/{file}` or `Games/racing-dinosaurs|pterosaurs/{file}` (shared keys like outside-track may live in either pack folder).
+        if normalized.hasPrefix("game-racing-") {
+            if let url = resolveURL(forPath: "Games/\(normalized)") { return url }
+        }
+        if normalized == "racing-pterosaurs" {
+            if let url = resolveURL(forPath: "Games/game-racing-pterosaurs") { return url }
+        }
+        if normalized == "racing-dinosaurs" || normalized == "racing dinosaurs" {
+            if let url = resolveURL(forPath: "Games/game-racing-dinosaurs") { return url }
+        }
+        // Dino Eggs UI clips: `Games/{file}` or `Games/dino-eggs/{file}` (egg morphotype keys `dino-eggs-*` stay under `Audio/Eggs/`).
+        if normalized.hasPrefix("game-dino-eggs") {
+            if let url = resolveURL(forPath: "Games/\(normalized)") { return url }
+        }
+        if normalized == "dino-eggs" {
+            if let url = resolveURL(forPath: "Games/game-dino-eggs") { return url }
+        }
+        // Dino Fossil Hunt site clips: `Games/{file}` or `Games/dino-fossil-hunt/{file}` (hint keys → `Audio/Fossil/`).
+        if normalized.hasPrefix("game-dino-fossil-hunt") && !normalized.hasPrefix("game-dino-fossil-hunt-hint") {
+            if let url = resolveURL(forPath: "Games/\(normalized)") { return url }
+        }
+        if normalized == "dino-fossil-hunt" {
+            if let url = resolveURL(forPath: "Games/game-dino-fossil-hunt") { return url }
+        }
+        if normalized.hasPrefix("game-dino-matrix") {
+            if let url = resolveURL(forPath: "Games/\(normalized)") { return url }
+        }
         guard let path = audioFilePath(for: key) else { return nil }
         return resolveURL(forPath: path)
     }
@@ -126,6 +164,35 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         "basecamp", "cleanup", "paperwork",
         "lab", "art",
     ]
+
+    /// Nested folders under `Assets/Audio/Games/` (game-specific packs). Flat `Games/{file}` is tried first; then each subfolder.
+    private static let gamesNestedSubfolders: [String] = [
+        "racing-dinosaurs",
+        "racing-pterosaurs",
+        "dino-eggs",
+        "dino-fossil-hunt",
+    ]
+
+    /// Order for nested `Games/` lookup: prefer the pack folder that matches the filename prefix.
+    private static func gamesNestedSubfolders(forFileName fileName: String) -> [String] {
+        let stem = fileName.lowercased()
+        let preferred: String?
+        if stem.hasPrefix("game-racing-pterosaurs") || stem == "game-racing-pterosaurs" {
+            preferred = "racing-pterosaurs"
+        } else if stem.hasPrefix("game-racing-dinosaurs") || stem == "game-racing-dinosaurs" {
+            preferred = "racing-dinosaurs"
+        } else if stem.hasPrefix("game-dino-eggs") {
+            preferred = "dino-eggs"
+        } else if stem.hasPrefix("game-dino-fossil-hunt") {
+            preferred = "dino-fossil-hunt"
+        } else {
+            preferred = nil
+        }
+        guard let preferred else { return gamesNestedSubfolders }
+        var ordered = [preferred]
+        ordered.append(contentsOf: gamesNestedSubfolders.filter { $0 != preferred })
+        return ordered
+    }
 
     /// Looks up `Tools/{subdir}/field-{slug}` then `Tools/{subdir}/{slug}`; returns first hit (e.g. Dino Fossil Hunt intro walk + taps).
     func urlForToolsAudio(slug: String) -> URL? {
@@ -141,8 +208,8 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         return nil
     }
 
-    /// Resolve path (e.g. "Feedback/crowd-cheering") to first found bundle URL (.m4a, .mp3, or .wav).
-    private func resolveURL(forPath audioPath: String) -> URL? {
+    /// Direct bundle lookup for an exact relative path under `Assets/Audio/` (no fuzzy search, no nested `Games/` fallbacks).
+    private func bundleURLForExactAudioPath(_ audioPath: String) -> URL? {
         let fileName = (audioPath as NSString).lastPathComponent
         let paths = [
             "DinoGames/Assets/Audio/\(audioPath)",
@@ -150,20 +217,19 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             "assets/Audio/\(audioPath)",
             "Audio/\(audioPath)",
             audioPath,
-            fileName
+            fileName,
         ]
         for resourcePath in paths {
             for ext in ["m4a", "mp3", "wav"] {
                 if let url = Bundle.main.url(forResource: resourcePath, withExtension: ext) { return url }
             }
         }
-        // Try subdirectory lookup (e.g. Feedback/congratulations → resource "congratulations" in "Audio/Feedback")
         if audioPath.contains("/") {
             let pathDir = (audioPath as NSString).deletingLastPathComponent
             let subdirs = [
                 "Audio/\(pathDir)",
                 "Assets/Audio/\(pathDir)",
-                "DinoGames/Assets/Audio/\(pathDir)"
+                "DinoGames/Assets/Audio/\(pathDir)",
             ]
             for subdir in subdirs {
                 for ext in ["m4a", "mp3", "wav"] {
@@ -171,6 +237,26 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
                 }
             }
         }
+        return nil
+    }
+
+    /// Resolve path (e.g. "Feedback/crowd-cheering") to first found bundle URL (.m4a, .mp3, or .wav).
+    private func resolveURL(forPath audioPath: String) -> URL? {
+        if let url = bundleURLForExactAudioPath(audioPath) { return url }
+        if audioPath.hasPrefix("Dino-Materials/") {
+            let legacy = (audioPath as NSString).replacingOccurrences(of: "Dino-Materials/", with: "Materials/")
+            if let url = bundleURLForExactAudioPath(legacy) { return url }
+        } else if audioPath.hasPrefix("Materials/") {
+            let preferred = (audioPath as NSString).replacingOccurrences(of: "Materials/", with: "Dino-Materials/")
+            if let url = bundleURLForExactAudioPath(preferred) { return url }
+        }
+        if audioPath.hasPrefix("Games/") {
+            let fileName = (audioPath as NSString).lastPathComponent
+            for nested in Self.gamesNestedSubfolders(forFileName: fileName) {
+                if let url = bundleURLForExactAudioPath("Games/\(nested)/\(fileName)") { return url }
+            }
+        }
+        let fileName = (audioPath as NSString).lastPathComponent
         if let resourcePath = Bundle.main.resourcePath, let enumerator = FileManager.default.enumerator(atPath: resourcePath) {
             // Require the parent folder in the match path so e.g. `Dinosaur-Clades/stegosaur` does not pick up
             // `Eggs/dino-eggs-stegosaur.m4a` (same basename suffix) during fuzzy search.
@@ -647,6 +733,16 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-dino-smile"
         case "game-dino-smile-gameplay-directions":
             return "Games/game-dino-smile-gameplay-directions"
+        case "game-ptero-eggs", "ptero-eggs":
+            return "Games/game-ptero-eggs"
+        case "game-ptero-eggs-beep":
+            return "Games/game-ptero-eggs-beep"
+        case "game-ptero-eggs-scan-failed":
+            return "Games/game-ptero-eggs-scan-failed"
+        case "game-ptero-eggs-tap-the-pterosaur":
+            return "Games/game-ptero-eggs-tap-the-pterosaur"
+        case "game-ptero-eggs-gameplay-directions", "games-ptero-eggs-gameplay-directions":
+            return "Games/game-ptero-eggs-gameplay-directions"
         case "game-dino-eggs", "dino-eggs":
             return "Games/game-dino-eggs"
         case "game-dino-eggs-beep":
@@ -666,6 +762,8 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         case "game-dino-eggs-gameplay-directions", "games-dino-eggs-gameplay-directions",
              "tap-the-dinosaur-when-you-see-the-egg":
             return "Games/game-dino-eggs-gameplay-directions"
+        case _ where normalized.hasPrefix("game-dino-eggs-nest-"):
+            return "Games/\(normalized)"
         case "game-dino-tools", "dino-tools":
             return "Games/game-dino-tools"
         case "game-dino-tools-beep":
@@ -737,6 +835,10 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-racing-outside-track"
         case "game-racing-inside-track", "racing inside track":
             return "Games/game-racing-inside-track"
+        case "game-racing-first-position", "racing first position":
+            return "Games/game-racing-first-position"
+        case "game-racing-second-position", "racing second position":
+            return "Games/game-racing-second-position"
         case "game-racing-dinosaurs-ready":
             return "Games/game-racing-dinosaurs-ready"
         case "game-racing-dinosaurs-set":
@@ -757,10 +859,12 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-racing-the-winner-is"
         case "game-racing-its-a-tie", "its a tie":
             return "Games/game-racing-its-a-tie"
-        case "game-matrix-materials", "matrix materials":
-            return "Games/game-matrix-materials"
-        case "game-matrix-which-one", "which one is it", "tap the one":
-            return "Games/game-matrix-which-one"
+        case "game-dino-matrix", "dino matrix", "game-matrix-materials", "matrix materials":
+            return "Games/game-dino-matrix"
+        case "game-dino-matrix-identify-the-stone", "game-matrix-identify-the-stone":
+            return "Games/game-dino-matrix-identify-the-stone"
+        case "game-dino-matrix-which-one", "game-matrix-which-one", "which one is it", "tap the one":
+            return "Games/game-dino-matrix-which-one"
         case "game-find-mama", "find mama", "find-mama", "game-mama-match", "mama match":
             return "Games/game-find-mama"
         case "game-find-mama-return-the-egg", "find-mama-return-the-egg", "return-the-egg":
@@ -889,9 +993,10 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             var suffix = String(normalized.dropFirst("dino-char-".count))
             if suffix == "tail-spikes" { suffix = "tail-spike" } // audio file is tail-spike.m4a
             return "\(characteristicSubfolder)/\(suffix)"
-        // Flora: flora-* → Flora/flora-{slug}.m4a for Dino Flora game
-        case _ where normalized.hasPrefix("flora-"):
-            return "Flora/\(normalized)"
+        // Dino Flora plant intros: key flora-{slug} → Flora/Dinosaurs/dino-flora-{slug}.m4a (flora-hint-* handled above)
+        case _ where normalized.hasPrefix("flora-") && !normalized.hasPrefix("flora-hint-"):
+            let slug = String(normalized.dropFirst("flora-".count))
+            return "Flora/Dinosaurs/dino-flora-\(slug)"
         // Fauna: fauna-{slug} → Fauna/{slug}.m4a for Dino Fauna species intros
         case _ where normalized.hasPrefix("fauna-"):
             let slug = String(normalized.dropFirst("fauna-".count))
@@ -899,6 +1004,9 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         // Smiling Dinos: dino-smile-* → Smile/dino-smile-{toothType}.m4a for tooth intro audio
         case _ where normalized.hasPrefix("dino-smile-"):
             return "Smile/\(normalized)"
+        // Ptero Eggs: ptero-eggs-{clade} / ptero-nests-{clade} → Eggs/Pterosaurs/{key}.m4a
+        case _ where normalized.hasPrefix("ptero-eggs-") || normalized.hasPrefix("ptero-nests-"):
+            return "Eggs/Pterosaurs/\(normalized)"
         // Dino Eggs: dino-eggs-* → Eggs/dino-eggs-{eggType}.m4a for egg intro audio
         case _ where normalized.hasPrefix("dino-eggs-"):
             return "Eggs/\(normalized)"
@@ -921,6 +1029,10 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Body/hindleg"
         case "cervical-vertebrae":
             return "Body/neck"
+        // Ptero Flora plant intros: `ptero-flora-{slug}` → `Flora/Pterosaurs/karabastau/ptero-flora-{slug}.m4a` (Karabastau formation); legacy flat `Flora/Pterosaurs/…` still tried in `urlForAudio`. Must precede generic `ptero-*` → Pterosaurs/.
+        case _ where normalized.hasPrefix("ptero-flora-"):
+            let rest = String(normalized.dropFirst("ptero-flora-".count))
+            return "Flora/Pterosaurs/karabastau/ptero-flora-\(rest)"
         // Dinosaurs: Audio/Dinosaurs/{key}.m4a for any other dino-* key (e.g. dino-camarasaurus) for dinosaur name audio
         case _ where normalized.hasPrefix("dino-"):
             return "Dinosaurs/\(normalized)"
@@ -938,10 +1050,10 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         case _ where normalized.hasPrefix("ichthyo-"):
             return "Marine/\(normalized)"
 
-        // Matrix Materials game: material names → Audio/Materials/{slug}.m4a
+        // Dino Matrix (and future Ptero/Marine Matrix): stone names → Audio/Dino-Materials/{slug}.m4a
         case "limestone", "mudstone", "bentonite", "sandstone", "siltstone", "tuff", "amber", "shale",
              "ironstone", "claystone", "lignite", "phosphorite", "conglomerate":
-            return "Materials/\(normalized)"
+            return "Dino-Materials/\(normalized)"
 
         default:
             // Debug output to help diagnose mapping issues
@@ -1269,6 +1381,8 @@ struct MatchingGameView: View {
     @State private var endHighlightIndex: Int = 0
     /// All dinosaurs from all 3 rounds (3 per round = 9 total) for victory list; accumulated when each round completes.
     @State private var victoryDinosaurs: [Dinosaur] = []
+    /// Dino Diets!: matched diet traits from all rounds (3 per round) for victory recap.
+    @State private var victoryDiets: [Characteristic] = []
     /// Intro walk each round: step 0..2 = dinosaurs, 3..7 = characteristics; when complete, gameplay is enabled.
     @State private var introWalkComplete = false
     @State private var introWalkStep: Int = 0
@@ -1334,6 +1448,7 @@ struct MatchingGameView: View {
                 currentRound = 1
                 currentConfig = gameConfig
                 victoryDinosaurs = []
+                victoryDiets = []
                 usedCreatureIds = []
                 resetGameState()
                 // Use correct characteristic audio folder for this game type
@@ -1351,9 +1466,15 @@ struct MatchingGameView: View {
         } // End NavigationView
     } // End body
     
+    private var isDinoDietsGame: Bool { gameConfig.id == "match-the-diet" }
+
+    private var victoryRecapRowCount: Int {
+        isDinoDietsGame ? victoryDiets.count : victoryDinosaurs.count
+    }
+
     /// Fixed viewport: up to `StandardVictoryLayout.maxVisibleRecapRows` recap rows visible; longer lists scroll.
     private var victoryListVisibleHeight: CGFloat {
-        StandardVictoryLayout.recapListScrollHeight(itemCount: victoryDinosaurs.count)
+        StandardVictoryLayout.recapListScrollHeight(itemCount: victoryRecapRowCount)
     }
 
     // MARK: - Victory: scrolling list in top half (highlight + name audio); bottom half success card + optional stinger, then good-job + crowd and dismiss
@@ -1362,20 +1483,36 @@ struct MatchingGameView: View {
                 listScrollHeight: victoryListVisibleHeight,
                 showSuccessPhase: endSequenceStep == 2,
                 endHighlightIndex: endHighlightIndex,
-                gameTitle: gameConfig.id == "match-the-diet" ? "Dino Diets!" : currentConfig.title,
+                gameTitle: isDinoDietsGame ? "Dino Diets!" : currentConfig.title,
                 scrollRows: {
-                    ForEach(Array(victoryDinosaurs.enumerated()), id: \.element.id) { index, dinosaur in
-                        let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                        StandardVictoryRecapRowView(
-                            item: VictoryRecapDisplayItem(
-                                id: "\(dinosaur.id)",
-                                title: dinosaur.name,
-                                imageAssetName: dinosaur.imageName,
-                                fallbackEmoji: dinosaur.icon
-                            ),
-                            isHighlighted: isHighlighted
-                        )
-                        .id(index)
+                    if isDinoDietsGame {
+                        ForEach(Array(victoryDiets.enumerated()), id: \.element.id) { index, diet in
+                            let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                            StandardVictoryRecapRowView(
+                                item: VictoryRecapDisplayItem(
+                                    id: "\(diet.id)",
+                                    title: diet.type,
+                                    imageAssetName: diet.imageName,
+                                    fallbackEmoji: diet.icon
+                                ),
+                                isHighlighted: isHighlighted
+                            )
+                            .id(index)
+                        }
+                    } else {
+                        ForEach(Array(victoryDinosaurs.enumerated()), id: \.element.id) { index, dinosaur in
+                            let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
+                            StandardVictoryRecapRowView(
+                                item: VictoryRecapDisplayItem(
+                                    id: "\(dinosaur.id)",
+                                    title: dinosaur.name,
+                                    imageAssetName: dinosaur.imageName,
+                                    fallbackEmoji: dinosaur.icon
+                                ),
+                                isHighlighted: isHighlighted
+                            )
+                            .id(index)
+                        }
                     }
                 },
                 successPhase: {
@@ -1393,13 +1530,26 @@ struct MatchingGameView: View {
             guard endSequenceStep == -1 else { return }
             endSequenceStep = 1
             endHighlightIndex = 0
-            if victoryDinosaurs.isEmpty {
-                endSequenceStep = 2 // Skip walk if no dinosaurs, go straight to success image
+            if victoryRecapRowCount == 0 {
+                endSequenceStep = 2 // Skip walk if empty, go straight to success image
             } else {
-                let d = victoryDinosaurs[0]
-                speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
+                speakMatchingVictoryRecap(at: 0)
                 speechManager.onAudioFinished = { advanceMatchingEndHighlight() }
             }
+        }
+    }
+
+    private func dietAudioKey(for characteristic: Characteristic) -> String {
+        "diet-\(characteristic.type.lowercased())"
+    }
+
+    private func speakMatchingVictoryRecap(at index: Int) {
+        if isDinoDietsGame, index < victoryDiets.count {
+            let diet = victoryDiets[index]
+            speechManager.speak(audioKey: dietAudioKey(for: diet), fallbackText: diet.type)
+        } else if index < victoryDinosaurs.count {
+            let d = victoryDinosaurs[index]
+            speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
         }
     }
 
@@ -1413,13 +1563,30 @@ struct MatchingGameView: View {
     private func advanceMatchingEndHighlight() {
         speechManager.onAudioFinished = nil
         endHighlightIndex += 1
-        if endHighlightIndex < victoryDinosaurs.count {
-            let d = victoryDinosaurs[endHighlightIndex]
-            speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
+        if endHighlightIndex < victoryRecapRowCount {
+            speakMatchingVictoryRecap(at: endHighlightIndex)
             speechManager.onAudioFinished = { advanceMatchingEndHighlight() }
         } else {
             // Walk complete: transition to success card
             endSequenceStep = 2
+        }
+    }
+
+    /// Appends this round's matched diets (Dino Diets) or dinosaurs (other matching games) for the victory walk.
+    private func accumulateVictoryRecapForCompletedRound() {
+        if isDinoDietsGame {
+            for dino in dinosaurs {
+                guard let pair = matchedPairs.first(where: { $0.dinosaurId == dino.id }),
+                      let diet = characteristics.first(where: { $0.id == pair.characteristicId }),
+                      !victoryDiets.contains(where: { $0.id == diet.id }) else { continue }
+                victoryDiets.append(diet)
+            }
+        } else {
+            for d in dinosaurs {
+                if !victoryDinosaurs.contains(where: { $0.id == d.id }) {
+                    victoryDinosaurs.append(d)
+                }
+            }
         }
     }
 
@@ -1702,12 +1869,7 @@ struct MatchingGameView: View {
                 }
                 speechManager.onAudioFinished = {
                     DispatchQueue.main.async {
-                        // Accumulate this round's dinosaurs; keep list unique by id (first appearance order) so walk-the-list and ForEach work correctly
-                        for d in self.dinosaurs {
-                            if !self.victoryDinosaurs.contains(where: { $0.id == d.id }) {
-                                self.victoryDinosaurs.append(d)
-                            }
-                        }
+                        self.accumulateVictoryRecapForCompletedRound()
                         if self.currentRound < self.totalRounds {
                             // Mark this round's creatures as used so next round won't reuse them
                             self.usedCreatureIds.formUnion(self.dinosaurs.map(\.id))

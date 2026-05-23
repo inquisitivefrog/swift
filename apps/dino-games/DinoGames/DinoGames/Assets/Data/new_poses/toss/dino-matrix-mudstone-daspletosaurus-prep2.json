@@ -1,0 +1,17 @@
+  {
+    "asset_id": "manifest_excavation_010_alt",
+    "project": "DinoMatrix",
+    "version": "1.0.0",
+    "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "intended_use": "UI_Card_Dig_Stage_3" },
+    "excavation_context": {
+      "character_id": "dino_bones_preparator_2",
+      "character_description": "Adult female grad student museum preparator, short blonde hair, lightly tanned skin, wearing a light blue tee shirt under a white lab coat, white skirt, and light blue pumps.",
+      "stage": "Extracting Fossil with Field Knives",
+      "target_dinosaur": "Daspletosaurus",
+      "geological_formation": "TWO_MEDICINE",
+      "matrix_material": "Mudstone",
+      "matrix_color": "Dark Green-Grey"
+    },
+    "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_preparator_2 is leaning forward over an un-fissile shelf of dark green-grey mudstone matrix inside a preservation lab. She uses a fine scalpel to systematically uncover a row of robust predatory theropod tail vertebrae trapped in the block. Soft overhead museum lighting illuminating her blue pumps and the dense green-grey matrix texture. 1:1 Square aspect ratio."
+  }
+

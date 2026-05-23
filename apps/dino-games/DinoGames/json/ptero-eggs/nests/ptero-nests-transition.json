@@ -1,0 +1,6 @@
+{
+      "id": "ui_nest_transition_solitary",
+      "dimensions": "SQUARE_ASPECT_RATIO",
+      "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up view of a completely solitary, isolated Transition pterosaur nest. It contains three medium, chicken-egg-sized off-white eggs that are visibly squished and flattened on their sides. The nest is a secretive, primitive ground scrape hidden quietly on a dim forest floor, lined with a sparse layer of dried leaves and rich brown soil. There are absolutely no other nests visible in the frame. SETTING: Solitary woodland floor inspired by the JURASSIC_BASE framework. LIGHTING: Soft, filtered sunbeams cutting through forest canopy to warmly illuminate the squished egg membranes. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+      "visual_logic": "Combines two visual clues: chicken-egg-sized, flattened off-white eggs (Clue 1) and a strictly isolated, solitary forest floor ground scrape (Clue 2) to indicate the Transition clade."
+    }

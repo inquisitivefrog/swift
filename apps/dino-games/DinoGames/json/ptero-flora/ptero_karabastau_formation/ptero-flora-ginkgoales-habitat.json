@@ -1,0 +1,24 @@
+[
+  {
+    "id": "karabastau_ginkgoales_001",
+    "species": "Ginkgoales",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "KARABASTAU",
+    "environment_details": {
+      "habitat": "STAGNANT_LAKE_FOREST",
+      "flora": [
+        "Ginkgoales (fan-shaped leaves)",
+        "Conifers",
+        "Fern undergrowth"
+      ],
+      "ground_palette": ["Deep Brown", "Forest Green", "Charcoal", "Olive"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; iconic fan-shaped leaves with soft, undulating edges; high-quality leaf textures with subtle veins; golden-yellow accents mixed with forest greens."
+    },
+    "visual_logic": {
+      "composition": "A serene shot of a Ginkgo branch reaching out over a stagnant marsh. Some leaves are beginning to turn a pale gold, contrasting with the dark olive water.",
+      "ground": "Dark forest floor littered with fallen fan-shaped leaves and dark, decaying organic matter.",
+      "lighting": "Warm, low-angle sunlight hitting the leaves from the side, highlighting their unique shape and texture."
+    }
+  }
+]

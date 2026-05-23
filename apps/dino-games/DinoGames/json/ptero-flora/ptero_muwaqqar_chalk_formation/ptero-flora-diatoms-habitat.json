@@ -1,0 +1,25 @@
+[
+  {
+    "id": "muwaqqar_diatoms_quad_001",
+    "species": "Diatoms",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MUWAQQAR_CHALK",
+    "environment_details": {
+      "habitat": "TETHYS_COASTAL_MARGIN",
+      "flora": [
+        "Diatoms (geometric, glass-like silica shells)",
+        "Lithothamnion (Coralline Red Algae)",
+        "Floating botanical debris",
+        "Silica-rich mineral clouds"
+      ],
+      "ground_palette": ["Pure White", "Deep Ocean Blue", "Light Grey", "Golden Sand"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; toy-like geometric beauty; shells have a translucent, glass-like quality with soft specular highlights; avoids aggressive sharp edges despite the silica nature; tactile and jewel-like."
+    },
+    "visual_logic": {
+      "composition": "An underwater focus shot where the diatoms appear as intricate, floating 'jewels' in the water column. The background features the soft, white chalky seafloor of the Muwaqqar formation.",
+      "ground": "Smooth, white phosphatic limestone and fine chalk dust, providing a clean, high-albedo backdrop.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; light refracts through the translucent bodies of the diatoms, creating tiny caustic patterns on the seabed below."
+    }
+  }
+]

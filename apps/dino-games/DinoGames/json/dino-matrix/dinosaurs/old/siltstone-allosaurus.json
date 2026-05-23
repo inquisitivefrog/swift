@@ -1,0 +1,8 @@
+{ 
+  "app_image_config": { 
+    "layer_1_style": "1024x1024 px, high-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures.", 
+    "layer_2_setting": "Setting: A siltstone gulch somewhere in the Morrison formation in Colorado.", 
+    "aspect_ratio": "1:1" 
+  }, 
+  "action_description": “A paleontologist attempts to dig out an Allosaurus skull from the gulch end. Note the gulch must have the color of siltstone." 
+}

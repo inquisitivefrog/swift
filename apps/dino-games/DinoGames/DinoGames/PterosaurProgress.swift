@@ -86,6 +86,16 @@ final class PterosaurProgress: ObservableObject {
         }
     }
 
+    /// Every catalog game in `level` has been completed at least once (non-empty levels only). Used for level-up UX after the last first-time completion.
+    func hasCompletedEveryGame(in level: GameLevel) -> Bool {
+        let games = PterosaurGameCatalog.games(level: level)
+        if games.isEmpty { return false }
+        return games.allSatisfy { game in
+            guard let rawId = game.id else { return true }
+            return playedCanonicalGameIds.contains(Self.canonicalId(for: rawId))
+        }
+    }
+
     func canPlayPterosaurGame(_ game: GameType, at level: GameLevel) -> Bool {
         if DeveloperSessionFlags.unlockAllGameLevels { return true }
         guard isLevelUnlocked(level) else { return false }

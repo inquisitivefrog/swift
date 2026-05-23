@@ -1,14 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "footprint-spec-medium-80.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "footprint-spec-medium-160.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "footprint-spec-medium-240.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

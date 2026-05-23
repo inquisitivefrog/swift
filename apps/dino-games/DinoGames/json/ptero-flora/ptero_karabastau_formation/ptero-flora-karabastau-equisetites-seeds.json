@@ -1,0 +1,25 @@
+[
+  {
+    "id": "karabastau_equisetites_quad_001",
+    "species": "Equisetites",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "KARABASTAU",
+    "environment_details": {
+      "habitat": "STAGNANT_LAKE_FOREST",
+      "flora": [
+        "Stem node (bamboo-like segment, chunky joint)",
+        "Strobilus (spore-bearing cone at the tip, textured)",
+        "Whorled leaves (thin, radial filaments at the node)",
+        "Rhizome (thick underground root system emerging from mud)"
+      ],
+      "ground_palette": ["Deep Brown", "Forest Green", "Charcoal", "Olive"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; segmented verticality; soft-touch branchlets; tactile 'honeycomb' texture on the spore cones."
+    }
+    "visual_logic": {
+      "composition": "Quadrant layout: Top-Left: A detailed node segment; Top-Right: The terminal spore cone (strobilus); Bottom-Left: A top-down view of the radial leaf whorl; Bottom-Right: A section of the thick root system in the mud.",
+      "ground": "Saturated, dark charcoal silt with visible water droplets.",
+      "lighting": "Bright diffused light, highlighting the translucency of the green stalks."
+    }
+  }
+]

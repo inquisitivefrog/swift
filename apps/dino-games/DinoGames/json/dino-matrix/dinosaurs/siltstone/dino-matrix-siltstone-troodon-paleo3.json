@@ -1,0 +1,19 @@
+{
+    "asset_id": "manifest_excavation_052",
+    "project": "DinoMatrix",
+    "version": "1.0.0",
+    "meta": { 
+      "style_preset": "STYLE_ANIMATED_FEATURE_V3", 
+      "intended_use": "UI_Card_Dig_Stage_3" 
+    },
+    "excavation_context": {
+      "character_id": "dino_bones_paleontologist_3",
+      "character_description": "An adult male grad student working as a paleontologist, curly black hair, Black race, wearing a white sun hat. Wears a light purple tee shirt worn UNDER a khaki safari vest, white shorts and black hiking boots.",
+      "stage": "Brushing Overburden from a Fragile Non-Avian Theropod Nest",
+      "target_dinosaur": "Troodon",
+      "geological_formation": "TWO_MEDICINE",
+      "matrix_material": "Siltstone",
+      "matrix_color": "Dark Green-Grey"
+    },
+    "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_paleontologist_3, wearing his signature white sun hat, uses a fine-bristled field brush to sweep away loose sediment from a block of dark green-grey siltstone matrix. His delicate sweeps expose a pair of elongated, finely textured eggs within a pristine Troodon nesting clutch on an open woodland floodplain. 1:1 Square aspect ratio."
+  }

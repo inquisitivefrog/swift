@@ -1,0 +1,89 @@
+{
+  "asset_id": "img_dino_matrix_victory_002",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "source_file": "game-matrix-victory-card.png",
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "Square_Victory_Game_Card"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Square Medium Shot (1:1 Aspect Ratio)",
+      "angle": "Eye-level, dynamic close action focus",
+      "depth_of_field": "Crisp foreground focus, gentle fallback depth on the background wall"
+    },
+    "canvas_constraints": {
+      "aspect_ratio": "1:1 (Square Layout)",
+      "target_resolution": "1024x1024",
+      "safe_zone": "All essential character features and text elements contained inside standard square card boundaries"
+    },
+    "characters": [
+      {
+        "id": "dino_bones_preparator_1",
+        "base_library_ref": "dino_bones_preparator_1",
+        "description": "An adult male grad student working as a museum preparator, short dark hair, tanned skin.",
+        "features": {
+          "hair": "Short dark hair",
+          "skin_tone": "Tanned skin",
+          "eyewear": "Signature thin-rimmed BLACK RECTANGULAR lens glasses (perfectly consistent across scenes)",
+          "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+          "visual_identity": "High-fidelity 3D animated feature film style. Adult proportions with soft, stylized, toy-like rounded edges. Highly expressive face."
+        },
+        "apparel": {
+          "upper": "Light blue tee shirt worn UNDER a crisp white lab coat",
+          "lower": "Blue jean slacks",
+          "footwear": "Black dress shoes"
+        },
+        "pose": "Excitedly cleaning the rock matrix away from a massive fossil discovery, wearing a triumphal, proud expression.",
+        "tools_held": [
+          "Fine-detailed pneumatic matrix scribe tool"
+        ]
+      }
+    ],
+    "environment": {
+      "formation_archetype": "CANDELEROS",
+      "geology": {
+        "strata_type": "Cross-bedded sedimentary matrix wall",
+        "primary_materials": ["Compressed sandstone", "Siltstone mudstone matrix"],
+        "color_palette": ["Brick Red", "Terracotta", "Deep Ochre"]
+      },
+      "flora": [],
+      "embedded_assets": [
+        {
+          "asset_type": "Fossil Specimen",
+          "associated_dino": "dino_racer_ankylosaurus",
+          "description": "Exhumed articulated forelimb leading to a heavy, armor-plated bony tail club structure embedded in the sandstone.",
+          "features": {
+            "anatomical_accuracy": "Stylized-realism, large ossified osteoderms, distinct heavy club node",
+            "texture": "Dense, heavily mineralized porous bone structure with rich dark sediment accents in crevices"
+          }
+        }
+      ]
+    },
+    "graphic_elements": [
+      {
+        "element_type": "Primary 3D Text Overlay",
+        "text_content": "Dino Matrix!",
+        "typography": {
+          "style": "Bold, blocky 3D sans-serif extruded geometry",
+          "letter_casing": "Mixed Case",
+          "color": "Bright Red",
+          "integration": "Physically nested into the upper rock recess, casting shadows down onto the matrix wall"
+        }
+      },
+      {
+        "element_type": "Secondary Victory Ribbon / Banner Text",
+        "text_content": "Player Wins!",
+        "typography": {
+          "style": "Stylized, rounded golden-yellow slab serif with high-contrast borders",
+          "letter_casing": "Mixed Case",
+          "color": "Bright Gold and Canary Yellow",
+          "integration": "Floating dynamic overlay banner near the bottom third of the square frame, complete with subtle drop-shadows to pop from the background"
+        }
+      }
+    ]
+  }
+}

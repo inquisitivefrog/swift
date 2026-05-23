@@ -1,0 +1,17 @@
+  { 
+    "asset_id": "manifest_excavation_012_alt",
+    "project": "DinoMatrix",
+    "version": "1.0.0",
+    "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "intended_use": "UI_Card_Dig_Stage_1" },
+    "excavation_context": {
+      "character_id": "dino_bones_paleontologist_1",
+      "character_description": "Adult female grad student, long blonde hair, tanned skin, wearing a white sun hat, light pink blouse under a khaki safari vest, and white shorts.",
+      "stage": "Discovery of Overlap Specimen in Field",
+      "target_dinosaur": "Ripariovenator",
+      "geological_formation": "KIMMERIDGE_CLAY",
+      "matrix_material": "Shale",
+      "matrix_color": "Charcoal Black"
+    },
+    "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_paleontologist_1 is at the base of a dark marine coastal cliff seam. Splitting open a heavy slab of charcoal black shale with a pick-ax, she reveals a cross-game surprise: a heavy, spinosaurid tail spine embedded directly alongside dark, glossy marine ammonites. Moody, cool marine daylight. 1:1 Square aspect ratio." 
+  }
+

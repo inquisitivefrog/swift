@@ -64,7 +64,7 @@ Each of these views is used by a single game in the catalog.
 | **ToothacheGameView** | Toothache | Land L5 |
 | **FindMamaGameView** | Find Mama | Land L5 |
 | **DinoLunchGameView** | Dino Lunch | Land L5 |
-| **MatrixMaterialsGameView** | Matrix Materials | Land L4 |
+| **DinoMatrixGameView** | Dino Matrix | Land L4 |
 | **DinoAgesGameView** | Dino Ages | Land L4 |
 | **DinoFormationsGameView** | Dino Formations | Land L4 |
 
@@ -95,7 +95,7 @@ Adding a new game: add the right `GameType` (and config) to the right catalog; i
 | Toothache | ToothacheGameView | |
 | Find Mama | FindMamaGameView | |
 | Dino Lunch | DinoLunchGameView | |
-| Matrix Materials | MatrixMaterialsGameView | |
+| Dino Matrix | DinoMatrixGameView | Config id: `dino-matrix` |
 | Dino Ages | DinoAgesGameView | |
 | Dino Formations | DinoFormationsGameView | |
 | Measure the Dinosaur! | MeasureGameView | Config id: `measure-the-dinosaur`; pool-agnostic for Measure the Pterosaur / Measure the Mosasaur |

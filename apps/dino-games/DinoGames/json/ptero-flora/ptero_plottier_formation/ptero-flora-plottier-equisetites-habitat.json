@@ -1,0 +1,30 @@
+[
+  {
+    "id": "plottier_equisetites_001",
+    "species": "Equisetites",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "PLOTTIER",
+    "environment_details": {
+      "habitat": "SEMI_ARID_PLAINS",
+      "flora": [
+        "Equisetites (Giant Horsetails in dense, vertical stands)",
+        "Small hardy ferns",
+        "Podocarp seedlings",
+        "Mossy patches (in shaded hollows)"
+      ],
+      "ground_palette": [
+        "Variegated Red",
+        "Ochre",
+        "Pinkish-Grey",
+        "Tan"
+      ],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; segmented stalks with chunky, rounded nodes; branchlets have a soft, 'fuzzy' appearance; emphasis on the rhythmic verticality of the stalks; vibrant green hues to suggest a pocket of moisture."
+    },
+    "visual_logic": {
+      "composition": "A mid-range shot of a dense stand of Equisetites growing along a dried-up stream bed. The stalks create a natural screen, with light filtering through the gaps to hit the red soil behind.",
+      "ground": "Pinkish-grey sandy soil with ripples from ancient water flow, interspersed with fallen green segments of the horsetails.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; warm, direct light creating long, rhythmic shadows across the dry stream bed."
+    }
+  }
+]

@@ -1100,8 +1100,16 @@ struct RacingGameView: View {
         ]
     }
 
-    /// Fraction along the **incoming** segment toward each landmark where landing lag begins (open-water / approach), not on the waypoint icon.
-    private let airportHopLagApproachAlongSegment: Double = 0.88
+    /// Default fraction along the **incoming** segment where landing lag begins (open-water approach), not on the waypoint icon.
+    private let airportHopLagApproachAlongSegmentDefault: Double = 0.88
+
+    /// B→C is a long vertical leg; the default fraction leaves racers visibly short of the bottom-right (C) marker.
+    private func airportHopLagApproachAlongSegment(for node: AirportHopNode) -> Double {
+        switch node {
+        case .c: return 0.95
+        default: return airportHopLagApproachAlongSegmentDefault
+        }
+    }
 
     /// Course progress where hop lag triggers — slightly **before** each landmark along the path.
     private func airportLagTriggerProgress(waypointIndex: Int, width: CGFloat, height: CGFloat, inset: CGFloat = 0) -> Double {
@@ -1111,7 +1119,7 @@ struct RacingGameView: View {
         let prev = waypointIndex == 0 ? 0.0 : wps[waypointIndex - 1].progress
         let span = landmark - prev
         guard span > 1e-9 else { return landmark }
-        return prev + span * airportHopLagApproachAlongSegment
+        return prev + span * airportHopLagApproachAlongSegment(for: wps[waypointIndex].node)
     }
 
     /// Species-specific landing/takeoff lag ticks at hop nodes.
@@ -1915,6 +1923,20 @@ struct RacingGameView: View {
         return winners.filter { seen.insert($0.id).inserted }
     }
 
+    /// Victory recap: winner portrait + speed subtitle (concepts introduced during play).
+    private var racingVictoryRecapItems: [VictoryRecapDisplayItem] {
+        uniqueWinners.map { racer in
+            VictoryRecapDisplayItem(
+                id: "\(racer.id)",
+                title: racer.name,
+                subtitle: "\(formatSpeed(racer.speed)) mph",
+                imageAssetName: winnerDisplayImageName(for: racer, config: config)
+                    ?? racerDisplayImageName(for: racer, config: config),
+                fallbackEmoji: racer.icon
+            )
+        }
+    }
+
     /// Matches row layout in `victoryView` (`92` row height); list viewport caps at `maxVisibleRecapRows` (3) then scrolls.
     private func victoryScrollHeight(forWinnerCount count: Int, maxHeight: CGFloat) -> CGFloat {
         StandardVictoryLayout.listScrollHeightRacing(rowCount: count, maxScreenHeight: maxHeight)
@@ -1922,54 +1944,17 @@ struct RacingGameView: View {
 
     private var victoryView: some View {
         GeometryReader { geo in
-            let listH = victoryScrollHeight(forWinnerCount: uniqueWinners.count, maxHeight: geo.size.height)
+            let listH = victoryScrollHeight(forWinnerCount: racingVictoryRecapItems.count, maxHeight: geo.size.height)
             VictorySplitColumnView(
                 listScrollHeight: listH,
                 showSuccessPhase: endSequenceStep == 2,
                 endHighlightIndex: endHighlightIndex,
                 gameTitle: config.title,
                 scrollRows: {
-                    ForEach(Array(uniqueWinners.enumerated()), id: \.offset) { index, racer in
-                        let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                        HStack(spacing: 16) {
-                            Group {
-                                if let imageName = winnerDisplayImageName(for: racer, config: config) ?? racerDisplayImageName(for: racer, config: config) {
-                                    Image(imageName)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 72, height: 72)
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                                } else {
-                                    Text(racer.icon)
-                                        .font(.system(size: 40))
-                                        .frame(width: 72, height: 72)
-                                }
-                            }
-                            .opacity(isHighlighted ? 1.0 : 0.4)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
-                            )
-
-                            Text("\(racer.name) – \(formatSpeed(racer.speed)) mph")
-                                .font(.system(size: nameLength(racer.name) > 10 ? 18 : 22, weight: isHighlighted ? .semibold : .regular))
-                                .foregroundColor(.primary)
-                                .multilineTextAlignment(.leading)
-                                .lineLimit(1)
-                                .minimumScaleFactor(0.6)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .opacity(isHighlighted ? 1.0 : 0.5)
-                        }
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
-                        .frame(height: StandardVictoryLayout.rowHeight)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 12)
-                                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                    ForEach(Array(racingVictoryRecapItems.enumerated()), id: \.element.id) { index, item in
+                        StandardVictoryRecapRowView(
+                            item: item,
+                            isHighlighted: endSequenceStep >= 1 && index == endHighlightIndex
                         )
                         .id(index)
                     }

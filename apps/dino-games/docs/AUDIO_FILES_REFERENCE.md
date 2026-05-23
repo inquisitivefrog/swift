@@ -58,7 +58,7 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | `Games/game-dino-footprints.m4a` | Dino Footprints |
 | `Games/game-dino-bones.m4a` | Dino Bones |
 | `Games/game-racing-dinosaurs.m4a` | Racing Dinosaurs |
-| `Games/game-matrix-materials.m4a` | Matrix Materials |
+| `Games/game-dino-matrix.m4a` | Dino Matrix |
 | `Games/game-find-mama.m4a` | Find Mama |
 | `Games/game-dino-lunch.m4a` | Dino Lunch |
 | `Games/game-dino-toothache.m4a` | Dino Toothache (game card + transition) |
@@ -89,7 +89,7 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 | `Games/game-racing-ready-set.m4a` | Racing pre-race: referee (ready, set) |
 | `Games/racing-the-winner-is.m4a` | Racing: winner announcement (legacy) |
 | `Games/game-racing-the-winner-is.m4a` | Racing: "The winner is…" before dino name |
-| `Games/game-matrix-which-one.m4a` | Matrix Materials in-game |
+| `Games/game-dino-matrix-identify-the-stone.m4a` | Dino Matrix in-game (round prompt) |
 | `Games/game-find-mama-return-the-egg.m4a` | Find Mama |
 | `Games/game-find-mama-help-the-paleontologist.m4a` | Find Mama |
 | `Games/game-give-this-nutritious-lunch.m4a` | Dino Lunch |
@@ -119,7 +119,7 @@ All paths are relative to **`Assets/Audio/`** (or `DinoGames/Assets/Audio/` in t
 
 | Path | When used |
 |------|-----------|
-| `Flora/flora-{slug}.m4a` | Dino Flora: plant intro per round (e.g. flora-horsetails, flora-ginkgo) |
+| `Flora/Dinosaurs/dino-flora-{slug}.m4a` | Dino Flora: plant intro per round (keys still `flora-{slug}`, e.g. flora-horsetails → `dino-flora-horsetails.m4a`) |
 | `Flora/hint-browsers.m4a` | Dino Flora: Source Flora hints — Browsers |
 | `Flora/hint-periods.m4a` | Dino Flora: Source Flora hints — Periods |
 | `Flora/hint-diets.m4a` | Dino Flora: Source Flora hints — Diets |
@@ -194,7 +194,7 @@ Examples: `Ptero-Characteristics/wings.m4a`, `Ptero-Characteristics/crest.m4a`, 
 | **Formations** | `Formations/{slug}-formation.m4a` | Dino Formations: formation name (key `formation-name-{slug}`) |
 | **Habitats** | `Habitats/{slug}.m4a` | Dino Habitats: scientific habitat name (key `habitat-name-{slug}`). Example: `Habitats/seasonal-river-plains.m4a`. |
 | **Habitats** | `Habitats/nickname-{slug}.m4a` | Dino Habitats: kid-friendly nickname (key `habitat-nickname-{slug}`). **Prefer when present** — e.g. `Habitats/nickname-meadow.m4a`, `nickname-marsh.m4a`, `nickname-swamp.m4a`, `nickname-savannah.m4a`, `nickname-lakeshore.m4a`, `nickname-rainforest.m4a`. Falls back to scientific name if missing. |
-| **Materials** | `Materials/{slug}.m4a` | Matrix Materials: limestone, sandstone, etc. |
+| **Dino-Materials** | `Dino-Materials/{slug}.m4a` | Dino Matrix (and future matrix games): limestone, sandstone, etc. |
 
 ---
 

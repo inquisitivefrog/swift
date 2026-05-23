@@ -1,0 +1,25 @@
+[
+  {
+    "id": "muwaqqar_dinoflagellates_001",
+    "species": "Dinoflagellates",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MUWAQQAR_CHALK",
+    "environment_details": {
+      "habitat": "TETHYS_COASTAL_MARGIN",
+      "flora": [
+        "Dinoflagellates (bioluminescent green/blue clusters)",
+        "Sargassum-type Brown Algae (floating near surface)",
+        "Microscopic algal mats",
+        "Tiny oxygen bubbles"
+      ],
+      "ground_palette": ["Pure White", "Deep Ocean Blue", "Light Grey", "Golden Sand"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on vibrant, bioluminescent-inspired colors; textures appear as soft, glowing clusters; high-fidelity water effects with suspended organic particulates."
+    },
+    "visual_logic": {
+      "composition": "A mid-water shot focusing on a dense 'cloud' of dinoflagellates. The composition emphasizes the contrast between the deep cobalt water and the vibrant, near-fluorescent clusters of algae.",
+      "ground": "Distant, hazy seafloor composed of dark grey marl and scattered inoceramid shells.",
+      "lighting": "High-key light from the surface creating a slight hazy glow, with internal light logic suggesting the algae's own faint bioluminescence."
+    }
+  }
+]

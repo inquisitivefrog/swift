@@ -1,0 +1,15 @@
+  {
+    "asset_id": "manifest_excavation_010",
+    "project": "DinoMatrix",
+    "version": "1.0.0",
+    "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "intended_use": "UI_Card_Dig_Stage_2" },
+    "excavation_context": {
+      "character_id": "dino_bones_paleontologist_2",
+      "character_description": "Adult male grad student, short red hair, freckled skin, wearing a khaki baseball cap, grey short-sleeve button-down shirt over a white tee shirt, khaki cargo pants, and brown hiking boots.",
+      "stage": "Examining and Recording Fossil with Instruments",
+      "target_dinosaur": "Maiasaura",
+      "geological_formation": "TWO_MEDICINE",
+      "matrix_material": "Mudstone",
+      "matrix_color": "Dark Green-Grey"
+    },
+    "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_paleontologist_2 is kneeling inside a historic nesting site channel, using a hand-held electronic scanner device over a dark green-grey mudstone horizon. The dense mudstone matrix is filled with fractured fossilized dinosaur eggshell shards surrounding a tiny embryonic Maiasaura limb bone. Cinematic soft-rimmed afternoon daylight. 1:1 Square aspect ratio."

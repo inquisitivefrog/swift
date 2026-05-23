@@ -88,6 +88,7 @@ struct CategorySelectionView: View {
     @State private var enabledSea = false
     @State private var coverSequenceComplete = false
     @State private var hasStartedCoverSequence = false
+    @State private var didAttemptResumeSession = false
 
     private func isEnabled(_ root: RootGameType) -> Bool {
         switch root {
@@ -128,6 +129,7 @@ struct CategorySelectionView: View {
                     hasStartedCoverSequence = true
                     startCoverSequence()
                 }
+                resumeGuidedSessionIfNeeded()
             }
             .onDisappear {
                 speechManager.stopCurrentAudio()
@@ -136,7 +138,11 @@ struct CategorySelectionView: View {
             .navigationDestination(for: CategoryNavRoute.self) { route in
                 switch route {
                 case .gameLevels(let category):
-                    GameSelectionView(category: category)
+                    GameSelectionView(
+                        category: category,
+                        guidedPlayMode: CategoryPlaySession.shouldUseGuidedMode(for: category),
+                        onReturnToCategoryMenu: returnToCategoryMenu
+                    )
                 }
             }
         }
@@ -178,19 +184,56 @@ struct CategorySelectionView: View {
         speechManager.speak("cover-and-marine-reptiles-in-the-sea", chainDelay: true)
     }
 
+    private func category(for root: RootGameType) -> GameCategory {
+        switch root {
+        case .dinosaurs: return .land
+        case .pterosaurs: return .air
+        case .sea: return .marineReptiles
+        }
+    }
+
     private func handleRootTap(_ root: RootGameType) {
         selectedRoot = root
+        let category = category(for: root)
+        let guided = CategoryPlaySession.shouldUseGuidedMode(for: category)
+        CategoryPlaySession.save(
+            category: category,
+            level: nil,
+            gameCanonicalId: nil,
+            guidedPlayMode: guided
+        )
         speechManager.speak(root.title)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            switch root {
-            case .dinosaurs:
-                navigationPath.append(.gameLevels(.land))
-            case .pterosaurs:
-                navigationPath.append(.gameLevels(.air))
-            case .sea:
-                navigationPath.append(.gameLevels(.marineReptiles))
-            }
+            navigationPath.append(.gameLevels(category))
         }
+    }
+
+    /// After splash: reopen an in-progress guided run (same category / level) when the app was interrupted.
+    private func resumeGuidedSessionIfNeeded() {
+        guard !didAttemptResumeSession else { return }
+        didAttemptResumeSession = true
+        guard CategoryPlaySession.hasResumableGuidedSession else { return }
+        let snap = CategoryPlaySession.load()
+        guard let category = snap.category else { return }
+        switch category {
+        case .land: selectedRoot = .dinosaurs
+        case .air: selectedRoot = .pterosaurs
+        case .marineReptiles: selectedRoot = .sea
+        }
+        navigationPath = [.gameLevels(category)]
+    }
+
+    private func returnToCategoryMenu() {
+        navigationPath.removeAll()
+        coverSequenceComplete = true
+        enabledDinosaurs = true
+        enabledPterosaurs = true
+        enabledSea = true
+        speechManager.onAudioFinished = nil
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+        }
+        speechManager.speak("cover-choose-a-game-type")
     }
 }
 

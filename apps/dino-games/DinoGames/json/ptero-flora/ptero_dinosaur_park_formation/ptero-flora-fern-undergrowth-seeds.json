@@ -1,0 +1,25 @@
+[
+  {
+    "id": "dp_fern_undergrowth_quad_001",
+    "species": "Fern_undergrowth",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "DINOSAUR_PARK",
+    "environment_details": {
+      "habitat": "COASTAL_LOWLANDS",
+      "flora": [
+        "Fern frond (detailed pinnatifid structure, leathery texture)",
+        "Fiddlehead (tightly coiled 'crosier' emerging from ground)",
+        "Sori cluster (underside of leaf showing spore-bearing spots)",
+        "Rhizome clump (fibrous root base with small emerging stems)"
+      ],
+      "ground_palette": ["Olive Gray", "Pale Gray", "Brownish-Gray", "Dark Gray"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; lush, verdant feel; fronds have rounded, safe edges; focus on the repetitive geometric beauty of the leaves and the fuzzy texture of the fiddleheads."
+    },
+    "visual_logic": {
+      "composition": "A quadrant composition: Top-Left: a full mature frond; Top-Right: a tightly curled, fuzzy fiddlehead; Bottom-Left: a close-up of spore-bearing sori; Bottom-Right: the thick root base in the silt.",
+      "ground": "Saturated dark gray mudstone fragments and organic peat.",
+      "lighting": "Bright, even illumination to distinguish the green plant matter from the dark, damp substrate."
+    }
+  }
+]

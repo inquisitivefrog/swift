@@ -1,0 +1,24 @@
+[
+  {
+    "id": "karabastau_palm_leaves_001",
+    "species": "Palm_like_leaves",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "KARABASTAU",
+    "environment_details": {
+      "habitat": "STAGNANT_LAKE_FOREST",
+      "flora": [
+        "Palm_like_leaves (broad, fanned fronds)",
+        "Cycads",
+        "Dense ferns"
+      ],
+      "ground_palette": ["Deep Brown", "Forest Green", "Charcoal", "Olive"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; broad leaves with visible but soft ribbing; tactile, leathery surfaces with subtle specular highlights to suggest humidity; rounded, appealing tips."
+    },
+    "visual_logic": {
+      "composition": "A mid-range shot focusing on a cluster of broad, palm-like leaves overhanging a still, dark pool of water. The leaves catch the light reflecting off the water's surface.",
+      "ground": "Muddy, olive-toned banks with half-submerged decaying leaves and silty shale nodules.",
+      "lighting": "Warm, humid afternoon sun filtered through mist, creating soft-edged shadows across the broad fronds."
+    }
+  }
+]

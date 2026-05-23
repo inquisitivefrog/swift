@@ -1,0 +1,23 @@
+{
+  "id": "muwaqqar_diatom_quad_002",
+  "species": "Diatoms",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "MUWAQQAR_CHALK",
+  "environment_details": {
+    "habitat": "TETHYS_COASTAL_MARGIN",
+    "flora": [
+      "Centric Diatom frustule (microscopic ornate silica disc with radial symmetry)",
+      "Pennate Diatom (elongated, needle-like silica valve with transverse ribbing)",
+      "Micro-porous architecture (intricate lace-like patterns in the silica surface)",
+      "Colonial Fragilariaceae chain (stacked microscopic rectangular cells)"
+    ],
+    "ground_palette": ["Pure White", "Deep Ocean Blue", "Light Grey"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Microscopic scale; Organic silica geometry; Translucent 'biological glass' with subtle opalescent sheen; Avoid lab equipment or human-made glassware; Tactile, fine-grained mineral textures."
+  },
+  "visual_logic": {
+    "composition": "Scientific quadrant tile: Top-Left: a microscopic ornate circular valve; Top-Right: a slender, ribbed pennate cell; Bottom-Left: extreme macro detail of the lace-like silica pores; Bottom-Right: a natural chain of planktonic cells.",
+    "ground": "A backdrop of fine-grained white chalk particles and marine snow, emphasizing a microscopic marine environment.",
+    "lighting": "Backlit diffused light to show internal cell structures and the refractive edges of the silica shells."
+  }
+}

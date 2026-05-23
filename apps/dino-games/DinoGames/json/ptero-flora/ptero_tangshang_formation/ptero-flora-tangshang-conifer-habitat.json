@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tangshang_conifer_001",
+    "species": "Conifers",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TANGSHANG",
+    "environment_details": {
+      "habitat": "SUBTROPICAL_RIVER_VALLEY",
+      "flora": [
+        "Cretaceous Conifers (tall, stately trunks, dense clusters of short, flattened needles)",
+        "Pendulous seed cones",
+        "Young conifer saplings",
+        "Scattered dry needles"
+      ],
+      "ground_palette": ["Rich Silt Brown", "Rusty Ochre", "Dark Charcoal Clay"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; avoid sharp, hyper-realistic pine needles; render foliage as dense, rounded 'pillows' or tufts of dark green with soft-touch volume; sturdy, prominent trunks with deeply grooved but rounded bark plates."
+    },
+    "visual_logic": {
+      "composition": "A dramatic low-angle view looking up past a massive conifer trunk toward its tiered, rounded foliage clusters that rise high into a bright sky.",
+      "ground": "A thick, soft carpet of rusty ochre fallen needles and woody detritus around the flared base of the tree trunk.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; strong directional side-lighting that emphasizes the blocky, 3D volume of the bark texture and the layers of the canopy."
+    }
+  }
+]

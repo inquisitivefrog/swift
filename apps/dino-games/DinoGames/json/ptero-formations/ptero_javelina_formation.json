@@ -1,0 +1,21 @@
+{
+  "formation_id": "JAVELINA_FORMATION",
+  "base_habitat": "SEMI_ARID_FLOODPLAIN",
+  "period": "LATE_CRETACEOUS",
+  "visuals": {
+    "ground": "Dry, cracked mudflats and braided river channels. Scattered scrub-like vegetation.",
+    "water": "Slow-moving, muddy brown rivers with wide, silty banks.",
+    "sky": "Vast, open continental sky; pale blue to dusty orange."
+  },
+  "physics": {
+    "altitude": "inland_basin",
+    "water": "turbid_riverine",
+    "humidity": "low"
+  },
+  "strata_specifics": {
+    "ground_texture": "Multi-colored claystone and sandstone channel sands.",
+    "color_palette": ["Dusty Red", "Pale Purple", "Tan", "Olive Drab"]
+  },
+  "flora_manifest": ["Early_Angiosperms", "Conifers", "Palm_like_leaves"],
+  "negative_prompt": "grass, thick jungle, moss, snow, ocean waves"
+}

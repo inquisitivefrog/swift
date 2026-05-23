@@ -229,9 +229,12 @@ struct DinoAgesGameView: View {
     @ViewBuilder
     private var mainContent: some View {
         VStack(spacing: 20) {
-            Text(gameConfig.title)
-                .font(.largeTitle)
-                .padding(.top, 8)
+            // Hidden during victory — `VictorySplitColumnView` shows `gameTitle` in recap; success card art includes the title.
+            if !isGameComplete {
+                Text(gameConfig.title)
+                    .font(.largeTitle)
+                    .padding(.top, 8)
+            }
             gameBody
         }
     }

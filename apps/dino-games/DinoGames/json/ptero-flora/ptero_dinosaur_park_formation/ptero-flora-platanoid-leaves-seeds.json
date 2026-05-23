@@ -1,0 +1,25 @@
+[
+  {
+    "id": "dp_platanoid_leaves_quad_001",
+    "species": "Platanoid_leaves",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "DINOSAUR_PARK",
+    "environment_details": {
+      "habitat": "COASTAL_LOWLANDS",
+      "flora": [
+        "Platanoid leaf (broad, multi-lobed, prominent palmate venation)",
+        "Seed ball (spherical, textured, hanging from a slender stalk)",
+        "Bark fragment (mottled, peeling 'puzzle-piece' texture)",
+        "Young sapling (broad leaves, sturdy green stem)"
+      ],
+      "ground_palette": ["Olive Gray", "Pale Gray", "Brownish-Gray", "Dark Gray"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; tactile, high-quality textures like waxy leaf surfaces and papery peeling bark; clear emphasis on individual components for educational identification."
+    },
+    "visual_logic": {
+      "composition": "A quadrant or tiled composition showcasing: one large detailed leaf, a cluster of spherical seed balls, a close-up of the distinctive mottled bark, and a small sapling emerging from the mud.",
+      "ground": "Dark, rich organic mud and silt typical of the Dinosaur Park lowlands, providing a high-contrast backdrop.",
+      "lighting": "Even, bright, diffused light to ensure all botanical details are clearly visible without harsh shadows."
+    }
+  }
+]

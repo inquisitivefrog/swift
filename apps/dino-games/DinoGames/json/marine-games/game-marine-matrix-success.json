@@ -1,0 +1,89 @@
+{
+  "asset_id": "img_marine_matrix_victory_002",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "source_file": "game-marine-matrix-victory-card.png",
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "Square_Victory_Game_Card"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Square Medium Shot (1:1 Aspect Ratio)",
+      "angle": "Eye-level, dynamic close action focus",
+      "depth_of_field": "Crisp foreground focus, atmospheric softening on background waves and coastlines"
+    },
+    "canvas_constraints": {
+      "aspect_ratio": "1:1 (Square Layout)",
+      "target_resolution": "1024x1024",
+      "safe_zone": "All essential character features and text elements contained inside standard square card boundaries"
+    },
+    "characters": [
+      {
+        "id": "dino_bones_preparator_1",
+        "base_library_ref": "dino_bones_preparator_1",
+        "description": "An adult male grad student working as a museum preparator, short dark hair, tanned skin.",
+        "features": {
+          "hair": "Short dark hair",
+          "skin_tone": "Tanned skin",
+          "eyewear": "Thin-rimmed black rectangular lens glasses",
+          "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+          "visual_identity": "High-fidelity 3D animated feature film style. Adult proportions with soft, stylized, rounded edges. Energetic, victorious face."
+        },
+        "apparel": {
+          "upper": "Light blue tee shirt worn UNDER a crisp white lab coat",
+          "lower": "Blue jean slacks",
+          "footwear": "Black dress shoes"
+        },
+        "pose": "Holding a steel sculpting chisel up high in a salute of victory, standing proudly next to an enormous, beautifully prepared marine reptile skeleton slab.",
+        "tools_held": [
+          "Steel matrix chisel tool"
+        ]
+      }
+    ],
+    "environment": {
+      "formation_archetype": "BLUE_LIAS",
+      "geology": {
+        "strata_type": "Coastal marine matrix block situated on an outdoor field table",
+        "primary_materials": ["Dark slate-grey shale matrix"],
+        "color_palette": ["Dark Charcoal Grey", "Slate", "Deep Blue-Grey"]
+      },
+      "flora": [],
+      "embedded_assets": [
+        {
+          "asset_type": "Fossil Specimen",
+          "associated_reptile": "Ichthyosaurus",
+          "description": "A magnificent, fully articulated Ichthyosaurus skeleton showing a massive sclerotic ring inside its eye socket and complete streamlined vertebral column.",
+          "features": {
+            "anatomical_accuracy": "Stylized-realism, fish-like body structure, perfectly defined sharp teeth rows",
+            "texture": "Glossy, deep chocolate-brown mineralized bone contrasting starkly against the matte charcoal shale matrix"
+          }
+        }
+      ]
+    ],
+    "graphic_elements": [
+      {
+        "element_type": "Primary 3D Text Overlay",
+        "text_content": "Marine Matrix!",
+        "typography": {
+          "style": "Bold, blocky 3D sans-serif extruded geometry",
+          "letter_casing": "Mixed Case",
+          "color": "Cyan Blue",
+          "integration": "Physically anchored into the upper edge of the shale block, casting a crisp shadow downwards"
+        }
+      },
+      {
+        "element_type": "Secondary Victory Ribbon / Banner Text",
+        "text_content": "Player Wins!",
+        "typography": {
+          "style": "Stylized, rounded golden-yellow slab serif with high-contrast borders",
+          "letter_casing": "Mixed Case",
+          "color": "Bright Gold and Canary Yellow",
+          "integration": "Floating dynamic overlay banner near the bottom third of the square frame, popping neatly against the dark slate environment"
+        }
+      }
+    ]
+  }
+}

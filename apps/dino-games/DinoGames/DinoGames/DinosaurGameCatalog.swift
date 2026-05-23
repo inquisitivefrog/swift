@@ -137,7 +137,7 @@ enum DinosaurGameCatalog {
             ]
         case .level4:
             return [
-                .matrixMaterials(MatrixMaterialsGameConfigs.matrixMaterials), // Matrix Materials
+                .dinoMatrix(DinoMatrixGameConfigs.dinoMatrix), // Dino Matrix
                 .matching(MatchingGameConfigs.dinoDietFeatures), // Dino Diets!
                 .smilingDinos(SmilingDinosGameConfigs.smilingDinos), // Dino Smile!
             ]

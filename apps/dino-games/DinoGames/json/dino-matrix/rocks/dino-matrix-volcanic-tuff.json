@@ -1,0 +1,67 @@
+{
+  "asset_id": "matrix_layout_tuff_multi_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Rock_Sample_Match_Card"
+  },
+  "canvas_constraints": {
+    "aspect_ratio": "1:1 (Square Layout)",
+    "target_resolution": "1024x1024"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Three-quarter angled perspective",
+      "angle": "Dynamic angled shot looking down at the foreground blocks, widening out to an expansive ash-fall valley basin"
+    },
+    "foreground_element": {
+      "type": "Multiple Material Blocks Array",
+      "rock_type": "Volcanic Tuff Variant Set",
+      "placement": "Three blocks arranged neatly side-by-side on a flat, gravelly plain",
+      "blocks": [
+        {
+          "block_id": "tuff_color_x",
+          "geometry": "3D stylized rectangular block with porous, gritty texture",
+          "color": "Muted Green-Grey",
+          "texture": "Consolidated volcanic ash with trace chlorite-altered crystal shards"
+        },
+        {
+          "block_id": "tuff_color_y",
+          "geometry": "3D stylized rectangular block with porous, gritty texture",
+          "color": "Dusty Brick Red",
+          "texture": "Subaerially oxidized ash layer, rough and micro-vesicular"
+        },
+        {
+          "block_id": "tuff_color_z",
+          "geometry": "3D stylized rectangular block with porous, gritty texture",
+          "color": "Ash White / Light Cream",
+          "texture": "Pure silica-rich rhyolitic pumice tuff, highly porous"
+        }
+      ]
+    },
+    "background_environment": {
+      "habitat_archetype": "Volcanic Ash-Fall Stratified Valley",
+      "geological_mapping": [
+        {
+          "zone_name": "Lower Canyon Floor Layers",
+          "color_profile": "Muted Green-Grey (Matches Block Color X)",
+          "description": "Thick, hard volcaniclastic layers forming the structural floor of the ancient valley."
+        },
+        {
+          "zone_name": "Eroded Valley Ridges",
+          "color_profile": "Dusty Brick Red (Matches Block Color Y)",
+          "description": "Distinctive red-tinted, sun-baked volcanic ash ridges flanking the mid-ground horizon."
+        },
+        {
+          "zone_name": "Elevated Background Butte",
+          "color_profile": "Ash White / Light Cream (Matches Block Color Z)",
+          "description": "A prominent, flat-topped tuff pinnacle glowing brightly against the sky."
+        }
+      ],
+      "lighting": "Bright overhead sunlight highlighting the gritty, micro-vesicular relief of both the blocks and the valley structures."
+    }
+  }
+}

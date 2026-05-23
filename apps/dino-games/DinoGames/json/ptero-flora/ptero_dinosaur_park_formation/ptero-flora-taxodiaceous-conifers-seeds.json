@@ -1,0 +1,25 @@
+[
+  {
+    "id": "dp_taxodiaceous_conifers_quad_001",
+    "species": "Taxodiaceous_Conifers",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "DINOSAUR_PARK",
+    "environment_details": {
+      "habitat": "COASTAL_LOWLANDS",
+      "flora": [
+        "Conifer cone (small, peltate scales, woody texture)",
+        "Needle spray (flat, two-ranked needles, soft and feathery)",
+        "Buttressed root (thick, flaring base showing fibrous bark)",
+        "Seedling (thin stalk with delicate tufts of needles)"
+      ],
+      "ground_palette": ["Olive Gray", "Pale Gray", "Brownish-Gray", "Dark Gray"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; chunky, fibrous textures for the wood; soft, clumped needles; avoiding sharp angles to maintain the 'animated feature' appeal."
+    },
+    "visual_logic": {
+      "composition": "A quadrant layout featuring: a close-up of a woody cone, a feathery spray of green needles, a study of the flaring root buttress, and a delicate young seedling.",
+      "ground": "Dark grey silty mud interspersed with fallen needles and small bits of rotting wood.",
+      "lighting": "Even, bright, diffused daylight to highlight the intricate patterns of the needles and scales."
+    }
+  }
+]

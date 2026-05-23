@@ -1,0 +1,22 @@
+{
+  "id": "zizyphus_scrub_habitat_025",
+  "species": "Zizyphus-like Shrubs",
+  " tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SUNNY_HAZY_MIDDAY",
+  "formation_ref": "DENSUS_CIULA_FORMATION",
+  "environment_details": {
+    "habitat": "SUBTROPICAL_ISLAND_FLOODPLAIN",
+    "flora": [
+      "Zizyphus-like scrub (multi-stemmed, sprawling, covered in tiny waxy leaves and small white flowers)",
+      "Small Araucariaceae trees in the background",
+      "Red clay banks"
+    ],
+    "ground_palette": ["Brick Red", "Volcanic Grey", "Dusty Olive"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the dense, barrier-like habit of the scrub; a warm, hazy color temperature."
+  },
+  "visual_logic": {
+    "composition": "A view of the floodplain showing a dense, sprawling thicket of the multi-stemmed Zizyphus-like scrub, forming a low barrier along a river bank. Volcanic grey ash deposits are visible in the red clay.",
+    "ground": "Dry, silty red clay mud with patches of grey volcanic ash.",
+    "lighting": "Warm, direct sunlight making the small waxy leaves shine."
+  }
+}

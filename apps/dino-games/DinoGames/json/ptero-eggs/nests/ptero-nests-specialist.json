@@ -1,0 +1,6 @@
+{
+      "id": "ui_nest_specialist_mudbank",
+      "dimensions": "SQUARE_ASPECT_RATIO",
+      "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A clear, close-up view of a Specialist pterosaur nest containing six elongated, small-to-medium plum-sized ivory eggs, heavily creased and resting in pairs. The nest is a wet, muddy burrow dug into a dark silt riverbank. The eggs are partially embedded in smooth, damp organic mud to keep them hydrated. The immediate background shows a quiet, hyper-saline inland salt flat with small puddles reflecting the sky. SETTING: Moist inland wetland substrate. LIGHTING: Bright daylight reflecting off the wet mud surface, highlighting the wrinkled textures of the soft shells. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+      "visual_logic": "Combines two visual clues: plum-sized, heavily creased ivory eggs (Clue 1) and an inland, muddy silt-bank burrow environment (Clue 2) to indicate the Specialist clade."
+    }

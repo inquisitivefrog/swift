@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tiaojishan_ginkgoites_001",
+    "species": "Ginkgoites",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TIAOJISHAN",
+    "environment_details": {
+      "habitat": "VOLCANIC_VALLEY_FLOOR",
+      "flora": [
+        "Ginkgoites (stately hardwood-profile trees with deeply lobed, fan-shaped leaves)",
+        "Clusters of leaves growing on short wood spurs",
+        "Fleshy, plum-like seeds along the branches",
+        "Fallen yellow-green leaf carpet"
+      ],
+      "ground_palette": ["Dark Volcanic Ash Gray", "Muted Mustard Yellow", "Charcoal Slate"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; fan leaves should have highly distinct, deeply cut lobes (often divided into narrow segments); graphical outline foliage; thick, clean leaf edges to suit the animated style."
+    },
+    "visual_logic": {
+      "composition": "A wide, cinematic shot of a mature Ginkgoites tree standing in a clearing at the base of a basalt cliff. The foliage shows a mix of deep forest green and early patches of soft mustard yellow.",
+      "ground": "A striking contrast layer of fallen, deeply-lobed yellow leaves scattered over a dark gray volcanic ash floor.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; clear afternoon light casting crisp, graphical shadows of the fan leaves onto the dark ground below."
+    }
+  }
+]

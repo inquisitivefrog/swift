@@ -1,0 +1,25 @@
+[
+  {
+    "id": "santana_bennettitales_quad_001",
+    "species": "Bennettitales_shrub",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "environment_details": {
+      "habitat": "COASTAL_LAGOON_MARGIN",
+      "flora": [
+        "Trunk-flower (flower-like reproductive structures emerging directly from the wood)",
+        "Stiff pinnate frond (thick, leathery leaflets arranged like a feather)",
+        "Squat armor-plated stem (short trunk covered in persistent leaf bases)",
+        "Seed-bearing receptacle (central, dome-like structure inside the open blossom)"
+      ],
+      "ground_palette": ["Golden Sand", "Pale Limestone", "Soft Teal Water"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded, stylized features; look for a clear distinction between the woody, scarred stem and the soft-touch, petal-like structures of the reproductive organs; no modern petal textures."
+    },
+    "visual_logic": {
+      "composition": "Quadrant composition: Top-Left: a detailed close-up of a complex flower-like structure with robust, thick petals; Top-Right: a segment of a stiff, parallel-veined frond; Bottom-Left: a macro view of the scarred, bumpy trunk surface; Bottom-Right: a cross-section of the seed dome.",
+      "ground": "Pale limestone silt, offering a crisp, high-contrast surface to highlight the botanical details.",
+      "lighting": "High-key diffused daylight, illuminating the internal structures of the trunk-blossom evenly."
+    }
+  }
+]

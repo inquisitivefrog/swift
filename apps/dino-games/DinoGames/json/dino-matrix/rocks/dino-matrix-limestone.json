@@ -1,0 +1,67 @@
+{
+  "asset_id": "matrix_layout_limestone_multi_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Rock_Sample_Match_Card"
+  },
+  "canvas_constraints": {
+    "aspect_ratio": "1:1 (Square Layout)",
+    "target_resolution": "1024x1024"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Three-quarter angled perspective",
+      "angle": "Low foreground angle looking across the three sample blocks, looking up toward massive coastal cliffs"
+    },
+    "foreground_element": {
+      "type": "Multiple Material Blocks Array",
+      "rock_type": "Limestone Variant Set",
+      "placement": "Three blocks arranged neatly on a flat, light grey gravelly plain",
+      "blocks": [
+        {
+          "block_id": "lime_color_x",
+          "geometry": "3D stylized rectangular block, sharp geometric cleavage faces",
+          "color": "Cool Ash Grey",
+          "texture": "Fine-grained, compact, micro-porous stone face"
+        },
+        {
+          "block_id": "lime_color_y",
+          "geometry": "3D stylized rectangular block, sharp geometric cleavage faces",
+          "color": "Soft Buff Cream / Yellow-Tan",
+          "texture": "Iron-stained, porous dolomitic limestone face"
+        },
+        {
+          "block_id": "lime_color_z",
+          "geometry": "3D stylized rectangular block, sharp geometric cleavage faces",
+          "color": "Stark Chalk White",
+          "texture": "Pure, fine-grained powder-matte bioclastic chalk"
+        }
+      ]
+    },
+    "background_environment": {
+      "habitat_archetype": "Prehistoric Coastal Cliffs / Carbonate Platform",
+      "geological_mapping": [
+        {
+          "zone_name": "Main Wave-Cut Cliff Face",
+          "color_profile": "Cool Ash Grey (Matches Block Color X)",
+          "description": "The massive, sheer vertical limestone cliffs dominant along the central horizon."
+        },
+        {
+          "zone_name": "Weathered Karst Pinnacles",
+          "color_profile": "Soft Buff Cream / Yellow-Tan (Matches Block Color Y)",
+          "description": "Isolated, wind-sculpted rock spires showing high exposure and iron-rich weathering."
+        },
+        {
+          "zone_name": "Upper Crest / Marine Shelf Bed",
+          "color_profile": "Stark Chalk White (Matches Block Color Z)",
+          "description": "A highly reflective, clean, un-weathered upper cap layer glowing brightly against the blue sky."
+        }
+      ],
+      "lighting": "Bright, clear afternoon sunlight accentuating the block faces and casting dramatic, long cinematic shadows down the jointed cliff sections."
+    }
+  }
+}

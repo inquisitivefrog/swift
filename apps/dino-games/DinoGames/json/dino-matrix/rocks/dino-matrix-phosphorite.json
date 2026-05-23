@@ -1,0 +1,42 @@
+{
+  "asset_id": "matrix_layout_phosphorite_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Rock_Sample_Match_Card"
+  },
+  "canvas_constraints": {
+    "aspect_ratio": "1:1 (Square Layout)",
+    "target_resolution": "1024x1024"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Wide foreground, deep background landscape",
+      "angle": "Angled foreground perspective tracking back to a low-horizon coastal flat deposit"
+    },
+    "foreground_element": {
+      "type": "Isolated Material Block",
+      "rock_type": "Phosphorite",
+      "geometry": "3D stylized rectangular block with irregular, nodular edges and bumpy, uneven surfaces",
+      "placement": "Sits prominently on a flat pebble-shingle beach floor",
+      "visual_properties": {
+        "surface_texture": "Dense, tightly packed pelletal nodules and marine fossil fragment inclusions",
+        "finish": "Dull matte with low-gloss mineralized patches",
+        "color": "Slate Grey, Gunmetal, and Muted Dark Olive"
+      }
+    },
+    "background_environment": {
+      "habitat_archetype": "Prehistoric Marine Terrace Margin",
+      "terrain_features": [
+        {
+          "feature_type": "Wave-Cut Marine Bed Seams",
+          "description": "Low-lying coastal outcrops showing heavily compacted dark phosphate nodule horizons cutting through grey marine silt layers, matching the block's visual makeup."
+        }
+      ],
+      "lighting": "Bright, cool coastal daylight reflecting off the top faces of the block and defining the heavy, bumpy contours of the background shelf seams."
+    }
+  }
+}

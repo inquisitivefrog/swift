@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tiaojishan_ginkgoites_quad_001",
+    "species": "Ginkgoites",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "TIAOJISHAN",
+    "environment_details": {
+      "habitat": "VOLCANIC_VALLEY_FLOOR",
+      "flora": [
+        "Deeply-lobed fan leaf (close-up of a fan leaf distinctly divided into 4-6 narrow, strap-like segments)",
+        "Fleshy seed cluster (a pair of smooth, oval, plum-like pale yellow seeds on a shared woody stalk)",
+        "Woody spur branchlet (a short, stout, heavily wrinkled wood twig showing concentric growth rings)",
+        "Autumnal yellow leaf (a fallen, bright mustard-yellow fan leaf displaying fine, radiating line-veins)"
+      ],
+      "ground_palette": ["Dark Volcanic Ash Gray", "Muted Mustard Yellow", "Charcoal Slate"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; bold, graphical shapes; emphasize the deep, narrow finger-like cuts in the leaf canopy; seeds should look plump and slightly rubbery; avoid messy or blurry edge artifacts."
+    },
+    "visual_logic": {
+      "composition": "Quadrant composition: Top-Left: a single deep green fan leaf showing its characteristic deep lobes; Top-Right: a pair of smooth, pale yellow fleshy seeds hanging together; Bottom-Left: a macro study of a stubby, wrinkled wood spur shoot; Bottom-Right: a clean golden-yellow leaf showing radiating parallel veins.",
+      "ground": "A flat slab of light slate gray rock, providing a sharp contrast layer for the graphical silhouettes of the leaves.",
+      "lighting": "Even, bright diffused daylight, catching the clean margins of the fan segments and the smooth curves of the seed coats."
+    }
+  }
+]

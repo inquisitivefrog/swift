@@ -1,0 +1,22 @@
+{
+  "id": "zizyphus_lifecycle_026",
+  "species": "Zizyphus-like Shrubs",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "DENSUS_CIULA_FORMATION",
+  "environment_details": {
+    "habitat": "SUBTROPICAL_ISLAND_FLOODPLAIN",
+    "flora": [
+      "Small Flower (tiny, white/yellowish, five-petaled, in clusters)",
+      "Drupe Fruit (berry-like, small, greenish-yellow, hard center pit)",
+      "Seed (small, brown, derived from the hard pit)",
+      "Leaves & Thorns (small oval leaves, with short paired thorns at base)"
+    ],
+    "ground_palette": ["Brick Red", "Tan", "Vibrant Green"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; emphasis on tiny, waxy textures; high-resolution macro details."
+  },
+  "visual_logic": {
+    "composition": "A grid display showing: A flower cluster with its tiny blooms, several drupe fruits, isolated seeds from the pit, and a branch showing leaves and thorns.",
+    "ground": "Red clay backdrop with fine sand grains."
+  }
+}

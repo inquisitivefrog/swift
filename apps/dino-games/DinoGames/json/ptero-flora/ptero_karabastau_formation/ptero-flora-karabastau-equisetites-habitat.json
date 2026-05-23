@@ -1,0 +1,24 @@
+[
+  {
+    "id": "karabastau_equisetites_001",
+    "species": "Equisetites",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "KARABASTAU",
+    "environment_details": {
+      "habitat": "STAGNANT_LAKE_FOREST",
+      "flora": [
+        "Equisetites (Giant Horsetails in dense stands)",
+        "Early_Angiosperms",
+        "Mossy groundcover"
+      ],
+      "ground_palette": ["Deep Brown", "Forest Green", "Charcoal", "Olive"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; segmented, bamboo-like stalks with chunky, rounded nodes; tufted branchlets with a soft, fuzzy appearance; emphasis on repeating vertical patterns."
+    },
+    "visual_logic": {
+      "composition": "A low-angle view looking through a 'forest within a forest' of giant horsetails. The stalks are crowded together, creating a rhythmic vertical screen.",
+      "ground": "Deeply saturated mud and stagnant puddles reflecting the green stalks and the hazy sky.",
+      "lighting": "Soft, diffused top-lighting that emphasizes the translucency of the young green stalks."
+    }
+  }
+]

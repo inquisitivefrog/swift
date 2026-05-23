@@ -1,0 +1,25 @@
+[
+  {
+    "id": "santana_early_angiosperm_lily_001",
+    "species": "Early_Angiosperm_Lily",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "environment_details": {
+      "habitat": "COASTAL_LAGOON_MARGIN",
+      "flora": [
+        "Early Angiosperm (small, primitive lily-pads with notch-like veins)",
+        "Tiny delicate white flowers (simple petal structure)",
+        "Submerged aquatic moss",
+        "Floating organic detritus"
+      ],
+      "ground_palette": ["Deep Aqua", "Murky Green", "Sandy Ochre"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; lily pads should be small and slightly thick-edged; tactile 'waxy' leaf surface; flowers are simple and 'toy-like' with 3-5 rounded petals; clear water transparency."
+    },
+    "visual_logic": {
+      "composition": "Top-down 'specimen' view of a cluster of primitive lily pads floating on clear lagoon water. Ripples originate from the center. Some pads are partially submerged.",
+      "ground": "The sandy lagoon floor is visible through 2 feet of clear teal water, showing scattered pebbles and plant shadows.",
+      "lighting": "Diffused daylight filtering through water, creating caustic light patterns on the sandy bottom."
+    }
+  }
+]

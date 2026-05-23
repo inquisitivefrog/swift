@@ -1,0 +1,7 @@
+{
+    "id": "ui_nest_clue_small_theropod_square",
+    "clade": "small_theropod",
+    "prompt": "High-fidelity 3D animated feature film style educational game clue graphic. A beautiful open ground nest hidden among low alpine ferns. The nest is a neat, low circular wall of mud and twigs. Sitting openly inside the nest is a pair of highly asymmetrical, long, narrow eggs with a vibrant teal-blue base shell heavily covered in dense reddish-brown speckles. A single fuzzy kiwi fruit, cut cleanly in half, rests on the twig border for size comparison. Background shows a vibrant green forest floor under warm, natural afternoon highlights. Perfectly centered 1:1 square composition, formatted as a square hero card with a strict 25% negative space buffer.",
+    "visual_logic": "Shows a small theropod nest clue: a bird-like open cup nest with highly vibrant, exposed teal-speckled eggs, using a halved kiwi for scale.",
+    "style_notes": "SQUARE_HERO_CARD, STYLE_ANIMATED_FEATURE_V3. No scale bars. The most colorful and avian-like nest setup in the game matrix."
+  }

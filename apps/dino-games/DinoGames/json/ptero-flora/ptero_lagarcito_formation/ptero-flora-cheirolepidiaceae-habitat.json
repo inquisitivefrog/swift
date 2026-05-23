@@ -1,0 +1,30 @@
+[
+  {
+    "id": "lagarcito_cheirolepidiaceae_conifer_001",
+    "species": "Cheirolepidiaceae (conifers)",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "LAGARCITO",
+    "environment_details": {
+      "habitat": "PLAYA_LAKE_SYSTEM",
+      "flora": [
+        "Cheirolepidiaceae (conifers with scale-like, succulent needles)",
+        "Small Gnetales shrubs (as understory)",
+        "Sparse salt-tolerant grasses",
+        "Fallen woody branches"
+      ],
+      "ground_palette": [
+        "Dusty Rose",
+        "Ochre",
+        "Pale Teal",
+        "Salmon"
+      ],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; chunky, geometric leaf patterns; needles have a soft, succulent, rounded appearance; high-fidelity bark textures with a slightly weathered, chalky patina; focus on the unique silhouette of arid-adapted conifers."
+    },
+    "visual_logic": {
+      "composition": "A mid-range heroic shot of a solitary Cheirolepidiaceae conifer. Its branches are heavy with scale-like foliage, casting a long, soft shadow across the cracked silt of the playa floor.",
+      "ground": "Dusty rose and ochre silt with visible mud-crack geometry and patches of white salt crystals.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; intense midday sun creating high-contrast volume on the tree's cylindrical branches and a bright, airy atmosphere."
+    }
+  }
+]

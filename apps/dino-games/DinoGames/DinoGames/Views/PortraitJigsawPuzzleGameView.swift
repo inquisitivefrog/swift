@@ -89,6 +89,19 @@ enum PortraitJigsawPuzzleLine: Equatable {
         }
     }
 
+    /// Config id for `LandGameVictorySuccessStingerThenContinue` (`game-{id}-success`, `game-{id}-victory` stinger).
+    var catalogGameId: String {
+        switch self {
+        case .dinosaur(let c): return c.id
+        case .pterosaur(let c): return c.id
+        case .marineReptile(let c): return c.id
+        }
+    }
+
+    var successImageCandidateNames: [String] {
+        [successImagePrimary, successImageFallback]
+    }
+
     func notifyGameCompleted() {
         switch self {
         case .dinosaur(let c):
@@ -563,8 +576,12 @@ struct PortraitJigsawPuzzleGameView: View {
             speechManager.speak(audioKey: key, fallbackText: d.name)
             speechManager.onAudioFinished = { advanceEndHighlight() }
         } else {
-            playGoodJobAndCrowdThenDismiss()
+            endSequenceStep = 2
         }
+    }
+
+    private var puzzleVictoryListHeight: CGFloat {
+        StandardVictoryLayout.recapListScrollHeight(itemCount: rounds.count)
     }
 
     var body: some View {
@@ -734,67 +751,43 @@ struct PortraitJigsawPuzzleGameView: View {
 
     private var puzzleEndSequenceView: some View {
         let creatures = rounds.map(\.creature)
-        return VStack(spacing: 16) {
-            VStack(spacing: 12) {
+        return VictorySplitColumnView(
+            listScrollHeight: puzzleVictoryListHeight,
+            showSuccessPhase: endSequenceStep == 2,
+            endHighlightIndex: endHighlightIndex,
+            gameTitle: line.navigationTitle,
+            scrollRows: {
                 ForEach(Array(creatures.enumerated()), id: \.offset) { index, creature in
-                    let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                    HStack(spacing: 16) {
-                        Group {
-                            if let name = creature.imageName, ImageAssetCache.imageExists(named: name) {
-                                Image(name)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 72, height: 72)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                            } else {
-                                Text(creature.icon)
-                                    .font(.system(size: 40))
-                                    .frame(width: 72, height: 72)
-                            }
-                        }
-                        .opacity(isHighlighted ? 1 : 0.45)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
-                        )
-
-                        Text(creature.name)
-                            .font(.title3)
-                            .fontWeight(isHighlighted ? .semibold : .regular)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 10)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
+                    StandardVictoryRecapRowView(
+                        item: VictoryRecapDisplayItem(
+                            id: "\(creature.id)",
+                            title: creature.name,
+                            imageAssetName: creature.imageName,
+                            fallbackEmoji: creature.icon
+                        ),
+                        isHighlighted: endSequenceStep >= 1 && index == endHighlightIndex
                     )
+                    .id(index)
                 }
+            },
+            successPhase: {
+                LandGameVictorySuccessStingerThenContinue(
+                    candidateSuccessImageNames: line.successImageCandidateNames,
+                    catalogGameIdForStinger: line.catalogGameId,
+                    imageSide: GameCatalogImageMetrics.nameThatVictorySuccessImageSide,
+                    speechManager: speechManager,
+                    onContinue: playGoodJobAndCrowdThenDismiss
+                )
             }
-            Group {
-                if ImageAssetCache.imageExists(named: line.successImagePrimary) {
-                    Image(line.successImagePrimary)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 320)
-                } else if ImageAssetCache.imageExists(named: line.successImageFallback) {
-                    Image(line.successImageFallback)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 320)
-                }
-            }
-            Spacer()
-        }
-        .padding()
+        )
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             guard endSequenceStep == -1 else { return }
-            endSequenceStep = 1
             endHighlightIndex = 0
-            isAudioPlaying = true
             if creatures.isEmpty {
-                playGoodJobAndCrowdThenDismiss()
+                endSequenceStep = 2
             } else {
+                endSequenceStep = 1
                 let d = creatures[0]
                 let key = d.imageName ?? d.name.lowercased().replacingOccurrences(of: " ", with: "-")
                 speechManager.speak(audioKey: key, fallbackText: d.name)

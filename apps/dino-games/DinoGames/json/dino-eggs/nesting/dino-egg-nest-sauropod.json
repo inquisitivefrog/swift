@@ -1,0 +1,7 @@
+{
+    "id": "ui_nest_clue_sauropod_square",
+    "clade": "sauropod",
+    "prompt": "High-fidelity 3D animated feature film style educational game clue graphic. A massive sauropod nesting site located on a dry, sun-cracked mudflat. A wide, shallow trench excavated into the clay substrate is filled with a large communal clutch of perfectly spherical, chalky plain white eggs, buried entirely beneath a layer of loose, dry soil. A single bright yellow grapefruit sits on the cracked clay surface directly above the deposit for scale. Background features the open canopy and fern prairies of the Morrison formation under a midday sun. Perfectly centered 1:1 square composition, formatted as a square hero card with a strict 25% negative space buffer.",
+    "visual_logic": "Shows a sauropod nest clue: a large subterranean trench covered by loose dirt on a mudflat, using a grapefruit on the surface for scale.",
+    "style_notes": "SQUARE_HERO_CARD, STYLE_ANIMATED_FEATURE_V3. No scale bars. The focus is on the large scale of the trench footprint contrasted with the grapefruit."
+  }

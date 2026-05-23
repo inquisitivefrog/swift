@@ -1,0 +1,24 @@
+[
+  {
+    "id": "karabastau_araucariaceae_001",
+    "species": "Araucariaceae",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "KARABASTAU",
+    "environment_details": {
+      "habitat": "STAGNANT_LAKE_FOREST",
+      "flora": [
+        "Araucariaceae (distinctive symmetrical branching)",
+        "Conifers",
+        "Equisetites"
+      ],
+      "ground_palette": ["Deep Brown", "Forest Green", "Charcoal", "Olive"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; geometric, scale-like leaf patterns rendered with soft, toy-like roundness; sturdy, pillar-like trunks; vibrant green hues against the charcoal mud."
+    },
+    "visual_logic": {
+      "composition": "A full-height profile of a young Araucaria tree standing in a clearing. Its unique, symmetrical branches create a striking silhouette against the dark forest background.",
+      "ground": "Damp, dark forest floor with patches of moss and silver-grey siltstone fragments.",
+      "lighting": "Clear cinematic 'god-rays' cutting through the forest gloom to illuminate the tree's geometric structure."
+    }
+  }
+]

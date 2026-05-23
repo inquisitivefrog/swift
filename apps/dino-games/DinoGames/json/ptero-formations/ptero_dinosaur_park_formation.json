@@ -1,0 +1,21 @@
+{
+  "formation_id": "DINOSAUR_PARK_FORMATION",
+  "base_habitat": "COASTAL_PLAIN_DELTA",
+  "period": "LATE_CRETACEOUS",
+  "visuals": {
+    "ground": "Lush, swampy soil rich in organic matter. Massive fallen logs and sandbars.",
+    "water": "Extensive swamp networks and winding estuaries moving toward the Western Interior Seaway.",
+    "sky": "Cooler blue; frequent rain-heavy clouds and atmospheric mist."
+  },
+  "physics": {
+    "altitude": "low_coastal",
+    "water": "freshwater_to_brackish",
+    "humidity": "high"
+  },
+  "strata_specifics": {
+    "ground_texture": "Siltstone and carbonaceous shale.",
+    "color_palette": ["Deep Brown", "Forest Green", "Steel Blue", "Grey"]
+  },
+  "flora_manifest": ["Platanoid_leaves", "Taxodiaceous_Conifers", "Fern_undergrowth"],
+  "negative_prompt": "grass, cactus, desert, coral reefs, bright tropical colors"
+}

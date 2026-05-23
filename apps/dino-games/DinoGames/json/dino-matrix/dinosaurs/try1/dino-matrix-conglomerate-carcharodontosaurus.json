@@ -1,0 +1,15 @@
+{
+    "asset_id": "manifest_excavation_007_alt",
+    "project": "DinoMatrix",
+    "version": "1.0.0",
+    "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "intended_use": "UI_Card_Dig_Stage_1" },
+    "excavation_context": {
+      "character_id": "dino_bones_preparator_4",
+      "character_description": "An adult male grad student working as a museum preparator, dark brown hair, tanned skin, Latino ethnicity.",
+      "uniform": "A soccer sport jersey worn UNDER a white lab coat, blue jeans and grey sneakers.",
+      "stage": "Prospecting and Initial Discovery",
+      "target_dinosaur": "Carcharodontosaurus",
+      "geological_formation": "LA_AMARGA",
+      "matrix_material": "Conglomerate",
+      "matrix_color": "Pebble-Packed Tan"
+    }

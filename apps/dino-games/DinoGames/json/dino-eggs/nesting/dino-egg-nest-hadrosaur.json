@@ -1,0 +1,7 @@
+{
+    "id": "ui_nest_clue_hadrosaur_square",
+    "clade": "hadrosaur",
+    "prompt": "High-fidelity 3D animated feature film style educational game clue graphic. A large, raised volcanic-ash and dirt crater mound forming a communal dinosaur nest. The top of the mound is packed and sealed with dry mud, hiding the clutch completely from view. A single ripe orange mango rests on the sloping side of the dirt crater for an intuitive scale reference. The background features the vast woodland floodplains of the Two Medicine formation under bright midday sun with short, crisp shadows. Perfectly centered 1:1 square composition, formatted as a square hero card with a strict 25% negative space buffer on all boundaries.",
+    "visual_logic": "Shows a hadrosaur nest clue: a massive raised dirt and ash mound with buried eggs, using a mango on the exterior for scale.",
+    "style_notes": "SQUARE_HERO_CARD, STYLE_ANIMATED_FEATURE_V3. No scale bars. The mound must look artificially constructed by a dinosaur, broad and stable."
+  }

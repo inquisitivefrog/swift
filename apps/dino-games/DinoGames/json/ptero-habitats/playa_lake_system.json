@@ -1,0 +1,21 @@
+{
+  "id": "habitat_lagarcito_playa_lake_029",
+  "species": "General_Habitat_Flora",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "HEAT_SHIMMER_MIDDAY",
+  "formation_ref": "LAGARCITO_FORMATION",
+  "environment_details": {
+    "habitat": "PLAYA_LAKE_SYSTEM",
+    "flora": [
+      "Cheirolepidiaceae (Drought-resistant, scale-leaved conifers)",
+      "Gnetales (scrubby, jointed-stem plants)",
+      "Microscopic algae blooms (turning patches of water pink/orange)"
+    ],
+    "ground_palette": ["Dusty Rose", "Ochre", "White Salt"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the vast, flat horizon and the shimmering, colorful mineral-rich water."
+  },
+  "visual_logic": {
+    "composition": "A very low-angle shot looking across the shallow, pinkish water of a playa lake towards a distant, heat-blurred treeline.",
+    "ground": "Fine red silt and white crystalline salt-crusts."
+  }
+}

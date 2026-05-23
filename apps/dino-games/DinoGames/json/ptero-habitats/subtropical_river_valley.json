@@ -1,0 +1,21 @@
+{
+  "id": "habitat_tangshang_valley_028",
+  "species": "General_Habitat_Flora",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SOFT_AFTERNOON_HAZE",
+  "formation_ref": "TANGSHANG_FORMATION",
+  "environment_details": {
+    "habitat": "SUBTROPICAL_RIVER_VALLEY",
+    "flora": [
+      "Early Birch-like hardwoods (slender, light bark)",
+      "Platanoid trees (broad leaves, forming a high canopy)",
+      "Ginkgo trees mixed with early flowering shrubs"
+    ],
+    "ground_palette": ["Pale Sand", "Sage Green", "Leaf Brown"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; transitional feel; a mix of 'modern' hardwoods and 'ancient' ginkgoes."
+  },
+  "visual_logic": {
+    "composition": "A peaceful river valley with sandy banks. The canopy is more open and airy compared to the dense Jurassic forests.",
+    "ground": "Yellowish-grey silt and sandy river-bar deposits."
+  }
+}

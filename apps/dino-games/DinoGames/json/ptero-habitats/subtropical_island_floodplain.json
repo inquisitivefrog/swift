@@ -1,0 +1,21 @@
+{
+  "id": "habitat_hateg_island_floodplain_026",
+  "species": "General_Habitat_Flora",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "VIBRANT_TROPICAL_NOON",
+  "formation_ref": "DENSUS_CIULA_FORMATION",
+  "environment_details": {
+    "habitat": "SUBTROPICAL_ISLAND_FLOODPLAIN",
+    "flora": [
+      "Dwarf Araucariaceae (miniaturized mature trees)",
+      "Early Angiosperm shrubs (Magnoliids with large, waxy flowers)",
+      "Zizyphus-like scrub forming thick, low-to-the-ground barriers"
+    ],
+    "ground_palette": ["Brick Red", "Volcanic Grey", "Lush Emerald"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on 'miniaturization'—the plants should look mature but remain at a lower height-scale."
+  },
+  "visual_logic": {
+    "composition": "A river bend with red clay banks. Volcanic ash is visible as thin grey stripes in the soil. The vegetation is dense but low-slung.",
+    "ground": "Red silty clay mixed with grey volcanic tuff fragments."
+  }
+}

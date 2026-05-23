@@ -1,0 +1,45 @@
+{
+  "id": "plottier_equisetites_quad_002",
+  "species": "Equisetites",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "PLOTTIER",
+  "environment_details": {
+    "habitat": "SEMI_ARID_PLAINS",
+    "flora": [
+      "Nodal sheath (biological protective ring with organic tooth-like edges)",
+      "Spore-bearing strobilus (terminal cone with organic honeycomb scales)",
+      "Emerging vegetative shoot (thick, spear-like spear-head pushing through clay)",
+      "Anatomical stem cross-section (showing organic cellular chambers and pith)"
+    ],
+    "ground_palette": ["Variegated Red", "Ochre", "Tan"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Strictly microscopic or macro-botanical scale; Organic plant tissue textures; Avoid plastic, PVC, or industrial tubing; Avoid landscape-scale environments; Focus on 'fleshy' and 'fibrous' botanical details; Soft-touch, toy-like high-fidelity 3D rendering."
+  },
+  "visual_logic": {
+    "composition": "Botanical specimen tile: Top-Left: Close-up of a growth node with its organic jagged sheath; Top-Right: A hero shot of the terminal spore cone; Bottom-Left: A single spear-like green shoot pushing vertically through a red clay crack (macro focus); Bottom-Right: A cross-section of a green stalk showing a ring of organic air-canals and fibrous plant tissue.",
+    "ground": "Clean, studio-lit backdrop of red Plottier siltstone, ensuring the plant is the only subject.",
+    "lighting": "Bright diffused daylight with a slight rim-light to emphasize the organic, fibrous edges of the plant tissue."
+  }
+}{
+  "id": "plottier_equisetites_quad_002",
+  "species": "Equisetites",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "PLOTTIER",
+  "environment_details": {
+    "habitat": "SEMI_ARID_PLAINS",
+    "flora": [
+      "Nodal sheath (biological protective ring with organic tooth-like edges)",
+      "Spore-bearing strobilus (terminal cone with organic honeycomb scales)",
+      "Emerging vegetative shoot (thick, spear-like spear-head pushing through clay)",
+      "Anatomical stem cross-section (showing organic cellular chambers and pith)"
+    ],
+    "ground_palette": ["Variegated Red", "Ochre", "Tan"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Strictly microscopic or macro-botanical scale; Organic plant tissue textures; Avoid plastic, PVC, or industrial tubing; Avoid landscape-scale environments; Focus on 'fleshy' and 'fibrous' botanical details; Soft-touch, toy-like high-fidelity 3D rendering."
+  },
+  "visual_logic": {
+    "composition": "Botanical specimen tile: Top-Left: Close-up of a growth node with its organic jagged sheath; Top-Right: A hero shot of the terminal spore cone; Bottom-Left: A single spear-like green shoot pushing vertically through a red clay crack (macro focus); Bottom-Right: A cross-section of a green stalk showing a ring of organic air-canals and fibrous plant tissue.",
+    "ground": "Clean, studio-lit backdrop of red Plottier siltstone, ensuring the plant is the only subject.",
+    "lighting": "Bright diffused daylight with a slight rim-light to emphasize the organic, fibrous edges of the plant tissue."
+  }
+}

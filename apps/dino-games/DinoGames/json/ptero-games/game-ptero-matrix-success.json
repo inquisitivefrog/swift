@@ -1,0 +1,88 @@
+{
+  "asset_id": "img_ptero_matrix_victory_002",
+  "project": "DinoGames",
+  "version": "1.0.2",
+  "meta": {
+    "source_file": "game-ptero-matrix-victory-card.png",
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "Square_Victory_Game_Card"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Square Medium Shot (1:1 Aspect Ratio)",
+      "angle": "Eye-level, dynamic close action focus",
+      "depth_of_field": "Crisp foreground focus, gentle fallback depth on the field lab desk"
+    },
+    "canvas_constraints": {
+      "aspect_ratio": "1:1 (Square Layout)",
+      "target_resolution": "1024x1024",
+      "safe_zone": "All essential features and text contained inside standard square boundaries"
+    },
+    "characters": [
+      {
+        "id": "dino_bones_preparator_6",
+        "base_library_ref": "dino_bones_preparator_6",
+        "description": "An adult female grad student working as a museum preparator, long black hair, Asian ethnicity.",
+        "features": {
+          "hair": "Long black hair tied back",
+          "skin_tone": "Light skin tone",
+          "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+          "visual_identity": "High-fidelity 3D animated feature film style. Adult human proportions with soft, stylized, toy-like rounded edges. Joyful, triumphant expression."
+        },
+        "apparel": {
+          "upper": "Yellow tee shirt with a unicorn image worn UNDER a clean white lab coat",
+          "lower": "Yellow skirt",
+          "footwear": "White sneakers"
+        },
+        "pose": "Wiping her brow with one hand while pointing proudly with a fine bristle brush at a completely clean, perfectly exposed pterosaur fossil matrix slab.",
+        "tools_held": [
+          "Wooden-handled fine camel-hair dust brush"
+        ]
+      }
+    ],
+    "environment": {
+      "formation_archetype": "SOLNHOFEN",
+      "geology": {
+        "strata_type": "Clean, flat-surfaced lithographic rock tiles resting on a workbench",
+        "primary_materials": ["Plattenkalk limestone slabs"],
+        "color_palette": ["Cream White", "Ivory", "Soft Tan"]
+      },
+      "flora": [],
+      "embedded_assets": [
+        {
+          "asset_type": "Fossil Specimen",
+          "associated_ptero": "Pterodactylus",
+          "description": "A pristine, fully exposed Pterodactylus specimen showcasing wing membrane impressions faintly preserved in the limestone.",
+          "features": {
+            "anatomical_accuracy": "Stylized-realism, perfectly spaced vertebrae, light hollow bone framework",
+            "texture": "Smooth fossilized bone surface with soft dendritic manganese stains surrounding the matrix edges"
+          }
+        }
+      ]
+    ],
+    "graphic_elements": [
+      {
+        "element_type": "Primary 3D Text Overlay",
+        "text_content": "Ptero Matrix!",
+        "typography": {
+          "style": "Bold, blocky 3D sans-serif extruded geometry",
+          "letter_casing": "Mixed Case",
+          "color": "Bright Orange-Yellow",
+          "integration": "Physically integrated into the top frame layer, interacting cleanly with scene highlights"
+        }
+      },
+      {
+        "element_type": "Secondary Victory Ribbon / Banner Text",
+        "text_content": "Player Wins!",
+        "typography": {
+          "style": "Stylized, rounded golden-yellow slab serif with high-contrast borders",
+          "letter_casing": "Mixed Case",
+          "color": "Bright Gold and Canary Yellow",
+          "integration": "Floating dynamic overlay banner near the bottom third of the square frame with drop-shadows"
+        }
+      }
+    ]
+  }
+}

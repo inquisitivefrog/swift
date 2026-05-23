@@ -1,0 +1,21 @@
+{
+  "id": "habitat_plottier_braided_river_024",
+  "species": "General_Habitat_Flora",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "HARSH_CONTINENTAL_SUN",
+  "formation_ref": "PLOTTIER_FORMATION",
+  "environment_details": {
+    "habitat": "ARID_BRAIDED_RIVER_SYSTEM",
+    "flora": [
+      "Stunted Podocarp Conifers (gnarled trunks, drought-resistant needles)",
+      "Hardy Equisetites (Horsetails) clustered in damp sand-scours",
+      "Desiccation-tolerant ferns in the shade of sandstone boulders"
+    ],
+    "ground_palette": ["Crimson Red", "Burnt Orange", "Pale Tan"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; wide-angle perspective; focus on the contrast between the vibrant red earth and the sparse, tough green vegetation."
+  },
+  "visual_logic": {
+    "composition": "A sprawling landscape view of shifting river channels. A few hardy trees stand as lonely sentinels against a backdrop of massive red cliffs.",
+    "ground": "Dry, pebbly red sandstone and sun-cracked clay mudflats."
+  }
+}

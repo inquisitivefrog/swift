@@ -1,0 +1,62 @@
+{
+  "id": "habitat_santana_romualdo_v1",
+  "species": "SANTANA_ADDITIONS_MANIFEST",
+  "tech_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "SANTANA_ROMUALDO",
+  "base_habitat": "TROPICAL_ISLAND_LAGOONS",
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_ANIMATED_FEATURE_V3",
+      "framing": "SQUARE_HERO_CARD"
+    },
+    "layer_2_setting": {
+      "habitat_id": "TROPICAL_ISLAND_LAGOONS",
+      "formation_id": "SANTANA_ROMUALDO"
+    },
+    "layer_3_action": {
+      "subject": "A sun-drenched Early Cretaceous tropical lagoon margin.",
+      "features": [
+        "White carbonate sand beaches meeting shallow turquoise water.",
+        "Scattered calcareous concretions and limestone outcrops along the shore.",
+        "Lush clusters of Brachyphyllum conifers and early water lilies near the margins.",
+        "Large predatory Calamopleurus and armored Vinctifer fish visible in the clear shallows.",
+        "Araripemys turtles resting on iron-oxide red mudbanks."
+      ],
+      "action": "A vibrant, high-key tropical scene with sharp, short shadows. The atmosphere is clear and saturated, emphasizing the terracotta and golden ochre earth tones. No grass."
+    }
+  },
+  "visuals": {
+    "ground": "Fine white sand and variegated reddish-brown mudstone rich in iron-oxide. No grass.",
+    "water": "Crystal clear, shallow turquoise lagoon water over a white carbonate silt floor.",
+    "sky": "Bright tropical blue with high-key saturation and a slight hazy glow on the horizon."
+  },
+  "physics": {
+    "altitude": "sea_level",
+    "water": "tropical_marine_lagoon",
+    "humidity": "high"
+  },
+  "strata_specifics": {
+    "primary_rocks": [
+      "Laminated limestone",
+      "Calcareous concretions",
+      "Bituminous shale"
+    ],
+    "color_palette": [
+      "Iron-oxide Red",
+      "Terracotta",
+      "Golden Ochre",
+      "Limestone White"
+    ]
+  },
+  "flora_manifest": [
+    "Brachyphyllum (Conifer)",
+    "Early Angiosperm lily-pads"
+  ],
+  "fauna_manifest": [
+    "Calamopleurus (large predatory fish)",
+    "Vinctifer (armored fish)",
+    "Araripemys (turtle)"
+  ],
+  "negative_prompt": "grass, flowers, snow, city, humans, deep ocean"
+}

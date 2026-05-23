@@ -1,0 +1,30 @@
+[
+  {
+    "id": "lagarcito_microscopic_algae_001",
+    "species": "Microscopic algae",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "LAGARCITO",
+    "environment_details": {
+      "habitat": "PLAYA_LAKE_SYSTEM",
+      "flora": [
+        "Microscopic algae (as thick, vibrant green and teal blooms in shallow water)",
+        "Gnetales (at the water's edge)",
+        "Salt-encrusted driftwood",
+        "Submerged mineral nodules"
+      ],
+      "ground_palette": [
+        "Dusty Rose",
+        "Ochre",
+        "Pale Teal",
+        "Salmon"
+      ],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the swirling, cloud-like textures of the algae in the water; vibrant, saturated 'emerald' and 'teal' colors; water has a soft, inviting translucency; focus on the contrast between life and the harsh salt-crusted environment."
+    },
+    "visual_logic": {
+      "composition": "A high-angle close-up looking down into a shallow, turquoise ephemeral pool on the playa. Vibrant swirls of algae create abstract patterns in the water, contrasting with the salmon-colored silt at the pool's edge.",
+      "ground": "Fine-grained pinkish-red siltstone submerged beneath clear, algae-tinted water, with white salt crystals forming at the waterline.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; bright sun reflecting off the water surface and the white salt crusts, creating a high-key, sparkling tropical-arid feel."
+    }
+  }
+]

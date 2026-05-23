@@ -1,0 +1,25 @@
+[
+  {
+    "id": "plottier_podocarp_quad_001",
+    "species": "Podocarp_Conifers",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "PLOTTIER",
+    "environment_details": {
+      "habitat": "SEMI_ARID_PLAINS",
+      "flora": [
+        "Podocarp fruit/receptacle (fleshy, brightly colored, berry-like base)",
+        "Spirally arranged leaves (small, lance-shaped, waxy surface)",
+        "Male pollen cone (elongated, slender, drooping from branch)",
+        "Bark detail (thin, vertically fissured, sun-bleached grey)"
+      ],
+      "ground_palette": ["Variegated Red", "Ochre", "Pinkish-Grey", "Tan"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the unique fleshy seed bases; leaves should look soft-touch and slightly succulent; rounded, chunky branch joints to maintain the toy-like aesthetic."
+    },
+    "visual_logic": {
+      "composition": "A quadrant layout: Top-Left: a close-up of the vibrant red fleshy receptacle with its seed; Top-Right: a detailed spray of the spiraled evergreen leaves; Bottom-Left: a cluster of male pollen cones; Bottom-Right: a hero shot of the sun-bleached bark texture.",
+      "ground": "Variegated red siltstone with fine sand, providing a warm, high-contrast background.",
+      "lighting": "Bright, even diffused light to emphasize the translucent quality of the fleshy fruit and the waxy sheen of the leaves."
+    }
+  }
+]

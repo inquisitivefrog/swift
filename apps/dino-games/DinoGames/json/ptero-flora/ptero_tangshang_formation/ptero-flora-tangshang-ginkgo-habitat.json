@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tangshang_ginkgo_001",
+    "species": "Ginkgos",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TANGSHANG",
+    "environment_details": {
+      "habitat": "SUBTROPICAL_RIVER_VALLEY",
+      "flora": [
+        "Mature Ginkgo tree (distinct fan-shaped leaves with deep central notches, arranged in clusters)",
+        "Fleshy, plum-like ginkgo seeds (hanging on thin stalks)",
+        "Early hardwood saplings",
+        "Carpet of fallen fan leaves"
+      ],
+      "ground_palette": ["Rich Silt Brown", "Pale Ochre", "Mossy Green"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; fan leaves should be rendered with clear, stylized parallel veins and thick, rounded leaf margins; the canopy should have a bold, graphical silhouette; avoid chaotic, messy leaf scattering."
+    },
+    "visual_logic": {
+      "composition": "A mid-angle, wide shot of an ancient Ginkgo tree standing at the edge of a river clearing. Its dense canopy displays a transition of deep greens and light, pale ochre tones, shedding a small trail of fan leaves.",
+      "ground": "Rich silt brown bank leading down to calm water, partially covered in a decorative layer of fallen fan-shaped leaves.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; bright afternoon sun casting long, clear graphical shadows of the fan leaves across the open clearing."
+    }
+  }
+]

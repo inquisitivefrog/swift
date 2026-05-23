@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tiaojishan_dense_conifer_forest_001",
+    "species": "Dense_Conifer_forest",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TIAOJISHAN",
+    "environment_details": {
+      "habitat": "VOLCANIC_SLOPES",
+      "flora": [
+        "Dense Conifers (towering trunks, tiered branches arranged in organized whorls)",
+        "Thick, blunt-tipped needle clusters",
+        "Moss-covered fallen logs",
+        "Immature conifer saplings"
+      ],
+      "ground_palette": ["Dark Volcanic Ash Gray", "Earthy Umber", "Deep Forest Green"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; forest canopy should look like layered, puffy green cushions stacked vertically; avoid fine, noisy, individual pine needle assets; trunks are thick, column-like, and deeply textured with soft, rounded bark ridges."
+    },
+    "visual_logic": {
+      "composition": "A deep vista view peering into a dense, ancient conifer forest. Massive trunks create a sense of scale, with a thick, mossy forest floor leading into a dark, shadowy background.",
+      "ground": "A rich carpet of dark ash gray soil covered in a dense layer of decomposing brown organic mulch and bright green log moss.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; strong shafts of dappled sunlight piercing the dense overhead canopy, creating brilliant high-contrast spot-highlights on the mossy ground."
+    }
+  }
+]

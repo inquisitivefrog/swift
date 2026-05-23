@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tangshang_ginkgo_quad_001",
+    "species": "Ginkgos",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "TANGSHANG",
+    "environment_details": {
+      "habitat": "SUBTROPICAL_RIVER_VALLEY",
+      "flora": [
+        "Fan-shaped leaf (distinctive wedge leaf with a deep central split and fine, parallel line-veins)",
+        "Plum-like seed pair (rounded, smooth, pale ochre fleshy seeds hanging from a shared stem split)",
+        "Spur shoot node (chunky, wrinkled wooden knob where a cluster of leaf stems originates)",
+        "Cured leaf (a dried, brilliant golden-yellow fan leaf showing a crisp, unwrinkled silhouette)"
+      ],
+      "ground_palette": ["Rich Silt Brown", "Pale Ochre", "Mossy Green"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; bold graphical silhouettes; emphasis on the clean, sweeping curves of the fan leaf margins; seeds should look plump, smooth, and slightly translucent; avoid noisy, shattered leaf textures."
+    },
+    "visual_logic": {
+      "composition": "Quadrant composition: Top-Left: a pristine green fan-shaped leaf showing its prominent central notch; Top-Right: two smooth, pale ochre fleshy seeds hanging neatly together; Bottom-Left: a close-up of a wrinkled, blocky wood spur shoot; Bottom-Right: a fallen golden-yellow leaf showcasing distinct parallel venation lines.",
+      "ground": "A smooth slab of pale ochre river siltstone, serving as a bright, highly contrasted background for the individual elements.",
+      "lighting": "Even, bright diffused daylight, catching the waxy sheen of the seed skins and emphasizing the graphical vein lines of the foliage."
+    }
+  }
+]

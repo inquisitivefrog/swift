@@ -1,0 +1,9 @@
+here’s the dinosaur.
+{ 
+  "app_image_config": { 
+    "layer_1_style": "1024x1024 px, high-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures.", 
+    "layer_2_setting": "Setting: A bentonite butte somewhere in Brushy Bush member of the Morrison formation in Utah.", 
+    "aspect_ratio": "1:1" 
+  }, 
+  "action_description": “A paleontologist attempts to dig out a Stegosaurus from the ground.  The ground must have the bentonite color." 
+}

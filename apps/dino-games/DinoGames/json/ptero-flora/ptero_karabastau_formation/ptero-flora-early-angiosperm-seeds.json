@@ -1,0 +1,25 @@
+[
+  {
+    "id": "karabastau_early_angiosperm_quad_001",
+    "species": "Early_Angiosperms",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "KARABASTAU",
+    "environment_details": {
+      "habitat": "STAGNANT_LAKE_FOREST",
+      "flora": [
+        "Primitive flower (small, simple petals, visible pollen structures)",
+        "Seed pod (rounded, waxy, containing small seeds)",
+        "Young sprout (slender stem, two simple leaves)",
+        "Leaf detail (pinnate venation, soft green texture)"
+      ],
+      "ground_palette": ["Deep Brown", "Forest Green", "Charcoal", "Olive"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; soft, appealing floral shapes; focus on delicate but sturdy textures; high-fidelity 3D rendering with subtle translucency in the petals."
+    },
+    "visual_logic": {
+      "composition": "A four-quadrant tile: Top-Left: Close-up of a primitive bloom; Top-Right: Cross-section of a waxy seed pod; Bottom-Left: A single emerging sprout; Bottom-Right: High-detail texture of a single leaf.",
+      "ground": "Dark, silty charcoal-colored mudstone surface, providing a high-contrast backdrop for the green and pale-colored flora.",
+      "lighting": "Clean, even diffused daylight to highlight botanical anatomy."
+    }
+  }
+]

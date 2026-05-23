@@ -1,0 +1,17 @@
+{
+    "asset_id": "manifest_excavation_008_alt",
+    "project": "DinoMatrix",
+    "version": "1.0.0",
+    "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "intended_use": "UI_Card_Dig_Stage_3" },
+    "excavation_context": {
+      "character_id": "dino_bones_paleontologist_4",
+      "character_description": "An adult male grad student working as a paleontologist, short brown hair, Latino ethnicity. Signature thin-rimmed BLACK aviator lens glasses.",
+      "uniform": "A light white tee shirt worn UNDER a khaki safari vest, khaki shorts and brown hiking boots.",
+      "stage": "Extracting Fossil with Air Scribes",
+      "target_dinosaur": "Xiaotingia",
+      "geological_formation": "JEHOL_BIOTA",
+      "matrix_material": "Volcanic Tuff",
+      "matrix_color": "Pale Ash-Grey"
+    },
+    "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_paleontologist_4 is inside a field laboratory tent, using a humming air scribe tool on a flat plate of pale ash-grey volcanic tuff matrix. Brittle ash flakes fly back as he carefully exposes the delicate, bird-like claw elements of a Xiaotingia specimen under brilliant overhead utility lighting. Glare shines realistically across his black aviator glasses. 1:1 Square aspect ratio."
+  }

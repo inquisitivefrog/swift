@@ -1,0 +1,25 @@
+[
+  {
+    "id": "karabastau_palm_leaves_quad_001",
+    "species": "Palm_like_leaves",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "KARABASTAU",
+    "environment_details": {
+      "habitat": "STAGNANT_LAKE_FOREST",
+      "flora": [
+        "Emerging frond (tightly coiled 'fiddlehead' style transition)",
+        "Broad frond segment (showing parallel ribbing)",
+        "Stem base (fibrous, textured, robust)",
+        "Dried/fossilized leaf (shale-grey, flattened, showing preserved outline)"
+      ],
+      "ground_palette": ["Deep Brown", "Forest Green", "Charcoal", "Olive"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; leathery, waxy leaf surfaces; chunky fibrous stems; rounded, safe-looking frond tips; high-specular highlights to suggest humidity."
+    },
+    "visual_logic": {
+      "composition": "Tiled composition: Top-Left: A tightly curled new frond; Top-Right: A wide shot of a full fan-leaf; Bottom-Left: The textured base where the leaf meets the trunk; Bottom-Right: A leaf impression in a slab of grey Karabastau shale.",
+      "ground": "Olive-tinted silty mud with small, smooth river-worn pebbles.",
+      "lighting": "Bright, even illumination to distinguish the green living tissue from the grey fossilized tissue."
+    }
+  }
+]

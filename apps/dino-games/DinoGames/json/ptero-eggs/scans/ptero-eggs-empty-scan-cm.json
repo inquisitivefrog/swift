@@ -1,0 +1,8 @@
+{
+  "id": "ui_ct_scan_egg_empty_clay",
+  "morphology": "pterosaur_egg_ct_scan_result",
+  "style": "STYLE_CLAY_MASTER",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "state": "empty_egg_shell_interior",
+  "prompt": "A simulated CT scan image of an empty pterosaur egg, rendered in a charming, child-friendly claymation style, as if displayed on a scanner screen. The egg has a distinctly elongated, ellipsoidal shape characteristic of pterosaurs. The external shell of the egg is depicted as a simple, soft-textured clay outline. Inside, the egg is completely empty, showing only a clean, uniform, and clear internal negative space with no skeletal structures or embryos visible. The entire image should have a soft, muted grayscale or a very light, desaturated clay-like color palette, giving the impression of an internal, X-ray-like view of a hollow shell. The background is simple and clean, as if part of a digital display."
+}

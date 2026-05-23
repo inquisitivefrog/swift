@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tiaojishan_dicksoniaceous_ferns_001",
+    "species": "Dicksoniaceous_Ferns",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TIAOJISHAN",
+    "environment_details": {
+      "habitat": "VOLCANIC_LAKE_MARGIN",
+      "flora": [
+        "Dicksoniaceous Ferns (large, architectural, sub-tree ferns with thick, fibrous trunks)",
+        "Massive, arching fronds with deeply dissected, repetitive leaflets",
+        "Large unfurling fiddleheads near the trunk apex",
+        "Liverwort ground mats"
+      ],
+      "ground_palette": ["Dark Volcanic Ash Gray", "Rich Humus Brown", "Vibrant Lime Green"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; trunks must look like columns of woven brown fiber or hair; fronds are bold and feather-like with clean, simplified geometric leaflets; maintain a lush, humid, tropical look with soft-edged geometry."
+    },
+    "visual_logic": {
+      "composition": "A low-angle view looking upward from the base of a giant Dicksoniaceous fern. Its massive green fronds arch gracefully outward like an emerald umbrella, silhouetted against a soft-focus background of the lake valley.",
+      "ground": "Soft, moist ash gray earth covered in dark humus mulch and thick, velvety cushions of lime-green liverwort mats.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; warm, backlight filtering through the translucent green leaflets, making the fronds glow with internal light."
+    }
+  }
+]

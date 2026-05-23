@@ -1,0 +1,8 @@
+{ 
+  "app_image_config": { 
+    "layer_1_style": "1024x1024 px, high-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures.", 
+    "layer_2_setting": "Setting: A phosphorite vein in a cliff in the Couche III Formation in Morocco.", 
+    "aspect_ratio": "1:1" 
+  }, 
+  "action_description": “A paleontologist attempts to dig out a Spinosaurus skull from the cliff.  Note the vein must have the color of phosphorite." 
+}

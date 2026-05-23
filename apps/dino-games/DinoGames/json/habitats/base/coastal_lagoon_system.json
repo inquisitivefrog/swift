@@ -1,0 +1,44 @@
+{
+  "id": "habitat_coastal_lagoon_system_highnoon_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "COASTAL_LAGOON_SYSTEM", 
+      "formation_id": "ROMUALDO_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Vibrant, sun-drenched tropical lagoon and salt flats",
+      "features": [
+        "Bright turquoise shallow waters over white carbonate sand",
+        "Low-lying limestone reefs breaking the gentle surf",
+        "Stunted, salt-tolerant Araucarian conifers on the shoreline",
+        "Exposed white salt-crusts shimmering in the intense heat",
+        "Clumps of tough, succulent-like Bennettitales near the beach"
+      ],
+      "action": "A high-contrast coastal scene with intense tropical light. The landscape is arid and saline at the water's edge, transitioning to scrubby, prehistoric evergreens. No grass."
+    }
+  },
+  "visuals": {
+    "ground": "Blindingly white carbonate sand and light-colored limestone nodules. Cracked salt-pans in dried depressions. No grass.",
+    "water": "Crystal-clear turquoise water with visible limestone structures beneath the surface.",
+    "sky": "Intense, saturated blue with high-altitude cirrus clouds and shimmering heat haze."
+  },
+  "habitat_id": "COASTAL_LAGOON_SYSTEM",
+  "physics": {
+    "altitude": "sea_level",
+    "water": "hypersaline_brackish",
+    "humidity": "high_arid"
+  },
+  "strata_specifics": {
+    "ground_texture": "Hardened calcarenite, fine white sand, and salt crystals.",
+    "color_palette": ["Turquoise", "Cream White", "Sand Tan", "Olive Green"]
+  },
+  "flora_manifest": [
+    "Araucariaceae",
+    "Bennettitales (Cycadeoidea)",
+    "Brachyphyllum (conifer twigs)",
+    "Salt-crust algae"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, jungle, dark mud, rainforest, river, pine trees, gloom, rainy"
+}

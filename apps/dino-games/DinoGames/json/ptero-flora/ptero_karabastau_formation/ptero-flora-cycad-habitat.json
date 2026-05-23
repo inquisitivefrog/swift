@@ -1,0 +1,24 @@
+[
+  {
+    "id": "karabastau_cycad_001",
+    "species": "Cycads",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "KARABASTAU",
+    "environment_details": {
+      "habitat": "STAGNANT_LAKE_FOREST",
+      "flora": [
+        "Cycads (stout trunks, crown of stiff fronds)",
+        "Palm_like_leaves",
+        "Equisetites"
+      ],
+      "ground_palette": ["Deep Brown", "Forest Green", "Charcoal", "Olive"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; rough, diamond-patterned trunk textures; thick, leathery fronds with a protective, waxy sheen; chunky central cones with stylized details."
+    },
+    "visual_logic": {
+      "composition": "A centered 'hero' shot of a mature Cycad nestled between two large, mossy rocks. Its fronds fan out to fill the mid-ground.",
+      "ground": "Saturated forest floor with layers of dark organic matter and occasional clusters of mossy shale.",
+      "lighting": "Vibrant cinematic light with high-key highlights on the waxy surfaces of the upper fronds."
+    }
+  }
+]

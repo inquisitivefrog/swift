@@ -1,0 +1,19 @@
+{
+    "asset_id": "manifest_excavation_065",
+    "project": "DinoMatrix",
+    "version": "1.0.0",
+    "meta": { 
+      "style_preset": "STYLE_ANIMATED_FEATURE_V3", 
+      "intended_use": "UI_Card_Dig_Stage_3" 
+    },
+    "excavation_context": {
+      "character_id": "dino_bones_preparator_2",
+      "character_description": "An adult female grad student working as a museum preparator, short blonde hair, lightly tanned skin. Wears a light blue tee shirt worn UNDER a white lab coat, white skirt and light blue pumps.",
+      "stage": "Air-Scribing Fine Mudstone Matrix around a Horned Dinosaur Skull",
+      "target_dinosaur": "Triceratops",
+      "geological_formation": "HELL_CREEK",
+      "matrix_material": "Mudstone",
+      "matrix_color": "Yellowish-grey"
+    },
+    "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_preparator_2 sits at her lab workbench under focused overhead task lighting, guiding a thin pneumatic air-scribe tool across a block of soft yellowish-grey mudstone matrix. The fine sedimentary rock flakes away neatly, slowly revealing the large, curved brow horn and bony frill of a Triceratops skull. 1:1 Square aspect ratio."
+  }

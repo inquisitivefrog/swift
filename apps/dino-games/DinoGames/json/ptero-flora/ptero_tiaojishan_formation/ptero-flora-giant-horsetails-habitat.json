@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tiaojishan_giant_horsetails_001",
+    "species": "Giant_Horsetails",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TIAOJISHAN",
+    "environment_details": {
+      "habitat": "VOLCANIC_LAKE_MARGIN",
+      "flora": [
+        "Giant Horsetails (towering, bamboo-like ribbed stalks with prominent, ring-like joints)",
+        "Whorled, scale-like lateral branches",
+        "Terminal spore cones (honeycomb patterns at stalk tips)",
+        "Low fern undergrowth"
+      ],
+      "ground_palette": ["Dark Volcanic Ash Gray", "Charcoal Slate", "Deep Olive Moss"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; stalks should look thick, organic, and slightly fleshy rather than perfectly straight industrial pipes; emphasize the bold, repeating dark rings at the nodes; soft-touch volume."
+    },
+    "visual_logic": {
+      "composition": "A low-angle, sweeping look through a dense stand of giant reed-like horsetails growing along a dark lake edge. The ribbing on the trunks creates strong vertical lines reaching toward a hazy, ash-tinted sky.",
+      "ground": "Damp, charcoal-tinted volcanic ash earth scattered with broken, hollow green stem segments and smooth slate pebbles.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; sun rays breaking through volcanic haze, casting dramatic, elongated bar-shadows across the dark ground."
+    }
+  }
+]

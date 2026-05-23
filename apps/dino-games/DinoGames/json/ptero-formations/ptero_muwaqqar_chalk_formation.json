@@ -1,0 +1,32 @@
+{
+  "id": "habitat_nearshore_marine_margin_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3", "framing": "SQUARE_HERO_CARD" },
+    "layer_2_setting": { 
+      "habitat_id": "TETHYS_COASTAL_MARGIN", 
+      "formation_id": "MUWAQQAR_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "An open coastal margin of the ancient Tethys Ocean",
+      "features": [
+        "White chalky cliffs and marl shorelines",
+        "Vast, calm marine waters with deep blue hues",
+        "Occasional phosphatic sandbars reflecting the sun",
+        "Sargassum-like floating kelp mats near the shore"
+      ]
+    }
+  },
+  "visuals": {
+    "ground": "Soft white chalk and grey marl. High phosphate content gives sand a yellowish-grey tint.",
+    "water": "Deep, clear marine water with high nutrient content (plankton rich).",
+    "sky": "Limitless, hazy coastal sky."
+  },
+  "habitat_id": "TETHYS_COASTAL_MARGIN",
+  "physics": { "altitude": "sea_level", "water": "marine_pelagic", "humidity": "moderate_high" },
+  "strata_specifics": {
+    "ground_texture": "Soft chalk, marl, and phosphatic limestone.",
+    "color_palette": ["Pure White", "Deep Ocean Blue", "Light Grey", "Golden Sand"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE"],
+  "fauna_manifest": ["Enchodus", "Global Mosasaurs", "Large Ammonites"]
+}

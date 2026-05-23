@@ -1,0 +1,25 @@
+[
+  {
+    "id": "santana_early_angiosperm_quad_001",
+    "species": "Early_Angiosperm_lilypads",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "environment_details": {
+      "habitat": "COASTAL_LAGOON_MARGIN",
+      "flora": [
+        "Primitive lily pad (small, circular floating leaf with a distinct, deep V-shaped notch)",
+        "Simple flower blossom (few petals, prominent central carpels, simple structure)",
+        "Fibrous roots and petiole (thick, translucent underwater stem connecting the pad)",
+        "Venation closeup (primitive, irregular branching veins on a waxy green surface)"
+      ],
+      "ground_palette": ["Golden Sand", "Pale Limestone", "Soft Teal Water"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; avoid wide, fragile, modern lily configurations; give the pads a slightly fleshy, rubbery edge; water elements should feel crystalline and clean."
+    },
+    "visual_logic": {
+      "composition": "Quadrant composition: Top-Left: a solitary, waxy green notched lily pad floating on a thin layer of teal water; Top-Right: a simple primitive white flower floating face-up; Bottom-Left: a side view of the thick petiole and root strands; Bottom-Right: extreme close-up of the irregular, non-parallel vein network on a leaf surface.",
+      "ground": "Clear, shallow lagoon water over fine golden sand, creating a crisp and colorful baseline.",
+      "lighting": "Clean diffused daylight with subtle reflections on the waxy leaf surfaces to emphasize texture."
+    }
+  }
+]

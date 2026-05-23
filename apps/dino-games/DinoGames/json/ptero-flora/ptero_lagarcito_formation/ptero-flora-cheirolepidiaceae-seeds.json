@@ -1,0 +1,25 @@
+[
+  {
+    "id": "lagarcito_cheirolepidiaceae_quad_001",
+    "species": "Cheirolepidiaceae (conifers)",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "LAGARCITO",
+    "environment_details": {
+      "habitat": "PLAYA_LAKE_SYSTEM",
+      "flora": [
+        "Succulent needle (thick, scale-like, rounded water-storing form)",
+        "Male pollen cone (small, cylindrical, dusty yellow texture)",
+        "Female seed cone (spherical, tightly closed scales, woody)",
+        "Fossilized branchlet (preserved in siltstone, showing scale patterns)"
+      ],
+      "ground_palette": ["Dusty Rose", "Ochre", "Pale Teal", "Salmon"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; succulent leaves appear plump and 'soft-touch'; cones have chunky, geometric scales; vibrant greens contrasting with the dusty rose earth."
+    },
+    "visual_logic": {
+      "composition": "Quadrant composition: Top-Left: a close-up of the scale-like succulent needles; Top-Right: a cluster of male pollen cones; Bottom-Left: a mature spherical female cone; Bottom-Right: an impression of a branch in a slab of salmon-colored siltstone.",
+      "ground": "Dry, cracked playa mud with white crystalline salt flecks.",
+      "lighting": "Studio-style soft lighting to emphasize the plump, 3D volume of the succulent needles."
+    }
+  }
+]

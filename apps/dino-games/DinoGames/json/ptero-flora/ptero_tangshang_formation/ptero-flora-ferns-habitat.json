@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tangshang_ferns_001",
+    "species": "Ferns",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TANGSHANG",
+    "environment_details": {
+      "habitat": "SUBTROPICAL_RIVER_VALLEY",
+      "flora": [
+        "Thick carpet ferns (dense, lush fronds with highly repetitive rounded leaflets)",
+        "Fiddleheads (unfurling tightly wound spirals emerging from the base)",
+        "Decaying woody logs",
+        "Liverworts and mosses"
+      ],
+      "ground_palette": ["Rich Silt Brown", "Vibrant Emerald Green", "Mossy Green"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the rhythm of the repeating fronds; fiddleheads should look plump, smooth, and deliberately stylized; avoid wispy or fragile leaf stems; emphasize a heavy, ancient, and verdant undergrowth feel."
+    },
+    "visual_logic": {
+      "composition": "A ground-level macro shot looking across a dense glade of lush ferns. A few prominent, oversized green fiddleheads form the focal point in the foreground, crisp against the soft-focus backdrop of the glade.",
+      "ground": "Dark, damp charcoal clay earth peeking through a dense layer of vibrant green ground cover and decaying, moss-covered wood.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; sun-dappled forest light filtering down in sharp beams, illuminating the waxy transparency of the unfurling fiddleheads."
+    }
+  }
+]

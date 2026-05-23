@@ -1,0 +1,67 @@
+{
+  "asset_id": "matrix_layout_ironstone_multi_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Rock_Sample_Match_Card"
+  },
+  "canvas_constraints": {
+    "aspect_ratio": "1:1 (Square Layout)",
+    "target_resolution": "1024x1024"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Three-quarter angled perspective",
+      "angle": "Dynamic angled close shot on the three foreground sample blocks, opening up to a massive gorge landscape"
+    },
+    "foreground_element": {
+      "type": "Multiple Material Blocks Array",
+      "rock_type": "Ironstone Variant Set",
+      "placement": "Three blocks arranged side-by-side on a flat, barren, hard-packed earth plain",
+      "blocks": [
+        {
+          "block_id": "iron_color_x",
+          "geometry": "3D stylized rectangular block, pitted concretion crusts",
+          "color": "Vibrant Rust Orange",
+          "texture": "Highly oxidized, crusty, and granular"
+        },
+        {
+          "block_id": "iron_color_y",
+          "geometry": "3D stylized rectangular block, pitted concretion crusts",
+          "color": "Dark Metallic Charcoal",
+          "texture": "Dense, heavy iron-silicate concretion face"
+        },
+        {
+          "block_id": "iron_color_z",
+          "geometry": "3D stylized rectangular block, pitted concretion crusts",
+          "color": "Deep Chocolate Brown",
+          "texture": "Limonitic matte earth stone face"
+        }
+      ]
+    },
+    "background_environment": {
+      "habitat_archetype": "Oxidized Canyon Badlands",
+      "geological_mapping": [
+        {
+          "zone_name": "Eroding Talus Slopes",
+          "color_profile": "Vibrant Rust Orange (Matches Block Color X)",
+          "description": "Loose scree slopes bleeding down the base of the canyon cliffs."
+        },
+        {
+          "zone_name": "Prominent Hard Ledges",
+          "color_profile": "Dark Metallic Charcoal (Matches Block Color Y)",
+          "description": "Thick, heavy, weather-resistant cap-rocks forming structural shelves near the canyon rims."
+        },
+        {
+          "zone_name": "Lower Gorge Shadows",
+          "color_profile": "Deep Chocolate Brown (Matches Block Color Z)",
+          "description": "Massive structural canyon tiers exposed deep inside the shaded recesses of the ravine."
+        }
+      ],
+      "lighting": "Bright, direct overhead daylight casting high-contrast shadows that accentuate the metallic and oxidized volumes of both the blocks and the canyon walls."
+    }
+  }
+}

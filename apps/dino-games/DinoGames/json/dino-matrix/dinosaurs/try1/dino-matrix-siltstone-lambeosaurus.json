@@ -1,0 +1,16 @@
+{
+    "asset_id": "manifest_excavation_005_alt",
+    "project": "DinoMatrix",
+    "version": "1.0.0",
+    "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "intended_use": "UI_Card_Dig_Stage_3" },
+    "excavation_context": {
+      "character_id": "dino_bones_paleontologist_2",
+      "character_description": "Adult male grad student, short red hair, freckled skin, wearing a khaki baseball cap, grey short-sleeve button-down shirt over a white tee shirt, khaki cargo pants, and brown hiking boots.",
+      "stage": "Extracting Fossil with Precision Tools",
+      "target_dinosaur": "Lambeosaurus",
+      "geological_formation": "DINOSAUR_PARK",
+      "matrix_material": "Siltstone",
+      "matrix_color": "Sulfur Yellow"
+    },
+    "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_paleontologist_2 is on his knees using a sharp dental pick to isolate a flat siltstone block. The fine-grained, chalky sulfur yellow siltstone matrix is being carved away from the hollow, hatchet-shaped crest of a Lambeosaurus skull. Low horizon framing under bright morning daylight. 1:1 Square aspect ratio."
+  }

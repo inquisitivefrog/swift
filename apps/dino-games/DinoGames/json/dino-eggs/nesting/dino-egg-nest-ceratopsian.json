@@ -1,0 +1,7 @@
+{
+    "id": "ui_nest_clue_ceratopsian_square",
+    "clade": "ceratopsian",
+    "prompt": "High-fidelity 3D animated feature film style educational game clue graphic. A dinosaur nesting site in a humid forest clearing. A low mound made of a thick pile of leaves and decaying green cycad vegetation sits over a hidden underground depression. Two elongated, leathery-textured plain white eggs are partially visible where the vegetation has shifted. A single bright red apple is placed neatly on top of the organic compost pile for scale. Background features towering conifers and a soft atmospheric mist under direct high-key Cretaceous sunlight. Perfectly centered 1:1 square composition, formatted as a square hero card with a strict 25% negative space buffer on all boundaries.",
+    "visual_logic": "Shows a ceratopsian nest clue: a rotting vegetation compost pile with mostly buried, unpigmented eggs, using an apple for scale.",
+    "style_notes": "SQUARE_HERO_CARD, STYLE_ANIMATED_FEATURE_V3. No scale bars. Ensure the leaf pile textures look organic, damp, and tactile."
+  }

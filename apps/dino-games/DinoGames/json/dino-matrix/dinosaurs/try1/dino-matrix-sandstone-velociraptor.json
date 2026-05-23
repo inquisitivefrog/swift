@@ -1,0 +1,21 @@
+[
+  {
+    "asset_id": "manifest_excavation_001",
+    "project": "DinoMatrix",
+    "version": "1.0.0",
+    "meta": {
+      "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+      "intended_use": "UI_Card_Dig_Stage_1"
+    },
+    "excavation_context": {
+      "character_id": "dino_bones_paleontologist_1",
+      "character_description": "Adult female grad student, long blonde hair, tanned skin, wearing a white sun hat, light pink blouse under a khaki safari vest, and white shorts.",
+      "stage": "Prospecting and Initial Discovery",
+      "target_dinosaur": "Velociraptor",
+      "geological_formation": "DJADOKHTA",
+      "matrix_material": "Sandstone",
+      "matrix_color": "Desert Orange"
+    },
+    "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_paleontologist_1 is kneeling on a vast desert dune, using a soft fine-bristle brush to sweep away loose desert orange sandstone grains. She has just uncovered the delicate white tip of a Velociraptor skull embedded inside a solid sandstone block. Wide landscape camera view tracking back to low desert dunes under bright sunlight. 1:1 Square aspect ratio.”
+  }
+]

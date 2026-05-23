@@ -1,0 +1,67 @@
+{
+  "asset_id": "matrix_layout_lignite_multi_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Rock_Sample_Match_Card"
+  },
+  "canvas_constraints": {
+    "aspect_ratio": "1:1 (Square Layout)",
+    "target_resolution": "1024x1024"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Three-quarter angled perspective",
+      "angle": "Angled close shot tracking from the three foreground blocks back to a low-horizon delta riverbank"
+    },
+    "foreground_element": {
+      "type": "Multiple Material Blocks Array",
+      "rock_type": "Lignite Variant Set",
+      "placement": "Three blocks arranged neatly on a flat, damp silt plain near a river edge",
+      "blocks": [
+        {
+          "block_id": "coal_color_x",
+          "geometry": "3D stylized rectangular block with brittle, flaky fractured corners",
+          "color": "Deep Jet Black",
+          "texture": "Highly carbonized, brittle parallel compression sheets"
+        },
+        {
+          "block_id": "coal_color_y",
+          "geometry": "3D stylized rectangular block with brittle, flaky fractured corners",
+          "color": "Dull Soot Grey",
+          "texture": "High-ash siltaceous coal face, dusty texture"
+        },
+        {
+          "block_id": "coal_color_z",
+          "geometry": "3D stylized rectangular block with brittle, flaky fractured corners",
+          "color": "Rich Dark Espresso Brown",
+          "texture": "Fibrous, woody lignite compression layer showing preserved grain"
+        }
+      ]
+    },
+    "background_environment": {
+      "habitat_archetype": "Lowland Delta / Swamp Basin Margin",
+      "geological_mapping": [
+        {
+          "zone_name": "Primary Coal Seam Core",
+          "color_profile": "Deep Jet Black (Matches Block Color X)",
+          "description": "The pure, high-density organic core layer passing horizontally across the middle of the river embankment."
+        },
+        {
+          "zone_name": "Weathered Upper Overburden",
+          "color_profile": "Dull Soot Grey (Matches Block Color Y)",
+          "description": "The dusty, degraded margin where the coal layer grades directly into sandy soil beds near the surface."
+        },
+        {
+          "zone_name": "Eroded Basin Floor Channels",
+          "color_profile": "Rich Dark Espresso Brown (Matches Block Color Z)",
+          "description": "Exposed structural benches cutting down into fossil-wood rich humic muck beds along the bottom of the bank."
+        }
+      ],
+      "lighting": "Diffused but clear overhead cinematic lighting, catching the flaky sheet edges without blowing out the dark, rich tonal gradients."
+    }
+  }
+}

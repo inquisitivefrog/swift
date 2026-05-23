@@ -1,0 +1,25 @@
+[
+  {
+    "id": "plottier_hardy_fern_quad_001",
+    "species": "Hardy_drought_resistant_ferns",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "PLOTTIER",
+    "environment_details": {
+      "habitat": "SEMI_ARID_PLAINS",
+      "flora": [
+        "Leathery pinna (individual leaflet with rounded, thick edges)",
+        "Fossilized frond (impression in red siltstone)",
+        "Protective scales (fuzzy, bronze-colored base of the plant)",
+        "Cured frond (dried, brown, curled-up dormant leaf)"
+      ],
+      "ground_palette": ["Variegated Red", "Ochre", "Pinkish-Grey", "Tan"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; thick, durable leaf textures; focus on the 'fuzzy' protective base; avoid thin or wispy elements; emphasize the resilience required for semi-arid life."
+    },
+    "visual_logic": {
+      "composition": "Tiled layout: Top-Left: a close-up of a vibrant but leathery green leaflet; Top-Right: a beautiful leaf impression in a slab of red Plottier stone; Bottom-Left: the fuzzy, scaled base of the fern crown; Bottom-Right: a dormant, curled-up brown frond.",
+      "ground": "Pinkish-grey sandy soil with ripples, typical of wind-blown plains.",
+      "lighting": "Even, bright light to clearly distinguish the bronze 'fur' from the green leaf tissue and red rock."
+    }
+  }
+]

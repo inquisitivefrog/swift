@@ -1,0 +1,25 @@
+[
+  {
+    "id": "karabastau_cycad_quad_001",
+    "species": "Cycads",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "KARABASTAU",
+    "environment_details": {
+      "habitat": "STAGNANT_LAKE_FOREST",
+      "flora": [
+        "Cycad seed (large, waxy, bright orange-red)",
+        "Central cone (tall, robust, textured scales)",
+        "Young frond (unfurling with soft, rounded leaflets)",
+        "Trunk texture (diamond-shaped leaf base scars)"
+      ],
+      "ground_palette": ["Deep Brown", "Forest Green", "Charcoal", "Olive"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; chunky and robust proportions; leathery, tactile textures; bold color pops for seeds."
+    },
+    "visual_logic": {
+      "composition": "Quadrant layout: Top-Left: A close-up of a vibrant orange seed; Top-Right: The imposing central cone; Bottom-Left: A soft, unfurling new frond; Bottom-Right: A close-up of the diamond-patterned bark.",
+      "ground": "Dark forest floor with bits of olive-colored moss and charcoal-grey shale.",
+      "lighting": "Even, bright light to showcase the contrast between the rough trunk and the waxy seeds."
+    }
+  }
+]

@@ -1,0 +1,47 @@
+{
+  "id": "habitat_plottier_braided_river_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "ARID_BRAIDED_RIVER_SYSTEM", 
+      "formation_id": "PLOTTIER_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "A massive, arid floodplain dominated by giant red sandstone outcrops",
+      "features": [
+        "Braided river channels with shifting red sand and gravel bars",
+        "Massive, weathered red sandstone cliffs in the background",
+        "Sparse, hardy vegetation concentrated near the water channels",
+        "Intense, direct sunlight creating sharp, dark shadows",
+        "A vast, wide-open horizon to accommodate giant flyers"
+      ],
+      "action": "A harsh, majestic landscape under an immense sky. The scale is monumental. The ground is dry, pebbly, and vibrant red. No grass."
+    }
+  },
+  "visuals": {
+    "ground": "Coarse red sand, pebbles, and sun-baked clay. Vegetation is sparse and scrub-like. No grass.",
+    "water": "Multiple shallow, fast-moving channels of silty, reddish water.",
+    "sky": "Intense, deep blue; wide-angle perspective to emphasize the scale of the sky."
+  },
+  "habitat_id": "ARID_BRAIDED_RIVER_SYSTEM",
+  "physics": {
+    "altitude": "continental_basin",
+    "water": "shallow_braided",
+    "humidity": "low"
+  },
+  "strata_specifics": {
+    "ground_texture": "Red sandstone and conglomerate gravels.",
+    "color_palette": ["Crimson", "Deep Orange", "Sky Blue", "Dusty Olive"]
+  },
+  "flora_manifest": [
+    "Podocarp Conifers",
+    "Equisetites (Horsetails)",
+    "Hardy drought-resistant ferns"
+  ],
+  "fauna_manifest": [
+    "Juvenile Titanosaurs (prey)",
+    "Large terrestrial lizards",
+    "Crocodylomorphs"
+  ],
+  "negative_prompt": "grass, flowers, swamp, jungle, snow, city, humans"
+}

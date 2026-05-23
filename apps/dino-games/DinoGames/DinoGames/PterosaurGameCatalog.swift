@@ -29,6 +29,8 @@ enum PterosaurGameCatalog {
         case .level3:
             return [
                 .guess(GuessGameConfigs.pteroFootprints),        // Ptero Footprints
+                .pteroFlora(PteroFloraGameConfigs.pteroFloraKarabastau),
+                .pteroEggs(PteroEggsGameConfigs.pteroEggs),       // Ptero Eggs!
             ]
         case .level6:
             return [

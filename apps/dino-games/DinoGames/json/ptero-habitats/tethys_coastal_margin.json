@@ -1,0 +1,21 @@
+{
+  "id": "habitat_tethys_coastal_margin_027",
+  "species": "General_Habitat_Flora",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_COASTAL_GLARE",
+  "formation_ref": "MUWAQQAR_CHALK",
+  "environment_details": {
+    "habitat": "TETHYS_COASTAL_MARGIN",
+    "flora": [
+      "Floating Sargassum-type algae (forming large golden-brown mats)",
+      "Lithothamnion (pinkish coralline algae on rocks)",
+      "Thalassotaenia (Seagrass) visible in the clear shallows"
+    ],
+    "ground_palette": ["Chalk White", "Deep Sea Blue", "Golden Brown"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; high-key lighting; the white chalk cliffs should reflect a bright, clean light."
+  },
+  "visual_logic": {
+    "composition": "A view from a white chalk cliff looking down at the turquoise Tethys Ocean. Patches of brown algae float on the waves.",
+    "ground": "Soft white chalk dust and grey-marl pebbles."
+  }
+}

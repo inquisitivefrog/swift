@@ -1,0 +1,25 @@
+[
+  {
+    "id": "muwaqqar_dinoflagellate_quad_001",
+    "species": "Dinoflagellates",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "MUWAQQAR_CHALK",
+    "environment_details": {
+      "habitat": "TETHYS_COASTAL_MARGIN",
+      "flora": [
+        "Theca (armored cell wall with distinctive grooves)",
+        "Flagella (slender, stylized whip-like appendages)",
+        "Cyst (resting stage, thicker walled, dormant texture)",
+        "Bioluminescent glow (swirling light pattern in dark water)"
+      ],
+      "ground_palette": ["Pure White", "Deep Ocean Blue", "Light Grey", "Golden Sand"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; semi-translucent 'bio-plastic' look; vibrant neon-green and blue accents; smooth, flowing lines for the flagella."
+    },
+    "visual_logic": {
+      "composition": "Quadrant composition: Top-Left: the armored main cell body; Top-Right: a close-up of the groove and flagella; Bottom-Left: the hardy, textured cyst; Bottom-Right: an abstract tile showing the vibrant bioluminescent effect.",
+      "ground": "Deep indigo-blue water column with suspended 'marine snow' particles.",
+      "lighting": "Balanced diffused light with a gentle internal bioluminescent glow in the lower tiles."
+    }
+  }
+]

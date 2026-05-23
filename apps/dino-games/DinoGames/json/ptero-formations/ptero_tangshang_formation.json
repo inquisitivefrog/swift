@@ -1,0 +1,48 @@
+{
+  "id": "habitat_tangshang_river_valley_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3", "framing": "SQUARE_HERO_CARD" },
+    "layer_2_setting": { 
+      "habitat_id": "SUBTROPICAL_RIVER_VALLEY", 
+      "formation_id": "TANGSHANG_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "A Late Cretaceous river valley with a mix of old and modern flora",
+      "features": [
+        "A wide, winding river with sandy point bars",
+        "Scattered groves of early deciduous hardwoods (Angiosperms)",
+        "Stands of tall, slender conifers on the valley slopes",
+        "Patches of early flowering plants near the water's edge",
+        "Clear, bright sky with high-altitude haze"
+      ],
+      "action": "A transitional landscape between the ancient Mesozoic and a more modern-looking world. The ground is sandy with patches of scrubby vegetation and ferns. No grass."
+    }
+  },
+  "visuals": {
+    "ground": "Sandy river deposits and yellowish-grey silt. Dense fern thickets and the first appearances of modern-looking leaf litter. No grass.",
+    "water": "Meandering freshwater river; relatively clear with sandy bottom visible in shallows.",
+    "sky": "Bright, pale blue with occasional wispy clouds."
+  },
+  "habitat_id": "SUBTROPICAL_RIVER_VALLEY",
+  "physics": {
+    "altitude": "lowland_valley",
+    "water": "freshwater_fluvial",
+    "humidity": "moderate"
+  },
+  "strata_specifics": {
+    "ground_texture": "Siltstone and medium-grained sandstone.",
+    "color_palette": ["Sand Tan", "Sage Green", "Pale Blue", "Ochre"]
+  },
+  "flora_manifest": [
+    "Early Angiosperm hardwoods",
+    "Conifers",
+    "Ferns",
+    "Ginkgos"
+  ],
+  "fauna_manifest": [
+    "Freshwater turtles",
+    "Small theropods",
+    "Late Cretaceous insects"
+  ],
+  "negative_prompt": "grass, jungle, volcanic ash, snow, deep ocean"
+}

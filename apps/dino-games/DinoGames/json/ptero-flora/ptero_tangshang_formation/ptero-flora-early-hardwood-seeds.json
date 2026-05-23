@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tangshang_early_hardwood_quad_001",
+    "species": "Early_Angiosperm_hardwoods",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "TANGSHANG",
+    "environment_details": {
+      "habitat": "SUBTROPICAL_RIVER_VALLEY",
+      "flora": [
+        "Simple oval leaf (close-up showing a serrated, jagged margin and a prominent central vein)",
+        "Primitive flower cluster (tiny, inconspicuous green-white blossoms bundled tightly on a branch node)",
+        "Smooth bark section (macro view of light grey bark with scattered, raised breathing pores)",
+        "Young seedling (sturdy, upright woody shoot with a pair of thick, waxy cotyledon leaves)"
+      ],
+      "ground_palette": ["Rich Silt Brown", "Mossy Green", "Dark Charcoal Clay"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on small-scale botanical anatomy; leaf margins must look distinctly jagged but smooth-edged; avoid complex flower configurations; emphasize thick, tactile plant tissues."
+    },
+    "visual_logic": {
+      "composition": "A quadrant layout: Top-Left: a single, crisp oval leaf showcasing jagged margins; Top-Right: a bundle of tiny primitive flower clusters along a branch; Bottom-Left: a macro study of the smooth grey bark surface; Bottom-Right: a stout young seedling emerging cleanly.",
+      "ground": "A uniform backdrop of damp, rich silt brown clay, providing a clean, distraction-free stage for the specimens.",
+      "lighting": "Bright, even diffused daylight to illuminate internal vein logic and flower clusters without creating high-contrast shadows."
+    }
+  }
+]

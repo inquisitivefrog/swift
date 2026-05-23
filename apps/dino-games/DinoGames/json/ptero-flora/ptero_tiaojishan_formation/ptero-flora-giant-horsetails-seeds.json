@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tiaojishan_giant_horsetails_quad_001",
+    "species": "Giant_Horsetails",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "TIAOJISHAN",
+    "environment_details": {
+      "habitat": "VOLCANIC_LAKE_MARGIN",
+      "flora": [
+        "Ribbed stem joint (close-up of a thick hollow node, showing an organic tooth-like black-tipped sheath)",
+        "Lateral branch whorl (a cluster of slender, segmented green shoots radiating from a nodal ring)",
+        "Spore-bearing strobilus (terminal cone showing a distinct, geometric honeycomb scale pattern)",
+        "Anatomical stem cross-section (showing an organized ring of hollow vascular chambers and pith)"
+      ],
+      "ground_palette": ["Dark Volcanic Ash Gray", "Charcoal Slate", "Deep Olive Moss"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; structural and chunky; avoid perfectly smooth tubes or manufactured plumbing textures; plant tissues must look fibrous, fleshy, and organic; soft-touch volume."
+    },
+    "visual_logic": {
+      "composition": "A quadrant layout: Top-Left: a macro focus on a thick ribbed stem joint with its jagged sheath ring; Top-Right: a radiating spray of segmented lateral branches; Bottom-Left: a hero shot of a terminal spore cone; Bottom-Right: a clean anatomical cross-section showing internal hollow chambers.",
+      "ground": "A flat, clean surface of dark ash gray siltstone, creating a neutral backdrop that highlights the green specimens.",
+      "lighting": "Bright, even diffused daylight to bring out the micro-textures of the ribbing and internal chambers cleanly."
+    }
+  }
+]

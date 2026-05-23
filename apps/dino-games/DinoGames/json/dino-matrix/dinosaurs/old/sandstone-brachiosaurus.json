@@ -1,0 +1,8 @@
+{ 
+  "app_image_config": { 
+    "layer_1_style": "1024x1024 px, high-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures.", 
+    "layer_2_setting": "Setting: A dried up riverbed of sandstone conglomerate in the Morrison Formation in Colorado.", 
+    "aspect_ratio": "1:1" 
+  }, 
+  "action_description": “A paleontologist attempts to dig out a Brachiosaurus foot from a shallow hole in the riverbed.   Note the hole must look the color of sandstone." 
+}

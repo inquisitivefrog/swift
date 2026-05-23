@@ -1,0 +1,6 @@
+{
+      "id": "ui_nest_basal_microburrow",
+      "dimensions": "SQUARE_ASPECT_RATIO",
+      "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up view looking directly into a small, secretive micro-burrow dug deep into a vertical, moss-covered earth bank. Tucked safely inside the tiny subterranean tunnel is a clutch of four strawberry-sized, highly elongated pale cream eggs, appearing delicately deflated with fine surface wrinkles. The interior of the burrow is visibly damp, with tiny droplets of condensation clinging to the rich soil walls. SETTING: Humid, mossy riverbank environment inspired by the SOLNHOFEN limestone microclimates. LIGHTING: Focused, soft directional lighting peeking into the mouth of the burrow to illuminate the tiny, delicate eggs. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+      "visual_logic": "Combines two visual clues: tiny strawberry-sized, hyper-deflated eggs (Clue 1) and a hidden, high-humidity subterranean micro-burrow (Clue 2) to indicate the Basal clade."
+    }

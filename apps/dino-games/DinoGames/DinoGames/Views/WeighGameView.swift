@@ -765,9 +765,22 @@ struct WeighGameView: View {
         }
     }
 
+    /// Recap rows: weighed creatures with weigh-grid art introduced during play.
+    private var weighVictoryRecapItems: [VictoryRecapDisplayItem] {
+        dinosaursWeighed.map { item in
+            let imageName = item.imageName.flatMap { ImageAssetCache.imageExists(named: $0) ? $0 : nil }
+            return VictoryRecapDisplayItem(
+                id: "\(item.id)",
+                title: item.name,
+                imageAssetName: imageName,
+                fallbackEmoji: item.emoji
+            )
+        }
+    }
+
     /// Recap list height: up to `StandardVictoryLayout.maxVisibleRecapRows` rows visible; longer lists scroll.
     private var victoryListVisibleHeight: CGFloat {
-        StandardVictoryLayout.recapListScrollHeight(itemCount: dinosaursWeighed.count)
+        StandardVictoryLayout.recapListScrollHeight(itemCount: weighVictoryRecapItems.count)
     }
 
     /// Victory screen: same as Dino Diets / Match the Dinosaur — top half list (highlight + name audio), bottom half success image (centered, no wrapper), then good-job + crowd and dismiss.
@@ -778,30 +791,10 @@ struct WeighGameView: View {
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
             scrollRows: {
-                ForEach(Array(dinosaursWeighed.enumerated()), id: \.offset) { index, item in
-                    let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                    HStack(spacing: 16) {
-                        weighVictoryImage(item: item, isHighlighted: isHighlighted)
-                        Text(item.name)
-                            .font(.title2)
-                            .fontWeight(isHighlighted ? .semibold : .regular)
-                            .foregroundColor(.primary)
-                            .multilineTextAlignment(.leading)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.8)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .opacity(isHighlighted ? 1.0 : 0.5)
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
-                    .frame(height: StandardVictoryLayout.rowHeight)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                ForEach(Array(weighVictoryRecapItems.enumerated()), id: \.element.id) { index, item in
+                    StandardVictoryRecapRowView(
+                        item: item,
+                        isHighlighted: endSequenceStep >= 1 && index == endHighlightIndex
                     )
                     .id(index)
                 }
@@ -831,28 +824,6 @@ struct WeighGameView: View {
         }
     }
 
-    private func weighVictoryImage(item: WeighableItem, isHighlighted: Bool) -> some View {
-        Group {
-            if let name = item.imageName, ImageAssetCache.imageExists(named: name) {
-                Image(name)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 72, height: 72)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .opacity(isHighlighted ? 1.0 : 0.4)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
-                    )
-            } else {
-                Text(item.emoji)
-                    .font(.system(size: 40))
-                    .frame(width: 72, height: 72)
-                    .opacity(isHighlighted ? 1.0 : 0.4)
-            }
-        }
-    }
-    
     private func advanceWeighEndHighlight() {
         speechManager.onAudioFinished = nil
         endHighlightIndex += 1

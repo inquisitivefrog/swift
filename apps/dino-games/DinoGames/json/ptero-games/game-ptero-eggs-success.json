@@ -1,0 +1,29 @@
+{
+  "id": "game_card_02_player_wins",
+  "project_name": "Ptero Eggs",
+  "style_ref": "STYLE_3D_ANIMATED_FEATURE_ORGANIC_TEXTURES",
+  "subject": "Three different friendly pterosaurs grouped in a natural habitat, all smiling triumphantly.",
+  "composition": {
+    "foreground": {
+      "pterosaur_1": "Pteranodon (Ornithocheiroid): Three-quarter view, proud happy smile, large backward-pointing head crest, smooth pelican-like beak, positioned prominently.",
+      "pterosaur_2": "Pterodaustro (Specialist): Three-quarter view, cheerful smile, upward-curving lower jaw with fine bristles, soft pycnofiber-coated body, positioned beside Pteranodon.",
+      "pterosaur_3": "Quetzalcoatlus (Azhdarchid): Three-quarter view, brave happy smile, towering giraffe-like neck profile, folded leathery wing membranes, in the background looking contented."
+    },
+    "background": "Open, sunny prehistoric coastal beach with a ground sand-scrape nest containing soft-shelled eggs, distant coastal cliffs and a clear blue sky. Celebratory, light atmosphere.",
+    "grouping": "Pterosaurs are posed on all fours or perched in a way that conveys happiness and success, looking out at the player."
+  },
+  "typography": {
+    "caption_1": {
+      "text": "Ptero Eggs!",
+      "style": "Bright sky-blue, thick 3D mixed-case block letters, positioned top-center."
+    },
+    "caption_2": {
+      "text": "Player Wins!",
+      "style": "Shiny gold, bold 3D mixed-case block letters, positioned clearly below 'Ptero Eggs!', possibly with a subtle celebratory sparkle effect. Text is slightly textured, like polished gold."
+    }
+  },
+  "visual_logic": {
+    "overall_mood": "Celebratory, rewarding, successful. Emphasizes the positive outcome of the game.",
+    "color_palette": "Bright sunny yellows, vivid coastal teals, warm golden sands, with the sky-blue and gold captions standing out."
+  }
+}

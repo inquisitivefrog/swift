@@ -1,0 +1,25 @@
+[
+  {
+    "id": "santana_araucariaceae_quad_001",
+    "species": "Araucariaceae",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "environment_details": {
+      "habitat": "COASTAL_LAGOON_MARGIN",
+      "flora": [
+        "Mature seed cone (large, heavy sphere with sharply pointed, interlocking scales)",
+        "Triangular leaf whorl (thick, leathery, awl-shaped leaves clasping the stem)",
+        "Winged seed (flattened, nut-like structure with translucent lateral wings)",
+        "Armored bark detail (overlapping geometric plates with a rough, resinous texture)"
+      ],
+      "ground_palette": ["Golden Sand", "Pale Limestone", "Soft Teal Water"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; chunky, geometric proportions; emphasize the heavy, armored nature of the ancient conifer; textures should feel thick, stiff, and highly tactile."
+    },
+    "visual_logic": {
+      "composition": "A quadrant layout: Top-Left: a dense, spherical green seed cone; Top-Right: a detailed close-up of the overlapping, sharp triangular leaves; Bottom-Left: a solitary wedge-shaped winged seed; Bottom-Right: a macro study of the geometric bark plates.",
+      "ground": "A flat, clean surface of fine golden beach sand, serving as a neutral background for the specimen components.",
+      "lighting": "Bright, even diffused daylight to bring out the deep greens of the foliage and the rough texture of the cone scales."
+    }
+  }
+]

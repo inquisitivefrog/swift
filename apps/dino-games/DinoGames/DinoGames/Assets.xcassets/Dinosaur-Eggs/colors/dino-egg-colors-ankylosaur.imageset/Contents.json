@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "dino-egg-colors-ankylosaur-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "dino-egg-colors-ankylosaur-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "dino-egg-colors-ankylosaur-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

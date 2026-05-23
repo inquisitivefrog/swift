@@ -1,0 +1,30 @@
+[
+  {
+    "id": "dinosaur_park_taxodiaceous_conifers_001",
+    "species": "Taxodiaceous_Conifers",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DINOSAUR_PARK",
+    "environment_details": {
+      "habitat": "COASTAL_LOWLANDS",
+      "flora": [
+        "Taxodiaceous_Conifers (massive, swamp-cypress-like trunks)",
+        "Platanoid_leaves (as mid-story growth)",
+        "Fern_undergrowth (dense at the base)",
+        "Moss-covered bark"
+      ],
+      "ground_palette": [
+        "Olive Gray",
+        "Pale Gray",
+        "Brownish-Gray",
+        "Dark Gray"
+      ],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; thick, fibrous bark with chunky, rounded textures; needles appear as soft, clustered tufts; emphasis on the massive, ancient scale of the trunks; avoiding sharp or aggressive angles."
+    },
+    "visual_logic": {
+      "composition": "A low-angle view looking up at the base of a massive Taxodiaceous conifer. The trunk is broad and buttressed, disappearing into a thick canopy above. Ferns cluster tightly around the root flares.",
+      "ground": "Dark, rich peat and silty grey mud, heavily littered with fallen needles and botanical debris.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; direct sunlight filtering through the upper needles, creating dramatic 'god-rays' and high-contrast highlights on the textured bark."
+    }
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "id": "tree_fern_thicket_023",
+  "species": "Hateg Tree Fern",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SOFT_FOGGY_MORNING",
+  "formation_ref": "DENSUS_CIULA_FORMATION",
+  "environment_details": {
+    "habitat": "SUBTROPICAL_ISLAND_FLOODPLAIN",
+    "flora": [
+      "Tree Ferns (tall fibrous trunks, massive delicate canopy fronds)",
+      "Mosses and Liverworts covering the ground",
+      "Ginkgo saplings near the ferns"
+    ],
+    "ground_palette": ["Forest Umber", "Fern Green", "Mist Grey"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the atmospheric moisture; the fronds should look delicate and airy."
+  },
+  "visual_logic": {
+    "composition": "A misty view inside a dense thicket of Tree Ferns, where the light struggles to filter through the complex, overlapping canopy of delicate fronds.",
+    "ground": "Spongy, moist forest soil with a thick carpet of bryophytes.",
+    "lighting": "Misty morning light, diffused and cool, enhancing the texture of the moss."
+  }
+}

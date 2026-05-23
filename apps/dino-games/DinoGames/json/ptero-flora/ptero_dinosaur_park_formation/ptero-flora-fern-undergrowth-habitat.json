@@ -1,0 +1,30 @@
+[
+  {
+    "id": "dinosaur_park_fern_undergrowth_001",
+    "species": "Fern_undergrowth",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DINOSAUR_PARK",
+    "environment_details": {
+      "habitat": "COASTAL_LOWLANDS",
+      "flora": [
+        "Fern_undergrowth (dense, low-lying thickets of varied fronds)",
+        "Fallen Platanoid leaves",
+        "Exposed Taxodiaceous roots",
+        "Small mosses"
+      ],
+      "ground_palette": [
+        "Olive Gray",
+        "Pale Gray",
+        "Brownish-Gray",
+        "Dark Gray"
+      ],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; lush and verdant feel; fronds have a soft, leathery texture with rounded tips; high-fidelity rendering of the intricate, repeating patterns of the fern leaves without looking sharp."
+    },
+    "visual_logic": {
+      "composition": "A sweeping ground-level view of a dense fern thicket. The fronds are layered and overlapping, creating a complex, textured carpet that extends into a misty, sun-dappled background.",
+      "ground": "Damp, dark organic mudstone and shale fragments, partially obscured by the dense green growth and botanical detritus.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; bright, diffused light filtering through the overhead canopy, creating a warm, hazy glow and complex dappled shadows on the forest floor."
+    }
+  }
+]

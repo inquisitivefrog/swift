@@ -1,0 +1,11 @@
+{
+  "formation_id": "DENSUS_CIULA",
+  "base_habitat": "SUBTROPICAL_ISLAND_FLOODPLAIN",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Red silty claystone and volcanic ash layers.",
+    "color_palette": ["Brick Red", "Ash Grey", "Emerald Green", "Terracotta"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "DENSUS_CIULA_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE", "HATEG_ISLAND_ADDITIONS"],
+}

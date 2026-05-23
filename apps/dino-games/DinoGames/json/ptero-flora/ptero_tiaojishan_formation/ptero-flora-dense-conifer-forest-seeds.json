@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tiaojishan_dense_conifer_forest_quad_001",
+    "species": "Dense_Conifer_forest",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "TIAOJISHAN",
+    "environment_details": {
+      "habitat": "VOLCANIC_SLOPES",
+      "flora": [
+        "Blunt needle spray (close-up segment of thick, flattened linear needles arranged along a twig)",
+        "Pendant seed cone (oval, hanging conifer cone with thick, smooth overlapping woody scales)",
+        "Resinous bark plate (macro study of deeply grooved, blocky bark showing a glossy amber sap droplet)",
+        "Young conifer shoot (vibrant green, plump seedling emerging vertically with soft embryonic needles)"
+      ],
+      "ground_palette": ["Dark Volcanic Ash Gray", "Earthy Umber", "Deep Forest Green"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; look for dense, pillow-like groupings; avoid sharp, razor-thin, spike-like needle rendering; focus on blocky, rounded woody masses and rich tactile surfaces."
+    },
+    "visual_logic": {
+      "composition": "Quadrant composition: Top-Left: a detailed grid view of the comb-like flattened needle arrangement; Top-Right: a solitary woody seed cone hanging vertically; Bottom-Left: a close-up of a blocky bark segment with a clear sap bubble; Bottom-Right: a sturdy young green shoot.",
+      "ground": "A uniform layer of earthy umber volcanic soil, elevating the dark greens of the conifer elements.",
+      "lighting": "High-key diffused daylight, illuminating the overlapping layers of the cone and the texturing of the bark without harsh shadows."
+    }
+  }
+]

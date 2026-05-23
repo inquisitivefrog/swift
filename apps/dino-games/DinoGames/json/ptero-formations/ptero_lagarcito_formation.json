@@ -1,0 +1,33 @@
+{
+  "id": "habitat_semi_arid_lacustrine_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3", "framing": "SQUARE_HERO_CARD" },
+    "layer_2_setting": { 
+      "habitat_id": "PLAYA_LAKE_SYSTEM", 
+      "formation_id": "LAGARCITO_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "A wide, shallow perennial lake in a semi-arid basin",
+      "features": [
+        "Expansive shallow margins with pinkish algae blooms",
+        "Cracked mud at the edges transitioning into muddy water",
+        "Sparse, drought-resistant conifers and Gnetales on the horizon",
+        "Nocturnal sky transition or harsh midday sun reflecting off salt"
+      ]
+    }
+  },
+  "visuals": {
+    "ground": "Laminated siltstone and clay. Sun-baked mudflats with ripple marks. No grass.",
+    "water": "Extremely shallow, still lake water; often cloudy with microorganisms.",
+    "sky": "Pale, washed-out blue; high heat shimmer."
+  },
+  "habitat_id": "PLAYA_LAKE_SYSTEM",
+  "physics": { "altitude": "inland_basin", "water": "shallow_stagnant", "humidity": "low" },
+  "strata_specifics": {
+    "ground_texture": "Fine-grained red-to-pinkish siltstone.",
+    "color_palette": ["Dusty Rose", "Ochre", "Pale Teal", "Salmon"]
+  },
+  "flora_manifest": ["Gnetales", "Cheirolepidiaceae (conifers)", "Microscopic algae"],
+  "fauna_manifest": ["Brine shrimp analogues", "Small ostracods"],
+  "negative_prompt": "grass, deep ocean, jungle, snow, large trees"
+}

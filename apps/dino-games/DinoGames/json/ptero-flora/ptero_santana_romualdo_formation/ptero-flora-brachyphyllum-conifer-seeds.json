@@ -1,0 +1,25 @@
+[
+  {
+    "id": "santana_brachyphyllum_quad_001",
+    "species": "Brachyphyllum_conifer",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "environment_details": {
+      "habitat": "COASTAL_LAGOON_MARGIN",
+      "flora": [
+        "Scale-covered branchlet (twigs covered entirely in tiny, overlapping, appressed scales)",
+        "Small oval pollen cone (slender, yellow-tinted cone clustering at a branch tip)",
+        "Branching node (chunky joint where the braided green shoots diverge)",
+        "Fossilized imprint (clear relief mapping of a scaly stem in light grey limestone)"
+      ],
+      "ground_palette": ["Golden Sand", "Pale Limestone", "Soft Teal Water"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; foliage must look like braided cords; avoid thin, sharp pine needles; focus on the repetitive pattern of the tiny scales; toy-like density."
+    },
+    "visual_logic": {
+      "composition": "Tiled layout: Top-Left: a macro view of the braided green scale patterns on the branchlet; Top-Right: a cluster of tiny, pale yellow pollen cones; Bottom-Left: a split branch junction showing thick woody joints; Bottom-Right: a crisp fossil impression in a pale limestone fragment.",
+      "ground": "A stark backdrop of fine-grained white limestone rock, preventing any environment-scale confusion.",
+      "lighting": "Soft, multi-directional light that casts light shadows into the crevices of the scales and fossil grooves."
+    }
+  }
+]

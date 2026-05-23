@@ -1,0 +1,8 @@
+{ 
+  "app_image_config": { 
+    "layer_1_style": "1024x1024 px, high-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures.", 
+    "layer_2_setting": "Setting: A claystone bed in the Dinosaur Park formation in Alberta, Canada", 
+    "aspect_ratio": "1:1" 
+  }, 
+  "action_description": “A paleontologist attempts to dig out a Parasaurolophus skull from a hole in the ground.  Note the hole has to match the color of claystone." 
+}

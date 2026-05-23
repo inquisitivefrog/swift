@@ -1,0 +1,30 @@
+[
+  {
+    "id": "dinosaur_park_platanoid_leaves_001",
+    "species": "Platanoid_leaves",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "DINOSAUR_PARK",
+    "environment_details": {
+      "habitat": "COASTAL_LOWLANDS",
+      "flora": [
+        "Platanoid_leaves (broad, maple-like leaves with prominent veins)",
+        "Taxodiaceous_Conifers (towering in the background)",
+        "Fern_undergrowth",
+        "Large patches of rotting wood"
+      ],
+      "ground_palette": [
+        "Olive Gray",
+        "Pale Gray",
+        "Brownish-Gray",
+        "Dark Gray"
+      ],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; broad, tactile leaf surfaces with visible but soft ribbing; rounded edges to maintain an appealing 'toy-like' quality; high-fidelity 3D textures that suggest a humid, coastal environment."
+    },
+    "visual_logic": {
+      "composition": "A mid-range focus on a lush cluster of Platanoid trees overhanging a damp, muddy bank. The broad leaves catch the high-key sunlight, creating a vibrant, layered canopy.",
+      "ground": "Saturated, dark organic mud and silt interspersed with fallen broad leaves and smooth, water-worn grey stones.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; bright midday sun with warm highlights and soft-edged shadows that emphasize the volume of the dense foliage."
+    }
+  }
+]

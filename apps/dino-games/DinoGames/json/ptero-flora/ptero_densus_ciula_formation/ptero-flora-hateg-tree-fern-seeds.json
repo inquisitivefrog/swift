@@ -1,0 +1,22 @@
+{
+  "id": "tree_fern_lifecycle_024",
+  "species": "Hateg Tree Fern",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "DENSUS_CIULA_FORMATION",
+  "environment_details": {
+    "habitat": "SUBTROPICAL_ISLAND_FLOODPLAIN",
+    "flora": [
+      "Spore (Sporangia cluster, dark brown bumps on leaf underside)",
+      "Frond cross-section (showing the complex leaflet arrangement)",
+      "Fibrous Trunk bark (intertwined aerial roots, hairy texture)",
+      "Crozier/Fiddlehead (tightly coiled young frond)"
+    ],
+    "ground_palette": ["Forest Umber", "Deep Green", "Tan"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on intricate patterns and hairy textures; vibrant greens and deep browns."
+  },
+  "visual_logic": {
+    "composition": "A tiled grid showing: A coiled fiddlehead, a close-up of the sporangia bumps on a leaflet, a full complex frond, and the fibrous trunk texture.",
+    "ground": "Rich, dark, nutrient-dense soil backdrop."
+  }
+}

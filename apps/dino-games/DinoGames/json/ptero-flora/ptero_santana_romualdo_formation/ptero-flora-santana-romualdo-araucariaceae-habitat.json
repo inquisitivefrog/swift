@@ -1,0 +1,25 @@
+[
+  {
+    "id": "santana_araucariaceae_tower_001",
+    "species": "Araucariaceae",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "environment_details": {
+      "habitat": "COASTAL_LAGOON_MARGIN",
+      "flora": [
+        "Araucariaceae (tall, columnar trunk, umbrella-like canopy at the very top)",
+        "Whorled branches",
+        "Thick, triangular leathery leaves",
+        "Distant lagoon horizon"
+      ],
+      "ground_palette": ["Ochre Earth", "Limestone Grey", "Deep Forest Green"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the iconic 'Monkey Puzzle' silhouette; the trunk should have a geometric, 'armored' bark texture; canopy appears as a dense, rounded tuft of green."
+    },
+    "visual_logic": {
+      "composition": "A heroic upward-looking 'worm's eye view' of a massive Araucarian trunk, tracing the armored bark up to the distinctive canopy against a bright sky.",
+      "ground": "Dry limestone soil with fallen, triangular leathery leaves scattered around the base.",
+      "lighting": "Cinematic side-lighting to emphasize the deep, geometric texture of the bark plates."
+    }
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "id": "small_araucariaceae_grove_021",
+  "species": "Small Araucariaceae (Endemic Hateg Species)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "VIBRANT_TROPICAL_NOON",
+  "formation_ref": "DENSUS_CIULA_FORMATION",
+  "environment_details": {
+    "habitat": "SUBTROPICAL_ISLAND_FLOODPLAIN",
+    "flora": [
+      "Small Araucariaceae grove (stunted, symmetrical canopy, 'chunky' needles)",
+      "Zizyphus-like scrub forming an understory barrier",
+      "Ferns along the stream margin"
+    ],
+    "ground_palette": ["Red silty clay", "Emerald Green", "Warm Ochre"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the miniaturization; trees look mature and symmetrical but are significantly lower than a standard Araucaria."
+  },
+  "visual_logic": {
+    "composition": "A scenic view of a river floodplain. A tight grove of small Araucariaceae trees frames the stream, their symmetrical, umbrella-shaped canopies visible. The overall scale of the trees feels relatable, like a garden, rather than towering.",
+    "ground": "Rich, saturated red flood silt with a few river-worn stones.",
+    "lighting": "Intense, high-key midday sun creating defined, but not aggressive, shadows."
+  }
+}

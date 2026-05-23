@@ -1,0 +1,19 @@
+{
+    "asset_id": "manifest_excavation_019",
+    "project": "DinoMatrix",
+    "version": "1.0.0",
+    "meta": { 
+      "style_preset": "STYLE_ANIMATED_FEATURE_V3", 
+      "intended_use": "UI_Card_Dig_Stage_3" 
+    },
+    "excavation_context": {
+      "character_id": "dino_bones_preparator_5",
+      "character_description": "An adult male grad student working as a museum preparator, curly black hair, African ethnicity, goatee.",
+      "stage": "Prepping Heavy Armor Plates under Lab Lights",
+      "target_dinosaur": "Ankylosaurus",
+      "geological_formation": "HELL_CREEK",
+      "matrix_material": "Ironstone",
+      "matrix_color": "Rusty brown"
+    },
+    "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_preparator_5 is using a heavy-duty pneumatic air-scribe tool to carefully chip away at a dense, stubborn block of rusty brown ironstone matrix on his laboratory workbench. His precise movements slowly expose the massive, heavily textured geometric osteoderm armor plate of an Ankylosaurus. 1:1 Square aspect ratio."
+  }

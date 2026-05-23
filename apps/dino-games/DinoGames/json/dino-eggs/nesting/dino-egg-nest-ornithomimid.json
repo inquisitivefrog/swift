@@ -1,0 +1,7 @@
+{
+    "id": "ui_nest_clue_ornithomimid_square",
+    "clade": "ornithomimid",
+    "prompt": "High-fidelity 3D animated feature film style educational game clue graphic. An open dinosaur nest built as a shallow, unlined scrape in loose desert sand. Inside the shallow depression, several elongated, smooth eggs with a pale olive-green base and fine brown micro-speckles are neatly arranged in a circle, fully exposed to the sky. A single dull yellow pear sits right beside the scrape for scale. Background features sparse scrub and sandy dunes under a bright Cretaceous sun with a slight hazy horizon glow. Perfectly centered 1:1 square composition, formatted as a square hero card with a strict 25% negative space buffer.",
+    "visual_logic": "Shows an ornithomimid nest clue: an open sandy ground scrape with exposed, lightly speckled eggs, using a pear for scale.",
+    "style_notes": "SQUARE_HERO_CARD, STYLE_ANIMATED_FEATURE_V3. No scale bars. Keep the composition uncluttered to emphasize the minimalist sand-scrape structure."
+  }

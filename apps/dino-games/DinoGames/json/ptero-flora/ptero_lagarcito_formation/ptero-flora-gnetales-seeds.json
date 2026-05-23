@@ -1,0 +1,25 @@
+[
+  {
+    "id": "lagarcito_gnetales_quad_001",
+    "species": "Gnetales",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "LAGARCITO",
+    "environment_details": {
+      "habitat": "PLAYA_LAKE_SYSTEM",
+      "flora": [
+        "Gnetales leaf (broad, leathery, weathered edges, deep veins)",
+        "Reproductive cone (small, flower-like spike, slightly waxy texture)",
+        "Young shrublet (sturdy, low-profile, emerging from cracked silt)",
+        "Stem segment (jointed, woody, with fine bark texture)"
+      ],
+      "ground_palette": ["Dusty Rose", "Ochre", "Pale Teal", "Salmon"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on the thick, 'unbreakable' feel of arid-adapted leaves; tactile wood grain; clear focus on botanical identification."
+    },
+    "visual_logic": {
+      "composition": "A quadrant tile composition: Top-Left: a single broad, leathery leaf; Top-Right: a close-up of the flower-like reproductive spike; Bottom-Left: a young seedling emerging from a mud crack; Bottom-Right: a detailed section of the woody, jointed stem.",
+      "ground": "Fine-grained red siltstone with a dry, matte finish, providing a warm backdrop for the green plant elements.",
+      "lighting": "Even, bright, diffused light to showcase the unique morphology of the Gnetales without heavy shadows."
+    }
+  }
+]

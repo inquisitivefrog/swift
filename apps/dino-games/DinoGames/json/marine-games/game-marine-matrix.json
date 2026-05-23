@@ -1,0 +1,74 @@
+{
+  "asset_id": "img_marine_matrix_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "source_file": "game-marine-matrix-intro-1024.png",
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Header_Art_Marine_Matrix",
+    "tech_ref": "DEFAULT_SQUARE"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Medium Close-Up",
+      "angle": "Eye-level, slight low-angle tilt",
+      "depth_of_field": "Subtle background softening"
+    },
+    "characters": [
+      {
+        "id": "dino_bones_paleontologist_1",
+        "base_library_ref": "dino_bones_paleontologist_1",
+        "description": "An adult female grad student working as a paleontologist, long blonde hair, tanned skin.",
+        "features": {
+          "hair": "Long blonde hair flowing under her hat",
+          "skin_tone": "Tanned skin",
+          "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+          "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges."
+        },
+        "apparel": {
+          "headwear": "White sun hat",
+          "upper": "Light pink blouse worn UNDER a khaki safari vest",
+          "lower": "White shorts",
+          "footwear": "Pink hiking boots"
+        },
+        "pose": "Kneeling beside a coastal cliff outcropping, pointing an inspection magnifying glass over a block of dark shale.",
+        "tools_held": [
+          "Silver-rimmed paleontology magnifying loupe"
+        ]
+      }
+    ],
+    "environment": {
+      "formation_archetype": "BLUE_LIAS",
+      "geology": {
+        "strata_type": "Interbedded marine shale and limestone coastal cliffs",
+        "primary_materials": ["Dark bituminous shale", "Clay-rich mudstone matrix"],
+        "color_palette": ["Dark Charcoal Grey", "Blue-Grey", "Slate", "Dull Teal"]
+      },
+      "flora": [],
+      "embedded_assets": [
+        {
+          "asset_type": "Fossil Specimen",
+          "description": "The massive paddle limb and interlocking rows of flipper phalanges of a marine reptile emerging from the dark shale.",
+          "features": {
+            "anatomical_accuracy": "Stylized-realism, hyper-phalangy layout, dense bone placement",
+            "texture": "Dark, pyritized golden-metallic sheen accents over deep grey fossilized bone"
+          }
+        }
+      ]
+    ],
+    "graphic_elements": [
+      {
+        "element_type": "3D Text Overlay",
+        "text_content": "Marine Matrix!",
+        "typography": {
+          "style": "Bold, blocky 3D sans-serif extruded geometry",
+          "letter_casing": "Mixed Case",
+          "color": "Cyan Blue",
+          "integration": "Nested directly into a damp, dark slate shelf at the top of the frame, showing wet reflection highlights"
+        }
+      }
+    ]
+  }
+}

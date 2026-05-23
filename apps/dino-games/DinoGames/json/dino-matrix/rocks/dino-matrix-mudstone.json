@@ -1,0 +1,67 @@
+{
+  "asset_id": "matrix_layout_mudstone_multi_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Rock_Sample_Match_Card"
+  },
+  "canvas_constraints": {
+    "aspect_ratio": "1:1 (Square Layout)",
+    "target_resolution": "1024x1024"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Three-quarter angled perspective",
+      "angle": "Low, dynamic angled tilt highlighting the solid volume of the mudstone block array"
+    },
+    "foreground_element": {
+      "type": "Multiple Material Blocks Array",
+      "rock_type": "Mudstone Variant Set",
+      "placement": "Three blocks arranged neatly side-by-side on a flat, dry, hard-packed mud plain",
+      "blocks": [
+        {
+          "block_id": "mud_color_x",
+          "geometry": "3D stylized uniform block with earthy, softened rounded corners",
+          "color": "Chocolate Brown",
+          "texture": "Dense, massive organic-rich mud clay surface"
+        },
+        {
+          "block_id": "mud_color_y",
+          "geometry": "3D stylized uniform block with earthy, softened rounded corners",
+          "color": "Deep Sepia",
+          "texture": "Heavy, tightly compacted peat-mud clay face"
+        },
+        {
+          "block_id": "mud_color_z",
+          "geometry": "3D stylized uniform block with earthy, softened rounded corners",
+          "color": "Muted Sage Green",
+          "texture": "Anaerobic, unoxidized low-lying wetland mud face"
+        }
+      ]
+    },
+    "background_environment": {
+      "habitat_archetype": "Lowland Floodplain Channel / River Banks",
+      "geological_mapping": [
+        {
+          "zone_name": "Eroding Main River Bank",
+          "color_profile": "Chocolate Brown (Matches Block Color X)",
+          "description": "A massive clay shelf running directly along the primary active water channel cut."
+        },
+        {
+          "zone_name": "Lower Floodplain Swales",
+          "color_profile": "Deep Sepia (Matches Block Color Y)",
+          "description": "Dark, organic mud banks sloping down toward the background basin marshes."
+        },
+        {
+          "zone_name": "Distant Canyon Trench",
+          "color_profile": "Muted Sage Green (Matches Block Color Z)",
+          "description": "A deep, sheer horizontal strata zone cut visible on the far-right valley horizon."
+        }
+      ],
+      "lighting": "Clear daylight hitting the scene from a high angle, defining the heavy block volumes and casting soft shadows down the tiered riverbanks."
+    }
+  }
+}

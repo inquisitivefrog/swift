@@ -2,7 +2,7 @@
   "project": "DinoGames",
   "version": "1.0.0",
   "metadata": {
-    "total_formations": 53,
+  "total_formations": 61,
   "libraries": {
     "characters": {
       "dino_bones_preparator_1": {
@@ -10,74 +10,74 @@
         "eyewear": "Signature thin-rimmed BLACK RECTANGULAR lens glasses. These glasses are consistent in every scene.",
         "uniform": "A light blue tee shirt worn UNDER a white lab coat, blue jean slacks and black dress shoes.",
         "style_notes": "STYLE_ANIMATED_FEATURE_V3",
-        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions."
       },
       "dino_bones_preparator_2": {
         "description": "An adult female grad student working as a museum preparator, short blonde hair, lightly tanned skin.",
         "uniform": "A light blue tee shirt worn UNDER a white lab coat, white skirt and light blue pumps.",
         "style_notes": "STYLE_ANIMATED_FEATURE_V3",
-        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions."
       },
       "dino_bones_preparator_3": {
         "description": "An adult female grad student working as a museum preparator, long reddish hair, tanned skin.",
         "uniform": "A light orange tee shirt worn UNDER a white lab coat, red skirt and orange pumps.",
         "style_notes": "STYLE_ANIMATED_FEATURE_V3",
-        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions."
       },
       "dino_bones_preparator_4": {
         "description": "An adult male grad stadent working as a museum preparator, dark brown hair, tanned skin, Latino ethnicity.",
         "uniform": "A soccer sport jersey worn UNDER a white lab coat, blue jeans and grey sneakers.",
         "style_notes": "STYLE_ANIMATED_FEATURE_V3",
-        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions."
       },
       "dino_bones_preparator_5": {
         "description": "An adult male grad student working as a museum preparator, curly black hair, African ethnicity, goatee.",
         "uniform": "A purple tee shirt worn UNDER a white lab coat, blue jeans and white sneakers.",
         "style_notes": "STYLE_ANIMATED_FEATURE_V3",
-        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions."
       },
       "dino_bones_preparator_6": {
         "description": "An adult female grad student working as a museum preparator, long black hair, Asian ethnicity.",
         "uniform": "A yellow tee shirt with a unicorn image worn UNDER a white lab coat, yellow skirt and white sneakers.",
         "style_notes": "STYLE_ANIMATED_FEATURE_V3",
-        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions."
       },
       "dino_bones_paleontologist_1": {
         "description": "An adult female grad student working as a paleontologist, long blonde hair, tanned skin, wearing a white sun hat.",
         "uniform": "A light pink blouse worn UNDER a khaki safari vest, white shorts and pink hiking boots.",
         "style_notes": "STYLE_ANIMATED_FEATURE_V3",
-        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions."
       },
       "dino_bones_paleontologist_2": {
         "description": "An adult female grad student working as a paleontologist, short black hair, tanned skin, wearing a green sun hat.",
         "uniform": "A light green blouse worn UNDER a khaki safari vest, green skirt and black hiking boots.",
         "style_notes": "STYLE_ANIMATED_FEATURE_V3",
-        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions."
       },
       "dino_bones_paleontologist_3": {
         "description": "An adult male grad student working as a paleontologist, curly black hair, Black race, wearing a white sun hat.",
         "uniform": "A light purple tee shirt worn UNDER a khaki safari vest, white shorts and black hiking boots.",
         "style_notes": "STYLE_ANIMATED_FEATURE_V3",
-        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions."
       },
       "dino_bones_paleontologist_4": {
         "description": "An adult male grad stadent working as a paleontologist, short brown hair, Latino ethnicity.",
         "eyewear": "Signature thin-rimmed BLACK aviator lens glasses. These glasses are consistent in every scene.",
         "uniform": "A light white tee shirt worn UNDER a khaki safari vest, khaki shorts and brown hiking boots.",
         "style_notes": "STYLE_ANIMATED_FEATURE_V3",
-        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions."
       },
       "dino_bones_paleontologist_5": {
         "description": "An adult female grad student working as a paleontologist, short black hair, Asian ethnicity.",
         "uniform": "A light red tee shirt worn UNDER a khaki safari vest, red shorts and black hiking boots.",
         "style_notes": "STYLE_ANIMATED_FEATURE_V3",
-        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions."
       },
       "dino_bones_paleontologist_6": {
         "description": "An adult female grad stadent working as a paleontologist, braided black hair, African ethnicity.",
         "uniform": "A white tee shirt worn UNDER a khaki safari vest, white shorts and black hiking boots.",
         "style_notes": "STYLE_ANIMATED_FEATURE_V3",
-        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions.",
+        "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features. Focus on dynamic posing and cinematic appeal. Avoid 'chibi' or overtly child-like proportions."
       },
       "dino_push_referee_1": {
         "description": "An adult male paleontologist, dark short hair, clean-shaven, wearing a tan safari pith helmet.",
@@ -91,72 +91,7 @@
         "uniform": "A black-and-white vertical striped referee jersey worn UNDER a khaki safari vest.",
         "style_notes": "STYLE_ANIMATED_FEATURE_V3, rounded toy-like proportions, expressive physical comedy."
       },
-      "dino_racer_allosaurus": {
-        "species": "Allosaurus",
-        "visual_identity": "Vibrant ochre-orange skin with distinct chocolate-brown tiger stripes along the back and tail; smooth cream-colored underbelly.",
-        "anatomy_constraints": "Exactly THREE forward-facing claws on each hand; no opposable thumb; tail is long and used as a rigid horizontal counterweight; two-toed feet.",
-        "personality": "High-energy, intense focus, comically expressive; prone to extreme physical exhaustion (Tex Avery style).",
-        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
-      },
-      "dino_racer_brontosaurus": {
-        "species": "Brontosaurus",
-        "visual_identity": "Pale mint-green skin with soft lavender-purple dappled spots concentrated along the neck and upper back. Smooth cream-colored underbelly.",
-        "anatomy_constraints": "Massive pillar-like legs with thick, rounded feet; a very long, gracefully curving neck; a small, friendly head with large expressive eyes; an extremely long whip-like tail held in a gentle curve off the ground.",
-        "personality": "Gentle, calm, and immensely powerful. Moves with a rhythmic, thundering pace. Unlike the Allosaurus, the Brontosaurus is an endurance racer who stays composed.",
-        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
-      },
-      "dino_racer_albertosaurus": {
-        "species": "Albertosaurus",
-        "visual_identity": "Slate-blue skin with pale silvery-grey underbelly. Distinctive 'racing stripes' of deep navy blue running from the eyes down the length of the neck. Small, boney 'horns' or crests above the eyes are tipped in dull red.",
-        "anatomy_constraints": "Slightly more slender and long-legged than the Allosaurus. Two-fingered hands (unlike the Allosaurus's three). A long, stiff tail held perfectly horizontal for balance.",
-        "personality": "Arrogant, sleek, and highly competitive. He views himself as the 'professional' athlete of the group. Very disciplined posture.",
-        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
-      },
-      "dino_racer_ankylosaurus": {
-        "species": "Ankylosaurus magniventris",
-        "visual_identity": {
-          "color_palette": "Base skin is deep moss-green; dorsal armor is a stony slate-grey; lateral spikes (scutes) are pale cream-colored.",
-          "texture": "Armor plates (osteoderms) have a rugged, weathered rock texture; under-skin is leathery and pebbly.",
-          "distinguishing_marks": "A massive, heavy tail club made of slate-grey bone, showing minor chips and battle-scars; amber-colored eyes with a sharp, focused glint."
-        },
-        "anatomy_constraints": {
-          "frame": "Extremely wide, squat, and low-slung quadrupedal body; center of gravity is very close to the ground.",
-          "head": "Broad, triangular skull with a reinforced beak; exactly four backward-pointing horns (two at the top corners, two at the cheeks).",
-          "tail": "Thick, muscular tail that is rigid toward the end, terminating in a large, symmetrical bone club.",
-          "armor": "Continuous interlocking plates covering the entire back and top of the head; a row of cream spikes protruding horizontally from the sides."
-        },
-        "personality": "The 'Ironclad'—stoic, immovable, and cautious. He relies on momentum and defensive stability rather than raw speed.",
-        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
-      },
-      "dino_racer_triceratops": {
-        "species": "Triceratops",
-        "visual_identity": "Earth-toned, dusty ochre skin with thick, leathery texture. His massive head frill is edged with blunt, bony ossicles. Three polished, off-white horns (two long brow horns, one shorter nose horn).",
-        "anatomy_constraints": "Heavily muscled, stocky quadrupedal frame. Thick, pillar-like legs. A short, pointed tail. Deep-set, soulful but determined brown eyes. Solid, heavy-set beak.",
-        "personality": "The 'Powerhouse.' Stoic, stubborn, and determined. He doesn't swerve; he just plows through. He has a 'slow and steady' but high-momentum vibe.",
-        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
-      },
-      "dino_racer_velociraptor": {
-        "species": "Velociraptor",
-        "visual_identity": "Slate-grey skin with dark, charcoal-grey vertical 'shattered' stripes that provide natural camouflage. A streak of crimson red feathers running from the top of the head down the neck like a mohawk.",
-        "anatomy_constraints": "Lean, aerodynamic frame. Large, curved 'sickle claws' on each foot. Three-fingered hands with long, dexterous fingers and sharp black talons. Slit-pupil yellow eyes.",
-        "personality": "Calculating and opportunistic. Uses agility and intelligence over raw power.",
-        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
-      },
-      "dino_racer_gallimimus": {
-        "species": "Gallimimus",
-        "visual_identity": "Bright amber-orange skin. Three thin, horizontal white 'speed streaks' running from the mid-neck all the way to the tip of the tail. Cream-colored underbelly and throat. Large, dark, glassy bird-like eyes.",
-        "anatomy_constraints": "Long, slender 'S-curve' neck. Small, toothless beak. Very long, thin legs with three-toed bird-like feet. Long arms with three slender fingers held in a tight tuck.",
-         "personality": "High-strung, twitchy, and lightning-fast. Always looks like he's about to bolt.",
-        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
-      },
-      "dino_racer_trex": {
-        "species": "Tyrannosaurus Rex",
-        "visual_identity": "Deep forest-green skin with a rugged, pebbled texture. Thick, dark charcoal-grey 'armor' plates along the spine. A pale sulfur-yellow underbelly. One small, vertical 'battle scar' notch in his left ear-flap area.",
-        "anatomy_constraints": "Massive, blocky head with a heavy jaw. Extremely thick, muscular neck and powerful thighs. Tiny, comical two-fingered hands held close to the chest. Huge, three-toed feet that leave deep impressions.",
-        "personality": "The 'Powerhouse.' Grumpy, loud, and uses sheer intimidation. He doesn't run around obstacles; he runs THROUGH them. Constant 'tough guy' scowl.",
-        "style_ref": "STYLE_ANIMATED_FEATURE_V3"
-      }
-    }
+    },
     "style_presets": {
       "STYLE_CLAY_MASTER": {
         "description": "Chibi-style 3D animation; chunky, toy-like proportions; large expressive eyes; rounded snouts; smooth matte clay/vinyl textures; vibrant saturated colors; friendly and approachable for small children.",
@@ -224,30 +159,37 @@
       "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
       "CRATO_ADDITIONS": ["Ruffordia (fern)", "Endressinia (early flower)"],
       "DAOHUGOU_BEDS_ADDITIONS": ["Evergreen conifers", "Alpine ferns"],
+      "DINOSAUR_PARK_ADDITIONS": ["Platanoid_leaves", "Taxodiaceous_Conifers", "Fern_undergrowth"],
       "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
       "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
       "HAKEL_ADDITIONS": ["Thalassotaenia (Ancestral Seagrass)", "Phytoplankton blooms"],
       "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
       "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"],
       "IREN_DABASU_ADDITIONS": ["Early Walnut-like trees", "Mistletoe-like shrubs", "Charophytes (aquatic stoneworts)", "Broadleaf hardwoods"],
+      "JAVELINA_ADDITIONS": ["Early_Angiosperms", "Conifers", "Palm_like_leaves"],
       "JEHOL_BIOTA_ADDITIONS": ["Water lilies at the edge", "Dense hardwoods"],
       "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
       "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
       "KAIPAROWITS_ADDITIONS": ["Giant horsetails", "Mosses", "Dense fern thickets"],
+      "KARABASTAU_ADDITIONS": ["Early_Angiosperms", "Conifers", "Palm_like_leaves", "Araucariaceae", "Equisetites (Giant Horsetails)", "Ginkgoales", "Cycads"],
       "KEM_KEM_ADDITIONS": ["Early Sycamores", "Willow-like shrubs", "Horsetail banks"],
+      "LAGARCITO_ADDITIONS": ["Gnetales", "Cheirolepidiaceae (conifers)", "Microscopic algae"],
       "LANCE_HELL_CREEK_ADDITIONS": ["Palm-like Bennettitales", "Tree ferns", "Lush canopy"],
       "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
       "LATE_CRETACEOUS_FLUVIAL_BASE": ["Metasequoia (Water Dawn Redwood)", "Metasequoia (Water Dawn Redwood)", "Floating Water Ferns (Salviniales)", "Equisetites (Giant Horsetails)"],
       "LATE_CRETACEOUS_MARINE_BASE": ["Thalassotaenia (Ancestral Seagrass)", "Sargassum-type Brown Algae", "Lithothamnion (Coralline Red Algae)"],
       "LA_AMARGA_ADDITIONS": ["Equisetites (Giant Horsetails)", "Charophytes (Aquatic stoneworts)", "Early Podocarp Conifers"],
       "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
+      "MUWAQQAR_ADDITIONS": ["Coccoliths", "Dinoflagellates", "Diatoms", "Radiolarians"],
       "NAVESINK_ADDITIONS": ["Thalassotaenia (Ancestral Seagrass)", "Abundant Phytoplankton"],
       "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
       "NKPORO_SHALE_ADDITIONS": ["Submerged Mangrove-like roots", "Floating Water Ferns (Salviniales)", "Nypa-like palms"],
+      "PLOTTIER_ADDITIONS": ["Podocarp Conifers", "Equisetites (Horsetails)", "Hardy drought-resistant ferns"],
       "POSEIDON_ADDITIONS": ["Floating Crinoid rafts (Seirocrinus) attached to driftwood", "Sargassum-like algae", "Phytoplankton blooms"],
-      "SANTANA_ADDITIONS": ["Brachyphyllum (Conifer)", "Early Angiosperm lily-pads"],
+      "SANTANA_ADDITIONS": ["Brachyphyllum (Conifer)", "Early Angiosperm lily-pads", "Araucariaceae", "Bennettitales", "Brachyphyllum"],
       "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
-      "TIAOJISHAN_ADDITIONS": ["Giant Horsetails", "Dense Conifer forest"],
+      "TANGSHANG_ADDITIONS": ["Early Angiosperm hardwoods", "Conifers", "Ferns", "Ginkgos"],
+      "TIAOJISHAN_ADDITIONS": ["Giant Horsetails", "Dense Conifer forest", "Cycadophytes", "Dicksoniaceous_Ferns", "Ginkgoites"],
       "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"]
     },
     "fauna": {
@@ -255,19 +197,25 @@
       "CRATO_ADDITIONS": ["Giant Crato Dragonflies", "Early Crickets", "Susisuchus (small crocodilian)"],
       "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
       "HAKEL_ADDITIONS": ["Eurypholis (long-snouted fish)", "Prionolepis", "Stomatopods (Mantis shrimp)", "Small marine lizards"],
+      "HATEG_ISLAND_ADDITIONS": ["Allodaposuchus (small crocodilian)", "Kogaionid multituberculates"],
       "HELL_CREEK_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (fast-running lizards)", "Cicadas", "Early wasps"],
       "IREN_DABASU_ADDITIONS": ["Ostracods", "Freshwater turtles", "Hybodont sharks (in river channels)", "Small lizards"],
       "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
+      "KARABASTAU_ADDITIONS": [ "Jurassic Lacewings", "Early Salamanders", "Small Jurassic mammals" ],
+      "LAGARCITO_ADDITIONS": ["Brine shrimp analogues", "Small ostracods"],
       "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
       "LA_AMARGA_ADDITIONS": ["Amargasuchus (small, friendly crocodylomorph)", "Vincelestes (opossum-sized early mammal)", "Freshwater turtles"],
+      "MUWAQQAR_ADDITIONS": ["Enchodus", "Global Mosasaurs", "Large Ammonites"],
       "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizards)", "Cicadas"],
       "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
       "NAVESINK_ADDITIONS": ["Ammonites (Baculites)", "Belemnitella", "Pycnodont fish", "Halisaurus platyspondylus"],
       "NEMEGT_ADDITIONS": ["Freshwater crabs", "Shrimp", "Gar-like predators", "Champsosaurus"],
       "NKPORO_SHALE_ADDITIONS": ["Pluridens calabariensis", "Giant Sawfish (Onchoselachus)", "Araripemys (turtles)", "Large ammonites"],
+      "PLOTTIER_ADDITIONS": ["Juvenile Titanosaurs (prey)", "Large terrestrial lizards", "Crocodylomorphs"],
       "POSEIDON_ADDITIONS": ["Stenopterygius", "Eurhinosaurus (long-snout)", "Temnodontosaurus (giant eyes)", "Ammonites (Harpoceras)", "Belemnites", "Giant Crinoids"],
       "SANTANA_ADDITIONS": ["Calamopleurus (large predatory fish)", "Vinctifer (armored fish)", "Araripemys (turtle)"],
-      "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates"]
+      "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates"],
+      "TANGSHANG_ADDITIONS": ["Freshwater turtles", "Small theropods", "Late Cretaceous insects"]
     },
     "era_manifests": {
       "JURASSIC_BASE": {
@@ -284,14 +232,30 @@
       }
     },
     "habitats": {
+      "ARID_BRAIDED_RIVER_SYSTEM": {
+        "substrate": "Crimson Red, Burnt Orange, and Pale Tan",
+        "visuals": { "ground": "Dry, pebbly red sandstone and sun-cracked clay mudflats." }
+      },
       "COASTAL_LOWLANDS": {
-        "physics": { "altitude": "low", "water": "high" },
+        "substrate": { "altitude": "low", "water": "high" },
         "visual_logic": { "water_features": "Meandering channels and stagnant oxbows", "atmospheric_effects": ["Coastal haze", "Low-altitude humidity"] },
         "visuals": { "ground": "Dark, rich organic mud", "water": "Steamy lagoons and slow estuaries" }
       },
-      "COASTAL_FLOODPLAINS": {
-        "substrate": "Peaty clay and lignite",
-        "visuals": { "ground": "Sticky black mud with salt-marsh grasses" }
+      "COASTAL_LAGOON_SYSTEM": {
+        "substrate": "Hardened calcarenite, fine white sand, and salt crystals.",
+        "visuals": { 
+          "ground": "Blindingly white carbonate sand and light-colored limestone nodules. Cracked salt-pans in dried depressions. No grass.",
+          "water": "Crystal-clear turquoise water with visible limestone structures beneath the surface.",
+          "sky": "Intense, saturated blue with high-altitude cirrus clouds and shimmering heat haze."
+        }
+      },
+      "COASTAL_PLAIN_DELTA": {
+        "substrate": "Deep Umber, Forest Green, Steel Grey and Slate Blue",
+        "visuals": { 
+          "ground": "Saturated dark silt and peat. Large patches of rotting wood and fallen needles. Massive fern fronds and broad-leafed angiosperms dominate. No grass.",
+          "water": "Turbid, slow-moving brownish water with swirling eddies and floating botanical debris.",
+          "sky": "Pale, overcast steel-grey with soft, diffused light and visible atmospheric haze." 
+        }
       },
       "DESERT_DUNE_FIELDS": {
         "substrate": "Aeolian quartz sandstone",
@@ -333,12 +297,16 @@
         }
       },
       "PELAGIC_SHELF_SEA": {
-        "substrate": "Bituminous mud and organic "marine snow"",
+        "substrate": "Bituminous mud and organic marine snow",
         "visuals": {
           "ground": "Flat, dark-grey abyssal floor with scattered ammonite shells",
           "water": "Deep indigo-to-black water with shimmering 'god-rays' from the surface",
           "atmosphere": "Suspended particulates (plankton) and silver bubbles"
         }
+      },
+      "PLAYA_LAKE_SYSTEM": {
+        "substrate": "Dusty Rose, Ochre and White Salt",
+        "visuals": { "ground": "Fine red silt and white crystalline salt-crusts." }
       },
       "RIVER_DELTA_WETLANDS": {
         "physics": { "altitude": "sea_level", "water": "very_high" },
@@ -368,6 +336,22 @@
           "atmosphere": "Abundant particulates and 'jarositic' (yellowish) mineral clouds drifting from the seabed."
         }
       },
+      "STAGNANT_LAKE_FOREST": {
+        "substrate": "Deep Umber, Dark Moss Green and Slate Grey",
+        "visuals": { "ground": "Saturated forest floor with layers of dark, decaying organic matter." }
+      },
+      "SUBTROPICAL_ISLAND_FLOODPLAIN": {
+        "substrate": "Brick Red, Volcanic Grey and Lush Emerald",
+        "visuals": { "ground": "Red silty clay mixed with grey volcanic tuff fragments." }
+      },
+      "SUBTROPICAL_RIVER_VALLEY": {
+        "substrate": "Pale Sand and Sage Green, Leaf Brown",
+        "visuals": { "ground": "Yellowish-grey silt and sandy river-bar deposits." }
+      },
+      "TETHYS_COASTAL_MARGIN": {
+        "substrate": "Chalk White, Deep Sea Blue and Golden Brown",
+        "visuals": { "ground": "Soft white chalk dust and grey-marl pebbles." }
+      },
       "TROPICAL_ISLAND_LAGOONS": {
         "substrate": "White carbonate sand and limestone",
         "visuals": { "ground": "Fine white sand and turquoise shallow water" }
@@ -377,6 +361,14 @@
         "visuals": { 
           "ground": "Variegated reddish-brown mud with shallow turquoise pools",
           "atmospheric_effects": ["Heat shimmer", "High-key tropical saturation"]
+        }
+      },
+      "VOLCANIC_SUBTROPICAL_FOREST": {
+        "substrate": "Fine volcanic ash, porous basalt, and thick damp moss.",
+        "visuals": { 
+          "ground": "Grey volcanic tuff and charcoal-colored ash soil. Extremely thick carpets of liverworts and mosses. No grass.",
+          "water": "Dark, mineral-rich lake water with occasional bubbles from geothermal vents.",
+          "sky": "Amber-tinted haze caused by atmospheric ash; dramatic crepuscular rays."
         }
       },
       "WARM_FLUVIAL_PLAINS": {
@@ -396,7 +388,7 @@
       "DESERT_DUNE_FIELDS": { "lighting_bias": "Extreme", "surface": "High-albedo sand and minimal shadow" }
     },
     "formation_logic": {
-      "ANACLETO" {
+      "ANACLETO": {
         "period": "LATE_CRETACEOUS",
         "flora": ["LATE_CRETACEOUS_BASE", "ANACLETO_ADDITIONS"],
         "fauna": ["LATE_CRETACEOUS_BASE"],
@@ -408,11 +400,10 @@
           "mineral_palette": ["Emerald Green", "Mint", "Moss"]
         }
       },
-      {
       "BLUE_LIAS": {
-        "period": "EARLY_JURASSIC",
-        "flora_manifest": ["JURASSIC_BASE", "FLOATING_CRINOID_RAFTS"],
-        "fauna_manifest": ["JURASSIC_BASE", "AMMONITES", "BELEMNITES"],
+        "period": "JURASSIC",
+        "flora": ["JURASSIC_BASE", "FLOATING_CRINOID_RAFTS"],
+        "fauna": ["JURASSIC_BASE", "AMMONITES", "BELEMNITES"],
         "habitat_default": "OPEN_OCEAN_PELAGIC",
         "palette": ["Blue-grey", "Charcoal", "Limestone White"],
         "strata_specifics": {
@@ -422,8 +413,8 @@
       },
       "CAMBRIDGE_GREENSAND": {
         "period": "EARLY_CRETACEOUS",
-        "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE"],
-        "fauna_manifest": ["EARLY_CRETACEOUS_BASE", "GREENSAND_LAG_DEPOSITS"],
+        "flora": ["LATE_CRETACEOUS_MARINE_BASE"],
+        "fauna": ["EARLY_CRETACEOUS_BASE", "GREENSAND_LAG_DEPOSITS"],
         "habitat_default": "PELAGIC_SHELF_SEA",
         "manifest": "CRETAECEOUS_BASE",
         "geology": {
@@ -445,8 +436,8 @@
       },
       "CARLILE_SHALE": {
         "period": "LATE_CRETACEOUS",
-        "flora_manifest": ["LATE_CRETACEOUS_BASE"],
-        "fauna_manifest": ["LATE_CRETACEOUS_BASE", "MOSASAURS", "XIPHACTINUS"],
+        "flora": ["LATE_CRETACEOUS_BASE"],
+        "fauna": ["LATE_CRETACEOUS_BASE", "MOSASAURS", "XIPHACTINUS"],
         "habitat_default": "EPICONTINENTAL_SEAWAY",
         "palette": ["Silver-Grey", "Buff", "Chalky White"],
         "geology": {
@@ -491,8 +482,8 @@
       },
       "CRATO_FORMATION": {
         "period": "EARLY_CRETACEOUS",
-        "flora_manifest": ["EARLY_CRETACEOUS_BASE", "CRATO_ADDITIONS"],
-        "fauna_manifest": ["EARLY_CRETACEOUS_BASE", "CRATO_ADDITIONS"],
+        "flora": ["EARLY_CRETACEOUS_BASE", "CRATO_ADDITIONS"],
+        "fauna": ["EARLY_CRETACEOUS_BASE", "CRATO_ADDITIONS"],
         "habitat_default": "COASTAL_LOWLANDS",
         "manifest": "CRETACEOUS_BASE",
         "geology": {
@@ -500,10 +491,10 @@
           "mineral_palette": ["Pale Buff", "Soft Sulphur Yellow", "Cream", "Light Grey"]
         }
       },
-      "CSEHBANYA_FORMATION",
+      "CSEHBANYA_FORMATION": {
         "period": "LATE_CRETACEOUS",
-        "flora_manifest": ["LATE_CRETACEOUS_FLUVIAL_BASE", "FERNS", "CYCADS"],
-        "fauna_manifest": ["LATE_CRETACEOUS_BASE", "ALLODAPOSUCHUS", "FRESHWATER_FISH"],
+        "flora": ["LATE_CRETACEOUS_FLUVIAL_BASE", "FERNS", "CYCADS"],
+        "fauna": ["LATE_CRETACEOUS_BASE", "ALLODAPOSUCHUS", "FRESHWATER_FISH"],
         "base_habitat": "FRESHWATER_RIVER_SYSTEM",
         "palette": ["Tannin Brown", "Deep Green", "Clay Red"],
         "geology": {
@@ -523,15 +514,27 @@
           "mineral_palette": ["Silver-grey", "Cool grey", "Black carbonaceous shale", "Creamy ash"]
         }
       },
+      "DENSUS_CIULA": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE", "DENSUS_CIULA_ADDITIONS"],
+        "fauna": ["LATE_CRETACEOUS_BASE", "HATEG_ISLAND_ADDITIONS"],
+        "habitat_default": "SUBTROPICAL_ISLAND_FLOODPLAIN",
+        "palette": ["Brick Red", "Ash Grey", "Emerald Green", "Terracotta"],
+        "manifest": "LATE_CRETACEOUS",
+        "geology": {
+          "primary_rocks": "Red silty claystone and volcanic ash layers.",
+          "mineral_palette": ["Brick Red", "Ash Grey", "Emerald Green", "Terracotta"]   
+        }
+      },
       "DINOSAUR_PARK": {
         "period": "LATE_CRETACEOUS",
-        "flora": ["LATE_CRETACEOUS_BASE", "CYCAD_PALMS"],
+        "flora": ["LATE_CRETACEOUS_BASE", "DINOSAUR_PARK_ADDITIONS", "CYCAD_PALMS"],
         "fauna": ["LATE_CRETACEOUS_BASE", "HADROSAUR_SPECIFIC_INSECTS"],
         "habitat_default": "COASTAL_LOWLANDS",
-        "palette": ["Grey", "Black", "Dark Green"],
+        "palette": ["Grey", "Black", "Dark Green", "Deep Brown", "Forest Green", "Steel Blue"],
         "manifest": "LATE_CRETACEOUS_BASE",
         "geology": {
-          "primary_rocks": ["Sandstone", "Mudstone", "Siltstone"],
+          "primary_rocks": ["Sandstone", "Mudstone", "Siltstone", "Shale"],
           "mineral_palette": ["Olive Gray", "Pale Gray", "Brownish-Gray", "Dark Gray"]
         }
       },
@@ -593,10 +596,10 @@
           "mineral_palette": ["Coal black", "Rusty brown", "Dark grey", "Siderite orange"]
         }
       },
-      "HVAR_DEPOSITS",
+      "HVAR_DEPOSITS": {
         "period": "LATE_CRETACEOUS",
-        "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE", "SEA_GRASS_PRIMITIVE"],
-        "fauna_manifest": ["LATE_CRETACEOUS_BASE", "SMALL_CRUSTACEANS"],
+        "flora": ["LATE_CRETACEOUS_MARINE_BASE", "SEA_GRASS_PRIMITIVE"],
+        "fauna": ["LATE_CRETACEOUS_BASE", "SMALL_CRUSTACEANS"],
         "habitat_default": "SHALLOW_LAGOON",
         "palette": ["Turquoise", "Coral White", "Sand"],
         "geology": {
@@ -618,14 +621,26 @@
       },
       "IREN_DABASU": {
         "period": "LATE_CRETACEOUS",
-        "flora_manifest": ["LATE_CRETACEOUS_BASE", "IREN_DABASU_ADDITIONS"],
-        "fauna_manifest": ["LATE_CRETACEOUS_BASE", "IREN_DABASU_ADDITIONS"],
+        "flora": ["LATE_CRETACEOUS_BASE", "IREN_DABASU_ADDITIONS"],
+        "fauna": ["LATE_CRETACEOUS_BASE", "IREN_DABASU_ADDITIONS"],
         "habitat_habitat": "BRAIDED_RIVER_SYSTEMS",
         "palette": ["Ochre", "Terracotta", "Tan"],
         "manifest": "LATE_CRETACEOUS_BASE",
         "geology": {
           "primary_rocks": ["Fine-grained fluvial sandstone", "claystone", "mudstone"],
           "mineral_palette": ["Light Grey", "Yellowish-orange", "Mottled Red", "Dusty Tan"]
+        }
+      },
+      "JAVELINA": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE", "JAVELINA_ADDITIONS"],
+        "fauna": ["LATE_CRETACEOUS_BASE"],
+        "habitat_default": "SEMI_ARID_FLOODPLAIN",
+        "palette": ["Dusty Red", "Pale Purple", "Tan", "Olive Drab"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Claystone", "Sandstone"],
+          "mineral_palette": ["Dusty Red", "Pale Purple", "Tan", "Olive Drab"]
         }
       },
       "JEHOL_BIOTA": {
@@ -650,6 +665,18 @@
         "geology": {
           "primary_rocks": ["mudstone", "Shale", "siltstone", "sandstone", "conglomerate"],
           "mineral_palette": ["Yellow-green", "Gray-green", "Purple-gray", "Gray", "Dark Gray", "Blue-Gray"]
+        }
+      },
+      "KARABASTAU": {
+        "period": "JURASSIC",
+        "flora": ["JURASSIC_BASE", "KARABASTAU_ADDITIONS"],
+        "fauna": ["JURASSIC_BASE"],
+        "habitat_default": "STAGNANT_LAKE_FOREST",
+        "palette": ["Forest Green", "Charcoal", "Olive"],
+        "manifest": "JURASSIC_BASE",
+        "geology": {
+          "primary_rocks": "Laminated paper-shale and fine siltstone.",
+          "mineral_palette": ["Deep Brown", "Forest Green", "Charcoal", "Olive"]
         }
       },
       "KAIPAROWITS": {
@@ -677,7 +704,7 @@
         }
       },
       "KIMMERIDGE_CLAY": {
-        "period": "LATE_JURASSIC",
+        "period": "JURASSIC",
         "flora_manifest": ["JURASSIC_BASE", "PHYTOPLANKTON_BLOOMS"],
         "fauna_manifest": ["JURASSIC_BASE", "AMMONITES", "LEEDSICHTHYS"],
         "habitat_default": "PELAGIC_SHELF_SEA",
@@ -693,7 +720,7 @@
         "fauna": ["EARLY_CRETACEOUS_BASE", "KITADANI_ADDITIONS"],
         "habitat_default": "MEANDERING_RIVER_SYSTEMS",
         "palette": ["Light Grey", "Charcoal", "Reddish-Brown (Tuff)", "Deep Water Blue"],
-        "manifest": EARLY_CRETACEOUS_BASE",
+        "manifest": "EARLY_CRETACEOUS_BASE",
         "geology": {
           "primary_rocks": ["Light-grey sandstone", "Blackish organic shale"],
           "mineral_palette": ["Light Grey", "Charcoal", "Reddish-Brown (Tuff)", "Deep Water Blue"]
@@ -711,6 +738,18 @@
           "mineral_palette": ["Silt grey", "Sandstone tan", "Vibrant blue", "Pale ochre"]
         }
       },
+      "LAGARCITO": {
+        "period": "EARLY_CRETACEOUS",
+        "flora_manifest": ["EARLY_CRETACEOUS_BASE", "LAGARCITO_ADDITIONS"],
+        "fauna_manifest": ["EARLY_CRETACEOUS_BASE", "LAGARCITO_ADDITIONS"],
+        "habitat_default": "PLAYA_LAKE_SYSTEM",
+        "palette": ["Ochre", "Pale Teal", "Salmon"],
+        "manifest": "EARLY_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": "Fine-grained red-to-pinkish siltstone.",
+          "mineral_palette": ["Dusty Rose", "Ochre", "Pale Teal", "Salmon"]
+        }
+      },
       "LANCE_HELL_CREEK": {
         "period": "LATE_CRETACEOUS",
         "flora": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
@@ -726,16 +765,16 @@
       "LA_AMARGA": {
         "period": "EARLY_CRETACEOUS",
         "flora_manifest": ["EARLY_CRETACEOUS_BASE", "LA_AMARGA_ADDITIONS"],
-        "fauna_manifest": ["EARLY_CRETACEOUS_BASE", "LA_AMARGA_ADDITIONS"]
+        "fauna_manifest": ["EARLY_CRETACEOUS_BASE", "LA_AMARGA_ADDITIONS"],
         "habitat_habitat": "BRAIDED_RIVER_SYSTEMS",
         "palette": ["Light-Grey", "Dusty Tan", "Pale Yellow"],
         "manifest": "LATE_CRETACEOUS_BASE",
         "geology": {
-          "primary_rocks": "Conglomerate", "Sandstone"",
+          "primary_rocks": "Conglomerate, Sandstone",
           "mineral_palette": ["Light Grey", "Dusty Tan", "Pale Yellow", "Soft Terracotta"]
-        },
-      }
-      "MAASTRICHT_FORMATION",
+        }
+      },
+      "MAASTRICHT_FORMATION": {
         "period": "LATE_CRETACEOUS",
         "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE"],
         "fauna_manifest": ["LATE_CRETACEOUS_BASE", "AMMONITES", "SEA_TURTLES"],
@@ -758,7 +797,7 @@
           "mineral_palette": ["Light-Grey", "White", "Red", "Pale Buff"]
         }
       },
-      "MORENO_FORMATION",
+      "MORENO_FORMATION": {
         "period": "LATE_CRETACEOUS",
         "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE"],
         "fauna_manifest": ["LATE_CRETACEOUS_BASE", "RADIOLARIANS", "SQUID"],
@@ -782,8 +821,8 @@
         }
       },
       "MORRISON_LJ": {
-        "period": "LATE_JURASSIC",
-        "flora": ["JURASSIC_BASE", "MORRISON_ADDITIONS"],
+        "period": "JURASSIC",
+        "flora_manifest": ["JURASSIC_BASE", "MORRISON_ADDITIONS"],
         "fauna": ["JURASSIC_BASE", "MORRISON_ADDITIONS"],
         "habitat_default": "SEMI_ARID_PLAINS",
         "palette": ["Variegated red", "Pinkish grey", "Greenish-grey"],
@@ -793,23 +832,34 @@
           "mineral_palette": ["Tan", "White"]
         }
       },
-      {
+      "MUWAQQAR_CHALK": {
+        "period": "LATE_CRETACEOUS",
+        "flora_manifest": ["LATE_CRETACEOUS_BASE", "MUWAQQAR_ADDITIONS"],
+        "fauna_manifest": ["LATE_CRETACEOUS_BASE", "MUWAQQAR_ADDITIONS"],
+        "habitat_default": "TETHYS_COASTAL_MARGIN",
+        "palette": ["Pure White", "Deep Ocean Blue", "Light Grey", "Golden Sand"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": "Soft chalk, marl, and phosphatic limestone.",
+          "mineral_palette": ["Pure White", "Deep Ocean Blue", "Light Grey", "Golden Sand"]
+        }
+      },
       "NAVESINK": {
         "period": "LATE_CRETACEOUS",
-        "flora": ["LATE_CRETACEOUS_MARINE_BASE", "NAVESINK_ADDITIONS"], 
-        "fauna": ["LATE_CRETACEOUS_MARINE_BASE", "NAVESINK_ADDITIONS"],
+        "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE", "NAVESINK_ADDITIONS"], 
+        "fauna_manifest": ["LATE_CRETACEOUS_MARINE_BASE", "NAVESINK_ADDITIONS"],
         "habitat_default": "PELAGIC_SHELF_SEA",
         "palette": ["Dark Olive Green", "Slate Blue", "Grey-Brown", "Creamy White"],
         "manifest": "LATE_CRETACEOUS_BASE",
         "geology": {
-          "primary_rocks": "Glauconitic greensand", "Marl", "Silty clay"],
+          "primary_rocks": "Glauconitic greensand, Marl and Silty clay",
           "mineral_palette": ["Dull Olive Green", "Dark Charcoal Grey", "Rusty Iron-Orange", "Pyrite Silver"]
-        },
+        }
       },
       "NEMEGT": {
         "period": "LATE_CRETACEOUS",
-        "flora": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"],
-        "fauna": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"],
+        "flora_manifest": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"],
+        "fauna_manifest": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"],
         "habitat_default": "RIVER_VALLEYS",
         "palette": ["Tan", "Light brown", "Grey-white"],
         "manifest": "LATE_CRETACEOUS_BASE",
@@ -840,7 +890,7 @@
           "mineral_palette": ["Charcoal Black", "Siderite Orange", "Muddy Brown", "Dark Grey"] 
         }
       },
-      "OULED_ABDOUN_BASIN",
+      "OULED_ABDOUN_BASIN": {
         "period": "LATE_CRETACEOUS",
         "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE"],
         "fauna_manifest": ["LATE_CRETACEOUS_BASE", "ENCHODUS", "SQUALICORAX"],
@@ -852,7 +902,7 @@
         }
       },
       "OXFORD_CLAY": {
-        "period": "EARLY_JURASSIC",
+        "period": "JURASSIC",
         "flora_manifest": ["JURASSIC_BASE", "PHYTOPLANKTON_BLOOMS"],
         "fauna_manifest": ["JURASSIC_BASE", "AMMONITES", "LEEDSICHTHYS"],
         "habitat_default": "OPEN_OCEAN_PELAGIC",
@@ -864,8 +914,8 @@
       },
       "PAJA": {
         "period": "EARLY_CRETACEOUS",
-        "flora": ["EARLY_CRETACEOUS_BASE"],
-        "fauna": ["EARLY_CRETACEOUS_BASE", "AMMONITES"],
+        "flora_manifest": ["EARLY_CRETACEOUS_BASE"],
+        "fauna_manifest": ["EARLY_CRETACEOUS_BASE", "AMMONITES"],
         "habitat_default": "EPICONTINENTAL_SEAWAY",
         "palette": ["Rusty Orange", "Dark Grey", "Deep Sea Blue"],
         "geology": {
@@ -873,7 +923,7 @@
           "mineral_palette": ["Iron-oxide Orange", "Steel Grey", "Ochre"]
         }
       },
-      "PIERRE_SHALE_FW",
+      "PIERRE_SHALE_FW": {
         "period": "LATE_CRETACEOUS",
         "flora_manifest": ["LATE_CRETACEOUS_MARINE_BASE"],
         "fauna_manifest": ["LATE_CRETACEOUS_BASE", "INOCERAMIDS", "Baculites"],
@@ -895,10 +945,22 @@
           "mineral_palette": ["Slate Grey", "Silver", "Black Carbonaceous Shale"]
         }
       },
+      "PLOTTIER": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE", "POSEIDON_ADDITIONS"],
+        "fauna": ["LATE_CRETACEOUS_BASE", "POSEIDON_ADDITIONS"],
+        "habitat_default": "PELAGIC_SHELF_SEA",
+        "palette": ["Black oil shale", "Grey-white"],
+        "manifest": "LATE_CRETACEOUS_BASE",
+        "geology": {
+          "primary_rocks": ["Black Shale", "Pyrite nodules"],
+          "mineral_palette": ["Charcoal", "Jet black", "Pyrite gold", "Deep indigo"]
+        }
+      },
       "POSEIDON_SHALE": {
-        "period": "EARLY_JURASSIC",
+        "period": "JURASSIC",
         "flora": ["JURASSIC_BASE", "POSEIDON_ADDITIONS"],
-        "fauna": ["JURASSIC_BASE", "POSEIDON_ADDITIONS"]
+        "fauna": ["JURASSIC_BASE", "POSEIDON_ADDITIONS"],
         "habitat_default": "PELAGIC_SHELF_SEA",
         "palette": ["Black oil shale", "Grey-white"],
         "manifest": "JURASSIC_BASE",
@@ -940,6 +1002,30 @@
         "geology": {
           "primary_rocks": ["Plattenkalk (fine-grained limestone)"],
           "mineral_palette": ["Cream white", "Ivory", "Pale yellow", "Soft beige", "Light grey"]
+        }
+      },
+      "TANGSHANG": {
+        "period": "LATE_CRETACEOUS",
+        "flora": ["LATE_CRETACEOUS_BASE", "TANGSHANG_ADDITIONS"],
+        "fauna": ["LATE_CRETACEOUS_BASE", "TANGSHANG_ADDITIONS"],
+        "habitat_default": "VOLCANIC_SUBTROPICAL_FOREST",
+        "palette": ["Sand Tan", "Sage Green", "Pale Blue", "Ochre"],
+        "manifest": "LATE_CRETACEOUS",
+        "geology": {
+          "primary_rocks": "Siltstone and medium-grained sandstone.",
+          "mineral_palette": ["Sand Tan", "Sage Green", "Pale Blue", "Ochre"]
+        }
+      },
+      "TIAOJISHAN": {
+        "period": "JURASSIC",
+        "flora": ["JURASSIC_BASE", "TIAOJISHAN_ADDITIONS"],
+        "fauna": ["JURASSIC_BASE", "TIAOJISHAN_ADDITIONS"],
+        "habitat_default": "VOLCANIC_SUBTROPICAL_FOREST",
+        "palette": ["Slate Grey", "Deep Green", "Charcoal", "Amber"],
+        "manifest": "JURASSIC_BASE",
+        "geology": {
+          "primary_rocks": "Grey volcanic tuff and mudstone.",
+          "mineral_palette": ["Slate Grey", "Deep Green", "Charcoal", "Amber"]
         }
       },
       "TENDAGURU": {
@@ -1003,6 +1089,6 @@
         }
       }
     }
-   }
+  }
   }
 }

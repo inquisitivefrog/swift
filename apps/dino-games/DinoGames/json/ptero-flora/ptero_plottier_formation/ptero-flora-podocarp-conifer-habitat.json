@@ -1,0 +1,30 @@
+[
+  {
+    "id": "plottier_podocarp_conifer_001",
+    "species": "Podocarp_Conifers",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "PLOTTIER",
+    "environment_details": {
+      "habitat": "SEMI_ARID_PLAINS",
+      "flora": [
+        "Podocarp Conifers (tall, slender trunks, spirally arranged evergreen leaves)",
+        "Hardy ferns (scattered at base)",
+        "Sparse Equisetites (near seasonal water runoffs)",
+        "Dry woody debris"
+      ],
+      "ground_palette": [
+        "Variegated Red",
+        "Ochre",
+        "Pinkish-Grey",
+        "Tan"
+      ],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; slender but sturdy trunk silhouettes; leaves appear as soft, overlapping clusters rather than sharp needles; tactile bark with a slightly weathered, sun-bleached texture; rounded, toy-like branch tips."
+    },
+    "visual_logic": {
+      "composition": "A low-angle shot looking up at a small cluster of Podocarp Conifers. Their dark green foliage provides a stark, vertical contrast against a bright, expansive sky and the red earth of the plains.",
+      "ground": "Dry, variegated red and ochre earth with visible mud-cracks and scattered, sun-bleached wood fragments.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; high-key sunlight from a high angle, creating sharp, dark shadows on the ground and highlighting the volume of the foliage."
+    }
+  }
+]

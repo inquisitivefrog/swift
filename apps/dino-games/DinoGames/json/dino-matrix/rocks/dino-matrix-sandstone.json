@@ -1,0 +1,67 @@
+{
+  "asset_id": "matrix_layout_sandstone_multi_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Rock_Sample_Match_Card"
+  },
+  "canvas_constraints": {
+    "aspect_ratio": "1:1 (Square Layout)",
+    "target_resolution": "1024x1024"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Three-quarter angled perspective",
+      "angle": "Angled view looking down onto the three sandstone blocks, expanding out into a deep dune corridor landscape"
+    },
+    "foreground_element": {
+      "type": "Multiple Material Blocks Array",
+      "rock_type": "Sandstone Variant Set",
+      "placement": "Three blocks grouped together on a flat, sunlit sandy plain",
+      "blocks": [
+        {
+          "block_id": "sand_color_x",
+          "geometry": "3D stylized rectangular block with distinct flowing cross-bedding lines",
+          "color": "Soft Desert Orange",
+          "texture": "Gritty, wind-sheared granular face"
+        },
+        {
+          "block_id": "sand_color_y",
+          "geometry": "3D stylized rectangular block with distinct flowing cross-bedding lines",
+          "color": "Warm Desert Gold / Tan",
+          "texture": "Standard coarse, uniform granular matrix sand"
+        },
+        {
+          "block_id": "sand_color_z",
+          "geometry": "3D stylized rectangular block with distinct flowing cross-bedding lines",
+          "color": "Pale Muted Pink / Rose",
+          "texture": "Feldspar-rich arkosic granular sand face"
+        }
+      ]
+    },
+    "background_environment": {
+      "habitat_archetype": "Arid Dune Fields / Sandstone Canyon Floors",
+      "geological_mapping": [
+        {
+          "zone_name": "Towering Canyon Butte",
+          "color_profile": "Soft Desert Orange (Matches Block Color X)",
+          "description": "A prominent, massive rock butte framing the left side of the canyon gorge entry."
+        },
+        {
+          "zone_name": "Sweeping Dune Ridges",
+          "color_profile": "Warm Desert Gold / Tan (Matches Block Color Y)",
+          "description": "Long, fluid, wind-swept sandstone ridges crossing the central horizon floor."
+        },
+        {
+          "zone_name": "Deep Escarpment Flanks",
+          "color_profile": "Pale Muted Pink / Rose (Matches Block Color Z)",
+          "description": "Sheer rock face recesses cutting deeply into the right flank of the ancient dune field corridor."
+        }
+      ],
+      "lighting": "Direct, brilliant midday sunlight highlighting the granular surface textures of the foreground blocks and casting crisp shadows beneath the stratified background cliff bands."
+    }
+  }
+}

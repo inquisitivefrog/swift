@@ -58,13 +58,22 @@ enum StandardVictoryLayout {
 struct VictoryRecapDisplayItem: Identifiable, Equatable {
     let id: String
     let title: String
+    /// Optional second line (e.g. racing speed).
+    let subtitle: String?
     /// Asset catalog / `UIImage` name for the thumbnail, if any.
     let imageAssetName: String?
     let fallbackEmoji: String
 
-    init(id: String, title: String, imageAssetName: String?, fallbackEmoji: String = "🦕") {
+    init(
+        id: String,
+        title: String,
+        subtitle: String? = nil,
+        imageAssetName: String?,
+        fallbackEmoji: String = "🦕"
+    ) {
         self.id = id
         self.title = title
+        self.subtitle = subtitle
         self.imageAssetName = imageAssetName
         self.fallbackEmoji = fallbackEmoji
     }
@@ -100,15 +109,25 @@ struct StandardVictoryRecapRowView: View {
                         )
                 }
             }
-            Text(item.title)
-                .font(.title2)
-                .fontWeight(isHighlighted ? .semibold : .regular)
-                .foregroundColor(.primary)
-                .multilineTextAlignment(.leading)
-                .lineLimit(2)
-                .minimumScaleFactor(0.65)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .opacity(isHighlighted ? 1.0 : 0.5)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(item.title)
+                    .font(.title2)
+                    .fontWeight(isHighlighted ? .semibold : .regular)
+                    .foregroundColor(.primary)
+                    .multilineTextAlignment(.leading)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.65)
+                if let subtitle = item.subtitle, !subtitle.isEmpty {
+                    Text(subtitle)
+                        .font(.subheadline)
+                        .fontWeight(isHighlighted ? .semibold : .regular)
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.6)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .opacity(isHighlighted ? 1.0 : 0.5)
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
@@ -264,7 +283,7 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
     let listScrollHeight: CGFloat
     let showSuccessPhase: Bool
     let endHighlightIndex: Int
-    /// Shown above the recap list when non-nil and non-empty (game name / marketing title).
+    /// Shown above the recap list when non-nil and non-empty (game name / marketing title). Hidden during the success phase so it does not duplicate title text baked into `game-*-success` art (e.g. Ptero Footprints).
     let gameTitle: String?
 
     var rowSpacing: CGFloat = StandardVictoryLayout.rowSpacing
@@ -313,7 +332,7 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            if let gameTitle, !gameTitle.isEmpty {
+            if let gameTitle, !gameTitle.isEmpty, !showSuccessPhase {
                 Text(gameTitle)
                     .font(.largeTitle)
                     .multilineTextAlignment(.center)

@@ -1,0 +1,7 @@
+{
+    "id": "ui_nest_clue_large_theropod_square",
+    "clade": "large_theropod",
+    "prompt": "High-fidelity 3D animated feature film style educational game clue graphic. A massive open dinosaur nest constructed as a wide circular ring of scooped earth and sand on a forest floor. In the center of the ring, resting in open air, sits a clutch of large, elongated, olive-green eggs heavily camouflaged with dark charcoal-grey and brown mottled swirls. A single whole cantaloupe melon is placed on the edge of the dirt ring for scale. Background shows forest shadows and scattered leaf litter under direct sunlight with soft-edged shadows. Perfectly centered 1:1 square composition, formatted as a square hero card with a strict 25% negative space buffer.",
+    "visual_logic": "Shows a large theropod nest clue: an open, circular dirt rim with fully exposed, dark camouflaged eggs, using a cantaloupe for scale.",
+    "style_notes": "SQUARE_HERO_CARD, STYLE_ANIMATED_FEATURE_V3. No scale bars. The camouflage pattern on the eggs must match the forest floor shadows."
+  }

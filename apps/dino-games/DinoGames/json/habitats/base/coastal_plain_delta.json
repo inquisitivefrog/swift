@@ -1,0 +1,44 @@
+{
+  "id": "habitat_coastal_plain_delta_misty_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "COASTAL_PLAIN_DELTA", 
+      "formation_id": "DINOSAUR_PARK_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Cool, atmospheric view of a northern coastal delta",
+      "features": [
+        "Winding, sluggish river channels merging into a vast estuary",
+        "Towering, dark Taxodiaceous conifers draped with primitive moss",
+        "Massive fallen logs and driftwood piles clogging the mudflats",
+        "Broad-leafed Platanoid plants forming a dense understory",
+        "Low-hanging mist blurring the distant horizon of the seaway"
+      ],
+      "action": "A cool, humid morning in a vast river delta. The air is thick with moisture. The ground is a rich, dark mud strewn with decaying wood and large-leafed prehistoric flora. No grass."
+    }
+  },
+  "visuals": {
+    "ground": "Saturated dark silt and peat. Large patches of rotting wood and fallen needles. Massive fern fronds and broad-leafed angiosperms dominate. No grass.",
+    "water": "Turbid, slow-moving brownish water with swirling eddies and floating botanical debris.",
+    "sky": "Pale, overcast steel-grey with soft, diffused light and visible atmospheric haze."
+  },
+  "habitat_id": "COASTAL_PLAIN_DELTA",
+  "physics": {
+    "altitude": "low_coastal",
+    "water": "brackish_estuarine",
+    "humidity": "very_high"
+  },
+  "strata_specifics": {
+    "ground_texture": "Slick, wet mud, carbonaceous shale fragments, and spongy peat.",
+    "color_palette": ["Deep Umber", "Forest Green", "Steel Grey", "Slate Blue"]
+  },
+  "flora_manifest": [
+    "Taxodiaceous Conifers",
+    "Platanoid (Sycamore-like) leaves",
+    "Osmunda-style ferns",
+    "Swamp mosses"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, desert, bright sand, palm trees, tropical flowers, bright sun, cacti"
+}

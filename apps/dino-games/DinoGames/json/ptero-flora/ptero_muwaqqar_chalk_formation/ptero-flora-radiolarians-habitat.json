@@ -1,0 +1,25 @@
+[
+  {
+    "id": "muwaqqar_radiolarians_001",
+    "species": "Radiolarians",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MUWAQQAR_CHALK",
+    "environment_details": {
+      "habitat": "TETHYS_COASTAL_MARGIN",
+      "flora": [
+        "Radiolarians (intricate, radial skeletal structures)",
+        "Phytoplankton clouds",
+        "Marine snow particulates",
+        "Distant schools of Enchodus"
+      ],
+      "ground_palette": ["Pure White", "Deep Ocean Blue", "Light Grey", "Golden Sand"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; complex but rounded radial symmetry; 'frozen-bubble' or fine-porcelain texture; emphasizes the ancient, delicate nature of the pelagic ecosystem."
+    },
+    "visual_logic": {
+      "composition": "A high-depth perspective shot showing the radial skeletons of radiolarians drifting like snowflakes in the deep blue Tethys water. The view emphasizes the immense scale of the open ocean shelf.",
+      "ground": "A flat, abyssal-style floor of soft chalk and marl with scattered ammonite shells.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; dramatic crepuscular rays (god-rays) penetrating the indigo water, highlighting the delicate silhouettes of the floating micro-skeletons."
+    }
+  }
+]

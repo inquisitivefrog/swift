@@ -6,7 +6,7 @@
 
 | Asset | Path / Name |
 |-------|-------------|
-| Per-plant intro audio | `Audio/Flora/flora-{slug}.m4a` (e.g. `flora-horsetails.m4a`) |
+| Per-plant intro audio | `Audio/Flora/Dinosaurs/dino-flora-{slug}.m4a` (e.g. key `flora-horsetails` → `dino-flora-horsetails.m4a`) |
 | Round prompt audio | `Games/game-dino-flora-which-three-dinosaurs.m4a` |
 | Game card | `game-dino-flora` |
 | Success card | `game-dino-flora-success` |
@@ -42,7 +42,7 @@
 ## Gameplay Rules
 
 1. **Five rounds per game**
-2. **Per round:** Randomly choose a plant (from the 19). Display image, title, and play introduction from `Audio/Flora/flora-{slug}.m4a`
+2. **Per round:** Randomly choose a plant (from the 19). Display image, title, and play introduction from `Audio/Flora/Dinosaurs/dino-flora-{slug}.m4a` (audio key `flora-{slug}`)
 3. **Track used plants:** Save plant name so it is not reused in the same game
 4. **Build round:** Choose 3 dinosaurs from the plant's "Eats" list (herbivores/omnivores); add 2 decoys from "Won't eat"
 5. **Play** `game-dino-flora-which-three-dinosaurs` audio

@@ -453,8 +453,22 @@ struct WhoIsTallerGameView: View {
 
     // MARK: - Victory
 
+    /// Recap: height-comparison art shown during play (`measure-*` / `ptero-measure-*` when bundled).
+    private var tallerVictoryRecapItems: [VictoryRecapDisplayItem] {
+        dinosaursCompared.map { item in
+            let imageName = measureDinoImageName(for: item) ?? gridImageName(for: item) ?? item.imageName
+            let resolved = imageName.flatMap { ImageAssetCache.imageExists(named: $0) ? $0 : nil }
+            return VictoryRecapDisplayItem(
+                id: "\(item.id)",
+                title: item.name,
+                imageAssetName: resolved,
+                fallbackEmoji: item.emoji
+            )
+        }
+    }
+
     private var victoryListVisibleHeight: CGFloat {
-        StandardVictoryLayout.recapListScrollHeight(itemCount: dinosaursCompared.count)
+        StandardVictoryLayout.recapListScrollHeight(itemCount: tallerVictoryRecapItems.count)
     }
 
     private var victoryView: some View {
@@ -464,48 +478,10 @@ struct WhoIsTallerGameView: View {
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
             scrollRows: {
-                ForEach(Array(dinosaursCompared.enumerated()), id: \.offset) { index, item in
-                    let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                    HStack(spacing: 16) {
-                        Group {
-                            if let name = gridImageName(for: item) ?? item.imageName, ImageAssetCache.imageExists(named: name) {
-                                Image(name)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 72, height: 72)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                            } else {
-                                Text(item.emoji)
-                                    .font(.system(size: 40))
-                                    .frame(width: 72, height: 72)
-                            }
-                        }
-                        .opacity(isHighlighted ? 1.0 : 0.4)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
-                        )
-
-                        Text(item.name)
-                            .font(.title2)
-                            .fontWeight(isHighlighted ? .semibold : .regular)
-                            .foregroundColor(.primary)
-                            .multilineTextAlignment(.leading)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.8)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .opacity(isHighlighted ? 1.0 : 0.5)
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
-                    .frame(height: StandardVictoryLayout.rowHeight)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                ForEach(Array(tallerVictoryRecapItems.enumerated()), id: \.element.id) { index, item in
+                    StandardVictoryRecapRowView(
+                        item: item,
+                        isHighlighted: endSequenceStep >= 1 && index == endHighlightIndex
                     )
                     .id(index)
                 }
@@ -513,6 +489,7 @@ struct WhoIsTallerGameView: View {
             successPhase: {
                 LandGameVictorySuccessStingerThenContinue(
                     gameConfigId: gameConfig.id,
+                    imageSide: GameCatalogImageMetrics.nameThatVictorySuccessImageSide,
                     speechManager: speechManager,
                     onContinue: playGoodJobAndCrowdThenDismiss
                 )

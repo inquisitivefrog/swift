@@ -1,0 +1,25 @@
+[
+  {
+    "id": "karabastau_araucariaceae_quad_001",
+    "species": "Araucariaceae",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "KARABASTAU",
+    "environment_details": {
+      "habitat": "STAGNANT_LAKE_FOREST",
+      "flora": [
+        "Globe cone (large, spherical, interlocking scales)",
+        "Branchlet (scale-like leaves, geometric pattern)",
+        "Juvenile seedling (symmetrical, small, vibrant green)",
+        "Pollen cone (smaller, elongated, dusty with yellow pollen)"
+      ],
+      "ground_palette": ["Deep Brown", "Forest Green", "Charcoal", "Olive"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; highly geometric, repeating patterns; scales appear thick and 'toylike'; vibrant greens against the dark earth."
+    },
+    "visual_logic": {
+      "composition": "Quadrant view: Top-Left: The heavy spherical female cone; Top-Right: Close-up of the overlapping scale-leaves; Bottom-Left: A perfectly symmetrical seedling; Bottom-Right: A cluster of male pollen cones.",
+      "ground": "Dark brown, damp earth with scattered charcoal nodules.",
+      "lighting": "Diffused top-down lighting to accentuate the 3D relief of the overlapping scales."
+    }
+  }
+]

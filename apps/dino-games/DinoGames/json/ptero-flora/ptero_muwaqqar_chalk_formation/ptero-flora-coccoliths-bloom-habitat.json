@@ -1,0 +1,25 @@
+[
+  {
+    "id": "muwaqqar_coccoliths_bloom_001",
+    "species": "Coccoliths",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MUWAQQAR_CHALK",
+    "environment_details": {
+      "habitat": "TETHYS_COASTAL_MARGIN",
+      "flora": [
+        "Coccolithophores (as a massive, milky-white underwater cloud)",
+        "Thalassotaenia (Seagrass) visible in distant shallows",
+        "Abundant Phytoplankton blooms",
+        "Suspended marine snow"
+      ],
+      "ground_palette": ["Pure White", "Deep Ocean Blue", "Light Grey", "Golden Sand"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; soft, ethereal clouds of micro-organisms; individual coccolith plates appear as tiny, shimmering iridescent discs; emphasis on the 'milky' quality of the water; rounded, appealing particles without sharp noise."
+    },
+    "visual_logic": {
+      "composition": "A cinematic underwater view looking through a dense, milky-white bloom of coccoliths. The 'cloud' of algae swirls with the current, partially obscuring a distant phosphatic limestone reef.",
+      "ground": "Soft white chalk dust and grey-marl pebbles on the seafloor, reflecting the high-key light from above.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; bright surface light filtering down as shimmering 'god-rays,' catching the individual plates to create a sparkling, crystalline effect."
+    }
+  }
+]

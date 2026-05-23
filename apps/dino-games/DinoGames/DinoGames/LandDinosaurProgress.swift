@@ -39,7 +39,7 @@ enum LandDinosaurGamePairing {
         case "dino-habitats":
             return ["dino-flora", "dino-fauna"]
         case "dino-formations":
-            return ["matrix-materials", "dino-habitats"]
+            return ["dino-matrix", "dino-habitats"]
         case "dino-bones":
             return ["whose-bones"]
         case "dino-trackways":
@@ -66,6 +66,7 @@ final class LandDinosaurProgress: ObservableObject {
 
     /// Maps runtime config ids (e.g. racing-dinosaurs-jurassic) to catalog ids used for progress.
     static func canonicalId(for configId: String) -> String {
+        if configId == "matrix-materials" { return "dino-matrix" }
         if configId.hasPrefix("dino-push-") { return "dino-push" }
         if configId.hasPrefix("racing-dinosaurs") { return "racing-dinosaurs" }
         return configId
@@ -78,7 +79,11 @@ final class LandDinosaurProgress: ObservableObject {
 
     private init() {
         let stored = UserDefaults.standard.stringArray(forKey: defaultsKey) ?? []
-        playedCanonicalGameIds = Set(stored)
+        var ids = Set(stored)
+        if ids.remove("matrix-materials") != nil {
+            ids.insert("dino-matrix")
+        }
+        playedCanonicalGameIds = ids
         // Record here (not only from `GameSelectionView`) so completions still count when a game sheet
         // dismisses during navigation transitions or when that view is temporarily off-screen.
         gameCompletedObserver = NotificationCenter.default.addObserver(
@@ -123,6 +128,17 @@ final class LandDinosaurProgress: ObservableObject {
     private func allGamesInLevelMarkedPlayed(_ level: GameLevel) -> Bool {
         let games = DinosaurGameCatalog.games(level: level)
         if games.isEmpty { return true }
+        return games.allSatisfy { game in
+            guard let rawId = game.id else { return true }
+            let c = Self.canonicalId(for: rawId)
+            return playedCanonicalGameIds.contains(c)
+        }
+    }
+
+    /// Every catalog game in `level` has been completed at least once (non-empty levels only). Used for level-up UX after the last first-time completion.
+    func hasCompletedEveryGame(in level: GameLevel) -> Bool {
+        let games = DinosaurGameCatalog.games(level: level)
+        if games.isEmpty { return false }
         return games.allSatisfy { game in
             guard let rawId = game.id else { return true }
             let c = Self.canonicalId(for: rawId)

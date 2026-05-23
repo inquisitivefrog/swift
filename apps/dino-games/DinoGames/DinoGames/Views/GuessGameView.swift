@@ -248,6 +248,80 @@ struct GuessGameView: View {
             .filter { seen.insert($0.id).inserted }
     }
 
+    /// Victory recap: thumbnail = main clue art from that round; title = owner name (e.g. footprint + dinosaur).
+    private var guessVictoryRecapItems: [VictoryRecapDisplayItem] {
+        if isFootprintsGuessGame {
+            return gameConfig.rounds.compactMap { round in
+                guard let dinosaur = round.options.first(where: { $0.id == round.correctAnswerId }) else { return nil }
+                return VictoryRecapDisplayItem(
+                    id: "round-\(round.id)",
+                    title: dinosaur.name,
+                    imageAssetName: guessFootprintVictoryImageName(round: round, dinosaur: dinosaur),
+                    fallbackEmoji: dinosaur.icon
+                )
+            }
+        }
+        var seen: Set<Int> = []
+        var items: [VictoryRecapDisplayItem] = []
+        for round in gameConfig.rounds {
+            guard let dinosaur = round.options.first(where: { $0.id == round.correctAnswerId }) else { continue }
+            guard seen.insert(dinosaur.id).inserted else { continue }
+            items.append(
+                VictoryRecapDisplayItem(
+                    id: "\(dinosaur.id)",
+                    title: dinosaur.name,
+                    imageAssetName: guessVictoryRecapImageName(round: round, dinosaur: dinosaur),
+                    fallbackEmoji: dinosaur.icon
+                )
+            )
+        }
+        return items
+    }
+
+    /// Same footprint asset shown large at the top of the round (`footprint-*` / `ptero-footprint-*`), not the dinosaur portrait.
+    private func guessFootprintVictoryImageName(round: RoundQuestion, dinosaur: Dinosaur) -> String? {
+        if ImageAssetCache.imageExists(named: round.questionImageName) {
+            return round.questionImageName
+        }
+        if let name = dinosaur.imageName, ImageAssetCache.imageExists(named: name) {
+            return name
+        }
+        return nil
+    }
+
+    private func guessVictoryRecapImageName(round: RoundQuestion, dinosaur: Dinosaur) -> String? {
+        if usesQuestionArtInVictoryRecap, ImageAssetCache.imageExists(named: round.questionImageName) {
+            return round.questionImageName
+        }
+        if let name = dinosaur.imageName, ImageAssetCache.imageExists(named: name) {
+            return name
+        }
+        return nil
+    }
+
+    /// Creature to speak during victory walk at `index` (aligned with `guessVictoryRecapItems`).
+    private func guessVictoryRecapDinosaur(at index: Int) -> Dinosaur? {
+        if isFootprintsGuessGame {
+            guard index < gameConfig.rounds.count else { return nil }
+            let round = gameConfig.rounds[index]
+            return round.options.first(where: { $0.id == round.correctAnswerId })
+        }
+        guard index < endSequenceDinosaurs.count else { return nil }
+        return endSequenceDinosaurs[index]
+    }
+
+    /// Guess games whose rounds teach non-portrait clues (footprints, silhouettes, skeletons, …).
+    private var usesQuestionArtInVictoryRecap: Bool {
+        switch gameConfig.id {
+        case "dino-footprints", "ptero-footprints",
+             "dino-bones", "whose-bones",
+             "name-that-dinosaur", "name-that-pterosaur", "name-that-marine-reptile":
+            return true
+        default:
+            return false
+        }
+    }
+
     /// Whose Bones?: body segment keys aligned with `endSequenceDinosaurs` for victory audio.
     private var endSequenceBodySegmentSpeechKeys: [String] {
         guard gameConfig.id == "whose-bones" else { return [] }
@@ -284,7 +358,7 @@ struct GuessGameView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 30) {
-                // Title (hidden during victory — `VictorySplitColumnView` shows `gameTitle` there)
+                // Title (hidden during victory — `VictorySplitColumnView` shows `gameTitle` during recap only; success card art includes the title)
                 if !isGameComplete {
                     Text(gameConfig.title)
                         .font(.largeTitle)
@@ -547,7 +621,7 @@ struct GuessGameView: View {
     
     /// Recap list height: up to `StandardVictoryLayout.maxVisibleRecapRows` rows visible; longer lists scroll.
     private var victoryListVisibleHeight: CGFloat {
-        StandardVictoryLayout.recapListScrollHeight(itemCount: endSequenceDinosaurs.count)
+        StandardVictoryLayout.recapListScrollHeight(itemCount: guessVictoryRecapItems.count)
     }
 
     // MARK: - End sequence: same as Dino Diets / Match the Dinosaur — top half list (highlight + name audio), bottom half "Good job!" then success image (centered, no wrapper), then good-job + crowd and dismiss
@@ -558,30 +632,10 @@ struct GuessGameView: View {
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
             scrollRows: {
-                ForEach(Array(endSequenceDinosaurs.enumerated()), id: \.element.id) { index, dinosaur in
-                    let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
-                    HStack(spacing: 16) {
-                        guessGameEndSequenceImage(dinosaur: dinosaur, isHighlighted: isHighlighted)
-                        Text(dinosaur.name)
-                            .font(.title2)
-                            .fontWeight(isHighlighted ? .semibold : .regular)
-                            .foregroundColor(.primary)
-                            .multilineTextAlignment(.leading)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.8)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .opacity(isHighlighted ? 1.0 : 0.5)
-                    }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 10)
-                    .frame(height: StandardVictoryLayout.rowHeight)
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 12)
-                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
+                ForEach(Array(guessVictoryRecapItems.enumerated()), id: \.element.id) { index, item in
+                    StandardVictoryRecapRowView(
+                        item: item,
+                        isHighlighted: endSequenceStep >= 1 && index == endHighlightIndex
                     )
                     .id(index)
                 }
@@ -600,18 +654,18 @@ struct GuessGameView: View {
             guard endSequenceStep == -1 else { return }
             endSequenceStep = 1
             endHighlightIndex = 0
-            if endSequenceDinosaurs.isEmpty {
+            if guessVictoryRecapItems.isEmpty {
                 endSequenceStep = 2
             } else if gameConfig.id == "whose-bones" {
                 let keys = endSequenceBodySegmentSpeechKeys
                 if !keys.isEmpty {
                     speechManager.speak("body-\(keys[0])")
-                } else {
-                    speechManager.speak(audioKey: endSequenceDinosaurs[0].imageName ?? endSequenceDinosaurs[0].name, fallbackText: endSequenceDinosaurs[0].name)
+                } else if let d = guessVictoryRecapDinosaur(at: 0) {
+                    speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
                 }
                 speechManager.onAudioFinished = { advanceEndHighlight() }
-            } else {
-                speechManager.speak(audioKey: endSequenceDinosaurs[0].imageName ?? endSequenceDinosaurs[0].name, fallbackText: endSequenceDinosaurs[0].name)
+            } else if let d = guessVictoryRecapDinosaur(at: 0) {
+                speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
                 speechManager.onAudioFinished = { advanceEndHighlight() }
             }
         }
@@ -628,41 +682,19 @@ struct GuessGameView: View {
         }
     }
 
-    private func guessGameEndSequenceImage(dinosaur: Dinosaur, isHighlighted: Bool) -> some View {
-        Group {
-            if let imageName = dinosaur.imageName, UIImage(named: imageName) != nil {
-                Image(imageName)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 72, height: 72)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .opacity(isHighlighted ? 1.0 : 0.4)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
-                    )
-            } else {
-                Text(dinosaur.icon)
-                    .font(.system(size: 40))
-                    .frame(width: 72, height: 72)
-                    .opacity(isHighlighted ? 1.0 : 0.4)
-            }
-        }
-    }
-    
     private func advanceEndHighlight() {
         speechManager.onAudioFinished = nil
         endHighlightIndex += 1
-        if endHighlightIndex < endSequenceDinosaurs.count {
+        if endHighlightIndex < guessVictoryRecapItems.count {
             if gameConfig.id == "whose-bones" {
                 let keys = endSequenceBodySegmentSpeechKeys
                 if endHighlightIndex < keys.count {
                     speechManager.speak("body-\(keys[endHighlightIndex])")
-                } else {
-                    speechManager.speak(audioKey: endSequenceDinosaurs[endHighlightIndex].imageName ?? endSequenceDinosaurs[endHighlightIndex].name, fallbackText: endSequenceDinosaurs[endHighlightIndex].name)
+                } else if let d = guessVictoryRecapDinosaur(at: endHighlightIndex) {
+                    speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
                 }
-            } else {
-                speechManager.speak(audioKey: endSequenceDinosaurs[endHighlightIndex].imageName ?? endSequenceDinosaurs[endHighlightIndex].name, fallbackText: endSequenceDinosaurs[endHighlightIndex].name)
+            } else if let d = guessVictoryRecapDinosaur(at: endHighlightIndex) {
+                speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
             }
             speechManager.onAudioFinished = { advanceEndHighlight() }
         } else {

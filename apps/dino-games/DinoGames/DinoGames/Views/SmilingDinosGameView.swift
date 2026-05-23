@@ -4,7 +4,7 @@
 //
 //  Smiling Dinos: Match 2 dinosaur smiles to 3 teeth (2 matches + 1 distractor). Mimics Match the Dinosaur framework.
 //  Left column: Smiles (dino-smile-{slug}). Right column: Tooth Shapes (dino-smile-tooth-{toothType}).
-//  Each smile matches one tooth. 3 rounds, 6 introduced per game. Victory: re-introduce teeth.
+//  Each smile matches one tooth. 3 rounds, 6 introduced per game. Victory: shared pipeline; recap re-introduces tooth shapes.
 //
 
 import SwiftUI
@@ -360,8 +360,9 @@ struct SmilingDinosGameView: View {
 
         if currentRound >= totalRounds {
             isAudioPlaying = false
+            endSequenceStep = -1
+            endHighlightIndex = 0
             showVictory = true
-            // endSequenceStep and endHighlightIndex are set in victoryView.onAppear (guard requires -1)
         } else {
             currentRound += 1
             resetGameState()
@@ -371,11 +372,7 @@ struct SmilingDinosGameView: View {
         }
     }
 
-    // MARK: - Victory
-
-    private let victoryRowHeight: CGFloat = 72
-    /// Visible height for sliding list (~3 rows like Toothache); list scrolls as we walk through items.
-    private var victoryListVisibleHeight: CGFloat { 16 + 3 * 92 + 2 * 12 + 16 }
+    // MARK: - Victory (shared: recap tooth shapes → success stinger → good-job + crowd)
 
     /// Deduplicated tooth types for victory display (preserves order of first appearance).
     private var victoryToothTypesUnique: [String] {
@@ -383,67 +380,55 @@ struct SmilingDinosGameView: View {
         return victoryToothTypes.filter { seen.insert($0).inserted }
     }
 
-    private var victoryView: some View {
-        GeometryReader { _ in
-            VStack(spacing: 0) {
-                Text(gameConfig.title)
-                    .font(.largeTitle)
-                    .padding(.top, 8)
-                    .padding(.bottom, 8)
-                ScrollViewReader { proxy in
-                    ScrollView {
-                        VStack(spacing: 12) {
-                            ForEach(Array(victoryToothTypesUnique.enumerated()), id: \.offset) { index, toothType in
-                                ToothVictoryRowView(toothType: toothType, isHighlighted: endSequenceStep >= 1 && index == endHighlightIndex)
-                                    .id(index)
-                            }
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 10)
-                    }
-                    .frame(height: min(CGFloat(victoryToothTypesUnique.count) * (92 + 12) + 32, victoryListVisibleHeight))
-                    .onChange(of: endHighlightIndex) { _, newValue in
-                        if newValue >= 0, newValue < victoryToothTypesUnique.count {
-                            withAnimation(.easeInOut(duration: 0.3)) {
-                                proxy.scrollTo(newValue, anchor: .center)
-                            }
-                        }
-                    }
-                }
-                .frame(maxWidth: .infinity)
-
-                Group {
-                    if endSequenceStep == 2 {
-                        successImageView
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
-                            .onAppear {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    playGoodJobAndCrowdThenDismiss()
-                                }
-                            }
-                    } else {
-                        Spacer()
-                    }
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
+    private var smileVictoryRecapItems: [VictoryRecapDisplayItem] {
+        victoryToothTypesUnique.map { toothType in
+            let imageName = "dino-smile-tooth-\(toothType)"
+            return VictoryRecapDisplayItem(
+                id: toothType,
+                title: dinoSmileToothDisplayName(toothType),
+                imageAssetName: ImageAssetCache.imageExists(named: imageName) ? imageName : nil,
+                fallbackEmoji: "🦷"
+            )
         }
+    }
+
+    private var victoryView: some View {
+        VictorySplitColumnView(
+            listScrollHeight: StandardVictoryLayout.recapListScrollHeight(itemCount: smileVictoryRecapItems.count),
+            showSuccessPhase: endSequenceStep == 2,
+            endHighlightIndex: endHighlightIndex,
+            gameTitle: gameConfig.title,
+            scrollRows: {
+                ForEach(Array(smileVictoryRecapItems.enumerated()), id: \.element.id) { index, item in
+                    StandardVictoryRecapRowView(
+                        item: item,
+                        isHighlighted: endSequenceStep >= 1 && index == endHighlightIndex
+                    )
+                    .id(index)
+                }
+            },
+            successPhase: {
+                LandGameVictorySuccessStingerThenContinue(
+                    candidateSuccessImageNames: ["game-dino-smile-success", "game-smiling-dinos-success", "game-smiling-dinos"],
+                    catalogGameIdForStinger: gameConfig.id,
+                    speechManager: speechManager,
+                    onContinue: playGoodJobAndCrowdThenDismiss
+                )
+            }
+        )
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             guard endSequenceStep == -1 else { return }
             endSequenceStep = 1
             endHighlightIndex = 0
-            if victoryToothTypesUnique.isEmpty {
+            if smileVictoryRecapItems.isEmpty {
                 endSequenceStep = 2
             } else {
                 let toothType = victoryToothTypesUnique[0]
                 let fallback = dinoSmileToothDisplayName(toothType)
                 playToothAudio(speechManager: speechManager, toothType: toothType, fallbackText: fallback, onFinished: advanceVictoryHighlight)
-                // Timeout: if audio never completes, advance after 6s to prevent permanent hang
                 DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
-                    if endHighlightIndex == 0, endSequenceStep == 1 {
-                        advanceVictoryHighlight()
-                    }
+                    if endHighlightIndex == 0, endSequenceStep == 1 { advanceVictoryHighlight() }
                 }
             }
         }
@@ -458,28 +443,11 @@ struct SmilingDinosGameView: View {
             playToothAudio(speechManager: speechManager, toothType: toothType, fallbackText: fallback, onFinished: advanceVictoryHighlight)
             let currentIndex = endHighlightIndex
             DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
-                if endHighlightIndex == currentIndex, endSequenceStep == 1 {
-                    advanceVictoryHighlight()
-                }
+                if endHighlightIndex == currentIndex, endSequenceStep == 1 { advanceVictoryHighlight() }
             }
         } else {
             endSequenceStep = 2
         }
-    }
-
-    private var successImageView: some View {
-        Group {
-            if ImageAssetCache.imageExists(named: "game-dino-smile-success") {
-                Image("game-dino-smile-success")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else {
-                Text("🎉")
-                    .font(.system(size: 100))
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     private func playGoodJobAndCrowdThenDismiss() {
@@ -647,69 +615,6 @@ private struct ToothVictoryImage: View {
                     .opacity(isHighlighted ? 1.0 : 0.4)
             }
         }
-    }
-
-    @ViewBuilder private var diamondBatteryShineOverlay: some View {
-        if isDiamondBattery {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(
-                    LinearGradient(
-                        colors: [.clear, .white.opacity(0.5), .clear],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
-                .blendMode(.overlay)
-        }
-    }
-}
-
-/// Victory row: tooth shape image + name.
-private struct ToothVictoryRowView: View {
-    let toothType: String
-    let isHighlighted: Bool
-    private let rowHeight: CGFloat = 92
-
-    private var imageName: String { "dino-smile-tooth-\(toothType)" }
-    private var isDiamondBattery: Bool { toothType.contains("diamond-battery") }
-
-    var body: some View {
-        HStack(spacing: 16) {
-            Group {
-                if ImageAssetCache.imageExists(named: imageName) {
-                    Image(imageName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 72, height: 72)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .overlay(diamondBatteryShineOverlay)
-                        .opacity(isHighlighted ? 1.0 : 0.4)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 3)
-                        )
-                } else {
-                    Text("🦷")
-                        .font(.system(size: 40))
-                        .frame(width: 72, height: 72)
-                        .opacity(isHighlighted ? 1.0 : 0.4)
-                }
-            }
-            Text(dinoSmileToothDisplayName(toothType))
-                .font(.title2)
-                .fontWeight(isHighlighted ? .semibold : .regular)
-                .foregroundColor(.primary)
-                .multilineTextAlignment(.leading)
-                .lineLimit(2)
-                .minimumScaleFactor(0.65)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .opacity(isHighlighted ? 1.0 : 0.5)
-        }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 10)
-        .frame(height: rowHeight)
-        .background(RoundedRectangle(cornerRadius: 12).fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear))
-        .overlay(RoundedRectangle(cornerRadius: 12).stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2))
     }
 
     @ViewBuilder private var diamondBatteryShineOverlay: some View {

@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tiaojishan_dicksoniaceous_ferns_quad_001",
+    "species": "Dicksoniaceous_Ferns",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "TIAOJISHAN",
+    "environment_details": {
+      "habitat": "VOLCANIC_LAKE_MARGIN",
+      "flora": [
+        "Oversized fuzzy fiddlehead (thick, coiled green spiral covered in dense, velvet-like brown hair)",
+        "Feather-like leaflet branch (a detailed section of a frond showing repeating dissected leaf patterns)",
+        "Fibrous trunk mass (macro close-up of a tree-fern stem showing a woven column of dark brown roots)",
+        "Spore cluster strip (neat rows of miniature raised circular capsules along a leaf blade edge)"
+      ],
+      "ground_palette": ["Dark Volcanic Ash Gray", "Rich Humus Brown", "Vibrant Lime Green"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; avoid thin, fragile lines; fiddleheads must look thick, fleshy, and stylized; clear texture contrast between the coarse brown fibrous trunk and the smooth, vibrant lime-green fronds."
+    },
+    "visual_logic": {
+      "composition": "Quadrant composition: Top-Left: a giant, plush, tightly coiled brown-velvet fiddlehead; Top-Right: a detailed grid view of a repeating dissected leaf structure; Bottom-Left: a macro look at the woven, hair-like root trunk texture; Bottom-Right: the underside of a leaf blade highlighting the spore rows.",
+      "ground": "A clean, dark charcoal floor composed of fine volcanic ash, emphasizing the bright green and rich brown specimens.",
+      "lighting": "Clean, diffused daylight that clearly separates the fuzzy bronze details from the glossy green leaf tissues."
+    }
+  }
+]

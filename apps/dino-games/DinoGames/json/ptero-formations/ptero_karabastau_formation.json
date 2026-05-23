@@ -1,0 +1,48 @@
+{
+  "id": "habitat_karabastau_lake_forest_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3", "framing": "SQUARE_HERO_CARD" },
+    "layer_2_setting": { 
+      "habitat_id": "STAGNANT_LAKE_FOREST", 
+      "formation_id": "KARABASTAU_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "A quiet, humid Late Jurassic lake surrounded by dense evergreen forest",
+      "features": [
+        "Still, dark lake water with fine anaerobic silts on the floor",
+        "Dense thickets of Araucarian conifers and giant horsetails",
+        "Abundant Jurassic lacewings and dragonflies hovering over the margins",
+        "Fallen logs covered in thick, damp bryophyte mats",
+        "Subdued, moody lighting filtering through a thick forest canopy"
+      ],
+      "action": "A sheltered, primeval forest scene. The environment is humid and still, perfect for the preservation of delicate soft tissues. The ground is a dark, loamy forest floor. No grass."
+    }
+  },
+  "visuals": {
+    "ground": "Dark, carbonaceous mudstone and fine-grained brownish silts. Spongy mosses and fallen conifer needles. No grass.",
+    "water": "Stagnant and dark; the surface is broken only by ripples from insects or small reptiles.",
+    "sky": "Deep forest green canopy filter; the sky is barely visible as pale patches through the trees."
+  },
+  "habitat_id": "STAGNANT_LAKE_FOREST",
+  "physics": {
+    "altitude": "inland_basin",
+    "water": "static_freshwater",
+    "humidity": "high"
+  },
+  "strata_specifics": {
+    "ground_texture": "Laminated paper-shale and fine siltstone.",
+    "color_palette": ["Deep Brown", "Forest Green", "Charcoal", "Olive"]
+  },
+  "flora_manifest": [
+    "Araucariaceae",
+    "Equisetites (Giant Horsetails)",
+    "Ginkgoales",
+    "Cycads"
+  ],
+  "fauna_manifest": [
+    "Jurassic Lacewings",
+    "Early Salamanders",
+    "Small Jurassic mammals"
+  ],
+  "negative_prompt": "grass, bright blue sky, flowers, ocean, desert, city, humans"
+}

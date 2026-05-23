@@ -1,0 +1,7 @@
+{
+    "id": "ui_nest_clue_ornithischian_square",
+    "clade": "ornithischian",
+    "prompt": "High-fidelity 3D animated feature film style educational game clue graphic. A tight, small dinosaur nesting site in a dry, sandy upland depression. A cross-section reveals small, slenderly oblong, porcelain-smooth white eggs packed tightly in a vertical upright arrangement, buried completely under loose sandy soil. At the surface of the sand directly above them, a single bright red apple rests for a size comparison. Background shows sparse upland shrubs and dry earth under high-key direct afternoon sun. Perfectly centered 1:1 square composition, formatted as a square hero card with a strict 25% negative space buffer on all boundaries.",
+    "visual_logic": "Shows a basal ornithischian nest clue: a small, tight vertical clutch buried under sand, using an apple at the surface for scale.",
+    "style_notes": "SQUARE_HERO_CARD, STYLE_ANIMATED_FEATURE_V3. No scale bars. Emphasize the distinct vertical packing arrangement of the hidden eggs."
+  }

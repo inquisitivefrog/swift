@@ -1,0 +1,74 @@
+{
+  "asset_id": "img_ptero_matrix_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "source_file": "game-ptero-matrix-intro-1024.png",
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Header_Art_Ptero_Matrix",
+    "tech_ref": "DEFAULT_SQUARE"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Medium Close-Up",
+      "angle": "Eye-level, slight low-angle tilt",
+      "depth_of_field": "Subtle background softening"
+    },
+    "characters": [
+      {
+        "id": "dino_bones_paleontologist_6",
+        "base_library_ref": "dino_bones_paleontologist_6",
+        "description": "An adult female grad student working as a paleontologist, braided black hair, African ethnicity.",
+        "features": {
+          "hair": "Tightly braided black hair",
+          "skin_tone": "Dark skin tone",
+          "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+          "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features."
+        },
+        "apparel": {
+          "headwear": "Khaki bucket hat",
+          "upper": "Muted green tee shirt worn UNDER a khaki safari vest",
+          "lower": "Khaki cargo pants",
+          "footwear": "Brown hiking boots"
+        },
+        "pose": "Engaged in careful field preparation, examining a split slab of stone with an air-scribe held aloft, smiling enthusiastically.",
+        "tools_held": [
+          "Pneumatic micro-scribe tool with thin coiled air hose"
+        ]
+      }
+    ],
+    "environment": {
+      "formation_archetype": "SOLNHOFEN",
+      "geology": {
+        "strata_type": "Finely laminated, flat-layered carbonate beds",
+        "primary_materials": ["Plattenkalk limestone", "Lithographic matrix layers"],
+        "color_palette": ["Cream White", "Pale Ivory", "Soft Buff", "Light Ochre"]
+      },
+      "flora": [],
+      "embedded_assets": [
+        {
+          "asset_type": "Fossil Specimen",
+          "description": "Exquisite, fully articulated pterosaur skeleton flat-pressed into a split limestone matrix.",
+          "features": {
+            "anatomical_accuracy": "Stylized-realism, elongated fourth digit wing finger, delicate skull with pointed beak",
+            "texture": "Dark brown carbonized bone replacement contrasting sharply against light matrix"
+          }
+        }
+      ]
+    ],
+    "graphic_elements": [
+      {
+        "element_type": "3D Text Overlay",
+        "text_content": "Ptero Matrix!",
+        "typography": {
+          "style": "Bold, blocky 3D sans-serif extruded geometry",
+          "letter_casing": "Mixed Case",
+          "color": "Bright Orange-Yellow",
+          "integration": "Nested physically into the upper rock ledge, casting clear shadows onto the limestone background"
+        }
+      }
+    ]
+  }
+}

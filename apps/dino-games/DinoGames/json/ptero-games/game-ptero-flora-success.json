@@ -1,0 +1,30 @@
+{
+  "id": "ptero_flora_victory_002",
+  "species": "Transitional Flora Mastery",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "CELEBRATORY_GOLDEN_SUNSHINE",
+  "formation_ref": "GLOBAL_PTERO_Lagerstätten",
+  "environment_details": {
+    "habitat": "COASTAL_LAGOON_SYSTEM",
+    "flora": [
+      "Transitional Magnoliids (large white blooms on woody branches, framing the foreground)",
+      "Giant Ginkgoites (vibrant amber-yellow autumn fan leaves)",
+      "Cycadeoidea/Bennettitales (with prominent flower-like reproductive cones)",
+      "Taxodiaceous conifer knees (protruding from the shallow shoreline)",
+      "Floating aquatic ferns (Salviniales) on the water surface",
+      "Stunted wind-swept Araucaria on distant limestone cliffs"
+    ],
+    "ground_palette": [
+      "Crystal Turquoise (shallows)",
+      "Victory Gold (text)",
+      "Electric Blue (header text)",
+      "Warm Sand"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; celebratory high-energy atmosphere; waxy, waxy petal textures and sparkling water highlights."
+  },
+  "visual_logic": {
+    "composition": "A high-key celebratory landscape. A beautiful Magnolia-like branch with a large white bloom frames the left foreground. In the center, a clear stream or lagoon leads the eye toward distant cliffs and a venting volcano. The top caption 'PTERO FLORA!' is in 3D Electric Blue. The bottom caption 'Player Wins!' is in bright 3D Mastery Gold with a heavy bevel.",
+    "ground": "Clear shallow water over white limestone sand with visible roots and pebbles.",
+    "lighting": "Intense, sparkling golden sunlight creating a 'glimmer' effect on the water and a warm glow on the vegetation."
+  }
+}

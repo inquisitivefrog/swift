@@ -1,0 +1,12 @@
+{
+  "fauna_library_updates": {
+    "CEPHALOPOD_PACK": ["Soft-bodied coleoids (squid analogues)", "Teuthids"],
+    "SOLNHOFEN_SPECIFIC": ["Leptolepides (Small silvery fish)", "Ascalaphid Neuropterans (Owlflies)"],
+    "AZHDARCHID_PREY": ["Baby Titanosaurs", "Hypsilophodont juveniles", "Large lizards"],
+    "PISCIVORE_EXPANSION": ["Lycoptera (Common Jehol fish)", "Dastilbe (Common Brazilian fish)"]
+  },
+  "flora_library_updates": {
+    "FRUIT_EQUIVALENTS": ["Fleshy Gnetophyte seeds", "Early Angiosperm berries"],
+    "FILTER_FEED_BASE": ["Spirogyra-type algae", "Green colonial algae"]
+  }
+}

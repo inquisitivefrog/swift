@@ -1,0 +1,6 @@
+{
+      "id": "ui_nest_ornithocheiroid_colony",
+      "dimensions": "SQUARE_ASPECT_RATIO",
+      "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A clear, close-up view of an Ornithocheiroid nest containing four soft-shelled, off-white eggs exhibiting prominent deflated creases and subtle sand-dusting. The nest is a simple, shallow circular scrape dug directly into loose, fine sand on an open beach. In the immediate blurred background, dozens of identical sandy scrapes stretch down the coastline, creating a massive, dense breeding colony. SETTING: Vibrant beach environment with clear coastal teal water. LIGHTING: Crisp midday sun casting sharp, distinct shadows beneath the egg contours. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+      "visual_logic": "Combines two visual clues: lemon-sized, dented off-white eggs (Clue 1) and a massive, multi-nest beach colony sand scrape (Clue 2) to indicate the Ornithocheiroid clade."
+    }

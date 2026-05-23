@@ -1,0 +1,23 @@
+{
+  "id": "muwaqqar_radiolarian_quad_002",
+  "species": "Radiolarians",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+  "formation_ref": "MUWAQQAR_CHALK",
+  "environment_details": {
+    "habitat": "TETHYS_COASTAL_MARGIN",
+    "flora": [
+      "Radiolarian test (microscopic porous silica skeleton with radial symmetry)",
+      "Geodesic lattice (intricate, interlocking hexagonal silica framework)",
+      "Radial spines (tapered, needle-like mineral projections)",
+      "Central capsule (stylized soft-tissue inner core within the silica shell)"
+    ],
+    "ground_palette": ["Pure White", "Deep Ocean Blue", "Light Grey"],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; Microscopic scale; Organic mineral architecture; Texture of fine white porcelain or frosted silica; Avoid jewelry, Christmas ornaments, or macro glassware; Highly detailed but with the soft, rounded edges characteristic of the project's visual identity."
+  },
+  "visual_logic": {
+    "composition": "Scientific quadrant tile: Top-Left: a full spherical skeleton with radiating spines; Top-Right: extreme close-up of a geodesic honeycomb lattice; Bottom-Left: a cross-section showing the inner capsule; Bottom-Right: several abandoned skeletons settling like dust on a chalky surface.",
+    "ground": "A clean, high-contrast backdrop of deep indigo water or fine white chalk silt, reinforcing the deep-sea pelagic setting.",
+    "lighting": "Soft, multi-directional 'studio' lighting that reveals the complex internal layering and the 3D relief of the silica lattice."
+  }
+}

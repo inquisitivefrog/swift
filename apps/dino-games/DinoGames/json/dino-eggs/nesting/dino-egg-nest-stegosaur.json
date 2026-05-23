@@ -1,0 +1,7 @@
+{
+  "id": "ui_nest_clue_stegosaur_partially_exposed_square",
+  "clade": "stegosaur",
+  "prompt": "High-fidelity 3D animated feature film style educational game clue graphic. A top-down bird's-eye view of a stegosaur nesting site set within a lush, fern-rich floodplain. The nest is a low, circular ring constructed of tightly woven twigs and dried mud. Inside the ring, the sand substrate layer is unevenly distributed due to natural wind erosion. Five unpigmented, chalky off-white eggs are mostly buried, appearing as soft, smooth mounds beneath the sand. One single egg on the lower right is significantly uncovered, fully exposing its elongated, oblong-oval shape and matte porcelain-like texture. A single bright orange fruit sits cleanly on the top rim of the twig wall for scale. Background shows dense green Cretaceous ferns under natural midday sun. Perfectly centered 1:1 square composition, formatted as a square hero card with a strict 25% negative space buffer on all boundaries. A single small black-and-white checkered scale bar spans horizontally across the very bottom edge.",
+  "visual_logic": "Shows a top-down view of a stegosaur nest where wind erosion leaves most eggs mostly buried as mounds, but fully exposes one egg to reveal its unpigmented color and oblong shape, using an orange for scale.",
+  "style_notes": "SQUARE_HERO_CARD, STYLE_ANIMATED_FEATURE_V3. Ensure the scale bar sits perfectly at the bottom edge and the composition remains entirely centered."
+}

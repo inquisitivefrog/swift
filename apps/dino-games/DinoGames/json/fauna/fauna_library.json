@@ -2,20 +2,26 @@
   "fauna_library": {
     "CAMBRIDGE_GREENSAND": ["Enchodus (Fang-tooth fish)", "Small marine ammonites", "Ischyodus (Chimaera fish)"],
     "CRATO_ADDITIONS": ["Giant Crato Dragonflies", "Early Crickets", "Susisuchus (small crocodilian)"],
-    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
+    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles", "Planktonic blooms", "Small freshwater crustaceans"],
     "HAKEL_ADDITIONS": ["Eurypholis (long-snouted fish)", "Prionolepis", "Stomatopods (Mantis shrimp)", "Small marine lizards"],
-    "HELL_CREEK_ADDITIONS:" ["Alphadon (Opossum-like)", "Teiids (fast-running lizards)", "Cicadas", "Early wasps"],
+    "HATEG_ISLAND_ADDITIONS": ["Allodaposuchus (small crocodilian)", "Kogaionid multituberculates"],
+    "HELL_CREEK_ADDITIONS:" ["Alphadon (Opossum-like)", "Teiids (fast-running lizards)", "Cicadas", "Early wasps", "Didelphodon (large Cretaceous mammal)"],
     "IREN_DABASU_ADDITIONS": ["Ostracods", "Freshwater turtles", "Hybodont sharks (in river channels)", "Small lizards"],
-    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
-    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
+    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches", "Early Mammaliaforms (e.g., Morganucodon analogues)"],
+    "KARABASTAU_ADDITIONS": [ "Jurassic Lacewings", "Early Salamanders", "Small Jurassic mammals" ],
+    "LAGARCITO_ADDITIONS": ["Brine shrimp analogues", "Small ostracods"],
+    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches", "Brine shrimp analogues", "Ostracods (seed shrimp)", "Juvenile Ornithopods", "Small Dromaeosaurs (Raptors)"],
     "LA_AMARGA_ADDITIONS": ["Amargasuchus (small, friendly crocodylomorph)", "Vincelestes (opossum-sized early mammal)", "Freshwater turtles"],
     "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
     "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)", "Cicadas"],
+    "MUWAQQAR_ADDITIONS": ["Enchodus", "Global Mosasaurs", "Large Ammonites"],
     "NAVESINK_ADDITIONS": ["Ammonites (Baculites)", "Belemnitella", "Pycnodont fish", "Halisaurus platyspondylus"],
     "NEMEGT_ADDITIONS": ["Freshwater crabs", "Shrimp", "Gar-like predators", "Champsosaurus (crocodile-like but smaller)"],
     "NKPORO_SHALE_ADDITIONS": ["Pluridens calabariensis", "Giant Sawfish (Onchoselachus)", "Araripemys (turtles)", "Large ammonites"],
+    "PLOTTIER_ADDITIONS": ["Juvenile Titanosaurs (prey)", "Large terrestrial lizards", "Crocodylomorphs"],
     "POSEIDON_ADDITIONS": ["Stenopterygius", "Eurhinosaurus (long-snout)", "Temnodontosaurus (giant eyes)", "Ammonites (Harpoceras)", "Belemnites", "Giant Crinoids"],
     "SANTANA_ADDITIONS": ["Calamopleurus (large predatory fish)", "Vinctifer (armored fish)", "Araripemys (turtle)"],
-    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates"]
+    "SOLNHOFEN_ADDITIONS": ["Flies", "Belemnites", "Leptolepides (small herring-like fish)"],
+    "TANGSHANG_ADDITIONS": ["Freshwater turtles", "Small theropods", "Late Cretaceous insects"]
   }
 }

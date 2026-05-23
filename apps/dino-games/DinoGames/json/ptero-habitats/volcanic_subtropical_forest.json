@@ -1,0 +1,44 @@
+{
+  "id": "habitat_volcanic_subtropical_forest_hazy_v2",
+  "app_image_config": {
+    "layer_1_style": { "style_id": "STYLE_ANIMATED_FEATURE_V3" },
+    "layer_2_setting": { 
+      "habitat_id": "VOLCANIC_SUBTROPICAL_FOREST", 
+      "formation_id": "TIAOJISHAN_EQUIVALENT" 
+    },
+    "layer_3_action": {
+      "subject": "Hazy, dramatic forest within a volcanic highland basin",
+      "features": [
+        "Dark, jagged volcanic rocks covered in vibrant orange lichen",
+        "Dense canopy of Ginkgoes and Cycads with distinct fan-shaped leaves",
+        "Thin plumes of volcanic steam rising from dark, mossy crevices",
+        "A deep, mirror-still caldera lake reflecting a hazy sun",
+        "Layered ash deposits visible in the eroded hillsides"
+      ],
+      "action": "A lush but alien forest under a hazy, amber sky. Volcanic activity creates a warm, steaming environment. The ground is a mix of dark ash and thick, primitive bryophyte mats. No grass."
+    }
+  },
+  "visuals": {
+    "ground": "Grey volcanic tuff and charcoal-colored ash soil. Extremely thick carpets of liverworts and mosses. No grass.",
+    "water": "Dark, mineral-rich lake water with occasional bubbles from geothermal vents.",
+    "sky": "Amber-tinted haze caused by atmospheric ash; dramatic crepuscular rays."
+  },
+  "habitat_id": "VOLCANIC_SUBTROPICAL_FOREST",
+  "physics": {
+    "altitude": "high_montane",
+    "water": "geothermal_freshwater",
+    "humidity": "saturated"
+  },
+  "strata_specifics": {
+    "ground_texture": "Fine volcanic ash, porous basalt, and thick damp moss.",
+    "color_palette": ["Charcoal Grey", "Vibrant Moss Green", "Burnt Orange", "Amber"]
+  },
+  "flora_manifest": [
+    "Ginkgoites",
+    "Cycadophytes",
+    "Dicksoniaceous tree ferns",
+    "Liverworts"
+  ],
+  "fauna_manifest": [ "NO_FAUNA_DEPICTED" ],
+  "negative_prompt": "grass, ocean, seagulls, oak trees, flowers, snow, ice, blue sky"
+}

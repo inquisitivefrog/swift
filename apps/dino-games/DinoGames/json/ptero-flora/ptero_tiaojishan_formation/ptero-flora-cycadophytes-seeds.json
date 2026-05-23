@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tiaojishan_cycadophytes_quad_001",
+    "species": "Cycadophytes",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "TIAOJISHAN",
+    "environment_details": {
+      "habitat": "VOLCANIC_VALLEY_FLOOR",
+      "flora": [
+        "Leathery leaflet segment (close-up of parallel-veined, stiff pinnate leaves with rounded tips)",
+        "Central seed cone scale (a single thick, triangular armor scale from a reproductive cone)",
+        "Trunk leaf scar (macro pattern of interlocking diamond-shaped scars left by fallen fronds)",
+        "Emerging fiddlehead frond (a thick, downy-coated young leaf leaf-tip unfurling loosely)"
+      ],
+      "ground_palette": ["Dark Volcanic Ash Gray", "Weathered Basalt Gray", "Ochre Silt"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; toy-like density; leaflets must appear rigid, waxy, and thick-edged; emphasize the geometric alignment of the diamond trunk textures; smooth, chunky details."
+    },
+    "visual_logic": {
+      "composition": "Tiled layout: Top-Left: a detailed close-up of the stiff parallel veins on a deep green leaflet; Top-Right: a solitary, robust golden-brown cone scale; Bottom-Left: a macro pattern study of the diamond-scarred trunk armor; Bottom-Right: a single thick, downy frond tip unfurling.",
+      "ground": "A clean surface of weathered basalt gray stone, framing the green and golden-brown botanical details.",
+      "lighting": "Even, omnidirectional studio light to capture the distinct geometric patterns and waxy leaf surfaces accurately."
+    }
+  }
+]

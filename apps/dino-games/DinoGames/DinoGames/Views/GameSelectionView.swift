@@ -14,6 +14,8 @@ import Combine
 
 struct GameSelectionView: View {
     let category: GameCategory
+    let guidedPlayMode: Bool
+    let onReturnToCategoryMenu: () -> Void
     @Environment(\.dismiss) private var dismiss
     @AppStorage("introducedGameListKeysCSV") private var introducedGameListKeysCSV = ""
 
@@ -32,11 +34,13 @@ struct GameSelectionView: View {
     @State private var showRacingPeriodSelection = false
     @State private var showFindMamaGame = false
     @State private var showDinoLunchGame = false
-    @State private var showMatrixMaterialsGame = false
+    @State private var showDinoMatrixGame = false
     @State private var showDinoAgesGame = false
     @State private var showDinoFormationsGame = false
     @State private var showDinoHabitatsGame = false
     @State private var showDinoFloraGame = false
+    @State private var showPteroFloraGame = false
+    @State private var showPteroEggsGame = false
     @State private var showDinoFaunaGame = false
     @State private var showDinoFossilHuntGame = false
     @State private var showMeasureGame = false
@@ -57,11 +61,13 @@ struct GameSelectionView: View {
     @State private var currentRacingConfig: RacingGameConfig?
     @State private var currentFindMamaConfig: FindMamaConfig?
     @State private var currentDinoLunchConfig: DinoLunchConfig?
-    @State private var currentMatrixMaterialsConfig: MatrixMaterialsGameConfig?
+    @State private var currentDinoMatrixConfig: DinoMatrixGameConfig?
     @State private var currentDinoAgesConfig: DinoAgesGameConfig?
     @State private var currentDinoFormationsConfig: DinoFormationsGameConfig?
     @State private var currentDinoHabitatsConfig: DinoHabitatsGameConfig?
     @State private var currentDinoFloraConfig: DinoFloraGameConfig?
+    @State private var currentPteroFloraConfig: PteroFloraGameConfig?
+    @State private var currentPteroEggsConfig: PteroEggsGameConfig?
     @State private var currentDinoFaunaConfig: DinoFaunaGameConfig?
     @State private var currentDinoFossilHuntConfig: DinoFossilHuntGameConfig?
     @State private var currentMeasureConfig: MeasureGameConfig?
@@ -82,6 +88,12 @@ struct GameSelectionView: View {
     @ObservedObject private var landProgress = LandDinosaurProgress.shared
     @ObservedObject private var marineProgress = MarineReptileProgress.shared
     @ObservedObject private var pterosaurProgress = PterosaurProgress.shared
+    /// Snapshot at game open: if the level was not yet fully played, the next dismiss may complete it and trigger auto-advance to the next unlocked level.
+    @State private var levelWasFullyPlayedWhenGameOpened = false
+    /// Set when the level game-name walk finishes in guided mode; triggers auto-launch of the next catalog game.
+    @State private var pendingGuidedAutoLaunch = false
+    /// Game being auto-launched after the walk (used to resume an interrupted session).
+    @State private var lastCompletedGameForGuidedAdvance: GameType?
 
     /// Games for the current category and level. When `selectedLevel == nil`, callers typically show the level picker instead of this list.
     private var gamesForCategory: [GameType] {
@@ -160,6 +172,101 @@ struct GameSelectionView: View {
         }
     }
 
+    private func isCatalogLevelFullyPlayed(_ level: GameLevel) -> Bool {
+        switch category {
+        case .land:
+            return landProgress.hasCompletedEveryGame(in: level)
+        case .marineReptiles:
+            return marineProgress.hasCompletedEveryGame(in: level)
+        case .air:
+            return pterosaurProgress.hasCompletedEveryGame(in: level)
+        }
+    }
+
+    /// After returning from a game sheet: if this run completed the final never-played slot in the current level, jump to the next level so intermission + level intro + game walk play there.
+    private func maybeAutoAdvanceToNextLevelAfterGameDismissed() {
+        defer { levelWasFullyPlayedWhenGameOpened = false }
+        guard let current = selectedLevel else { return }
+        guard !levelWasFullyPlayedWhenGameOpened else { return }
+        guard isCatalogLevelFullyPlayed(current) else { return }
+        guard let next = GameCatalog.nextPlayableUnlockedLevel(after: current, category: category) else { return }
+        selectedLevel = next
+        persistPlaySession(gameCanonicalId: nil)
+    }
+
+    private func persistPlaySession(gameCanonicalId: String?) {
+        CategoryPlaySession.save(
+            category: category,
+            level: selectedLevel,
+            gameCanonicalId: gameCanonicalId,
+            guidedPlayMode: guidedPlayMode
+        )
+    }
+
+    /// Guided play: enter the saved or first incomplete level (skip the manual level picker).
+    private func applyGuidedEntryIfNeeded() {
+        guard guidedPlayMode else { return }
+        guard selectedLevel == nil else { return }
+        let snap = CategoryPlaySession.load()
+        if snap.category == category, let level = snap.level, GameCatalog.isLevelUnlocked(level, category: category) {
+            selectedLevel = level
+        } else if let level = GameCatalog.firstIncompleteUnlockedLevel(for: category) {
+            selectedLevel = level
+        } else if let first = GameCatalog.levelsWithGames(for: category).first {
+            selectedLevel = first
+        }
+        persistPlaySession(gameCanonicalId: snap.gameCanonicalId)
+    }
+
+    private func gameForGuidedAutoLaunch() -> GameType? {
+        guard let level = selectedLevel else { return nil }
+        let snap = CategoryPlaySession.load()
+        if let savedId = snap.gameCanonicalId,
+           let saved = gamesForCategory.first(where: { GameCatalog.canonicalId(for: $0, category: category) == savedId }),
+           GameCatalog.canPlay(saved, at: level, category: category),
+           !GameCatalog.hasPlayed(saved, category: category) {
+            return saved
+        }
+        if let completed = lastCompletedGameForGuidedAdvance,
+           let next = GameCatalog.nextUnplayedGame(in: level, category: category, after: completed) {
+            return next
+        }
+        return GameCatalog.firstUnplayedGame(in: level, category: category)
+    }
+
+    private func autoLaunchNextGuidedGame() {
+        guard guidedPlayMode, !showGameTransition else { return }
+        guard let game = gameForGuidedAutoLaunch() else { return }
+        guard isCurrentCategoryGamePlayable(game) else { return }
+        if let canonical = GameCatalog.canonicalId(for: game, category: category) {
+            persistPlaySession(gameCanonicalId: canonical)
+        }
+        handleGameTap(game)
+    }
+
+    /// Guided post-game: level-up, category completion → top menu, or re-walk + next game.
+    private func runGuidedPostGameDismissal() {
+        if let game = selectedGame {
+            lastCompletedGameForGuidedAdvance = game
+        }
+        maybeAutoAdvanceToNextLevelAfterGameDismissed()
+        if GameCatalog.isCategoryFullyPlayed(category) {
+            CategoryPlaySession.save(category: category, level: nil, gameCanonicalId: nil, guidedPlayMode: false)
+            onReturnToCategoryMenu()
+            return
+        }
+        CategoryPlaySession.clearGameSlot()
+        persistPlaySession(gameCanonicalId: nil)
+    }
+
+    private func runPostGameDismissalSideEffects() {
+        if guidedPlayMode {
+            runGuidedPostGameDismissal()
+        } else {
+            maybeAutoAdvanceToNextLevelAfterGameDismissed()
+        }
+    }
+
     /// Call after transition dismisses to present the correct game sheet.
     private func presentSheetForSelectedGame() {
         guard let gameType = selectedGame else { return }
@@ -194,8 +301,8 @@ struct GameSelectionView: View {
                 currentRacingConfig = RacingGameConfigs.racingDinosaursNeedsPeriod
                 showRacingGame = true
             }
-        } else if gameType.matrixMaterialsConfig != nil {
-            showMatrixMaterialsGame = true
+        } else if gameType.dinoMatrixConfig != nil {
+            showDinoMatrixGame = true
         } else if gameType.dinoAgesConfig != nil {
             showDinoAgesGame = true
         } else if gameType.dinoFormationsConfig != nil {
@@ -204,6 +311,10 @@ struct GameSelectionView: View {
             showDinoHabitatsGame = true
         } else if gameType.dinoFloraConfig != nil {
             showDinoFloraGame = true
+        } else if gameType.pteroFloraConfig != nil {
+            showPteroFloraGame = true
+        } else if gameType.pteroEggsConfig != nil {
+            showPteroEggsGame = true
         } else if gameType.dinoFaunaConfig != nil {
             showDinoFaunaGame = true
         } else if gameType.dinoFossilHuntConfig != nil {
@@ -289,11 +400,13 @@ struct GameSelectionView: View {
             showGuessGame: $showGuessGame,
             showFindMamaGame: $showFindMamaGame,
             showDinoLunchGame: $showDinoLunchGame,
-            showMatrixMaterialsGame: $showMatrixMaterialsGame,
+            showDinoMatrixGame: $showDinoMatrixGame,
             showDinoAgesGame: $showDinoAgesGame,
             showDinoFormationsGame: $showDinoFormationsGame,
             showDinoHabitatsGame: $showDinoHabitatsGame,
             showDinoFloraGame: $showDinoFloraGame,
+            showPteroFloraGame: $showPteroFloraGame,
+            showPteroEggsGame: $showPteroEggsGame,
             showDinoFaunaGame: $showDinoFaunaGame,
             showDinoFossilHuntGame: $showDinoFossilHuntGame,
             showMeasureGame: $showMeasureGame,
@@ -316,11 +429,13 @@ struct GameSelectionView: View {
             currentGuessConfig: $currentGuessConfig,
             currentFindMamaConfig: $currentFindMamaConfig,
             currentDinoLunchConfig: $currentDinoLunchConfig,
-            currentMatrixMaterialsConfig: $currentMatrixMaterialsConfig,
+            currentDinoMatrixConfig: $currentDinoMatrixConfig,
             currentDinoAgesConfig: $currentDinoAgesConfig,
             currentDinoFormationsConfig: $currentDinoFormationsConfig,
             currentDinoHabitatsConfig: $currentDinoHabitatsConfig,
             currentDinoFloraConfig: $currentDinoFloraConfig,
+            currentPteroFloraConfig: $currentPteroFloraConfig,
+            currentPteroEggsConfig: $currentPteroEggsConfig,
             currentDinoFaunaConfig: $currentDinoFaunaConfig,
             currentDinoFossilHuntConfig: $currentDinoFossilHuntConfig,
             currentMeasureConfig: $currentMeasureConfig,
@@ -336,6 +451,9 @@ struct GameSelectionView: View {
             isAudioPlaying: $isAudioPlaying,
             gameWalkIndex: $gameWalkIndex,
             landLevelIntermissionActive: $landLevelIntermissionActive,
+            guidedPlayMode: guidedPlayMode,
+            onPostGameSheetDismissalCleanup: { runPostGameDismissalSideEffects() },
+            onGuidedWalkFinished: { pendingGuidedAutoLaunch = true },
             content: AnyView(mainSelectionContent)
         )
     }
@@ -422,7 +540,12 @@ struct GameSelectionView: View {
                         showGameTransition = false
                         selectedGame = nil
                     } else if selectedLevel != nil {
-                        selectedLevel = nil
+                        if guidedPlayMode {
+                            persistPlaySession(gameCanonicalId: nil)
+                            onReturnToCategoryMenu()
+                        } else {
+                            selectedLevel = nil
+                        }
                     } else {
                         dismiss()
                     }
@@ -435,8 +558,12 @@ struct GameSelectionView: View {
         .onChange(of: selectedLevel) { _, newLevel in
             // So the game-name walk runs for each level when the list changes (non-readers memorize by hearing names).
             hasPlayedWelcome = false
+            lastCompletedGameForGuidedAdvance = nil
             if newLevel != nil {
                 landLevelIntermissionActive = true
+                if guidedPlayMode {
+                    persistPlaySession(gameCanonicalId: nil)
+                }
             } else {
                 landLevelIntermissionActive = false
             }
@@ -448,14 +575,35 @@ struct GameSelectionView: View {
         }
         // Land / marine / pterosaur completion → `UserDefaults` is handled by `*Progress.shared` notification observers
         // so progress still updates if this view is off-screen during sheet dismiss or transition.
+        .onAppear {
+            applyGuidedEntryIfNeeded()
+        }
+        .onChange(of: pendingGuidedAutoLaunch) { _, shouldLaunch in
+            guard shouldLaunch else { return }
+            pendingGuidedAutoLaunch = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                autoLaunchNextGuidedGame()
+            }
+        }
     }
 
     private func handleGameTap(_ gameType: GameType) {
         guard !isAudioPlaying && !showGameTransition else { return }
         guard isCurrentCategoryGamePlayable(gameType) else { return }
-        
+        if let level = selectedLevel {
+            levelWasFullyPlayedWhenGameOpened = isCatalogLevelFullyPlayed(level)
+        } else {
+            levelWasFullyPlayedWhenGameOpened = false
+        }
+
+        if guidedPlayMode {
+            lastCompletedGameForGuidedAdvance = nil
+        }
         // Store the selected game
         selectedGame = gameType
+        if guidedPlayMode, let canonical = GameCatalog.canonicalId(for: gameType, category: category) {
+            persistPlaySession(gameCanonicalId: canonical)
+        }
         currentGameConfig = gameType.gameConfig
         // Weigh game: use random set of 9 (dinosaurs or pterosaurs) based on which game was tapped
         if let weighConfig = gameType.weighConfig {
@@ -485,11 +633,13 @@ struct GameSelectionView: View {
         currentSmilingDinosConfig = gameType.smilingDinosConfig
         currentDinoEggsConfig = gameType.dinoEggsConfig
         currentDinoToolsConfig = gameType.dinoToolsConfig
-        currentMatrixMaterialsConfig = gameType.matrixMaterialsConfig
+        currentDinoMatrixConfig = gameType.dinoMatrixConfig
         currentDinoAgesConfig = gameType.dinoAgesConfig
         currentDinoFormationsConfig = gameType.dinoFormationsConfig
         currentDinoHabitatsConfig = gameType.dinoHabitatsConfig
         currentDinoFloraConfig = gameType.dinoFloraConfig
+        currentPteroFloraConfig = gameType.pteroFloraConfig
+        currentPteroEggsConfig = gameType.pteroEggsConfig
         currentDinoFaunaConfig = gameType.dinoFaunaConfig
         currentDinoFossilHuntConfig = gameType.dinoFossilHuntConfig
         currentMeasureConfig = gameType.measureConfig
@@ -522,11 +672,13 @@ private struct GameSelectionNavigationContent: View {
     @Binding var showGuessGame: Bool
     @Binding var showFindMamaGame: Bool
     @Binding var showDinoLunchGame: Bool
-    @Binding var showMatrixMaterialsGame: Bool
+    @Binding var showDinoMatrixGame: Bool
     @Binding var showDinoAgesGame: Bool
     @Binding var showDinoFormationsGame: Bool
     @Binding var showDinoHabitatsGame: Bool
     @Binding var showDinoFloraGame: Bool
+    @Binding var showPteroFloraGame: Bool
+    @Binding var showPteroEggsGame: Bool
     @Binding var showDinoFaunaGame: Bool
     @Binding var showDinoFossilHuntGame: Bool
     @Binding var showMeasureGame: Bool
@@ -549,11 +701,13 @@ private struct GameSelectionNavigationContent: View {
     @Binding var currentGuessConfig: GuessGameConfig?
     @Binding var currentFindMamaConfig: FindMamaConfig?
     @Binding var currentDinoLunchConfig: DinoLunchConfig?
-    @Binding var currentMatrixMaterialsConfig: MatrixMaterialsGameConfig?
+    @Binding var currentDinoMatrixConfig: DinoMatrixGameConfig?
     @Binding var currentDinoAgesConfig: DinoAgesGameConfig?
     @Binding var currentDinoFormationsConfig: DinoFormationsGameConfig?
     @Binding var currentDinoHabitatsConfig: DinoHabitatsGameConfig?
     @Binding var currentDinoFloraConfig: DinoFloraGameConfig?
+    @Binding var currentPteroFloraConfig: PteroFloraGameConfig?
+    @Binding var currentPteroEggsConfig: PteroEggsGameConfig?
     @Binding var currentDinoFaunaConfig: DinoFaunaGameConfig?
     @Binding var currentDinoFossilHuntConfig: DinoFossilHuntGameConfig?
     @Binding var currentMeasureConfig: MeasureGameConfig?
@@ -569,6 +723,9 @@ private struct GameSelectionNavigationContent: View {
     @Binding var isAudioPlaying: Bool
     @Binding var gameWalkIndex: Int?
     @Binding var landLevelIntermissionActive: Bool
+    let guidedPlayMode: Bool
+    let onPostGameSheetDismissalCleanup: () -> Void
+    let onGuidedWalkFinished: () -> Void
     let content: AnyView
     @AppStorage("introducedGameListKeysCSV") private var introducedGameListKeysCSV = ""
 
@@ -577,7 +734,7 @@ private struct GameSelectionNavigationContent: View {
 
     private var noOtherGameShowing: Bool {
         !showMatchingGame && !showWeighGame && !showBalanceGame && !showGuessGame &&
-        !showFindMamaGame && !showDinoLunchGame && !showMatrixMaterialsGame && !showDinoAgesGame && !showDinoFormationsGame && !showDinoHabitatsGame && !showDinoFloraGame && !showDinoFaunaGame && !showMeasureGame && !showWhoIsTallerGame && !showWackyGame && !showToothacheGame && !showSmilingDinosGame && !showDinoEggsGame &&
+        !showFindMamaGame && !showDinoLunchGame && !showDinoMatrixGame && !showDinoAgesGame && !showDinoFormationsGame && !showDinoHabitatsGame && !showDinoFloraGame && !showPteroFloraGame && !showPteroEggsGame && !showDinoFaunaGame && !showMeasureGame && !showWhoIsTallerGame && !showWackyGame && !showToothacheGame && !showSmilingDinosGame && !showDinoEggsGame &&
         !showRacingGame && !showRacingPeriodSelection && !showDinoPushGame && !showDinoPuzzleGame && !showPteroPuzzleGame && !showMarinePuzzleGame && !showDinoToolsGame && !showDinoFossilHuntGame
     }
 
@@ -590,7 +747,12 @@ private struct GameSelectionNavigationContent: View {
         }
     }
 
-    /// Called from sheet-dismiss handlers (after the same delay as state reset). Scrolls the list to the level header; avoids relying on `onChange` of the derived `noOtherGameShowing` flag, which can miss updates.
+    /// Called from sheet-dismiss handlers (after the same delay as state reset). Runs level-up advance if applicable, then scrolls the list to the level header; avoids relying on `onChange` of the derived `noOtherGameShowing` flag, which can miss updates.
+    private func runPostGameSheetDismissalSideEffects() {
+        onPostGameSheetDismissalCleanup()
+        bumpGameListScrollToHeaderAfterSheetDismissed()
+    }
+
     private func bumpGameListScrollToHeaderAfterSheetDismissed() {
         guard selectedLevel != nil else { return }
         gameListScrollToTopToken &+= 1
@@ -756,11 +918,11 @@ private struct GameSelectionNavigationContent: View {
                     RacingGameView(isPresented: $showRacingGame, gameConfig: config)
                 }
             }
-            .sheet(isPresented: $showMatrixMaterialsGame) {
-                if let config = currentMatrixMaterialsConfig {
-                    MatrixMaterialsGameView(isPresented: $showMatrixMaterialsGame, gameConfig: config)
+            .sheet(isPresented: $showDinoMatrixGame) {
+                if let config = currentDinoMatrixConfig {
+                    DinoMatrixGameView(isPresented: $showDinoMatrixGame, gameConfig: config)
                 } else {
-                    MatrixMaterialsGameView(isPresented: $showMatrixMaterialsGame, gameConfig: MatrixMaterialsGameConfigs.matrixMaterials)
+                    DinoMatrixGameView(isPresented: $showDinoMatrixGame, gameConfig: DinoMatrixGameConfigs.dinoMatrix)
                 }
             }
             .sheet(isPresented: $showDinoAgesGame) {
@@ -792,6 +954,20 @@ private struct GameSelectionNavigationContent: View {
                     DinoFloraGameView(isPresented: $showDinoFloraGame, gameConfig: config)
                 } else {
                     DinoFloraGameView(isPresented: $showDinoFloraGame, gameConfig: DinoFloraGameConfigs.dinoFlora)
+                }
+            }
+            .sheet(isPresented: $showPteroFloraGame) {
+                if let config = currentPteroFloraConfig {
+                    PteroFloraGameView(isPresented: $showPteroFloraGame, gameConfig: config)
+                } else {
+                    PteroFloraGameView(isPresented: $showPteroFloraGame, gameConfig: PteroFloraGameConfigs.pteroFloraKarabastau)
+                }
+            }
+            .sheet(isPresented: $showPteroEggsGame) {
+                if let config = currentPteroEggsConfig {
+                    PteroEggsGameView(isPresented: $showPteroEggsGame, gameConfig: config)
+                } else {
+                    PteroEggsGameView(isPresented: $showPteroEggsGame, gameConfig: PteroEggsGameConfigs.pteroEggs)
                 }
             }
             .sheet(isPresented: $showDinoFaunaGame) {
@@ -846,7 +1022,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentGameConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else {
@@ -865,7 +1041,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentWeighConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 }
@@ -878,7 +1054,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentBalanceConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 }
@@ -895,7 +1071,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentGuessConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else {
@@ -913,7 +1089,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentFindMamaConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else {
@@ -928,7 +1104,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentDinoLunchConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else {
@@ -947,7 +1123,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentWackyConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 }
@@ -960,7 +1136,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentToothacheConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else {
@@ -975,7 +1151,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentSmilingDinosConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else {
@@ -990,7 +1166,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentDinoEggsConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else {
@@ -1005,7 +1181,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentDinoToolsConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else {
@@ -1034,7 +1210,7 @@ private struct GameSelectionNavigationContent: View {
                         showGameName = false
                         currentRacingConfig = nil
                         hasPlayedWelcome = false
-                        bumpGameListScrollToHeaderAfterSheetDismissed()
+                        runPostGameSheetDismissalSideEffects()
                     }
                 }
             }
@@ -1045,7 +1221,7 @@ private struct GameSelectionNavigationContent: View {
                             selectedGame = nil
                             showGameName = false
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 }
@@ -1057,7 +1233,7 @@ private struct GameSelectionNavigationContent: View {
                             selectedGame = nil
                             showGameName = false
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 }
@@ -1069,7 +1245,7 @@ private struct GameSelectionNavigationContent: View {
                             selectedGame = nil
                             showGameName = false
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 }
@@ -1081,24 +1257,24 @@ private struct GameSelectionNavigationContent: View {
                             selectedGame = nil
                             showGameName = false
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 }
             }
-            .onChange(of: showMatrixMaterialsGame) { _, newValue in
+            .onChange(of: showDinoMatrixGame) { _, newValue in
                 if !newValue {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         if noOtherGameShowing {
                             selectedGame = nil
                             showGameName = false
-                            currentMatrixMaterialsConfig = nil
+                            currentDinoMatrixConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else {
-                    currentMatrixMaterialsConfig = MatrixMaterialsGameConfigs.matrixMaterials
+                    currentDinoMatrixConfig = DinoMatrixGameConfigs.dinoMatrix
                 }
             }
             .onChange(of: showDinoAgesGame) { _, newValue in
@@ -1109,7 +1285,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentDinoAgesConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else {
@@ -1124,7 +1300,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentDinoFormationsConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else {
@@ -1144,11 +1320,49 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentDinoFloraConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else {
                     currentDinoFloraConfig = DinoFloraGameConfigs.dinoFlora
+                }
+            }
+            .onChange(of: showPteroFloraGame) { _, newValue in
+                if !newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        if noOtherGameShowing {
+                            selectedGame = nil
+                            showGameName = false
+                            currentPteroFloraConfig = nil
+                            hasPlayedWelcome = false
+                            runPostGameSheetDismissalSideEffects()
+                        }
+                    }
+                } else if currentPteroFloraConfig == nil {
+                    if let game = selectedGame, let c = game.pteroFloraConfig {
+                        currentPteroFloraConfig = c
+                    } else {
+                        currentPteroFloraConfig = PteroFloraGameConfigs.pteroFloraKarabastau
+                    }
+                }
+            }
+            .onChange(of: showPteroEggsGame) { _, newValue in
+                if !newValue {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                        if noOtherGameShowing {
+                            selectedGame = nil
+                            showGameName = false
+                            currentPteroEggsConfig = nil
+                            hasPlayedWelcome = false
+                            runPostGameSheetDismissalSideEffects()
+                        }
+                    }
+                } else if currentPteroEggsConfig == nil {
+                    if let game = selectedGame, let c = game.pteroEggsConfig {
+                        currentPteroEggsConfig = c
+                    } else {
+                        currentPteroEggsConfig = PteroEggsGameConfigs.pteroEggs
+                    }
                 }
             }
             .onChange(of: showDinoFaunaGame) { _, newValue in
@@ -1159,7 +1373,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentDinoFaunaConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else {
@@ -1174,7 +1388,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentDinoFossilHuntConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else if currentDinoFossilHuntConfig == nil {
@@ -1193,7 +1407,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentDinoHabitatsConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else {
@@ -1208,7 +1422,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentMeasureConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else {
@@ -1223,7 +1437,7 @@ private struct GameSelectionNavigationContent: View {
                             showGameName = false
                             currentWhoIsTallerConfig = nil
                             hasPlayedWelcome = false
-                            bumpGameListScrollToHeaderAfterSheetDismissed()
+                            runPostGameSheetDismissalSideEffects()
                         }
                     }
                 } else if let w = selectedGame?.whoIsTallerConfig {
@@ -1268,11 +1482,11 @@ private struct GameSelectionNavigationContent: View {
         speechManager.onAudioFinished = nil
         speechManager.onAudioFinished = {
             DispatchQueue.main.async {
-                if self.hasIntroducedCurrentGameList {
+                if self.guidedPlayMode || !self.hasIntroducedCurrentGameList {
+                    self.startGameWalk()
+                } else {
                     self.isAudioPlaying = false
                     self.speechManager.onAudioFinished = nil
-                } else {
-                    self.startGameWalk()
                 }
             }
         }
@@ -1314,10 +1528,15 @@ private struct GameSelectionNavigationContent: View {
 
     private func advanceGameWalk(index: Int, games: [GameType]) {
         if index >= games.count {
-            markCurrentGameListIntroduced()
+            if !guidedPlayMode {
+                markCurrentGameListIntroduced()
+            }
             gameWalkIndex = nil
             isAudioPlaying = false
             speechManager.onAudioFinished = nil
+            if guidedPlayMode {
+                onGuidedWalkFinished()
+            }
             return
         }
         gameWalkIndex = index
@@ -1345,11 +1564,13 @@ enum GameType {
     case toothache(ToothacheGameConfig) // Dino Toothache: match tooth to grumpy dinosaur
     case racing(RacingGameConfig) // Racing Dinosaurs!
     case dinoPush(DinoPushGameConfig) // Dino Push!: sumo-style face-off
-    case matrixMaterials(MatrixMaterialsGameConfig) // Matrix Materials: identify matrix encasing fossil
+    case dinoMatrix(DinoMatrixGameConfig) // Dino Matrix: identify matrix encasing fossil
     case dinoAges(DinoAgesGameConfig) // Dino Ages: when dinosaurs lived
     case dinoFormations(DinoFormationsGameConfig) // Dino Formations: dinosaurs found in named formation
     case dinoHabitats(DinoHabitatsGameConfig) // Dino Habitats: which dinosaur prefers this habitat
     case dinoFlora(DinoFloraGameConfig) // Dino Flora: which dinosaurs ate this plant
+    case pteroFlora(PteroFloraGameConfig) // Ptero Flora!: which pterosaurs fit this plant
+    case pteroEggs(PteroEggsGameConfig) // Ptero Eggs!: match pterosaurs to their eggs
     case dinoFauna(DinoFaunaGameConfig) // Dino Fauna: which dinosaurs fit this animal
     case measure(MeasureGameConfig) // Measure the Dinosaur!: stack to match height
     case whoIsTaller(WhoIsTallerGameConfig) // Which Dino Is Taller: compare two dinosaurs by height
@@ -1383,7 +1604,7 @@ enum GameType {
             return config.title
         case .dinoPush(let config):
             return config.title
-        case .matrixMaterials(let config):
+        case .dinoMatrix(let config):
             return config.title
         case .dinoAges(let config):
             return config.title
@@ -1392,6 +1613,10 @@ enum GameType {
         case .dinoHabitats(let config):
             return config.title
         case .dinoFlora(let config):
+            return config.title
+        case .pteroFlora(let config):
+            return config.title
+        case .pteroEggs(let config):
             return config.title
         case .dinoFauna(let config):
             return config.title
@@ -1438,7 +1663,7 @@ enum GameType {
             return "Race two dinosaurs!"
         case .dinoPush:
             return "Sumo-style push face-off!"
-        case .matrixMaterials:
+        case .dinoMatrix:
             return "Identify the matrix material encasing the fossil"
         case .dinoAges(let config):
             return config.id == "ptero-ages" ? "Discover when pterosaurs lived" : "Discover when dinosaurs lived"
@@ -1448,6 +1673,10 @@ enum GameType {
             return "Which dinosaur prefers this habitat?"
         case .dinoFlora:
             return "Which dinosaurs ate this plant?"
+        case .pteroFlora:
+            return "Which three pterosaurs fit this plant?"
+        case .pteroEggs:
+            return "Match pterosaurs to their eggs"
         case .dinoFauna:
             return "Which three dinosaurs fit this animal?"
         case .measure:
@@ -1476,175 +1705,189 @@ enum GameType {
     var gameConfig: MatchingGameConfig? {
         switch self {
         case .matching(let config): return config
-        case .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var weighConfig: WeighGameConfig? {
         switch self {
         case .weigh(let config): return config
-        case .matching, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var balanceConfig: BalanceGameConfig? {
         switch self {
         case .balance(let config): return config
-        case .matching, .weigh, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var guessConfig: GuessGameConfig? {
         switch self {
         case .guess(let config): return config
-        case .matching, .weigh, .balance, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var findMamaConfig: FindMamaConfig? {
         switch self {
         case .findMama(let config): return config
-        case .matching, .weigh, .balance, .guess, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var dinoLunchConfig: DinoLunchConfig? {
         switch self {
         case .dinoLunch(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var wackyConfig: WackyGameConfig? {
         switch self {
         case .wacky(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var toothacheConfig: ToothacheGameConfig? {
         switch self {
         case .toothache(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var racingConfig: RacingGameConfig? {
         switch self {
         case .racing(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var dinoPushConfig: DinoPushGameConfig? {
         switch self {
         case .dinoPush(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
-    var matrixMaterialsConfig: MatrixMaterialsGameConfig? {
+    var dinoMatrixConfig: DinoMatrixGameConfig? {
         switch self {
-        case .matrixMaterials(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .dinoMatrix(let config): return config
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var dinoAgesConfig: DinoAgesGameConfig? {
         switch self {
         case .dinoAges(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var dinoFormationsConfig: DinoFormationsGameConfig? {
         switch self {
         case .dinoFormations(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var dinoHabitatsConfig: DinoHabitatsGameConfig? {
         switch self {
         case .dinoHabitats(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var dinoFloraConfig: DinoFloraGameConfig? {
         switch self {
         case .dinoFlora(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
+        }
+    }
+
+    var pteroFloraConfig: PteroFloraGameConfig? {
+        switch self {
+        case .pteroFlora(let config): return config
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
+        }
+    }
+
+    var pteroEggsConfig: PteroEggsGameConfig? {
+        switch self {
+        case .pteroEggs(let config): return config
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var dinoFaunaConfig: DinoFaunaGameConfig? {
         switch self {
         case .dinoFauna(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var measureConfig: MeasureGameConfig? {
         switch self {
         case .measure(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var whoIsTallerConfig: WhoIsTallerGameConfig? {
         switch self {
         case .whoIsTaller(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var smilingDinosConfig: SmilingDinosGameConfig? {
         switch self {
         case .smilingDinos(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var dinoEggsConfig: DinoEggsGameConfig? {
         switch self {
         case .dinoEggs(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var dinoToolsConfig: DinoToolsGameConfig? {
         switch self {
         case .dinoTools(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var dinoFossilHuntConfig: DinoFossilHuntGameConfig? {
         switch self {
         case .dinoFossilHunt(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoPuzzle, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var dinoPuzzleConfig: DinoPuzzleGameConfig? {
         switch self {
         case .dinoPuzzle(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .pteroPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .pteroFlora, .pteroEggs, .pteroPuzzle, .marinePuzzle: return nil
         }
     }
 
     var pteroPuzzleConfig: PteroPuzzleGameConfig? {
         switch self {
         case .pteroPuzzle(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .marinePuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .marinePuzzle: return nil
         }
     }
 
     var marinePuzzleConfig: MarineReptilePuzzleGameConfig? {
         switch self {
         case .marinePuzzle(let config): return config
-        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .matrixMaterials, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroPuzzle: return nil
+        case .matching, .weigh, .balance, .guess, .findMama, .dinoLunch, .wacky, .toothache, .racing, .dinoPush, .dinoMatrix, .dinoAges, .dinoFormations, .dinoHabitats, .dinoFlora, .dinoFauna, .measure, .whoIsTaller, .smilingDinos, .dinoEggs, .dinoTools, .dinoFossilHunt, .dinoPuzzle, .pteroFlora, .pteroEggs, .pteroPuzzle: return nil
         }
     }
 
@@ -1661,11 +1904,13 @@ enum GameType {
         case .toothache(let config): return config.id
         case .racing(let config): return config.id
         case .dinoPush(let config): return config.id
-        case .matrixMaterials(let config): return config.id
+        case .dinoMatrix(let config): return config.id
         case .dinoAges(let config): return config.id
         case .dinoFormations(let config): return config.id
         case .dinoHabitats(let config): return config.id
         case .dinoFlora(let config): return config.id
+        case .pteroFlora(let config): return config.id
+        case .pteroEggs(let config): return config.id
         case .dinoFauna(let config): return config.id
         case .measure(let config): return config.id
         case .whoIsTaller(let config): return config.id
@@ -1704,7 +1949,7 @@ enum GameType {
             return config.id.hasPrefix("racing-pterosaur") ? "game-racing-pterosaurs" : "game-racing-dinosaurs"
         case .dinoPush(let config):
             return "game-\(config.id)"
-        case .matrixMaterials(let config):
+        case .dinoMatrix(let config):
             return "game-\(config.id)"
         case .dinoAges(let config):
             return "game-\(config.id)"
@@ -1713,6 +1958,10 @@ enum GameType {
         case .dinoHabitats(let config):
             return "game-\(config.id)"
         case .dinoFlora(let config):
+            return "game-\(config.id)"
+        case .pteroFlora(let config):
+            return "game-\(config.id)"
+        case .pteroEggs(let config):
             return "game-\(config.id)"
         case .dinoFauna(let config):
             return "game-\(config.id)"
@@ -1750,11 +1999,13 @@ enum GameType {
         case .toothache: return "🦷"
         case .racing: return "🏃"
         case .dinoPush: return "🤼"
-        case .matrixMaterials: return "🪨"
+        case .dinoMatrix: return "🪨"
         case .dinoAges: return "🕐"
         case .dinoFormations: return "🪨"
         case .dinoHabitats: return "🌿"
         case .dinoFlora: return "🌿"
+        case .pteroFlora: return "🌿"
+        case .pteroEggs: return "🥚"
         case .dinoFauna: return "🦎"
         case .measure: return "📏"
         case .whoIsTaller: return "📏"
@@ -1784,11 +2035,13 @@ enum GameType {
         case .toothache(let config): return "game-\(config.id)"
         case .racing(let config): return config.id.hasPrefix("racing-pterosaur") ? "game-racing-pterosaurs" : "game-racing-dinosaurs"
         case .dinoPush(let config): return "game-\(config.id)"
-        case .matrixMaterials(let config): return "game-\(config.id)"
+        case .dinoMatrix(let config): return "game-\(config.id)"
         case .dinoAges(let config): return config.introAudio
         case .dinoFormations(let config): return config.introAudio
         case .dinoHabitats(let config): return config.introAudio
         case .dinoFlora(let config): return config.introAudio
+        case .pteroFlora(let config): return config.introAudio
+        case .pteroEggs(let config): return config.introAudio
         case .dinoFauna(let config): return config.introAudio
         case .measure(let config): return config.introAudio
         case .whoIsTaller(let config): return config.introAudio
@@ -2004,6 +2257,6 @@ struct GameTransitionView: View {
 
 #Preview {
     NavigationStack {
-        GameSelectionView(category: .land)
+        GameSelectionView(category: .land, guidedPlayMode: false, onReturnToCategoryMenu: {})
     }
 }

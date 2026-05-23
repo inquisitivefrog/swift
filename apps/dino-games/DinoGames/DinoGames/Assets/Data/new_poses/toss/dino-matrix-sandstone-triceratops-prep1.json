@@ -1,0 +1,19 @@
+{
+    "asset_id": "manifest_excavation_062",
+    "project": "DinoMatrix",
+    "version": "1.0.0",
+    "meta": { 
+      "style_preset": "STYLE_ANIMATED_FEATURE_V3", 
+      "intended_use": "UI_Card_Dig_Stage_3" 
+    },
+    "excavation_context": {
+      "character_id": "dino_bones_preparator_1",
+      "character_description": "An adult male grad student working as a museum preparator, short dark hair, tanned skin. Wears signature thin-rimmed BLACK RECTANGULAR lens glasses, a light blue tee shirt worn UNDER a white lab coat, blue jean slacks and black dress shoes.",
+      "stage": "Air-Scribing Consolidated Sandstone Away from a Famous Frill",
+      "target_dinosaur": "Triceratops",
+      "geological_formation": "LANCE",
+      "matrix_material": "Fluvial sandstone",
+      "matrix_color": "Tan-grey"
+    },
+    "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_preparator_1, wearing his signature black rectangular glasses, works at an indoor laboratory workbench under bright task lighting, driving a vibrating pneumatic air-scribe across a massive rock block. Under his guidance, the tan-grey fluvial sandstone breaks away cleanly to trace out the large scalloped edge of a Triceratops neck frill. 1:1 Square aspect ratio."
+  }

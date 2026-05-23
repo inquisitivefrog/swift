@@ -1,0 +1,25 @@
+[
+  {
+    "id": "santana_brachyphyllum_conifer_001",
+    "species": "Brachyphyllum",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "environment_details": {
+      "habitat": "COASTAL_LAGOON_MARGIN",
+      "flora": [
+        "Brachyphyllum (conifer with short, overlapping scale-like leaves)",
+        "Araucariaceae (tall distant silhouettes)",
+        "Low cycads",
+        "Coastal ferns"
+      ],
+      "ground_palette": ["Golden Sand", "Pale Limestone", "Soft Teal Water"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; foliage should look like braided green cords; avoid needle-like pine textures; emphasize the geometric, scale-like pattern of the branches; rounded, chunky woody stems."
+    },
+    "visual_logic": {
+      "composition": "A mid-range shot of a Brachyphyllum bush leaning over a limestone ledge. The scale-covered branches droop slightly toward a turquoise lagoon in the background.",
+      "ground": "Fine golden sand with embedded fossilized shell fragments and sun-bleached limestone slabs.",
+      "lighting": "Bright, tropical high-noon sun creating high contrast between the dark green scales and the pale rock."
+    }
+  }
+]

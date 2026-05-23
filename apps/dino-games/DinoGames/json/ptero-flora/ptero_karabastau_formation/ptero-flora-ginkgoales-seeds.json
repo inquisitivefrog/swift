@@ -1,0 +1,25 @@
+[
+  {
+    "id": "karabastau_ginkgoales_quad_001",
+    "species": "Ginkgoales",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "KARABASTAU",
+    "environment_details": {
+      "habitat": "STAGNANT_LAKE_FOREST",
+      "flora": [
+        "Fan leaf (distinctive notch, undulating edge)",
+        "Ginkgo fruit/seed (fleshy, plum-like, soft yellow-orange)",
+        "Short shoot (woody spur where leaves cluster)",
+        "Autumnal leaf (bright golden-yellow, fallen)"
+      ],
+      "ground_palette": ["Deep Brown", "Forest Green", "Charcoal", "Olive"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; iconic fan shapes; soft-touch surfaces; focus on the contrast between the waxy green and the soft, fleshy seeds."
+    },
+    "visual_logic": {
+      "composition": "Quadrant layout: Top-Left: A single green fan leaf; Top-Right: A cluster of the fleshy yellow seeds; Bottom-Left: The woody spur branch; Bottom-Right: A golden-yellow leaf resting on dark mud.",
+      "ground": "Damp, dark organic mudstone (Karabastau palette).",
+      "lighting": "Clean daylight with soft shadows to emphasize the leaf's unique vein structure."
+    }
+  }
+]

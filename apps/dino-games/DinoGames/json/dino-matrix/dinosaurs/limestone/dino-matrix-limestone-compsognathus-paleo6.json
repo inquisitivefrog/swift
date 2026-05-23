@@ -1,0 +1,19 @@
+{
+  "asset_id": "manifest_excavation_065",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": { 
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3", 
+    "intended_use": "UI_Card_Dig_Stage_3" 
+  },
+  "excavation_context": {
+    "character_id": "dino_bones_preparator_6",
+    "character_description": "An adult female grad student working as a museum preparator, long black hair, Asian ethnicity. Uniform: A yellow tee shirt with a unicorn image worn UNDER a white lab coat, yellow skirt and white sneakers.",
+    "stage": "Air-Scribing Limestone Matrix in a Desert Basecamp",
+    "target_dinosaur": "Compsognathus",
+    "geological_formation": "SOLNHOFEN",
+    "matrix_material": "Plattenkalk Limestone",
+    "matrix_color": "Cream White"
+  },
+  "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_preparator_6, an adult female grad student with braided black hair, wears a white lab coat over a yellow unicorn tee shirt and yellow skirt. She is crouched at an outdoor table at a desert field camp, using a pneumatic air scribe to meticulously remove cream-white limestone matrix from a small, completely intact Compsognathus skeleton. Background shows canvas field tents, equipment cases, and other team members sifting sediment under a bright midday sun. 1:1 Square aspect ratio."
+}

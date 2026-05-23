@@ -1,0 +1,8 @@
+{ 
+  "app_image_config": { 
+    "layer_1_style": "1024x1024 px, high-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures.", 
+    "layer_2_setting": "Setting: A vein of amber in a hillside in the Wapiti Formation in Alberta, Canada", 
+    "aspect_ratio": "1:1" 
+  }, 
+  "action_description": “A paleontologist attempts to dig out a Pachyrhinosaurus from the amber vein. The vein must have the color of amber." 
+}

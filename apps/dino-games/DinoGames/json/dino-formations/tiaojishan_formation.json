@@ -1,0 +1,11 @@
+{
+  "formation_id": "TIAOJISHAN",
+  "base_habitat": "VOLCANIC_SUBTROPICAL_FOREST",
+  "period": "JURASSIC",
+  "strata_specifics": {
+    "ground_texture": "Grey volcanic tuff and mudstone.",
+    "color_palette": ["Slate Grey", "Deep Green", "Charcoal", "Amber"]
+  },
+  "flora_manifest": ["JURASSIC_BASE", "TIAOJISHAN_ADDITIONS"],
+  "fauna_manifest": ["JURASSIC_BASE", "TIAOJISHAN_ADDITIONS"]
+}

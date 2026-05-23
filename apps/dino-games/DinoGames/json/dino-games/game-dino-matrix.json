@@ -1,0 +1,74 @@
+{
+  "asset_id": "img_dino_matrix_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "source_file": "game-matrix-materials-1024.png",
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Header_Art_Dino_Matrix",
+    "tech_ref": "DEFAULT_SQUARE"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Medium Close-Up",
+      "angle": "Eye-level, slight low-angle tilt",
+      "depth_of_field": "Subtle background softening"
+    },
+    "characters": [
+      {
+        "id": "dino_bones_paleontologist_1",
+        "base_library_ref": "dino_bones_paleontologist_1",
+        "description": "An adult female grad student working as a paleontologist, long blonde hair, tanned skin.",
+        "features": {
+          "hair": "Long blonde hair",
+          "skin_tone": "Tanned skin",
+          "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+          "visual_identity": "High-fidelity 3D animated feature film style. Characters have adult human proportions with soft, stylized, and slightly rounded edges. Expressive facial features."
+        },
+        "apparel": {
+          "headwear": "White sun hat",
+          "upper": "Light pink blouse worn UNDER a khaki safari vest",
+          "lower": "White shorts",
+          "footwear": "Pink hiking boots"
+        },
+        "pose": "Engaged in field excavation, looking toward the fossil matrix, precision brushing the bone structure.",
+        "tools_held": [
+          "Wooden-handled fine bristle matrix brush"
+        ]
+      }
+    ],
+    "environment": {
+      "formation_archetype": "CANDELEROS",
+      "geology": {
+        "strata_type": "Cross-bedded sedimentary cliffside",
+        "primary_materials": ["Compressed sandstone", "Siltstone mudstone matrix"],
+        "color_palette": ["Brick Red", "Terracotta", "Deep Ochre", "Dusty Rose"]
+      },
+      "flora": [],
+      "embedded_assets": [
+        {
+          "asset_type": "Fossil Specimen",
+          "description": "Fully articulated theropod dinosaur skull embedded in rock matrix.",
+          "features": {
+            "anatomical_accuracy": "Stylized-realism, deep antorbital fenestrae, visible dentition",
+            "texture": "Porous bone fossilization with settled dark sediment accents"
+          }
+        }
+      ]
+    },
+    "graphic_elements": [
+      {
+        "element_type": "3D Text Overlay",
+        "text_content": "Dino Matrix!",
+        "typography": {
+          "style": "Bold, blocky 3D sans-serif extruded geometry",
+          "letter_casing": "Mixed Case (capitalized initial letters)",
+          "color": "Bright Red",
+          "integration": "Nested physically into the upper rock recess, casting and receiving dynamic scene shadows"
+        }
+      }
+    ]
+  }
+}

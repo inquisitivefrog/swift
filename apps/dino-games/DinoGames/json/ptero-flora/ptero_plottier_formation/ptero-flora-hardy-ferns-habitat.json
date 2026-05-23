@@ -1,0 +1,30 @@
+[
+  {
+    "id": "plottier_hardy_ferns_001",
+    "species": "Hardy_drought_resistant_ferns",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "PLOTTIER",
+    "environment_details": {
+      "habitat": "SEMI_ARID_PLAINS",
+      "flora": [
+        "Hardy drought-resistant ferns (stiff, leathery fronds, low-growing)",
+        "Scattered Podocarp needles",
+        "Small Equisetites shoots",
+        "Dry shrubs"
+      ],
+      "ground_palette": [
+        "Variegated Red",
+        "Ochre",
+        "Pinkish-Grey",
+        "Tan"
+      ],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; fronds have a thick, leathery, almost 'succulent' appearance; rounded edges to the leaflets; dusty green and bronze tones to suggest heat-resistance; focus on a resilient and ancient feel."
+    },
+    "visual_logic": {
+      "composition": "A close-up, ground-level view of a cluster of hardy ferns nestled in the shadow of a large, ochre-colored boulder. The leathery texture of the leaves is the primary focus.",
+      "ground": "Variegated red earth with small, chalky nodules and a thin layer of wind-blown sand.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; dappled light hitting the ferns as it peeks around the boulder, creating high-contrast texture on the leathery fronds."
+    }
+  }
+]

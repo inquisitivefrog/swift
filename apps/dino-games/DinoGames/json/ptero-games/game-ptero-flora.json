@@ -1,0 +1,30 @@
+{
+  "id": "ptero_flora_game_card_complete_001",
+  "species": "Pterosaur Botanical Collection",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "DRAMATIC_COASTAL_DAWN",
+  "formation_ref": "GLOBAL_PTERO_Lagerstätten",
+  "environment_details": {
+    "habitat": "COASTAL_CLIFF_AND_LAGOON_SYSTEM",
+    "flora": [
+      "Stunted Araucaria (wind-swept, growing from cliff crevices in the background)",
+      "Giant Ginkgoites (with fan leaves showing bright amber autumn colors)",
+      "Cycadeoidea (Bennettitales) with visible flower-like reproductive cones in the midground",
+      "Thick mats of liverworts and mosses draped over dark volcanic rocks",
+      "Coastal Thalassotaenia (Seagrass) visible in the turquoise shallows at the bottom edge",
+      "Vertical Giant Horsetails (Equisetites) framing the sides like prehistoric reeds"
+    ],
+    "ground_palette": [
+      "Turquoise (water)",
+      "Chalky White (limestone)",
+      "Volcanic Charcoal (rocks)",
+      "Electric Sky Blue (for text)"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; emphasis on coastal/island airiness; very high visual density; tactile leaf textures from waxy to fuzzy."
+  },
+  "visual_logic": {
+    "composition": "A high-altitude, multi-layered perspective. The background features white limestone cliffs and a distant caldera volcano. The mid-ground shows a lush island floodplain. The foreground is a rocky tide-pool area. Centered at the bottom is the text 'PTERO FLORA!' in bright electric blue, 3D mixed-case letters with a heavy white bevel and glossy finish.",
+    "ground": "A mix of white limestone sands, dark volcanic ash deposits, and clear shallow water showing seagrass.",
+    "lighting": "Bright, cool-toned morning light reflecting off the water, creating a crisp 'pop' for the blue text and highlighting the waxy cuticles of the leaves."
+  }
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "lagarcito_gnetales_mature_001",
+    "species": "Gnetales",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "LAGARCITO",
+    "environment_details": {
+      "habitat": "PLAYA_LAKE_SYSTEM",
+      "flora": [
+        "Mature Gnetales (hardy, low-growing shrubs with broad, leathery leaves)",
+        "Scattered Cheirolepidiaceae (in the background)",
+        "Hardy drought-resistant groundcover",
+        "Dry botanical detritus"
+      ],
+      "ground_palette": [
+        "Dusty Rose",
+        "Ochre",
+        "Pale Teal",
+        "Salmon"
+      ],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; tactile, high-quality textures like thick, waxy leathery leaves; emphasis on the resilient, arid-adapted nature of the flora; no sharp aggressive angles; overall ancient and hardy feel."
+    },
+    "visual_logic": {
+      "composition": "A low-angle view of a hardy Gnetales shrub, its broad leaves catching the high-key sun. The plant is positioned against a wide, flat playa lake bed that extends to a shimmering heat-haze horizon.",
+      "ground": "Fine red silt and white crystalline salt-crusts typical of the Lagarcito formation, interspersed with wind-blown botanical litter.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; high-key direct sunlight creating a warm glow, with sharp highlights on waxy leaf surfaces and soft-edged shadows on the silt."
+    }
+  }
+]

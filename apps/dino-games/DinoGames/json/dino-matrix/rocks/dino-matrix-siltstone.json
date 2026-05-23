@@ -1,0 +1,67 @@
+{
+  "asset_id": "matrix_layout_siltstone_multi_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Rock_Sample_Match_Card"
+  },
+  "canvas_constraints": {
+    "aspect_ratio": "1:1 (Square Layout)",
+    "target_resolution": "1024x1024"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Three-quarter angled perspective",
+      "angle": "Angled low-perspective shot focusing on the foreground blocks, opening up to a wide-horizon desert plateau"
+    },
+    "foreground_element": {
+      "type": "Multiple Material Blocks Array",
+      "rock_type": "Siltstone Variant Set",
+      "placement": "Three blocks arranged neatly side-by-side on a flat, sandy desert plain",
+      "blocks": [
+        {
+          "block_id": "silt_color_x",
+          "geometry": "3D stylized rectangular block with fine, blocky horizontal laminations",
+          "color": "Ochre Yellow",
+          "texture": "Fine-grained, uniform sedimentary face showing hydrated iron stains"
+        },
+        {
+          "block_id": "silt_color_y",
+          "geometry": "3D stylized rectangular block with fine, blocky horizontal laminations",
+          "color": "Deep Terracotta Red",
+          "texture": "Fine-grained uniform sedimentary face with rich oxidized mineral bands"
+        },
+        {
+          "block_id": "silt_color_z",
+          "geometry": "3D stylized rectangular block with fine, blocky horizontal laminations",
+          "color": "Muted Slate Blue",
+          "texture": "Fine-grained uniform sedimentary face from a flooded, poorly drained basin"
+        }
+      ]
+    },
+    "background_environment": {
+      "habitat_archetype": "Arid Floodplain Delta Plateaus",
+      "geological_mapping": [
+        {
+          "zone_name": "Main Flat-Topped Mesa Layer",
+          "color_profile": "Ochre Yellow (Matches Block Color X)",
+          "description": "The prominent, sunlit upper plateau tier that dominates the left horizon line."
+        },
+        {
+          "zone_name": "Weathered Escarpment Ridge",
+          "color_profile": "Deep Terracotta Red (Matches Block Color Y)",
+          "description": "An iron-rich sedimentary ledge cutting across the central background."
+        },
+        {
+          "zone_name": "Deep Basin Canyon Wall",
+          "color_profile": "Muted Slate Blue (Matches Block Color Z)",
+          "description": "A sheer vertical wall recess plunging into the right background, exposing deep clay silt deposits."
+        }
+      ],
+      "lighting": "Warm, sweeping afternoon sunlight striking the flat facets of the blocks and distant cliffs, casting soft, elongated cinematic shadows."
+    }
+  }
+}

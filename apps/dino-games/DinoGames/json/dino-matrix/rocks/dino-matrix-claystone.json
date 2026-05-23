@@ -1,0 +1,67 @@
+{
+  "asset_id": "matrix_layout_claystone_multi_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Rock_Sample_Match_Card"
+  },
+  "canvas_constraints": {
+    "aspect_ratio": "1:1 (Square Layout)",
+    "target_resolution": "1024x1024"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Three-quarter angled perspective",
+      "angle": "Angled dynamic close shot focusing on the three foreground sample blocks, trailing off into a vast stratified geologic basin"
+    },
+    "foreground_element": {
+      "type": "Multiple Material Blocks Array",
+      "rock_type": "Claystone / Mudstone Variant Set",
+      "placement": "Three blocks arranged neatly side-by-side on a flat, open, sandy riverbed plain",
+      "blocks": [
+        {
+          "block_id": "block_color_x",
+          "geometry": "3D stylized rectangular block, angled fracture faces",
+          "color": "Terracotta Red",
+          "texture": "Smooth, dense conchoidal fracture planes"
+        },
+        {
+          "block_id": "block_color_y",
+          "geometry": "3D stylized rectangular block, angled fracture faces",
+          "color": "Ochre Yellow",
+          "texture": "Smooth, dense conchoidal fracture planes"
+        },
+        {
+          "block_id": "block_color_z",
+          "geometry": "3D stylized rectangular block, angled fracture faces",
+          "color": "Green-Grey / Olive",
+          "texture": "Smooth, dense conchoidal fracture planes"
+        }
+      ]
+    },
+    "background_environment": {
+      "formation_archetype": "Hell Creek / Wealden Style Stratified Basin",
+      "geological_mapping": [
+        {
+          "zone_name": "Distinct Butte",
+          "color_profile": "Terracotta Red (Matches Block Color X)",
+          "description": "An isolated, flat-topped sedimentary butte layer on the far left of the horizon."
+        },
+        {
+          "zone_name": "Eroded Ridge",
+          "color_profile": "Ochre Yellow (Matches Block Color Y)",
+          "description": "A long, weathered structural ridge running horizontally across the mid-ground layer."
+        },
+        {
+          "zone_name": "Excavated Canyon Wall",
+          "color_profile": "Green-Grey / Olive (Matches Block Color Z)",
+          "description": "A sheer vertical canyon cutting through the right side of the frame, exposing deep, un-weathered clay strata."
+        }
+      ],
+      "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle, binding the foreground blocks and background formations into a single cohesive, color-matched ecosystem."
+    }
+  }
+}

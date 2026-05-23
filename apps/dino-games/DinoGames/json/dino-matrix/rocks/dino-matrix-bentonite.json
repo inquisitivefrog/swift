@@ -1,0 +1,67 @@
+{
+  "asset_id": "matrix_layout_bentonite_multi_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Rock_Sample_Match_Card"
+  },
+  "canvas_constraints": {
+    "aspect_ratio": "1:1 (Square Layout)",
+    "target_resolution": "1024x1024"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Three-quarter angled perspective",
+      "angle": "Dynamic angled view looking down at the foreground blocks, widening out to an eroded badland skyline"
+    },
+    "foreground_element": {
+      "type": "Multiple Material Blocks Array",
+      "rock_type": "Bentonite Variant Set",
+      "placement": "Three blocks arranged neatly side-by-side on a flat, mud-cracked ground plane",
+      "blocks": [
+        {
+          "block_id": "bentonite_color_x",
+          "geometry": "3D stylized block with highly fractured popcorn-crust texture",
+          "color": "Pale Cream / Ivory",
+          "texture": "Dry, chalky, pure aluminum-silicate desiccation crust"
+        },
+        {
+          "block_id": "bentonite_color_y",
+          "geometry": "3D stylized block with highly fractured popcorn-crust texture",
+          "color": "Soft Ochre / Pale Yellow",
+          "texture": "Iron-leached, crumbly weathered clay face"
+        },
+        {
+          "block_id": "bentonite_color_z",
+          "geometry": "3D stylized block with highly fractured popcorn-crust texture",
+          "color": "Muted Sage Green",
+          "texture": "Un-weathered sodium bentonite clay face"
+        }
+      ]
+    },
+    "background_environment": {
+      "habitat_archetype": "Arid Badland Field Site",
+      "geological_mapping": [
+        {
+          "zone_name": "Eroded Badland Butte Cap",
+          "color_profile": "Pale Cream / Ivory (Matches Block Color X)",
+          "description": "The high-purity ash-crust crowning the very top of the central badland butte formation."
+        },
+        {
+          "zone_name": "Rolling Badland Ridges",
+          "color_profile": "Soft Ochre / Pale Yellow (Matches Block Color Y)",
+          "description": "Weathered, popcorn-textured clay mounds winding across the mid-ground terrain."
+        },
+        {
+          "zone_name": "Deep Creek Outcrop",
+          "color_profile": "Muted Sage Green (Matches Block Color Z)",
+          "description": "An un-weathered, low-lying clay seam exposed along a dry wash channel cutting through the right background."
+        }
+      ],
+      "lighting": "Harsh, direct midday sunlight casting deep shadows inside the polygonal surface cracks of both the blocks and the landscape mounds."
+    }
+  }
+}

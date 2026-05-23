@@ -1,0 +1,25 @@
+[
+  {
+    "id": "karabastau_conifer_quad_001",
+    "species": "Conifers",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "KARABASTAU",
+    "environment_details": {
+      "habitat": "STAGNANT_LAKE_FOREST",
+      "flora": [
+        "Conifer cone (woody, spiraling scales, chunky texture)",
+        "Needle cluster (tufted, rounded tips, deep green)",
+        "Bark fragment (thick, layered, with stylized amber/resin drip)",
+        "Winged seed (thin, translucent papery wing)"
+      ],
+      "ground_palette": ["Deep Brown", "Forest Green", "Charcoal", "Olive"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; emphasis on 'clumped' needle groups rather than individual sharp points; tactile resin drips; chunky, satisfying bark geometry."
+    },
+    "visual_logic": {
+      "composition": "Quadrant layout: Top-Left: A mature woody cone; Top-Right: A cluster of needles; Bottom-Left: A vertical slab of bark with a drop of golden resin; Bottom-Right: Two winged seeds resting on the silt.",
+      "ground": "A bed of dark forest peat and laminated paper-shale fragments.",
+      "lighting": "Studio-style soft lighting to emphasize the varied textures of wood, needle, and resin."
+    }
+  }
+]

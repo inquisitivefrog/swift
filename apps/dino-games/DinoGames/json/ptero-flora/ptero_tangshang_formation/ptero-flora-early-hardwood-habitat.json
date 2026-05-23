@@ -1,0 +1,25 @@
+[
+  {
+    "id": "tangshang_early_hardwood_001",
+    "species": "Early_Angiosperm_hardwoods",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "TANGSHANG",
+    "environment_details": {
+      "habitat": "SUBTROPICAL_RIVER_VALLEY",
+      "flora": [
+        "Early Angiosperm Hardwoods (small, primitive woody trees, simple oval leaves with jagged margins)",
+        "Inconspicuous primitive flowers (tiny clusters along branches)",
+        "Fern undergrowth",
+        "Fallen leaf litter"
+      ],
+      "ground_palette": ["Rich Silt Brown", "Mossy Green", "Dark Charcoal Clay"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; tree profiles are compact and bushy rather than towering; leaves have a slightly thick, waxy, soft-edged look; trunks are smooth with blocky, chunky branch divisions to maintain the toy-like structure."
+    },
+    "visual_logic": {
+      "composition": "A sweeping mid-range shot of a small stand of primitive hardwood trees growing along a river bank. Their vibrant green, simple leaf canopies partially overlap, showing glimpses of smooth grey bark.",
+      "ground": "Moist, dark silt brown earth scattered with fallen simple oval leaves and small clumps of green river moss.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; bright, warm sunlight cutting through the canopy from a low angle, highlighting leaf surfaces with a clean, waxy reflection."
+    }
+  }
+]

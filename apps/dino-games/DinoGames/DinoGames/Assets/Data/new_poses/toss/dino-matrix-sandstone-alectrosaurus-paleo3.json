@@ -1,0 +1,19 @@
+{
+    "asset_id": "manifest_excavation_050",
+    "project": "DinoMatrix",
+    "version": "1.0.0",
+    "meta": { 
+      "style_preset": "STYLE_ANIMATED_FEATURE_V3", 
+      "intended_use": "UI_Card_Dig_Stage_3" 
+    },
+    "excavation_context": {
+      "character_id": "dino_bones_paleontologist_3",
+      "character_description": "An adult male grad student working as a paleontologist, curly black hair, Black race, wearing a white sun hat. Wears a light purple tee shirt worn UNDER a khaki safari vest, white shorts and black hiking boots.",
+      "stage": "Prying Sandstone Beds in an Ancient River Valley",
+      "target_dinosaur": "Alectrosaurus",
+      "geological_formation": "IREN_DABASU",
+      "matrix_material": "Fine-grained fluvial sandstone",
+      "matrix_color": "Yellowish-orange"
+    },
+    "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_paleontologist_3, sporting his signature white sun hat, uses a steel pry bar to crack loose layered slabs of yellowish-orange sandstone out on a wide braided river system floodplain. Splitting the stone reveals the slender, curved tooth rows of an Alectrosaurus maxilla. 1:1 Square aspect ratio."
+  }

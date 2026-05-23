@@ -1,0 +1,25 @@
+[
+  {
+    "id": "santana_bennettitales_shrub_001",
+    "species": "Bennettitales",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "environment_details": {
+      "habitat": "COASTAL_LAGOON_MARGIN",
+      "flora": [
+        "Bennettitales (squat trunk, crown of stiff cycad-like fronds)",
+        "Flower-like reproductive organs (growing directly from the trunk)",
+        "Fern undergrowth",
+        "Lush coastal scrub"
+      ],
+      "ground_palette": ["Tan Sand", "Lush Green", "Dark Brown Wood"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; emphasize the unique 'trunk-flowers'; fronds are stiff and leathery; rounded, stout proportions to the main stem."
+    },
+    "visual_logic": {
+      "composition": "A close-up focusing on the trunk of a Bennettitalean plant, highlighting the strange, petal-like reproductive structures emerging from the bark.",
+      "ground": "A mix of moist sand and dark organic mulch from fallen plant matter.",
+      "lighting": "Warm, afternoon sun filtering through the overhead canopy, creating soft dappled spots on the trunk-flowers."
+    }
+  }
+]

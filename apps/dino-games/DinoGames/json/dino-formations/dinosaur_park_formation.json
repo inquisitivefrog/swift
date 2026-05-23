@@ -1,0 +1,11 @@
+{
+  "formation_id": "DINOSAUR_PARK",
+  "base_habitat": "SUBTROPICAL_COASTAL_PLAINS",
+  "period": "LATE_CRETACEOUS",
+  "strata_specifics": {
+    "ground_texture": "Dark, rich organic mud, Siltstone and carbonaceous shale.",
+    "color_palette": ["Deep Brown", "Forest Green", "Steel Blue", "Grey", "Black"]
+  },
+  "flora_manifest": ["LATE_CRETACEOUS_BASE", "DINOSAUR_PARK_ADDITIONS"],
+  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+}

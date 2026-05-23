@@ -1,0 +1,25 @@
+[
+  {
+    "id": "lagarcito_algae_quad_001",
+    "species": "Microscopic algae",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "LAGARCITO",
+    "environment_details": {
+      "habitat": "PLAYA_LAKE_SYSTEM",
+      "flora": [
+        "Algal bloom (swirling cloud of vibrant emerald and teal)",
+        "Dried algal mat (leathery, cracked, pale green/grey texture)",
+        "Micro-droplet view (stylized 'bubble' showing cellular clusters)",
+        "Water's edge (transition from liquid bloom to salt-crusted silt)"
+      ],
+      "ground_palette": ["Dusty Rose", "Ochre", "Pale Teal", "Salmon"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; liquid elements have a soft, 'gel-like' appealing translucency; dried mats appear satisfyingly tactile and brittle; high-saturation colors."
+    },
+    "visual_logic": {
+      "composition": "A tiled layout: Top-Left: a swirling overhead view of a liquid bloom; Top-Right: a close-up of a dried, cracked algal mat on the playa surface; Bottom-Left: a stylized 'magnified' circle showing glowing green cellular spheres; Bottom-Right: the interface where teal water meets orange silt.",
+      "ground": "A mix of wet, saturated silt and dry, salt-crust mineral deposits.",
+      "lighting": "Bright diffused light, with a slight internal glow applied to the liquid algae for a clean, cinematic look."
+    }
+  }
+]

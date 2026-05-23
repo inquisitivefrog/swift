@@ -1,0 +1,19 @@
+{
+    "asset_id": "manifest_excavation_056",
+    "project": "DinoMatrix",
+    "version": "1.0.0",
+    "meta": { 
+      "style_preset": "STYLE_ANIMATED_FEATURE_V3", 
+      "intended_use": "UI_Card_Dig_Stage_3" 
+    },
+    "excavation_context": {
+      "character_id": "dino_bones_preparator_1",
+      "character_description": "An adult male grad student working as a museum preparator, short dark hair, tanned skin. Wears signature thin-rimmed BLACK RECTANGULAR lens glasses, a light blue tee shirt worn UNDER a white lab coat, blue jean slacks and black dress shoes.",
+      "stage": "Pneumatic Scribing Consolidated Sandstone from a Sauropod Vertebra",
+      "target_dinosaur": "Apatosaurus",
+      "geological_formation": "MORRISON_LJ",
+      "matrix_material": "Sandstone",
+      "matrix_color": "Tan"
+    },
+    "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_preparator_1, wearing his black rectangular lens glasses, sits at his indoor museum laboratory workbench guiding a vibrating pneumatic air-scribe across a block of hard tan sandstone matrix under bright task lighting. His precise work isolates a giant, deeply excavated cervical vertebra of an Apatosaurus. 1:1 Square aspect ratio."
+  }
