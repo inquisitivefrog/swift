@@ -1,0 +1,30 @@
+{
+  "id": "marine_ages_v1_JURASSIC_CRETACEOUS_ONLY",
+  "game_title": "Marine Ages!",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "scene_logic": {
+    "composition": "Two massive, stylized underwater stone archways carved from ancient calcarenite side-by-side, standing on a pale seafloor. No humans. The background inside each archway opens into two distinct, vibrant prehistoric marine ecosystems.",
+    "left_side_jurassic": "Inside the left archway: A friendly, long-necked marine reptile peeks out from a deep cobalt Jurassic pelagic environment. Floating nearby are shimmering Harpoceras ammonites. The archway is labeled with a 3D stone sign: 'JURASSIC'.",
+    "right_side_cretaceous": "Inside the right archway: A colorful, soft-featured Mosasaur steps/swims forward from a sunlit Cretaceous epicontinental seaway filled with schools of small forage fish. The archway is labeled with a 3D stone sign: 'CRETACEOUS'.",
+    "center_foreground": "A small, friendly, and very excited prehistoric turtle sits on a limestone nodule between the two arches, looking directly at the player and pointing one way or the other with a flipper."
+  },
+  "typography": {
+    "main_title": {
+      "text_content": "MARINE AGES!",
+      "style": "Extra-thick 3D oceanic cyan block letters with a glossy 'candy' finish.",
+      "color": "Bright Cyan with a crisp white outline.",
+      "placement": "Top center, arched over both underwater portals."
+    }
+  },
+  "character_details": {
+    "finish": "High-fidelity 3D animated feature film aesthetic. Tactile, high-quality surfaces featuring satiny-smooth skin or soft leathery textures with subtle specular highlights. Big, soulful, expressive eyes with a signature friendly smirk. Zero grit, zero scary predatory features, and rounded, non-threatening anatomy.",
+    "expressions": "The marine creatures look remarkably proud, cheerful, and inviting, actively gesturing for the player to dive in and play."
+  },
+  "environmental_details": {
+    "habitat_influences": ["EPICONTINENTAL_SEAWAY", "PELAGIC_SHELF_SEA"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC. High-key exposure with beautiful, diffused 'god-rays' filtering down from the surface to emphasize the 3D volume of the marine creatures' bodies. Visible refractive water ripples dance across the floor plane.",
+    "atmosphere": "Magical 'underwater adventure' vibe. Crystal-clear water visibility with floating silver bubbles and tiny, sparkling plankton particulates. Highly saturated, clean, and high-contrast."
+  },
+  "negative_prompt": "Triassic, land dinosaurs, humans, scuba divers, realistic skin textures, sharp predatory teeth, blood, dark murky water, scary, grit, 90s CGI, blurry text, 'Jura ssic', 'Creta ceous'"
+}

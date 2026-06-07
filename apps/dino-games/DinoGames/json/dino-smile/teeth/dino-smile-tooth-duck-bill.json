@@ -1,1 +1,11 @@
-High-fidelity 3D render of a single Edmontosaurus duck bill focused on just the bill. Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_beak_edmontosaurus_01",
+  "species": "Edmontosaurus",
+  "morphology": "duck_bill_keratin_sheath",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Focuses strictly on the flattened duck-bill structure to highlight the specialized grazing adaptation of Hadrosaurids.",
+  "prompt": "High-fidelity 3D asset of a single Edmontosaurus duck-bill specimen, focusing strictly on the wide, flattened bill structure and rendered in a 3D animated feature film aesthetic with soft, stylized, and slightly rounded edges. The specimen features the broad, spoon-shaped premaxilla and predentary bone structure, completely enveloped by a highly detailed, textured keratinous beak sheath (rhamphotheca). The keratin showcases high-quality tactile finishes, detailed with fine growth rings, subtle vertical ridges, and a naturally rugged, slightly layered chewing margin. The specimen is perfectly centered in a 1:1 square composition, scaled precisely within the central power-zone to preserve a strict 25% negative space safety margin on all four sides so no edge of the wide bill touches the frame borders. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows underneath for realistic physical weight and grounding. A small, clean, checkered black-and-white scientific scale bar is integrated neatly at the bottom within the safety padding. Illuminated by soft studio lighting with ambient occlusion to cleanly emphasize the wide volume, broad flatness, and intricate organic surface textures of the beak."
+}

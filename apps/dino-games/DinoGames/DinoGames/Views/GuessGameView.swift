@@ -357,15 +357,16 @@ struct GuessGameView: View {
     
     var body: some View {
         NavigationView {
+            Group {
+                if isGameComplete {
+                    guessGameEndSequenceView
+                } else {
             VStack(spacing: 30) {
-                // Title (hidden during victory — `VictorySplitColumnView` shows `gameTitle` during recap only; success card art includes the title)
-                if !isGameComplete {
-                    Text(gameConfig.title)
-                        .font(.largeTitle)
-                        .padding(.top)
-                }
+                Text(gameConfig.title)
+                    .font(.largeTitle)
+                    .padding(.top)
 
-                if let question = currentQuestion, !isGameComplete {
+                if let question = currentQuestion {
                     // Main game area - one question at a time
                     VStack(spacing: 40) {
                         // Top: Question image (silhouette), then round label below
@@ -427,15 +428,14 @@ struct GuessGameView: View {
                         .padding(.horizontal, 12)
                     }
                     .frame(maxWidth: .infinity)
-                } else if isGameComplete {
-                    // End sequence: darkened row of 3 dinosaurs → walk row (highlight + name audio) → good-job + crowd → dismiss
-                    guessGameEndSequenceView
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            }
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding()
             .onAppear {
+                guard !isGameComplete else { return }
                 if !hasInitiallyAppeared {
                     hasInitiallyAppeared = true
                     resetGameState()
@@ -492,11 +492,13 @@ struct GuessGameView: View {
     
     /// Starts the round: for Dino Footprints plays "identify the footprint" then options walk; for Dino Bones plays "identify the skeleton" then options walk; for other guess games goes straight to options walk.
     private func startRoundIfNeeded() {
+        guard !isGameComplete else { return }
         guard let question = currentQuestion, !question.options.isEmpty, optionsWalkIndex == nil else { return }
         if gameConfig.id == "dino-footprints" || gameConfig.id == "ptero-footprints" {
             isAudioPlaying = true
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
+                guard !self.isGameComplete else { return }
                 self.playFootprintsHintThenStartOptionsWalk()
             }
             speechManager.speak("game-footprints-identify-the-footprint")
@@ -504,6 +506,7 @@ struct GuessGameView: View {
             isAudioPlaying = true
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
+                guard !self.isGameComplete else { return }
                 self.playDinoBonesHintThenStartOptionsWalk()
             }
             speechManager.speak("game-dino-bones-identify-the-skeleton")
@@ -511,6 +514,7 @@ struct GuessGameView: View {
             isAudioPlaying = true
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
+                guard !self.isGameComplete else { return }
                 self.startOptionsWalkIfNeeded()
             }
             speechManager.speak("game-whose-bones-gameplay")
@@ -521,8 +525,10 @@ struct GuessGameView: View {
 
     /// Plays game-hint then starts the options walk. Keeps isAudioPlaying true so taps are blocked (no click sounds).
     private func playFootprintsHintThenStartOptionsWalk() {
+        guard !isGameComplete else { return }
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
+            guard !self.isGameComplete else { return }
             self.startOptionsWalkIfNeeded()
         }
         if let url = speechManager.urlForAudio(key: "game-hint") {
@@ -537,6 +543,7 @@ struct GuessGameView: View {
     }
 
     private func startOptionsWalkIfNeeded() {
+        guard !isGameComplete else { return }
         guard let question = currentQuestion, !question.options.isEmpty, optionsWalkIndex == nil else { return }
         optionsWalkIndex = 0
         isAudioPlaying = true
@@ -546,6 +553,11 @@ struct GuessGameView: View {
 
     private func advanceOptionsWalk() {
         speechManager.onAudioFinished = nil
+        guard !isGameComplete else {
+            optionsWalkIndex = nil
+            isAudioPlaying = false
+            return
+        }
         guard let question = currentQuestion else {
             optionsWalkIndex = nil
             isAudioPlaying = false
@@ -596,6 +608,10 @@ struct GuessGameView: View {
                         self.isAudioPlaying = false
                         // startOptionsWalkIfNeeded() will run from .onChange(of: currentRound)
                     } else {
+                        self.selectedDinosaur = nil
+                        self.isProcessingAnswer = false
+                        self.isAudioPlaying = false
+                        self.optionsWalkIndex = nil
                         self.isGameComplete = true
                         // End sequence (darkened row → highlight + name → good-job + crowd → dismiss) runs in guessGameEndSequenceView
                     }
@@ -624,13 +640,29 @@ struct GuessGameView: View {
         StandardVictoryLayout.recapListScrollHeight(itemCount: guessVictoryRecapItems.count)
     }
 
-    // MARK: - End sequence: same as Dino Diets / Match the Dinosaur — top half list (highlight + name audio), bottom half "Good job!" then success image (centered, no wrapper), then good-job + crowd and dismiss
+    // MARK: - End sequence: same as Dino Diets / Match the Dinosaur — top half list (highlight + name audio), bottom half success card, then good-job + crowd and dismiss
+    /// Name That games keep title + recap visible above the success card so the victory reads as one continuous screen.
+    private var guessVictoryKeepsRecapDuringSuccess: Bool {
+        switch gameConfig.id {
+        case "name-that-dinosaur", "name-that-pterosaur", "name-that-marine-reptile":
+            return true
+        default:
+            return false
+        }
+    }
+
+    private var victoryHidesGameTitleDuringSuccess: Bool {
+        !guessVictoryKeepsRecapDuringSuccess
+    }
+
     private var guessGameEndSequenceView: some View {
         VictorySplitColumnView(
             listScrollHeight: victoryListVisibleHeight,
             showSuccessPhase: endSequenceStep == 2,
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
+            hideGameTitleDuringSuccessPhase: victoryHidesGameTitleDuringSuccess,
+            collapseRecapListDuringSuccessPhase: !guessVictoryKeepsRecapDuringSuccess,
             scrollRows: {
                 ForEach(Array(guessVictoryRecapItems.enumerated()), id: \.element.id) { index, item in
                     StandardVictoryRecapRowView(
@@ -671,8 +703,11 @@ struct GuessGameView: View {
         }
     }
 
-    /// End-sequence success art: catalog guess games with `game-{id}-success` use the same large frame as Name That Dinosaur so the card reads clearly (smaller default was legacy for list-style games).
+    /// End-sequence success art: full-size when the recap list collapses; smaller when recap stays visible above the card (Name That games).
     private var guessGameSuccessImageSide: CGFloat {
+        if guessVictoryKeepsRecapDuringSuccess {
+            return 180
+        }
         switch gameConfig.id {
         case "name-that-dinosaur", "name-that-pterosaur", "name-that-marine-reptile",
              "dino-footprints", "ptero-footprints", "dino-bones", "whose-bones":
@@ -703,32 +738,12 @@ struct GuessGameView: View {
     }
     
     private func playGoodJobAndCrowdThenDismiss() {
-        gameConfig.victorySideEffect?()
-        let goodJobURL = speechManager.urlForAudio(key: victoryGoodJobAudioKey)
-        let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
-        if let u1 = goodJobURL, let u2 = crowdURL {
-            speechManager.playTogether(url1: u1, url2: u2) {
-                self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
-                MarineReptileProgress.notifyCompletionIfMarineGame(configId: self.gameConfig.id)
-                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
-                self.isPresented = false
-            }
-        } else if let u = goodJobURL ?? crowdURL {
-            speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
-                MarineReptileProgress.notifyCompletionIfMarineGame(configId: self.gameConfig.id)
-                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
-                self.isPresented = false
-            }
-            speechManager.playAudioFile(url: u)
-        } else {
-            LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
-            MarineReptileProgress.notifyCompletionIfMarineGame(configId: gameConfig.id)
-            PterosaurProgress.notifyCompletionIfPterosaurGame(configId: gameConfig.id)
-            isPresented = false
-        }
+        StandardVictorySequence.dismissAfterVictory(
+            configId: gameConfig.id,
+            isPresented: $isPresented,
+            speechManager: speechManager,
+            beforeDismiss: { gameConfig.victorySideEffect?() }
+        )
     }
 
     private var usesMarineGameSpecificFeedback: Bool {
@@ -741,10 +756,6 @@ struct GuessGameView: View {
 
     private var tryAgainAudioKey: String {
         usesMarineGameSpecificFeedback ? "game-name-that-marine-reptile-try-again" : "try-again"
-    }
-
-    private var victoryGoodJobAudioKey: String {
-        usesMarineGameSpecificFeedback ? "game-name-that-marine-reptile-good-job" : "good-job-you-got-them-all"
     }
 }
 

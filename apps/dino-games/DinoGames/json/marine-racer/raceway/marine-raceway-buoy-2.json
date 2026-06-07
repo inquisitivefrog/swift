@@ -1,0 +1,15 @@
+{
+    "id": "raceway_buoy_2_the_emerald_lantern",
+    "species": "Platform_Asset",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "BLUE_LIAS",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "OPEN_OCEAN_PELAGIC",
+    "pose": "A massive, cylindrical steel buoy painted charcoal grey, topped with a prominent glass gantry holding a glowing emerald-green lantern. Several small pterosaurs have nested on top of the lantern structure, looking out across the open sea.",
+    "environmental_details": {
+      "ground": "Deep blue-grey ocean water with swells that lift and lower the buoy. White limestone foam breaks gently around its waterlines.",
+      "atmosphere": "Clear, crisp atmospheric perspective over an infinite horizon, emphasizing the vast scale of the pelagic ocean.",
+      "palette": ["Blue-grey", "Charcoal", "Limestone White"]
+    }
+  }

@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_032",
+    "species": "Coloborhynchus clavirostris",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "WEALDEN",
+    "matrix_material": "lignite",
+    "character_assigned": "dino_bones_paleontologist_2",
+    "pose": "Analyzing a pair of uniquely placed, forward-facing teeth sockets on a deep, deep blue-grey clay matrix block."
+  }

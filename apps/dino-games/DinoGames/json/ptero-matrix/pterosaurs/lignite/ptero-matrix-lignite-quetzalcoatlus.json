@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_017",
+    "species": "Quetzalcoatlus northropi",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "JAVELINA",
+    "matrix_material": "lignite",
+    "character_assigned": "dino_bones_preparator_5",
+    "pose": "Using an industrial air-abrasive system to clean thick, dusty red mudstone off a massive humerus bone."
+  }

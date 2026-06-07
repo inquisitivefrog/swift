@@ -1,0 +1,8 @@
+{
+    "id": "ui_egg_placodus",
+    "morphology": "placodont_oval",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D render of a single Placodus egg next to a standard lime. Shape: blocky, short oval with thickened poles. Texture: tough, heavily textured leathery shell, light ochre-yellow with fine pimpled bumps on the surface. Background: clean, empty light-grey studio background. A single scale bar at the bottom. Soft studio lighting.",
+    "visual_logic": "Highlights a short, blocky egg with a unique pimpled, tough leathery texture indicating a robust coastal sauropterygian.",
+    "style_notes": "Only one scale bar."
+  }

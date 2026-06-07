@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import XCTest
+@testable import DinoGames
 
 enum TestBundleHelpers {
     /// Audio extensions scanned under `DinoGames/Assets/Audio`.
@@ -51,6 +53,36 @@ enum TestBundleHelpers {
     static func audioStems(in directory: URL) throws -> Set<String> {
         let files = try recursiveFiles(in: directory, allowedExtensions: audioExtensions)
         return Set(files.map { $0.deletingPathExtension().lastPathComponent.lowercased() })
+    }
+
+    /// Union of audio stems under one or more directories (repo `Assets/Audio/…` paths).
+    static func audioStems(in directories: [URL], allowedExtensions: Set<String> = audioExtensions) throws -> Set<String> {
+        var stems: Set<String> = []
+        for directory in directories {
+            let files = try recursiveFiles(in: directory, allowedExtensions: allowedExtensions)
+            stems.formUnion(files.map { $0.deletingPathExtension().lastPathComponent.lowercased() })
+        }
+        return stems
+    }
+
+    /// Asserts each logical audio key resolves via `SpeechManager` (same lookup as gameplay).
+    @MainActor
+    static func assertBundleResolvesAudioKeys(
+        _ keys: [String],
+        file: StaticString = #filePath,
+        line: UInt = #line,
+        messagePrefix: String = ""
+    ) {
+        let speech = SpeechManager()
+        let prefix = messagePrefix.isEmpty ? "" : "\(messagePrefix): "
+        for key in keys {
+            XCTAssertNotNil(
+                speech.urlForAudio(key: key),
+                "\(prefix)missing bundle audio for key `\(key)`",
+                file: file,
+                line: line
+            )
+        }
     }
 
     // MARK: - Source tree (json ↔ images) slug matching

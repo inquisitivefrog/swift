@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_029",
+    "species": "Pteranodon longiceps",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "NIOBRARA_CHALK",
+    "matrix_material": "volcanic tuff",
+    "character_assigned": "dino_bones_preparator_5",
+    "pose": "Sifting out toothless beak fragments from soft, powdery cream-white pure chalk layers."
+  }

@@ -106,6 +106,43 @@ enum AirPterosaurData {
         Dinosaur(id: 144, name: "Wukongopterus", icon: "🦅", imageName: "ptero-trans-wukongopterus", characteristicIds: [630, 631, 632]),
     ]
 
+    /// Five diet option labels for Ptero Diets! (matches `ptero-diets-*` imagesets).
+    /// Uses **Filter Feeder** (not Omnivore — there is no `ptero-diets-omnivore` art).
+    static let pterosaurDietTypes = ["Frugivore", "Carnivore", "Piscivore", "Insectivore", "Filter Feeder"]
+
+    /// Asset slug for a pterosaur diet label (e.g. Filter Feeder → filter-feeder).
+    static func pterosaurDietAssetSlug(for dietType: String) -> String {
+        switch dietType {
+        case "Filter Feeder": return "filter-feeder"
+        default:
+            return dietType.lowercased()
+        }
+    }
+
+    /// Spoken diet name under `Audio/Ptero-Diets/` (e.g. `ptero-diet-carnivore.m4a`, `ptero-diets-frugivore.m4a`).
+    static func pterosaurDietAudioKey(for dietType: String) -> String {
+        let slug = pterosaurDietAssetSlug(for: dietType)
+        switch dietType {
+        case "Frugivore", "Filter Feeder":
+            return "ptero-diets-\(slug)"
+        default:
+            return "ptero-diet-\(slug)"
+        }
+    }
+
+    /// Diet per pterosaur for Ptero Diets! (Frugivore, Carnivore, Piscivore, Insectivore, Filter Feeder).
+    static let pterosaurDietById: [Int: String] = [
+        101: "Carnivore", 102: "Carnivore", 103: "Carnivore", 104: "Carnivore", 105: "Carnivore", 106: "Carnivore",
+        107: "Insectivore", 108: "Insectivore", 109: "Carnivore", 110: "Insectivore", 111: "Insectivore", 112: "Piscivore",
+        113: "Carnivore", 114: "Insectivore",
+        115: "Piscivore", 116: "Piscivore", 117: "Piscivore", 118: "Piscivore", 119: "Carnivore", 120: "Piscivore",
+        121: "Piscivore", 122: "Piscivore", 123: "Piscivore", 124: "Piscivore",
+        125: "Filter Feeder", 126: "Carnivore", 127: "Filter Feeder", 128: "Frugivore", 129: "Carnivore", 130: "Filter Feeder",
+        131: "Frugivore", 132: "Frugivore", 133: "Frugivore", 134: "Frugivore", 135: "Frugivore", 136: "Frugivore",
+        137: "Piscivore", 138: "Piscivore", 139: "Carnivore", 140: "Carnivore",
+        141: "Insectivore", 142: "Insectivore", 143: "Insectivore", 144: "Carnivore",
+    ]
+
     /// Estimated adult body mass in kg per pterosaur id (101+). Used by Weigh and Balance.
     static let pterosaurEstimatedWeightKgById: [Int: Double] = [
         101: 60000,
@@ -361,6 +398,15 @@ enum AirPterosaurData {
             return "ptero-silhouette-" + String(b.dropFirst("ptero-".count))
         }
         return "ptero-silhouette-\(b)"
+    }
+
+    /// Species slug for `ptero-matrix-{stone}-{slug}` fossil composites (e.g. `ptero-basal-dimorphodon` → `dimorphodon`).
+    static func matrixFossilSlug(for creature: Dinosaur) -> String? {
+        guard let name = creature.imageName else { return nil }
+        let parts = name.split(separator: "-", omittingEmptySubsequences: true)
+        guard parts.count >= 3, parts[0] == "ptero" else { return nil }
+        let slug = parts.dropFirst(2).joined(separator: "-")
+        return slug.isEmpty ? nil : slug
     }
 
     /// Two decoys for Name That Pterosaur: not the question’s guess group, and from two different non-question groups when the pool allows.

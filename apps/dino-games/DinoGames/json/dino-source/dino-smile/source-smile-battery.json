@@ -1,0 +1,54 @@
+{
+  "id": "game_card_dino_smile_herbivore_batteries_square_exclusive",
+  "name": "Dino Smile: Herbivore Grinding Tools (Square Aspect)",
+  "category": "Educational Asset - Dental Paleontology",
+  "description": "A comparative diagram for the game 'Dino Smile', presenting three distinct types of herbivorous dinosaur dental batteries optimized for a 1:1 square game card format to illustrate specialization for plant-milling, entirely excluding carnivorous dentition.",
+  "dimensions": {
+    "width": 1024,
+    "height": 1024,
+    "unit": "pixels",
+    "aspect_ratio": "1:1"
+  },
+  "file_type": "PNG (high-resolution illustrative diagram)",
+  "style": "3D render, realistic bone and enamel textures with illustrative cross-sections arranged in a balanced, clean layout across three primary focal zones",
+  "color_palette": {
+    "background_matrix": "Natural stone greys and warm tans",
+    "tooth_enamel": "Pale cream and polished white",
+    "fossilized_bone": "Dark amber-brown to charcoal grey"
+  },
+  "key_elements": [
+    {
+      "element_id": "diamond_battery",
+      "description": "A complex cross-section showing thousands of interlocking diamond-shaped teeth tightly packed into vertical columns, specifically showing a Hadrosaurid jaw mechanism.",
+      "label": "DIAMOND BATTERY (Hadrosaur)",
+      "position": "Left Half / Column Panel",
+      "state": "Complex milling tool showcasing hundreds of replacement teeth waiting below the surface."
+    },
+    {
+      "element_id": "honeycomb_battery",
+      "description": "A visual representation showing a matrix of teeth interlocking in a hexagonal, honeycomb-like pattern, creating a massive shearing and grinding surface typical of Ceratopsians.",
+      "label": "HONEYCOMB BATTERY (Ceratopsian)",
+      "position": "Top-Right Quadrant",
+      "state": "Continuous grinding pavement optimized for slicing tough fibrous vegetation."
+    },
+    {
+      "element_id": "forked_battery",
+      "description": "A close-up and illustrative cross-section of multi-pointed, spoon-shaped or 'forked' edge teeth arranged in a compact, overlapping sequence found in sauropodomorphs and early ornithischians.",
+      "label": "FORKED BATTERY (Sauropodomorph)",
+      "position": "Bottom-Right Quadrant",
+      "state": "Plant shredder and raking tool used to strip leaves from woody stems."
+    }
+  ],
+  "context_graphics": [
+    {
+      "graphic_id": "dino_smile_branding",
+      "description": "The stylized 'Dino Smile' logo centered at the absolute bottom margin of the square canvas.",
+      "state": "Integrated branding for the game card layout"
+    }
+  ],
+  "usage": [
+    "Texture mapping for interactive educational square tiles",
+    "Digital game asset (standard square card icon)",
+    "Printable square card for physical tabletop gameplay"
+  ]
+}

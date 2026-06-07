@@ -1,0 +1,20 @@
+{
+  "project": "Marine Ages Game Assets",
+  "period": "LATE_CRETACEOUS",
+  "tech_ref": "DEFAULT_SQUARE",
+  "location": "MUWAQQAR_CHALK_FORMATION",
+  "final_style_anchor": "STYLE_ANIMATED_FEATURE_V3",
+  "prompt": {
+    "composition": "Widescreen oceanic cinematic tableau. Groups organized into underwater 'visual islands' across layered depths. Left: A Mosasaur duo (Global Mosasaurs, Pluridens) gliding gracefully. Center: An elegant long-necked Plesiosaur family (Elasmosaurids) arching their necks in an upright, curved loop. Right: A pair of ancient, smooth-shelled sea turtles (Araripemys) swimming downward in mid-stroke. Background: A massive, non-threatening filter-feeding marine vertebrate cruising peacefully in the upper sunlit open sea. Foreground: Schools of shimmering forage fish parting around pristine calcareous seabed nodules.",
+    "lighting": "SUNNY_EXPOSED_CINEMATIC. Intense, high-key midday sun filtering down through turquoise waters, creating beautiful, dancing refractive water ripples across the ocean floor plane and casting powerful golden rim-lighting on every marine creature silhouette to separate them from the deep sea depth.",
+    "texture_standard": "High-end 3D character groom. Satiny-smooth skin, soft leathery flippers, and polished, high-gloss turtle shells. Zero grit, zero rough scales, zero scary predatory features, and completely rounded, friendly anatomy.",
+    "color_palette": {
+      "mosasaurs": "Saturated oceanic cyan and deep teal with decorative, cream-colored 'painted' belly patterns.",
+      "plesiosaurs": "Vibrant sunset-orange with soft white underbellies and deep purple counter-shading.",
+      "sea_turtles": "Polished olive-green shells with bright ivory edges and friendly glowing amber eyes.",
+      "background_elements": "Pure White and Golden Sand hues highlighting the pristine Tethys coastal margin aesthetics."
+    },
+    "environment": "Shallow, clear epicontinental seaway with floating strands of ancestral seagrass (Thalassotaenia) and drifting silver air bubbles. The seafloor consists of high-albedo chalky white sand mixed with large, smooth limestone nodules.",
+    "negative_prompt": "photorealistic, grainy, lumpy skin, scales, grit, scary, horror, blood, open mouths, aggressive predatory behavior, sharp teeth, 90s CGI, plastic toy, grey water, muddy, dark abyssal sea, land dinosaurs, humans"
+  }
+}

@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_028",
+    "species": "Nyctosaurus gracilis",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "NIOBRARA_CHALK",
+    "matrix_material": "bentonite",
+    "character_assigned": "dino_bones_preparator_4",
+    "pose": "Exposing an immense, hyper-elongated antler-like cranial crest stretching across a smoky grey slab."
+  }

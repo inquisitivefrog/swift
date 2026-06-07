@@ -1,0 +1,27 @@
+{
+  "id": "poseidon_v1_STYLE_RESET",
+  "scene_name": "The Golden Poseidon Horizon",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "tech_ref": "DEFAULT_SQUARE",
+  "period": "LATE_JURASSIC",
+  "pose_constraints": {
+    "composition": "Layered cinematic depth. Foreground: Sleek Ichthyosaurs (Stenopterygius, Eurhinosaurus) in full lateral profiles, showcasing a dynamic, aerodynamic 'stealth' swimming structure. Midground: A gentle, large-eyed marine reptile (Temnodontosaurus) floating calmly in a three-quarter view. Background: A majestic cluster of long-necked Plesiosaurs stretching vertically toward the shimmering ocean surface overhead.",
+    "ichthyosaur_logic": "Streamlined dolphin-like silhouettes with stylized, rounded fins—no aggressive thrashing poses or chunky, lumpy skin profiles.",
+    "plesiosaur_logic": "Vertical orientation for their long, elegant necks, making their heads the highest focal peak against the ambient light filtering from the surface."
+  },
+  "character_details": {
+    "texture": "Ultra-clean, satin-finish skin with smooth light falloff, mimicking a high-budget 3D animated film render. Surface finishes are tactile and soft with gentle specular highlights from the water's surface. ZERO rough scales, ZERO gritty textures.",
+    "expression": "Intelligent, curious, and highly dignified. Big, soulful, expressive eyes with warm golden irises for all creatures. Jaws are kept closed or set in a signature friendly smirk, ensuring zero scary teeth are exposed.",
+    "colors": {
+      "ichthyosaurs": "Palettes of deep indigo-blue counter-shaded against soft creams and pastel teals.",
+      "plesiosaurs": "Emerald green bodies with vibrant, 'painted' sunrise-orange flipper bands.",
+      "large_marine_reptiles": "Deep charcoal-grey skin accented by a striking crimson crest pattern traveling down the spine."
+    }
+  },
+  "environmental_details": {
+    "lighting": "Extreme underwater 'Magic Hour' lighting. Diffused 'cloudy' god-rays create a high-contrast spotlight from the surface. A powerful, warm golden rim-light must trace every marine creature to separate their bodies perfectly from the dark slate-blue water column.",
+    "atmosphere": "Vibrant and highly saturated. The pelagic shelf environment features floating crinoid rafts attached to stylized driftwood and a scattering of beautifully detailed silver ammonite shells floating in the mid-water currents.",
+    "flora": "Floating clusters of sargassum-like algae and glowing microscopic phytoplankton blooms that add a magical, painterly feel to the water volume."
+  },
+  "negative_prompt": "photorealistic, land dinosaurs, humans, scuba divers, hyper-detailed skin, scales, bumps, grit, dirt, dull colors, grey skies, scary, horror, 1990s CGI, plastic toy, museum replica, sharp teeth, blood, attacking, property destruction"
+}

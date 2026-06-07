@@ -1,0 +1,8 @@
+{
+    "id": "ui_egg_proganochelys",
+    "morphology": "testudines_primitive",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D render of a single Proganochelys egg next to a standard plum. Shape: nearly spherical but slightly elongated, small-sized. Texture: hard, rigid, calcified shell with a rough, chalky texture and pale ivory color. Background: clean, empty light-grey studio background. A single small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting.",
+    "visual_logic": "Highlights the primitive, hard calcified shell of the earliest land-nesting turtles, setting it apart from soft marine turtle eggs.",
+    "style_notes": "Only one scale bar."
+  }

@@ -1,0 +1,8 @@
+{
+    "id": "ui_egg_mesoleptos",
+    "morphology": "aigialosaur_slender",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D render of a single Mesoleptos egg next to a standard strawberry. Shape: slender, sausage-like elongated oval. Texture: soft, thin, papery white skin that shows slight surface wrinkling. Background: clean, empty light-grey studio background. A single small scale bar at the bottom. Soft lighting to accentuate wrinkles.",
+    "visual_logic": "Shows the small, soft, wrinkled papery egg structure characteristic of early pythonomorph lizards.",
+    "style_notes": "Only one scale bar."
+  }

@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_016",
+    "species": "Kunpengopterus sinensis",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "TIAOJISHAN",
+    "matrix_material": "volcanic tuff",
+    "character_assigned": "dino_bones_preparator_4",
+    "pose": "Isolating an intact fossilized pterosaur egg found positioned directly beneath a well-preserved pelvis."
+  }

@@ -1,0 +1,6 @@
+{
+  "id": "ui_birth_halisaurus_silhouette",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. An underwater scene capturing a marine reptile birth puzzle. The large adult mother mosasaur swimming horizontally across the center is rendered entirely as a sharp, dark teal-blue silhouette, obscuring her skin details but clearly showing a sleek, streamlined lizard-like body shape. In vibrant contrast, a tiny, fully detailed, three-dimensional newborn baby Halisaurus made of smooth light-green clay—with oversized soulful eyes and miniature flippers—is exiting tail-first from the shadow, surrounded by a halo of soft bubbles. SETTING: Late Cretaceous open marine seaway. LIGHTING: Deep-water cinematic godrays fracturing through the ocean surface from directly behind the mother, casting her body into a stark silhouette while highlighting the colorful baby. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+  "visual_logic": "Uses a high-contrast dark silhouette for the mother to hide obvious identification, forcing the player to use the detailed features of the colorful newborn baby and the mother's silhouette outline as the clues."
+}

@@ -1,6 +1,10 @@
 {
-    "id": "ui_tooth_ridged_leaf_stegosaurus",
-    "morphology": "Small Ridged Leaf",
-    "prompt": "High-fidelity 3D render of a Stegosaurus tooth. Shape: flat and wide, resembling a broad arrowhead or a small leaf. Texture: distinct vertical ridges (fluting) running from the base to the serrated top edge. Background: neutral soft-grey. Includes a checkered scale bar. Lighting emphasizes the depth of the ridges.",
-    "visual_logic": "Differentiates 'leaf-shaped' from 'peg-shaped' for herbivore matching."
-  },
+  "id": "ui_tooth_ridged_leaf_stegosaurus",
+  "morphology": "Small Ridged Leaf",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Differentiates 'leaf-shaped' from 'peg-shaped' for herbivore matching.",
+  "prompt": "High-fidelity 3D asset of a single Stegosaurus tooth, rendered in a 3D animated feature film aesthetic with soft, stylized, and slightly rounded edges. The tooth morphology is flat and wide, closely resembling a broad arrowhead or a small leaf. It features distinct vertical fluting ridges running cleanly from the base to the finely serrated top edge, showcasing high-quality tactile textures and subtle specular highlights. The asset is perfectly centered in a 1:1 square composition, carefully scaled to sit within the central power-zone, ensuring a strict 25% negative space safety margin on all four sides to prevent the edges from being cut off. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows to give the specimen a physical weight and grounding. A small, clean, checkered black-and-white scientific scale bar is integrated at the bottom within the safety margin. Illuminated by soft studio lighting with ambient occlusion to sharply emphasize the depth, volume, and texture of the vertical ridges."
+}

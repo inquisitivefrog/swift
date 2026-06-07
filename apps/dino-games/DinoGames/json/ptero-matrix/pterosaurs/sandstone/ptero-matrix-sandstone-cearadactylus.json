@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_008",
+    "species": "Cearadactylus atrox",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "matrix_material": "sandstone",
+    "character_assigned": "dino_bones_paleontologist_2",
+    "pose": "Measuring the expanded, spoon-shaped snout tip of a three-dimensional prepped rostrum."
+  }

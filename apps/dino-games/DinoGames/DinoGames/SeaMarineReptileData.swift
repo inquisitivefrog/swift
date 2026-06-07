@@ -96,6 +96,76 @@ enum SeaMarineReptileData {
         "marine-\(marineCladeRawValue(for: creature))-"
     }
 
+    /// Species slug in `marine-matrix-{material}-{slug}` from `marine-{clade}-{species}` image names.
+    nonisolated static func matrixFossilSlug(for creature: Dinosaur) -> String? {
+        guard let name = creature.imageName else { return nil }
+        let parts = name.split(separator: "-", omittingEmptySubsequences: true)
+        guard parts.count >= 3, parts[0] == "marine" else { return nil }
+        let slug = parts.dropFirst(2).joined(separator: "-")
+        return slug.isEmpty ? nil : slug
+    }
+
+    /// Diet option labels for Marine Diets! (five right-column choices every round).
+    static let marineDietTypes = ["Herbivore", "Piscivore", "Apex Predator", "Durophage", "Teuthivore"]
+
+    /// Diet per marine reptile for Marine Diets! (built from `allMarineReptiles` at first use).
+    static let marineReptileDietById: [Int: String] = {
+        Dictionary(uniqueKeysWithValues: allMarineReptiles.map { ($0.id, diet(for: $0)) })
+    }()
+
+    /// Asset/audio slug for a diet label (e.g. Apex Predator → apex-predator).
+    static func dietAssetSlug(for dietType: String) -> String {
+        switch dietType {
+        case "Apex Predator": return "apex-predator"
+        case "Durophage": return "durophage"
+        case "Herbivore": return "herbivore"
+        case "Piscivore": return "piscivore"
+        case "Teuthivore": return "teuthivore"
+        default:
+            return dietType.lowercased().replacingOccurrences(of: " ", with: "-")
+        }
+    }
+
+    /// Spoken diet name under `Audio/Diets/diet-{slug}.m4a` (shared folder; TTS fallback when missing).
+    static func dietAudioKey(for dietType: String) -> String {
+        "diet-\(dietAssetSlug(for: dietType))"
+    }
+
+    /// Inferred diet from clade and species slug (educational defaults for the matching game).
+    static func diet(for creature: Dinosaur) -> String {
+        let slug = matrixFossilSlug(for: creature) ?? ""
+        if durophageSlugs.contains(slug) { return "Durophage" }
+        if herbivoreSlugs.contains(slug) { return "Herbivore" }
+        if teuthivoreSlugs.contains(slug) { return "Teuthivore" }
+        if apexPredatorSlugs.contains(slug) { return "Apex Predator" }
+
+        switch marineCladeRawValue(for: creature) {
+        case "testu": return "Herbivore"
+        case "teleo": return "Piscivore"
+        case "mosa", "plio", "pliop", "tylo": return "Apex Predator"
+        case "ichthyo": return "Piscivore"
+        case "plesio", "notho", "hali", "thala": return "Piscivore"
+        case "basal": return slug == "mesosaurus" ? "Herbivore" : "Piscivore"
+        default: return "Piscivore"
+        }
+    }
+
+    private static let durophageSlugs: Set<String> = [
+        "globidens", "carinodens", "placodus", "gavialimimus", "khinjaria", "pannoniasaurus",
+    ]
+    private static let herbivoreSlugs: Set<String> = [
+        "archelon", "protostega", "mesosaurus", "hupehsuchus", "attenborosaurus",
+    ]
+    private static let teuthivoreSlugs: Set<String> = [
+        "temnodontosaurus", "ophthalmosaurus", "eurhinosaurus", "platypterygius", "grendelius",
+        "stenopterygius", "mixosaurus",
+    ]
+    private static let apexPredatorSlugs: Set<String> = [
+        "mosasaurus", "tylosaurus", "hainosaurus", "liopleurodon", "kronosaurus", "pliosaurus",
+        "thalassomedon", "shastasaurus", "shonisaurus", "cymbospondylus", "clidastes",
+        "megacephalosaurus", "macrospondylus", "brachauchenius",
+    ]
+
     /// Two wrong options from different marine groups when possible (same idea as land clades / pterosaur guess groups).
     static func pickTwoDecoysDistinctMarineClades(question: Dinosaur, pool: [Dinosaur]) -> [Dinosaur] {
         let questionClade = marineCladeRawValue(for: question)
@@ -118,5 +188,115 @@ enum SeaMarineReptileData {
             fatalError("Not enough marine reptiles for decoys")
         }
         return Array(fallbackCandidates.shuffled().prefix(2))
+    }
+
+    // MARK: - Marine Ages (Jurassic / Cretaceous)
+
+    enum MesozoicSpan {
+        case jurassic
+        case cretaceous
+        case both
+    }
+
+    /// Species-level overrides for Marine Ages period sorting (image-name slug after `marine-{group}-`).
+    private static let marineAgesJurassicSlugs: Set<String> = [
+        "aigialosaurus", "dallasaurus", "proganochelys",
+        "attenborosaurus", "cryptoclidus", "hauffiosaurus", "hydrotherosaurus",
+        "microcleidus", "muraenosaurus", "plesiosaurus", "rhomaleosaurus",
+        "brachypterygius", "cymbospondylus", "ichthyosaurus", "kyhytysuka",
+        "malawania", "mixosaurus", "shastasaurus", "shonisaurus",
+        "dolichosaurus", "hupehsuchus", "judeasaurus", "mesoleptos", "mesosaurus", "tanystropheus",
+        "henodus", "nothosaurus", "placodus",
+        "dakosaurus", "metriorhynchus", "steneosaurus",
+        "brachauchenius", "kronosaurus", "liopleurodon", "megacephalosaurus", "pliosaurus",
+    ]
+
+    private static let marineAgesCretaceousSlugs: Set<String> = [
+        "aphrosaurus", "dolichorhynchops", "elasmosaurus", "mauisaurus", "polycotylus",
+        "styxosaurus", "thalassomedon", "woolungasaurus",
+        "caypullisaurus", "eurhinosaurus", "grendelius", "ophthalmosaurus",
+        "platypterygius", "stenopterygius", "temnodontosaurus",
+        "archelon", "protostega",
+        "clidastes", "gavialimimus", "globidens", "hainosaurus", "khinjaria",
+        "megapterygius", "mosasaurus", "pannoniasaurus", "plotosaurus", "prognathodon",
+        "thalassotitan", "xenodens",
+        "halisaurus", "phosphosaurus", "pluridens",
+        "platecarpus", "plioplatecarpus", "yaguarasaurus",
+        "kaikaifilu", "taniwhasaurus",
+        "enchodus", "gillicus", "xiphactinus",
+    ]
+
+    /// Jurassic vs Cretaceous for Marine Ages! (same two-period model as Dino/Ptero Ages).
+    static func mesozoicSpanForAges(creature: Dinosaur) -> MesozoicSpan? {
+        guard let slug = matrixFossilSlug(for: creature) else { return nil }
+        if marineAgesCretaceousSlugs.contains(slug) { return .cretaceous }
+        if marineAgesJurassicSlugs.contains(slug) { return .jurassic }
+        switch marineCladeRawValue(for: creature) {
+        case "mosa", "pliop", "tylo", "hali", "teleo": return .cretaceous
+        case "notho", "thala", "plio": return .jurassic
+        case "plesio", "ichthyo", "basal": return .jurassic
+        case "testu": return .cretaceous
+        default: return .jurassic
+        }
+    }
+
+    // MARK: - Racing Marine Reptiles
+
+    struct MarineRacingPoolEntry {
+        let creature: Dinosaur
+        let speed: Double
+        let icon: String
+        /// `marine-racer-*` / `marine-racing-*` base when a dedicated pack exists; nil uses catalog body image.
+        let racingAssetBase: String?
+    }
+
+    /// Featured species for Racing Marine Reptiles (speeds are educational estimates in mph).
+    private static let marineRacingFeatured: [(displayName: String, speed: Double, icon: String)] = [
+        ("Mosasaurus", 28, "🐋"),
+        ("Elasmosaurus", 12, "🦕"),
+        ("Ichthyosaurus", 35, "🐬"),
+        ("Plesiosaurus", 14, "🦕"),
+        ("Kronosaurus", 22, "🦈"),
+        ("Liopleurodon", 18, "🐊"),
+    ]
+
+    /// Builds `marine-racer-{group}-{slug}` / `marine-racing-{group}-{slug}` from catalog body keys.
+    static func marineRacingAssetBase(fromCatalogImageName imageName: String) -> String? {
+        let parts = imageName.split(separator: "-").map(String.init)
+        guard parts.count >= 3, parts[0].lowercased() == "marine" else { return nil }
+        let group = parts[1].lowercased()
+        let tail = parts.dropFirst(2).joined(separator: "-").lowercased()
+        guard !group.isEmpty, !tail.isEmpty else { return nil }
+        let candidates = [
+            "marine-racer-\(group)-\(tail)",
+            "marine-racing-\(group)-\(tail)",
+        ]
+        let known = ImageAssetNames.knownAssets
+        return candidates.first { base in
+            known.contains(base + "-ready") || known.contains(base + "-run") || known.contains(base)
+        }
+    }
+
+    /// Pool for Racing Marine Reptiles: featured species that exist in `allMarineReptiles` with bundled body art.
+    static func marineRacersForRacing() -> [MarineRacingPoolEntry] {
+        let byDisplayName = Dictionary(
+            uniqueKeysWithValues: allMarineReptiles.map { (displayName(from: $0.imageName ?? ""), $0) }
+        )
+        var entries: [MarineRacingPoolEntry] = []
+        for spec in marineRacingFeatured {
+            guard let creature = byDisplayName[spec.displayName],
+                  let imageName = creature.imageName,
+                  ImageAssetCache.imageExists(named: imageName) else { continue }
+            let base = marineRacingAssetBase(fromCatalogImageName: imageName)
+            entries.append(
+                MarineRacingPoolEntry(
+                    creature: creature,
+                    speed: spec.speed,
+                    icon: spec.icon,
+                    racingAssetBase: base
+                )
+            )
+        }
+        return entries
     }
 }

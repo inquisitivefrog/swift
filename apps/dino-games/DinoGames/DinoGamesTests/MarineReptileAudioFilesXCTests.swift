@@ -55,10 +55,31 @@ final class MarineReptileAudioFilesXCTests: XCTestCase {
             "game-marine-reptile-puzzle",
             "game-marine-reptile-puzzle-gameplay-directions",
             "game-marine-reptile-puzzle-guess-the-marine-reptile-in-clade",
+            "game-racing-marine-reptiles",
+            "game-which-marine-reptile-is-longer",
+            "game-marine-eggs",
+            "game-marine-eggs-gameplay-directions",
+            "game-marine-ages",
+            "game-marine-ages-jurassic-marine-reptiles",
+            "game-marine-ages-cretaceous-marine-reptiles",
+            "game-marine-ages-find-in-jurassic",
+            "game-marine-ages-find-in-cretaceous",
+            "game-marine-ages-tap-the-period-to-hear-description",
         ]
 
         let missing = expectedStems.subtracting(availableStems).sorted()
         XCTAssertTrue(missing.isEmpty, "Missing marine gameplay audio files in Games/: \(missing)")
+    }
+
+    func testMarineReptileLengthComparisonFeedbackAudioExists() throws {
+        let directory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Feedback")
+        let availableStems = try TestBundleHelpers.audioStems(in: directory)
+        let expectedStems: Set<String> = [
+            "is-longer",
+            "about-the-same-length",
+        ]
+        let missing = expectedStems.subtracting(availableStems).sorted()
+        XCTAssertTrue(missing.isEmpty, "Missing marine length comparison feedback audio: \(missing)")
     }
 
     func testMarineCladeAudioFilesExist() throws {

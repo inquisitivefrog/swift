@@ -1,0 +1,27 @@
+{
+  "id": "marine_ages_victory_FINAL",
+  "art_style": "STYLE_ANIMATED_FEATURE_V3",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "composition": {
+    "layout": "The two underwater stone portals are now glowing with a celebratory, magical golden aura against the deep blue sea background.",
+    "left_marine_creature": "A bright green, friendly Plesiosaur on the left, wearing a comically small party hat balanced perfectly on its head, looking exceptionally proud.",
+    "right_marine_creature": "A soft-featured, friendly cartoonish Taniwhasaurus on the right, striking a triumphant 'ta-da!' pose with open flippers (flippers up, non-threatening).",
+    "celebration": "Vibrant, colorful prehistoric sea-grass blades and bright orange flower petals floating through the water currents like confetti. Radiant sun-flares stream down from the ocean surface."
+  },
+  "typography": {
+    "branding": {
+      "text_content": "Marine Ages!",
+      "style": "Small 3D cyan letters in the top left corner for continuity."
+    },
+    "victory_text": {
+      "text_content": "Player Wins!",
+      "style": "Large, shimmering 3D gold and orange letters. Extremely high-gloss, 'Winner' medal style with a slight metallic reflection.",
+      "placement": "Center of the frame, slightly tilted for a dynamic, fun look."
+    }
+  },
+  "technical_parameters": {
+    "mood": "Extreme joy, warmth, and educational accomplishment. The entire aquatic scene is filled with a warm, glowing celebratory light.",
+    "character_finish": "High-fidelity 3D animated forms with appealing, rounded 'toy-like' edges. Any aquatic reptiles feature completely rounded, dull teeth to ensure they look 100% friendly and cartoonish.",
+    "negative_prompt": "Land dinosaurs, sharp teeth, hunting, attacking, blood, scary, dark abyssal water, property destruction, realism, Triassic, humans."
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "image_manifest": {
+    "filename": "marine_reptile_race_finish_001.png",
+    "description": "An asset manifest for a stylized 3D rendered scene depicting the climax of an aquatic race where three marine reptiles approach a floating finish line ribbon at high speed, with a clear winner established.",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1",
+    "assets": [
+      {
+        "id": "A1",
+        "name": "Header Text",
+        "description": "Blue and yellow, stylized, irregular 3D block text reading 'RACING MARINE REPTILES!' located at the top of the image.",
+        "type": "text_element"
+      },
+      {
+        "id": "A2",
+        "name": "Victory Text",
+        "description": "Bold, celebratory 3D block text reading 'PLAYER WINS!' located at the bottom of the image, styled to match the header.",
+        "type": "text_element"
+      },
+      {
+        "id": "A3",
+        "name": "Winning Marine Reptile (Mosasaurus)",
+        "description": "The large Mosasaurus surging forward in a high-speed swimming pose, tail powerfully flexing, its snout breaking through a red checkered finish ribbon pulled across the surface of the water.",
+        "type": "character"
+      },
+      {
+        "id": "A4",
+        "name": "Trailing Racer 1 (Elasmosaurus)",
+        "description": "The long-necked Elasmosaurus paddling vigorously in mid-swim just behind the leader, its head and neck extended far forward with an intensely focused, competitive expression.",
+        "type": "character"
+      },
+      {
+        "id": "A5",
+        "name": "Trailing Racer 2 (Ichthyosaurus)",
+        "description": "The sleek Ichthyosaurus breaching slightly out of a wake on the opposite side of the leader, trailing closely behind and putting maximum effort into a final sprint.",
+        "type": "character"
+      },
+      {
+        "id": "A6",
+        "name": "Floating Finish Line Ribbon",
+        "description": "A vibrant red checkered finish line ribbon stretched horizontally across the water's surface, anchored tightly between two large, floating neon orange buoys that are actively bobbing in the waves.",
+        "type": "item"
+      },
+      {
+        "id": "A7",
+        "name": "Epicontinental Seaway Marine Environment",
+        "description": "Set in the sunlit turquoise-to-cobalt waters of the EPICONTINENTAL_SEAWAY formation, showing churning sea foam, aggressive water displacement wakes behind the racing animals, and clear overhead sunlight glinting off the water ripples.",
+        "type": "environment"
+      },
+      {
+        "id": "A8",
+        "name": "Atmospheric Perspective",
+        "description": "Dynamic white sea spray and trailing underwater bubble streams behind the marine reptiles to heavily emphasize forward speed, with a slight hazy, cinematic heat glow along the ocean horizon.",
+        "type": "environment"
+      },
+      {
+        "id": "A9",
+        "name": "Bottom Right Watermark",
+        "description": "A small, translucent lens-flare type logo/watermark located in the bottom-right corner.",
+        "type": "watermark"
+      }
+    ]
+  }
+}

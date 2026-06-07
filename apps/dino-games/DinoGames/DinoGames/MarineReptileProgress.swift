@@ -27,7 +27,8 @@ final class MarineReptileProgress: ObservableObject {
     }
 
     static func canonicalId(for configId: String) -> String {
-        configId
+        if configId.hasPrefix("racing-marine-reptiles") { return "racing-marine-reptiles" }
+        return configId
     }
 
     @Published private(set) var playedCanonicalGameIds: Set<String>

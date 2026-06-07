@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "marine-eggs-dakosaurus-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "marine-eggs-dakosaurus-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "marine-eggs-dakosaurus-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

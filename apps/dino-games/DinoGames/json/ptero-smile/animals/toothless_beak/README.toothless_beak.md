@@ -1,0 +1,10 @@
+ptero-azhd-arambourgiania
+ptero-azhd-cryodrakon
+ptero-azhd-hatzegopteryx
+ptero-azhd-quetzalcoatlus
+ptero-azhd-thanatosdrakon
+ptero-azhd-zhejiangopterus
+ptero-thal-bangiadraco
+ptero-thal-kariridraco
+ptero-thal-thalassodromeus
+ptero-thal-tupuxuara

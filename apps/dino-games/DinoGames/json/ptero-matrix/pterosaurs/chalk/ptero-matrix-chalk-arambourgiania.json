@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_018",
+    "species": "Arambourgiania philadelphiae",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "MUWAQQAR_CHALK",
+    "matrix_material": "chalk",
+    "character_assigned": "dino_bones_preparator_6",
+    "pose": "Stabilizing an incredibly elongated, paper-thin cervical vertebra embedded in a pale chalk block."
+  }

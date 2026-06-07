@@ -1,0 +1,27 @@
+{
+    "id": "tahora_bull_kelp_lifecycle_closeup_001",
+    "species": "Bull Kelp (Durvillaea-type)",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "TAHORA",
+    "environment_details": {
+      "habitat": "COASTAL_LAGOON_SYSTEM",
+      "flora": [
+        "Kelp Blade Cross-section (thick, honeycombed internal cellular air structure that gives it buoyancy)",
+        "Conceptacle Concept (microscopic reproductive pits on the fertile frond surface releasing motile biflagellate zoospores)",
+        "Young Kelp Sporophyte (slender, small rubbery blade beginning to split, anchored by a tiny button-shaped holdfast)",
+        "Holdfast Detail (root-like, highly textured, thick solid disc firmly gripping a dark grey glaucconitic rock surface)"
+      ],
+      "ground_palette": [
+        "Dark greenish-grey",
+        "Sandy Ocher",
+        "Muted Glauconite Green"
+      ],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; emphasis on distinct tactile textures—from slick, wet, rubbery outer cuticles to the porous, dry interior cells; optimized for educational quadrant identification."
+    },
+    "visual_logic": {
+      "composition": "A clean quadrant-tiled layout separating four analytical biological components: Top-Left: Close-up of a cut blade showcasing its internal cellular honeycomb buoyancy structure; Top-Right: Macro view of the textured frond surface showing reproductive conceptacle pores releasing tiny spore dots; Bottom-Left: A single, tiny young sporophyte showing early growth development; Bottom-Right: A high-detail view of the solid, bulbous holdfast anchoring system.",
+      "ground": "A clean, wet marine-studio surface composed of a smooth dark grey-green rock background to provide high contrast for the golden-brown structures.",
+      "lighting": "Clear, bright, even diffused daylight with minimal harsh shadows, carefully balanced to capture the wet, glossy, high-contrast sheen of the marine plant tissue."
+    }
+  }

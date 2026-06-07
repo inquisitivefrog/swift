@@ -1,0 +1,7 @@
+  {
+    "id": "ui_nest_proganochelys_scrape",
+    "morphology": "testudines_primitive",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up view of a Proganochelys nest hole. A small cluster of four hard, rigid white eggs is buried in a mixture of coarse river gravel, loose red clay, and dry moss. The hole is roughly dug at the base of a primitive cycad tree stump. SETTING: Late Triassic inland riparian environment. LIGHTING: Dappled forest sunlight filtering through branches onto the soil. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+    "visual_logic": "Combines a rigid, hard shell egg (Clue 1) with a coarse gravel and clay riverbank nest hole (Clue 2)."
+  }

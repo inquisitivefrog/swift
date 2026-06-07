@@ -1,1 +1,11 @@
-High-fidelity 3D render of a single Triceratops parrot beak focused on just the beak. Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_beak_triceratops_parrot",
+  "species": "Triceratops horridus",
+  "morphology": "rostral_predentary_keratinous_parrot_beak",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Isolates the combined rostral and predentary beak elements to showcase the sharply hooked, parrot-like clipping adaptation characteristic of advanced ceratopsians.",
+  "prompt": "High-fidelity 3D asset render of a single fossilized front beak assembly from a Triceratops, focusing exclusively on the beak mechanism in a 3D animated feature film aesthetic. The specimen showcases the powerful, deeply curved, and sharply hooked 'parrot beak' morphology, consisting of the interlocking upper rostral bone and lower predentary bone. The texture is a heavily mineralized, weathered bone-tan and dark iron-grey with a rugged, matte, and slightly porous finish that captures the deep grooving where the original keratinous sheath attached. The beak is isolated, oriented vertically, and perfectly centered on a 1:1 square canvas. Soft studio lighting with precise ambient occlusion accentuates the heavy shearing edges and structural density. The background is a seamless, solid light-grey studio plane extending completely to the canvas margins with no internal borders or containment boxes. The asset is scaled to preserve a strict 25% empty background framing buffer on all four sides to eliminate UI clipping. Grounded flat with realistic contact shadows. A clean checkered black-and-white scientific scale bar sits centered at the bottom."
+}

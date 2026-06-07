@@ -1,1 +1,11 @@
-High-fidelity 3D render of a single Therizinosaurus leaf slicer tooth. Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_tooth_therizinosaurus_leaf_slicer",
+  "species": "Therizinosaurus cheloniformis",
+  "morphology": "robust_leaf_shaped_herbivorous_slicer",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Isolates a single leaf-shaped tooth to showcase the highly unique herbivorous adaptation of this specialized coelurosaurian theropod, contrasting with predatory theropod teeth.",
+  "prompt": "High-fidelity 3D asset render of a single fossilized leaf slicer tooth from a Therizinosaurus, executed in a 3D animated feature film aesthetic with soft, stylized contours. The specimen exhibits a prominent lanceolate or 'leaf-shaped' crown morphology: it is broad, somewhat flattened, and possesses large, coarse, distinct serrations along the cutting margins designed for shearing plant material. The fossil coloration features a dark, mineralized charcoal and dark brown enamel patina with a subtle matte sheen. The single tooth is isolated and oriented vertically, centered precisely on a 1:1 square canvas. The background is a seamless, solid light-grey studio plane that fills the entire canvas without any internal decorative lines, borders, or boxes. The asset is scaled down to maintain a strict 25% empty background margin on all four sides to completely protect against UI clipping. Grounded flat on the floor plane with realistic, soft contact shadows. A clean checkered black-and-white scientific scale bar sits centered at the bottom."
+}

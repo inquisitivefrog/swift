@@ -1,0 +1,18 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{ 
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": “STYLE_CLAY_MASTER",
+     "tech_ref": "DEFAULT_SQUARE",
+    },
+    "layer_2_setting": "blank light blue canvas",
+    "layer_3_action": {
+      "subject": "Hungry looking Archelon (giant prehistoric sea turtle) head with an open beak",
+      "features": ["massive hooked toothless beak", "leathery skin textures", "large soulful eyes", "friendly expressive face"],
+      "action": "The Archelon head is surrounded by a translucent pink prehistoric jellyfish, a golden-scaled fish, a coiled striped ammonite shell, a cluster of bright green sea lettuce fronds, and a slippery purple squid, each at geometric positions that form an invisible five-pointed star around the turtle head with a caption in bright red mixed case letters that reads Marine Diets!"
+    }
+  } 
+}

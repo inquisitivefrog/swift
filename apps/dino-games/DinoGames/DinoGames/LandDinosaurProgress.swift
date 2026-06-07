@@ -156,9 +156,3 @@ final class LandDinosaurProgress: ObservableObject {
         return prereqs.allSatisfy { playedCanonicalGameIds.contains($0) }
     }
 }
-
-extension GameLevel {
-    fileprivate var zeroOrderedIndex: Int {
-        GameLevel.allCases.firstIndex(of: self) ?? 0
-    }
-}

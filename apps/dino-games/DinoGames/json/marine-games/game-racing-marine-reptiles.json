@@ -1,0 +1,66 @@
+{
+  "image_manifest": {
+    "filename": "marine_reptile_race_start_001.png",
+    "description": "An asset manifest for a stylized 3D rendered scene of three unique racing marine reptiles lined up in the water at a floating buoy starting line with a human referee.",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1",
+    "assets": [
+      {
+        "id": "A1",
+        "name": "Header Text",
+        "description": "Blue and yellow, stylized, irregular 3D block text reading 'RACING MARINE REPTILES!' located at the top of the image.",
+        "type": "text_element"
+      },
+      {
+        "id": "A2",
+        "name": "Mosasaurus Racer Character",
+        "description": "A powerful Mosasaurus treading water behind the ribbon line on the left, its large head bobbing out of the sea with expressive, soulful eyes and a determined expression, showing a glimpse of its patterned, dark leathery skin just below the surface.",
+        "type": "character"
+      },
+      {
+        "id": "A3",
+        "name": "Elasmosaurus Racer Character",
+        "description": "A long-necked Plesiosaur (Elasmosaurus) positioned in the center, its head raised high out of the water on its curved neck, looking down over the starting ribbon with intense, playful competitive focus.",
+        "type": "character"
+      },
+      {
+        "id": "A4",
+        "name": "Ichthyosaurus Racer Character",
+        "description": "A sleek, dolphin-like Ichthyosaurus on the right, its snout breaking through the water's surface as it rapidly bobs in place, ready to instantly burst forward into a swim.",
+        "type": "character"
+      },
+      {
+        "id": "A5",
+        "name": "Human Referee Character",
+        "description": "dino_bones_paleontologist_4 (an adult male Latino grad student with short brown hair, wearing signature thin-rimmed BLACK aviator lens glasses) acting as the race official. He is sitting on a small floating platform on the far right, wearing a black-and-white vertical striped referee jersey with a silver whistle hanging from a necklace.",
+        "type": "character"
+      },
+      {
+        "id": "A6",
+        "name": "Racing Flag Item",
+        "description": "A bright green racing flag attached to a short pole, held high and being waved actively through the air by dino_bones_paleontologist_4 to signify the start of the race.",
+        "type": "item"
+      },
+      {
+        "id": "A7",
+        "name": "Floating Buoy Starting Line Environment",
+        "description": "A vibrant red starting line ribbon pulled taut over the surface of the water, anchored securely between two large, round, floating orange-and-white aquatic buoys.",
+        "type": "environment"
+      },
+      {
+        "id": "A8",
+        "name": "Epicontinental Seaway Marine Environment",
+        "description": "Set in the shallow, sunlit turquoise-to-cobalt waters of the EPICONTINENTAL_SEAWAY formation, featuring high surface visibility, gentle water ripples catching refractive light, white sea spray, and drifting bubbles around the racers beneath an open, vibrant-blue sky.",
+        "type": "environment"
+      },
+      {
+        "id": "A9",
+        "name": "Bottom Right Watermark",
+        "description": "A small, translucent lens-flare type logo/watermark located in the bottom-right corner.",
+        "type": "watermark"
+      }
+    ]
+  }
+}

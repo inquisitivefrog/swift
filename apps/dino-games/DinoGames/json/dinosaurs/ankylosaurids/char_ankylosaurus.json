@@ -1,58 +1,23 @@
 {
-  "style_id": "STYLE_CLAY_MASTER",
-  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
-}
-{
-  "flora_library": {
-    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
-    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
-    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
-    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
-    "TIAOJISHAN_ADDITIONS": ["Hardy Ferns", "Mosses"],
-    "CEDAR_MOUNTAIN_NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
-    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
-    "LANCE_HELL_CREEK_ADDITIONS": ["Palms", "Platanites", "Viburnum"],
-    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"]
-  }
-}
-{
-  "fauna_library": {
-    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
-    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
-    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
-  }
-}
-{
-  "habitat_id": "SUBTROPICAL_COASTAL_PLAINS",
-  "physics": { "altitude": "low", "water": "high" },
-  "visuals": {
-    "ground": "Dark, rich organic mud",
-    "water": "Steamy lagoons and slow estuaries",
-  }
-}
-{
-  "formation_id": "HELL_CREEK",
-  "base_habitat": "SUBTROPICAL_COASTAL_PLAINS",
-  "period": "LATE_CRETACEOUS",
-  "strata_specifics": {
-    "ground_texture": "Fine-grained fluvial sandstone and mudstone",
-    "color_palette": ["Yellowish-grey", "Dull green", "Ocher"]
-  },
-  "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
-  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
-}
-{
-  "app_image_config": {
-    "layer_1_style": {
-      "style_id": "STYLE_CLAY_MASTER"
-    },
-    "layer_2_setting": {
-      “formation_id": “HELL_CREEK"
-    },
-    "layer_3_action": {
-      "subject": "Juvenile Ankylosaurus",
-      "features": [“tail club", “body armor", "friendly expressive face"],
-      "action": “munching on a fern"
-    }
-  }
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {
+      "formation_id": "HELL_CREEK",
+      "base_habitat": "COASTAL_LOWLANDS",
+      "period": "LATE_CRETACEOUS",
+      "strata_specifics": {
+        "ground_texture": "Fine-grained fluvial sandstone and mudstone",
+        "color_palette": ["Yellowish-grey", "Dull green", "Ocher"]
+      },
+      "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+      "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+    },
+    "layer_3_action": {
+      "subject": "Juvenile Ankylosaurus",
+      "features": ["tail club", "body armor", "friendly expressive face"],
+      "action": "munching on a fern"
+    }
+  }
 }

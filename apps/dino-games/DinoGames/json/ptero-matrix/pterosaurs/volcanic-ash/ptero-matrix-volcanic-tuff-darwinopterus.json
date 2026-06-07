@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_013",
+    "species": "Darwinopterus modularis",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "TIAOJISHAN",
+    "matrix_material": "volcanic tuff",
+    "character_assigned": "dino_bones_preparator_1",
+    "pose": "Exposing both the advanced pterodactyloid skull and primitive long tail on a single charcoal tuff block."
+  }

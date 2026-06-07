@@ -1,0 +1,8 @@
+{
+    "id": "ui_egg_tanystropheus",
+    "morphology": "archosauromorph_basal",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D render of a single Tanystropheus egg next to a standard pear. Shape: asymmetrical oval, slightly tapered at one end. Texture: leathery but firm, dull matte finish, pale ocher-brown with fine vertical stress streaks. Background: clean light-grey studio background. Scale bar at bottom.",
+    "visual_logic": "Depicts an asymmetrical archosauromorph egg with a firm leathery shell and distinctive ocher coloration.",
+    "style_notes": "Only one scale bar."
+  }

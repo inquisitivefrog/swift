@@ -1,0 +1,67 @@
+{
+  "asset_id": "matrix_layout_claystone_multi_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Rock_Sample_Match_Card"
+  },
+  "canvas_constraints": {
+    "aspect_ratio": "1:1 (Square Layout)",
+    "target_resolution": "1024x1024"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Three-quarter angled perspective",
+      "angle": "Angled close shot tracking from the three foreground blocks back to a low-horizon open ocean horizon line"
+    },
+    "foreground_element": {
+      "type": "Multiple Material Blocks Array",
+      "rock_type": "Claystone Variant Set",
+      "placement": "Three blocks arranged neatly on a flat, dense silicate clay bed near an open marine shelf margin",
+      "blocks": [
+        {
+          "block_id": "claystone_color_x",
+          "geometry": "3D stylized rectangular block with blocky, plastic fractures and smooth, dense surface planes",
+          "color": "Greenish-grey",
+          "texture": "Fine-grained, unlaminated silicate mud matrix with a dull matte finish"
+        },
+        {
+          "block_id": "claystone_color_y",
+          "geometry": "3D stylized rectangular block with smooth, slightly rounded structural angles",
+          "color": "Olive",
+          "texture": "Silty claystone interface showing microscopic trace fossil mottling"
+        },
+        {
+          "block_id": "claystone_color_z",
+          "geometry": "3D stylized rectangular block with clean planar fractures",
+          "color": "Dark Grey",
+          "texture": "Organic-rich, dense claystone layer containing compacted micro-fossil debris"
+        }
+      ]
+    },
+    "background_environment": {
+      "habitat_archetype": "Open Ocean Pelagic / Marine Shelf",
+      "geological_mapping": [
+        {
+          "zone_name": "Oxford Silicate Clay Mass",
+          "color_profile": "Greenish-grey (Matches Block Color X)",
+          "description": "The dominant, thick marine clay sequence forming the massive underlying layer of the seafloor profile."
+        },
+        {
+          "zone_name": "Weathered Mudstone Horizon",
+          "color_profile": "Olive (Matches Block Color Y)",
+          "description": "The transitional sediment zone where oxygenated waters slightly alter the surface clay layers."
+        },
+        {
+          "zone_name": "Basal Organic Mudstone Seam",
+          "color_profile": "Dark Grey (Matches Block Color Z)",
+          "description": "A high-density, unoxygenated bottom layer packed securely with compacted ammonite and marine reptile bone debris."
+        }
+      ],
+      "lighting": "Diffused cinematic midday sunlight passing through water-vapor filled skies, casting soft contact shadows beneath the heavy claystone blocks to emphasize weight."
+    }
+  }
+}

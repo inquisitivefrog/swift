@@ -545,25 +545,12 @@ struct PortraitJigsawPuzzleGameView: View {
     }
 
     private func playGoodJobAndCrowdThenDismiss() {
-        let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
-        let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
-        if let u1 = goodJobURL, let u2 = crowdURL {
-            speechManager.playTogether(url1: u1, url2: u2) {
-                self.speechManager.onAudioFinished = nil
-                self.line.notifyGameCompleted()
-                self.isPresented = false
-            }
-        } else if let u = goodJobURL ?? crowdURL {
-            speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                self.line.notifyGameCompleted()
-                self.isPresented = false
-            }
-            speechManager.playAudioFile(url: u)
-        } else {
-            line.notifyGameCompleted()
-            isPresented = false
-        }
+        StandardVictorySequence.dismissAfterVictory(
+            configId: line.catalogGameId,
+            isPresented: $isPresented,
+            speechManager: speechManager,
+            beforeDismiss: { line.notifyGameCompleted() }
+        )
     }
 
     private func advanceEndHighlight() {

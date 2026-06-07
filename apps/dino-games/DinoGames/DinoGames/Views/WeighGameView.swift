@@ -187,15 +187,16 @@ struct WeighGameView: View {
         GeometryReader { geometry in
             let safeWidth = max(geometry.size.width, 1)
             let safeHeight = max(geometry.size.height, 1)
+            if isGameOver {
+                // Full-screen victory (same as MatchingGameView) so the game title stays pinned and visible.
+                weighVictoryView
+                    .frame(width: safeWidth, height: safeHeight)
+            } else {
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(spacing: 0) {
                     Spacer()
                         .frame(height: 32)
                     
-                    // Top - Item grid or victory message (same as Match the Dinosaur: Good job! + row of dinos)
-                    if isGameOver {
-                        weighVictoryView
-                    } else {
                     // Grid: 3 columns, fixed height so all 3 rows are visible (no scroll around grid)
                     VStack(spacing: 6) {
                         VStack(spacing: 4) {
@@ -235,9 +236,7 @@ struct WeighGameView: View {
                     }
                     .frame(height: 422) // Room for game title + Round label + 3 full rows; compact so seesaw fits on screen
                     .frame(width: safeWidth)
-                }
                 
-                if !isGameOver {
                     // Expandable spacer: pushes seesaw toward bottom, ensures no collision with grid
                     Spacer()
                         .frame(minHeight: 36)
@@ -384,10 +383,10 @@ struct WeighGameView: View {
                     .frame(width: safeWidth)
                     }
                 }
-                }
             }
             .frame(minHeight: safeHeight)
             .frame(maxHeight: safeHeight)
+            }
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -783,6 +782,17 @@ struct WeighGameView: View {
         StandardVictoryLayout.recapListScrollHeight(itemCount: weighVictoryRecapItems.count)
     }
 
+    /// Marine weigh keeps title + recap visible above the success card (Name That style).
+    private var weighVictoryKeepsRecapDuringSuccess: Bool {
+        gameConfig.id == "weigh-marine-reptile"
+    }
+
+    private var weighVictorySuccessImageSide: CGFloat {
+        weighVictoryKeepsRecapDuringSuccess
+            ? 180
+            : GameCatalogImageMetrics.nameThatVictorySuccessImageSide
+    }
+
     /// Victory screen: same as Dino Diets / Match the Dinosaur — top half list (highlight + name audio), bottom half success image (centered, no wrapper), then good-job + crowd and dismiss.
     private var weighVictoryView: some View {
         VictorySplitColumnView(
@@ -790,6 +800,8 @@ struct WeighGameView: View {
             showSuccessPhase: endSequenceStep == 2,
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
+            hideGameTitleDuringSuccessPhase: !weighVictoryKeepsRecapDuringSuccess,
+            collapseRecapListDuringSuccessPhase: !weighVictoryKeepsRecapDuringSuccess,
             scrollRows: {
                 ForEach(Array(weighVictoryRecapItems.enumerated()), id: \.element.id) { index, item in
                     StandardVictoryRecapRowView(
@@ -805,6 +817,7 @@ struct WeighGameView: View {
                         ? ["game-weigh-the-marine-reptile-success", "game-weigh-the-marine-reptile"]
                         : ["game-\(gameConfig.id)-success", "game-\(gameConfig.id)"],
                     catalogGameIdForStinger: gameConfig.id,
+                    imageSide: weighVictorySuccessImageSide,
                     speechManager: speechManager,
                     onContinue: playWeighGoodJobAndCrowdThenDismiss
                 )
@@ -836,31 +849,11 @@ struct WeighGameView: View {
     }
     
     private func playWeighGoodJobAndCrowdThenDismiss() {
-        let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
-        let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
-        if let u1 = goodJobURL, let u2 = crowdURL {
-            speechManager.playTogether(url1: u1, url2: u2) {
-                self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
-                MarineReptileProgress.notifyCompletionIfMarineGame(configId: self.gameConfig.id)
-                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
-                self.isPresented = false
-            }
-        } else if let u = goodJobURL ?? crowdURL {
-            speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
-                MarineReptileProgress.notifyCompletionIfMarineGame(configId: self.gameConfig.id)
-                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
-                self.isPresented = false
-            }
-            speechManager.playAudioFile(url: u)
-        } else {
-            LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
-            MarineReptileProgress.notifyCompletionIfMarineGame(configId: gameConfig.id)
-            PterosaurProgress.notifyCompletionIfPterosaurGame(configId: gameConfig.id)
-            isPresented = false
-        }
+        StandardVictorySequence.dismissAfterVictory(
+            configId: gameConfig.id,
+            isPresented: $isPresented,
+            speechManager: speechManager
+        )
     }
     
     private func resetWeighing() {

@@ -1,0 +1,30 @@
+{
+  "id": "game_card_02_player_wins",
+  "project_name": "Marine Eggs",
+  "style_ref": "STYLE_3D_ANIMATED_FEATURE_ORGANIC_TEXTURES",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "subject": "Three different friendly prehistoric marine reptiles grouped in a natural coastal habitat, all smiling triumphantly.",
+  "composition": {
+    "foreground": {
+      "marine_reptile_1": "Protostega: Three-quarter view, proud happy smile, large paddle-like flippers, beautifully patterned leathery shell carapace, positioned prominently on a sandy shore.",
+      "marine_reptile_2": "Nothosaurus: Three-quarter view, cheerful smile, webbed feet resting on wet pebbles, sleek seal-like body contours, positioned beside Protostega near the water's edge.",
+      "marine_reptile_3": "Halisaurus: Three-quarter view, brave happy smile, long streamlined tail fin visible, looking out from the shallow surf in the background with a contented expression."
+    },
+    "background": "Open, sunny prehistoric shallow tropical lagoon beach with a deep sand-hole nest containing perfectly spherical matte-white eggs, distant coral reef crests breaking the surface, and a vibrant clear blue sky. Celebratory, light atmosphere.",
+    "grouping": "Marine reptiles are posed along the sunny tidal interface in a way that conveys happiness and success, looking out warmly at the player."
+  },
+  "typography": {
+    "caption_1": {
+      "text": "Marine Eggs!",
+      "style": "Bright coral-pink, thick 3D mixed-case block letters, positioned top-center."
+    },
+    "caption_2": {
+      "text": "Player Wins!",
+      "style": "Shiny gold, bold 3D mixed-case block letters, positioned clearly below 'Marine Eggs!', with a subtle celebratory sparkle effect. Text is slightly textured, like polished gold."
+    }
+  },
+  "visual_logic": {
+    "overall_mood": "Celebratory, rewarding, successful. Emphasizes the positive educational outcome of completing the marine reptiles matching game.",
+    "color_palette": "Bright sunny yellows, intense coral-reef turquoise and teals, warm golden beach sand, with the coral-pink and gold captions standing out sharply."
+  }
+}

@@ -22,18 +22,39 @@ private func dinoSmileToothDisplayName(_ toothType: String) -> String {
     return s.replacingOccurrences(of: "-", with: " ").capitalized
 }
 
-/// Play tooth audio for Dino Smile. Tries dino-smile-{toothType}, -v1, -v2 so Audio/Smile/dino-smile-{toothType}-v1.m4a (e.g. diamond-battery, flute-leaf) is found when base doesn't exist.
-private func playToothAudio(speechManager: SpeechManager, toothType: String, fallbackText: String, onFinished: (() -> Void)?) {
-    let baseKey = "dino-smile-\(toothType)"
-    let url = speechManager.urlForAudio(key: baseKey)
-        ?? speechManager.urlForAudio(key: "\(baseKey)-v1")
-        ?? speechManager.urlForAudio(key: "\(baseKey)-v2")
+enum SmileGameLine {
+    case land
+    case air
+}
+
+/// Play tooth/beak shape audio. Land tries dino-smile-{toothType} variants; air tries ptero-smile-tooth-{toothType}.
+private func playToothAudio(
+    speechManager: SpeechManager,
+    toothType: String,
+    line: SmileGameLine,
+    fallbackText: String,
+    chainDelay: Bool = false,
+    onFinished: (() -> Void)?
+) {
+    let candidateKeys: [String]
+    switch line {
+    case .land:
+        let baseKey = "dino-smile-\(toothType)"
+        candidateKeys = [baseKey, "\(baseKey)-v1", "\(baseKey)-v2", "dino-smile-tooth-\(toothType)"]
+    case .air:
+        candidateKeys = [
+            PteroSmileMorphology.toothAudioKey(for: toothType),
+            "ptero-smile-tooth-\(toothType)",
+            "ptero-smile-\(toothType)",
+        ]
+    }
+    let url = candidateKeys.lazy.compactMap { speechManager.urlForAudio(key: $0) }.first
     if let url {
         speechManager.onAudioFinished = onFinished
         speechManager.playAudioFile(url: url, fallbackSpeakText: fallbackText)
     } else {
         speechManager.onAudioFinished = onFinished
-        speechManager.speak(fallbackText)
+        speechManager.speak(fallbackText, chainDelay: chainDelay)
     }
 }
 
@@ -53,6 +74,30 @@ struct SmilingDinosGameConfig {
     let introAudio: String
     let gameplayDirectionsAudio: String
     let rounds: [SmilingDinosRound]
+
+    var line: SmileGameLine { id == "ptero-smile" ? .air : .land }
+
+    var successImageCandidates: [String] {
+        switch line {
+        case .land:
+            return ["game-dino-smile-success", "game-smiling-dinos-success", "game-smiling-dinos"]
+        case .air:
+            return ["game-ptero-smile-success", "game-ptero-smile"]
+        }
+    }
+
+    func toothImageName(for toothType: String) -> String {
+        switch line {
+        case .land:
+            return "dino-smile-tooth-\(toothType)"
+        case .air:
+            return PteroSmileMorphology.toothImageAssetName(for: toothType)
+        }
+    }
+
+    var pickCreatureFirstPrompt: String {
+        line == .air ? "pick-a-pterosaur-first" : "pick-a-dinosaur-first"
+    }
 }
 
 // MARK: - Main View
@@ -67,8 +112,7 @@ struct SmilingDinosGameView: View {
     @State private var selectedToothType: String?
     @State private var matchedPairs: Set<Int> = []
     @State private var failedAttempts: Set<Int> = []
-    @State private var showFeedback = false
-    @State private var feedbackMessage = ""
+    @State private var showMatchFeedback = false
     @State private var isCorrect = false
     @State private var isAudioPlaying = false
     @State private var showVictory = false
@@ -135,9 +179,9 @@ struct SmilingDinosGameView: View {
                     victoryView
                 } else {
                     mainGameView
+                        .padding()
                 }
             }
-            .padding()
             .onAppear {
                 guard currentRound == 1 else { return }
                 resetGameState()
@@ -156,7 +200,7 @@ struct SmilingDinosGameView: View {
         selectedToothType = nil
         matchedPairs.removeAll()
         failedAttempts.removeAll()
-        showFeedback = false
+        showMatchFeedback = false
         introWalkComplete = false
         introWalkStep = 0
     }
@@ -174,18 +218,18 @@ struct SmilingDinosGameView: View {
                 Text("Round \(currentRound) of \(totalRounds)")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                // Fixed-height label area: selection name, intro name, or feedback (That's right! / Try again!)
-                Text(showFeedback ? feedbackMessage : (selectedItemLabel ?? " "))
+                // Fixed-height label area: selection name or intro name
+                Text(selectedItemLabel ?? " ")
                     .font(.title3)
                     .fontWeight(.medium)
-                    .foregroundColor(showFeedback ? (isCorrect ? .green : .orange) : .primary)
+                    .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
                     .minimumScaleFactor(0.8)
                     .padding(.horizontal, 24)
                     .padding(.top, 8)
                     .frame(height: 52)
-                    .opacity(showFeedback || selectedItemLabel != nil ? 1 : 0)
+                    .opacity(selectedItemLabel != nil ? 1 : 0)
             }
 
             HStack(spacing: 20) {
@@ -194,6 +238,7 @@ struct SmilingDinosGameView: View {
                         .font(.headline)
                     ForEach((displayedDinosaurs.isEmpty ? dinosaurs : displayedDinosaurs), id: \.id) { dino in
                         SmileCard(
+                            line: gameConfig.line,
                             dinosaur: dino,
                             isSelected: selectedDinosaur?.id == dino.id,
                             isMatched: matchedPairs.contains(dino.id),
@@ -209,12 +254,13 @@ struct SmilingDinosGameView: View {
                         .font(.headline)
                     ForEach(displayedToothTypes.isEmpty ? toothTypes : displayedToothTypes, id: \.self) { toothType in
                         ToothCard(
+                            imageName: gameConfig.toothImageName(for: toothType),
                             toothType: toothType,
                             isSelected: selectedToothType == toothType,
                             isMatched: matchedPairs.contains(where: { id in
                                 pairs.contains { $0.dinosaur.id == id && $0.toothType == toothType }
                             }),
-                            hasFailedAttempt: matchedPairs.isEmpty && selectedToothType == toothType && showFeedback && !isCorrect,
+                            hasFailedAttempt: matchedPairs.isEmpty && selectedToothType == toothType && showMatchFeedback && !isCorrect,
                             isIntroHighlighted: !introWalkComplete && introWalkStep >= 3 && introWalkStep <= 5 && introWalkStep - 3 < introTeethOrder.count && introTeethOrder[introWalkStep - 3] == toothType,
                             onTap: { handleToothTap(toothType) }
                         )
@@ -246,7 +292,7 @@ struct SmilingDinosGameView: View {
             self.speechManager.onAudioFinished = nil
             self.advanceIntroWalk()
         }
-        speechManager.speak("game-dino-smile-gameplay-directions")
+        speechManager.speak(gameConfig.gameplayDirectionsAudio)
     }
 
     private func advanceIntroWalk() {
@@ -264,7 +310,7 @@ struct SmilingDinosGameView: View {
         } else if introWalkStep >= 3, introWalkStep - 3 < introTeethOrder.count {
             let toothType = introTeethOrder[introWalkStep - 3]
             let fallback = dinoSmileToothDisplayName(toothType)
-            playToothAudio(speechManager: speechManager, toothType: toothType, fallbackText: fallback, onFinished: advanceIntroWalk)
+            playToothAudio(speechManager: speechManager, toothType: toothType, line: gameConfig.line, fallbackText: fallback, onFinished: advanceIntroWalk)
         }
     }
 
@@ -297,7 +343,7 @@ struct SmilingDinosGameView: View {
         if selectedDinosaur == nil {
             isAudioPlaying = true
             speechManager.onAudioFinished = { DispatchQueue.main.async { self.isAudioPlaying = false } }
-            speechManager.speak("pick-a-dinosaur-first")
+            speechManager.speak(gameConfig.pickCreatureFirstPrompt)
             return
         }
         if selectedToothType == toothType {
@@ -310,15 +356,14 @@ struct SmilingDinosGameView: View {
         let correctTooth = pairs.first { $0.dinosaur.id == dino.id }?.toothType
         let isCorrectMatch = correctTooth == toothType
 
-        showFeedback = true
+        showMatchFeedback = true
         self.isCorrect = isCorrectMatch
-        feedbackMessage = isCorrectMatch ? "That's right!" : "Try again!"
         isAudioPlaying = true
 
         let playMatchFeedback: () -> Void = {
             self.speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
-                self.showFeedback = false
+                self.showMatchFeedback = false
                 if isCorrectMatch {
                     self.matchedPairs.insert(dino.id)
                     if self.matchedPairs.count >= 2 {
@@ -344,7 +389,7 @@ struct SmilingDinosGameView: View {
 
         // Play tooth audio first, then match feedback
         let fallback = dinoSmileToothDisplayName(toothType)
-        playToothAudio(speechManager: speechManager, toothType: toothType, fallbackText: fallback) {
+        playToothAudio(speechManager: speechManager, toothType: toothType, line: gameConfig.line, fallbackText: fallback) {
             self.speechManager.onAudioFinished = nil
             playMatchFeedback()
         }
@@ -382,7 +427,7 @@ struct SmilingDinosGameView: View {
 
     private var smileVictoryRecapItems: [VictoryRecapDisplayItem] {
         victoryToothTypesUnique.map { toothType in
-            let imageName = "dino-smile-tooth-\(toothType)"
+            let imageName = gameConfig.toothImageName(for: toothType)
             return VictoryRecapDisplayItem(
                 id: toothType,
                 title: dinoSmileToothDisplayName(toothType),
@@ -398,6 +443,7 @@ struct SmilingDinosGameView: View {
             showSuccessPhase: endSequenceStep == 2,
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
+            hideGameTitleDuringSuccessPhase: false,
             scrollRows: {
                 ForEach(Array(smileVictoryRecapItems.enumerated()), id: \.element.id) { index, item in
                     StandardVictoryRecapRowView(
@@ -409,8 +455,9 @@ struct SmilingDinosGameView: View {
             },
             successPhase: {
                 LandGameVictorySuccessStingerThenContinue(
-                    candidateSuccessImageNames: ["game-dino-smile-success", "game-smiling-dinos-success", "game-smiling-dinos"],
+                    candidateSuccessImageNames: gameConfig.successImageCandidates,
                     catalogGameIdForStinger: gameConfig.id,
+                    imageSide: GameCatalogImageMetrics.nameThatVictorySuccessImageSide,
                     speechManager: speechManager,
                     onContinue: playGoodJobAndCrowdThenDismiss
                 )
@@ -424,55 +471,44 @@ struct SmilingDinosGameView: View {
             if smileVictoryRecapItems.isEmpty {
                 endSequenceStep = 2
             } else {
-                let toothType = victoryToothTypesUnique[0]
-                let fallback = dinoSmileToothDisplayName(toothType)
-                playToothAudio(speechManager: speechManager, toothType: toothType, fallbackText: fallback, onFinished: advanceVictoryHighlight)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
-                    if endHighlightIndex == 0, endSequenceStep == 1 { advanceVictoryHighlight() }
-                }
+                speakSmileVictoryRecap(at: 0)
+                speechManager.onAudioFinished = { advanceSmileVictoryHighlight() }
             }
         }
     }
 
-    private func advanceVictoryHighlight() {
+    private func speakSmileVictoryRecap(at index: Int) {
+        guard index < victoryToothTypesUnique.count else { return }
+        let toothType = victoryToothTypesUnique[index]
+        let fallback = dinoSmileToothDisplayName(toothType)
+        playToothAudio(
+            speechManager: speechManager,
+            toothType: toothType,
+            line: gameConfig.line,
+            fallbackText: fallback,
+            chainDelay: true,
+            onFinished: nil
+        )
+    }
+
+    private func advanceSmileVictoryHighlight() {
         speechManager.onAudioFinished = nil
         endHighlightIndex += 1
         if endHighlightIndex < victoryToothTypesUnique.count {
-            let toothType = victoryToothTypesUnique[endHighlightIndex]
-            let fallback = dinoSmileToothDisplayName(toothType)
-            playToothAudio(speechManager: speechManager, toothType: toothType, fallbackText: fallback, onFinished: advanceVictoryHighlight)
-            let currentIndex = endHighlightIndex
-            DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
-                if endHighlightIndex == currentIndex, endSequenceStep == 1 { advanceVictoryHighlight() }
-            }
+            speakSmileVictoryRecap(at: endHighlightIndex)
+            speechManager.onAudioFinished = { advanceSmileVictoryHighlight() }
         } else {
             endSequenceStep = 2
         }
     }
 
     private func playGoodJobAndCrowdThenDismiss() {
-        let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
-        let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
-        if let u1 = goodJobURL, let u2 = crowdURL {
-            speechManager.playTogether(url1: u1, url2: u2) {
-                self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
-                self.isAudioPlaying = false
-                self.isPresented = false
-            }
-        } else if let u = goodJobURL ?? crowdURL {
-            speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
-                self.isAudioPlaying = false
-                self.isPresented = false
-            }
-            speechManager.playAudioFile(url: u)
-        } else {
-            LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
-            isAudioPlaying = false
-            isPresented = false
-        }
+        StandardVictorySequence.dismissAfterVictory(
+            configId: gameConfig.id,
+            isPresented: $isPresented,
+            speechManager: speechManager,
+            beforeDismiss: { isAudioPlaying = false }
+        )
     }
 }
 
@@ -481,6 +517,7 @@ struct SmilingDinosGameView: View {
 private let dinoSmileCardSize: CGFloat = 165
 
 private struct SmileCard: View {
+    let line: SmileGameLine
     let dinosaur: Dinosaur
     let isSelected: Bool
     let isMatched: Bool
@@ -489,11 +526,16 @@ private struct SmileCard: View {
     let onTap: () -> Void
 
     private var imageName: String? {
-        let slug = dinosaur.imageName?.replacingOccurrences(of: "dino-", with: "") ?? "\(dinosaur.id)"
-        let smileName = "dino-smile-\(slug)"
-        if ImageAssetCache.imageExists(named: smileName) { return smileName }
-        if let dinoName = dinosaur.imageName, ImageAssetCache.imageExists(named: dinoName) { return dinoName }
-        return nil
+        switch line {
+        case .air:
+            return PteroSmileMorphology.smilePortraitAssetName(for: dinosaur)
+        case .land:
+            let slug = dinosaur.imageName?.replacingOccurrences(of: "dino-", with: "") ?? "\(dinosaur.id)"
+            let smileName = "dino-smile-\(slug)"
+            if ImageAssetCache.imageExists(named: smileName) { return smileName }
+            if let dinoName = dinosaur.imageName, ImageAssetCache.imageExists(named: dinoName) { return dinoName }
+            return nil
+        }
     }
 
     var body: some View {
@@ -530,16 +572,13 @@ private struct SmileCard: View {
 }
 
 private struct ToothCard: View {
+    let imageName: String
     let toothType: String
     let isSelected: Bool
     let isMatched: Bool
     let hasFailedAttempt: Bool
     var isIntroHighlighted: Bool = false
     let onTap: () -> Void
-
-    private var imageName: String {
-        "dino-smile-tooth-\(toothType)"
-    }
 
     private var isDiamondBattery: Bool { toothType.contains("diamond-battery") }
 
@@ -730,5 +769,104 @@ struct SmilingDinosGameConfigs {
             }
         }
         return pool
+    }
+
+    static var isPteroSmilePlayable: Bool { makePteroSmile() != nil }
+
+    static var pteroSmile: SmilingDinosGameConfig {
+        guard let config = makePteroSmile() else {
+            fatalError("Ptero Smile requires 6 pterosaurs with bundled smile and tooth art")
+        }
+        return config
+    }
+
+    static func config(for category: GameCategory) -> SmilingDinosGameConfig {
+        switch category {
+        case .air:
+            return pteroSmile
+        default:
+            return smilingDinos
+        }
+    }
+
+    static func makePteroSmile() -> SmilingDinosGameConfig? {
+        let pool = pterosaursWithSmileAndTooth
+        guard let rounds = buildPteroSmileRounds(from: pool) else { return nil }
+        return SmilingDinosGameConfig(
+            id: "ptero-smile",
+            title: "Ptero Smile!",
+            introAudio: "game-ptero-smile",
+            gameplayDirectionsAudio: "game-ptero-smile-gameplay-directions",
+            rounds: rounds
+        )
+    }
+
+    private static var pterosaursWithSmileAndTooth: [Dinosaur] {
+        AirPterosaurData.allPterosaurs.filter { ptero in
+            guard PteroSmileMorphology.smilePortraitAssetName(for: ptero) != nil,
+                  let toothType = PteroSmileMorphology.smileToothType(for: ptero) else { return false }
+            return ImageAssetCache.imageExists(named: PteroSmileMorphology.toothImageAssetName(for: toothType))
+        }
+    }
+
+    private static func buildPteroSmileRounds(from pool: [Dinosaur]) -> [SmilingDinosRound]? {
+        var usedIds: Set<Int> = []
+        var usedToothTypes: Set<String> = []
+        var rounds: [SmilingDinosRound] = []
+
+        let allToothTypes = Set(pool.compactMap { PteroSmileMorphology.smileToothType(for: $0) })
+        let morphGroupByTooth = Dictionary(uniqueKeysWithValues: allToothTypes.map {
+            ($0, PteroSmileMorphology.morphologyGroup(for: $0))
+        })
+
+        for roundId in 1...3 {
+            let available = pool.filter { !usedIds.contains($0.id) }
+            let availableWithNewTeeth = available.filter { ptero in
+                guard let toothType = PteroSmileMorphology.smileToothType(for: ptero) else { return false }
+                return !usedToothTypes.contains(toothType)
+            }
+            let selectionPool = availableWithNewTeeth.count >= 2 ? availableWithNewTeeth : available
+            let byMorph = Dictionary(grouping: selectionPool) { ptero in
+                PteroSmileMorphology.smileToothType(for: ptero)
+                    .map { PteroSmileMorphology.morphologyGroup(for: $0) } ?? "unknown"
+            }
+            let morphsWithPteros = byMorph.keys.filter { !(byMorph[$0] ?? []).isEmpty }.shuffled()
+            let selected: [Dinosaur]
+            if morphsWithPteros.count >= 2 {
+                selected = (0..<2).compactMap { index in
+                    let group = morphsWithPteros[index]
+                    return (byMorph[group] ?? []).shuffled().first
+                }
+            } else {
+                let shuffled = selectionPool.count >= 2 ? selectionPool.shuffled() : pool.shuffled()
+                selected = Array(shuffled.prefix(2))
+            }
+            guard selected.count == 2, Set(selected.map(\.id)).count == 2 else { break }
+
+            var pairs: [(Dinosaur, String)] = []
+            var roundToothTypes: Set<String> = []
+            for ptero in selected {
+                guard let toothType = PteroSmileMorphology.smileToothType(for: ptero) else { continue }
+                pairs.append((ptero, toothType))
+                roundToothTypes.insert(toothType)
+            }
+            guard pairs.count == 2 else { break }
+
+            let baseCandidates = allToothTypes.subtracting(roundToothTypes)
+            let roundMorphGroups = Set(roundToothTypes.compactMap { morphGroupByTooth[$0] })
+            let distractorCandidates = baseCandidates.filter { candidate in
+                guard let group = morphGroupByTooth[candidate] else { return true }
+                return !roundMorphGroups.contains(group)
+            }
+            let distractor = (distractorCandidates.isEmpty ? Array(baseCandidates) : Array(distractorCandidates)).randomElement()
+            guard let distractor else { break }
+
+            usedIds.formUnion(selected.map(\.id))
+            usedToothTypes.formUnion(roundToothTypes)
+            rounds.append(SmilingDinosRound(id: roundId, pairs: pairs, distractorToothType: distractor))
+        }
+
+        guard rounds.count >= 3 else { return nil }
+        return Array(rounds.prefix(3))
     }
 }

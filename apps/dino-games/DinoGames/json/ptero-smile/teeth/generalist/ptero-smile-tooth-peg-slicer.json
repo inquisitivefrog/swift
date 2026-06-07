@@ -1,0 +1,7 @@
+{
+    "id": "ui_tooth_peg_slicer_pterosaur",
+    "morphology": "Peg-Slicer",
+    "tech_ref": "DEFAULT_SQUARE",
+    "prompt": "High-fidelity 3D render of a single generalist pterosaur tooth. Shape: small, robust, leaf-shaped base tapering to a mildly flattened peg tip. Texture: milky-white polished enamel with small scalloped details along the crown shoulder. Background: clean, empty light-grey studio background. Warm studio lighting highlighting the geometric facets.",
+    "visual_logic": "Captures the classic, tiny, generalist insect-grabbing tooth shape of early pterosaurs."
+  }

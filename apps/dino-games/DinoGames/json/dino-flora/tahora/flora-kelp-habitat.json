@@ -1,0 +1,26 @@
+{
+    "id": "tahora_bull_kelp_mature_001",
+    "species": "Bull Kelp (Durvillaea-type)",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUBMERGED_DAPPLED_LIGHT",
+    "formation_ref": "TAHORA",
+    "environment_details": {
+      "habitat": "COASTAL_LAGOON_SYSTEM",
+      "flora": [
+        "Mature Bull Kelp (massive, thick, leathery golden-brown fronds floating near the surface, anchored by thick ropelike stipes)",
+        "Early marine macroalgae clusters (tufted greens and delicate reds in the background)",
+        "Benthic microalgal mats coating the lower substrate"
+      ],
+      "ground_palette": [
+        "Dark greenish-grey",
+        "Sandy Ocher",
+        "Muted Glauconite Green"
+      ],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions with a thick, tactile 'rubbery' texture for the kelp; dense, underwater marine atmosphere; suspended organic particulate filtering light beams; reflecting a cool-temperate coastal marine climate."
+    },
+    "visual_logic": {
+      "composition": "An underwater wide-angle view looking slightly upward from a shallow coastal lagoon bed. Massive, wide golden-brown kelp blades dominate the upper water column, swaying with a gentle current. In the background, the soft silhouettes of other marine plants fade into the hazy, green-tinted water.",
+      "ground": "A mix of dark greenish-grey muddy silt and sandy ocher patches, with smooth, water-worn glauconitic sandstone boulders providing anchorage for the kelp holdfasts.",
+      "lighting": "Bright coastal sunlight filtering down through a moving, rippling ocean surface, creating dancing patterns of dappled light and volumetric sunbeams cutting through the green water column."
+    }
+  }

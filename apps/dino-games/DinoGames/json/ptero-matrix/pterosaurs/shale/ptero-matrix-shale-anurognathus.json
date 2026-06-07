@@ -1,0 +1,10 @@
+{
+    "id": "pteromatrix_004",
+    "species": "Anurognathus ammoni",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "SOLNHOFEN",
+    "matrix_material": "shale",
+    "character_assigned": "dino_bones_preparator_4",
+    "pose": "Using a soft brush to sweep loose dust from the short, broad skull and needle-like teeth."
+  }

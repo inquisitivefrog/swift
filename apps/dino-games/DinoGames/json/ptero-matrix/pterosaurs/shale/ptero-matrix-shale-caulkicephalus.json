@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_021",
+    "species": "Caulkicephalus trimicrodon",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "WESSEX",
+    "matrix_material": "shale",
+    "character_assigned": "dino_bones_paleontologist_3",
+    "pose": "Cataloging a dynamic, partial braincase fragment showing distinct pneumatic, hollow openings."
+  }

@@ -1,1 +1,10 @@
-High-fidelity 3D render of Dryosaurus small scalloped leaf tooth.  Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_tooth_dryosaurus_01",
+  "species": "Dryosaurus",
+  "morphology": "small_scalloped_leaf",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "prompt": "High-fidelity 3D asset of a single Dryosaurus tooth, rendered in a 3D animated feature film aesthetic with soft, stylized, and slightly rounded edges. The tooth morphology is small and leaf-shaped, featuring a highly distinct scalloped edge along its upper margins with fine, prominent ridges leading down to the base. The surfaces showcase high-quality tactile textures and subtle specular highlights along the enamel. The specimen is perfectly centered in a 1:1 square composition, carefully scaled to occupy the central power-zone, ensuring a strict 25% negative space safety margin on all four sides so no part of the tooth or its delicate edges touches the frame borders. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows to provide realistic physical weight and grounding. A small, clean, checkered black-and-white scientific scale bar is integrated neatly at the bottom within the safety margin. Illuminated by soft studio lighting with ambient occlusion to cleanly emphasize the physical volume and the intricate scalloped surface details of the fossilized specimen."
+}

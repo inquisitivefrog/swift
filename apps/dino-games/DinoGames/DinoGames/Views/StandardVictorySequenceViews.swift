@@ -3,9 +3,10 @@
 //  DinoGames
 //
 //  Shared layout metrics and success-card art for land games that end with:
-//  “re-introduce” list (scroll + highlight + name audio) → success image (+ optional `game-{id}-victory` stinger) → good job + crowd → dismiss.
+//  “re-introduce” list (scroll + highlight + name audio) → crowd cheering + success game card → dismiss.
+//  Orchestration helpers live in `StandardVictorySequence.swift`.
 //  All Dinosaur (land) games use this pipeline; list shows up to `maxVisibleRecapRows` rows in a fixed viewport, then scrolls.
-//  Dino Puzzle uses `PortraitJigsawPuzzleGameView`, which shares the same recap + stinger pattern via this file where wired.
+//  Dino Puzzle uses `PortraitJigsawPuzzleGameView`, which shares the same recap + finish pattern via this file where wired.
 //
 
 import SwiftUI
@@ -43,6 +44,17 @@ enum StandardVictoryLayout {
             + CGFloat(rows) * rowHeight
             + CGFloat(gaps) * rowSpacing
             + listContentVerticalPadding
+    }
+
+    /// Titles longer than this use `.title2` / `.title3` instead of `.largeTitle` / `.title` in victory (e.g. Which Marine Reptile Is Longer).
+    static let compactVictoryGameTitleCharacterThreshold: Int = 24
+
+    static func victoryGameTitleFont(for title: String, showSuccessPhase: Bool) -> Font {
+        let useCompact = title.count > compactVictoryGameTitleCharacterThreshold
+        if showSuccessPhase {
+            return useCompact ? .title3 : .title
+        }
+        return useCompact ? .title2 : .largeTitle
     }
 
     /// Racing: same capped recap viewport as other land games (`maxVisibleRecapRows`); then cap so the success region still fits on small screens.
@@ -110,13 +122,15 @@ struct StandardVictoryRecapRowView: View {
                 }
             }
             VStack(alignment: .leading, spacing: 2) {
-                Text(item.title)
-                    .font(.title2)
-                    .fontWeight(isHighlighted ? .semibold : .regular)
-                    .foregroundColor(.primary)
-                    .multilineTextAlignment(.leading)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.65)
+                if !item.title.isEmpty {
+                    Text(item.title)
+                        .font(.title2)
+                        .fontWeight(isHighlighted ? .semibold : .regular)
+                        .foregroundColor(.primary)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.65)
+                }
                 if let subtitle = item.subtitle, !subtitle.isEmpty {
                     Text(subtitle)
                         .font(.subheadline)
@@ -143,14 +157,66 @@ struct StandardVictoryRecapRowView: View {
     }
 }
 
-// MARK: - Success card + optional victory stinger (`game-{id}-victory` in Audio/Games, .mp3 / .m4a / .wav)
+// MARK: - Success card + crowd (standard finish)
 
-/// Audio key resolved by `SpeechManager` to `Games/game-{catalogGameId}-victory` (see `audioFilePath` `game-` rule).
-enum LandVictoryAudio {
-    static func stingerKey(catalogGameId: String) -> String { "game-\(catalogGameId)-victory" }
+/// Shows the success game card (`game-{id}-success`) and plays crowd cheering once; then `onComplete` (dismiss).
+struct StandardVictoryCrowdThenSuccessView: View {
+    let candidateSuccessImageNames: [String]
+    let imageSide: CGFloat
+    let missingPolicy: StandardVictorySuccessImageView.MissingAssetPolicy
+    let speechManager: SpeechManager
+    let onComplete: () -> Void
+
+    @State private var didStartFinish = false
+
+    init(
+        gameConfigId: String,
+        imageSide: CGFloat = GameCatalogImageMetrics.nameThatVictorySuccessImageSide,
+        missingPolicy: StandardVictorySuccessImageView.MissingAssetPolicy = .emojiCelebration,
+        speechManager: SpeechManager,
+        onComplete: @escaping () -> Void
+    ) {
+        self.candidateSuccessImageNames = StandardVictorySequence.defaultSuccessImageCandidates(gameConfigId: gameConfigId)
+        self.imageSide = imageSide
+        self.missingPolicy = missingPolicy
+        self.speechManager = speechManager
+        self.onComplete = onComplete
+    }
+
+    init(
+        candidateSuccessImageNames: [String],
+        imageSide: CGFloat = GameCatalogImageMetrics.nameThatVictorySuccessImageSide,
+        missingPolicy: StandardVictorySuccessImageView.MissingAssetPolicy = .emojiCelebration,
+        speechManager: SpeechManager,
+        onComplete: @escaping () -> Void
+    ) {
+        self.candidateSuccessImageNames = candidateSuccessImageNames
+        self.imageSide = imageSide
+        self.missingPolicy = missingPolicy
+        self.speechManager = speechManager
+        self.onComplete = onComplete
+    }
+
+    var body: some View {
+        StandardVictorySuccessImageView(
+            candidateAssetNames: candidateSuccessImageNames,
+            imageSide: imageSide,
+            missingPolicy: missingPolicy
+        )
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear(perform: startCrowdThenComplete)
+    }
+
+    private func startCrowdThenComplete() {
+        guard !didStartFinish else { return }
+        didStartFinish = true
+        StandardVictorySequence.playCrowdCheeringThen(speechManager: speechManager, onComplete: onComplete)
+    }
 }
 
-/// Shows `StandardVictorySuccessImageView`, then plays optional stinger clip, then invokes `onContinue` (typically good-job + crowd).
+// MARK: - Legacy alias (all call sites use crowd + success card; victory stinger removed)
+
+/// Shows `StandardVictorySuccessImageView`, plays crowd cheering, then invokes `onContinue` (dismiss).
 struct LandGameVictorySuccessStingerThenContinue: View {
     let candidateSuccessImageNames: [String]
     let catalogGameIdForStinger: String
@@ -166,7 +232,7 @@ struct LandGameVictorySuccessStingerThenContinue: View {
         speechManager: SpeechManager,
         onContinue: @escaping () -> Void
     ) {
-        self.candidateSuccessImageNames = ["game-\(gameConfigId)-success", "game-\(gameConfigId)"]
+        self.candidateSuccessImageNames = StandardVictorySequence.defaultSuccessImageCandidates(gameConfigId: gameConfigId)
         self.catalogGameIdForStinger = gameConfigId
         self.imageSide = imageSide
         self.missingPolicy = missingPolicy
@@ -191,28 +257,13 @@ struct LandGameVictorySuccessStingerThenContinue: View {
     }
 
     var body: some View {
-        StandardVictorySuccessImageView(
-            candidateAssetNames: candidateSuccessImageNames,
+        StandardVictoryCrowdThenSuccessView(
+            candidateSuccessImageNames: candidateSuccessImageNames,
             imageSide: imageSide,
-            missingPolicy: missingPolicy
+            missingPolicy: missingPolicy,
+            speechManager: speechManager,
+            onComplete: onContinue
         )
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear(perform: playStingerThenContinue)
-    }
-
-    private func playStingerThenContinue() {
-        let key = LandVictoryAudio.stingerKey(catalogGameId: catalogGameIdForStinger)
-        if let url = speechManager.urlForAudio(key: key) {
-            speechManager.onAudioFinished = {
-                speechManager.onAudioFinished = nil
-                onContinue()
-            }
-            speechManager.playAudioFile(url: url)
-        } else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
-                onContinue()
-            }
-        }
     }
 }
 
@@ -283,8 +334,12 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
     let listScrollHeight: CGFloat
     let showSuccessPhase: Bool
     let endHighlightIndex: Int
-    /// Shown above the recap list when non-nil and non-empty (game name / marketing title). Hidden during the success phase so it does not duplicate title text baked into `game-*-success` art (e.g. Ptero Footprints).
+    /// Shown above the recap list when non-nil and non-empty. Hidden during the success phase when `hideGameTitleDuringSuccessPhase` is true (success card art may already include the title, e.g. Ptero Footprints).
     let gameTitle: String?
+    /// When false, the title stays pinned above the list through the success stinger (e.g. Dino Matrix success art has no title).
+    var hideGameTitleDuringSuccessPhase: Bool = true
+    /// When false, the recap list stays visible above the success card so the two phases read as one screen (Name That Dinosaur / Pterosaur).
+    var collapseRecapListDuringSuccessPhase: Bool = true
 
     var rowSpacing: CGFloat = StandardVictoryLayout.rowSpacing
     /// When `nil`, uses SwiftUI’s default horizontal inset (same as `.padding(.horizontal)` with no argument).
@@ -305,6 +360,8 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
         showSuccessPhase: Bool,
         endHighlightIndex: Int,
         gameTitle: String? = nil,
+        hideGameTitleDuringSuccessPhase: Bool = true,
+        collapseRecapListDuringSuccessPhase: Bool = true,
         rowSpacing: CGFloat = StandardVictoryLayout.rowSpacing,
         listHorizontalPadding: CGFloat? = nil,
         listVerticalPadding: CGFloat = StandardVictoryLayout.listContentVerticalPadding,
@@ -319,6 +376,8 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
         self.showSuccessPhase = showSuccessPhase
         self.endHighlightIndex = endHighlightIndex
         self.gameTitle = gameTitle
+        self.hideGameTitleDuringSuccessPhase = hideGameTitleDuringSuccessPhase
+        self.collapseRecapListDuringSuccessPhase = collapseRecapListDuringSuccessPhase
         self.rowSpacing = rowSpacing
         self.listHorizontalPadding = listHorizontalPadding
         self.listVerticalPadding = listVerticalPadding
@@ -330,16 +389,27 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
         self.successPhase = successPhase
     }
 
+    /// Recap list is hidden during the success card when collapsed so the title and success art fit on screen (e.g. Weigh the Marine Reptile in landscape).
+    private var activeListScrollHeight: CGFloat {
+        showSuccessPhase && collapseRecapListDuringSuccessPhase ? 0 : listScrollHeight
+    }
+
     var body: some View {
         VStack(spacing: 0) {
-            if let gameTitle, !gameTitle.isEmpty, !showSuccessPhase {
+            if let gameTitle, !gameTitle.isEmpty, !(hideGameTitleDuringSuccessPhase && showSuccessPhase) {
                 Text(gameTitle)
-                    .font(.largeTitle)
+                    .font(StandardVictoryLayout.victoryGameTitleFont(for: gameTitle, showSuccessPhase: showSuccessPhase))
                     .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
                     .padding(.top, 8)
                     .padding(.bottom, 8)
+                    .frame(maxWidth: .infinity)
+                    .layoutPriority(2)
             }
-            scrollSection
+            if activeListScrollHeight > 0 {
+                scrollSection
+            }
             bottomSection
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -361,7 +431,7 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
                 }
             }
             .scrollIndicators(scrollIndicators)
-            .frame(height: listScrollHeight)
+            .frame(height: activeListScrollHeight)
             .onChange(of: endHighlightIndex) { _, newIndex in
                 if let validator = highlightScrollValidator, !validator(newIndex) { return }
                 withAnimation(.easeInOut(duration: 0.3)) {

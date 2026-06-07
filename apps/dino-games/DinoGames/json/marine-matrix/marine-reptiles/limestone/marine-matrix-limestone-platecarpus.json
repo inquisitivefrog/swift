@@ -1,0 +1,19 @@
+{
+    "asset_id": "manifest_marine_008",
+    "project": "MarineMatrix",
+    "version": "1.0.0",
+    "meta": {
+      "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+      "intended_use": "UI_Card_Dig_Stage_4"
+    },
+    "excavation_context": {
+      "character_id": "dino_bones_paleontologist_4",
+      "character_description": "An adult male grad stadent working as a paleontologist, short brown hair, Latino ethnicity. Wears signature thin-rimmed BLACK aviator lens glasses, a light white tee shirt worn UNDER a khaki safari vest, khaki shorts and brown hiking boots.",
+      "stage": "Sweeping Loose Sediment off an Articulated Skull",
+      "target_marine_reptile": "Platecarpus",
+      "geological_formation": "NIOBRARA_CHALK",
+      "matrix_material": "Limestone",
+      "matrix_color": "Smoky Grey"
+    },
+    "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_paleontologist_4, wearing his signature black aviator glasses, uses a soft brush to sweep away loose smoky grey limestone powder from the long snout of an articulated Platecarpus mosasaur skull in an exposed ocean-facing cliff. 1:1 Square aspect ratio."
+  }

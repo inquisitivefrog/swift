@@ -75,10 +75,12 @@ struct SplashScreenView: View {
                         CreditsView()
                     }
                     .onAppear {
-                        // Play welcome audio when splash is displayed
-                        speechManager.speak("cover-welcome-to-dino-games")
-                        // Auto-dismiss after 3.5 seconds
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
+                        let skipIntros = CategoryPlaySession.shouldSkipLaunchIntros
+                        if !skipIntros {
+                            speechManager.speak("cover-welcome-to-dino-games")
+                        }
+                        let delay = skipIntros ? 0.8 : 3.5
+                        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
                             withAnimation {
                                 showMainApp = true
                             }

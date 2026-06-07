@@ -1,6 +1,11 @@
-{ 
-    "id": "ui_tooth_pencil_peg_apatasaurus", 
-    "morphology": "Pencil Peg", 
-    "prompt": "High-fidelity 3D render of a single Apatosaurus 'Pencil Peg' tooth. Shape: long, perfectly uniform thin cylinder, blunt and flat at the top like a peg. Texture: smooth, polished bone-white. Background: empty light-cream background. A checkered scientific scale ruler at the base. Focus on the vertical, non-tapering cylindrical shape.", 
-    "visual_logic": "Emphasizes the 'rake' utility of the tooth for stripping leaves." 
-  },
+{
+  "id": "ui_fossil_tooth_apatosaurus_pencil_peg",
+  "species": "Apatosaurus louisae",
+  "morphology": "pencil_peg_cylindrical_crown",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Isolates a single uniform, cylindrical tooth to emphasize the rake-like utility used for stripping foliage, maintaining consistent studio formatting with previous sauropod variants.",
+  "prompt": "High-fidelity 3D asset render of a single fossilized tooth from an Apatosaurus, emphasizing its highly specialized 'pencil peg' morphology. The tooth is rendered in a 3D animated feature film aesthetic with clean, stylized lines. The structure is a long, highly uniform, thin cylinder that remains non-tapering throughout its length, capped with a blunt, slightly flattened wear facet at the apex, perfectly capturing its function as a rake prong for stripping leaves. The texture is a weathered ivory and bone-white with a smooth, matte mineralized finish showing subtle surface growth lines. The single peg-tooth is isolated and oriented vertically, centered on a 1:1 square canvas. The background is a seamless, solid light-grey studio plane that extends to the image borders with no internal frames or boxes. The specimen is scaled carefully to leave a strict 25% empty background margin on all four sides to prevent UI clipping. Placed flat with realistic contact shadows. A clean checkered black-and-white scientific scale bar sits centered at the bottom."
+}

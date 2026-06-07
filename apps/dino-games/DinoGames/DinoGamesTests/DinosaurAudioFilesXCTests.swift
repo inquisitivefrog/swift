@@ -37,17 +37,15 @@ final class DinosaurAudioFilesXCTests: XCTestCase {
         XCTAssertTrue(TestBundleHelpers.directoryExists(directory), "Missing directory: \(directory.path)")
 
         let availableStems = try TestBundleHelpers.audioStems(in: directory)
-        // Gameplay prompts stay a static contract: if game scripting changes, this list must be
-        // updated intentionally so missing prompts fail loudly in CI.
+        // Shared cross-game prompts; per-game coverage is in `LandDinosaurGameAudioFilesXCTests`.
         let expectedStems: Set<String> = [
             "game-can-you-name-that-dinosaur",
-            "game-name-that-dinosaur",
             "game-weigh-dinosaur",
             "game-choose-your-first-dinosaur",
             "game-choose-your-second-dinosaur",
         ]
 
         let missing = expectedStems.subtracting(availableStems).sorted()
-        XCTAssertTrue(missing.isEmpty, "Missing dinosaur gameplay audio files in Games/: \(missing)")
+        XCTAssertTrue(missing.isEmpty, "Missing shared dinosaur gameplay audio in Games/: \(missing)")
     }
 }

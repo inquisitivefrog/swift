@@ -1,0 +1,10 @@
+{
+    "id": "pteromatrix_mud_007",
+    "species": "Shanyingopterus xiangyangensis",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "JIUFOTANG",
+    "matrix_material": "mudstone",
+    "character_assigned": "dino_bones_paleontologist_6",
+    "pose": "Gently brushing loose purple-gray mudstone powder out of the empty eye orbital of an articulated pterodactyloid skull setup."
+  }

@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_014",
+    "species": "Jeholopterus ninchengensis",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "TIAOJISHAN",
+    "matrix_material": "volcanic tuff",
+    "character_assigned": "dino_bones_preparator_2",
+    "pose": "Delicately tracing carbonized pycnofibres that form a dense, fur-like coating over the neck vertebrae."
+  }

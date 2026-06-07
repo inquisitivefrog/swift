@@ -1,0 +1,8 @@
+{
+    "id": "ui_egg_archelon",
+    "morphology": "cheloniid_giant",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D render of a single Archelon marine reptile egg next to a standard grapefruit. Shape: perfectly spherical, large-sized, with a soft, slightly pliable skin showing minor dimples. Texture: matte, rubbery, chalk-white with light golden sand grains adhering to the surface. Background: clean, empty light-grey studio background. A single small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show the flexible, non-rigid shell surface.",
+    "visual_logic": "Emphasizes the large, perfectly round, ping-pong-ball style leathery egg typical of giant prehistoric sea turtles.",
+    "style_notes": "Only one scale bar."
+  }

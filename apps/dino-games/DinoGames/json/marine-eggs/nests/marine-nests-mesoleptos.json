@@ -1,0 +1,7 @@
+  {
+    "id": "ui_nest_mesoleptos_hollow",
+    "morphology": "aigialosaur_slender",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up view of a Mesoleptos nest. A group of five small, wrinkled, sausage-shaped white eggs is nestled in a natural hollow under a piece of fossilized driftwood on a damp mudflat. SETTING: Late Cretaceous tidal mudflat environment with dark green-grey mineral tones. LIGHTING: Overcast, diffused cinematic daylight reflecting off wet mud. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+    "visual_logic": "Combines small, wrinkled sausage-like eggs (Clue 1) with a damp mudflat driftwood hollow nest (Clue 2)."
+  }

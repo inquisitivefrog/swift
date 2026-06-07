@@ -1,0 +1,11 @@
+  {
+    "id": "pteromatrix_027",
+    "species": "Pterodaustro guinazui",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "LAGARCITO",
+    "matrix_material": "bentonite",
+    "character_assigned": "dino_bones_preparator_3",
+    "pose": "Uncovering thousands of comb-like, bristly bristle teeth on a curved jaw within pinkish siltstone."
+  }
+

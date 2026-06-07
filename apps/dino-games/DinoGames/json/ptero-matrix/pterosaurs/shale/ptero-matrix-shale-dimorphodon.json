@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_022",
+    "species": "Dimorphodon macronyx",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "BLUE_LIAS",
+    "matrix_material": "shale",
+    "character_assigned": "dino_bones_paleontologist_4",
+    "pose": "Using fine dental picks to reveal the deep, puffin-like skull profile from dark argillaceous limestone."
+  }

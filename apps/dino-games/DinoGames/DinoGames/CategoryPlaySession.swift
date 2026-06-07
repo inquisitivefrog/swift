@@ -83,4 +83,43 @@ enum CategoryPlaySession {
         guard let category = snap.category, snap.guidedPlayMode else { return false }
         return shouldUseGuidedMode(for: category)
     }
+
+    private static let landPlayedKey = "landDinosaurPlayedCanonicalGameIds"
+    private static let pteroPlayedKey = "pterosaurPlayedCanonicalGameIds"
+    private static let marinePlayedKey = "marineReptilePlayedCanonicalGameIds"
+
+    /// True when any land / air / marine game has been played at least once.
+    static var hasAnyRecordedPlayProgress: Bool {
+        let defaults = UserDefaults.standard
+        func hasPlayedGames(_ key: String) -> Bool {
+            !(defaults.stringArray(forKey: key) ?? []).isEmpty
+        }
+        return hasPlayedGames(landPlayedKey)
+            || hasPlayedGames(pteroPlayedKey)
+            || hasPlayedGames(marinePlayedKey)
+    }
+
+    /// Skip splash welcome and category cover intros for returning players.
+    static var shouldSkipLaunchIntros: Bool {
+        hasResumableGuidedSession || hasAnyRecordedPlayProgress
+    }
+
+    /// Skip level intro + game-name walk when auto-resuming an interrupted guided run (saved level still on disk).
+    static func shouldSkipGuidedLevelIntro(for category: GameCategory) -> Bool {
+        let snap = load()
+        guard snap.guidedPlayMode, snap.category == category, snap.level != nil else { return false }
+        return shouldUseGuidedMode(for: category)
+    }
+
+    /// Level to open when entering guided play (saved session or first incomplete unlocked level).
+    static func guidedEntryLevel(for category: GameCategory) -> GameLevel? {
+        let snap = load()
+        if snap.category == category, let level = snap.level, GameCatalog.isLevelUnlocked(level, category: category) {
+            return level
+        }
+        if let level = GameCatalog.firstIncompleteUnlockedLevel(for: category) {
+            return level
+        }
+        return GameCatalog.levelsWithGames(for: category).first
+    }
 }

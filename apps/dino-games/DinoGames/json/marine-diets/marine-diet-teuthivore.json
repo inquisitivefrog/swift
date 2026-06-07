@@ -1,0 +1,24 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "tech_ref": "DEFAULT_SQUARE",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Teuthivore diet symbolism",
+      "features": [
+        "A stylized, cartoonish prehistoric squid made of smooth clay",
+        "The squid has a plump, cone-shaped pink clay mantle, large friendly white eyes, and thick, wavy purple clay tentacles",
+        "Rounded, soft edges with no sharp points to maintain a toy-like, friendly aesthetic",
+        "Tactile 'handmade' clay sculpture appearance",
+        "Soft studio lighting with gentle highlights"
+      ],
+      "action": "A clean, centered shot of a clay squid sitting on a simple clay surface. The background is a soft, neutral out-of-focus color. The image is designed as a clear icon or symbol to indicate a squid-eating diet for a children's matching game. No text."
+    }
+  }
+}

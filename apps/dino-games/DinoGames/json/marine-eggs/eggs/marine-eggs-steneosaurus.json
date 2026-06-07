@@ -1,0 +1,8 @@
+{
+    "id": "ui_egg_steneosaurus",
+    "morphology": "teleosaurid_standard",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D render of a single Steneosaurus egg next to a standard papaya. Shape: thick, heavy elongated oval. Texture: hard, highly calcified shell with a dense chalky texture, pale ivory-grey with dark organic soil staining around the middle. Background: clean light-grey studio background. Scale bar at bottom.",
+    "visual_logic": "Highlights a thick, heavily calcified crocodilian egg with pronounced chalky texturing and nesting stains.",
+    "style_notes": "Only one scale bar."
+  }

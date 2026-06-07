@@ -60,8 +60,12 @@ final class PterosaurImageAssetsXCTests: XCTestCase {
     func testPterosaurGameCardAssetsExist() {
         let requiredGameCards: Set<String> = [
             "game-name-that-pterosaur",
+            "game-ptero-diets",
+            "game-ptero-diets-success",
             "game-ptero-footprints",
             "game-ptero-footprints-success",
+            "game-ptero-matrix",
+            "game-ptero-matrix-success",
             "game-weigh-pterosaur",
             "game-which-ptero-is-taller",
             "game-which-ptero-is-taller-success",

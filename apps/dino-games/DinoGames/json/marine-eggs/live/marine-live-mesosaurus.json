@@ -1,0 +1,6 @@
+{
+  "id": "ui_birth_mesosaurus_silhouette",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. An underwater scene capturing a primitive reptile birth puzzle. A small, slender lizard-like mother reptile is presented entirely as a stark, dark charcoal-grey silhouette, outlining a long tail and webbed feet but hiding all body details. Emerging tail-first from the shadow is a beautifully detailed, full-color baby Mesosaurus made of smooth reddish-brown clay, featuring an incredibly delicate snout lined with visible, needle-thin white clay teeth. SETTING: Early Permian restricted inland sea basin. LIGHTING: Moody, high-contrast underwater light beam cutting through brackish water from behind the animal, backlighting the mother into a silhouette while casting bright focus onto the detailed newborn. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+  "visual_logic": "Converts the mother into a challenging dark shadow silhouette, leaving the newborn baby's detailed needle teeth and webbed digits as the colorful clues to solve the puzzle."
+}

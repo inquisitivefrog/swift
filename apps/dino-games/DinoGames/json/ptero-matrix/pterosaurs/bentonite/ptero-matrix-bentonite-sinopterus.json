@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_010",
+    "species": "Sinopterus dongi",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "JIUFOTANG",
+    "matrix_material": "bentonite",
+    "character_assigned": "dino_bones_paleontologist_4",
+    "pose": "Analyzing a completely articulated, small tapejarid skeleton flattened on a light ash-grey slab."
+  }

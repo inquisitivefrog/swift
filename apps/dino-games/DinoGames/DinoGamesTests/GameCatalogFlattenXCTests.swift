@@ -48,4 +48,15 @@ final class GameCatalogFlattenXCTests: XCTestCase {
             "Every catalog game should expose a config id for progress / selection; missing: \(missing.map { "\($0.category)/\($0.level)/\($0.game.name)" })"
         )
     }
+
+    func testForCatalogConfigIdMatchesPlacedGameCategory() {
+        for placed in GameCatalog.allPlacedGames() {
+            guard let id = placed.game.id else { continue }
+            XCTAssertEqual(
+                GameCategory.forCatalogConfigId(id),
+                placed.category,
+                "Config id \(id) should map to \(placed.category), not another category or nil."
+            )
+        }
+    }
 }

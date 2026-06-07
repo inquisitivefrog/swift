@@ -1,0 +1,7 @@
+  {
+    "id": "ui_nest_protostega_pit",
+    "morphology": "cheloniid_large",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up view of a Protostega nest on a sandy beach barrier bar. A cluster of five round, soft-shelled white eggs sits in a clean, excavated sand depression. Soft marine grasses are scattered at the edges of the sand pit. SETTING: Late Cretaceous sunlit beach margin. LIGHTING: Bright, direct marine sunlight casting crisp shadows inside the sand hole. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+    "visual_logic": "Combines a spherical leathery egg shape (Clue 1) with an open sandy beach barrier bar nest (Clue 2)."
+  }

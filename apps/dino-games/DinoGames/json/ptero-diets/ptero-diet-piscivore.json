@@ -1,0 +1,24 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "tech_ref": "DEFAULT_SQUARE",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Piscivore diet symbolism",
+      "features": [
+        "A stylized, cartoonish whole silver fish made of smooth clay",
+        "The fish body is a soft metallic-grey clay with a large, friendly round white eye and a single cartoon scale pattern",
+        "Smooth, rounded fins and tail to maintain a toy-like, friendly aesthetic",
+        "Tactile 'handmade' clay sculpture appearance",
+        "Soft studio lighting with gentle highlights"
+      ],
+      "action": "A clean, centered shot of a clay fish sitting on a simple clay surface. The background is a soft, neutral out-of-focus color. The image is designed as a clear icon or symbol to indicate a fish-eating diet for a children's matching game. No text."
+    }
+  }
+}

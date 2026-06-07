@@ -1,0 +1,686 @@
+  {
+    "dino_matrix": [
+      {
+        "asset_id": "matrix_layout_dino_claystone_001",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": {
+          "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+          "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+          "intended_use": "UI_Rock_Sample_Match_Card"
+        },
+        "canvas_constraints": {
+          "aspect_ratio": "1:1 (Square Layout)",
+          "target_resolution": "1024x1024"
+        },
+        "composition": {
+          "camera": {
+            "type": "Cinematic 3D",
+            "framing": "Three-quarter angled perspective",
+            "angle": "Angled dynamic close shot focusing on the three foreground sample blocks, trailing off into a vast stratified geologic basin"
+          },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Claystone Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a flat, open, river valley plain",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized rectangular block, angled fracture faces", "color": "Deep Purple-Red", "texture": "Dense, ultra-fine grained flat surfaces" },
+              { "block_id": "block_color_y", "geometry": "3D stylized rectangular block, angled fracture faces", "color": "Maroon", "texture": "Dense, ultra-fine grained flat surfaces" },
+              { "block_id": "block_color_z", "geometry": "3D stylized rectangular block, angled fracture faces", "color": "Silty Grey", "texture": "Dense, ultra-fine grained flat surfaces" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Anacleto Style Stratified Basin",
+            "geological_mapping": [
+              { "zone_name": "Distinct Butte", "color_profile": "Deep Purple-Red", "description": "An isolated, flat-topped sedimentary layer on the far left horizon." },
+              { "zone_name": "Eroded Ridge", "color_profile": "Maroon", "description": "A long, weathered structural ridge running horizontally across the mid-ground." },
+              { "zone_name": "Excavated Canyon Wall", "color_profile": "Silty Grey", "description": "A sheer vertical canyon cutting through the right side, exposing un-weathered strata." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle, binding the elements into a cohesive ecosystem."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_dino_conglomerate_002",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Conglomerate Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a pebbly seasonal river plain",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized chunky block, rough edges", "color": "Light Grey", "texture": "Coarse matrix with heavily embedded rounded river pebbles" },
+              { "block_id": "block_color_y", "geometry": "3D stylized chunky block, rough edges", "color": "Dusty Tan", "texture": "Coarse matrix with heavily embedded rounded river pebbles" },
+              { "block_id": "block_color_z", "geometry": "3D stylized chunky block, rough edges", "color": "Pale Yellow", "texture": "Coarse matrix with heavily embedded rounded river pebbles" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "La Amarga Style Braided System",
+            "geological_mapping": [
+              { "zone_name": "Outwash Bench", "color_profile": "Light Grey", "description": "An elevated alluvial bench segment on the left frame." },
+              { "zone_name": "Gravel Bar Ridge", "color_profile": "Dusty Tan", "description": "An exposed gravel bar structure curving through the mid-ground." },
+              { "zone_name": "Terrace Layer", "color_profile": "Pale Yellow", "description": "A distinct, stratified terrace cutting through the right background." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_dino_ironstone_003",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Ironstone Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a dark, wet, muddy swamp plain",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized dense block, sharp mineral seams", "color": "Coal Black", "texture": "Heavy, metallic, rustic oxidized iron crusting" },
+              { "block_id": "block_color_y", "geometry": "3D stylized dense block, sharp mineral seams", "color": "Rusty Brown", "texture": "Heavy, metallic, rustic oxidized iron crusting" },
+              { "block_id": "block_color_z", "geometry": "3D stylized dense block, sharp mineral seams", "color": "Siderite Orange", "texture": "Heavy, metallic, rustic oxidized iron crusting" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Horseshoe Canyon Style Coal Basin",
+            "geological_mapping": [
+              { "zone_name": "Coal Seam Cap", "color_profile": "Coal Black", "description": "A dark, prominent organic carbon band framing the upper left topography." },
+              { "zone_name": "Bog Iron Bluff", "color_profile": "Rusty Brown", "description": "A heavy, mineralized swamp bluff cutting across the mid-ground." },
+              { "zone_name": "Oxidized Siderite Ledge", "color_profile": "Siderite Orange", "description": "A vibrant orange mineralized ledge breaking the terrain on the right side." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_dino_lignite_004",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Lignite Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a dark, organic wetland soil floor",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized block, fibrous fracture lines", "color": "Tan-Grey", "texture": "Matted woody vegetation fibers and brittle organic textures" },
+              { "block_id": "block_color_y", "geometry": "3D stylized block, fibrous fracture lines", "color": "Forest Green-Grey", "texture": "Matted woody vegetation fibers and brittle organic textures" },
+              { "block_id": "block_color_z", "geometry": "3D stylized block, fibrous fracture lines", "color": "Brownish-Black", "texture": "Matted woody vegetation fibers and brittle organic textures" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Lance Hell Creek Deltaic Basin",
+            "geological_mapping": [
+              { "zone_name": "Silted Overburden", "color_profile": "Tan-Grey", "description": "A weathered silt layer visible on the upper left horizon bounds." },
+              { "zone_name": "Marsh Bank", "color_profile": "Forest Green-Grey", "description": "A highly organic delta channel bench stretching across the frame center." },
+              { "zone_name": "Exposed Lignite Seam", "color_profile": "Brownish-Black", "description": "A dark, un-weathered fossilized wood coal layer running deep along the right canyon floor." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_dino_limestone_005",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Limestone Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a semi-arid, caliche-covered mudflat",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized block, crisp angular chiseling", "color": "Pale Lavender", "texture": "Dense, matte chemical precipitate rock surfaces" },
+              { "block_id": "block_color_y", "geometry": "3D stylized block, crisp angular chiseling", "color": "Chalky White", "texture": "Dense, matte chemical precipitate rock surfaces" },
+              { "block_id": "block_color_z", "geometry": "3D stylized block, crisp angular chiseling", "color": "Maroon", "texture": "Dense, matte chemical precipitate rock surfaces" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Cedar Mountain Alkaline Lacustrine System",
+            "geological_mapping": [
+              { "zone_name": "Carbonate Knolls", "color_profile": "Pale Lavender", "description": "Weathered limestone hills rising subtly on the left horizon layer." },
+              { "zone_name": "Caliche Terrace", "color_profile": "Chalky White", "description": "A prominent white, sun-baked mineral bench lining the center basin." },
+              { "zone_name": "Oxidized Mud Wall", "color_profile": "Maroon", "description": "A deep reddish limestone-rich mud strata flanking the right frame boundary." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_dino_mudstone_006",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Mudstone Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a dry, desiccation-cracked flood plain ground",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized sub-angular block, smooth corners", "color": "Bright Red", "texture": "Fine silted clay texture with tiny blocky stress lines" },
+              { "block_id": "block_color_y", "geometry": "3D stylized sub-angular block, smooth corners", "color": "Purplish-Grey", "texture": "Fine silted clay texture with tiny blocky stress lines" },
+              { "block_id": "block_color_z", "geometry": "3D stylized sub-angular block, smooth corners", "color": "Sandy Buff", "texture": "Fine silted clay texture with tiny blocky stress lines" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Cloverly Style Floodplain Basin",
+            "geological_mapping": [
+              { "zone_name": "Eroded Badland Mound", "color_profile": "Bright Red", "description": "A highly visible, heavily eroded red silt structure on the left sky-line." },
+              { "zone_name": "Silty Escarpment", "color_profile": "Purplish-Grey", "description": "A broad, dark mudstone bench dissecting the landscape midground frame." },
+              { "zone_name": "Outcrop Step", "color_profile": "Sandy Buff", "description": "A low-lying weathered mud strata exposure baseline near the right frame." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_dino_sandstone_007",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Sandstone Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on an aeolian dune field floor",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized block, granular pitted faces, cross-bedding layers", "color": "Flame Orange", "texture": "Distinct sandy grain grit with prominent wind-swept laminations" },
+              { "block_id": "block_color_y", "geometry": "3D stylized block, granular pitted faces, cross-bedding layers", "color": "Light Tan", "texture": "Distinct sandy grain grit with prominent wind-swept laminations" },
+              { "block_id": "block_color_z", "geometry": "3D stylized block, granular pitted faces, cross-bedding layers", "color": "Sunset Red", "texture": "Distinct sandy grain grit with prominent wind-swept laminations" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Djadokhta Desert Dune Basin",
+            "geological_mapping": [
+              { "zone_name": "Star Dune Peak", "color_profile": "Flame Orange", "description": "A massive, sweeping quartz sand dune pinnacle shaping the upper left quadrant." },
+              { "zone_name": "Interdune Playa Ledge", "color_profile": "Light Tan", "description": "A low, flat sand flat expanse tracking through the center frame." },
+              { "zone_name": "Asymmetrical Sand Ridge", "color_profile": "Sunset Red", "description": "A steep slipface dune structure cutting heavily along the right backdrop zone." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_dino_shale_008",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Shale Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a damp, organic-rich lacustrine basin edge",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized block, highly fissionable sheets, hyper-flat steps", "color": "Light Ash Grey", "texture": "Brittle, ultra-thin fissile plates stacked sequentially" },
+              { "block_id": "block_color_y", "geometry": "3D stylized block, highly fissionable sheets, hyper-flat steps", "color": "Dark Olive-Grey", "texture": "Brittle, ultra-thin fissile plates stacked sequentially" },
+              { "block_id": "block_color_z", "geometry": "3D stylized block, highly fissionable sheets, hyper-flat steps", "color": "Whitish Tuff", "texture": "Brittle, ultra-thin fissile plates stacked sequentially" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Jehol Biota Laminated Lacustrine Basin",
+            "geological_mapping": [
+              { "zone_name": "Stratified Lake Bluffs", "color_profile": "Light Ash Grey", "description": "Fine, sheet-like lake sediment bluffs sitting far out on the left perspective." },
+              { "zone_name": "Fissile Basin Shelf", "color_profile": "Dark Olive-Grey", "description": "A deep shale platform tracing the middle baseline structure of the frame." },
+              { "zone_name": "Ash Bed Marker", "color_profile": "Whitish Tuff", "description": "A prominent white volcanic ash-sediment band breaking up the right canyon wall." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_dino_siltstone_009",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Siltstone Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a muddy riverbank bar deposits plane",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized block, flaggy planar cleavage", "color": "Olive Gray", "texture": "Sub-granular compact silt surface, smoother than sandstone" },
+              { "block_id": "block_color_y", "geometry": "3D stylized block, flaggy planar cleavage", "color": "Pale Gray", "texture": "Sub-granular compact silt surface, smoother than sandstone" },
+              { "block_id": "block_color_z", "geometry": "3D stylized block, flaggy planar cleavage", "color": "Brownish-Gray", "texture": "Sub-granular compact silt surface, smoother than sandstone" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Dinosaur Park Fluvial Lowland Basin",
+            "geological_mapping": [
+              { "zone_name": "Point Bar Escarpment", "color_profile": "Olive Gray", "description": "A low riverbank cutbank formation visible on the left background frame." },
+              { "zone_name": "Silt Splay Step", "color_profile": "Pale Gray", "description": "A wide crevasse splay sediment bench running through the midground frame." },
+              { "zone_name": "Stratified Mud Bluff", "color_profile": "Brownish-Gray", "description": "A heavy, silty deltaic plain wall framing the right background region." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_dino_volcanic_tuff_010",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Volcanic Tuff Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a dark basaltic ash field plane",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized angular block, highly vesicular, glassy shards", "color": "Slate Grey", "texture": "Porous, aerated ash consolidation matrix with tiny crystal inclusions" },
+              { "block_id": "block_color_y", "geometry": "3D stylized angular block, highly vesicular, glassy shards", "color": "Charcoal", "texture": "Porous, aerated ash consolidation matrix with tiny crystal inclusions" },
+              { "block_id": "block_color_z", "geometry": "3D stylized angular block, highly vesicular, glassy shards", "color": "Amber", "texture": "Porous, aerated ash consolidation matrix with tiny crystal inclusions" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Tiaojishan Volcanic Subtropical Basin",
+            "geological_mapping": [
+              { "zone_name": "Caldera Ridge Slope", "color_profile": "Slate Grey", "description": "The sloping outer edge of an ash-choked rift dome on the left field line." },
+              { "zone_name": "Tephra Flow Terrace", "color_profile": "Charcoal", "description": "A thick, dark volcanic flow sheet segment spanning across the center scene." },
+              { "zone_name": "Hydrothermal Vein Wall", "color_profile": "Amber", "description": "A chemically stained mineral ash cliff rising vertically along the right side." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle."
+          }
+        }
+      }
+    ],
+    "marine_matrix": [
+      {
+        "asset_id": "matrix_layout_marine_chalk_001",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Chalk Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a pale, high-albedo chalky seafloor",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized block, soft powdery crumbed corners", "color": "Pure White", "texture": "Friable, fine-grained coccolithophore micro-texture" },
+              { "block_id": "block_color_y", "geometry": "3D stylized block, soft powdery crumbed corners", "color": "Light Grey", "texture": "Friable, fine-grained coccolithophore micro-texture" },
+              { "block_id": "block_color_z", "geometry": "3D stylized block, soft powdery crumbed corners", "color": "Golden Sand", "texture": "Friable, fine-grained coccolithophore micro-texture" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Muwaqqar Tethys Pelagic Margin",
+            "geological_mapping": [
+              { "zone_name": "Seafloor Escarpment", "color_profile": "Pure White", "description": "A massive carbonate bench rising on the deep left benthic horizon." },
+              { "zone_name": "Pelagic Strata Bench", "color_profile": "Light Grey", "description": "A wide, flat chalk ledge cutting horizontally across the midground viewport." },
+              { "zone_name": "Marly Infill Wall", "color_profile": "Golden Sand", "description": "A phosphatic-rich marly sediment wall rising along the right marine background." }
+            ],
+            "lighting": "Clear afternoon sunlight striking through deep waters from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_marine_claystone_002",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Claystone Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a flat epicontinental seafloor mud",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized block, dense blocky fragmentation", "color": "Iron-oxide Orange", "texture": "Smooth silicate mud-consolidation faces lacking fissility" },
+              { "block_id": "block_color_y", "geometry": "3D stylized block, dense blocky fragmentation", "color": "Steel Grey", "texture": "Smooth silicate mud-consolidation faces lacking fissility" },
+              { "block_id": "block_color_z", "geometry": "3D stylized block, dense blocky fragmentation", "color": "Ochre", "texture": "Smooth silicate mud-consolidation faces lacking fissility" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Paja Epicontinental Seaway Basin",
+            "geological_mapping": [
+              { "zone_name": "Concretion Mound", "color_profile": "Iron-oxide Orange", "description": "A localized, iron-stained structural heave on the far left marine horizon." },
+              { "zone_name": "Marine Silt Ridge", "color_profile": "Steel Grey", "description": "A long, smooth silt terrace traversing the sub-aquatic center plane." },
+              { "zone_name": "Claystone Shelf Wall", "color_profile": "Ochre", "description": "A prominent mud-shelf exposure section wall framing the right landscape frame." }
+            ],
+            "lighting": "Clear afternoon sunlight striking through deep waters from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_marine_ironstone_003",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Ironstone Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a mineralized carbonaceous marine floor",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized ultra-dense block, oolitic texture", "color": "Dark Lead-Grey", "texture": "Heavy crystalline metallic body with dense rust pits" },
+              { "block_id": "block_color_y", "geometry": "3D stylized ultra-dense block, oolitic texture", "color": "Siderite Orange", "texture": "Heavy crystalline metallic body with dense rust pits" },
+              { "block_id": "block_color_z", "geometry": "3D stylized ultra-dense block, oolitic texture", "color": "Charcoal", "texture": "Heavy crystalline metallic body with dense rust pits" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Pierre Shale FW Siderite Basin",
+            "geological_mapping": [
+              { "zone_name": "Anoxic Ledge", "color_profile": "Dark Lead-Grey", "description": "A prominent dark ironstone ledge step visible on the far left viewport." },
+              { "zone_name": "Siderite Ridge Structure", "color_profile": "Siderite Orange", "description": "A prominent weathered mineral band structure extending through the scene midground." },
+              { "zone_name": "Carbonaceous Wall Face", "color_profile": "Charcoal", "description": "A stark mineralized marine wall framing the right side viewport." }
+            ],
+            "lighting": "Clear afternoon sunlight striking through deep waters from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_marine_limestone_004",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Limestone Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a fine white carbonate sand reef lagoon floor",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized block, sharp fossiliferous indents", "color": "Cream White", "texture": "Brittle bioclast micrite matrix holding shell outlines" },
+              { "block_id": "block_color_y", "geometry": "3D stylized block, sharp fossiliferous indents", "color": "Ivory", "texture": "Brittle bioclast micrite matrix holding shell outlines" },
+              { "block_id": "block_color_z", "geometry": "3D stylized block, sharp fossiliferous indents", "color": "Soft Beige", "texture": "Brittle bioclast micrite matrix holding shell outlines" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Solnhofen Tropical Lagoon Basin",
+            "geological_mapping": [
+              { "zone_name": "Plattenkalk Bench", "color_profile": "Cream White", "description": "An ultra-flat lithographic stone bench capping the left landscape horizon." },
+              { "zone_name": "Carbonate Shoal Bank", "color_profile": "Ivory", "description": "A wide, low structural sandy spit dividing the background water horizon." },
+              { "zone_name": "Lagoon Tier Escarpment", "color_profile": "Soft Beige", "description": "A layered micrite step terrace defining the right side background layout." }
+            ],
+            "lighting": "Clear afternoon sunlight striking through deep waters from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_marine_phosphorite_005",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Phosphorite Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a bone-rich lag deposit floor",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized dense block, nodular/pelletal texture", "color": "Ochre", "texture": "Grainy, bone-fragment pelletal matrix with a dull luster" },
+              { "block_id": "block_color_y", "geometry": "3D stylized dense block, nodular/pelletal texture", "color": "Pale Tan", "texture": "Grainy, bone-fragment pelletal matrix with a dull luster" },
+              { "block_id": "block_color_z", "geometry": "3D stylized dense block, nodular/pelletal texture", "color": "Dusty Gold", "texture": "Grainy, bone-fragment pelletal matrix with a dull luster" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Ouled Abdoun Pelagic Shelf Basin",
+            "geological_mapping": [
+              { "zone_name": "Lag Deposit Bench", "color_profile": "Ochre", "description": "An accumulation sheet step visible on the far left frame horizon." },
+              { "zone_name": "Phosphatic Sand Ridge", "color_profile": "Pale Tan", "description": "A long submarine bar feature running horizontally across the mid-view." },
+              { "zone_name": "Marly Escarpment Wall", "color_profile": "Dusty Gold", "description": "A highly mineralized sand cliff segment framing the right background window." }
+            ],
+            "lighting": "Clear afternoon sunlight striking through deep waters from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_marine_shale_006",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Shale Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a dark flat abyssal floor",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized block, highly paper-thin fissile splitting", "color": "Charcoal", "texture": "Bituminous laminated organic carbon sheet stack" },
+              { "block_id": "block_color_y", "geometry": "3D stylized block, highly paper-thin fissile splitting", "color": "Jet Black", "texture": "Bituminous laminated organic carbon sheet stack" },
+              { "block_id": "block_color_z", "geometry": "3D stylized block, highly paper-thin fissile splitting", "color": "Deep Indigo", "texture": "Bituminous laminated organic carbon sheet stack" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Poseidon Marine Oil Shale Basin",
+            "geological_mapping": [
+              { "zone_name": "Anoxic Sea Basin Step", "color_profile": "Charcoal", "description": "A steep structural drop platform shaping the lower left distance view." },
+              { "zone_name": "Laminated Floor Ridge", "color_profile": "Jet Black", "description": "A long organic mud ridge splitting the main seabed frame backdrop." },
+              { "zone_name": "Bituminous Wall Scarp", "color_profile": "Deep Indigo", "description": "A deep deep sea shale fissure wall tracing along the right frame limit." }
+            ],
+            "lighting": "Clear afternoon sunlight striking through deep waters from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_marine_volcanic_tuff_007",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Volcanic Tuff Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a glauconitic shelf sand floor",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized block, sub-pumice crystalline bits", "color": "Olive Green", "texture": "Sub-aquatic altered volcanic ash ash deposition plane texture" },
+              { "block_id": "block_color_y", "geometry": "3D stylized block, sub-pumice crystalline bits", "color": "Chocolate Brown", "texture": "Sub-aquatic altered volcanic ash ash deposition plane texture" },
+              { "block_id": "block_color_z", "geometry": "3D stylized block, sub-pumice crystalline bits", "color": "Gunmetal Grey", "texture": "Sub-aquatic altered volcanic ash ash deposition plane texture" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Cambridge Greensand Shelf Marine Basin",
+            "geological_mapping": [
+              { "zone_name": "Glauconitic Sand Bench", "color_profile": "Olive Green", "description": "An elevated green marine sand platform rising out to the left horizon." },
+              { "zone_name": "Nodular Lag Ridge", "color_profile": "Chocolate Brown", "description": "A long, dark phosphatic conglomerate ridge crossing the main mid-view." },
+              { "zone_name": "Tuffaceous Marine Escarpment", "color_profile": "Gunmetal Grey", "description": "A steep marine siltstone and tuff wall boundary on the right frame side." }
+            ],
+            "lighting": "Clear afternoon sunlight striking through deep waters from a three-quarter angle."
+          }
+        }
+      }
+    ],
+    "ptero_matrix": [
+      {
+        "asset_id": "matrix_layout_ptero_bentonite_001",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Bentonite Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a slippery clay shelf sea baseline floor",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized block, highly plastic, soapy conchoidal faces", "color": "Slate Grey", "texture": "Altered volcanic ash clay, smooth and highly plastic surface feel" },
+              { "block_id": "block_color_y", "geometry": "3D stylized block, highly plastic, soapy conchoidal faces", "color": "Silver", "texture": "Altered volcanic ash clay, smooth and highly plastic surface feel" },
+              { "block_id": "block_color_z", "geometry": "3D stylized block, highly plastic, soapy conchoidal faces", "color": "Black Carbonaceous Shale", "texture": "Altered volcanic ash clay, smooth and highly plastic surface feel" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Pierre Shale SW Marine Basin",
+            "geological_mapping": [
+              { "zone_name": "Bentonite Bed Ledge", "color_profile": "Slate Grey", "description": "A thick grey volcanic ash ash fall bed tracking out along the left far edge." },
+              { "zone_name": "Shimmering Silt Bench", "color_profile": "Silver", "description": "A flat, micaceous mud shelf running parallel across the center workspace line." },
+              { "zone_name": "Organic Shale Tier", "color_profile": "Black Carbonaceous Shale", "description": "A heavy dark carbonaceous wall structure finishing the right visual backdrop." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_ptero_chalk_002",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Chalk Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a white calcareous ooze floor plane",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized block, blocky clean breakplanes", "color": "Off-white", "texture": "Fine microcrystalline porous calcium carbonate structures" },
+              { "block_id": "block_color_y", "geometry": "3D stylized block, blocky clean breakplanes", "color": "Light Grey", "texture": "Fine microcrystalline porous calcium carbonate structures" },
+              { "block_id": "block_color_z", "geometry": "3D stylized block, blocky clean breakplanes", "color": "Soft Yellow", "texture": "Fine microcrystalline porous calcium carbonate structures" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Niobrara Chalk Epicontinental Basin",
+            "geological_mapping": [
+              { "zone_name": "Chalk Pillar Ridge", "color_profile": "Off-white", "description": "An eroded freestanding carbonate monument layer on the left horizon path." },
+              { "zone_name": "Calcareous Slope", "color_profile": "Light Grey", "description": "A long, smooth chalky limestone slope step moving cleanly across center frame." },
+              { "zone_name": "Weathered Bluffs Wall", "color_profile": "Soft Yellow", "description": "A sheer, yellow-stained pure marine chalk wall cliff capping the right margin." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_ptero_lignite_003",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Lignite Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a point bar sand and plant debris field",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized block, jagged woodgrain fracture lines", "color": "Red", "texture": "Brittle organic coal matter showing compressed fossil leaf layers" },
+              { "block_id": "block_color_y", "geometry": "3D stylized block, jagged woodgrain fracture lines", "color": "Purple", "texture": "Brittle organic coal matter showing compressed fossil leaf layers" },
+              { "block_id": "block_color_z", "geometry": "3D stylized block, jagged woodgrain fracture lines", "color": "Charcoal Grey", "texture": "Brittle organic coal matter showing compressed fossil leaf layers" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Wessex Seasonal Subtropical Basin",
+            "geological_mapping": [
+              { "zone_name": "Oxidized Mud Knob", "color_profile": "Red", "description": "A prominent reddish point bar mud mound breaking out on the left background." },
+              { "zone_name": "Mottled Fluvial Ridge", "color_profile": "Purple", "description": "A long, multi-hued floodplain step line stretching far across the scene middle." },
+              { "zone_name": "Plant Debris Pit Wall", "color_profile": "Charcoal Grey", "description": "A dark, plant-debris heavy soil wall framing out the right side of the layout." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_ptero_sandstone_004",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Sandstone Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on an active river delta sandbar plain",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized block, granular pitted faces, porous structure", "color": "Golden Yellow", "texture": "Coarse sand grains consolidated with iron oxide cement bands" },
+              { "block_id": "block_color_y", "geometry": "3D stylized block, granular pitted faces, porous structure", "color": "Pale Tan", "texture": "Coarse sand grains consolidated with iron oxide cement bands" },
+              { "block_id": "block_color_z", "geometry": "3D stylized block, granular pitted faces, porous structure", "color": "Iron-oxide Red", "texture": "Coarse sand grains consolidated with iron oxide cement bands" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Elrhaz River Deltaic Basin",
+            "geological_mapping": [
+              { "zone_name": "Channel Sand Bluff", "color_profile": "Golden Yellow", "description": "A deep cross-bedded sand channel wall rising along the left field side." },
+              { "zone_name": "Deltaic Spit Ledge", "color_profile": "Pale Tan", "description": "A long sandy platform slicing directly across the river basin middle plane." },
+              { "zone_name": "Oxidized Silt Cliff", "color_profile": "Iron-oxide Red", "description": "A steep red deltaic clay wall highlighting the frame's right lateral bounds." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_ptero_shale_005",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Shale Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a stagnant volcanic lake mud floor",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized block, paper-thin step fragmentation", "color": "Yellow-green", "texture": "Finely laminated tuffaceous paper shale sheet sheets" },
+              { "block_id": "block_color_y", "geometry": "3D stylized block, paper-thin step fragmentation", "color": "Gray-green", "texture": "Finely laminated tuffaceous paper shale sheet sheets" },
+              { "block_id": "block_color_z", "geometry": "3D stylized block, paper-thin step fragmentation", "color": "Purple-gray", "texture": "Finely laminated tuffaceous paper shale sheet sheets" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Jiufotang Volcanic Lacustrine Basin",
+            "geological_mapping": [
+              { "zone_name": "Laminated Ash Tier", "color_profile": "Yellow-green", "description": "A fine sediment ash band shaping the far upper left topographic shelf." },
+              { "zone_name": "Shale Basin Flats", "color_profile": "Gray-green", "description": "The flat, weathered central floor expanse of an extinct caldera system lake bed." },
+              { "zone_name": "Tuffaceous Lake Escarpment", "color_profile": "Purple-gray", "description": "A heavy stratified tuffaceous mud wall bordering out the far right frame side." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle."
+          }
+        }
+      },
+      {
+        "asset_id": "matrix_layout_ptero_volcanic_tuff_006",
+        "project": "DinoGames",
+        "version": "1.0.0",
+        "meta": { "style_preset": "STYLE_ANIMATED_FEATURE_V3", "lighting_preset": "SUNNY_EXPOSED_CINEMATIC", "intended_use": "UI_Rock_Sample_Match_Card" },
+        "canvas_constraints": { "aspect_ratio": "1:1 (Square Layout)", "target_resolution": "1024x1024" },
+        "composition": {
+          "camera": { "type": "Cinematic 3D", "framing": "Three-quarter angled perspective", "angle": "Angled dynamic close shot focusing on the three foreground sample blocks" },
+          "foreground_element": {
+            "type": "Multiple Material Blocks Array",
+            "rock_type": "Volcanic Tuff Variant Set",
+            "placement": "Three blocks arranged neatly side-by-side on a light ash silt forest floor",
+            "blocks": [
+              { "block_id": "block_color_x", "geometry": "3D stylized angular block, vesicular glass shard textures", "color": "Silver-grey", "texture": "Highly consolidated pyroclastic surge matrix with embedded ash crystals" },
+              { "block_id": "block_color_y", "geometry": "3D stylized angular block, vesicular glass shard textures", "color": "Cool grey", "texture": "Highly consolidated pyroclastic surge matrix with embedded ash crystals" },
+              { "block_id": "block_color_z", "geometry": "3D stylized angular block, vesicular glass shard textures", "color": "Creamy ash", "texture": "Highly consolidated pyroclastic surge matrix with embedded ash crystals" }
+            ]
+          },
+          "background_environment": {
+            "formation_archetype": "Daohugou Volcanic Forested Basin",
+            "geological_mapping": [
+              { "zone_name": "Pyroclastic Ledge", "color_profile": "Silver-grey", "description": "A hardened ash flow terrace bench projecting out on the left side field." },
+              { "zone_name": "Tephra Floor Expanse", "color_profile": "Cool grey", "description": "The broad, flat volcanic silt plain stretching throughout scene middle ground." },
+              { "zone_name": "Ash Fall Wall Face", "color_profile": "Creamy ash", "description": "A light-colored, highly powdery ash fall cliff profiling the far right scene axis." }
+            ],
+            "lighting": "Clear afternoon sunlight striking the landscape from a three-quarter angle."
+          }
+        }
+      }
+    ]
+  }

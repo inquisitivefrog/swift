@@ -1,0 +1,24 @@
+{
+  "asset_manifest": [
+    {
+      "id": "marine_footprints_promo_v1",
+      "project": "MarineFootprints",
+      "species_primary": "marine_walker_nothosaurus",
+      "species_secondary": "juvenile_unspecified_sauropterygian",
+      "character_ref": "dino_bones_paleontologist_1",
+      "tech_ref": "SQUARE_ASPECT_RATIO",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+      "formation_ref": "MUSCHELKALK",
+      "habitat_ref": "COASTAL_TIDAL_MUDFLATS",
+      "pose": "An adult male grad student (Caucasian race, short dark hair) wearing a signature thin-rimmed black rectangular pair of glasses, a khaki sun hat, light blue tee shirt, and khaki safari vest kneels with joyful surprise on a wet, dark grey mudflat. He is pointing down at a beautifully clear, five-toed webbed footprint trackway. Nearby, a stylized, friendly Nothosaurus with a sleek seal-like body, webbed feet, and a wide cheerful smile is partially hauled up onto the mud, looking over at him playfully.",
+      "visual_notes": {
+        "text_overlay": "Marine Footprints!",
+        "text_style": "Bright Coral-Orange, high-poly 3D mixed case text with a glossy finish to match the STYLE_ANIMATED_FEATURE_V3 aesthetic.",
+        "ground_texture": "Glistening, wet dark grey mineral mud and fine silt with shallow water puddles and ripples characteristic of the coastal MUSCHELKALK formation.",
+        "ichnology_spec": "The trackway displays distinct semi-aquatic marine reptile impressions (Chirotherium-like tracks): the prints show five thick, splayed toes with faint, curved claw marks at the tips and a soft, curved webbed skin margin membrane visible between each digit. The tracks are sunken negative impressions surrounded by small, glistening mud-heave ridges.",
+        "character_consistency": "The paleontologist accurately displays the black rectangular glasses, light blue shirt under the vest, blue jean slacks, and black boots as outlined in the core character library."
+      }
+    }
+  ]
+}

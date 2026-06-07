@@ -101,6 +101,10 @@ enum GameLevel: String, CaseIterable, Identifiable {
         case .level10: return "level-10-good-luck-youll-need-it"
         }
     }
+
+    var zeroOrderedIndex: Int {
+        GameLevel.allCases.firstIndex(of: self) ?? 0
+    }
 }
 
 extension GameLevel {

@@ -1,1 +1,11 @@
-High-fidelity 3D render of Corythosaurus honeycomb battery with dense honeycomb rows of teeth.  Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_battery_paired_honeycomb",
+  "species": "Corythosaurus casuarius",
+  "morphology": "paired_dense_honeycomb_dental_battery_blocks",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Shows two complete, identical, vertically oriented dental battery blocks standing side-by-side, based on image_1.png, to highlight the massive, interlocking chewing apparatus and to allow for visual comparison of two such structures within a single asset frame. The arrangement maintains clear space between them.",
+  "prompt": "A high-fidelity 3D asset render, executed in a 3D animated feature film aesthetic, featuring two (2) complete, identical fossilized Corythosaurus honeycomb dental battery blocks, based on the structure and texture of the specimen in image_1.png. Both blocks are standing vertically and parallel to each other, placed side-by-side on a seamless, solid light-grey studio plane, with a clear, small space between them. Each block is a dense, multi-layered vertical chewing wall composed of dozens of interlocking hexagonal and sub-rectangular teeth with wear facets and central enamel ridges on the top grinding surface. The texture is a weathered ivory, cream, and tan mix with a clean, low-gloss matte finish. The perspective is frontal, showing both complete blocks. Symmetrical composition. The entire scene is framed with a strict 25% empty background safety margin on all four sides to eliminate UI clipping. Soft studio lighting with precise ambient occlusion accentuates individual tooth and block detail. A single, clean checkered black-and-white scientific scale bar sits centered at the bottom, positioned below both blocks. Balanced and symmetrical composition."
+}

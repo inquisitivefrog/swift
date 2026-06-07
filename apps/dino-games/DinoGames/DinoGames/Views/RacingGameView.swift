@@ -5,6 +5,7 @@
 //  Racing Dinosaurs!: Player picks two dinosaurs from four per period; they race on an oval track.
 //  Dino racer art: prefer `dino-racer-{clade}-{slug}-*` then legacy `dino-racer-{slug}-*` (slug uses trex for T-Rex).
 //  Racing Pterosaurs: uses `ptero-racer-*` packs (with compatibility for older `ptero-racing-*` names); pool filters by catalog; no `ptero-*` portrait fallback.
+//  Racing Marine Reptiles: eight buoys in a circular sea course; `marine-racer-*` packs with catalog body fallback.
 //
 
 import SwiftUI
@@ -23,6 +24,28 @@ struct RacingRacer: Identifiable {
     let racerAssetClade: String?
     /// Racing Pterosaurs imageset base (`ptero-racer-*`, with compatibility for `ptero-racing-*`); nil for dinosaurs.
     let pteroRacingAssetBase: String?
+    /// Racing Marine Reptiles imageset base (`marine-racer-*` / `marine-racing-*`); nil when using catalog body only.
+    let marineRacingAssetBase: String?
+
+    init(
+        id: Int,
+        name: String,
+        icon: String,
+        speed: Double,
+        fallbackImageName: String? = nil,
+        racerAssetClade: String? = nil,
+        pteroRacingAssetBase: String? = nil,
+        marineRacingAssetBase: String? = nil
+    ) {
+        self.id = id
+        self.name = name
+        self.icon = icon
+        self.speed = speed
+        self.fallbackImageName = fallbackImageName
+        self.racerAssetClade = racerAssetClade
+        self.pteroRacingAssetBase = pteroRacingAssetBase
+        self.marineRacingAssetBase = marineRacingAssetBase
+    }
 
     /// Slug for asset names: lowercase, spaces → hyphens (e.g. "T-Rex" → "t-rex").
     var imageSlug: String {
@@ -60,6 +83,9 @@ struct RacingRacer: Identifiable {
         if prefix == "ptero", let b = pteroRacingAssetBase {
             return b
         }
+        if prefix == "marine", let b = marineRacingAssetBase {
+            return b
+        }
         return "\(prefix)-racer-\(imageSlug)"
     }
     /// Ready pose: {prefix}-racer-{slug}-ready. Shown when dinosaurs are selected (grid, pre-race).
@@ -68,6 +94,9 @@ struct RacingRacer: Identifiable {
             return dinoRacerAssetBases().first! + "-ready"
         }
         if prefix == "ptero", let b = pteroRacingAssetBase {
+            return b + "-ready"
+        }
+        if prefix == "marine", let b = marineRacingAssetBase {
             return b + "-ready"
         }
         return racerImageName(prefix: prefix) + "-ready"
@@ -80,6 +109,9 @@ struct RacingRacer: Identifiable {
         if prefix == "ptero", let b = pteroRacingAssetBase {
             return b + "-run"
         }
+        if prefix == "marine", let b = marineRacingAssetBase {
+            return b + "-run"
+        }
         return racerImageName(prefix: prefix) + "-run"
     }
     /// Tripped pose: {prefix}-racer-{slug}-tripped. Shown briefly when faster dinosaur trips during race.
@@ -90,6 +122,9 @@ struct RacingRacer: Identifiable {
         if prefix == "ptero", let b = pteroRacingAssetBase {
             return b + "-tripped"
         }
+        if prefix == "marine", let b = marineRacingAssetBase {
+            return b + "-tripped"
+        }
         return racerImageName(prefix: prefix) + "-tripped"
     }
     /// Finish-line pose for winner/victory: {prefix}-winner-race-{slug}; ptero uses racing finish-excited as primary key string.
@@ -98,6 +133,9 @@ struct RacingRacer: Identifiable {
             return dinoWinnerRaceAssetNames().first!
         }
         if prefix == "ptero", let b = pteroRacingAssetBase {
+            return b + "-finish-excited"
+        }
+        if prefix == "marine", let b = marineRacingAssetBase {
             return b + "-finish-excited"
         }
         return "\(prefix)-winner-race-\(imageSlug)"
@@ -133,6 +171,14 @@ private func firstExistingPterosaurSuffix(base: String, suffixes: [String]) -> S
         if ImageAssetCache.imageExists(named: candidate) {
             return candidate
         }
+    }
+    return nil
+}
+
+private func firstExistingMarineSuffix(base: String, suffixes: [String]) -> String? {
+    for suffix in suffixes {
+        let name = base + suffix
+        if ImageAssetCache.imageExists(named: name) { return name }
     }
     return nil
 }
@@ -194,6 +240,36 @@ private func racerDisplayImageName(for racer: RacingRacer, config: RacingGameCon
         return nil
     }
 
+    if prefix == "marine", let b = racer.marineRacingAssetBase {
+        switch pose {
+        case .start:
+            if ImageAssetCache.imageExists(named: b + "-ready") { return b + "-ready" }
+            if ImageAssetCache.imageExists(named: b) { return b }
+        case .running:
+            if let n = firstExistingMarineSuffix(base: b, suffixes: ["-run", "-ready"]) { return n }
+            if ImageAssetCache.imageExists(named: b + "-ready") { return b + "-ready" }
+            if ImageAssetCache.imageExists(named: b) { return b }
+        case .tripped:
+            if ImageAssetCache.imageExists(named: b + "-tripped") { return b + "-tripped" }
+            if let n = firstExistingMarineSuffix(base: b, suffixes: ["-run", "-ready"]) { return n }
+            if ImageAssetCache.imageExists(named: b + "-ready") { return b + "-ready" }
+            if ImageAssetCache.imageExists(named: b) { return b }
+        case .finish:
+            if let n = firstExistingMarineSuffix(base: b, suffixes: ["-finish-excited", "-finish-exhausted", "-excited"]) { return n }
+            if let n = firstExistingMarineSuffix(base: b, suffixes: ["-run", "-ready"]) { return n }
+            if ImageAssetCache.imageExists(named: b + "-ready") { return b + "-ready" }
+        }
+        let fallback = racer.effectiveFallbackImageName(prefix: prefix)
+        if ImageAssetCache.imageExists(named: fallback) { return fallback }
+        return nil
+    }
+
+    if prefix == "marine" {
+        let fallback = racer.effectiveFallbackImageName(prefix: prefix)
+        if ImageAssetCache.imageExists(named: fallback) { return fallback }
+        return nil
+    }
+
     switch pose {
     case .start:
         if ImageAssetCache.imageExists(named: racer.readyImageName(prefix: prefix)) { return racer.readyImageName(prefix: prefix) }
@@ -236,6 +312,9 @@ private func finishRefereeImageName(prefix: String, isBroadDelta: Bool) -> Strin
 }
 
 private func tieRefereeImageName(prefix: String) -> String {
+    if prefix == "marine", ImageAssetCache.imageExists(named: "marine-racer-referee-finished-tie") {
+        return "marine-racer-referee-finished-tie"
+    }
     if prefix == "ptero", ImageAssetCache.imageExists(named: "ptero-racer-referee-finished-tie") {
         return "ptero-racer-referee-finished-tie"
     }
@@ -244,6 +323,9 @@ private func tieRefereeImageName(prefix: String) -> String {
 }
 
 private func startRefereeImageName(prefix: String) -> String {
+    if prefix == "marine", ImageAssetCache.imageExists(named: "marine-racer-referee-start") {
+        return "marine-racer-referee-start"
+    }
     if prefix == "ptero", ImageAssetCache.imageExists(named: "ptero-racer-referee-start") {
         return "ptero-racer-referee-start"
     }
@@ -276,6 +358,17 @@ private func finishWinnerImageName(for racer: RacingRacer, config: RacingGameCon
         }
         return nil
     }
+    if prefix == "marine", let b = racer.marineRacingAssetBase {
+        if isBroadDelta,
+           let excited = firstExistingMarineSuffix(base: b, suffixes: ["-finish-excited", "-finished-excited", "-excited"]) {
+            return excited
+        }
+        if !isBroadDelta,
+           let exhausted = firstExistingMarineSuffix(base: b, suffixes: ["-finish-exhausted", "-finished-exhausted", "-exhausted"]) {
+            return exhausted
+        }
+        return nil
+    }
     let base = racer.racerImageName(prefix: prefix)
     let excited = base + "-finish-excited"
     let exhausted = base + "-finish-exhausted"
@@ -291,15 +384,34 @@ private func finishWinnerImageName(for racer: RacingRacer, config: RacingGameCon
     return ImageAssetCache.imageExists(named: fallback) ? fallback : nil
 }
 
+/// Course geometry for the live race and referee finish preview.
+enum RacingTrackLayout: Equatable {
+    case ovalDualLane
+    case airportHop
+    /// Eight buoys on one exterior ring; racers weave wide (outside) / tight (inside) on each buoy leg clockwise.
+    case marineBuoyCircle(buoyCount: Int = 8)
+}
+
 struct RacingGameConfig {
     let id: String
     let title: String
     let introAudio: String
-    let assetPrefix: String // "dino" or "ptero" for racer/winner/referee image names
+    let assetPrefix: String // "dino", "ptero", or "marine" for racer/winner/referee image names
     let racers: [RacingRacer] // All pool dinosaurs (6) for dinosaur racing; 4 for pterosaurs
     /// Pool's min/max speeds for "max delta" trip logic. Nil when pool unknown.
     let poolMinSpeed: Double?
     let poolMaxSpeed: Double?
+    let trackLayout: RacingTrackLayout
+}
+
+private func racingSuccessImageCandidates(for config: RacingGameConfig) -> [String] {
+    if config.id.contains("marine") {
+        return ["game-\(config.id)-success", "game-racing-marine-reptiles-success", "game-racing-marine-reptiles"]
+    }
+    if config.id.contains("ptero") {
+        return ["game-\(config.id)-success", "game-racing-pterosaurs-success", "game-racing-pterosaurs"]
+    }
+    return ["game-\(config.id)-success", "game-racing-dinosaurs-success", "game-racing-dinosaurs"]
 }
 
 // MARK: - Main View
@@ -365,6 +477,38 @@ struct RacingGameView: View {
         effectiveConfig ?? gameConfig
     }
 
+    private var firstRacerSelectionPromptKey: String {
+        switch config.assetPrefix {
+        case "ptero": return "game-racer-choose-your-first-pterosaur-to-race"
+        case "marine": return "game-choose-your-first-marine-reptile"
+        default: return "game-racer-choose-your-first-dinosaur-to-race"
+        }
+    }
+
+    private var secondRacerSelectionPromptKey: String {
+        switch config.assetPrefix {
+        case "ptero": return "game-racer-choose-your-second-pterosaur-to-race"
+        case "marine": return "game-choose-your-second-marine-reptile"
+        default: return "game-racer-choose-your-second-dinosaur-to-race"
+        }
+    }
+
+    private var chooseFirstRacerLabel: String {
+        switch config.assetPrefix {
+        case "ptero": return "Choose your first pterosaur to race"
+        case "marine": return "Choose your first marine reptile to race"
+        default: return "Choose your first dinosaur to race"
+        }
+    }
+
+    private var chooseSecondRacerLabel: String {
+        switch config.assetPrefix {
+        case "ptero": return "Choose your second pterosaur to race"
+        case "marine": return "Choose your second marine reptile to race"
+        default: return "Choose your second dinosaur to race"
+        }
+    }
+
     /// True when we need to show period selection first (racing-dinosaurs with empty racers).
     private var needsPeriodSelection: Bool {
         gameConfig.racers.isEmpty && (gameConfig.id == "racing-dinosaurs" || gameConfig.id == "racing-pterosaurs")
@@ -396,7 +540,7 @@ struct RacingGameView: View {
                                 .onAppear {
                                     if selectedLane1 == nil && !hasPlayedFirstRacerPrompt {
                                         hasPlayedFirstRacerPrompt = true
-                                        let firstPrompt = config.assetPrefix == "ptero" ? "game-racer-choose-your-first-pterosaur-to-race" : "game-racer-choose-your-first-dinosaur-to-race"
+                                        let firstPrompt = firstRacerSelectionPromptKey
                                         speechManager.speak(firstPrompt)
                                     }
                                 }
@@ -446,11 +590,11 @@ struct RacingGameView: View {
                 .font(.subheadline)
                 .foregroundColor(.secondary)
             if selectedLane1 == nil {
-                Text(config.assetPrefix == "ptero" ? "Choose your first pterosaur to race" : "Choose your first dinosaur to race")
+                Text(chooseFirstRacerLabel)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             } else if selectedLane2 == nil && pendingRacer2 == nil {
-                Text(config.assetPrefix == "ptero" ? "Choose your second pterosaur to race" : "Choose your second dinosaur to race")
+                Text(chooseSecondRacerLabel)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
@@ -504,7 +648,7 @@ struct RacingGameView: View {
         showingExpandedRacer = nil
         selectedLane1 = racer
         canSelectSecond = true
-        let secondPrompt = config.assetPrefix == "ptero" ? "game-racer-choose-your-second-pterosaur-to-race" : "game-racer-choose-your-second-dinosaur-to-race"
+        let secondPrompt = secondRacerSelectionPromptKey
         speechManager.speak(secondPrompt)
     }
 
@@ -570,18 +714,26 @@ struct RacingGameView: View {
         }
 
         let steps: [(word: String, key: String)] = {
-            if config.assetPrefix == "ptero" {
+            switch config.assetPrefix {
+            case "ptero":
                 return [
                     ("Ready", "game-racing-pterosaurs-ready"),
                     ("Set", "game-racing-pterosaurs-set"),
                     ("Go!", "game-racing-pterosaurs-go"),
                 ]
+            case "marine":
+                return [
+                    ("Ready", "game-racing-marine-reptiles-ready"),
+                    ("Set", "game-racing-marine-reptiles-set"),
+                    ("Go!", "game-racing-marine-reptiles-go"),
+                ]
+            default:
+                return [
+                    ("Ready", "game-racing-dinosaurs-ready"),
+                    ("Set", "game-racing-dinosaurs-set"),
+                    ("Go!", "game-racing-dinosaurs-go"),
+                ]
             }
-            return [
-                ("Ready", "game-racing-dinosaurs-ready"),
-                ("Set", "game-racing-dinosaurs-set"),
-                ("Go!", "game-racing-dinosaurs-go"),
-            ]
         }()
 
         func playStep(_ index: Int) {
@@ -648,28 +800,38 @@ struct RacingGameView: View {
                 }
             }
         } else {
-            speechManager.onAudioFinished = {
+            // Same defer as step 0: stray delegate completions from the first-position clip must not
+            // fire after we register `onAudioFinished` and skip straight to “second position” without the name.
+            let prefix = config.assetPrefix
+            let nameKey = insideRacer.effectiveFallbackImageName(prefix: prefix)
+            let nameFallback = insideRacer.name
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
                 Task { @MainActor in
-                    self.speechManager.onAudioFinished = nil
-                    if let url = self.speechManager.urlForAudio(key: "game-racing-second-position")
-                        ?? self.speechManager.urlForAudio(key: "game-racing-inside-track") {
-                        self.speechManager.onAudioFinished = {
-                            Task { @MainActor in
-                                self.speechManager.onAudioFinished = nil
+                    guard self.preRaceStep == 1, self.preRaceContestantsLaneStarted == 1 else { return }
+                    self.speechManager.onAudioFinished = {
+                        Task { @MainActor in
+                            self.speechManager.onAudioFinished = nil
+                            if let url = self.speechManager.urlForAudio(key: "game-racing-second-position")
+                                ?? self.speechManager.urlForAudio(key: "game-racing-inside-track") {
+                                self.speechManager.onAudioFinished = {
+                                    Task { @MainActor in
+                                        self.speechManager.onAudioFinished = nil
+                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                            self.preRaceStep = 2
+                                        }
+                                    }
+                                }
+                                self.speechManager.playAudioFile(url: url)
+                            } else {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                                     self.preRaceStep = 2
                                 }
                             }
                         }
-                        self.speechManager.playAudioFile(url: url)
-                    } else {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                            self.preRaceStep = 2
-                        }
                     }
+                    self.speechManager.speak(audioKey: nameKey, fallbackText: nameFallback, chainDelay: true)
                 }
             }
-            speechManager.speak(audioKey: insideRacer.effectiveFallbackImageName(prefix: config.assetPrefix), fallbackText: insideRacer.name, chainDelay: true)
         }
     }
 
@@ -889,7 +1051,8 @@ struct RacingGameView: View {
         let finishRefereeName = isTie
             ? tieRefereeImageName(prefix: cfg.assetPrefix)
             : finishRefereeImageName(prefix: cfg.assetPrefix, isBroadDelta: true)
-        if cfg.assetPrefix == "ptero" {
+        switch cfg.trackLayout {
+        case .airportHop:
             let padding: CGFloat = 24
             let trackWidth = max(1, geometry.size.width - padding * 2)
             let trackHeight = max(120, geometry.size.height - 140)
@@ -939,7 +1102,59 @@ struct RacingGameView: View {
                 }
                 .padding(.horizontal, padding)
             )
-        }
+        case .marineBuoyCircle(let buoyCount):
+            let padding: CGFloat = 24
+            let trackWidth = max(1, geometry.size.width - padding * 2)
+            let trackHeight = max(120, geometry.size.height - 140)
+            let racerSize: CGFloat = 48
+            let waypointSize: CGFloat = 36
+            let outerR = circleLaneRadius(width: trackWidth, height: trackHeight, laneInset: 0)
+            let innerR = circleLaneRadius(width: trackWidth, height: trackHeight, laneInset: marineBuoyCircleLaneInset)
+            let count = max(3, buoyCount)
+            let pos1 = pointOnMarineSlalomCourse(progress: 1.0, width: trackWidth, height: trackHeight, outerR: outerR, innerR: innerR, buoyCount: count)
+            let pos2 = pointOnMarineSlalomCourse(progress: 1.0, width: trackWidth, height: trackHeight, outerR: outerR, innerR: innerR, buoyCount: count)
+            let off1 = marineSlalomRacerOffset(progress: 1.0, racerIndex: 0, width: trackWidth, height: trackHeight, outerR: outerR, innerR: innerR, buoyCount: count)
+            let off2 = marineSlalomRacerOffset(progress: 1.0, racerIndex: 1, width: trackWidth, height: trackHeight, outerR: outerR, innerR: innerR, buoyCount: count)
+            let half = racerSize / 2
+            let finishLineWidth: CGFloat = 4
+            let finishLineHeight: CGFloat = 10
+            let finishLineX = trackWidth / 2 - finishLineWidth / 2
+            let refereeSize: CGFloat = 64
+            return AnyView(
+                VStack(spacing: 8) {
+                    Text(finishHeadline)
+                        .font(.headline)
+                    ZStack(alignment: .topLeading) {
+                        AirportCourseWaterBackground(width: trackWidth, height: trackHeight)
+                        marineSlalomPath(width: trackWidth, height: trackHeight, outerR: outerR, innerR: innerR, buoyCount: count)
+                            .stroke(Color.white.opacity(0.38), style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
+                        Circle()
+                            .stroke(Color.white.opacity(0.45), style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
+                            .frame(width: outerR * 2, height: outerR * 2)
+                            .offset(x: trackWidth / 2 - outerR, y: trackHeight / 2 - outerR)
+                        ForEach(0..<count, id: \.self) { index in
+                            let buoyProgress = Double(index) / Double(count)
+                            let buoyPoint = pointOnBuoyCircle(progress: buoyProgress, width: trackWidth, height: trackHeight, radius: outerR)
+                            let halfBuoy = waypointSize / 2
+                            buoyMarkerView(index: index, size: waypointSize)
+                                .offset(x: buoyPoint.x - halfBuoy, y: buoyPoint.y - halfBuoy)
+                        }
+                        Rectangle()
+                            .fill(Color.white.opacity(0.95))
+                            .frame(width: finishLineWidth, height: finishLineHeight)
+                            .offset(x: finishLineX, y: trackHeight - finishLineHeight)
+                        racerView(racer: r1, size: racerSize, pose: .finish)
+                            .offset(x: pos1.x - half + off1.width, y: pos1.y - half + off1.height)
+                        racerView(racer: r2, size: racerSize, pose: .finish)
+                            .offset(x: pos2.x - half + off2.width, y: pos2.y - half + off2.height)
+                        refereeImageViewSmall(finishRefereeName, size: refereeSize)
+                            .offset(x: trackWidth / 2 - refereeSize / 2, y: trackHeight / 2 - refereeSize / 2)
+                    }
+                    .frame(width: trackWidth, height: trackHeight)
+                }
+                .padding(.horizontal, padding)
+            )
+        case .ovalDualLane:
         let padding: CGFloat = 24
         let trackInset: CGFloat = 44
         let ovalWidth = max(trackInset * 2 + 4, geometry.size.width - padding * 2)
@@ -998,16 +1213,261 @@ struct RacingGameView: View {
             .frame(width: ovalWidth, height: ovalHeight)
         }
         .padding(.horizontal, padding))
+        }
     }
     
-    // MARK: - Race (oval for dinosaurs; airport A→B→C→D for pterosaurs)
+    // MARK: - Race (oval / airport hop / marine buoy circle)
 
     private func raceTrack(geometry: GeometryProxy) -> some View {
         guard let r1 = selectedLane1, let r2 = selectedLane2 else { return AnyView(EmptyView()) }
-        if config.assetPrefix == "ptero" {
+        switch config.trackLayout {
+        case .airportHop:
             return AnyView(airportTrackView(geometry: geometry, progress1: progress1, progress2: progress2, racer1: r1, racer2: r2, trippedRacerId: trippedRacerId, raceElapsedSeconds: raceElapsedSeconds))
+        case .marineBuoyCircle(let buoyCount):
+            return AnyView(buoyCircleTrackView(geometry: geometry, progress1: progress1, progress2: progress2, racer1: r1, racer2: r2, trippedRacerId: trippedRacerId, raceElapsedSeconds: raceElapsedSeconds, buoyCount: buoyCount))
+        case .ovalDualLane:
+            return AnyView(ovalTrackView(geometry: geometry, progress1: progress1, progress2: progress2, racer1: r1, racer2: r2, trippedRacerId: trippedRacerId, raceElapsedSeconds: raceElapsedSeconds))
         }
-        return AnyView(ovalTrackView(geometry: geometry, progress1: progress1, progress2: progress2, racer1: r1, racer2: r2, trippedRacerId: trippedRacerId, raceElapsedSeconds: raceElapsedSeconds))
+    }
+
+    // MARK: - Marine buoy slalom (eight buoys on exterior ring, alternating wide/tight legs)
+
+    private let marineBuoyCircleLaneInset: CGFloat = 36
+
+    private func circleLaneRadius(width: CGFloat, height: CGFloat, laneInset: CGFloat) -> CGFloat {
+        max(40, min(width, height) * 0.36 - laneInset)
+    }
+
+    /// Progress 0…1: buoy positions on the exterior ring (start/finish at bottom center, clockwise).
+    private func pointOnBuoyCircle(progress: Double, width: CGFloat, height: CGFloat, radius: CGFloat) -> CGPoint {
+        let cx = width / 2
+        let cy = height / 2
+        let p = max(0, min(1, progress))
+        let theta = CGFloat.pi / 2 + CGFloat(p) * 2 * CGFloat.pi
+        return CGPoint(x: cx + radius * cos(theta), y: cy + radius * sin(theta))
+    }
+
+    private func marineSlalomRadius(forSegment index: Int, outerR: CGFloat, innerR: CGFloat) -> CGFloat {
+        index % 2 == 0 ? outerR : innerR
+    }
+
+    private func marineSlalomSegmentLengths(outerR: CGFloat, innerR: CGFloat, buoyCount: Int) -> [CGFloat] {
+        let count = max(3, buoyCount)
+        let sweep = 2 * CGFloat.pi / CGFloat(count)
+        return (0..<count).map { marineSlalomRadius(forSegment: $0, outerR: outerR, innerR: innerR) * sweep }
+    }
+
+    /// One lap: buoy 1 outside, buoy 2 inside, … back to the start line at the first buoy.
+    private func pointOnMarineSlalomCourse(
+        progress: Double,
+        width: CGFloat,
+        height: CGFloat,
+        outerR: CGFloat,
+        innerR: CGFloat,
+        buoyCount: Int
+    ) -> CGPoint {
+        let count = max(3, buoyCount)
+        let cx = width / 2
+        let cy = height / 2
+        let p = max(0, progress)
+        if p >= 1 {
+            return CGPoint(x: cx + outerR * cos(CGFloat.pi / 2), y: cy + outerR * sin(CGFloat.pi / 2))
+        }
+        let lengths = marineSlalomSegmentLengths(outerR: outerR, innerR: innerR, buoyCount: count)
+        let total = lengths.reduce(0, +)
+        guard total > 0 else {
+            return CGPoint(x: cx, y: cy + outerR)
+        }
+        var dist = CGFloat(p) * total
+        let segmentSweep = 2 * CGFloat.pi / CGFloat(count)
+        for i in 0..<count {
+            let segLen = lengths[i]
+            if dist <= segLen || i == count - 1 {
+                let t = segLen > 0 ? min(1, dist / segLen) : 0
+                let r = marineSlalomRadius(forSegment: i, outerR: outerR, innerR: innerR)
+                let theta = CGFloat.pi / 2 + CGFloat(i) * segmentSweep + t * segmentSweep
+                return CGPoint(x: cx + r * cos(theta), y: cy + r * sin(theta))
+            }
+            dist -= segLen
+        }
+        return CGPoint(x: cx + outerR * cos(CGFloat.pi / 2), y: cy + outerR * sin(CGFloat.pi / 2))
+    }
+
+    private func marineSlalomRacerOffset(
+        progress: Double,
+        racerIndex: Int,
+        width: CGFloat,
+        height: CGFloat,
+        outerR: CGFloat,
+        innerR: CGFloat,
+        buoyCount: Int
+    ) -> CGSize {
+        let delta = 0.005
+        let p0 = pointOnMarineSlalomCourse(
+            progress: max(0, progress - delta),
+            width: width,
+            height: height,
+            outerR: outerR,
+            innerR: innerR,
+            buoyCount: buoyCount
+        )
+        let p1 = pointOnMarineSlalomCourse(
+            progress: min(1, progress + delta),
+            width: width,
+            height: height,
+            outerR: outerR,
+            innerR: innerR,
+            buoyCount: buoyCount
+        )
+        let dx = p1.x - p0.x
+        let dy = p1.y - p0.y
+        let len = hypot(dx, dy)
+        guard len > 0.5 else { return .zero }
+        let nx = -dy / len
+        let ny = dx / len
+        let side: CGFloat = racerIndex == 0 ? -1 : 1
+        let gap: CGFloat = 11
+        return CGSize(width: nx * gap * side, height: ny * gap * side)
+    }
+
+    private func marineSlalomPath(width: CGFloat, height: CGFloat, outerR: CGFloat, innerR: CGFloat, buoyCount: Int) -> Path {
+        let count = max(3, buoyCount)
+        let samples = count * 28
+        var path = Path()
+        for s in 0...samples {
+            let progress = Double(s) / Double(samples)
+            let pt = pointOnMarineSlalomCourse(
+                progress: progress,
+                width: width,
+                height: height,
+                outerR: outerR,
+                innerR: innerR,
+                buoyCount: count
+            )
+            if s == 0 {
+                path.move(to: pt)
+            } else {
+                path.addLine(to: pt)
+            }
+        }
+        return path
+    }
+
+    @ViewBuilder
+    private func buoyMarkerView(index: Int, size: CGFloat) -> some View {
+        let numberedAsset = "marine-raceway-buoy-\(index + 1)"
+        let sharedAsset = "marine-raceway-buoy"
+        if ImageAssetCache.imageExists(named: numberedAsset) {
+            Image(numberedAsset)
+                .resizable()
+                .scaledToFit()
+                .frame(width: size, height: size)
+        } else if ImageAssetCache.imageExists(named: sharedAsset) {
+            Image(sharedAsset)
+                .resizable()
+                .scaledToFit()
+                .frame(width: size, height: size)
+        } else {
+            // Fallback until bundled: `marine-raceway-buoy` or `marine-raceway-buoy-1`…`8` (same pattern as `ptero-raceway-point-*`).
+            Text("🛟")
+                .font(.system(size: size * 0.72))
+                .frame(width: size, height: size)
+        }
+    }
+
+    private func buoyCircleTrackView(
+        geometry: GeometryProxy,
+        progress1: Double,
+        progress2: Double,
+        racer1: RacingRacer,
+        racer2: RacingRacer,
+        trippedRacerId: Int?,
+        raceElapsedSeconds: Int,
+        buoyCount: Int
+    ) -> some View {
+        let padding: CGFloat = 24
+        let trackWidth = max(1, geometry.size.width - padding * 2)
+        let trackHeight = max(120, geometry.size.height - 140)
+        let racerSize: CGFloat = 48
+        let waypointSize: CGFloat = 36
+        let outerR = circleLaneRadius(width: trackWidth, height: trackHeight, laneInset: 0)
+        let innerR = circleLaneRadius(width: trackWidth, height: trackHeight, laneInset: marineBuoyCircleLaneInset)
+        let count = max(3, buoyCount)
+        let pos1 = pointOnMarineSlalomCourse(
+            progress: progress1,
+            width: trackWidth,
+            height: trackHeight,
+            outerR: outerR,
+            innerR: innerR,
+            buoyCount: count
+        )
+        let pos2 = pointOnMarineSlalomCourse(
+            progress: progress2,
+            width: trackWidth,
+            height: trackHeight,
+            outerR: outerR,
+            innerR: innerR,
+            buoyCount: count
+        )
+        let off1 = marineSlalomRacerOffset(
+            progress: progress1,
+            racerIndex: 0,
+            width: trackWidth,
+            height: trackHeight,
+            outerR: outerR,
+            innerR: innerR,
+            buoyCount: count
+        )
+        let off2 = marineSlalomRacerOffset(
+            progress: progress2,
+            racerIndex: 1,
+            width: trackWidth,
+            height: trackHeight,
+            outerR: outerR,
+            innerR: innerR,
+            buoyCount: count
+        )
+        let half = racerSize / 2
+        let finishLineWidth: CGFloat = 4
+        let finishLineHeight: CGFloat = 10
+        let finishLineX = trackWidth / 2 - finishLineWidth / 2
+        let refereeSize: CGFloat = 64
+
+        return VStack(spacing: 8) {
+            Text("Race!")
+                .font(.headline)
+            ZStack(alignment: .topLeading) {
+                AirportCourseWaterBackground(width: trackWidth, height: trackHeight)
+                marineSlalomPath(width: trackWidth, height: trackHeight, outerR: outerR, innerR: innerR, buoyCount: count)
+                    .stroke(Color.white.opacity(0.38), style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
+                Circle()
+                    .stroke(Color.white.opacity(0.45), style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
+                    .frame(width: outerR * 2, height: outerR * 2)
+                    .offset(x: trackWidth / 2 - outerR, y: trackHeight / 2 - outerR)
+                ForEach(0..<count, id: \.self) { index in
+                    let buoyProgress = Double(index) / Double(count)
+                    let buoyPoint = pointOnBuoyCircle(progress: buoyProgress, width: trackWidth, height: trackHeight, radius: outerR)
+                    let halfBuoy = waypointSize / 2
+                    buoyMarkerView(index: index, size: waypointSize)
+                        .offset(x: buoyPoint.x - halfBuoy, y: buoyPoint.y - halfBuoy)
+                }
+                Rectangle()
+                    .fill(Color.white.opacity(0.95))
+                    .frame(width: finishLineWidth, height: finishLineHeight)
+                    .offset(x: finishLineX, y: trackHeight - finishLineHeight)
+                racerView(racer: racer1, size: racerSize, pose: trippedRacerId == racer1.id ? .tripped : .running)
+                    .offset(x: pos1.x - half + off1.width, y: pos1.y - half + off1.height)
+                racerView(racer: racer2, size: racerSize, pose: trippedRacerId == racer2.id ? .tripped : .running)
+                    .offset(x: pos2.x - half + off2.width, y: pos2.y - half + off2.height)
+                refereeImageViewSmall(startRefereeImageName(prefix: config.assetPrefix), size: refereeSize)
+                    .offset(x: trackWidth / 2 - refereeSize / 2, y: trackHeight / 2 - refereeSize / 2)
+                speedClockView(racer1: racer1, racer2: racer2, raceElapsedSeconds: raceElapsedSeconds, finishTime1: finishTime1, finishTime2: finishTime2)
+                    .frame(width: trackWidth, height: trackHeight, alignment: .topLeading)
+                    .offset(x: -trackWidth * 0.32, y: -trackHeight * 0.28)
+            }
+            .frame(width: trackWidth, height: trackHeight)
+        }
+        .padding(.horizontal, padding)
     }
 
     /// Airport hop course for pterosaurs: A → E → B → C → E → D → A.
@@ -1552,6 +2012,11 @@ struct RacingGameView: View {
                     return ImageAssetCache.imageExists(named: b + "-tripped")
                 }
                 return ImageAssetCache.imageExists(named: fasterRacer.trippedImageName(prefix: "ptero"))
+            case "marine":
+                if let b = fasterRacer.marineRacingAssetBase {
+                    return ImageAssetCache.imageExists(named: b + "-tripped")
+                }
+                return false
             default:
                 return ImageAssetCache.imageExists(named: fasterRacer.trippedImageName(prefix: config.assetPrefix))
             }
@@ -1961,11 +2426,7 @@ struct RacingGameView: View {
                 },
                 successPhase: {
                     LandGameVictorySuccessStingerThenContinue(
-                        candidateSuccessImageNames: [
-                            "game-\(config.id)-success",
-                            config.id.contains("ptero") ? "game-racing-pterosaurs-success" : "game-racing-dinosaurs-success",
-                            config.id.contains("ptero") ? "game-racing-pterosaurs" : "game-racing-dinosaurs",
-                        ],
+                        candidateSuccessImageNames: racingSuccessImageCandidates(for: config),
                         catalogGameIdForStinger: config.id,
                         imageSide: GameCatalogImageMetrics.nameThatVictorySuccessImageSide,
                         missingPolicy: .empty,
@@ -2006,28 +2467,11 @@ struct RacingGameView: View {
     }
 
     private func playGoodJobAndCrowdThenDismiss() {
-        let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
-        let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
-        if let u1 = goodJobURL, let u2 = crowdURL {
-            speechManager.playTogether(url1: u1, url2: u2) {
-                self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.config.id)
-                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.config.id)
-                self.isPresented = false
-            }
-        } else if let u = goodJobURL ?? crowdURL {
-            speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.config.id)
-                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.config.id)
-                self.isPresented = false
-            }
-            speechManager.playAudioFile(url: u)
-        } else {
-            LandDinosaurProgress.notifyCompletionIfLandGame(configId: config.id)
-            PterosaurProgress.notifyCompletionIfPterosaurGame(configId: config.id)
-            isPresented = false
-        }
+        StandardVictorySequence.dismissAfterVictory(
+            configId: config.id,
+            isPresented: $isPresented,
+            speechManager: speechManager
+        )
     }
 }
 
@@ -2199,7 +2643,8 @@ struct RacingGameConfigs {
         assetPrefix: "dino",
         racers: [],
         poolMinSpeed: nil,
-        poolMaxSpeed: nil
+        poolMaxSpeed: nil,
+        trackLayout: .ovalDualLane
     )
 
     /// Config with empty racers: RacingGameView shows period selection first, then pterosaur selection.
@@ -2214,8 +2659,35 @@ struct RacingGameConfigs {
         assetPrefix: "ptero",
         racers: [],
         poolMinSpeed: nil,
-        poolMaxSpeed: nil
+        poolMaxSpeed: nil,
+        trackLayout: .airportHop
     )
+
+    /// Racing Marine Reptiles: six featured species, circular course with eight buoys (no period picker).
+    static let racingMarineReptiles: RacingGameConfig = {
+        let pool = SeaMarineReptileData.marineRacersForRacing()
+        let speeds = pool.map(\.speed)
+        let racers = pool.map { entry in
+            RacingRacer(
+                id: entry.creature.id,
+                name: entry.creature.name,
+                icon: entry.icon,
+                speed: entry.speed,
+                fallbackImageName: entry.creature.imageName,
+                marineRacingAssetBase: entry.racingAssetBase
+            )
+        }
+        return RacingGameConfig(
+            id: "racing-marine-reptiles",
+            title: "Racing Marine Reptiles!",
+            introAudio: "racing-marine-reptiles",
+            assetPrefix: "marine",
+            racers: racers,
+            poolMinSpeed: speeds.min(),
+            poolMaxSpeed: speeds.max(),
+            trackLayout: .marineBuoyCircle(buoyCount: 8)
+        )
+    }()
 
     private static func pterosaurPool(for period: RacingPeriod) -> [PterosaurRacerPoolEntry] {
         switch period {
@@ -2243,7 +2715,6 @@ struct RacingGameConfigs {
                 icon: entry.icon,
                 speed: entry.speed,
                 fallbackImageName: entry.imageName,
-                racerAssetClade: nil,
                 pteroRacingAssetBase: entry.racingAssetBase
             )
         }
@@ -2254,7 +2725,8 @@ struct RacingGameConfigs {
             assetPrefix: "ptero",
             racers: racers,
             poolMinSpeed: speeds.min(),
-            poolMaxSpeed: speeds.max()
+            poolMaxSpeed: speeds.max(),
+            trackLayout: .airportHop
         )
     }
 
@@ -2279,7 +2751,13 @@ struct RacingGameConfigs {
         }
         let speeds = pool.map(\.speed)
         let racers = pool.enumerated().map { index, entry in
-            RacingRacer(id: idBase + index + 1, name: entry.name, icon: entry.icon, speed: entry.speed, fallbackImageName: nil, racerAssetClade: entry.racerAssetClade, pteroRacingAssetBase: nil)
+            RacingRacer(
+                id: idBase + index + 1,
+                name: entry.name,
+                icon: entry.icon,
+                speed: entry.speed,
+                racerAssetClade: entry.racerAssetClade
+            )
         }
         let periodId = period == .both ? "both" : period.rawValue
         return RacingGameConfig(
@@ -2289,7 +2767,8 @@ struct RacingGameConfigs {
             assetPrefix: "dino",
             racers: Array(racers),
             poolMinSpeed: speeds.min(),
-            poolMaxSpeed: speeds.max()
+            poolMaxSpeed: speeds.max(),
+            trackLayout: .ovalDualLane
         )
     }
 }

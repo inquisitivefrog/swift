@@ -32,13 +32,21 @@ enum PterosaurGameCatalog {
                 .pteroFlora(PteroFloraGameConfigs.pteroFloraKarabastau),
                 .pteroEggs(PteroEggsGameConfigs.pteroEggs),       // Ptero Eggs!
             ]
-        case .level6:
-            return [
-                .balance(BalanceGameConfigs.balancePterosaur),
+        case .level4:
+            var level4: [GameType] = [
+                .matching(MatchingGameConfigs.pteroDietFeatures), // Ptero Diets
             ]
-        case .level7:
+            if let matrix = PteroMatrixGameConfigs.makePteroMatrix() {
+                level4.insert(.pteroMatrix(matrix), at: 0) // Ptero Matrix (when fossil image sets are bundled)
+            }
+            if SmilingDinosGameConfigs.isPteroSmilePlayable {
+                level4.append(.smilingDinos(SmilingDinosGameConfigs.pteroSmile))
+            }
+            return level4
+        case .level5:
             return [
-                .matching(MatchingGameConfigs.pterosaurFeatures),
+                .balance(BalanceGameConfigs.balancePterosaur),   // Balance the Pterosaurs!
+                .matching(MatchingGameConfigs.pterosaurFeatures), // Match the Pterosaur
             ]
         default:
             return []

@@ -87,6 +87,15 @@ struct DinoGamesApp: App {
         WindowGroup {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .onAppear(perform: Self.lockToPortrait)
+        }
+    }
+
+    /// Default to portrait; Weigh/Balance games request landscape while active.
+    private static func lockToPortrait() {
+        DispatchQueue.main.async {
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+            windowScene.requestGeometryUpdate(.iOS(interfaceOrientations: .portrait))
         }
     }
 }

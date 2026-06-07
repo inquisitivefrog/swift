@@ -1,0 +1,7 @@
+{
+    "id": "quetzalcoatlus_prestige_spear",
+    "morphology": "Keratinous-Spear-Beak",
+    "tech_ref": "DEFAULT_SQUARE",
+    "prompt": "High-fidelity 3D animated feature style. Close-up profile of a smiling Quetzalcoatlus. Integument texture: soft, velvety, pastel-colored pycnofiber coat. A cheerful smile exposes a completely toothless, smooth, brightly colored neon-orange scissor-edged beak. Large, warm, friendly golden eyes. No human teeth, no fangs, highly intelligent and non-threatening animation expression.",
+    "visual_logic": "Replaces generic reptile jaws with the distinctive long, toothless, friendly spear beak signature to Azhdarchidae."
+  }

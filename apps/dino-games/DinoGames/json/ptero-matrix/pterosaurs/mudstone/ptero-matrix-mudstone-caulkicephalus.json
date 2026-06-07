@@ -1,0 +1,10 @@
+{
+    "id": "pteromatrix_mud_002",
+    "species": "Caulkicephalus trimicrodon",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "WESSEX",
+    "matrix_material": "mudstone",
+    "character_assigned": "dino_bones_preparator_6",
+    "pose": "Carefully washing a dense mudstone block with a damp sponge to expose the dark, iron-rich outline of a partial pterosaur braincase."
+  }

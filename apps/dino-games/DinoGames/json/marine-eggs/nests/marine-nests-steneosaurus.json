@@ -1,0 +1,7 @@
+  {
+    "id": "ui_nest_steneosaurus_mound",
+    "morphology": "teleosaurid_standard",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up view of a Steneosaurus nest. A group of four thick, ivory-grey eggs is nestled deep within a wet mound of decomposing ferns, marsh weeds, and river delta silt built near an estuarine bay edge. SETTING: Early Jurassic estuarine swamp margin. LIGHTING: Warm, humid overcast lighting showing the dampness of the mud and flora. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+    "visual_logic": "Combines a thick, chalky elongated egg (Clue 1) with a wet estuarine swamp mud-and-fern mound nest (Clue 2)."
+  }

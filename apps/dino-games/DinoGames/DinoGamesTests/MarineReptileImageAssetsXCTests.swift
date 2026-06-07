@@ -39,8 +39,12 @@ final class MarineReptileImageAssetsXCTests: XCTestCase {
         let requiredGameCards: Set<String> = [
             "game-name-that-marine-reptile",
             "game-name-that-marine-reptile-success",
+            "game-which-marine-reptile-is-longer",
+            "game-which-marine-reptile-is-longer-success",
             "game-marine-reptile-puzzle",
             "game-marine-reptile-puzzle-success",
+            "game-marine-eggs",
+            "game-marine-eggs-success",
         ]
 
         for gameCard in requiredGameCards {

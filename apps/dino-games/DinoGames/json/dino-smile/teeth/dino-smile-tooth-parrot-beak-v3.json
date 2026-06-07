@@ -1,1 +1,11 @@
-High-fidelity 3D render of a profile view of a single Stegosaurus parrot beak focused on just the parrot beak. Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_beak_stegosaurus_profile",
+  "species": "Stegosaurus stenops",
+  "morphology": "narrow_predentary_profile_cropping_beak",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Isolates a profile (lateral) view of the predentary and premaxillary assembly to showcase the narrow, down-curved beak profile characteristic of stegosaurids.",
+  "prompt": "High-fidelity 3D asset render of a single fossilized front beak assembly from a Stegosaurus, captured in a strict lateral profile view in a 3D animated feature film aesthetic. The specimen showcases a distinctly narrow, elongated, and downward-pointing 'parrot beak' silhouette, engineered for precise low-level vegetation cropping. The texture is a mineralized fossil bone in tones of soft mocha brown and weathered tan, displaying a highly detailed, porous matte finish with subtle vertical vascular grooves along the attachment margins. The beak assembly is isolated, oriented horizontally in profile, and perfectly centered on a 1:1 square canvas. Soft studio lighting with precise ambient occlusion accentuates the slender cutting edge and curved contours. The background is a seamless, solid light-grey studio plane extending completely to the canvas margins with no internal borders or containment boxes. The asset is scaled to preserve a strict 25% empty background framing buffer on all four sides to eliminate UI clipping. Grounded flat with realistic contact shadows. A clean checkered black-and-white scientific scale bar sits centered at the bottom."
+}

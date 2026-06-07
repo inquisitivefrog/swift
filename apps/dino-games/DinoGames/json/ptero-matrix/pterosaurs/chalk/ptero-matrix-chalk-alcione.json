@@ -1,0 +1,10 @@
+{
+    "id": "pteromatrix_chalk_006",
+    "species": "Alcione elainus",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "MUWAQQAR_CHALK",
+    "matrix_material": "chalk",
+    "character_assigned": "dino_bones_paleontologist_1",
+    "pose": "Mapping out the small, stout wing bones of a nyctosaurid skeleton on a chalky white slab using a non-marring clear plastic grid overlay."
+  }

@@ -1,1 +1,9 @@
-High-fidelity 3D render of Pachycephalosaurus sharp wavy-edged cutting tooth.  Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_tooth_pachycephalosaurus_01",
+  "species": "Pachycephalosaurus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "prompt": "High-fidelity 3D asset of a single Pachycephalosaurus tooth, rendered in a 3D animated feature film aesthetic with soft, stylized, and slightly rounded edges. The tooth features a distinct, sharp, wavy-edged cutting surface with realistic serrations, showcasing subtle specular highlights along its enamel. The object is perfectly centered in a 1:1 square composition, carefully scaled to occupy the central power-zone, ensuring a strict 25% negative space safety margin on all four sides so no part touches the edges. Placed against a neutral, 50% grey studio floor plane with high-contrast contact shadows to provide realistic physical weight and grounding. A small, clean, checkered black-and-white scientific scale bar is positioned neatly at the bottom within the safety margin to indicate physical size. Illuminated by soft studio lighting with ambient occlusion to cleanly emphasize the fine surface textures, structural ridges, and volume of the fossilized specimen."
+}

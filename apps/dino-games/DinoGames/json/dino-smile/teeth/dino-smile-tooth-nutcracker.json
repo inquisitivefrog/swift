@@ -1,1 +1,11 @@
-High-fidelity 3D render of Stygimoloch stout blunt nutcracker teeth.  Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_tooth_stygimoloch_nutcracker",
+  "species": "Stygimoloch spinifer",
+  "morphology": "stout_blunt_subpyramidal_nutcracker_crown",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Isolates a single thick, blunt tooth to showcase the robust, subpyramidal 'nutcracker' morphology typical of pachycephalosaurids, built for crushing tough vegetation.",
+  "prompt": "High-fidelity 3D asset render of a single fossilized tooth from a Stygimoloch, capturing its specialized herbivorous morphology in a 3D animated feature film aesthetic. The specimen exhibits a stout, blunt, and slightly subpyramidal 'nutcracker' crown profile, featuring a thickened base that tapers to a heavily worn, rounded apex. The margins show faint, coarse, heavily eroded serrations, indicating a life spent crushing dense seeds or tough foliage. The fossil enamel texture is rendered with a smooth, semi-polished finish showing rich amber and dark caramel mineralized tones, consistent with the jewel-like studio presentation seen in hooked-needle-v1.png. The single tooth is isolated and oriented vertically, centered perfectly on a 1:1 square canvas. Soft studio lighting with precise ambient occlusion emphasizes the thick, rounded planes and surface wear facets. The background is a seamless, solid light-grey studio plane extending completely to the canvas margins with no internal borders or containment boxes. The object is scaled to preserve a strict 25% empty background framing buffer on all four sides to eliminate UI clipping. Grounded flat with realistic contact shadows. A clean checkered black-and-white scientific scale bar sits centered at the bottom."
+}

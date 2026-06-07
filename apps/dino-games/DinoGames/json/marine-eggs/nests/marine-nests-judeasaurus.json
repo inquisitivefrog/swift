@@ -1,0 +1,7 @@
+  {
+    "id": "ui_nest_judeasaurus_scrape",
+    "morphology": "aigialosaur_standard",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up view of a Judeasaurus nest. A clutch of four oblong, mottled cream eggs sits in a shallow sand-and-soil scrape hidden behind a cluster of coastal ferns. The nest is located right on the margin of a coastal mangrove marsh. SETTING: Late Cretaceous marshland. LIGHTING: Warm golden hour sunlight filtering through marsh fronds. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+    "visual_logic": "Combines oblong micro-granular eggs (Clue 1) with a coastal mangrove marsh sand-and-soil scrape nest (Clue 2)."
+  }

@@ -1,0 +1,8 @@
+{
+    "id": "ui_egg_judeasaurus",
+    "morphology": "aigialosaur_standard",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D render of a single Judeasaurus egg next to a standard apricot. Shape: oblong oval with symmetrical rounded ends. Texture: flexible, leathery shell with a micro-granular surface texture, pale cream color with light brown mud mottling. Background: clean light-grey studio background. Scale bar at bottom.",
+    "visual_logic": "Highlights a standard varanoid/aigialosaur style flexible egg with a micro-granular leathery surface.",
+    "style_notes": "Only one scale bar."
+  }

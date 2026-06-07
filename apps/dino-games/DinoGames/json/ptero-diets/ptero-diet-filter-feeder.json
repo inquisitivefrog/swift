@@ -1,0 +1,24 @@
+{
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "tech_ref": "DEFAULT_SQUARE",
+      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
+    },
+    "layer_2_setting": {
+      "habitat_id": "STUDIO_BACKDROP",
+      "formation_id": "NONE"
+    },
+    "layer_3_action": {
+      "subject": "Filter-feeder diet symbolism",
+      "features": [
+        "A stylized, cartoonish tiny marine shrimp made of smooth clay",
+        "The shrimp is bright orange clay with a simple segmented body, a happy face, and tiny rounded antennae",
+        "Thick, curved form with smooth edges to maintain a toy-like, friendly aesthetic",
+        "Tactile 'handmade' clay sculpture appearance",
+        "Soft studio lighting with gentle highlights"
+      ],
+      "action": "A clean, centered shot of a clay shrimp sitting on a simple clay surface. The background is a soft, neutral out-of-focus color. The image is designed as a clear icon or symbol to indicate a filter-feeding diet for a children's matching game. No text."
+    }
+  }
+}

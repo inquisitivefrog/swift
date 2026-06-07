@@ -1,0 +1,8 @@
+{
+    "id": "ui_egg_metriorhynchus",
+    "morphology": "crocodylomorph_slender",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D render of a single Metriorhynchus egg next to a standard avocado. Shape: elongated oval, smooth cylinder. Texture: hard, rigid shell with fine longitudinal surface ripples, clean porcelain-white. Background: clean light-grey studio background. Scale bar at bottom. Soft lighting to accentuate surface ripples.",
+    "visual_logic": "Depicts a rigid, porcelain-white crocodilian egg with subtle surface rippling, belonging to a sleek pelagic marine croc.",
+    "style_notes": "Only one scale bar."
+  }

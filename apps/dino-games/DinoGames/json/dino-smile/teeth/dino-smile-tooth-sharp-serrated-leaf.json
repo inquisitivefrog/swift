@@ -1,1 +1,11 @@
-High-fidelity 3D render of a single Troodon small sharp serrated leaf tooth. Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_tooth_troodon_leaf",
+  "species": "Troodon formosus",
+  "morphology": "small_sharp_leaf_shaped_with_large_serrations",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Isolates a single, extremely small, razor-sharp tooth to showcase the unique leaf-shaped profile and disproportionately large serrations characteristic of troodontids.",
+  "prompt": "High-fidelity 3D asset render of a single fossilized small sharp serrated leaf tooth from a Troodon, based on the same texture and lighting logic as previous fossil teeth like `image_15.png`. The tooth is extremely small (tiny and delicate) and has a distinct, razor-sharp 'leaf' or 'shield' profile, tapering to a fine point. The most prominent feature is the edge serrations (denticles), which are disproportionately large and hooked for a tooth of this size, covering a significant portion of both the mesial and distal cutting edges. The enamel texture is fine and textured, colored in mottled browns and greys with a matte, fossilized finish. The single element is isolated and oriented vertically, centered perfectly on a 1:1 square canvas. Soft, diffused studio lighting with subtle ambient occlusion maximizes surface detail, highlighting the small-scale serrations. The background is a seamless, solid light-grey studio plane extending to the canvas borders with no internal borders or frames. The specimen is scaled down to maintain a strict 25% empty background safety margin on all four sides. Grounded flat with realistic contact shadows. A clean, small checkered black-and-white scientific scale bar sits centered at the bottom."
+}

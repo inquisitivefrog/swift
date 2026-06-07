@@ -1,0 +1,7 @@
+{
+    "id": "ui_nest_archelon_pit",
+    "morphology": "cheloniid_giant",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up view of an Archelon nest dug into a coastal beach. A dense, overflowing clutch of six perfectly spherical, matte-white rubbery eggs is resting deep inside a bowl-shaped sand pit. The loose, golden-tan sand walls of the hole are slightly collapsing around the cluster. SETTING: Late Cretaceous ocean shoreline with soft beach sand. LIGHTING: High-key, vibrant coastal sunlight highlighting the granular sand textures and round shapes of the eggs. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+    "visual_logic": "Combines two visual clues: large, perfectly spherical leathery white eggs (Clue 1) and a deep coastal beach sand pit (Clue 2) to indicate the giant sea turtle clade."
+  }

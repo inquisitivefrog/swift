@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_023",
+    "species": "Campylognathoides zitteli",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "POSEIDON_SHALE",
+    "matrix_material": "shale",
+    "character_assigned": "dino_bones_paleontologist_5",
+    "pose": "Prepping long, sweeping wing phalanges preserved flat against a shimmering, jet-black oil shale bed."
+  }

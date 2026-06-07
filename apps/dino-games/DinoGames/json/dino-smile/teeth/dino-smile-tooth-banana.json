@@ -1,6 +1,10 @@
 {
-    "id": "ui_tooth_banana_trex",
-    "morphology": "Banana",
-    "prompt": "High-fidelity 3D render of a single T-Rex 'Banana' tooth. Shape: thick, heavy, slightly curved, blunt-tipped cylinder. Texture: ivory-colored with subtle vertical growth lines and fine serrations along the rear edge. Background: clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.",
-    "visual_logic": "Highlights the massive, crushing power of the T-Rex tooth."
-  }
+  "id": "ui_tooth_banana_trex",
+  "morphology": "Banana",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Highlights the massive, bone-crushing power and hand-spanning length of the T-Rex tooth.",
+  "prompt": "High-fidelity 3D asset of a single, exceptionally massive Tyrannosaurus rex 'banana' tooth, rendered in a 3D animated feature film aesthetic with soft, stylized, and slightly rounded edges. The tooth exhibits an elongated, banana-like morphology, visibly long enough to extend far beyond both sides of an adult human hand if gripped. It forms a thick, heavy, slightly curved, and blunt-tipped cylinder where its immense length is balanced by its dense girth. The texture is an appealing ivory-color showcasing high-quality tactile finishes, detailed with subtle vertical growth lines and fine, crisp serrations running cleanly along the rear trailing edge. The specimen is oriented diagonally and perfectly centered in a 1:1 square composition, carefully scaled to occupy the central power-zone, ensuring a strict 25% negative space safety margin on all four sides so neither the tip nor the robust root touch the boundaries. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows to provide realistic physical weight and dramatic grounding. Illuminated by soft studio lighting with ambient occlusion to deeply emphasize the incredible elongated volume, thickness, and crushing surface detail of the fossilized specimen."
+}

@@ -1,0 +1,7 @@
+  {
+    "id": "ui_nest_metriorhynchus_hole",
+    "morphology": "crocodylomorph_slender",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up view of a Metriorhynchus nest. A row of three elongated porcelain-white eggs sits neatly inside a deep soil hole dug into a beach dune ridge, surrounded by coarse coastal grass and small white seashells. SETTING: Late Jurassic coastal beach ridge. LIGHTING: Bright afternoon cinematic daylight catching the white shells and eggs. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+    "visual_logic": "Combines a hard porcelain-white rippled egg (Clue 1) with a coastal beach dune soil hole nest (Clue 2)."
+  }

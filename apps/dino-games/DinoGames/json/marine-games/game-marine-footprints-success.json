@@ -1,0 +1,25 @@
+{
+  "asset_manifest": [
+    {
+      "id": "marine_footprints_success_v1",
+      "project": "MarineFootprints",
+      "species_primary": "marine_walker_nothosaurus",
+      "species_secondary": "juvenile_unspecified_sauropterygian",
+      "character_ref": "dino_bones_paleontologist_4",
+      "tech_ref": "SQUARE_ASPECT_RATIO",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+      "formation_ref": "MUSCHELKALK",
+      "habitat_ref": "COASTAL_TIDAL_MUDFLATS",
+      "pose": "An adult female grad student of Caucasian ethnicity with long blonde hair tied back, wearing a white sun hat, a light pink collared shirt under a khaki safari vest, khaki shorts, and pink hiking boots, kneels on the damp shoreline. She laughs and points joyfully at a series of clear, webbed marine reptile trackway prints in the wet sand. A tiny, cute juvenile sauropterygian is curled up taking a nap inside the largest footprint impression, while a stylized, friendly adult Nothosaurus with an expressive, toothy grin stands nearby looking at them with satisfaction.",
+      "visual_notes": {
+        "text_overlay_primary": "Marine Footprints!",
+        "text_overlay_secondary": "Player Wins!",
+        "text_style": "Bright Coral-Orange, high-poly 3D mixed case text with a glossy finish to match the STYLE_ANIMATED_FEATURE_V3 aesthetic, positioned prominently in the upper third.",
+        "ground_texture": "Glistening, fine-grained wet tidal sand and dark grey mud with water-ripple textures and shallow puddles reflecting the bright blue sky, characteristic of the coastal MUSCHELKALK formation.",
+        "ichnology_spec": "The foreground features deep, clear negative trackway impressions showing a five-toed plantigrade pattern with distinct skin-webbing membranes stretched between the splayed toes and soft, raised mud-heave borders.",
+        "character_consistency": "The paleontologist perfectly displays the blonde hair, white sun hat, pink accent top, and pink utility boots mapped to character library ID dino_bones_paleontologist_4."
+      }
+    }
+  ]
+}

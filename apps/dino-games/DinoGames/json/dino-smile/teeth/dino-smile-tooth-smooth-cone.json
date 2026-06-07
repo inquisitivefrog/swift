@@ -1,1 +1,9 @@
-High-fidelity 3D render of a single Spinosaurus straight unserrated smooth cone tooth. Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_tooth_spinosaurus_01",
+  "species": "Spinosaurus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "prompt": "High-fidelity 3D asset of a single Spinosaurus tooth, rendered in a high-fidelity 3D animated feature film aesthetic. The tooth features a distinct, straight, unserrated, and smoothly conical form, showcasing tactile, high-quality textures with subtle specular highlights along its enamel surface while maintaining appealing, rounded forms. The object is perfectly centered in a 1:1 square composition, scaled to occupy the central power-zone, ensuring a strict 25% negative space buffer on all four sides so no portion touches the edges of the frame. Placed against a neutral, 50% grey floor plane with high-contrast contact shadows for realistic weight and grounding. A small, clean, checkered black-and-white scientific scale bar is positioned neatly at the bottom within the negative space to indicate size. Illuminated by soft studio lighting with ambient occlusion to cleanly emphasize the physical volume and structural surface details of the fossilized specimen."
+}

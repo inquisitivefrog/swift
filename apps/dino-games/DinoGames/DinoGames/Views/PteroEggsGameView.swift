@@ -42,6 +42,20 @@ enum PteroEggMorphology {
         return clade.replacingOccurrences(of: "-", with: " ").capitalized + " nest"
     }
 
+    /// Bundled egg/nest/scan imagesets use `transition`; gameplay clade key stays `transitional`.
+    static func bundledImageKey(forClade clade: String) -> String {
+        clade == "transitional" ? "transition" : clade
+    }
+
+    static func scanAssetName(forClade clade: String) -> String {
+        let suffix = bundledImageKey(forClade: clade)
+        let candidates = [
+            "ptero-eggs-scan-\(suffix)",
+            "ptero-eggs-\(clade)",
+        ]
+        return candidates.first(where: { ImageAssetCache.imageExists(named: $0) }) ?? "ptero-eggs-scan-\(suffix)"
+    }
+
     static let morphology = EggsMorphology(
         assetPrefix: "ptero-eggs",
         nestAssetPrefix: "ptero-nests",
@@ -49,25 +63,36 @@ enum PteroEggMorphology {
         eggType: { PteroEggMorphology.eggType(for: $0) },
         nestingStyle: { eggType in eggType },
         nestingFallbackText: { PteroEggMorphology.nestingFallback(forClade: $0) },
-        scanAssetName: { clade in "ptero-eggs-\(clade)" },
+        scanAssetName: { scanAssetName(forClade: $0) },
         randomColorsAsset: { clade in
-            let name = "ptero-eggs-\(clade)"
+            let name = "ptero-eggs-\(bundledImageKey(forClade: clade))"
             return ImageAssetCache.imageExists(named: name) ? name : nil
-        }
+        },
+        eggImageNameResolver: { clade in "ptero-eggs-\(bundledImageKey(forClade: clade))" },
+        imageLookupKey: { bundledImageKey(forClade: $0) }
     )
 
     static let settings = EggsGameSettings(
         morphology: morphology,
         gameKeyPrefix: "game-ptero-eggs",
         gameplayDirectionsAudioKey: "game-ptero-eggs-gameplay-directions",
-        gameplayDirectionsFallback: "Pterosaur eggs can be soft and oddly shaped. When you see the egg, tap the CT scanner to look inside, then tap the pterosaur that laid the egg.",
+        gameplayDirectionsFallback: "When you see the egg, tap the CT scanner to look inside.",
         beepKey: "game-dino-eggs-beep",
         scanFailedKey: "game-dino-eggs-scan-failed",
-        tapCreatureKey: "game-dino-eggs-tap-the-dinosaur",
+        tapCreatureAfterScanKey: nil,
         successImageName: "game-ptero-eggs-success",
         creatureEmoji: "🦅",
         roundIntroNestAudioKey: nil,
-        roundIntroTapScannerAudioKey: nil,
+        roundIntroTapScannerAudioKey: "game-dino-eggs-tap-the-scanner",
+        playsEggNestNameIntro: false,
+        playsTapScannerPrompt: true,
+        showsCreatureNameOnCards: false,
+        victoryRecapUsesCreatureName: false,
+        hideGameTitleDuringSuccessPhase: true,
+        collapseRecapListDuringSuccessPhase: true,
+        sourceHints: nil,
+        sourceHintsTitle: "Source Eggs",
+        sourceHintsGridIntroAudioKey: nil,
         onVictoryComplete: { PterosaurProgress.notifyCompletionIfPterosaurGame(configId: $0) }
     )
 }
@@ -75,7 +100,7 @@ enum PteroEggMorphology {
 // MARK: - Game config
 
 struct PteroEggsGameConfigs {
-    private static let pteroEggsRoundCount = 1
+    private static let pteroEggsRoundCount = 3
 
     static var pteroEggs: PteroEggsGameConfig {
         let pool = pterosaursWithPortraitAndEgg

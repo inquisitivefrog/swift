@@ -1,0 +1,29 @@
+{
+  "id": "game_card_02_marine_player_wins",
+  "project_name": "Marine Toothache",
+  "style_ref": "STYLE_3D_ANIMATED_FEATURE_ORGANIC_TEXTURES",
+  "subject": "Three different friendly prehistoric marine reptiles grouped together in a sunlit ocean habitat, all smiling triumphantly.",
+  "composition": {
+    "foreground": {
+      "marine_reptile_1": "Elasmosaurus: Three-quarter view, gentle happy smile, a comically long elegant neck looping playfully, smooth aquatic blue skin, positioned prominently.",
+      "marine_reptile_2": "Mosasaurus: Three-quarter view, cheerful wide smile with dull, friendly cartoon teeth, leathery counter-shaded skin, positioned beside Elasmosaurus.",
+      "marine_reptile_3": "Liopleurodon: Three-quarter view, brave happy smile, stylized stubby flippers doing a 'ta-da!' gesture, in the background looking contented."
+    },
+    "background": "Open, sunlit prehistoric lagoon with shimmering surface ripples overhead, schools of tiny colorful fish, and a clean sandy seafloor. Celebratory, weightless atmosphere.",
+    "grouping": "Marine reptiles are swimming and floating poised in a way that conveys happiness and success, looking out at the player."
+  },
+  "typography": {
+    "caption_1": {
+      "text": "Marine Smile!",
+      "style": "Bright red, thick 3D mixed-case block letters, positioned top-center."
+    },
+    "caption_2": {
+      "text": "Player Wins!",
+      "style": "Shiny gold, bold 3D mixed-case block letters, positioned clearly below 'Marine Smile!', with glowing sun-flare bubble effects. Text is slightly textured, like polished gold."
+    }
+  },
+  "visual_logic": {
+    "overall_mood": "Celebratory, rewarding, aquatic accomplishment. Emphasizes a beautiful, sunny marine world.",
+    "color_palette": "Deep sea teals, vibrant coral oranges, bright yellow sunbeams, with the red and gold captions offering supreme contrast."
+  }
+}

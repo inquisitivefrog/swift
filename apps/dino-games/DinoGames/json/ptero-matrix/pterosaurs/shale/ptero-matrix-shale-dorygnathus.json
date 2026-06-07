@@ -1,0 +1,11 @@
+  {
+    "id": "pteromatrix_024",
+    "species": "Dorygnathus banthensis",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "POSEIDON_SHALE",
+    "matrix_material": "shale",
+    "character_assigned": "dino_bones_paleontologist_6",
+    "pose": "Carefully removing golden iron-pyrite crusts from long, out-turned fangs on the lower jaw."
+  }
+

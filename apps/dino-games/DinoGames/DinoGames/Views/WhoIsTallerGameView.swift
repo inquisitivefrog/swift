@@ -22,6 +22,7 @@ struct WhoIsTallerItem: Identifiable, Equatable {
 enum WhoIsTallerPoolKind {
     case dinosaurs
     case pterosaurs
+    case marineReptiles
 }
 
 struct WhoIsTallerGameConfig {
@@ -81,6 +82,8 @@ struct WhoIsTallerGameView: View {
     private var isGameOver: Bool { roundsCompleted >= maxRounds }
     private var displayItems: [WhoIsTallerItem] { currentRoundItems.isEmpty ? gameConfig.items : currentRoundItems }
     private var isPterosaurPool: Bool { gameConfig.poolKind == .pterosaurs }
+    private var isMarinePool: Bool { gameConfig.poolKind == .marineReptiles }
+    private var usesRelativeFirstSelectionScale: Bool { isPterosaurPool || isMarinePool }
     private var introWalkComplete: Bool { displayItems.isEmpty || introWalkStep >= displayItems.count }
     private var canTapGrid: Bool { introWalkComplete && !isChooseFirstAudioPlaying }
 
@@ -95,13 +98,15 @@ struct WhoIsTallerGameView: View {
         GeometryReader { geometry in
             let safeHeight = max(geometry.size.height, 1)
             let safeWidth = max(geometry.size.width, 1)
-            ScrollView(.vertical, showsIndicators: true) {
-                VStack(spacing: 0) {
-                    Spacer().frame(height: 8)
+            if isGameOver {
+                // Full-screen victory (same as Weigh / Name That Dinosaur) so the game title stays pinned and visible.
+                victoryView
+                    .frame(width: safeWidth, height: safeHeight)
+            } else {
+                ScrollView(.vertical, showsIndicators: true) {
+                    VStack(spacing: 0) {
+                        Spacer().frame(height: 8)
 
-                    if isGameOver {
-                        victoryView
-                    } else {
                         VStack(spacing: 8) {
                             VStack(spacing: 4) {
                                 Text(gameConfig.title)
@@ -134,7 +139,6 @@ struct WhoIsTallerGameView: View {
                                 .padding(.horizontal, 10)
                                 .frame(height: 330)
 
-                                // Bottom: left slot | paleontologist (tape) | right slot (chosen creatures; same layout throughout)
                                 whoIsTallerMeasureArea
                                     .padding(.top, 8)
                             } else {
@@ -146,18 +150,20 @@ struct WhoIsTallerGameView: View {
                             }
                         }
                         .frame(width: safeWidth)
-                    }
 
-                    Spacer(minLength: 8)
+                        Spacer(minLength: 8)
+                    }
                 }
+                .frame(minHeight: safeHeight)
             }
-            .frame(minHeight: safeHeight)
         }
-        .navigationTitle(gameConfig.title)
+        .navigationTitle(isGameOver ? "" : gameConfig.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Done") { isPresented = false }
+            if !isGameOver {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") { isPresented = false }
+                }
             }
         }
         .onAppear {
@@ -183,7 +189,7 @@ struct WhoIsTallerGameView: View {
 
     /// Left creature, right creature, and paleontologist all scale from one reference height = max(left m, right m, human m).
     private func whoIsTallerSlotScales() -> (left: CGFloat, right: CGFloat, center: CGFloat) {
-        let humanH = isPterosaurPool ? paleontologistHeightMetersPtero : paleontologistHeightMetersDino
+        let humanH = usesRelativeFirstSelectionScale ? paleontologistHeightMetersPtero : paleontologistHeightMetersDino
         guard let first = selectedFirst else { return (1.0, 1.0, 1.0) }
         let h1 = first.heightMeters
         if let second = selectedSecond {
@@ -200,7 +206,7 @@ struct WhoIsTallerGameView: View {
         let ref = max(h1, humanH)
         guard ref > 0 else { return (1.0, 1.0, 1.0) }
         let centerScale = CGFloat(humanH / ref)
-        let firstScale = isPterosaurPool ? max(CGFloat(h1 / ref), minVisiblePterosaurScale) : CGFloat(h1 / ref)
+        let firstScale = usesRelativeFirstSelectionScale ? max(CGFloat(h1 / ref), minVisiblePterosaurScale) : CGFloat(h1 / ref)
         return (firstScale, 1.0, centerScale)
     }
 
@@ -271,10 +277,24 @@ struct WhoIsTallerGameView: View {
         return ImageAssetCache.imageExists(named: measureName) ? measureName : nil
     }
 
+    /// Which Marine Reptile Is Longer: bundled length poses use `marine-measure-{group}-{slug}` when present.
+    private func marineMeasureImageName(forSquareBase base: String) -> String? {
+        let prefix = "marine-"
+        guard base.hasPrefix(prefix) else { return nil }
+        let tail = String(base.dropFirst(prefix.count))
+        guard !tail.isEmpty else { return nil }
+        let measureName = "marine-measure-\(tail)"
+        return ImageAssetCache.imageExists(named: measureName) ? measureName : nil
+    }
+
     private func measureDinoImageName(for item: WhoIsTallerItem) -> String? {
         let base = item.imageName ?? nameFallbackStem(item)
         if isPterosaurPool {
             if let name = pteroMeasureImageName(forSquareBase: base) { return name }
+            return ImageAssetCache.imageExists(named: base) ? base : nil
+        }
+        if isMarinePool {
+            if let name = marineMeasureImageName(forSquareBase: base) { return name }
             return ImageAssetCache.imageExists(named: base) ? base : nil
         }
         let measureName = "measure-\(base)"
@@ -283,7 +303,9 @@ struct WhoIsTallerGameView: View {
 
     private func nameFallbackStem(_ item: WhoIsTallerItem) -> String {
         let slug = item.name.lowercased().replacingOccurrences(of: " ", with: "-")
-        return isPterosaurPool ? "ptero-\(slug)" : "dino-\(slug)"
+        if isPterosaurPool { return "ptero-\(slug)" }
+        if isMarinePool { return "marine-\(slug)" }
+        return "dino-\(slug)"
     }
 
     private func audioStem(for item: WhoIsTallerItem) -> String {
@@ -293,6 +315,8 @@ struct WhoIsTallerGameView: View {
     private func playChooseFirstCreaturePrompt() {
         if isPterosaurPool {
             speechManager.speak(audioKey: "game-choose-your-first-pterosaur", fallbackText: "Choose your first pterosaur")
+        } else if isMarinePool {
+            speechManager.speak("game-choose-your-first-marine-reptile")
         } else {
             speechManager.speak("game-choose-your-first-dinosaur")
         }
@@ -301,6 +325,8 @@ struct WhoIsTallerGameView: View {
     private func playChooseSecondCreaturePrompt() {
         if isPterosaurPool {
             speechManager.speak(audioKey: "game-choose-your-second-pterosaur", fallbackText: "Choose your second pterosaur")
+        } else if isMarinePool {
+            speechManager.speak("game-choose-your-second-marine-reptile")
         } else {
             speechManager.speak("game-choose-your-second-dinosaur")
         }
@@ -376,7 +402,11 @@ struct WhoIsTallerGameView: View {
         }
 
         if isSameHeight {
-            speechManager.speak("they-are-about-the-same-height")
+            if isMarinePool {
+                speechManager.speak(audioKey: "about-the-same-length", fallbackText: "about the same length")
+            } else {
+                speechManager.speak("they-are-about-the-same-height")
+            }
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 advanceAfterDelay()
@@ -386,7 +416,11 @@ struct WhoIsTallerGameView: View {
             speechManager.speak(audioKey: audioKey, fallbackText: taller.name)
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
-                self.speechManager.speak("is-taller", chainDelay: true)
+                if self.isMarinePool {
+                    self.speechManager.speak(audioKey: "is-longer", fallbackText: "is longer", chainDelay: true)
+                } else {
+                    self.speechManager.speak("is-taller", chainDelay: true)
+                }
                 self.speechManager.onAudioFinished = {
                     self.speechManager.onAudioFinished = nil
                     advanceAfterDelay()
@@ -471,12 +505,25 @@ struct WhoIsTallerGameView: View {
         StandardVictoryLayout.recapListScrollHeight(itemCount: tallerVictoryRecapItems.count)
     }
 
+    /// Marine longer keeps title + recap visible above the success card (Name That style).
+    private var victoryKeepsRecapDuringSuccess: Bool {
+        gameConfig.id == "which-marine-reptile-is-longer"
+    }
+
+    private var victorySuccessImageSide: CGFloat {
+        victoryKeepsRecapDuringSuccess
+            ? 180
+            : GameCatalogImageMetrics.nameThatVictorySuccessImageSide
+    }
+
     private var victoryView: some View {
         VictorySplitColumnView(
             listScrollHeight: victoryListVisibleHeight,
             showSuccessPhase: endSequenceStep == 2,
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
+            hideGameTitleDuringSuccessPhase: !victoryKeepsRecapDuringSuccess,
+            collapseRecapListDuringSuccessPhase: !victoryKeepsRecapDuringSuccess,
             scrollRows: {
                 ForEach(Array(tallerVictoryRecapItems.enumerated()), id: \.element.id) { index, item in
                     StandardVictoryRecapRowView(
@@ -488,8 +535,9 @@ struct WhoIsTallerGameView: View {
             },
             successPhase: {
                 LandGameVictorySuccessStingerThenContinue(
-                    gameConfigId: gameConfig.id,
-                    imageSide: GameCatalogImageMetrics.nameThatVictorySuccessImageSide,
+                    candidateSuccessImageNames: ["game-\(gameConfig.id)-success", "game-\(gameConfig.id)"],
+                    catalogGameIdForStinger: gameConfig.id,
+                    imageSide: victorySuccessImageSide,
                     speechManager: speechManager,
                     onContinue: playGoodJobAndCrowdThenDismiss
                 )
@@ -523,31 +571,20 @@ struct WhoIsTallerGameView: View {
     }
 
     private func playGoodJobAndCrowdThenDismiss() {
-        let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
-        let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
-        if let u1 = goodJobURL, let u2 = crowdURL {
-            speechManager.playTogether(url1: u1, url2: u2) {
-                self.speechManager.onAudioFinished = nil
-                self.notifyCategoryCompletion()
-                self.isPresented = false
-            }
-        } else if let u = goodJobURL ?? crowdURL {
-            speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                self.notifyCategoryCompletion()
-                self.isPresented = false
-            }
-            speechManager.playAudioFile(url: u)
-        } else {
-            notifyCategoryCompletion()
-            isPresented = false
-        }
+        StandardVictorySequence.dismissAfterVictory(
+            configId: gameConfig.id,
+            isPresented: $isPresented,
+            speechManager: speechManager
+        )
     }
 
     private func notifyCategoryCompletion() {
-        if isPterosaurPool {
+        switch gameConfig.poolKind {
+        case .pterosaurs:
             PterosaurProgress.notifyCompletionIfPterosaurGame(configId: gameConfig.id)
-        } else {
+        case .marineReptiles:
+            MarineReptileProgress.notifyCompletionIfMarineGame(configId: gameConfig.id)
+        case .dinosaurs:
             LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
         }
     }
@@ -630,7 +667,15 @@ enum WhoIsTallerGameConfigs {
         poolKind: .pterosaurs
     )
 
-    /// Returns 9 creatures for the pool kind; dinosaurs require `measure-dino-*`; pterosaurs use standing heights from `AirPterosaurData`, square `ptero-*` on the grid, and `ptero-measure-{clade}-{slug}` in comparison slots when present.
+    static let whichMarineReptileIsLonger = WhoIsTallerGameConfig(
+        id: "which-marine-reptile-is-longer",
+        title: "Which Marine Reptile Is Longer",
+        introAudio: "game-which-marine-reptile-is-longer",
+        items: [],
+        poolKind: .marineReptiles
+    )
+
+    /// Returns 9 creatures for the pool kind; dinosaurs require `measure-dino-*`; pterosaurs use standing heights from `AirPterosaurData`, square `ptero-*` on the grid, and `ptero-measure-{clade}-{slug}` in comparison slots when present; marine reptiles use `MarineReptileLengthCatalog` and `marine-measure-*` when bundled.
     static func makeRoundItems(excluding alreadyUsedIds: Set<Int> = [], poolKind: WhoIsTallerPoolKind) -> [WhoIsTallerItem] {
         switch poolKind {
         case .dinosaurs:
@@ -689,6 +734,34 @@ enum WhoIsTallerGameConfigs {
                     heightMeters: AirPterosaurData.pterosaurStandingHeightMetersById[d.id] ?? 1
                 )
             }
+        case .marineReptiles:
+            let pool = SeaMarineReptileData.allMarineReptiles.filter { d in
+                guard let imageName = d.imageName, imageName.hasPrefix("marine-"),
+                      MarineReptileLengthCatalog.totalLengthMeters(forImageName: imageName) != nil,
+                      !alreadyUsedIds.contains(d.id),
+                      ImageAssetCache.imageExists(named: imageName) else { return false }
+                return true
+            }
+            guard pool.count >= 9 else {
+                return pool.shuffled().prefix(9).map { d in
+                    WhoIsTallerItem(
+                        id: d.id,
+                        name: d.name,
+                        imageName: d.imageName,
+                        emoji: d.icon,
+                        heightMeters: MarineReptileLengthCatalog.totalLengthMeters(forImageName: d.imageName ?? "") ?? 1
+                    )
+                }
+            }
+            return pool.shuffled().prefix(9).map { d in
+                WhoIsTallerItem(
+                    id: d.id,
+                    name: d.name,
+                    imageName: d.imageName,
+                    emoji: d.icon,
+                    heightMeters: MarineReptileLengthCatalog.totalLengthMeters(forImageName: d.imageName ?? "") ?? 1
+                )
+            }
         }
     }
 
@@ -708,6 +781,10 @@ enum WhoIsTallerGameConfigs {
 
     static func whoIsTallerPterosaurRandomized() -> WhoIsTallerGameConfig {
         randomized(from: whoIsTallerPterosaur)
+    }
+
+    static func whichMarineReptileIsLongerRandomized() -> WhoIsTallerGameConfig {
+        randomized(from: whichMarineReptileIsLonger)
     }
 }
 

@@ -1,0 +1,6 @@
+{
+  "id": "ui_spawn_enchodus",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up underwater view of an Enchodus spawning site. A cloud-like cluster of hundreds of tiny, perfectly spherical, translucent golden-orange jelly eggs is anchored to a floating branch of marine driftwood. Inside each soft, glass-like jelly sphere, a tiny embryonic fish with prominent, oversized fangs can be playfully discerned. SETTING: Late Cretaceous pelagic shelf sea. LIGHTING: Shimmering, high-contrast sunlight filtering through the water, refracting beautifully through the translucent golden jelly eggs. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+  "visual_logic": "Combines a massive cluster of soft, translucent fish jelly-eggs (Clue 1) with embryonic sabertooth fang silhouettes inside the spheres (Clue 2) to indicate the Enchodus fish clade."
+}

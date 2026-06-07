@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_015",
+    "species": "Wukongopterus lii",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "TIAOJISHAN",
+    "matrix_material": "volcanic tuff",
+    "character_assigned": "dino_bones_preparator_3",
+    "pose": "Uncovering the elongated cervical vertebrae from a layer of fine-grained, amber-tinted volcanic ash."
+  }

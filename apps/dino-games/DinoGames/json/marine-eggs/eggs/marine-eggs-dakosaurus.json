@@ -1,0 +1,8 @@
+{
+    "id": "ui_egg_dakosaurus",
+    "morphology": "crocodylomorph_pelagic",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D render of a single Dakosaurus egg next to a standard mango. Shape: elongated cylinder-oval with highly symmetrical rounded ends. Texture: hard, heavy calcified shell, glassy but micro-pitted, pale greyish-white. Background: clean light-grey studio background. Scale bar at bottom. Crisp lighting to highlight pitting.",
+    "visual_logic": "Features a heavily calcified, elongated, micro-pitted crocodilian style egg modified for an apex open-ocean marine archosaur.",
+    "style_notes": "Only one scale bar."
+  }

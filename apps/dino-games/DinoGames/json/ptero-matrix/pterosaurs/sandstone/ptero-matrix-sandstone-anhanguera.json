@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_007",
+    "species": "Anhanguera blittersdorffi",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "matrix_material": "sandstone",
+    "character_assigned": "dino_bones_paleontologist_1",
+    "pose": "Examining a row of long, interlocking teeth in the upper jaw using a handheld magnifying lens at the dig site."
+  }

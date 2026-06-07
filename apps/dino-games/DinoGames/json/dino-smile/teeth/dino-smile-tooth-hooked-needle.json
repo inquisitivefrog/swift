@@ -1,1 +1,11 @@
-High-fidelity 3D render of a single Troodon small hooked-needle tooth. Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_tooth_troodon_hooked_needle",
+  "species": "Troodon formosus",
+  "morphology": "small_hooked_needle_premaxillary_tooth",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Isolates a single premaxillary anterior tooth to showcase the slender, needle-like grasp-and-hold adaptation found at the front of the troodontid snout, contrasting with their lateral leaf-shaped teeth.",
+  "prompt": "High-fidelity 3D asset render of a single fossilized front tooth from a Troodon, capturing its highly specialized 'hooked-needle' premaxillary morphology in a 3D animated feature film aesthetic. The specimen is exceptionally small, slender, and elongated, resembling a fine sewing needle that curves sharply backward near the tip. Unlike the lateral teeth, this anterior variation lacks large, prominent serrations, exhibiting instead an ultra-fine, smooth cutting edge. The enamel finish is a polished, translucent amber and deep caramel brown with light mineralized surface crack lines. The single needle-tooth is isolated and oriented vertically, centered perfectly on a 1:1 square canvas. Rendered with soft studio lighting and precise ambient occlusion to emphasize the delicate, narrow profile. The background is a seamless, solid light-grey studio plane that extends to the canvas margins with no internal frames, borders, or boxes. The object is scaled to preserve a strict 25% empty background safety margin on all four sides to prevent UI clipping. Grounded flat with realistic contact shadows. A clean checkered black-and-white scientific scale bar sits centered at the bottom."
+}

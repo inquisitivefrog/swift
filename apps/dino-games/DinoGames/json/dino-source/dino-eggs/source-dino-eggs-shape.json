@@ -1,0 +1,8 @@
+{
+  "id": "game_card_dino_eggs_clades_manifest",
+  "species": "Multiple (Ankylosauridae, Ceratopsia, Hadrosauridae, Tyrannosauridae, Small Theropoda, Ornithischia, Ornithomimidae, Sauropoda, Stegosauridae)",
+  "tech_ref": "DEFAULT_SQUARE",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "LANCE_HELL_CREEK",
+  "pose": "A stylized, high-fidelity museum exhibit or paleontological field station layout displaying a diverse comparative collection of fossilized dinosaur nests and eggs, cleanly arranged into distinct spatial groups. In the foreground, a detailed, shallow sand-and-mud nest contains a cluster of large, highly elongated, symmetrical cylindrical eggs with rough shell textures (representing large and small theropods and ornithomimids). Adjacent to it sits a mound-shaped dirt nest holding perfectly spherical, rough-textured eggs reminiscent of giant marbles (representing a sauropod clutch). In the midground, a beautifully preserved shallow depression reveals a ring of smaller, slightly teardrop-shaped and oval eggs arranged in a meticulous geometric pattern (representing hadrosaur, ceratopsian, and ankylosaur clades). On the remaining side, a primitive gravel nest displays small, heavily wrinkled or dynamic, oblong egg shapes (representing general ornithischian and stegosaur variants). The background features a softly blurred field tent or laboratory workshop under warm, diffused light, allowing the diverse physical shapes, textures, and arrangements of the fossilized nests to stand out clearly for gameplay identification."
+}

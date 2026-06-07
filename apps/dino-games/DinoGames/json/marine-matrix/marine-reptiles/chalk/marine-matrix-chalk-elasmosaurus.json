@@ -1,0 +1,19 @@
+{
+    "asset_id": "manifest_marine_035",
+    "project": "MarineMatrix",
+    "version": "1.0.0",
+    "meta": {
+      "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+      "intended_use": "UI_Card_Dig_Stage_3"
+    },
+    "excavation_context": {
+      "character_id": "dino_bones_preparator_6",
+      "character_description": "An adult female grad student working as a museum preparator, long black hair, Asian ethnicity. Wears a yellow tee shirt with a unicorn image worn UNDER a white lab coat, yellow skirt and white sneakers.",
+      "stage": "Chiseling Matrix Away from Vertebrae",
+      "target_marine_reptile": "Elasmosaurus",
+      "geological_formation": "SMOKY_HILL_CHALK",
+      "matrix_material": "Chalk",
+      "matrix_color": "Buff Yellow"
+    },
+    "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_preparator_6 uses a delicate hand-chisel under strong laboratory spotlights to split flaky layers of buff yellow chalk matrix away from a long, interlocking chain of Elasmosaurus neck vertebrae. 1:1 Square aspect ratio."
+  }

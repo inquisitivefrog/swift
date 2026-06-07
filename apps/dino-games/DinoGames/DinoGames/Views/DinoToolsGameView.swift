@@ -145,9 +145,6 @@ struct DinoToolsGameView: View {
     @State private var currentRound = 1
     @State private var matchedPairs: Set<Int> = []
     @State private var failedAttempts: Set<Int> = []
-    @State private var showFeedback = false
-    @State private var feedbackMessage = ""
-    @State private var isCorrect = false
     @State private var showVictory = false
     @State private var introWalkComplete = false
     @State private var introWalkStep = 0
@@ -229,7 +226,6 @@ struct DinoToolsGameView: View {
     private func resetGameState() {
         matchedPairs.removeAll()
         failedAttempts.removeAll()
-        showFeedback = false
         introWalkComplete = false
         introWalkStep = 0
         hintShown = false
@@ -254,17 +250,17 @@ struct DinoToolsGameView: View {
                 Text("Round \(currentRound) of \(totalRounds)")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                Text(showFeedback ? feedbackMessage : (introLabel ?? " "))
+                Text(introLabel ?? " ")
                     .font(.title3)
                     .fontWeight(.medium)
-                    .foregroundColor(showFeedback ? (isCorrect ? .green : .orange) : .primary)
+                    .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
                     .minimumScaleFactor(0.8)
                     .padding(.horizontal, 24)
                     .padding(.top, 8)
                     .frame(height: 52)
-                    .opacity(showFeedback || introLabel != nil ? 1 : 0)
+                    .opacity(introLabel != nil ? 1 : 0)
             }
 
             // Alternating main image: nest ↔ egg (egg is draggable to scanner)
@@ -677,16 +673,11 @@ struct DinoToolsGameView: View {
             let correctDino = currentRoundConfig?.correctDinosaur
             let isCorrectMatch = dino.id == correctDino?.id
 
-            showFeedback = true
-            isCorrect = isCorrectMatch
-            feedbackMessage = isCorrectMatch ? "That's right!" : "Try again!"
-
             // Restate dinosaur name first for educational reinforcement, then play feedback
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 self.speechManager.onAudioFinished = {
                     self.speechManager.onAudioFinished = nil
-                    self.showFeedback = false
                     if isCorrectMatch {
                         self.matchedPairs.insert(dino.id)
                         self.finishRound()

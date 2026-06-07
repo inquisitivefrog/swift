@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_012",
+    "species": "Liaoningopterus gui",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "JIUFOTANG",
+    "matrix_material": "bentonite",
+    "character_assigned": "dino_bones_paleontologist_6",
+    "pose": "Consolidating a fractured, hollow wing phalanx found inside a layer of purple-gray shale sediment."
+  }

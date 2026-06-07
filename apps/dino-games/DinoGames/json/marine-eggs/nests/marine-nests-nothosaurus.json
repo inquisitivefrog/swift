@@ -1,0 +1,7 @@
+  {
+    "id": "ui_nest_nothosaurus_hollow",
+    "morphology": "sauropterygian_basal",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up view of a Nothosaurus nest tucked inside a damp rocky hollow. A neat row of four elongated, creamy-tan eggs with distinct leathery banding is laid across a bed of crushed gray limestone gravel and wet seaweed. SETTING: Triassic rocky intertidal marine shoreline. LIGHTING: Cool, misty coastal daylight reflecting off damp rock surfaces. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+    "visual_logic": "Combines elongated oval, mineral-banded leathery eggs (Clue 1) with a damp rocky coastal limestone hollow nest (Clue 2)."
+  }

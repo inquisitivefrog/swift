@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_031",
+    "species": "Siroccopteryx moroccensis",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "KEM_KEM",
+    "matrix_material": "lignite",
+    "character_assigned": "dino_bones_paleontologist_1",
+    "pose": "Brushing fine red mudstone sediment away from a flattened anterior terminal expansion jaw tip piece."
+  }

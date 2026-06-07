@@ -24,12 +24,12 @@ enum GameCategory: String, CaseIterable, Identifiable, Hashable {
         }
     }
 
-    /// Expected asset name (add these images to `Assets.xcassets` when ready).
+    /// Card art on the game-type landing screen (`Game-Category/game-category-{slug}` in Assets).
     var imageAssetName: String {
         switch self {
-        case .land: return "category-land"
-        case .air: return "category-air"
-        case .marineReptiles: return "category-sea"
+        case .land: return "game-category-land"
+        case .air: return "game-category-air"
+        case .marineReptiles: return "game-category-sea"
         }
     }
 
@@ -60,9 +60,9 @@ private enum RootGameType: String, CaseIterable, Identifiable {
 
     var imageAssetName: String {
         switch self {
-        case .dinosaurs: return "category-land"
-        case .pterosaurs: return "category-air"
-        case .sea: return "category-sea"
+        case .dinosaurs: return GameCategory.land.imageAssetName
+        case .pterosaurs: return GameCategory.air.imageAssetName
+        case .sea: return GameCategory.marineReptiles.imageAssetName
         }
     }
 
@@ -125,7 +125,9 @@ struct CategorySelectionView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
-                if !hasStartedCoverSequence {
+                if CategoryPlaySession.shouldSkipLaunchIntros {
+                    skipCoverSequenceForReturningPlayer()
+                } else if !hasStartedCoverSequence {
                     hasStartedCoverSequence = true
                     startCoverSequence()
                 }
@@ -149,6 +151,16 @@ struct CategorySelectionView: View {
     }
 
     /// Welcome → Dinosaurs → Pterosaurs → Sea (marine), then allow taps.
+    private func skipCoverSequenceForReturningPlayer() {
+        hasStartedCoverSequence = true
+        coverSequenceComplete = true
+        enabledDinosaurs = true
+        enabledPterosaurs = true
+        enabledSea = true
+        speechManager.stopCurrentAudio()
+        speechManager.onAudioFinished = nil
+    }
+
     private func startCoverSequence() {
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil

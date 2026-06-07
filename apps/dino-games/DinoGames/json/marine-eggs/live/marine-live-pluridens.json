@@ -1,0 +1,6 @@
+{
+  "id": "ui_birth_pluridens_silhouette",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. An underwater scene capturing a marine reptile birth puzzle. A massive, heavy-set mother mosasaur is shown as a thick, dark olive-grey silhouette outline, masking her skin texture but outlining a long, robust snout profile. Bursting tail-first out of the mother's shadow is a highly detailed, full-color newborn baby Pluridens made of vibrant clay, its tiny mouth open to reveal a row of numerous, miniature sculpted teeth. SETTING: Late Cretaceous epicontinental shelf sea. LIGHTING: Bright upper-ocean daylight cutting through turquoise water, casting strong backlighting that renders the mother as a silhouette while illuminating the detailed, colorful baby. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+  "visual_logic": "Keeps the mother as a challenging dark silhouette, requiring players to identify the clade by looking at the tiny, detailed teeth on the colorful newborn baby."
+}

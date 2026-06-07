@@ -1,1 +1,11 @@
-High-fidelity 3D render of a single Dromaeosaurus precision curved hooked blade tooth. Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_tooth_dromaeosaurus_hooked_blade",
+  "species": "Dromaeosaurus albertensis",
+  "morphology": "strongly_recurved_hooked_blade",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Isolates a single dromaeosaurid tooth to showcase the prominent backward curve and differential serration sizing characteristic of specialized raptorial theropods.",
+  "prompt": "High-fidelity 3D asset render of a single fossilized tooth from a Dromaeosaurus, captured in a 3D animated feature film aesthetic with clean, stylized lines. The specimen exhibits a precision 'hooked blade' morphology: it is strongly backward-curved (recurved) and laterally compressed, designed for slicing and securing prey. The edges are lined with sharp, distinct denticles (serrations), with the posterior serrations visibly larger than those on the anterior edge. The enamel texture features a dark chocolate brown and deep amber mineralized patina with a smooth, low-gloss matte finish. The single tooth is isolated and oriented vertically, centered perfectly on a 1:1 square canvas. Rendered with soft studio lighting and precise ambient occlusion to accentuate the curved silhouette. The background is a seamless, solid light-grey studio plane that extends to the image borders with no internal frames, borders, or boxes. The object is scaled to preserve a strict 25% empty background safety margin on all four sides to prevent UI clipping. Grounded flat with realistic contact shadows. A clean checkered black-and-white scientific scale bar sits centered at the bottom."
+}

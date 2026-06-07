@@ -1,1 +1,11 @@
-High-fidelity 3D render of a single Masiakasaurus forward spear tooth. Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_tooth_masiakasaurus_spear",
+  "species": "Masiakasaurus knopfleri",
+  "morphology": "procumbent_projecting_incisor",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Isolates a singular, hyper-specialized front tooth to showcase the unique fish-spearing adaptation of this theropod.",
+  "prompt": "High-fidelity 3D asset of a single fossilized front tooth from a Masiakasaurus, rendered in a 3D animated feature film aesthetic with clean, slightly stylized contours. The specimen showcases a highly unique, heavily curved, elongated spear-like incisor morphology. The tooth tip hooks forward subtly, featuring fine, realistic enamel texture lines, minor wear scratches, and a solid, non-fragmented root base. The asset is positioned vertically and centered perfectly within a 1:1 square canvas, meticulously scaled to maintain a strict 25% negative space framing buffer on all four sides to prevent UI clipping. Set against a seamless, solid light-grey studio floor plane with soft, realistic ambient occlusion and a subtle contact shadow cast directly underneath to establish physical weight. A clean, integrated checkered black-and-white scientific scale bar is positioned centered at the bottom."
+}

@@ -1,0 +1,29 @@
+{
+  "id": "game_card_02_ptero_player_wins",
+  "project_name": "Ptero Toothache",
+  "style_ref": "STYLE_3D_ANIMATED_FEATURE_ORGANIC_TEXTURES",
+  "subject": "Three different friendly pterosaurs grouped on an ancient rock outcrop, all smiling triumphantly.",
+  "composition": {
+    "foreground": {
+      "pterosaur_1": "Pteranodon: Three-quarter view, gentle happy smile, a prominent smooth crest, soft teal-grey leathery skin, positioned prominently looking at the screen.",
+      "pterosaur_2": "Dimorphodon: Three-quarter view, cheerful smile showcasing friendly rounded puffin-style jaw profiles, fuzzy pycnofiber coat, positioned beside Pteranodon.",
+      "pterosaur_3": "Tapejara: Three-quarter view, brave happy smile, a massive colorful sail-like head crest, in the background looking contented and waving a wing-finger."
+    },
+    "background": "Open, sunny prehistoric sky over a coastal canopy with distant rolling hills and a clear blue horizon. Celebratory, light, and airy atmosphere.",
+    "grouping": "Pterosaurs are perched and posed in a way that conveys happiness and success, looking out directly at the player."
+  },
+  "typography": {
+    "caption_1": {
+      "text": "Ptero Smile!",
+      "style": "Bright red, thick 3D mixed-case block letters, positioned top-center."
+    },
+    "caption_2": {
+      "text": "Player Wins!",
+      "style": "Shiny gold, bold 3D mixed-case block letters, positioned clearly below 'Ptero Smile!', with a subtle celebratory sparkle effect. Text is slightly textured, like polished gold."
+    }
+  },
+  "visual_logic": {
+    "overall_mood": "Celebratory, rewarding, successful. Emphasizes the positive, smile-focused outcome of the game.",
+    "color_palette": "Bright sky blues, sunlit yellows, lush canopy greens, with the red and gold captions standing out cleanly."
+  }
+}

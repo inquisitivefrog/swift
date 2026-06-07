@@ -1,0 +1,10 @@
+{
+    "id": "pteromatrix_001",
+    "species": "Pterodactylus antiquus",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "SOLNHOFEN",
+    "matrix_material": "shale",
+    "character_assigned": "dino_bones_preparator_1",
+    "pose": "Carefully clearing fine matrix away from the delicate elongated fourth finger bone using a pin-tool."
+  }

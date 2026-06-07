@@ -1,0 +1,15 @@
+{
+    "id": "raceway_buoy_7_the_solar_paddle",
+    "species": "Platform_Asset",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "TROPICAL_ISLAND_LAGOONS",
+    "pose": "A vibrant terracotta-colored buoy equipped with outrigger-style solar panel arrays shaped like canoe paddles that float directly on the water. Brightly colored coastal crabs are clambering over the warm, low-slung metal rungs.",
+    "environmental_details": {
+      "ground": "Shallow, calm tropical lagoon water displaying a beautiful gradient from bright golden ochre sand to vivid turquoise.",
+      "atmosphere": "High-key tropical sun with subtle heat shimmer effects rising from the exposed metallic solar paddles.",
+      "palette": ["Iron-oxide Red", "Terracotta", "Golden Ochre", "Limestone White"]
+    }
+  }

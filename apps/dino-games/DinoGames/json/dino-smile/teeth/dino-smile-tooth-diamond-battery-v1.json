@@ -1,0 +1,10 @@
+{
+  "id": "ui_tooth_hadrosaur_battery_cross_section",
+  "morphology": "Diamond-Battery-Jaw-Cutaway",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Uses a cross-section cutaway camera angle to reveal the diamond teeth columns waiting inside the jaw bone tray beneath the flat grinding table.",
+  "prompt": "High-fidelity 3D asset of a fossilized Hadrosaurid jaw fragment, rendered as a clean cross-section cutaway in a 3D animated feature film aesthetic with soft, stylized, and slightly rounded edges. The top of the specimen shows a wide, flat, sloped grinding table heavily worn from chewing vegetation. The front-facing side of the asset is sliced cleanly open in a cross-section view, exposing the interior of the porous jaw bone tray. Inside this bone cutaway, columns of perfectly diamond-shaped teeth are stacked vertically and interlocked tightly like a flawless geometric brick wall, migrating upward toward the grinding surface. The specimen is perfectly centered in a 1:1 square composition, scaled down cleanly into the central power-zone to ensure a strict 25% negative space safety margin on all four sides. Placed flat on a neutral, 50% grey studio floor with high-contrast contact shadows underneath for physical grounding. Illuminated by soft studio lighting with crisp ambient occlusion to define the cellular texture of the bone and the distinct enamel edges of the hidden diamond teeth columns."
+}

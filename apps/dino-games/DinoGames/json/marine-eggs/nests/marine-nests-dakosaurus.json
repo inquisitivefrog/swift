@@ -1,0 +1,7 @@
+  {
+    "id": "ui_nest_dakosaurus_mound",
+    "morphology": "crocodylomorph_pelagic",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up view of a Dakosaurus nest mound. A clutch of four large, elongated, micro-pitted grey-white eggs is revealed inside a massive incubation mound constructed from sand, packed coastal mud, and uprooted prehistoric palm fronds on a remote island sand spit. SETTING: Late Jurassic open ocean island beach. LIGHTING: Intense tropical noon sun baking the mud and vegetation of the mound. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+    "visual_logic": "Combines a hard-shelled, micro-pitted elongated crocodilian egg (Clue 1) with a massive sand-and-mud vegetation mound nest (Clue 2)."
+  }

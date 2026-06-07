@@ -1,0 +1,15 @@
+{
+    "id": "raceway_buoy_8_the_racing_pennant",
+    "species": "Platform_Asset",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "CAMBRIDGE_GREENSAND",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "PELAGIC_SHELF_SEA",
+    "pose": "A slender, high-visibility gunmetal grey pole buoy topped with a long, flexible fiberglass whip antenna flying a brightly striped racing pennant flag. A predatory Enchodus (fang-tooth fish) is dynamically breaching out of the water directly behind it.",
+    "environmental_details": {
+      "ground": "Murky olive-green water filled with drifting sea-grass particles, swirling over a dark, sandy tan seafloor base.",
+      "atmosphere": "Soft afternoon sun filtered through a thin coastal marine layer, creating highly volumetric shadows in the water splash.",
+      "palette": ["Olive Green", "Chocolate Brown", "Gunmetal Grey", "Sandy Tan"]
+    }
+  }

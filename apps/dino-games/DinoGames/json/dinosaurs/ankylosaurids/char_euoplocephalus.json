@@ -5,62 +5,24 @@
     },
     "layer_2_setting": {
       "formation_id": "HORSESHOE_CANYON",
-      "habitat_id": "COASTAL_SWAMPLANDS"
+      "base_habitat": "COASTAL_LOWLANDS",
+      "period": "LATE_CRETACEOUS",
+      "strata_specifics": {
+        "ground_texture": "Mucky, organic soil with dense plant roots",
+        "color_palette": ["Dark greens", "Browns", "Grey-blues"]
+      },
+      "flora_manifest": ["LATE_CRETACEOUS_BASE", "HORSESHOE_CANYON_ADDITIONS"],
+      "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
     },
     "layer_3_action": {
       "subject": "Young Euoplocephalus",
       "features": ["extensive bony armor plates covering its body", "broad, low-slung body", "massive club tail (rounded and friendly)", "small head", "large soulful eyes", "friendly expressive face"],
       "action": "Gently meandering through dense, low-lying ferns and horsetails in a coastal swampland, slowly munching on plants and looking calm and content."
+    },
+    "technical_specs": {
+      "aspect_ratio": "1:1",
+      "resolution": "1024x1024",
+      "framing_preset": "SQUARE_HERO_CARD"
     }
-  },
-  "flora_library": {
-    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
-    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
-    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
-    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
-    "TIAOJISHAN_ADDITIONS": ["Giant Horsetails", "Dense Conifer forest"],
-    "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
-    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
-    "LANCE_HELL_CREEK_ADDITIONS": ["Palm-like Bennettitales", "Tree ferns", "Lush canopy"],
-    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
-    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
-    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"],
-    "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"],
-    "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
-    "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
-    "CEDAR_MOUNTAIN_ADDITIONS": ["Paleopus in damp cracks", "Shrubby angiosperms"],
-    "JEHOL_BIOTA_ADDITIONS": ["Water lilies at the edge", "Dense hardwoods"],
-    "CANDELEROS_ADDITIONS": ["Paleopus", "Early flowering reeds"],
-    "KAIPAROWITS_ADDITIONS": ["Giant horsetails", "Mosses", "Dense fern thickets"],
-    "DAOHUGOU_BEDS_ADDITIONS": ["Evergreen conifers", "Alpine ferns"],
-    "KEM_KEM_ADDITIONS": ["Early Sycamores", "Willow-like shrubs", "Horsetail banks"]
-  },
-  "fauna_library": {
-    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
-    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
-    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
-    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates)"],
-    "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
-    "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)", "Cicadas"],
-    "HELL_CREEK_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (fast-running lizards)", "Cicadas", "Early wasps"]
-  },
-  "habitat_id": "COASTAL_SWAMPLANDS",
-  "physics": {
-    "altitude": "low",
-    "water": "high"
-  },
-  "visuals": {
-    "ground": "Soft, wet mud and lush vegetation",
-    "water": "Shallow pools and slow-moving streams",
-    "sky": "Overcast but bright, with humid air"
-  },
-  "formation_id": "HORSESHOE_CANYON",
-  "base_habitat": "COASTAL_SWAMPLANDS",
-  "period": "LATE_CRETACEOUS",
-  "strata_specifics": {
-    "ground_texture": "Mucky, organic soil with dense plant roots",
-    "color_palette": ["Dark greens", "Browns", "Grey-blues"]
-  },
-  "flora_manifest": ["LATE_CRETACEOUS_BASE", "HORSESHOE_CANYON_ADDITIONS"],
-  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+  }
 }

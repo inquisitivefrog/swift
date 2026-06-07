@@ -540,25 +540,11 @@ struct DinoFloraGameView: View {
     }
 
     private func playGoodJobAndCrowdThenDismiss() {
-        let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
-        let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
-        if let u1 = goodJobURL, let u2 = crowdURL {
-            speechManager.playTogether(url1: u1, url2: u2) {
-                self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
-                self.isPresented = false
-            }
-        } else if let u = goodJobURL ?? crowdURL {
-            speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
-                self.isPresented = false
-            }
-            speechManager.playAudioFile(url: u)
-        } else {
-            LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
-            isPresented = false
-        }
+        StandardVictorySequence.dismissAfterVictory(
+            configId: gameConfig.id,
+            isPresented: $isPresented,
+            speechManager: speechManager
+        )
     }
 }
 

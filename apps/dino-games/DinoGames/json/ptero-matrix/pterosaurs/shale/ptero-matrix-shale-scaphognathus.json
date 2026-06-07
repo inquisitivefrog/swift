@@ -1,0 +1,10 @@
+{
+    "id": "pteromatrix_003",
+    "species": "Scaphognathus crassirostris",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "SOLNHOFEN",
+    "matrix_material": "shale",
+    "character_assigned": "dino_bones_preparator_3",
+    "pose": "Stabilizing the robust, blunt skull elements embedded within a fine-grained micrite limestone matrix."
+  }

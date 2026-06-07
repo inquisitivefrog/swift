@@ -1,0 +1,7 @@
+  {
+    "id": "ui_nest_henodus_mound",
+    "morphology": "placodont_specialized",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up view of a Henodus nest. A small clutch of four compressed, pale greenish-grey eggs is nestled into a low mound of dried lagoon algae, soft saline mud, and fine silt. The nest is located just above the water line. SETTING: Triassic hyper-saline coastal lagoon. LIGHTING: Bright, hazy tropical sun bleaching the top layer of lagoon mud. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+    "visual_logic": "Combines a compressed greenish-grey speckled egg (Clue 1) with a lagoon mud and dried algae mound nest (Clue 2)."
+  }

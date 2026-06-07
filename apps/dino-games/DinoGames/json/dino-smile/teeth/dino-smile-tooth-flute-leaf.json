@@ -1,1 +1,11 @@
-High-fidelity 3D render of a single Stegosaurus tiny, leaf-shaped tooth. Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_tooth_stegosaurus_02",
+  "species": "Stegosaurus",
+  "morphology": "tiny_leaf_shaped",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Emphasizes the surprisingly small scale and leaf-like appearance of a Stegosaurus tooth compared to its massive body size.",
+  "prompt": "High-fidelity 3D asset of a single Stegosaurus tooth, rendered in a 3D animated feature film aesthetic with soft, stylized, and slightly rounded edges. The tooth exhibits a tiny, leaf-shaped morphology, forming a flat, wide arrowhead outline with small, distinctive serrations or denticles along the upper edges and gentle vertical fluting running toward the base. The surface displays high-quality tactile finishes and subtle specular highlights along the enamel. The specimen is perfectly centered in a 1:1 square composition, carefully scaled within the central power-zone to preserve a strict 25% negative space safety margin on all four sides so no part of the small tooth touches the borders. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows underneath to provide realistic physical weight and grounding. A small, clean, checkered black-and-white scientific scale bar is integrated neatly at the bottom within the safety padding to emphasize its diminutive size. Illuminated by soft studio lighting with ambient occlusion to cleanly highlight the delicate serrated contours and surface texture of the fossilized specimen."
+}

@@ -1,0 +1,15 @@
+{
+    "id": "raceway_buoy_3_the_crimson_beacon",
+    "species": "Platform_Asset",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MUWAQQAR_CHALK",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "TETHYS_COASTAL_MARGIN",
+    "pose": "A wide, stable pure white carbonate float supporting a tall lattice tower with a bright crimson flashing beacon at its apex. A large prehistoric marine turtle (Araripemys) has hauled itself onto the low-profile base, sunning its shell.",
+    "environmental_details": {
+      "ground": "Blindingly clear turquoise water flowing over a pure white chalky seafloor with golden sand bars visible in the background.",
+      "atmosphere": "Intense tropical saturation with a soft hazy glow along the coastal horizon line.",
+      "palette": ["Pure White", "Deep Ocean Blue", "Light Grey", "Golden Sand"]
+    }
+  }

@@ -1,0 +1,7 @@
+  {
+    "id": "ui_nest_tanystropheus_crevice",
+    "morphology": "archosauromorph_basal",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up view of a Tanystropheus nest. Three asymmetrical ocher-brown eggs are positioned neatly inside a narrow rock crevice lined with dry conifer pine needles and coarse, sandy dirt on a cliff overlooking the sea. SETTING: Triassic coastal cliff face. LIGHTING: Bright, direct morning sun illuminating the cliffside rocks and nest crevice. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+    "visual_logic": "Combines asymmetrical, ocher-brown tapered eggs (Clue 1) with a high coastal cliff face rock crevice nest (Clue 2)."
+  }

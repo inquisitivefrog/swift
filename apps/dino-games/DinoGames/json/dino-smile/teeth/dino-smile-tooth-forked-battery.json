@@ -1,1 +1,11 @@
-High-fidelity 3D render of Chasmosaurus forked battery with deeply grooved double-rooted teeth.  Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_ceratopsian_seamless_occlusion",
+  "species": "Chasmosaurus",
+  "morphology": "seamless_arrowhead_crowns_forked_roots",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Eliminates all horizontal seams within individual teeth, forcing each tooth to be a single, continuous object from the solid crown down to the split roots.",
+  "prompt": "High-fidelity 3D asset of a fossilized Chasmosaurus dental battery occlusion, rendered in a 3D animated feature film aesthetic. The composition shows two separate, offset jaw fragments bypass-shearing past each other. Each individual tooth in the vertical columns must be rendered as a single, continuous, unified fossil structure with absolutely no horizontal seams, joints, or lines separating the crown from the root. The top of each tooth is a solid, single-piece arrowhead crown with a prominent vertical center ridge and serrated edges; this solid structure smoothly and seamlessly transitions downward into a widely split, hollow, inverted V-shaped root fork. The nesting columns show the solid, seamless arrowhead crown of each younger tooth slotting directly up inside the hollow root fork of the older tooth directly above it like nested cups, forming a tight, solid wall of bone. The active chewing edges are sheared completely flat at a sharp mastication angle. Centered in a 1:1 square canvas, leaving a 25% empty safety frame on a seamless 50% grey studio floor with realistic contact shadows and a centered checkered scale bar at the bottom."
+}

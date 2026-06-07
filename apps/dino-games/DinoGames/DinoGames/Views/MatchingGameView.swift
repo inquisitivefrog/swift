@@ -127,12 +127,20 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             }
             return nil
         }
+        // Ptero Diets!: diet option clips under `Audio/Ptero-Diets/` (`ptero-diet-*`, `ptero-diets-*`).
+        if normalized.hasPrefix("ptero-diets-") || normalized.hasPrefix("ptero-diet-") {
+            if let url = resolveURL(forPath: "Ptero-Diets/\(normalized)") { return url }
+            return nil
+        }
         // Racing clips: `Games/{file}` or `Games/racing-dinosaurs|pterosaurs/{file}` (shared keys like outside-track may live in either pack folder).
         if normalized.hasPrefix("game-racing-") {
             if let url = resolveURL(forPath: "Games/\(normalized)") { return url }
         }
         if normalized == "racing-pterosaurs" {
             if let url = resolveURL(forPath: "Games/game-racing-pterosaurs") { return url }
+        }
+        if normalized == "racing-marine-reptiles" || normalized == "racing marine reptiles" {
+            if let url = resolveURL(forPath: "Games/game-racing-marine-reptiles") { return url }
         }
         if normalized == "racing-dinosaurs" || normalized == "racing dinosaurs" {
             if let url = resolveURL(forPath: "Games/game-racing-dinosaurs") { return url }
@@ -144,6 +152,12 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         if normalized == "dino-eggs" {
             if let url = resolveURL(forPath: "Games/game-dino-eggs") { return url }
         }
+        if normalized.hasPrefix("game-marine-eggs") {
+            if let url = resolveURL(forPath: "Games/\(normalized)") { return url }
+        }
+        if normalized == "marine-eggs" {
+            if let url = resolveURL(forPath: "Games/game-marine-eggs") { return url }
+        }
         // Dino Fossil Hunt site clips: `Games/{file}` or `Games/dino-fossil-hunt/{file}` (hint keys → `Audio/Fossil/`).
         if normalized.hasPrefix("game-dino-fossil-hunt") && !normalized.hasPrefix("game-dino-fossil-hunt-hint") {
             if let url = resolveURL(forPath: "Games/\(normalized)") { return url }
@@ -151,7 +165,7 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         if normalized == "dino-fossil-hunt" {
             if let url = resolveURL(forPath: "Games/game-dino-fossil-hunt") { return url }
         }
-        if normalized.hasPrefix("game-dino-matrix") {
+        if normalized.hasPrefix("game-dino-matrix") || normalized.hasPrefix("game-ptero-matrix") || normalized.hasPrefix("game-marine-matrix") {
             if let url = resolveURL(forPath: "Games/\(normalized)") { return url }
         }
         guard let path = audioFilePath(for: key) else { return nil }
@@ -169,6 +183,7 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
     private static let gamesNestedSubfolders: [String] = [
         "racing-dinosaurs",
         "racing-pterosaurs",
+        "racing-marine-reptiles",
         "dino-eggs",
         "dino-fossil-hunt",
     ]
@@ -177,7 +192,9 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
     private static func gamesNestedSubfolders(forFileName fileName: String) -> [String] {
         let stem = fileName.lowercased()
         let preferred: String?
-        if stem.hasPrefix("game-racing-pterosaurs") || stem == "game-racing-pterosaurs" {
+        if stem.hasPrefix("game-racing-marine-reptiles") || stem == "game-racing-marine-reptiles" {
+            preferred = "racing-marine-reptiles"
+        } else if stem.hasPrefix("game-racing-pterosaurs") || stem == "game-racing-pterosaurs" {
             preferred = "racing-pterosaurs"
         } else if stem.hasPrefix("game-racing-dinosaurs") || stem == "game-racing-dinosaurs" {
             preferred = "racing-dinosaurs"
@@ -398,6 +415,10 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         if normalized.hasPrefix("diet-") {
             return "Diets/\(normalized)"
         }
+        // Ptero Diets!: pterosaur diet clips (Audio/Ptero-Diets/ptero-diet-{slug}.m4a or ptero-diets-{slug}.m4a)
+        if normalized.hasPrefix("ptero-diets-") || normalized.hasPrefix("ptero-diet-") {
+            return "Ptero-Diets/\(normalized)"
+        }
         
         // Map common phrases to file names (matching your recorded files)
         switch normalized {
@@ -474,10 +495,14 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         // Who Is Taller: "X is taller" (one phrase file after dinosaur name)
         case "is-taller", "is taller":
             return "Feedback/is-taller"
+        case "is-longer", "is longer":
+            return "Feedback/is-longer"
         case "they-both-weigh-about-the-same", "they both weigh about the same":
             return "Feedback/they-both-weigh-about-the-same"
         case "they-are-about-the-same-height", "they are about the same height":
             return "Feedback/they-are-about-the-same-height"
+        case "about-the-same-length", "about the same length":
+            return "Feedback/about-the-same-length"
         case "is-as-tall-as", "is as tall as":
             return "Feedback/is-as-tall-as"
         case "and":
@@ -709,7 +734,7 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         case "can-you-name-that-dinosaur", "can you name that dinosaur":
             return "Games/game-can-you-name-that-dinosaur"
         case "can-you-name-the-pterosaur", "can you name the pterosaur":
-            return "Games/game-can-you-name-the-pterosaur"
+            return "Games/game-can-you-name-that-pterosaur"
         case "can-you-name-the-mosasaur", "can you name the mosasaur":
             return "Games/game-can-you-name-the-mosasaur"
         case "name-that-mosasaur", "name that mosasaur":
@@ -731,6 +756,10 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-dino-toothache"
         case "game-dino-smile", "dino-smile", "smiling-dinos":
             return "Games/game-dino-smile"
+        case "game-ptero-smile", "ptero-smile":
+            return "Games/game-ptero-smile"
+        case "game-ptero-smile-gameplay-directions":
+            return "Games/game-ptero-smile-gameplay-directions"
         case "game-dino-smile-gameplay-directions":
             return "Games/game-dino-smile-gameplay-directions"
         case "game-ptero-eggs", "ptero-eggs":
@@ -749,6 +778,10 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-dino-eggs-beep"
         case "game-dino-eggs-scan-failed":
             return "Games/game-dino-eggs-scan-failed"
+        case "game-dino-eggs-shape":
+            return "Games/game-dino-eggs-shape"
+        case "game-dino-eggs-color":
+            return "Games/game-dino-eggs-color"
         case "game-dino-eggs-tap-the-dinosaur":
             return "Games/game-dino-eggs-tap-the-dinosaur"
         case "game-dino-eggs-tap-the-sem":
@@ -805,6 +838,8 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-racing-dinosaurs"
         case "racing-pterosaurs", "racing pterosaurs", "game-racing-pterosaurs", "game racing pterosaurs":
             return "Games/game-racing-pterosaurs"
+        case "racing-marine-reptiles", "racing marine reptiles", "game-racing-marine-reptiles", "game racing marine reptiles":
+            return "Games/game-racing-marine-reptiles"
         case "game-can-you-balance-the-dinosaurs", "game can you balance the dinosaurs":
             return "Games/game-can-you-balance-the-dinosaurs"
         case "game-balance-choose-a-heavy-dinosaur", "choose a heavy dinosaur":
@@ -831,6 +866,14 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-racer-choose-your-first-pterosaur-to-race"
         case "game-racer-choose-your-second-pterosaur-to-race", "choose your second pterosaur to race":
             return "Games/game-racer-choose-your-second-pterosaur-to-race"
+        case "game-choose-your-first-marine-reptile", "choose your first marine reptile":
+            return "Games/game-choose-your-first-marine-reptile"
+        case "game-choose-your-second-marine-reptile", "choose your second marine reptile":
+            return "Games/game-choose-your-second-marine-reptile"
+        case "game-racer-choose-your-first-marine-reptile-to-race", "choose your first marine reptile to race":
+            return "Games/game-choose-your-first-marine-reptile"
+        case "game-racer-choose-your-second-marine-reptile-to-race", "choose your second marine reptile to race":
+            return "Games/game-choose-your-second-marine-reptile"
         case "game-racing-outside-track", "racing outside track":
             return "Games/game-racing-outside-track"
         case "game-racing-inside-track", "racing inside track":
@@ -851,6 +894,12 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-racing-pterosaurs-set"
         case "game-racing-pterosaurs-go":
             return "Games/game-racing-pterosaurs-go"
+        case "game-racing-marine-reptiles-ready":
+            return "Games/game-racing-marine-reptiles-ready"
+        case "game-racing-marine-reptiles-set":
+            return "Games/game-racing-marine-reptiles-set"
+        case "game-racing-marine-reptiles-go":
+            return "Games/game-racing-marine-reptiles-go"
         case "game-racing-ready-set", "racing ready set":
             return "Games/game-racing-ready-set"
         case "racing-the-winner-is", "the winner is":
@@ -863,6 +912,8 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-dino-matrix"
         case "game-dino-matrix-identify-the-stone", "game-matrix-identify-the-stone":
             return "Games/game-dino-matrix-identify-the-stone"
+        case "game-ptero-matrix-identify-the-stone":
+            return "Games/game-ptero-matrix-identify-the-stone"
         case "game-dino-matrix-which-one", "game-matrix-which-one", "which one is it", "tap the one":
             return "Games/game-dino-matrix-which-one"
         case "game-find-mama", "find mama", "find-mama", "game-mama-match", "mama match":
@@ -1001,12 +1052,21 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         case _ where normalized.hasPrefix("fauna-"):
             let slug = String(normalized.dropFirst("fauna-".count))
             return "Fauna/\(slug)"
-        // Smiling Dinos: dino-smile-* → Smile/dino-smile-{toothType}.m4a for tooth intro audio
+        // Dino Smile: dino-smile-* → Dino-Smile/dino-smile-{toothType}.m4a for tooth intro audio
         case _ where normalized.hasPrefix("dino-smile-"):
-            return "Smile/\(normalized)"
+            return "Dino-Smile/\(normalized)"
+        // Ptero Smile: ptero-smile-* → Ptero-Smile/ptero-smile-{beakType}.m4a for beak intro audio
+        case _ where normalized.hasPrefix("ptero-smile-"):
+            return "Ptero-Smile/\(normalized)"
+        // Marine Smile (when bundled): marine-smile-* → Marine-Smile/{key}.m4a
+        case _ where normalized.hasPrefix("marine-smile-"):
+            return "Marine-Smile/\(normalized)"
         // Ptero Eggs: ptero-eggs-{clade} / ptero-nests-{clade} → Eggs/Pterosaurs/{key}.m4a
         case _ where normalized.hasPrefix("ptero-eggs-") || normalized.hasPrefix("ptero-nests-"):
             return "Eggs/Pterosaurs/\(normalized)"
+        // Marine Eggs: marine-eggs-{slug} → Eggs/Marine-Reptiles/{key}.m4a (when bundled)
+        case _ where normalized.hasPrefix("marine-eggs-"):
+            return "Eggs/Marine-Reptiles/\(normalized)"
         // Dino Eggs: dino-eggs-* → Eggs/dino-eggs-{eggType}.m4a for egg intro audio
         case _ where normalized.hasPrefix("dino-eggs-"):
             return "Eggs/\(normalized)"
@@ -1052,7 +1112,7 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
 
         // Dino Matrix (and future Ptero/Marine Matrix): stone names → Audio/Dino-Materials/{slug}.m4a
         case "limestone", "mudstone", "bentonite", "sandstone", "siltstone", "tuff", "amber", "shale",
-             "ironstone", "claystone", "lignite", "phosphorite", "conglomerate":
+             "ironstone", "claystone", "lignite", "phosphorite", "conglomerate", "chalk":
             return "Dino-Materials/\(normalized)"
 
         default:
@@ -1369,9 +1429,6 @@ struct MatchingGameView: View {
     @State private var selectedCharacteristic: Characteristic?
     @State private var matchedPairs: Set<MatchedPair> = [] // Track specific matched pairs
     @State private var failedAttempts: Set<MatchedPair> = [] // Track failed attempts (visual only, doesn't block)
-    @State private var showFeedback = false
-    @State private var feedbackMessage = ""
-    @State private var isCorrect = false
     @State private var audioTestMessage = ""
     @State private var showVictory = false // Show victory screen: vertical list, highlight + name audio, then good-job + crowd
     @State private var victoryShownAt: Date? // When victory view was shown; used to enforce minimum display time
@@ -1381,7 +1438,7 @@ struct MatchingGameView: View {
     @State private var endHighlightIndex: Int = 0
     /// All dinosaurs from all 3 rounds (3 per round = 9 total) for victory list; accumulated when each round completes.
     @State private var victoryDinosaurs: [Dinosaur] = []
-    /// Dino Diets!: matched diet traits from all rounds (3 per round) for victory recap.
+    /// Dino Diets!: unique matched diet types across all rounds (Herbivore, Carnivore, etc.) for victory recap.
     @State private var victoryDiets: [Characteristic] = []
     /// Intro walk each round: step 0..2 = dinosaurs, 3..7 = characteristics; when complete, gameplay is enabled.
     @State private var introWalkComplete = false
@@ -1405,8 +1462,6 @@ struct MatchingGameView: View {
         failedAttempts.removeAll()
         selectedDinosaur = nil
         selectedCharacteristic = nil
-        showFeedback = false
-        feedbackMessage = ""
         showVictory = false
         victoryShownAt = nil
         matchChoiceStartTime = nil
@@ -1419,11 +1474,18 @@ struct MatchingGameView: View {
     private func startNextRound() {
         currentRound += 1
         // New random config each round; exclude creatures already used so no reuse across rounds
-        currentConfig = (currentConfig.id == "match-the-pterosaur")
-            ? MatchingGameConfigs.pterosaurFeatures(excluding: usedCreatureIds)
-            : (currentConfig.id == "match-the-diet"
-                ? MatchingGameConfigs.dinoDietFeatures(excluding: usedCreatureIds)
-                : MatchingGameConfigs.dinoFeatures(excluding: usedCreatureIds))
+        currentConfig = switch currentConfig.id {
+        case "match-the-pterosaur":
+            MatchingGameConfigs.pterosaurFeatures(excluding: usedCreatureIds)
+        case "match-the-diet":
+            MatchingGameConfigs.dinoDietFeatures(excluding: usedCreatureIds)
+        case "ptero-diets":
+            MatchingGameConfigs.pteroDietFeatures(excluding: usedCreatureIds)
+        case "marine-diets":
+            MatchingGameConfigs.marineDietFeatures(excluding: usedCreatureIds)
+        default:
+            MatchingGameConfigs.dinoFeatures(excluding: usedCreatureIds)
+        }
         speechManager.characteristicSubfolder = currentConfig.id == "match-the-pterosaur" ? "Ptero-Characteristics" : "Dino-Characteristics"
         resetGameState()
         // Run intro walk for this round (dinosaurs then traits). Delay so rate limiting doesn't skip the first speak and leave the first creature stuck highlighted.
@@ -1466,15 +1528,51 @@ struct MatchingGameView: View {
         } // End NavigationView
     } // End body
     
-    private var isDinoDietsGame: Bool { gameConfig.id == "match-the-diet" }
+    private var isDietMatchingGame: Bool {
+        gameConfig.id == "match-the-diet" || gameConfig.id == "ptero-diets" || gameConfig.id == "marine-diets"
+    }
+
+    private var dietMatchingDisplayTitle: String {
+        switch gameConfig.id {
+        case "match-the-diet": return "Dino Diets!"
+        case "ptero-diets": return "Ptero Diets!"
+        case "marine-diets": return "Marine Diets!"
+        default: return currentConfig.title
+        }
+    }
+
+    private var isPterosaurMatchingGame: Bool {
+        gameConfig.id == "match-the-pterosaur" || gameConfig.id == "ptero-diets"
+    }
+
+    private var isMarineMatchingGame: Bool {
+        gameConfig.id == "marine-diets"
+    }
+
+    private var matchingCreatureColumnTitle: String {
+        if isMarineMatchingGame { return "Marine Reptiles" }
+        if isPterosaurMatchingGame { return "Pterosaurs" }
+        return "Dinosaurs"
+    }
 
     private var victoryRecapRowCount: Int {
-        isDinoDietsGame ? victoryDiets.count : victoryDinosaurs.count
+        isDietMatchingGame ? victoryDiets.count : victoryDinosaurs.count
     }
 
     /// Fixed viewport: up to `StandardVictoryLayout.maxVisibleRecapRows` recap rows visible; longer lists scroll.
     private var victoryListVisibleHeight: CGFloat {
         StandardVictoryLayout.recapListScrollHeight(itemCount: victoryRecapRowCount)
+    }
+
+    /// Ptero Diets keeps title + diet recap visible above the success card (same continuous-screen victory as Name That Dinosaur).
+    private var matchingVictoryKeepsRecapDuringSuccess: Bool {
+        gameConfig.id == "ptero-diets"
+    }
+
+    private var matchingVictorySuccessImageSide: CGFloat {
+        matchingVictoryKeepsRecapDuringSuccess
+            ? 180
+            : GameCatalogImageMetrics.nameThatVictorySuccessImageSide
     }
 
     // MARK: - Victory: scrolling list in top half (highlight + name audio); bottom half success card + optional stinger, then good-job + crowd and dismiss
@@ -1483,10 +1581,12 @@ struct MatchingGameView: View {
                 listScrollHeight: victoryListVisibleHeight,
                 showSuccessPhase: endSequenceStep == 2,
                 endHighlightIndex: endHighlightIndex,
-                gameTitle: isDinoDietsGame ? "Dino Diets!" : currentConfig.title,
+                gameTitle: dietMatchingDisplayTitle,
+                hideGameTitleDuringSuccessPhase: !matchingVictoryKeepsRecapDuringSuccess,
+                collapseRecapListDuringSuccessPhase: !matchingVictoryKeepsRecapDuringSuccess,
                 scrollRows: {
-                    if isDinoDietsGame {
-                        ForEach(Array(victoryDiets.enumerated()), id: \.element.id) { index, diet in
+                    if isDietMatchingGame {
+                        ForEach(Array(victoryDiets.enumerated()), id: \.element.type) { index, diet in
                             let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
                             StandardVictoryRecapRowView(
                                 item: VictoryRecapDisplayItem(
@@ -1519,7 +1619,7 @@ struct MatchingGameView: View {
                     LandGameVictorySuccessStingerThenContinue(
                         candidateSuccessImageNames: matchingVictorySuccessCandidateAssetNames(),
                         catalogGameIdForStinger: gameConfig.id,
-                        imageSide: GameCatalogImageMetrics.nameThatVictorySuccessImageSide,
+                        imageSide: matchingVictorySuccessImageSide,
                         speechManager: speechManager,
                         onContinue: playMatchingGoodJobAndCrowdThenDismiss
                     )
@@ -1539,12 +1639,31 @@ struct MatchingGameView: View {
         }
     }
 
+    private func creatureDietType(for creature: Dinosaur) -> String? {
+        switch gameConfig.id {
+        case "match-the-diet":
+            return MatchingGameConfigs.dinosaurDietById[creature.id]
+        case "ptero-diets":
+            return AirPterosaurData.pterosaurDietById[creature.id]
+        case "marine-diets":
+            return SeaMarineReptileData.marineReptileDietById[creature.id]
+        default:
+            return nil
+        }
+    }
+
     private func dietAudioKey(for characteristic: Characteristic) -> String {
-        "diet-\(characteristic.type.lowercased())"
+        if gameConfig.id == "marine-diets" {
+            return SeaMarineReptileData.dietAudioKey(for: characteristic.type)
+        }
+        if gameConfig.id == "ptero-diets" {
+            return AirPterosaurData.pterosaurDietAudioKey(for: characteristic.type)
+        }
+        return "diet-\(characteristic.type.lowercased())"
     }
 
     private func speakMatchingVictoryRecap(at index: Int) {
-        if isDinoDietsGame, index < victoryDiets.count {
+        if isDietMatchingGame, index < victoryDiets.count {
             let diet = victoryDiets[index]
             speechManager.speak(audioKey: dietAudioKey(for: diet), fallbackText: diet.type)
         } else if index < victoryDinosaurs.count {
@@ -1556,6 +1675,12 @@ struct MatchingGameView: View {
     private func matchingVictorySuccessCandidateAssetNames() -> [String] {
         if gameConfig.id == "match-the-diet" {
             return ["game-dino-diets-success", "game-dino-diets", "game-match-the-diet-success", "game-match-the-diet"]
+        }
+        if gameConfig.id == "ptero-diets" {
+            return ["game-ptero-diets-success", "game-ptero-diets", "game-ptero-diet-success", "game-ptero-diet"]
+        }
+        if gameConfig.id == "marine-diets" {
+            return ["game-marine-diets-success", "game-marine-diets"]
         }
         return ["game-\(currentConfig.id)-success", "game-\(currentConfig.id)"]
     }
@@ -1574,11 +1699,11 @@ struct MatchingGameView: View {
 
     /// Appends this round's matched diets (Dino Diets) or dinosaurs (other matching games) for the victory walk.
     private func accumulateVictoryRecapForCompletedRound() {
-        if isDinoDietsGame {
+        if isDietMatchingGame {
             for dino in dinosaurs {
                 guard let pair = matchedPairs.first(where: { $0.dinosaurId == dino.id }),
                       let diet = characteristics.first(where: { $0.id == pair.characteristicId }),
-                      !victoryDiets.contains(where: { $0.id == diet.id }) else { continue }
+                      !victoryDiets.contains(where: { $0.type == diet.type }) else { continue }
                 victoryDiets.append(diet)
             }
         } else {
@@ -1591,36 +1716,18 @@ struct MatchingGameView: View {
     }
 
     private func playMatchingGoodJobAndCrowdThenDismiss() {
-        // Uniform: good-job + crowd then dismiss (all matching games)
-        let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
-        let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
-        if let u1 = goodJobURL, let u2 = crowdURL {
-            speechManager.playTogether(url1: u1, url2: u2) {
-                self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
-                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
-                self.isPresented = false
-            }
-        } else if let u = goodJobURL ?? crowdURL {
-            speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
-                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
-                self.isPresented = false
-            }
-            speechManager.playAudioFile(url: u)
-        } else {
-            LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
-            PterosaurProgress.notifyCompletionIfPterosaurGame(configId: gameConfig.id)
-            isPresented = false
-        }
+        StandardVictorySequence.dismissAfterVictory(
+            configId: gameConfig.id,
+            isPresented: $isPresented,
+            speechManager: speechManager
+        )
     }
 
     private var mainGameView: some View {
             VStack(spacing: 20) {
                 // Title (use gameConfig so Dino Diets! always shows "Dino Diets!" not config.title)
                 VStack(spacing: 4) {
-                    Text(gameConfig.id == "match-the-diet" ? "Dino Diets!" : currentConfig.title)
+                    Text(dietMatchingDisplayTitle)
                     .font(.title2)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
@@ -1628,27 +1735,13 @@ struct MatchingGameView: View {
                     Text("Round \(currentRound) of \(totalRounds)")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
-                    // Feedback message below round status (avoids pushing grid up)
-                    if showFeedback {
-                        Text(feedbackMessage)
-                            .font(.headline)
-                            .foregroundColor(isCorrect ? .green : .orange)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
-                            .background(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(isCorrect ? Color.green.opacity(0.2) : Color.orange.opacity(0.2))
-                            )
-                            .transition(.scale)
-                            .padding(.top, 4)
-                    }
                 }
                 
                 // Main game area (centered)
                 HStack(spacing: 20) {
                     // Left: Dinosaurs or Pterosaurs (dynamic by game)
                     VStack(spacing: 15) {
-                        Text(currentConfig.id == "match-the-pterosaur" ? "Pterosaurs" : "Dinosaurs")
+                        Text(matchingCreatureColumnTitle)
                             .font(.headline)
                         
                         ForEach(Array(dinosaurs.enumerated()), id: \.element.id) { index, dinosaur in
@@ -1667,7 +1760,7 @@ struct MatchingGameView: View {
                     
                     // Right: Diets (for Dino Diets!) or Special Feature (Match the Dinosaur / Pterosaur)
                     VStack(spacing: 15) {
-                        Text(currentConfig.id == "match-the-diet" ? "Diet" : "Special Feature")
+                        Text(isDietMatchingGame ? "Diet" : "Special Feature")
                             .font(.headline)
                         
                         ForEach(Array(characteristics.enumerated()), id: \.element.id) { index, characteristic in
@@ -1714,6 +1807,20 @@ struct MatchingGameView: View {
                 self.speechManager.speak(audioKey: d0.imageName ?? d0.name, fallbackText: d0.name)
             }
             speechManager.speak("game-dino-diets-match-each-dinosaur")
+        } else if gameConfig.id == "ptero-diets" {
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = { self.advanceIntroWalk() }
+                let d0 = self.dinosaurs[0]
+                self.speechManager.speak(audioKey: d0.imageName ?? d0.name, fallbackText: d0.name)
+            }
+            speechManager.speak(audioKey: "game-ptero-diets", fallbackText: "game-ptero-diet")
+        } else if gameConfig.id == "marine-diets" {
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = { self.advanceIntroWalk() }
+                let d0 = self.dinosaurs[0]
+                self.speechManager.speak(audioKey: d0.imageName ?? d0.name, fallbackText: d0.name)
+            }
+            speechManager.speak(audioKey: "game-marine-diets", fallbackText: "game-marine-diets")
         } else if gameConfig.id == "match-the-dinosaur" {
             // Match the Dinosaur: play directions (game-match-choose) then walk dinosaurs and characteristics (each round)
             speechManager.onAudioFinished = {
@@ -1742,8 +1849,8 @@ struct MatchingGameView: View {
             speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
         } else {
             let c = characteristics[introWalkStep - 3]
-            if gameConfig.id == "match-the-diet" {
-                speechManager.speak("diet-\(c.type.lowercased())")
+            if isDietMatchingGame {
+                speechManager.speak(dietAudioKey(for: c))
             } else {
                 speechManager.speak(c.type)
             }
@@ -1754,7 +1861,16 @@ struct MatchingGameView: View {
         // Don't allow interaction while audio is playing
         guard !speechManager.isPlaying else { return }
         
-        // If this dinosaur is fully matched (all characteristics matched), play handrail and don't allow selection.
+        // If this creature is fully matched, play handrail and don't allow selection.
+        if isDietMatchingGame {
+            if matchedPairs.contains(where: { $0.dinosaurId == dinosaur.id }) {
+                speechManager.onAudioFinished = {
+                    DispatchQueue.main.async {  }
+                }
+                speechManager.speak("pick-another-one")
+                return
+            }
+        } else {
         // When dinosaurCharacteristics is empty (round config bug), allow selection instead of "pick another one".
         let dinosaurCharacteristics = characteristics.filter { $0.dinosaurId == dinosaur.id }
         let matchedCount = matchedPairs.filter { $0.dinosaurId == dinosaur.id }.count
@@ -1764,6 +1880,7 @@ struct MatchingGameView: View {
             }
             speechManager.speak("pick-another-one")
             return
+        }
         }
         
         // If tapping the same dinosaur again, deselect it (no audio)
@@ -1794,7 +1911,11 @@ struct MatchingGameView: View {
             speechManager.onAudioFinished = {
                 DispatchQueue.main.async {  }
             }
-            let pickFirstKey = gameConfig.id == "match-the-pterosaur" ? "pick-a-pterosaur-first" : "pick-a-dinosaur-first"
+            let pickFirstKey: String = {
+                if isMarineMatchingGame { return "pick-a-dinosaur-first" }
+                if isPterosaurMatchingGame { return "pick-a-pterosaur-first" }
+                return "pick-a-dinosaur-first"
+            }()
             speechManager.speak(pickFirstKey)
             return
         }
@@ -1828,8 +1949,8 @@ struct MatchingGameView: View {
                 }
             }
         }
-        if gameConfig.id == "match-the-diet" {
-            speechManager.speak("diet-\(characteristic.type.lowercased())")
+        if isDietMatchingGame {
+            speechManager.speak(dietAudioKey(for: characteristic))
         } else {
             speechManager.speak(characteristic.type)
         }
@@ -1841,17 +1962,17 @@ struct MatchingGameView: View {
             return
         }
         
-        // Check if this characteristic belongs to this dinosaur
-        let isMatch = characteristic.dinosaurId == dinosaur.id
-        
-        isCorrect = isMatch
-        showFeedback = true
+        let isMatch: Bool = {
+            if isDietMatchingGame {
+                guard let expectedDiet = creatureDietType(for: dinosaur) else { return false }
+                return characteristic.type == expectedDiet
+            }
+            return characteristic.dinosaurId == dinosaur.id
+        }()
         
         if isMatch {
             // Success! Measure time from dinosaur tap to characteristic tap
             let elapsed = matchChoiceStartTime.map { Date().timeIntervalSince($0) } ?? 0
-            
-            feedbackMessage = "Great Match!"
             
             // Add this specific pair to matched pairs
             let newPair = MatchedPair(dinosaurId: dinosaur.id, characteristicId: characteristic.id)
@@ -1862,7 +1983,7 @@ struct MatchingGameView: View {
                 // Third match: Dino Diets! uses 10 s threshold and great-match / wow-that-was-tricky; others use 5 s and great-match / wow-that-was-tricky
                 matchChoiceStartTime = nil // Reset timer after choosing audio
                 let matchAudio: String
-                if gameConfig.id == "match-the-diet" {
+                if isDietMatchingGame {
                     matchAudio = elapsed > 10 ? "wow-that-was-tricky" : "great-match"
                 } else {
                     matchAudio = elapsed > 5 ? "wow-that-was-tricky" : "great-match"
@@ -1887,7 +2008,7 @@ struct MatchingGameView: View {
             } else {
                 // First or second match: Dino Diets! uses 10 s and great-match / wow-that-was-tricky; others use 5 s and great-match / wow-that-was-tricky
                 let matchAudio: String
-                if gameConfig.id == "match-the-diet" {
+                if isDietMatchingGame {
                     matchAudio = elapsed > 10 ? "wow-that-was-tricky" : "great-match"
                 } else {
                     matchAudio = elapsed > 5 ? "wow-that-was-tricky" : "great-match"
@@ -1897,22 +2018,19 @@ struct MatchingGameView: View {
                     DispatchQueue.main.async {
                         self.selectedDinosaur = nil
                         self.selectedCharacteristic = nil
-                        self.showFeedback = false
                     }
                 }
                 speechManager.speak(matchAudio)
             }
         } else {
             // Wrong match - encouragement and permission to continue (no failure count, no game over)
-            feedbackMessage = "Try again!"
             speechManager.onAudioFinished = {
                 DispatchQueue.main.async {
                     self.selectedDinosaur = nil
                     self.selectedCharacteristic = nil
-                    self.showFeedback = false
                 }
             }
-            let wrongKey = gameConfig.id == "match-the-diet" ? "thats-not-right-try-again" : "try-again"
+            let wrongKey = isDietMatchingGame ? "thats-not-right-try-again" : "try-again"
             speechManager.speak(wrongKey)
         }
     }
@@ -2078,89 +2196,6 @@ struct MatchingGameConfig {
             }
         }
 
-        return MatchingGameConfig(
-            id: id,
-            title: title,
-            introAudio: introAudio,
-            selectedDinosaurs: selected,
-            selectedCharacteristics: gameCharacteristics
-        )
-    }
-
-    /// Creates a config for Dino Diets!: 3 dinosaurs, 5 characteristics (always the 5 diets). Same gameplay as Match the Dinosaur but traits are Herbivore/Carnivore/Piscivore/Insectivore/Omnivore.
-    static func createRandomDiet(
-        from allDinosaurs: [Dinosaur],
-        allDietCharacteristics: [Characteristic],
-        id: String = "match-the-diet",
-        title: String = "Dino Diets!",
-        introAudio: String = "game-intro-dino-diets",
-        excludingCreatureIds: Set<Int> = []
-    ) -> MatchingGameConfig {
-        let pool: [Dinosaur] = {
-            if excludingCreatureIds.isEmpty { return allDinosaurs }
-            let available = allDinosaurs.filter { !excludingCreatureIds.contains($0.id) }
-            return available.count >= 3 ? available : allDinosaurs
-        }()
-        let cladeById = LandDinosaurCladeCatalog.cladeByCreatureId
-        let dietTypes = ["Herbivore", "Carnivore", "Piscivore", "Insectivore", "Omnivore"]
-        var selected: [Dinosaur] = []
-        var gameCharacteristics: [Characteristic] = []
-        let maxAttempts = 20
-
-        for _ in 0..<maxAttempts {
-            let playable = pool.filter { d in allDietCharacteristics.contains(where: { $0.dinosaurId == d.id }) }
-            let byClade = Dictionary(grouping: playable) { cladeById[$0.id] ?? .theropod }
-            let cladesWithDinos = byClade.keys.filter { !(byClade[$0] ?? []).isEmpty }.shuffled()
-            guard cladesWithDinos.count >= 3 else { continue }
-            selected = (0..<3).compactMap { i in
-                let clade = cladesWithDinos[i]
-                let candidates = (byClade[clade] ?? []).filter { !excludingCreatureIds.contains($0.id) }
-                return candidates.shuffled().first
-            }
-            guard selected.count == 3, Set(selected.map(\.id)).count == 3 else { continue }
-            // Require three distinct diets so we never get e.g. three herbivores in one round.
-            let selectedDiets = selected.compactMap { MatchingGameConfigs.dinosaurDietById[$0.id] }
-            guard Set(selectedDiets).count == 3 else { continue }
-            // All 5 diet types, each exactly once: use selected dinosaur’s characteristic when it matches that diet, else a decoy. Then shuffle for random order.
-            gameCharacteristics = dietTypes.compactMap { dietType in
-                if let match = selected.first(where: { d in allDietCharacteristics.contains(where: { $0.dinosaurId == d.id && $0.type == dietType }) }),
-                   let c = allDietCharacteristics.first(where: { $0.dinosaurId == match.id && $0.type == dietType }) {
-                    return c
-                }
-                return allDietCharacteristics.first(where: { $0.type == dietType })
-            }
-            guard gameCharacteristics.count == 5 else { continue }
-            break
-        }
-        if gameCharacteristics.count != 5 {
-            // Fallback: pick 3 from pool with 3 distinct diets (retry until satisfied)
-            for _ in 0..<maxAttempts {
-                let shuffled = pool.shuffled()
-                selected = Array(shuffled.prefix(3))
-                let diets = selected.compactMap { MatchingGameConfigs.dinosaurDietById[$0.id] }
-                guard Set(diets).count == 3 else { continue }
-                gameCharacteristics = dietTypes.compactMap { dietType in
-                    if let match = selected.first(where: { d in allDietCharacteristics.contains(where: { $0.dinosaurId == d.id && $0.type == dietType }) }),
-                       let c = allDietCharacteristics.first(where: { $0.dinosaurId == match.id && $0.type == dietType }) {
-                        return c
-                    }
-                    return allDietCharacteristics.first(where: { $0.type == dietType })
-                }
-                if gameCharacteristics.count == 5 { break }
-            }
-        }
-        // If still invalid (e.g. pool exhausted after many rounds), retry without exclusions so we always get a playable round
-        if gameCharacteristics.count != 5 && !excludingCreatureIds.isEmpty {
-            return createRandomDiet(
-                from: allDinosaurs,
-                allDietCharacteristics: allDietCharacteristics,
-                id: id,
-                title: title,
-                introAudio: introAudio,
-                excludingCreatureIds: []
-            )
-        }
-        gameCharacteristics.shuffle()
         return MatchingGameConfig(
             id: id,
             title: title,
@@ -2392,6 +2427,41 @@ struct CharacteristicCard: View {
 
 #Preview {
     MatchingGameView(isPresented: .constant(true), gameConfig: MatchingGameConfigs.dinoFeatures)
+}
+
+// MARK: - Diet game icons (file-private; used by static config builders without MainActor isolation)
+
+private func matchingDinoDietIcon(for diet: String) -> String {
+    switch diet {
+    case "Herbivore": return "🌿"
+    case "Carnivore": return "🥩"
+    case "Piscivore": return "🐟"
+    case "Insectivore": return "🦗"
+    case "Omnivore": return "🍎"
+    default: return "🍽️"
+    }
+}
+
+private func matchingPterosaurDietIcon(for diet: String) -> String {
+    switch diet {
+    case "Frugivore": return "🍇"
+    case "Carnivore": return "🥩"
+    case "Piscivore": return "🐟"
+    case "Insectivore": return "🦗"
+    case "Filter Feeder": return "🦐"
+    default: return "🍽️"
+    }
+}
+
+private func matchingMarineDietIcon(for diet: String) -> String {
+    switch diet {
+    case "Herbivore": return "🌿"
+    case "Piscivore": return "🐟"
+    case "Apex Predator": return "🦈"
+    case "Durophage": return "🦀"
+    case "Teuthivore": return "🦑"
+    default: return "🍽️"
+    }
 }
 
 // MARK: - Game Configurations
@@ -2682,23 +2752,152 @@ struct MatchingGameConfigs {
         Characteristic(id: 227, type: "Small", icon: "🐦", imageName: "dino-char-small", dinosaurId: 69),
     ]
     
-    /// Diet characteristics for Dino Diets!: one per dinosaur (type = Herbivore/Carnivore/etc.). Images from Assets/Dinosaur-Diets with prefix diet- (e.g. diet-herbivore).
-    static var allDietCharacteristics: [Characteristic] {
-        allDinosaurs.compactMap { d in
-            guard let diet = dinosaurDietById[d.id] else { return nil }
-            let imageName = "diet-\(diet.lowercased())"
-            let icon: String = {
-                switch diet {
-                case "Herbivore": return "🌿"
-                case "Carnivore": return "🥩"
-                case "Piscivore": return "🐟"
-                case "Insectivore": return "🦗"
-                case "Omnivore": return "🍎"
-                default: return "🍽️"
-                }
-            }()
-            return Characteristic(id: 200 + d.id - 1, type: diet, icon: icon, imageName: imageName, dinosaurId: d.id)
+    /// Resolves diet option art: `{category}-diets-{slug}` (e.g. `dino-diets-herbivore`, `marine-diets-apex-predator`).
+    private static func dietImageAssetName(categoryPrefix: String, diet: String) -> String? {
+        let slug: String = {
+            if categoryPrefix == "marine" {
+                return SeaMarineReptileData.dietAssetSlug(for: diet)
+            }
+            if categoryPrefix == "ptero" {
+                return AirPterosaurData.pterosaurDietAssetSlug(for: diet)
+            }
+            return diet.lowercased()
+        }()
+        let name = "\(categoryPrefix)-diets-\(slug)"
+        return ImageAssetCache.imageExists(named: name) ? name : nil
+    }
+
+    /// One right-column diet tile per label (not tied to a creature id). Matching is by diet *type*.
+    static func canonicalDietOptions(
+        dietTypes: [String],
+        categoryPrefix: String,
+        idBase: Int,
+        icon: (String) -> String
+    ) -> [Characteristic] {
+        dietTypes.enumerated().compactMap { index, dietType in
+            guard let imageName = dietImageAssetName(categoryPrefix: categoryPrefix, diet: dietType) else { return nil }
+            return Characteristic(
+                id: idBase + index,
+                type: dietType,
+                icon: icon(dietType),
+                imageName: imageName,
+                dinosaurId: 0
+            )
         }
+    }
+
+    /// Picks three creatures with three different diets from `candidates`.
+    private static func selectThreeWithDistinctDiets(
+        from candidates: [Dinosaur],
+        dietById: [Int: String],
+        allowedDiets: Set<String>
+    ) -> [Dinosaur] {
+        let byDiet = Dictionary(grouping: candidates) { dietById[$0.id] ?? "" }
+            .filter { allowedDiets.contains($0.key) && !$0.key.isEmpty }
+        let diets = byDiet.keys.shuffled()
+        guard diets.count >= 3 else { return [] }
+        return diets.prefix(3).compactMap { byDiet[$0]?.randomElement() }
+    }
+
+    /// Creates a config for diet matching games: 3 creatures, always 5 diet choices (one per diet label).
+    static func createRandomDiet(
+        from allCreatures: [Dinosaur],
+        dietOptions: [Characteristic],
+        dietById: [Int: String],
+        groupKey: (Dinosaur) -> String,
+        dietTypes: [String] = ["Herbivore", "Carnivore", "Piscivore", "Insectivore", "Omnivore"],
+        id: String = "match-the-diet",
+        title: String = "Dino Diets!",
+        introAudio: String = "game-intro-dino-diets",
+        excludingCreatureIds: Set<Int> = []
+    ) -> MatchingGameConfig {
+        let allowedDiets = Set(dietTypes)
+        let rightColumnDiets = dietOptions.filter { allowedDiets.contains($0.type) }
+        precondition(
+            rightColumnDiets.count == dietTypes.count,
+            "Diet game \(id) needs \(dietTypes.count) diet images; got \(rightColumnDiets.count)"
+        )
+
+        let pool: [Dinosaur] = {
+            if excludingCreatureIds.isEmpty { return allCreatures }
+            let available = allCreatures.filter { !excludingCreatureIds.contains($0.id) }
+            return available.count >= 3 ? available : allCreatures
+        }()
+
+        let playable = pool.filter { creature in
+            guard let diet = dietById[creature.id] else { return false }
+            return allowedDiets.contains(diet)
+        }
+
+        var selected: [Dinosaur] = []
+        let maxAttempts = 40
+
+        for _ in 0..<maxAttempts {
+            let byGroup = Dictionary(grouping: playable) { groupKey($0) }
+            let groupsWithCreatures = byGroup.keys.filter { !(byGroup[$0] ?? []).isEmpty }.shuffled()
+            guard groupsWithCreatures.count >= 3 else { continue }
+            let pick = (0..<3).compactMap { i -> Dinosaur? in
+                let group = groupsWithCreatures[i]
+                let candidates = (byGroup[group] ?? []).filter { !excludingCreatureIds.contains($0.id) }
+                return candidates.shuffled().first
+            }
+            guard pick.count == 3, Set(pick.map(\.id)).count == 3 else { continue }
+            let diets = pick.compactMap { dietById[$0.id] }
+            guard Set(diets).count == 3, Set(diets).isSubset(of: allowedDiets) else { continue }
+            selected = pick
+            break
+        }
+
+        if selected.count != 3 {
+            selected = selectThreeWithDistinctDiets(
+                from: playable.filter { !excludingCreatureIds.contains($0.id) },
+                dietById: dietById,
+                allowedDiets: allowedDiets
+            )
+        }
+        if selected.count != 3 {
+            selected = selectThreeWithDistinctDiets(from: playable, dietById: dietById, allowedDiets: allowedDiets)
+        }
+        if selected.count != 3 {
+            selected = selectThreeWithDistinctDiets(
+                from: allCreatures.filter { allowedDiets.contains(dietById[$0.id] ?? "") },
+                dietById: dietById,
+                allowedDiets: allowedDiets
+            )
+        }
+        if selected.count != 3 && !excludingCreatureIds.isEmpty {
+            return createRandomDiet(
+                from: allCreatures,
+                dietOptions: dietOptions,
+                dietById: dietById,
+                groupKey: groupKey,
+                dietTypes: dietTypes,
+                id: id,
+                title: title,
+                introAudio: introAudio,
+                excludingCreatureIds: []
+            )
+        }
+
+        var gameCharacteristics = rightColumnDiets
+        gameCharacteristics.shuffle()
+        return MatchingGameConfig(
+            id: id,
+            title: title,
+            introAudio: introAudio,
+            selectedDinosaurs: selected,
+            selectedCharacteristics: gameCharacteristics
+        )
+    }
+
+    /// Five diet tiles for Dino Diets! (`dino-diets-*`). Matching is by diet label, not creature id on the tile.
+    static var dinoDietOptions: [Characteristic] {
+        canonicalDietOptions(
+            dietTypes: ["Herbivore", "Carnivore", "Piscivore", "Insectivore", "Omnivore"],
+            categoryPrefix: "dino",
+            idBase: 2000,
+            icon: matchingDinoDietIcon(for:)
+        )
     }
 
     // Create a random game configuration (3 dinosaurs, 5 characteristics)
@@ -2724,9 +2923,13 @@ struct MatchingGameConfigs {
     }
 
     static func dinoDietFeatures(excluding usedCreatureIds: Set<Int>) -> MatchingGameConfig {
-        MatchingGameConfig.createRandomDiet(
+        MatchingGameConfigs.createRandomDiet(
             from: allDinosaurs,
-            allDietCharacteristics: allDietCharacteristics,
+            dietOptions: dinoDietOptions,
+            dietById: dinosaurDietById,
+            groupKey: { dinosaur in
+                LandDinosaurCladeCatalog.cladeByCreatureId[dinosaur.id]?.rawValue ?? "unknown"
+            },
             id: "match-the-diet",
             title: "Dino Diets!",
             introAudio: "game-intro-dino-diets",
@@ -2752,6 +2955,64 @@ struct MatchingGameConfigs {
             id: "match-the-pterosaur",
             title: "Match the Pterosaur!",
             introAudio: "game-intro-pterosaur",
+            excludingCreatureIds: usedCreatureIds
+        )
+    }
+
+    /// Five diet tiles for Ptero Diets! (`ptero-diets-*`).
+    static var pteroDietOptions: [Characteristic] {
+        canonicalDietOptions(
+            dietTypes: AirPterosaurData.pterosaurDietTypes,
+            categoryPrefix: "ptero",
+            idBase: 2700,
+            icon: matchingPterosaurDietIcon(for:)
+        )
+    }
+
+    static var pteroDietFeatures: MatchingGameConfig {
+        pteroDietFeatures(excluding: [])
+    }
+
+    static func pteroDietFeatures(excluding usedCreatureIds: Set<Int>) -> MatchingGameConfig {
+        MatchingGameConfigs.createRandomDiet(
+            from: allPterosaurs.filter { $0.imageName?.hasPrefix("ptero-") == true },
+            dietOptions: pteroDietOptions,
+            dietById: AirPterosaurData.pterosaurDietById,
+            groupKey: { pterosaur in
+                PterosaurGuessGroup.guessGroup(forImageName: pterosaur.imageName ?? "")?.rawValue ?? "unknown"
+            },
+            dietTypes: AirPterosaurData.pterosaurDietTypes,
+            id: "ptero-diets",
+            title: "Ptero Diets!",
+            introAudio: "game-ptero-diets",
+            excludingCreatureIds: usedCreatureIds
+        )
+    }
+
+    /// Five diet tiles for Marine Diets! (`marine-diets-*`).
+    static var marineDietOptions: [Characteristic] {
+        canonicalDietOptions(
+            dietTypes: SeaMarineReptileData.marineDietTypes,
+            categoryPrefix: "marine",
+            idBase: 2900,
+            icon: matchingMarineDietIcon(for:)
+        )
+    }
+
+    static var marineDietFeatures: MatchingGameConfig {
+        marineDietFeatures(excluding: [])
+    }
+
+    static func marineDietFeatures(excluding usedCreatureIds: Set<Int>) -> MatchingGameConfig {
+        MatchingGameConfigs.createRandomDiet(
+            from: SeaMarineReptileData.allMarineReptiles,
+            dietOptions: marineDietOptions,
+            dietById: SeaMarineReptileData.marineReptileDietById,
+            groupKey: { SeaMarineReptileData.marineCladeRawValue(for: $0) },
+            dietTypes: SeaMarineReptileData.marineDietTypes,
+            id: "marine-diets",
+            title: "Marine Diets!",
+            introAudio: "game-marine-diets",
             excludingCreatureIds: usedCreatureIds
         )
     }

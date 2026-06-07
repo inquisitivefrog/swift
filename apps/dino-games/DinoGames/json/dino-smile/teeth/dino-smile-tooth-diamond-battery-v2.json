@@ -1,0 +1,10 @@
+{
+  "id": "ui_fossil_hadrosaur_dental_occlusion_complete",
+  "morphology": "Dual-Jaw-Interlocking-Battery",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Displays both upper and lower interlocking dental columns meeting along a perfect, gap-free mechanical shearing plane to illustrate maximum chewing efficiency.",
+  "prompt": "High-fidelity 3D asset demonstrating the interlocking occlusion of a Hadrosaurid mouth, rendered in a 3D animated feature film aesthetic with soft, stylized, and slightly rounded edges. The composition shows a cross-section of both the upper and lower jaw bones meeting precisely in the center. Hundreds of columned, diamond-shaped teeth are visible, stacked tightly inside the porous bone matrices of both jaws. Crucially, the upper and lower batteries meet along a perfectly straight, gap-free diagonal shearing plane, illustrating an incredibly efficient grinding mechanism. The entire dual-jaw specimen is centered in a 1:1 square canvas, scaled carefully to maintain a strict 25% negative space safety buffer around the entire perimeter to prevent UI cropping. Placed on a neutral, 50% grey studio floor with heavy contact shadows directly beneath the lower jaw to establish physical weight and grounding. Soft, high-fidelity studio lighting with ambient occlusion accentuates the intricate, repeating geometric mosaic pattern where the teeth lock together."
+}

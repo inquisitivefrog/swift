@@ -1,0 +1,8 @@
+{
+    "id": "ui_egg_henodus",
+    "morphology": "placodont_specialized",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D render of a single Henodus egg next to a standard plum. Shape: compressed oval, flat on one side. Texture: matte, dense leathery shell, pale greenish-grey with tiny calcified speckles. Background: clean, empty light-grey studio background. A single small scale bar at the bottom. Soft studio lighting.",
+    "visual_logic": "Features a specialized compressed oval egg with distinctive greenish-grey coloration, matching a lagoon-dwelling turtle mimic.",
+    "style_notes": "Only one scale bar."
+  }

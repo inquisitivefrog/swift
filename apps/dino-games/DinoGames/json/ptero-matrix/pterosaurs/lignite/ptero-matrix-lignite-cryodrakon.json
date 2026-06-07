@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_019",
+    "species": "Cryodrakon boreas",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "DINOSAUR_PARK",
+    "matrix_material": "lignite",
+    "character_assigned": "dino_bones_paleontologist_1",
+    "pose": "Brushing dark organic silt from the massive, robust neck bone of a giant azhdarchid."
+  }

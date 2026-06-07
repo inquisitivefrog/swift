@@ -1,0 +1,10 @@
+{
+    "id": "pteromatrix_002",
+    "species": "Rhamphorhynchus muensteri",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "SOLNHOFEN",
+    "matrix_material": "shale",
+    "character_assigned": "dino_bones_preparator_2",
+    "pose": "Exposing the dark, carbonized structural fibers of the wing membrane on an ivory-colored slab."
+  }

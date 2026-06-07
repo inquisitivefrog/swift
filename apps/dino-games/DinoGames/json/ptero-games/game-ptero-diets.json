@@ -1,0 +1,18 @@
+{
+  "style_id": "STYLE_CLAY_MASTER",
+  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+}
+{ 
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": “STYLE_CLAY_MASTER",
+      "tech_ref": "DEFAULT_SQUARE"
+    },
+    "layer_2_setting": "blank light blue canvas",
+    "layer_3_action": {
+      "subject": "Hungry looking Pteranodon head with a wide open beak",
+      "features": ["long backward-pointing head crest", "toothless spear-like beak", "large soulful eyes", "friendly expressive face"],
+      "action": "The Pteranodon head is surrounded by a bright red fig-like ancient fruit, a large glossy dragonfly, a shiny silver fish, a small green lizard, and a purple-tinted cycad seed cone, each at geometric positions that form an invisible five-pointed star around the pteranodon head with a caption in bright red mixed case letters that reads Ptero Diets!"
+    }
+  } 
+}

@@ -60,18 +60,32 @@ enum DinoEggMorphology {
         randomColorsAsset: { eggClade in coloredEggAssetName(for: eggClade) }
     )
 
+    static let sourceHints: [EggsSourceHint] = [
+        EggsSourceHint(id: "shape", imageName: "source-dino-eggs-shape", displayName: "Shape", audioKey: "game-dino-eggs-shape"),
+        EggsSourceHint(id: "color", imageName: "source-dino-eggs-color", displayName: "Color", audioKey: "game-dino-eggs-color"),
+    ]
+
     static let settings = EggsGameSettings(
         morphology: morphology,
         gameKeyPrefix: "game-dino-eggs",
         gameplayDirectionsAudioKey: "game-dino-eggs-gameplay-directions",
-        gameplayDirectionsFallback: "Egg identification depends on shape, size, and color. When you see the egg, tap the CT scanner to look inside, then tap the dinosaur that laid the egg.",
+        gameplayDirectionsFallback: "When you see the egg, tap the CT scanner to look inside.",
         beepKey: "game-dino-eggs-beep",
         scanFailedKey: "game-dino-eggs-scan-failed",
-        tapCreatureKey: "game-dino-eggs-tap-the-dinosaur",
+        tapCreatureAfterScanKey: nil,
         successImageName: "game-dino-eggs-success",
         creatureEmoji: "🦖",
         roundIntroNestAudioKey: { clade in "game-dino-eggs-nest-\(clade)" },
         roundIntroTapScannerAudioKey: "game-dino-eggs-tap-the-scanner",
+        playsEggNestNameIntro: false,
+        playsTapScannerPrompt: true,
+        showsCreatureNameOnCards: false,
+        victoryRecapUsesCreatureName: false,
+        hideGameTitleDuringSuccessPhase: true,
+        collapseRecapListDuringSuccessPhase: true,
+        sourceHints: sourceHints,
+        sourceHintsTitle: "Source Eggs",
+        sourceHintsGridIntroAudioKey: nil,
         onVictoryComplete: { LandDinosaurProgress.notifyCompletionIfLandGame(configId: $0) }
     )
 

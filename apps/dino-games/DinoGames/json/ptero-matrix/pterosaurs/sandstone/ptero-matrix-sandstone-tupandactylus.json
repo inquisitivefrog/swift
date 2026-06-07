@@ -1,0 +1,10 @@
+  { 
+    "id": "pteromatrix_006",
+    "species": "Tupandactylus imperator",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "matrix_material": "sandstone",
+    "character_assigned": "dino_bones_preparator_6",
+    "pose": "Prepping the expansive, delicate sheet-like crest structure preserved in iron-oxide stained sediments."
+  }

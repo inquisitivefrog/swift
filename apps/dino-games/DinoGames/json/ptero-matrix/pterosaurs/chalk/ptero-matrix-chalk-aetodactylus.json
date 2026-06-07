@@ -1,0 +1,10 @@
+{
+    "id": "pteromatrix_chalk_004",
+    "species": "Aetodactylus halli",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "NIOBRARA_CHALK",
+    "matrix_material": "chalk",
+    "character_assigned": "dino_bones_paleontologist_4",
+    "pose": "Adjusting a magnifying loupe to examine the slender, needle-like tooth sockets of a compressed lower jaw resting flat against a soft yellow chalk bed."
+  }

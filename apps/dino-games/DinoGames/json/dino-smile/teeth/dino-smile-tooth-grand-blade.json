@@ -1,1 +1,11 @@
-High-fidelity 3D render of a single Carcharodontosaurus large thin grand blade tooth. Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_tooth_carcharodontosaurus_grand_blade",
+  "species": "Carcharodontosaurus saharicus",
+  "morphology": "large_flattened_blade_lateral_tooth",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Isolates a single lateral 'grand blade' tooth to showcase the extreme lateral compression and serration profile characteristic of carcharodontosaurids.",
+  "prompt": "High-fidelity 3D asset of a single fossilized large lateral blade tooth from a Carcharodontosaurus, rendered in a 3D animated feature film aesthetic with soft, stylized, and slightly rounded edges. The specimen exhibits a distinct 'grand blade' morphology: it is broad, significantly flattened (laterally compressed), and features sharp, prominent serrations (denticles) running along both the mesial and distal edges. The fossil texture is a weathered ivory/tan with matte finish, showing mineralization detail. The single tooth is vertically oriented and perfectly centered within a 1:1 square canvas, scaled meticulously to maintain a strict 25% empty background framing buffer on all four sides to prevent UI clipping. Set against a seamless, solid light-grey studio floor plane that extends completely across the entire canvas with no internal borders or boxes, featuring soft ambient occlusion and a small contact shadow cast directly underneath. A clean checkered black-and-white scientific scale bar sits centered at the bottom."
+}

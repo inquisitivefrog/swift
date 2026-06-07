@@ -1,1 +1,11 @@
-High-fidelity 3D render of a single Gallimimus nipping beak. Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_beak_gallimimus_nipper",
+  "species": "Gallimimus bullatus",
+  "morphology": "edentulous_nipping_keratinous_rhamphotheca",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Isolates a single fossilized beak jaw element to showcase the completely toothless (edentulous) nipping adaptation characteristic of ornithomimids, contrasting with the dental assets in the catalog.",
+  "prompt": "High-fidelity 3D asset render of a single fossilized front beak section from a Gallimimus, capturing its specialized toothless ornithomimid anatomy in a 3D animated feature film aesthetic. The specimen showcases a distinctive edentulous (toothless), U-shaped nipping beak profile, representing the fossilized predentary or premaxillary structure where a keratinous rhamphotheca would attach. The surface texture features a matte, highly detailed mineralized bone patina with a fine, porous, and delicately striated texture in shades of weathered tan and pale grey. The single beak element is isolated and oriented vertically, centered perfectly on a 1:1 square canvas. Soft, diffused studio lighting with subtle ambient occlusion accentuates the clean, curved contours and surface details. The background is a seamless, solid light-grey studio plane extending completely to the canvas margins with no internal borders or boxes. The object is carefully scaled to preserve a strict 25% empty background framing buffer on all four sides to prevent UI clipping. Grounded flat with realistic contact shadows. A clean checkered black-and-white scientific scale bar sits centered at the bottom."
+}

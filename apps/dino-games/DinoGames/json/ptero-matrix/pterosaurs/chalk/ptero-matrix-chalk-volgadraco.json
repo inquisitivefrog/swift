@@ -1,0 +1,10 @@
+{
+    "id": "pteromatrix_chalk_005",
+    "species": "Volgadraco bogolubovi",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "MUWAQQAR_CHALK",
+    "matrix_material": "chalk",
+    "character_assigned": "dino_bones_preparator_1",
+    "pose": "Using a low-pressure air-abrasive pen loaded with fine dolomite powder to meticulously reveal a robust azhdarchid jaw fragment from a light grey chalk matrix."
+  }

@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_026",
+    "species": "Dsungaripterus weii",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "IREN_DABASU",
+    "matrix_material": "sandstone",
+    "character_assigned": "dino_bones_preparator_2",
+    "pose": "Using a micro-blaster to reveal the blunt, crushing tooth pads in the back of the upturned snout."
+  }

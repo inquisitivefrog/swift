@@ -1,0 +1,8 @@
+{
+    "id": "ui_egg_dolichosaurus",
+    "morphology": "lepidosauromorph_elongated",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D render of a single Dolichosaurus egg next to a standard olive. Shape: highly elongated, slender cylinder-oval. Texture: very thin, highly flexible papery parchment shell, translucent off-white showing a faint amber glow from within. Background: clean light-grey studio background. Scale bar at bottom. Soft lighting.",
+    "visual_logic": "Emphasizes the highly elongated, thin, flexible lepidosaur-style egg typical of primitive squamates.",
+    "style_notes": "Only one scale bar."
+  }

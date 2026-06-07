@@ -1,0 +1,7 @@
+  {
+    "id": "ui_nest_dolichosaurus_burrow",
+    "morphology": "lepidosauromorph_elongated",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up view of a Dolichosaurus nest inside a shallow soil burrow. Five slender, highly elongated translucent white eggs are packed neatly together inside a tiny burrow lined with fine chalky silt and soft, decaying leaf mulch. SETTING: Late Cretaceous coastal island edge. LIGHTING: Soft, diffused twilight filtering into the shallow soil opening. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+    "visual_logic": "Combines slender, translucent cylinder-shaped eggs (Clue 1) with a shallow coastal soil burrow nest (Clue 2)."
+  }

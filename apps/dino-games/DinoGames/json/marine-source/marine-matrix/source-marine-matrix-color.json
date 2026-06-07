@@ -1,0 +1,59 @@
+{
+  "id": "plesiosaur_chalk_prep_matrix_swatch",
+  "name": "Plesiosaur Skeleton in Polychrome Chalk Matrix (Paleo Prep Study)",
+  "category": "Educational Asset - Paleontological Preparation / Geology Study",
+  "description": "A top-down photograph of a meticulously prepared plesiosaur skeleton embedded within a continuous block of natural chalk that acts as a physical color gradient. The image showcases the range of colors natural chalk can exhibit due to mineral impurities, ranging from pale gray-whites to rich terracotta and ochre.",
+ "tech_ref": "DEFAULT_SQUARE", 
+"lighting_ref": "SUNNY_EXPOSED_CINEMATIC", 
+"formation_ref": "MULTIPLE_MARINE_MATRIX_EXHIBIT",
+  "file_type": "PNG (high-resolution)",
+  "style": "Realistic studio photograph",
+  "color_palette": {
+    "foreground_fossil": "dark charcoal grey to deep amber-brown (fossil bone)",
+    "matrix_dominant": {
+      "left": "cool pale grey and soft purple-blue",
+      "center": "cream-white with warm peach and pale yellow washes",
+      "right": "intense rusty terracotta and warm ochre",
+      "far_right": "dark iron-rich grey"
+    },
+    "background_lab": "muted greys, brushed metal, clear glass",
+    "glove": "off-white latex/nitrile"
+  },
+  "key_elements": [
+    {
+      "element_id": "plesiosaur_fossil",
+      "description": "A detailed, articulated skeleton of a small plesiosaur (head, neck, ribcage, four paddles) oriented horizontally.",
+      "state": "Partially exposed, dark petrified bone contrasting sharply with matrix."
+    },
+    {
+      "element_id": "chalk_matrix_block",
+      "description": "A single, large, rectangular block of natural chalk with a smooth, matte surface, serving as the canvas for the skeleton and color study.",
+      "gradient_description": "The block's surface is smooth and features blending zones. From left (cool), through center (warm cream/peach), to right (intense rusty red and deep gray)."
+    },
+    {
+      "element_id": "gloved_preparator_hand",
+      "description": "A hand wearing a white glove, positioned at the bottom right, carefully manipulating a micro air-scribe.",
+      "action": "Applying localized task light and tool tip to the rusty terracotta zone of the matrix, creating small piles of colored chalk dust."
+    },
+    {
+      "element_id": "prep_tools",
+      "description": "Micro air-scribe with hose, various brushes, and picks visible in the lab background.",
+      "state": "Clean and functional."
+    },
+    {
+      "element_id": "lab_environment",
+      "description": "Background setting with shelves holding glass vials, tools, and a microscope (left) and a plaster field jacketed fossil (right).",
+      "state": "Softly blurred, professional context."
+    },
+    {
+      "element_id": "lighting",
+      "description": "Overhead diffuse lamp and a focused, intense task light highlighting the specific area of preparation.",
+      "type": "Warm studio lighting."
+    }
+  ],
+  "usage": [
+    "Texture mapping for geology tools",
+    "Digital museum exhibits on preparation",
+    "Game asset (card/study icon)"
+  ]
+}

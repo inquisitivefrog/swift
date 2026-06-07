@@ -1,0 +1,10 @@
+{
+    "id": "pteromatrix_005",
+    "species": "Tapejara wellnhoferi",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "matrix_material": "sandstone",
+    "character_assigned": "dino_bones_preparator_5",
+    "pose": "Using a pneumatic air scribe to slowly and meticulously chip away tough calcareous matrix from the outer margin of a large cranial crest, keeping the tool tip safely away from the bone surface."
+  }

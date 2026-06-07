@@ -1,0 +1,10 @@
+ptero-basal-campylognathoides
+ptero-basal-dimorphodon
+ptero-basal-eudimorphodon
+ptero-basal-scaphognathus
+ptero-basal-sordes
+ptero-spec-noripterus
+ptero-spec-pterodactylus
+ptero-trans-darwinopterus
+ptero-trans-kunpengopterus
+ptero-trans-wukongopterus

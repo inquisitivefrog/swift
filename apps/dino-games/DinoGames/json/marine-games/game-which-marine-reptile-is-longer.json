@@ -1,0 +1,9 @@
+{
+  "image_generation_request": {
+    "prompt": "A high-fidelity 3D animated underwater scene for a game card. On the left side, dino_bones_paleontologist_4 (an adult male Latino grad student with short brown hair, wearing signature thin-rimmed BLACK aviator lens glasses beneath a clear scuba diving mask) floats suspended in deep blue-to-black water. He is wearing a full scuba diving suit over his khaki safari vest and is holding a long, glowing yellow underwater tape measure extended across the scene. Stretched horizontally from left to right are two distinct marine reptiles, one stacked clearly above the other: a large Mosasaur with sleek, dark leathery skin and a vibrant green-grey pattern, and a long-necked Plesiosaur with smooth slate-blue skin. Both reptiles have rounded, toy-like proportions and expressive eyes, completely extended to clearly show their lengths. The background features the flat, dark-grey abyssal floor of the KIMMERIDGE_CLAY formation, scattered with coiled ammonite shells and drifting silver bubbles, illuminated by sharp, shimmering god-rays cutting down from the distant surface. A caption centered at the bottom in Bright Red 3D mixed case letters reads 'Which Marine Reptile is Longer?'",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "PELAGIC_SHELF_SEA",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1"
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "asset_id": "matrix_layout_limestone_multi_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Rock_Sample_Match_Card"
+  },
+  "canvas_constraints": {
+    "aspect_ratio": "1:1 (Square Layout)",
+    "target_resolution": "1024x1024"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Three-quarter angled perspective",
+      "angle": "Angled close shot tracking from the three foreground blocks back to a low-horizon hyper-saline lagoon shoreline"
+    },
+    "foreground_element": {
+      "type": "Multiple Material Blocks Array",
+      "rock_type": "Limestone Variant Set",
+      "placement": "Three blocks arranged neatly on a ultra-flat, high-albedo micrite shelf near a turquoise lagoon edge",
+      "blocks": [
+        {
+          "block_id": "limestone_color_x",
+          "geometry": "3D stylized rectangular block with razor-sharp, paper-thin sheet laminations and brittle flat corners",
+          "color": "Cream white",
+          "texture": "Ultra-fine Plattenkalk micrite limestone with a velvety smooth, lithographic matte finish"
+        },
+        {
+          "block_id": "limestone_color_y",
+          "geometry": "3D stylized rectangular block with clean, step-like planar breaks",
+          "color": "Ivory",
+          "texture": "Dense calcium-carbonate mud matrix with ultra-faint horizontal bedding lines"
+        },
+        {
+          "block_id": "limestone_color_z",
+          "geometry": "3D stylized rectangular block with soft, slightly rounded block edges",
+          "color": "Soft beige",
+          "texture": "Slightly argillaceous limestone face with micro-pitted weathering textures"
+        }
+      ]
+    },
+    "background_environment": {
+      "habitat_archetype": "Tropical Island Lagoon System",
+      "geological_mapping": [
+        {
+          "zone_name": "Solnhofen Lithographic Bed core",
+          "color_profile": "Cream white (Matches Block Color X)",
+          "description": "The prized, perfectly level plattenkalk beds that floor the quiet lagoon basins."
+        },
+        {
+          "zone_name": "Massive Micrite Lagoon Bench",
+          "color_profile": "Ivory (Matches Block Color Y)",
+          "description": "Thick structural lime-mud strata constructing the peripheral banks of the tropical reef complex."
+        },
+        {
+          "zone_name": "Weathered Carbonate Margin",
+          "color_profile": "Soft beige (Matches Block Color Z)",
+          "description": "Eroded limestone ramparts where tidal waters interact directly with exposed island cliffs."
+        }
+      ],
+      "lighting": "Vibrant, high-key tropical sunlight refracting off adjacent turquoise waters, casting crisp, stylized cinematic shadows that define the thin sheets of limestone."
+    }
+  }
+}

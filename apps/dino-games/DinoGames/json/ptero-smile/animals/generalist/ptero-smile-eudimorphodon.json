@@ -1,0 +1,7 @@
+{
+    "id": "ptero-basal-eudimorphodon",
+    "morphology": "Peg-Slicer",
+    "tech_ref": "DEFAULT_SQUARE",
+    "prompt": "High-fidelity 3D animated feature style. Close-up headshot of a smiling Eudimorphodon. A huge, joyful smile reveals rows of many tiny, neatly aligned, multi-cusped teeth that look like miniature, completely smooth, rounded white beads. Bright, curious, oversized cartoon eyes look forward eagerly, framed by a soft coat of short, fuzzy golden-orange pycnofibers along its cheeks.",
+    "visual_logic": "Translates the intricate, multi-toothed profile of this basal generalist into a cute, toy-like, non-threatening smile."
+  }

@@ -1,1 +1,11 @@
-High-fidelity 3D render of a single Ankylosaurus parrot beak focused on just the parrot beak. Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_beak_ankylosaurus_parrot",
+  "species": "Ankylosaurus magniventris",
+  "morphology": "broad_predentary_rhamphotheca_beak",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Isolates the predentary and premaxillary beak element to showcase the broad, triangular, crop-shearing beak morphology characteristic of heavily armored ankylosaurids.",
+  "prompt": "High-fidelity 3D asset render of a single fossilized front beak assembly from an Ankylosaurus, focusing exclusively on the beak structure in a 3D animated feature film aesthetic. The specimen showcases a broad, slightly downturned, and ruggedly constructed 'parrot beak' profile, designed for low-lying vegetation cropping. The texture is a dense, heavily mineralized fossil bone in earthy tones of dark umber and weathered charcoal-grey, featuring a rough, highly textured matte finish with deep vascular grooves where the keratinous rhamphotheca once anchored. The beak is isolated, oriented vertically, and perfectly centered on a 1:1 square canvas. Soft studio lighting with precise ambient occlusion emphasizes the robust shearing margins and dense bone layers. The background is a seamless, solid light-grey studio plane extending completely to the canvas margins with no internal borders or containment boxes. The asset is scaled to preserve a strict 25% empty background framing buffer on all four sides to eliminate UI clipping. Grounded flat with realistic contact shadows. A clean checkered black-and-white scientific scale bar sits centered at the bottom."
+}

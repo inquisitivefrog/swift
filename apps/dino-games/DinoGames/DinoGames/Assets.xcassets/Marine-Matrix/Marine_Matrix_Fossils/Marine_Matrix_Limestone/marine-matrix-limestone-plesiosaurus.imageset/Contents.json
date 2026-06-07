@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "marine-matrix-limestone-plesiosaurus-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "marine-matrix-limestone-plesiosaurus-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "marine-matrix-limestone-plesiosaurus-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

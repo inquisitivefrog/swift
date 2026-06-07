@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_030",
+    "species": "Caelestiventus hanseni",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "formation_ref": "MORRISON_EJ",
+    "matrix_material": "volcanic tuff",
+    "character_assigned": "dino_bones_preparator_6",
+    "pose": "Delicately uncovering an uncrushed Triassic-style dynamic skull from hard, consolidated desert sandstone."
+  }

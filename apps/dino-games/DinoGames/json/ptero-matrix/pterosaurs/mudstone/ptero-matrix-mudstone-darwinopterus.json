@@ -1,0 +1,10 @@
+{
+    "id": "pteromatrix_mud_004",
+    "species": "Darwinopterus modularis",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "TIAOJISHAN",
+    "matrix_material": "mudstone",
+    "character_assigned": "dino_bones_preparator_1",
+    "pose": "Tracing the interface of a dark grey mudstone layer with an air scribe to isolate the long, delicate tail vertebrae of a transitional pterosaur."
+  }

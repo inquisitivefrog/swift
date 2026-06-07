@@ -1,1 +1,11 @@
-High-fidelity 3D render of Argentinosaurus heavy peg tooth.  Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_tooth_argentinosaurus_peg",
+  "species": "Argentinosaurus huinculensis",
+  "morphology": "heavy_peg_pencil_like_crown",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Isolates a singular, hyper-specialized peg-like tooth to showcase the unique pencil-tooth morphology of titanosaur sauropods, in complete contrast to carcharodontosaurid grand blades.",
+  "prompt": "High-fidelity 3D asset render of a single fossilized peg-like tooth from an Argentinosaurus. The tooth is significantly elongated and slender, exhibiting a cylindrical, robust 'pencil-like' or 'peg-like' crown morphology that tapers to a simple, blunt apex, lacking the wide, serrated profile of a theropod grand blade seen in image_15.png. The fossil texture is detailed with weathered tan and ivory enamel surface detail, including mineralization crack lines. The single peg-tooth is isolated and oriented vertically, centered on a solid 1:1 square canvas. The lighting is soft studio illumination with ambient occlusion to highlight the cylindrical form. The background is a seamless, solid light-grey studio plane that extends to the image edges with no internal borders or artificial frame lines. The specimen is scaled down to maintain a strict 25% empty background buffer on all four sides. Grounded flat with realistic contact shadows. A clean checkered black-and-white scientific scale bar sits centered at the bottom."
+}

@@ -1,0 +1,8 @@
+{
+    "id": "ui_egg_protostega",
+    "morphology": "cheloniid_large",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D render of a single Protostega marine turtle egg next to a standard orange. Shape: perfectly spherical, medium-sized, with a clean, smooth matte surface. Texture: slightly flexible leathery membrane, parchment-white with fine coastal silt dusting. Background: clean, empty light-grey studio background. A single small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting.",
+    "visual_logic": "Shows a spherical, leathery egg slightly smaller than Archelon's, matching a closely related protostegid turtle.",
+    "style_notes": "Only one scale bar."
+  }

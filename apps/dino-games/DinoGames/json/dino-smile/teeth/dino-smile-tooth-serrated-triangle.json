@@ -1,1 +1,11 @@
-High-fidelity 3D render of a single Xiaotingia tiny flat serrated triangular tooth. Clean, empty light-grey studio background. A small checkered black-and-white scale bar is placed at the bottom to indicate size. Soft studio lighting to show surface detail.
+{
+  "id": "ui_fossil_tooth_xiaotingia_triangular",
+  "species": "Xiaotingia zhengi",
+  "morphology": "tiny_flat_serrated_triangular_crown",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "visual_logic": "Isolates a single, ultra-miniature tooth to showcase the flattened, triangular profile and fine serrations typical of small, basal paravian theropods.",
+  "prompt": "High-fidelity 3D asset render of a single fossilized tooth from a Xiaotingia, capturing its specialized paravian morphology in a 3D animated feature film aesthetic. The specimen is exceptionally small and delicate, exhibiting a tiny, distinctly flattened (laterally compressed), and broadly triangular crown that tapers to a sharp apex. The cutting edges feature ultra-fine, microscopic serrations. The fossil enamel texture is rendered with a smooth, semi-polished finish showing rich amber and warm caramel mineralized tones, matching the jewel-like aesthetic seen in hooked-needle-v1.png. The single tooth is isolated and oriented vertically, centered perfectly on a 1:1 square canvas. Soft studio lighting with precise ambient occlusion emphasizes the flat triangular planes and fine edge details. The background is a seamless, solid light-grey studio plane extending completely to the canvas margins with no internal borders or containment boxes. The object is scaled to preserve a strict 25% empty background framing buffer on all four sides to eliminate UI clipping. Grounded flat with realistic contact shadows. A small, clean checkered black-and-white scientific scale bar sits centered at the bottom."
+}

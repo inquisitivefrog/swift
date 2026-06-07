@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_020",
+    "species": "Istiodactylus latidens",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "WESSEX",
+    "matrix_material": "mudstone",
+    "character_assigned": "dino_bones_paleontologist_2",
+    "pose": "Reassembling interlocking, razor-sharp, duck-billed teeth fragments from a purple mudstone block."
+  }

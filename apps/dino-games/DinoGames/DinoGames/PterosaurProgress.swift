@@ -28,6 +28,7 @@ final class PterosaurProgress: ObservableObject {
 
     static func canonicalId(for configId: String) -> String {
         if configId.hasPrefix("racing-pterosaurs") { return "racing-pterosaurs" }
+        if configId == "ptero-diet" { return "ptero-diets" }
         return configId
     }
 
@@ -37,7 +38,9 @@ final class PterosaurProgress: ObservableObject {
 
     private init() {
         let stored = UserDefaults.standard.stringArray(forKey: defaultsKey) ?? []
-        playedCanonicalGameIds = Set(stored)
+        var ids = Set(stored)
+        if ids.remove("ptero-diet") != nil { ids.insert("ptero-diets") }
+        playedCanonicalGameIds = ids
         gameCompletedObserver = NotificationCenter.default.addObserver(
             forName: .pterosaurGameCompleted,
             object: nil,
@@ -69,7 +72,7 @@ final class PterosaurProgress: ObservableObject {
 
     func isLevelUnlocked(_ level: GameLevel) -> Bool {
         if DeveloperSessionFlags.unlockAllGameLevels { return true }
-        guard let ord = GameLevel.allCases.firstIndex(of: level) else { return true }
+        let ord = level.zeroOrderedIndex
         if ord <= 0 { return true }
         // Keep future pterosaur levels locked until they actually have games configured.
         guard !PterosaurGameCatalog.games(level: level).isEmpty else { return false }
@@ -79,7 +82,7 @@ final class PterosaurProgress: ObservableObject {
 
     private func allGamesInLevelMarkedPlayed(_ level: GameLevel) -> Bool {
         let games = PterosaurGameCatalog.games(level: level)
-        if games.isEmpty { return false }
+        if games.isEmpty { return true }
         return games.allSatisfy { game in
             guard let rawId = game.id else { return true }
             return playedCanonicalGameIds.contains(Self.canonicalId(for: rawId))

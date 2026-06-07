@@ -1,0 +1,11 @@
+  {
+    "id": "pteromatrix_025",
+    "species": "Noripterus complicatus",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "IREN_DABASU",
+    "matrix_material": "sandstone",
+    "character_assigned": "dino_bones_preparator_1",
+    "pose": "Chiseling through tough, yellowish-orange fluvial sandstone to isolate a dsungaripterid jaw crest."
+  }
+

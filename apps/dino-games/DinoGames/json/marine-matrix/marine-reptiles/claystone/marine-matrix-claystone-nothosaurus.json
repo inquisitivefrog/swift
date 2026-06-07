@@ -1,0 +1,19 @@
+{
+    "asset_id": "manifest_marine_016",
+    "project": "MarineMatrix",
+    "version": "1.0.0",
+    "meta": {
+      "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+      "intended_use": "UI_Card_Dig_Stage_4"
+    },
+    "excavation_context": {
+      "character_id": "dino_bones_paleontologist_2",
+      "character_description": "An adult female grad student working as a paleontologist, short black hair, tanned skin, wearing a green sun hat. Wears a light green blouse worn UNDER a khaki safari vest, green skirt and black hiking boots.",
+      "stage": "Sweeping Loose Sediment off an Articulated Skull",
+      "target_marine_reptile": "Nothosaurus",
+      "geological_formation": "SOLNHOFEN",
+      "matrix_material": "Claystone",
+      "matrix_color": "Soft Beige"
+    },
+    "composition_prompt": "High-fidelity 3D animated feature film style. dino_bones_paleontologist_2, sporting her green sun hat, utilizes a detailing paintbrush to clean a layer of soft beige claystone dust off the elongated teeth of a Nothosaurus cranium. 1:1 Square aspect ratio."
+  }

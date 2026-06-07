@@ -155,3 +155,37 @@ enum GameCatalog {
         }
     }
 }
+
+extension GameCategory {
+    /// Resolves which category should receive progress when a game sheet dismisses after victory.
+    static func forCatalogConfigId(_ configId: String) -> GameCategory? {
+        switch configId {
+        case let id where id.hasPrefix("marine-")
+            || id.contains("marine-reptile")
+            || id.hasPrefix("racing-marine")
+            || id == "name-that-marine-reptile":
+            return .marineReptiles
+        case let id where id.hasPrefix("ptero-")
+            || id.contains("pterosaur")
+            || id.hasPrefix("racing-ptero")
+            || id == "weigh-pterosaur"
+            || id.hasPrefix("which-ptero"):
+            return .air
+        case let id where id.hasPrefix("dino-")
+            || id == "weigh-dinosaur"
+            || id.hasPrefix("which-dino")
+            || id.hasPrefix("racing-dino")
+            || id.hasPrefix("match-the")
+            || id.hasPrefix("whose-bones")
+            || id.hasPrefix("name-that-dino")
+            || id == "wacky-dinos"
+            || id == "smiling-dinos"
+            || id == "find-mama"
+            || id == "balance-the-dinosaur"
+            || id == "measure-the-dinosaur":
+            return .land
+        default:
+            return nil
+        }
+    }
+}

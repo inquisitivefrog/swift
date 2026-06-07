@@ -1,0 +1,10 @@
+  {
+    "id": "pteromatrix_009",
+    "species": "Guidraco venator",
+    "tech_ref": "FOSSIL_SITE_SQUARE",
+    "lighting_ref": "DAPPLED_EXCAVATION",
+    "formation_ref": "JIUFOTANG",
+    "matrix_material": "bentonite",
+    "character_assigned": "dino_bones_paleontologist_3",
+    "pose": "Documenting an incredibly long, forward-pointing anterior tooth still seated in its socket."
+  }

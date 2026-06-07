@@ -1,0 +1,15 @@
+{
+    "id": "raceway_buoy_4_the_iron_foghorn",
+    "species": "Platform_Asset",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "KIMMERIDGE_CLAY",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "PELAGIC_SHELF_SEA",
+    "pose": "A dark, imposing iron buoy equipped with a cluster of four curved foghorn trumpets pointing in cardinal directions. A colossal Leedsichthys fish is lazily gliding past, its massive dorsal fin splitting the dark slate blue surface right next to the float.",
+    "environmental_details": {
+      "ground": "Choppy, bituminous black and dark grey sea with thick layers of organic marine snow drifting under the surface ripples.",
+      "atmosphere": "Moody, diffused lighting from an overcast sky that accentuates the heavy weight and dark silhouette of the iron structure.",
+      "palette": ["Dark Grey", "Bituminous Black", "Slate Blue"]
+    }
+  }

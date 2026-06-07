@@ -1,0 +1,67 @@
+{
+  "asset_id": "matrix_layout_ironstone_multi_001",
+  "project": "DinoGames",
+  "version": "1.0.0",
+  "meta": {
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_preset": "SUNNY_EXPOSED_CINEMATIC",
+    "intended_use": "UI_Rock_Sample_Match_Card"
+  },
+  "canvas_constraints": {
+    "aspect_ratio": "1:1 (Square Layout)",
+    "target_resolution": "1024x1024"
+  },
+  "composition": {
+    "camera": {
+      "type": "Cinematic 3D",
+      "framing": "Three-quarter angled perspective",
+      "angle": "Angled close shot tracking from the three foreground blocks back to a low-horizon brackish lagoon edge"
+    },
+    "foreground_element": {
+      "type": "Multiple Material Blocks Array",
+      "rock_type": "Ironstone Variant Set",
+      "placement": "Three blocks arranged neatly on a dense, iron-stained siderite crust near an estuarine mudflat",
+      "blocks": [
+        {
+          "block_id": "ironstone_color_x",
+          "geometry": "3D stylized rectangular block with heavy, dense geometric edges and metallic fractures",
+          "color": "Rusty brown",
+          "texture": "Heavy, iron-cemented siltstone matrix with a coarse sand finish"
+        },
+        {
+          "block_id": "ironstone_color_y",
+          "geometry": "3D stylized rectangular block with highly angular, jagged impact steps",
+          "color": "Siderite orange",
+          "texture": "Highly concentrated concretionary iron-carbonate crust, showing crystalline rinds"
+        },
+        {
+          "block_id": "ironstone_color_z",
+          "geometry": "3D stylized rectangular block with blocky, dense corners",
+          "color": "Dark grey",
+          "texture": "Ferriferous mudstone core with fine iron oxide laminations running through it"
+        }
+      ]
+    },
+    "background_environment": {
+      "habitat_archetype": "Coastal Lowlands / Estuarine Lagoon System",
+      "geological_mapping": [
+        {
+          "zone_name": "Horseshoe Canyon Ironstone Cap",
+          "color_profile": "Rusty brown (Matches Block Color X)",
+          "description": "The hard, erosion-resistant ferriferous sand ledge jutting out over the tidal channels."
+        },
+        {
+          "zone_name": "Siderite Concretionary Lens",
+          "color_profile": "Siderite orange (Matches Block Color Y)",
+          "description": "Discontinuous nodular bands of intense orange iron carbonate lining the intertidal mud layers."
+        },
+        {
+          "zone_name": "Ferriferous Silty Basal Layer",
+          "color_profile": "Dark grey (Matches Block Color Z)",
+          "description": "Heavy, dark iron-bearing silt sheets forming the floor of the ancient coastal delta basin."
+        }
+      ],
+      "lighting": "Warm, direct cinematic light catching the metallic orange and brown rust highlights on the ironstone faces without losing depth in the dark gray channels."
+    }
+  }
+}

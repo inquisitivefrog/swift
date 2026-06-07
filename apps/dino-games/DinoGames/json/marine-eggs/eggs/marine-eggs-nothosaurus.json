@@ -1,0 +1,8 @@
+{
+    "id": "ui_egg_nothosaurus",
+    "morphology": "sauropterygian_basal",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D render of a single Nothosaurus egg next to a standard lemon. Shape: elongated, regular oval. Texture: leathery, semi-rigid parchment shell, creamy-tan with horizontal mineral banding and minor damp silt stains. Background: clean, empty light-grey studio background. A single small checkered black-and-white scale bar is placed at the bottom. Soft studio lighting.",
+    "visual_logic": "Depicts an elongated oval, leathery egg with specialized mineral banding, adapted for damp coastal nesting environments.",
+    "style_notes": "Only one scale bar."
+  }

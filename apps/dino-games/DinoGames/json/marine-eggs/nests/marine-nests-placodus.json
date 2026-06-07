@@ -1,0 +1,7 @@
+  {
+    "id": "ui_nest_placodus_beach",
+    "morphology": "placodont_oval",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. A close-up view of a Placodus nest on a shingle beach. Three short, blocky ochre-yellow eggs with rough, pimpled surfaces are tucked tightly into a scrape lined with smooth, water-worn colorful pebbles and broken pieces of mollusk shells. SETTING: Triassic shallow lagoon beach margin. LIGHTING: Warm afternoon sun reflecting off wet beach pebbles. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+    "visual_logic": "Combines a pimpled, blocky ochre egg (Clue 1) with a pebble and broken-shell shingle beach scrape (Clue 2)."
+  }

@@ -22,6 +22,7 @@ private enum DinoAgesPeriod: String, CaseIterable {
 
     var imageName: String { "period-\(rawValue)" }
     var pteroImageName: String { "ptero-ages-\(rawValue)" }
+    var marineImageName: String { "marine-ages-\(rawValue)" }
     var coverAudioKey: String { "cover-\(rawValue)" }
     /// e.g. game-dino-ages-find-in-jurassic / game-dino-ages-find-in-cretaceous
     var findInPeriodAudioKey: String { "game-dino-ages-find-in-\(rawValue)" }
@@ -115,6 +116,48 @@ private let pteroAgesPeriodById: [Int: DinoAgesPeriod] = {
     return map
 }()
 
+/// Marine reptile pool: bundled marine portraits with period mapping for Marine Ages.
+private let marineAgesPool: [Dinosaur] = SeaMarineReptileData.allMarineReptiles.filter {
+    $0.imageName?.hasPrefix("marine-") == true
+        && SeaMarineReptileData.mesozoicSpanForAges(creature: $0) != nil
+}
+
+private let marineAgesPeriodById: [Int: DinoAgesPeriod] = {
+    var map: [Int: DinoAgesPeriod] = [:]
+    for creature in marineAgesPool {
+        guard let span = SeaMarineReptileData.mesozoicSpanForAges(creature: creature) else { continue }
+        switch span {
+        case .jurassic, .both:
+            map[creature.id] = .jurassic
+        case .cretaceous:
+            map[creature.id] = .cretaceous
+        }
+    }
+    return map
+}()
+
+fileprivate enum DinoAgesVariant {
+    case dino
+    case ptero
+    case marine
+
+    init(configId: String) {
+        switch configId {
+        case "ptero-ages": self = .ptero
+        case "marine-ages": self = .marine
+        default: self = .dino
+        }
+    }
+
+    var audioPrefix: String {
+        switch self {
+        case .dino: return "dino"
+        case .ptero: return "ptero"
+        case .marine: return "marine"
+        }
+    }
+}
+
 /// Diameter of each dinosaur circle in the star layout (and victory list).
 private let dinoAgesCircleSize: CGFloat = 96
 
@@ -151,10 +194,11 @@ struct DinoAgesGameView: View {
     @Binding var isPresented: Bool
     let gameConfig: DinoAgesGameConfig
 
-    @State private var speechManager = SpeechManager()
+    @StateObject private var speechManager = SpeechManager()
     @State private var period: DinoAgesPeriod?
     @State private var slots: [Dinosaur] = []
     @State private var matchedIds: Set<Int> = []
+    /// True during scripted sequences (intro walk, round transitions, victory recap) including gaps between chained clips.
     @State private var isAudioPlaying = false
     @State private var isGameComplete = false
     @State private var endSequenceStep = -1
@@ -177,19 +221,38 @@ struct DinoAgesGameView: View {
     /// When true, show the Source Ages hints overlay.
     @State private var showSourceAgesHints = false
 
-    private var isPteroAges: Bool { gameConfig.id == "ptero-ages" }
-    private var currentPool: [Dinosaur] { isPteroAges ? pteroAgesPool : dinoAgesPool }
-    private var currentPeriodById: [Int: DinoAgesPeriod] { isPteroAges ? pteroAgesPeriodById : dinoAgesPeriodById }
+    private var agesVariant: DinoAgesVariant { DinoAgesVariant(configId: gameConfig.id) }
+    private var currentPool: [Dinosaur] {
+        switch agesVariant {
+        case .ptero: return pteroAgesPool
+        case .marine: return marineAgesPool
+        case .dino: return dinoAgesPool
+        }
+    }
+    private var currentPeriodById: [Int: DinoAgesPeriod] {
+        switch agesVariant {
+        case .ptero: return pteroAgesPeriodById
+        case .marine: return marineAgesPeriodById
+        case .dino: return dinoAgesPeriodById
+        }
+    }
 
     private func findInPeriodAudioKey(for period: DinoAgesPeriod) -> String {
-        let prefix = isPteroAges ? "ptero" : "dino"
-        return "game-\(prefix)-ages-find-in-\(period.rawValue)"
+        "game-\(agesVariant.audioPrefix)-ages-find-in-\(period.rawValue)"
+    }
+
+    private var successImageCandidates: [String] {
+        let prefix = agesVariant.audioPrefix
+        return ["game-\(prefix)-ages-success", "game-\(prefix)-ages"]
     }
 
     /// Matched dinosaurs this round in the order they were tapped (for adding to victory walk).
     private var matchedDinosaursThisRoundInTapOrder: [Dinosaur] {
         matchedOrderThisRound.compactMap { id in slots.first { $0.id == id } }
     }
+
+    /// Block taps while any clip is playing or a scripted sequence has not finished (audio before input).
+    private var blocksUserInput: Bool { isAudioPlaying || speechManager.isPlaying }
 
     var body: some View {
         NavigationView {
@@ -201,8 +264,8 @@ struct DinoAgesGameView: View {
                     speechManager.onAudioFinished = nil
                     speechManager.stopCurrentAudio()
                 }
-                .allowsHitTesting(!isAudioPlaying)
-                .opacity(isAudioPlaying ? 0.85 : 1.0)
+                .allowsHitTesting(!blocksUserInput)
+                .opacity(blocksUserInput ? 0.85 : 1.0)
                 .overlay(alignment: .topTrailing) {
                     if period != nil, !isGameComplete {
                         Button {
@@ -216,12 +279,14 @@ struct DinoAgesGameView: View {
                                 .background(Circle().fill(Color.blue))
                                 .frame(width: 72, height: 72)
                         }
+                        .disabled(blocksUserInput)
+                        .opacity(blocksUserInput ? 0.45 : 1.0)
                         .padding(.top, 8)
                         .padding(.trailing, 16)
                     }
                 }
                 .fullScreenCover(isPresented: $showSourceAgesHints) {
-                    SourceAgesHintsView(isPteroAges: isPteroAges, onDismiss: { showSourceAgesHints = false })
+                    SourceAgesHintsView(agesVariant: agesVariant, onDismiss: { showSourceAgesHints = false })
                 }
         }
     }
@@ -272,7 +337,13 @@ struct DinoAgesGameView: View {
     }
 
     private func periodImage(_ p: DinoAgesPeriod) -> some View {
-        let preferredImageName = isPteroAges ? p.pteroImageName : p.imageName
+        let preferredImageName: String = {
+            switch agesVariant {
+            case .ptero: return p.pteroImageName
+            case .marine: return p.marineImageName
+            case .dino: return p.imageName
+            }
+        }()
         let fallbackImageName = p.imageName
         return Group {
             if ImageAssetCache.imageExists(named: preferredImageName) {
@@ -322,7 +393,7 @@ struct DinoAgesGameView: View {
     }
 
     private func handleTap(dino: Dinosaur) {
-        guard !isAudioPlaying else { return }
+        guard !blocksUserInput else { return }
         guard let p = period, let dinoPeriod = currentPeriodById[dino.id] else { return }
         let isCorrect = (dinoPeriod == p)
         if isCorrect {
@@ -440,9 +511,7 @@ struct DinoAgesGameView: View {
             self.speechManager.onAudioFinished = nil
             self.startIntroWalk()
         }
-        let hintKey = isPteroAges
-            ? "game-ptero-ages-tap-the-period-to-hear-description"
-            : "game-dino-ages-tap-the-period-to-hear-description"
+        let hintKey = "game-\(agesVariant.audioPrefix)-ages-tap-the-period-to-hear-description"
         if let url = speechManager.urlForAudio(key: hintKey) {
             speechManager.playAudioFile(url: url)
         } else if let url = speechManager.urlForAudio(key: "game-hint") {
@@ -535,9 +604,7 @@ struct DinoAgesGameView: View {
             },
             successPhase: {
                 LandGameVictorySuccessStingerThenContinue(
-                    candidateSuccessImageNames: isPteroAges
-                        ? ["game-ptero-ages-success", "game-ptero-ages"]
-                        : ["game-dino-ages-success", "game-dino-ages"],
+                    candidateSuccessImageNames: successImageCandidates,
                     catalogGameIdForStinger: gameConfig.id,
                     speechManager: speechManager,
                     onContinue: playGoodJobAndCrowdThenDismiss
@@ -547,6 +614,7 @@ struct DinoAgesGameView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             guard endSequenceStep == -1 else { return }
+            isAudioPlaying = true
             endSequenceStep = 1
             endHighlightIndex = 0
             if victoryWalkDinosaurs.isEmpty {
@@ -572,37 +640,11 @@ struct DinoAgesGameView: View {
     }
 
     private func playGoodJobAndCrowdThenDismiss() {
-        let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
-        let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
-        if let u1 = goodJobURL, let u2 = crowdURL {
-            speechManager.playTogether(url1: u1, url2: u2) {
-                self.speechManager.onAudioFinished = nil
-                if self.isPteroAges {
-                    PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
-                } else {
-                    LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
-                }
-                self.isPresented = false
-            }
-        } else if let u = goodJobURL ?? crowdURL {
-            speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                if self.isPteroAges {
-                    PterosaurProgress.notifyCompletionIfPterosaurGame(configId: self.gameConfig.id)
-                } else {
-                    LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.gameConfig.id)
-                }
-                self.isPresented = false
-            }
-            speechManager.playAudioFile(url: u)
-        } else {
-            if isPteroAges {
-                PterosaurProgress.notifyCompletionIfPterosaurGame(configId: gameConfig.id)
-            } else {
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: gameConfig.id)
-            }
-            isPresented = false
-        }
+        StandardVictorySequence.dismissAfterVictory(
+            configId: gameConfig.id,
+            isPresented: $isPresented,
+            speechManager: speechManager
+        )
     }
 }
 
@@ -727,14 +769,14 @@ private struct SourceAgesPeriodHint: Identifiable {
 }
 
 private let sourceAgesHintPeriods: [SourceAgesPeriodHint] = [
-    SourceAgesPeriodHint(id: "jurassic", imageName: "dino-ages-jurassic", displayName: "Jurassic", audioKey: "game-dino-ages-jurassic-dinosaurs"),
-    SourceAgesPeriodHint(id: "cretaceous", imageName: "dino-ages-cretaceous", displayName: "Cretaceous", audioKey: "game-dino-ages-cretaceous-dinosaurs"),
+    SourceAgesPeriodHint(id: "jurassic", imageName: "source-dino-ages-jurassic", displayName: "Jurassic", audioKey: "game-dino-ages-jurassic-dinosaurs"),
+    SourceAgesPeriodHint(id: "cretaceous", imageName: "source-dino-ages-cretaceous", displayName: "Cretaceous", audioKey: "game-dino-ages-cretaceous-dinosaurs"),
 ]
 
-struct SourceAgesHintsView: View {
-    var isPteroAges: Bool = false
+fileprivate struct SourceAgesHintsView: View {
+    var agesVariant: DinoAgesVariant = .dino
     let onDismiss: () -> Void
-    @State private var speechManager = SpeechManager()
+    @StateObject private var speechManager = SpeechManager()
     @State private var selectedPeriod: SourceAgesPeriodHint?
     @State private var introPlayed = false
 
@@ -754,11 +796,15 @@ struct SourceAgesHintsView: View {
                     .foregroundColor(.blue)
                     .frame(width: 44, height: 44)
             }
+            .disabled(speechManager.isPlaying)
+            .opacity(speechManager.isPlaying ? 0.45 : 1.0)
             .padding(.leading, 8)
             .padding(.top, 8)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.systemBackground))
+        .allowsHitTesting(!speechManager.isPlaying)
+        .opacity(speechManager.isPlaying ? 0.85 : 1.0)
         .onAppear { playIntroOnce() }
     }
 
@@ -815,21 +861,26 @@ struct SourceAgesHintsView: View {
     }
 
     private var hintPeriods: [SourceAgesPeriodHint] {
-        if isPteroAges {
+        switch agesVariant {
+        case .ptero:
             return [
                 SourceAgesPeriodHint(id: "jurassic", imageName: "ptero-ages-jurassic", displayName: "Jurassic", audioKey: "game-ptero-ages-jurassic-pterosaurs"),
                 SourceAgesPeriodHint(id: "cretaceous", imageName: "ptero-ages-cretaceous", displayName: "Cretaceous", audioKey: "game-ptero-ages-cretaceous-pterosaurs"),
             ]
+        case .marine:
+            return [
+                SourceAgesPeriodHint(id: "jurassic", imageName: "marine-ages-jurassic", displayName: "Jurassic", audioKey: "game-marine-ages-jurassic-marine-reptiles"),
+                SourceAgesPeriodHint(id: "cretaceous", imageName: "marine-ages-cretaceous", displayName: "Cretaceous", audioKey: "game-marine-ages-cretaceous-marine-reptiles"),
+            ]
+        case .dino:
+            return sourceAgesHintPeriods
         }
-        return sourceAgesHintPeriods
     }
 
     private func playIntroOnce() {
         guard !introPlayed else { return }
         introPlayed = true
-        let introKey = isPteroAges
-            ? "game-ptero-ages-tap-the-period-to-hear-description"
-            : "game-dino-ages-tap-the-period-to-hear-description"
+        let introKey = "game-\(agesVariant.audioPrefix)-ages-tap-the-period-to-hear-description"
         if let url = speechManager.urlForAudio(key: introKey) {
             speechManager.onAudioFinished = nil
             speechManager.playAudioFile(url: url)
@@ -837,6 +888,7 @@ struct SourceAgesHintsView: View {
     }
 
     private func showPeriodDetail(_ period: SourceAgesPeriodHint) {
+        guard !speechManager.isPlaying else { return }
         selectedPeriod = period
         speechManager.onAudioFinished = nil
         speechManager.onAudioFinished = {
@@ -866,6 +918,19 @@ enum DinoAgesGameConfigs {
         title: "Ptero Ages!",
         introAudio: "game-ptero-ages"
     )
+    static let marineAges = DinoAgesGameConfig(
+        id: "marine-ages",
+        title: "Marine Ages!",
+        introAudio: "game-marine-ages"
+    )
+
+    static func config(for category: GameCategory) -> DinoAgesGameConfig {
+        switch category {
+        case .air: return pteroAges
+        case .marineReptiles: return marineAges
+        default: return dinoAges
+        }
+    }
 }
 
 #Preview {
