@@ -1,0 +1,195 @@
+{
+  "ornithomimids": [
+    {
+      "id": "DINO_135_DEINOCHEIRUS",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "NEMEGT",
+          "base_habitat": "RIVER_VALLEYS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Soft waterlogged mudstone channels and light gray sandbar banks",
+            "color_palette": ["Tan", "Light brown", "Grey-white", "Light gray", "Yellowish-grey"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"]
+        },
+        "layer_3_action": {
+          "subject": "Deinocheirus",
+          "features": [
+            "broad toothless duck-billed snout with a deep sturdy lower jawline profile",
+            "large calm soulful eyes set high on the sides of the skull with an observant gaze",
+            "cleanly closed mouth with a gentle cow-like neutral profile",
+            "massive elongated forelimbs featuring three exceptionally large curved blunt claws",
+            "distinct tall sail-like muscular hump rising smoothly over the back of its large pot-bellied torso",
+            "thick heavy weight-bearing hind legs ending in blunt hoof-like walking toes",
+            "smooth seamless matte swamp-brown clay skin texture with clean sculpted moss-grey shaggy coat volumes"
+          ],
+          "action": "A composed, non-aggressive Deinocheirus with clean high-poly clay geometry is standing calmly in the shallow water channel of a Late Cretaceous river valley. The camera captures a stable three-quarter profile view at a neutral eye-level vantage point, dramatically highlighting the signature horizontal depth of its duck-billed snout, its colossal forearm claws hanging naturally, and its high muscular back hump without any active foraging mess or cartoonish over-rounding. It is looking forward with quiet curiosity near a sandbar bank dotted with stylized early hardwoods under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_058_GALLIMIMUS",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "NEMEGT",
+          "base_habitat": "RIVER_VALLEYS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Soft waterlogged mudstone channels and light gray sandbar banks",
+            "color_palette": ["Tan", "Light brown", "Grey-white", "Light gray", "Yellowish-grey"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"]
+        },
+        "layer_3_action": {
+          "subject": "Gallimimus",
+          "features": [
+            "slender narrow skull profile with a small toothless horn-like beak",
+            "large prominent calm round eyes with a gentle observant gaze",
+            "cleanly closed mouth with an innocent neutral expression",
+            "exceptionally long slender bird-like neck curving gracefully into its chest",
+            "sleek lightweight athletic ornithomimid body frame with a long straight horizontal tail",
+            "long powerful hind legs built with specialized weight-bearing toes for high-speed sprinting",
+            "slender forelimbs held comfortably against the torso with small blunt clay claws",
+            "smooth seamless matte clay-like skin with crisp high-poly contours"
+          ],
+          "action": "A composed, non-aggressive Gallimimus with clean high-poly clay geometry is captured in a slow, graceful stride across a light gray sandbar bank. The camera frames a balanced side profile at a neutral eye-level view, dramatically accentuating its exceptionally long bird-like neck and athletic sprinting leg lines without any frantic running poses or cartoonish infant roundness. It looks straight ahead with a quiet curiosity among a sparse cluster of stylized early hardwoods and tough ferns near a quiet mudstone channel under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_042_ORNITHOMIMUS",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "DINOSAUR_PARK",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Dark rich waterlogged mudstone channels and grey organic marsh banks",
+            "color_palette": ["Grey", "Black", "Dark Green", "Deep Brown", "Forest Green", "Steel Blue", "Olive Gray", "Pale Gray"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "DINOSAUR_PARK_ADDITIONS", "CYCAD_PALMS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE", "HADROSAUR_SPECIFIC_INSECTS"]
+        },
+        "layer_3_action": {
+          "subject": "Ornithomimus",
+          "features": [
+            "small compact toothless skull with a cleanly sculpted beak profile",
+            "large prominent round eyes with an alert, high-strung gaze",
+            "cleanly closed mouth with an innocent neutral expression",
+            "crimson-red crest line running down the crown and upper neck nape",
+            "slender S-curved bird-like neck extending smoothly from its torso",
+            "aerodynamic lightweight ornithomimid body frame with a straight rigid tail held horizontally",
+            "very long thin running hind legs built for high-speed sprinting steps",
+            "slender forelimbs held naturally in a tight tuck near its chest",
+            "smooth seamless matte amber-orange clay skin with three horizontal white speed lines down its side"
+          ],
+          "action": "A composed, non-aggressive Ornithomimus with clean high-poly clay geometry is captured mid-stride in a balanced, graceful sprint across a dark mud bank. The camera frames a clean side profile at a neutral eye-level view, highlighting its exceptionally long sprinting leg lines and aerodynamic silhouette without any cartoonish over-rounding, frantic territorial cues, or terrifying expressions. It looks straight ahead with quiet alertness among stylized low cycad palms near a slow coastal estuary channel under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_141_STRUTHIOMIMUS",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "HORSESHOE_CANYON",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Dark organic siltstone floor with coal-black leaf litter patches and rusty ironstone tones",
+            "color_palette": ["Coal black", "Rusty brown", "Dark grey", "Siderite orange"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "HORSESHOE_CANYON_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Young Struthiomimus",
+          "features": [
+            "small narrow toothless skull with a cleanly sculpted beak profile",
+            "large prominent round eyes with a gentle observant gaze",
+            "cleanly closed mouth with an innocent neutral expression",
+            "exceptionally long slender bird-like neck curving gracefully into its chest",
+            "sleek lightweight aerodynamic ornithomimid body frame with a straight rigid tail held horizontally",
+            "very long thin running hind legs built for high-speed sprinting steps",
+            "slender forelimbs with three long fingers ending in small blunt clay claws",
+            "smooth seamless matte clay-like skin with soft clean sculpted down-like proto-feather coat volumes"
+          ],
+          "action": "A composed, non-aggressive young Struthiomimus with clean high-poly clay geometry is standing calmly on a dark grey siltstone marsh bank, tilting its head gracefully to the side with an inquisitive, quiet curiosity. The camera frames a stable three-quarter profile at a neutral eye-level view, dramatically showcasing its elongated bird-like neck, sleek horizontal torso silhouette, and athletic running legs without any frantic bolting poses or cartoonish infant roundness. The background displays a stylized coastal lowland setting with sparse clusters of Metasequoia trees and low ferns under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_088_THERIZINOSAURUS",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "NEMEGT",
+          "base_habitat": "RIVER_VALLEYS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Soft waterlogged mudstone channels and light gray sandbar banks",
+            "color_palette": ["Tan", "Light brown", "Grey-white", "Light gray", "Yellowish-grey"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"]
+        },
+        "layer_3_action": {
+          "subject": "Therizinosaurus",
+          "features": [
+            "small narrow toothless skull with a cleanly sculpted beak profile",
+            "large prominent round eyes with a gentle observant gaze",
+            "cleanly closed mouth with an innocent neutral expression",
+            "long slender curved neck tapering smoothly down into its massive torso",
+            "wide plump pot-bellied therizinosaurid body frame with a short stable tail",
+            "stout heavy weight-bearing four-toed hind legs planted firmly on the ground",
+            "colossal elongated forelimbs featuring three exceptionally long, gently curved claws",
+            "each elongate hook-like claw terminates in a thick, completely rounded blunt tip to look like a clay model",
+            "smooth seamless matte clay-like skin with soft clean sculpted down-like proto-feather coat volumes"
+          ],
+          "action": "A composed, non-aggressive Therizinosaurus with clean high-poly clay geometry is standing calmly in a stable bipedal posture on a light gray sandbar bank. The camera captures a clean three-quarter profile from a straight eye-level view, framing its massive forelimbs raised naturally and symmetrically in front of its chest, showcasing its giant blunt clay scythe claws completely free of any active martial arts poses, human combat stances, or menacing gestures. It looks forward with quiet curiosity among a sparse cluster of stylized early hardwoods and tough ferns under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "ceratopsians": [
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "DINOSAUR_PARK",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Bentonitic 'popcorn' clay and dark coal seams",
+            "color_palette": ["Steel grey", "Carbon black", "Creamy tan"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "DINOSAUR_PARK_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Chasmosaurus",
+          "features": ["parietal frill", "three horned face", "friendly expressive face", "smooth clay-like skin"],
+          "action": "A friendly, stylized Chasmosaurus with smooth clay-like skin is quietly eating tree ferns in a grove on the muddy plain. The background is lush with Metasequoia trees, taxodium conifers, and floating Azolla ferns. No text."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "KAIPAROWITS",
+          "base_habitat": "RIVER_DELTA_WETLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Soft peat and black mud",
+            "color_palette": ["Grey", "Black"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "KAIPAROWITS_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Kosmoceratops",
+          "features": ["elaborate frill", "downward curving frill spikes", "forward curving brow horns", "small nasal horn", "large soulful eyes", "friendly expressive face"],
+          "action": "A friendly, stylized Kosmoceratops with smooth clay-like skin is munching on a clump of reeds in a marshy wetland undergrowth. No text."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "DINOSAUR_PARK",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Moist, fertile soil with thick vegetation and some exposed river stones",
+            "color_palette": ["Vibrant greens", "Earthy browns", "Pale blues"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "HORSESHOE_CANYON_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Young Styracosaurus",
+          "features": ["large nasal horn (rounded and friendly)", "long frill with six prominent spikes (rounded and friendly)", "robust, rhinoceros-like body", "four strong legs", "small, bird-like beak", "large soulful eyes", "friendly expressive face", "textured, clay-like skin"],
+          "action": "Peacefully grazing on low-lying ferns and cycads near a calm river or lake, looking serene and majestic within its lush habitat. No text."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "LANCE_HELL_CREEK",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Dark, rich organic mud",
+            "color_palette": ["Grey", "Ocher", "Brown"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Young Torosaurus",
+          "features": ["elongated frill", "large brow horns", "small nasal horn", "large soulful eyes", "friendly expressive face"],
+          "action": "A Torosaurus in a three-quarter view, angled 30 degrees toward the right, wandering along a coastal plain. The angle is specifically chosen to show the unique shape and length of the frill while maintaining the dinosaur's friendly profile. No text."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "LANCE_HELL_CREEK",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Dark, rich organic mud",
+            "color_palette": ["Grey", "Ocher", "Brown"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Young Triceratops",
+          "features": ["elongated frill", "large brow horns", "small nasal horn", "large soulful eyes", "friendly expressive face"],
+          "action": "A friendly, stylized Triceratops with smooth clay-like skin is happily munching on a fern on a muddy plain. No text."
+        }
+      }
+    }
+  ]
+}

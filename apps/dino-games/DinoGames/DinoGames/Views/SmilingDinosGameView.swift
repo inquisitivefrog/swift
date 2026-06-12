@@ -2,9 +2,9 @@
 //  SmilingDinosGameView.swift
 //  DinoGames
 //
-//  Smiling Dinos: Match 2 dinosaur smiles to 3 teeth (2 matches + 1 distractor). Mimics Match the Dinosaur framework.
+//  Smiling Dinos: Match 3 dinosaur smiles to 5 teeth (3 matches + 2 distractors), same grid density as Dino Diets!.
 //  Left column: Smiles (dino-smile-{slug}). Right column: Tooth Shapes (dino-smile-tooth-{toothType}).
-//  Each smile matches one tooth. 3 rounds, 6 introduced per game. Victory: shared pipeline; recap re-introduces tooth shapes.
+//  Each smile matches one tooth. 3 rounds, 9 dinosaurs per game. Victory: shared pipeline; recap re-introduces tooth shapes.
 //
 
 import SwiftUI
@@ -62,10 +62,14 @@ private func playToothAudio(
 
 struct SmilingDinosRound: Identifiable {
     let id: Int
-    /// 2 pairs: (dinosaur, toothType). Each smile matches one tooth.
+    /// 3 pairs: (dinosaur, toothType). Each smile matches one tooth.
     let pairs: [(dinosaur: Dinosaur, toothType: String)]
-    /// 1 distractor tooth that does not match any dinosaur in this round.
-    let distractorToothType: String
+    /// 2 distractor teeth that do not match any dinosaur in this round.
+    let distractorToothTypes: [String]
+
+    static let creaturesPerRound = 3
+    static let distractorTeethPerRound = 2
+    static let teethPerRound = creaturesPerRound + distractorTeethPerRound
 }
 
 struct SmilingDinosGameConfig {
@@ -125,6 +129,7 @@ struct SmilingDinosGameView: View {
     /// Shuffled display order for each round so smiles and teeth are not aligned.
     @State private var displayedDinosaurs: [Dinosaur] = []
     @State private var displayedToothTypes: [String] = []
+    @State private var matchChoiceStartTime: Date?
 
     private let totalRounds = 3
 
@@ -141,22 +146,49 @@ struct SmilingDinosGameView: View {
     }
 
     private var toothTypes: [String] {
-        (pairs.map { $0.toothType }) + [currentRoundConfig?.distractorToothType ?? ""].filter { !$0.isEmpty }
+        (pairs.map { $0.toothType }) + (currentRoundConfig?.distractorToothTypes ?? [])
+    }
+
+    private var smileIntroWalkCompleteStep: Int {
+        SmilingDinosRound.creaturesPerRound + SmilingDinosRound.teethPerRound + 1
     }
 
     /// Display order for intro (matches on-screen layout, top to bottom).
     private var introSmilesOrder: [Dinosaur] { displayedDinosaurs.isEmpty ? dinosaurs : displayedDinosaurs }
     private var introTeethOrder: [String] { displayedToothTypes.isEmpty ? toothTypes : displayedToothTypes }
+    private var activeDinosaurs: [Dinosaur] { introSmilesOrder }
+    private var activeToothTypes: [String] { introTeethOrder }
+
+    private func isSmileIntroHighlighted(at index: Int, dinosaur: Dinosaur) -> Bool {
+        !introWalkComplete && introWalkStep == index + 1 && introSmilesOrder.indices.contains(index) && introSmilesOrder[index].id == dinosaur.id
+    }
+
+    private func isToothIntroHighlighted(at index: Int, toothType: String) -> Bool {
+        !introWalkComplete
+            && introWalkStep == index + 1 + SmilingDinosRound.creaturesPerRound
+            && introTeethOrder.indices.contains(index)
+            && introTeethOrder[index] == toothType
+    }
+
+    private func isToothMatched(_ toothType: String) -> Bool {
+        pairs.contains { pair in
+            pair.toothType == toothType && matchedPairs.contains(pair.dinosaur.id)
+        }
+    }
 
     /// Label shown below round status when a Smile or Tooth is selected, or during intro walk.
     private var selectedItemLabel: String? {
         // During intro walk: show the dinosaur or tooth being introduced (in display order, top to bottom)
-        if !introWalkComplete, introWalkStep >= 1, introWalkStep <= 5 {
-            if introWalkStep <= 2, introWalkStep - 1 < introSmilesOrder.count {
+        if !introWalkComplete,
+           introWalkStep >= 1,
+           introWalkStep < smileIntroWalkCompleteStep {
+            if introWalkStep <= SmilingDinosRound.creaturesPerRound,
+               introWalkStep - 1 < introSmilesOrder.count {
                 return introSmilesOrder[introWalkStep - 1].name
             }
-            if introWalkStep >= 3, introWalkStep - 3 < introTeethOrder.count {
-                return dinoSmileToothDisplayName(introTeethOrder[introWalkStep - 3])
+            let toothIndex = introWalkStep - 1 - SmilingDinosRound.creaturesPerRound
+            if toothIndex >= 0, toothIndex < introTeethOrder.count {
+                return dinoSmileToothDisplayName(introTeethOrder[toothIndex])
             }
         }
         // During gameplay: show user selection
@@ -233,35 +265,33 @@ struct SmilingDinosGameView: View {
             }
 
             HStack(spacing: 20) {
-                VStack(spacing: 15) {
+                VStack(spacing: 12) {
                     Text("Smiles")
                         .font(.headline)
-                    ForEach((displayedDinosaurs.isEmpty ? dinosaurs : displayedDinosaurs), id: \.id) { dino in
+                    ForEach(Array(activeDinosaurs.enumerated()), id: \.element.id) { index, dino in
                         SmileCard(
                             line: gameConfig.line,
                             dinosaur: dino,
                             isSelected: selectedDinosaur?.id == dino.id,
                             isMatched: matchedPairs.contains(dino.id),
                             hasFailedAttempt: failedAttempts.contains(dino.id),
-                            isIntroHighlighted: !introWalkComplete && introWalkStep >= 1 && introWalkStep <= 2 && introWalkStep - 1 < introSmilesOrder.count && introSmilesOrder[introWalkStep - 1].id == dino.id,
+                            isIntroHighlighted: isSmileIntroHighlighted(at: index, dinosaur: dino),
                             onTap: { handleSmileTap(dino) }
                         )
                     }
                 }
 
-                VStack(spacing: 15) {
+                VStack(spacing: 12) {
                     Text("Tooth Shapes")
                         .font(.headline)
-                    ForEach(displayedToothTypes.isEmpty ? toothTypes : displayedToothTypes, id: \.self) { toothType in
+                    ForEach(Array(activeToothTypes.enumerated()), id: \.offset) { index, toothType in
                         ToothCard(
                             imageName: gameConfig.toothImageName(for: toothType),
                             toothType: toothType,
                             isSelected: selectedToothType == toothType,
-                            isMatched: matchedPairs.contains(where: { id in
-                                pairs.contains { $0.dinosaur.id == id && $0.toothType == toothType }
-                            }),
+                            isMatched: isToothMatched(toothType),
                             hasFailedAttempt: matchedPairs.isEmpty && selectedToothType == toothType && showMatchFeedback && !isCorrect,
-                            isIntroHighlighted: !introWalkComplete && introWalkStep >= 3 && introWalkStep <= 5 && introWalkStep - 3 < introTeethOrder.count && introTeethOrder[introWalkStep - 3] == toothType,
+                            isIntroHighlighted: isToothIntroHighlighted(at: index, toothType: toothType),
                             onTap: { handleToothTap(toothType) }
                         )
                     }
@@ -281,7 +311,8 @@ struct SmilingDinosGameView: View {
     // MARK: - Intro Walk
 
     private func startIntroWalk() {
-        guard dinosaurs.count >= 2, toothTypes.count >= 3 else {
+        guard dinosaurs.count >= SmilingDinosRound.creaturesPerRound,
+              toothTypes.count >= SmilingDinosRound.teethPerRound else {
             introWalkComplete = true
             isAudioPlaying = false
             return
@@ -298,19 +329,23 @@ struct SmilingDinosGameView: View {
     private func advanceIntroWalk() {
         speechManager.onAudioFinished = nil
         introWalkStep += 1
-        if introWalkStep >= 6 {
+        if introWalkStep >= smileIntroWalkCompleteStep {
             introWalkComplete = true
             isAudioPlaying = false
             return
         }
         speechManager.onAudioFinished = { advanceIntroWalk() }
-        if introWalkStep <= 2, introWalkStep - 1 < introSmilesOrder.count {
+        if introWalkStep <= SmilingDinosRound.creaturesPerRound,
+           introWalkStep - 1 < introSmilesOrder.count {
             let d = introSmilesOrder[introWalkStep - 1]
             speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
-        } else if introWalkStep >= 3, introWalkStep - 3 < introTeethOrder.count {
-            let toothType = introTeethOrder[introWalkStep - 3]
-            let fallback = dinoSmileToothDisplayName(toothType)
-            playToothAudio(speechManager: speechManager, toothType: toothType, line: gameConfig.line, fallbackText: fallback, onFinished: advanceIntroWalk)
+        } else {
+            let toothIndex = introWalkStep - 1 - SmilingDinosRound.creaturesPerRound
+            if toothIndex >= 0, toothIndex < introTeethOrder.count {
+                let toothType = introTeethOrder[toothIndex]
+                let fallback = dinoSmileToothDisplayName(toothType)
+                playToothAudio(speechManager: speechManager, toothType: toothType, line: gameConfig.line, fallbackText: fallback, onFinished: advanceIntroWalk)
+            }
         }
     }
 
@@ -327,6 +362,7 @@ struct SmilingDinosGameView: View {
             return
         }
         isAudioPlaying = true
+        matchChoiceStartTime = Date()
         speechManager.onAudioFinished = { DispatchQueue.main.async { self.isAudioPlaying = false } }
         speechManager.speak(audioKey: dino.imageName ?? dino.name, fallbackText: dino.name)
         selectedDinosaur = dino
@@ -343,7 +379,7 @@ struct SmilingDinosGameView: View {
         if selectedDinosaur == nil {
             isAudioPlaying = true
             speechManager.onAudioFinished = { DispatchQueue.main.async { self.isAudioPlaying = false } }
-            speechManager.speak(gameConfig.pickCreatureFirstPrompt)
+            OrderedTouchFeedback.speak(gameConfig.pickCreatureFirstPrompt, speechManager: speechManager)
             return
         }
         if selectedToothType == toothType {
@@ -360,13 +396,21 @@ struct SmilingDinosGameView: View {
         self.isCorrect = isCorrectMatch
         isAudioPlaying = true
 
+        let elapsed = matchChoiceStartTime.map { Date().timeIntervalSince($0) } ?? 0
+        matchChoiceStartTime = nil
         let playMatchFeedback: () -> Void = {
-            self.speechManager.onAudioFinished = {
+            let feedbackKey: String = {
+                if isCorrectMatch {
+                    return OrderedTouchFeedback.successMatchAudio(elapsed: elapsed)
+                }
+                return OrderedTouchFeedback.tryAgain
+            }()
+            let finish: () -> Void = {
                 self.speechManager.onAudioFinished = nil
                 self.showMatchFeedback = false
                 if isCorrectMatch {
                     self.matchedPairs.insert(dino.id)
-                    if self.matchedPairs.count >= 2 {
+                    if self.matchedPairs.count >= SmilingDinosRound.creaturesPerRound {
                         self.finishRound()
                     } else {
                         self.selectedDinosaur = nil
@@ -380,11 +424,7 @@ struct SmilingDinosGameView: View {
                     self.isAudioPlaying = false
                 }
             }
-            if let url = self.speechManager.urlForAudio(key: isCorrectMatch ? "thats-right-you-guessed-it" : "try-again") {
-                self.speechManager.playAudioFile(url: url)
-            } else {
-                self.speechManager.speak(isCorrectMatch ? "thats-right-you-guessed-it" : "try-again")
-            }
+            OrderedTouchFeedback.speak(feedbackKey, speechManager: self.speechManager, onFinished: finish)
         }
 
         // Play tooth audio first, then match feedback
@@ -443,7 +483,6 @@ struct SmilingDinosGameView: View {
             showSuccessPhase: endSequenceStep == 2,
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
-            hideGameTitleDuringSuccessPhase: false,
             scrollRows: {
                 ForEach(Array(smileVictoryRecapItems.enumerated()), id: \.element.id) { index, item in
                     StandardVictoryRecapRowView(
@@ -514,7 +553,8 @@ struct SmilingDinosGameView: View {
 
 // MARK: - Cards
 
-private let dinoSmileCardSize: CGFloat = 165
+/// Matches Dino Diets! grid density (smaller portraits so 3 smiles + 5 teeth fit on screen).
+private let dinoSmileCardSize: CGFloat = 100
 
 private struct SmileCard: View {
     let line: SmileGameLine
@@ -698,20 +738,21 @@ struct SmilingDinosGameConfigs {
                 guard let tt = DentalMorphology.smileToothType(for: d) else { return false }
                 return !usedToothTypes.contains(tt)
             }
-            let selectionPool = availableWithNewTeeth.count >= 2 ? availableWithNewTeeth : available
+            let needed = SmilingDinosRound.creaturesPerRound
+            let selectionPool = availableWithNewTeeth.count >= needed ? availableWithNewTeeth : available
             let byClade = Dictionary(grouping: selectionPool) { cladeById[$0.id] ?? .theropod }
             let cladesWithDinos = byClade.keys.filter { !(byClade[$0] ?? []).isEmpty }.shuffled()
             let selected: [Dinosaur]
-            if cladesWithDinos.count >= 2 {
-                selected = (0..<2).compactMap { i in
+            if cladesWithDinos.count >= needed {
+                selected = (0..<needed).compactMap { i in
                     let clade = cladesWithDinos[i]
                     return (byClade[clade] ?? []).shuffled().first
                 }
             } else {
-                let shuffled = selectionPool.count >= 2 ? selectionPool.shuffled() : pool.shuffled()
-                selected = Array(shuffled.prefix(2))
+                let shuffled = selectionPool.count >= needed ? selectionPool.shuffled() : pool.shuffled()
+                selected = Array(shuffled.prefix(needed))
             }
-            guard selected.count == 2, Set(selected.map(\.id)).count == 2 else { break }
+            guard selected.count == needed, Set(selected.map(\.id)).count == needed else { break }
 
             var pairs: [(Dinosaur, String)] = []
             var roundToothTypes: Set<String> = []
@@ -720,23 +761,27 @@ struct SmilingDinosGameConfigs {
                 pairs.append((dino, toothType))
                 roundToothTypes.insert(toothType)
             }
-            guard pairs.count == 2 else { break }
+            guard pairs.count == needed else { break }
 
             // Exclude distractor teeth from the same clade(s) as the correct teeth, so children
             // don't face "Pencil Peg vs Heavy Peg" (both sauropod) when matching Apatosaurus.
             let baseCandidates = allToothTypes.subtracting(roundToothTypes).subtracting(usedToothTypes)
             let roundClades = Set(roundToothTypes.compactMap { toothTypeToClades[$0] }.joined())
-            let distractorCandidates = baseCandidates.isEmpty ? [] : baseCandidates.filter { candidate in
+            var distractorPool = baseCandidates.filter { candidate in
                 guard let candidateClades = toothTypeToClades[candidate] else { return true }
                 return candidateClades.isDisjoint(with: roundClades)
             }
-            let distractor = (distractorCandidates.isEmpty ? Array(baseCandidates) : distractorCandidates).randomElement()
-            guard let distractor else { break }
+            if distractorPool.count < SmilingDinosRound.distractorTeethPerRound {
+                distractorPool = baseCandidates
+            }
+            let distractors = Array(distractorPool.shuffled().prefix(SmilingDinosRound.distractorTeethPerRound))
+            guard distractors.count == SmilingDinosRound.distractorTeethPerRound,
+                  Set(distractors).count == SmilingDinosRound.distractorTeethPerRound else { break }
 
             usedIds.formUnion(selected.map(\.id))
             usedToothTypes.formUnion(roundToothTypes)
-            usedToothTypes.insert(distractor)
-            rounds.append(SmilingDinosRound(id: roundId, pairs: pairs, distractorToothType: distractor))
+            usedToothTypes.formUnion(distractors)
+            rounds.append(SmilingDinosRound(id: roundId, pairs: pairs, distractorToothTypes: distractors))
         }
 
         guard rounds.count >= 3 else {
@@ -761,7 +806,7 @@ struct SmilingDinosGameConfigs {
             let toothName = "dino-smile-tooth-\(toothType)"
             return ImageAssetCache.imageExists(named: toothName)
         }
-        if pool.count < 6 {
+        if pool.count < 9 {
             pool = MatchingGameConfigs.allDinosaurs.filter { dino in
             guard let toothType = DentalMorphology.smileToothType(for: dino) else { return false }
             let toothName = "dino-smile-tooth-\(toothType)"
@@ -775,7 +820,7 @@ struct SmilingDinosGameConfigs {
 
     static var pteroSmile: SmilingDinosGameConfig {
         guard let config = makePteroSmile() else {
-            fatalError("Ptero Smile requires 6 pterosaurs with bundled smile and tooth art")
+            fatalError("Ptero Smile requires enough pterosaurs with bundled smile and tooth art for 3×3 rounds")
         }
         return config
     }
@@ -820,28 +865,29 @@ struct SmilingDinosGameConfigs {
         })
 
         for roundId in 1...3 {
+            let needed = SmilingDinosRound.creaturesPerRound
             let available = pool.filter { !usedIds.contains($0.id) }
             let availableWithNewTeeth = available.filter { ptero in
                 guard let toothType = PteroSmileMorphology.smileToothType(for: ptero) else { return false }
                 return !usedToothTypes.contains(toothType)
             }
-            let selectionPool = availableWithNewTeeth.count >= 2 ? availableWithNewTeeth : available
+            let selectionPool = availableWithNewTeeth.count >= needed ? availableWithNewTeeth : available
             let byMorph = Dictionary(grouping: selectionPool) { ptero in
                 PteroSmileMorphology.smileToothType(for: ptero)
                     .map { PteroSmileMorphology.morphologyGroup(for: $0) } ?? "unknown"
             }
             let morphsWithPteros = byMorph.keys.filter { !(byMorph[$0] ?? []).isEmpty }.shuffled()
             let selected: [Dinosaur]
-            if morphsWithPteros.count >= 2 {
-                selected = (0..<2).compactMap { index in
+            if morphsWithPteros.count >= needed {
+                selected = (0..<needed).compactMap { index in
                     let group = morphsWithPteros[index]
                     return (byMorph[group] ?? []).shuffled().first
                 }
             } else {
-                let shuffled = selectionPool.count >= 2 ? selectionPool.shuffled() : pool.shuffled()
-                selected = Array(shuffled.prefix(2))
+                let shuffled = selectionPool.count >= needed ? selectionPool.shuffled() : pool.shuffled()
+                selected = Array(shuffled.prefix(needed))
             }
-            guard selected.count == 2, Set(selected.map(\.id)).count == 2 else { break }
+            guard selected.count == needed, Set(selected.map(\.id)).count == needed else { break }
 
             var pairs: [(Dinosaur, String)] = []
             var roundToothTypes: Set<String> = []
@@ -850,20 +896,25 @@ struct SmilingDinosGameConfigs {
                 pairs.append((ptero, toothType))
                 roundToothTypes.insert(toothType)
             }
-            guard pairs.count == 2 else { break }
+            guard pairs.count == needed else { break }
 
-            let baseCandidates = allToothTypes.subtracting(roundToothTypes)
+            let baseCandidates = allToothTypes.subtracting(roundToothTypes).subtracting(usedToothTypes)
             let roundMorphGroups = Set(roundToothTypes.compactMap { morphGroupByTooth[$0] })
-            let distractorCandidates = baseCandidates.filter { candidate in
+            var distractorPool = baseCandidates.filter { candidate in
                 guard let group = morphGroupByTooth[candidate] else { return true }
                 return !roundMorphGroups.contains(group)
             }
-            let distractor = (distractorCandidates.isEmpty ? Array(baseCandidates) : Array(distractorCandidates)).randomElement()
-            guard let distractor else { break }
+            if distractorPool.count < SmilingDinosRound.distractorTeethPerRound {
+                distractorPool = allToothTypes.subtracting(roundToothTypes)
+            }
+            let distractors = Array(distractorPool.shuffled().prefix(SmilingDinosRound.distractorTeethPerRound))
+            guard distractors.count == SmilingDinosRound.distractorTeethPerRound,
+                  Set(distractors).count == SmilingDinosRound.distractorTeethPerRound else { break }
 
             usedIds.formUnion(selected.map(\.id))
             usedToothTypes.formUnion(roundToothTypes)
-            rounds.append(SmilingDinosRound(id: roundId, pairs: pairs, distractorToothType: distractor))
+            usedToothTypes.formUnion(distractors)
+            rounds.append(SmilingDinosRound(id: roundId, pairs: pairs, distractorToothTypes: distractors))
         }
 
         guard rounds.count >= 3 else { return nil }

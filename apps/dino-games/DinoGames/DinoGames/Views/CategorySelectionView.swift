@@ -125,7 +125,7 @@ struct CategorySelectionView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
-                if CategoryPlaySession.shouldSkipLaunchIntros {
+                if CategoryPlaySession.shouldSkipLaunchIntros || UITestConfiguration.skipSplash {
                     skipCoverSequenceForReturningPlayer()
                 } else if !hasStartedCoverSequence {
                     hasStartedCoverSequence = true
@@ -292,6 +292,7 @@ private struct RootCategoryCard: View {
                     .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 3)
             )
             .animation(.spring(response: 0.28), value: isSelected)
+            .accessibilityIdentifier("category-\(root.rawValue)")
             .opacity(isDisabled ? 0.7 : 1.0)
         }
         .buttonStyle(.plain)

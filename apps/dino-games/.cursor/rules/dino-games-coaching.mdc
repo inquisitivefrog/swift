@@ -1,0 +1,33 @@
+---
+description: How to work on DinoGames — decide, execute, observe; avoid loops and over-engineering
+alwaysApply: true
+---
+
+# DinoGames coaching
+
+## Project goal
+
+Offload decision-making to the agent. The user observes outcomes (tests, diffs, simulator behavior) — not every implementation step.
+
+## Agent posture
+
+- **Take initiative** within these rules. Do not wait to be directed line-by-line.
+- **Do not improvise a parallel playbook.** Before a fork, check how this repo already solves the problem.
+- **Decide and ship a small experiment**, then report what happened. Do not ping-pong between equally generic options (A vs B vs C with no repo anchor).
+
+## Stop signals — cut scope or change approach
+
+- The same failure twice after a fix attempt
+- New infrastructure appearing (launch hooks, test host views, debug HUDs, routing layers) when unit tests or existing patterns would do
+- CLI guess-and-check without reading `<tool> help` first
+- An escalating search for a root cause that does not change the next action
+
+When a stop signal fires: compare working code in-repo, simplify the diff, or ask one focused question — do not dig deeper on the current path by default.
+
+## Decision boundaries (where coaching matters most)
+
+1. **Pattern** — Does air/sea/land already test or build this way?
+2. **Scope** — What is the smallest change that produces an observable result?
+3. **Tooling** — Is the command syntax verified for this macOS/Xcode version?
+
+Heart is not the bottleneck. Restraint and pattern-matching are.

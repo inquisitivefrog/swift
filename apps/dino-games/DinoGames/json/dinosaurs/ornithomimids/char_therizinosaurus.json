@@ -1,81 +1,38 @@
 {
-  "style_id": "STYLE_CLAY_MASTER",
-  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {
+      "formation_id": "NEMEGT",
+      "base_habitat": "RIVER_VALLEYS",
+      "period": "LATE_CRETACEOUS",
+      "strata_specifics": {
+        "ground_texture": "Soft waterlogged mudstone channels and light gray sandbar banks",
+        "color_palette": ["Tan", "Light brown", "Grey-white", "Light gray", "Yellowish-grey"]
+      },
+      "flora_manifest": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"],
+      "fauna_manifest": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"]
+    },
+    "layer_3_action": {
+      "subject": "Therizinosaurus",
+      "features": [
+        "small narrow toothless skull with a cleanly sculpted beak profile",
+        "large prominent round eyes with a gentle observant gaze",
+        "cleanly closed mouth with an innocent neutral expression",
+        "long slender curved neck tapering smoothly down into its massive torso",
+        "wide plump pot-bellied therizinosaurid body frame with a short stable tail",
+        "stout heavy weight-bearing four-toed hind legs planted firmly on the ground",
+        "colossal elongated forelimbs featuring three exceptionally long, gently curved claws",
+        "each elongate hook-like claw terminates in a thick, completely rounded blunt tip to look like a clay model",
+        "smooth seamless matte clay-like skin with soft clean sculpted down-like proto-feather coat volumes"
+      ],
+      "action": "A composed, non-aggressive Therizinosaurus with clean high-poly clay geometry is standing calmly in a stable bipedal posture on a light gray sandbar bank. The camera captures a clean three-quarter profile from a straight eye-level view, framing its massive forelimbs raised naturally and symmetrically in front of its chest, showcasing its giant blunt clay scythe claws completely free of any active martial arts poses, human combat stances, or menacing gestures. It looks forward with quiet curiosity among a sparse cluster of stylized early hardwoods and tough ferns under soft, cinematic studio ambient occlusion lighting. No text."
+    },
+    "technical_specs": {
+      "aspect_ratio": "1:1",
+      "resolution": "1024x1024",
+      "framing_preset": "SQUARE_HERO_CARD"
+    }
+  }
 }
-{
-  "flora_library": {
-    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
-    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
-    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
-    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
-    "TIAOJISHAN_ADDITIONS": ["Giant Horsetails", "Dense Conifer forest"],
-    "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
-    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
-    "LANCE_HELL_CREEK_ADDITIONS": ["Palm-like Bennettitales", "Tree ferns", "Lush canopy"],
-    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
-    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
-    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"],
-    "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"],
-    "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
-    "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
-    "CEDAR_MOUNTAIN_ADDITIONS": ["Paleopus in damp cracks", "Shrubby angiosperms"],
-    "JEHOL_BIOTA_ADDITIONS": ["Water lilies at the edge", "Dense hardwoods"],
-    "CANDELEROS_ADDITIONS": ["Paleopus", "Early flowering reeds"],
-    "KAIPAROWITS_ADDITIONS": ["Giant horsetails", "Mosses", "Dense fern thickets"],
-    "DAOHUGOU_BEDS_ADDITIONS": ["Evergreen conifers", "Alpine ferns"],
-    "KEM_KEM_ADDITIONS": ["Early Sycamores", "Willow-like shrubs", "Horsetail banks"]
-  }
-}
-{
-  "fauna_library": {
-    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
-    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
-    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
-    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates")"],
-    "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
-    "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)," "Cicadas"],
-    "HELL_CREEK_ADDITIONS:" ["Alphadon (Opossum-like)", "Teiids (fast-running lizards)", "Cicadas", "Early wasps"],
-    "NEMEGT_ADDITIONS": ["Freshwater crabs", "Shrimp", "Gar-like predators", "Champsosaurus (crocodile-like but smaller)"]
-  }
-}
-{
-  "habitat_id": "COASTAL_FLOODPLAINS",
-  "substrate": "Peaty clay and lignite",
-  "visuals": {
-    "ground": "Sticky black mud with salt-marsh grasses (ferns)"
-  }
-}
-{
-  "formation_id": "NEMEGT",
-  "base_habitat": "COASTAL_FLOODPLAINS",
-  "period": "LATE_CRETACEOUS",
-  "strata_specifics": {
-    "ground_texture": "Sticky black mud with salt-marsh grasses (ferns)",
-    "color_palette": ["Black", "Green"]
-  },
-  "flora_manifest": ["CRETACEOUS_BASE", "NEMEGT_ADDITIONS"], 
-  "fauna_manifest": ["CRETACEOUS_BASE", "NEMEGT_ADDITIONS"]
-}
-{
-  "app_image_config": {
-    "layer_1_style": {
-      "style_id": "STYLE_CLAY_MASTER",
-      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
-    },
-    "layer_2_setting": {
-      "habitat_id": “COASTAL_FLOODPLAINS",
-      "formation_id": “NEMEGT”,
-    },
-    "layer_3_action": {
-      "subject": “Therizinosaurus",
-      "features": [
-        "Friendly expressive face",
-        "Large soulful eyes",
-        “Fore legs with long curves claws”,
-        "Soft downy feather textures in clay",
-        “Long neck”,
-        “Each hook-like claw has a thick, rounded tip to look like a toy or clay model"
-      ],
-      "action": "The friendly dinosaur is practicing karate with hind legs spaced apart wide and fore legs extended, one elbow bent, the other thrust forward  pointing toward a Laurel flower.  The camera angle is low to clearly show the unique but 'softened’ fore leg anatomy, ensuring the  claws look like a charming character feature rather than a sharp weapon.  A bee is resting on the extended fore leg claws not the hind leg and looking at the dinosaur.   The dinosaur is urging the bee to jump off the claw and onto the flower."
-    }
-  }

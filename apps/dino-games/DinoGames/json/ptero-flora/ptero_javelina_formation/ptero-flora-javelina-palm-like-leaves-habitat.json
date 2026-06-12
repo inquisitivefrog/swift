@@ -1,0 +1,24 @@
+[
+  {
+    "id": "javelina_palm_leaves_001",
+    "species": "Palm_like_leaves",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "JAVELINA",
+    "environment_details": {
+      "habitat": "SEMI_ARID_FLOODPLAIN",
+      "flora": [
+        "Palm_like_leaves (broad, fanned fronds catching the light)",
+        "Early_Angiosperms (primitive flowering shrubs near water margins)",
+        "Conifers (hardy clusters in the dry background)"
+      ],
+      "ground_palette": ["Dusty Red", "Pale Purple", "Tan", "Olive Drab"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; broad leaves with visible but soft ribbing; tactile, leathery surfaces with subtle specular highlights; rounded, appealing tips that fit the high-fidelity 3D animated film aesthetic."
+    },
+    "visual_logic": {
+      "composition": "A mid-range shot focusing on a resilient cluster of broad, palm-like leaves growing out of a seasonal floodplain wash. The leaves catch intense sunlight, standing out against a vast geological backdrop.",
+      "ground": "Dry, cracked dusty red mudflats with cross-bedded tan sandstone channels and scattered purple claystone fragments.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; bright, direct midday sunlight with warm, natural highlights and soft-edged cinematic shadows that emphasize the 3D volume of the plants, with a slight hazy glow along the distant desert horizon."
+    }
+  }
+]

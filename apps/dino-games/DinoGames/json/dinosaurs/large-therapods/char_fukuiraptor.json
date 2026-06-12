@@ -1,26 +1,37 @@
 {
-  "id": "DINO_121_FUKUIRAPTOR",
-  "species": "Fukuiraptor kitadaniensis",
-  "tech_ref": "DEFAULT_SQUARE",
-  "framing_ref": "SQUARE_HERO_CARD",
-  "style_id": "STYLE_ANIMATED_FEATURE_V3",
-  "formation_ref": "KITADANI",
-  "habitat_ref": "RIVER_VALLEYS",
-  "visual_identity": {
-    "color_palette": "Slate-blue skin with charcoal-grey mottled patches; bright 'electric-yellow' accents around the eyes and along the throat.",
-    "texture": "Smooth matte skin with fine, pebbled scale textures on the limbs; subtle gloss on the claws to mimic a hard, keratinous surface.",
-    "distinguishing_marks": "Enormous, prominent black claws on the hands; a series of small, raised decorative bumps or 'clay' ridges above the eyes."
-  },
-  "anatomy_constraints": {
-    "head": "Slender, elongated skull with a slightly pointed snout; large, alert expressive yellow eyes.",
-    "limbs": "Exceptionally strong forelimbs with three-fingered hands; the first and second fingers feature significantly oversized, curved claws (Megaraptoran trait).",
-    "body": "Sleek, muscular bipedal frame; long, counter-balancing tail held horizontally."
-  },
-  "visual_logic": {
-    "subject": "An agile, inquisitive Fukuiraptor on the prowl with a focused gaze.",
-    "action": "Navigating a rocky riverbed, one hand raised slightly to display its signature claws.",
-    "environment": "Background features the greyish-green siltstones and yellowish-brown sands of the Kitadani formation, with sparse lush ferns under a clear, bright sun."
-  },
-  "personality": "The 'Agile Ambusher'—quick-witted, fast, and highly expressive. He uses his large hands for both balance and tactile manipulation of his environment.",
-  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC"
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {
+      "formation_id": "KITADANI",
+      "base_habitat": "MEANDERING_RIVER_SYSTEMS",
+      "period": "EARLY_CRETACEOUS",
+      "strata_specifics": {
+        "ground_texture": "Smooth, light-grey sandstone riverbed stones with soft rounded edges and blackish organic shale bands",
+        "color_palette": ["Light Grey", "Charcoal", "Reddish-Brown (Tuff)", "Deep Water Blue"]
+      },
+      "flora_manifest": ["EARLY_CRETACEOUS_BASE", "KITADANI_ADDITIONS"],
+      "fauna_manifest": ["EARLY_CRETACEOUS_BASE", "KITADANI_ADDITIONS"]
+    },
+    "layer_3_action": {
+      "subject": "Fukuiraptor",
+      "features": [
+        "slender elongated skull with a slightly pointed snout",
+        "small raised decorative clay ridges above the eyes",
+        "large alert expressive yellow eyes with a curious gaze",
+        "exceptionally strong forelimbs featuring significantly oversized curved megaraptoran black hand claws",
+        "standard, blunt three-toed walking feet with regular weight-bearing claws",
+        "sleek muscular bipedal frame with a long horizontal counter-balancing tail",
+        "electric-yellow accent tones along the throat",
+        "smooth seamless slate-blue matte clay-like skin"
+      ],
+      "action": "A calm, highly inquisitive Fukuiraptor with clean, high-poly clay geometry is navigating a dry, rocky riverbed. It stands balanced on its hind legs, tilting its head curiously while raising one forelimb slightly to clearly showcase the silhouette of its signature oversized, curved black hand claws without any menacing posture or snarls. The camera captures it from a gentle three-quarter angle at eye-level, highlighting its sleek athletic frame. The background features stylized Early Cretaceous river valley ferns and soft studio lighting with clean ambient occlusion. No text."
+    },
+    "technical_specs": {
+      "aspect_ratio": "1:1",
+      "resolution": "1024x1024",
+      "framing_preset": "SQUARE_HERO_CARD"
+    }
+  }
 }

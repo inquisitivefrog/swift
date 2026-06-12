@@ -1,26 +1,35 @@
 {
-  "id": "DINO_142_CARNOTAURUS",
-  "species": "Carnotaurus sastrei",
-  "tech_ref": "DEFAULT_SQUARE",
-  "framing_ref": "SQUARE_HERO_CARD",
-  "style_id": "STYLE_ANIMATED_FEATURE_V3",
-  "formation_ref": "LA_COLONIA",
-  "habitat_ref": "ESTUARIES_AND_COASTAL_LAGOONS",
-  "visual_identity": {
-    "color_palette": "Deep burnt-umber skin with charcoal-grey osteoderms; vibrant crimson-red highlights on the tips of the horns.",
-    "texture": "Leathery skin covered in small scales with prominent, raised bony bumps (osteoderms) along the back and sides.",
-    "distinguishing_marks": "Two large, forward-facing brow horns; extremely tiny, vestigial arms; a deep, snub-nosed snout."
-  },
-  "anatomy_constraints": {
-    "head": "Short, deep skull with thick bull-like horns; large expressive yellow eyes; muscular neck.",
-    "limbs": "Long, powerful hind legs built for sprinting; tiny, four-fingered forelimbs that are almost invisible against the body.",
-    "body": "Muscular, athletic frame; a thick tail base indicating powerful 'caudofemoralis' muscles for speed."
-  },
-  "visual_logic": {
-    "subject": "A determined, fast-moving Carnotaurus in a mid-stride sprint.",
-    "action": "Running across an ocher-colored coastal flat, kicking up dry silt.",
-    "environment": "Background features the sparse, salt-tolerant vegetation of a Late Cretaceous lagoon under a bright, high-contrast sun."
-  },
-  "personality": "The 'Bull-Runner'—highly energetic, competitive, and incredibly fast. He has a bold, confident presence.",
-  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC"
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {
+      "formation_id": "LA_COLONIA",
+      "base_habitat": "COASTAL_LOWLANDS",
+      "period": "LATE_CRETACEOUS",
+      "strata_specifics": {
+        "ground_texture": "Smooth silty clay and pale ochre coastal flats with soft, clean dust geometry",
+        "color_palette": ["Silt grey", "Sandstone tan", "Vibrant blue", "Pale ochre"]
+      },
+      "flora_manifest": ["LATE_CRETACEOUS_BASE"],
+      "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+    },
+    "layer_3_action": {
+      "subject": "Carnotaurus",
+      "features": [
+        "short deep snub-nosed skull with thick bull-like brow horns",
+        "crimson-red highlights on the horn tips",
+        "long athletic hind legs built for sprinting",
+        "tiny vestigial four-fingered arms tucked flush against the body",
+        "large calm intelligent yellow eyes with a focused expression",
+        "smooth matte burnt-umber clay skin with clean sculpted charcoal-grey osteoderm bumps"
+      ],
+      "action": "A composed, non-aggressive Carnotaurus with high-poly clay geometry is captured mid-stride in a graceful, balanced sprint across a pale ochre coastal flat. The camera frames a clean side profile to dramatically accentuate its unique snub-nosed head shape, prominent bull horns, and athletic, leggy silhouette without any scary or predatory expressions. The background features a simplified, stylized Cretaceous lagoon with sparse, salt-tolerant clay vegetation under soft, balanced studio lighting. No text."
+    },
+    "technical_specs": {
+      "aspect_ratio": "1:1",
+      "resolution": "1024x1024",
+      "framing_preset": "SQUARE_HERO_CARD"
+    }
+  }
 }

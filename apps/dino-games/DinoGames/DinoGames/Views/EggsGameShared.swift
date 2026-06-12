@@ -124,6 +124,15 @@ struct EggsMorphology {
             return "\(prefix)-nest-\(style)"
         }
     }
+
+    /// Human-readable egg morphotype label for victory recap rows (e.g. `hadrosaur` → “Hadrosaur”).
+    func eggDisplayTitle(for eggType: String) -> String {
+        let nestLabel = nestingFallbackText(eggType)
+        if nestLabel.lowercased().hasSuffix(" nest") {
+            return String(nestLabel.dropLast(5))
+        }
+        return eggType.replacingOccurrences(of: "-", with: " ").capitalized
+    }
 }
 
 struct EggsSourceHint: Identifiable, Equatable {
@@ -149,16 +158,12 @@ struct EggsGameSettings {
     let roundIntroTapScannerAudioKey: String?
     /// Pre-reader play: skip spoken/written egg-type and nest labels during round intro.
     let playsEggNestNameIntro: Bool
-    /// Pre-reader play: skip “tap the CT scanner” prompts (intro + early creature taps).
+    /// Optional intro prompt urging players to tap the CT scanner (scanning is never required to answer).
     let playsTapScannerPrompt: Bool
     /// Pre-reader play: hide creature names under portrait cards.
     let showsCreatureNameOnCards: Bool
-    /// Victory recap rows show the matched creature name and use its `imageName` audio when bundled.
+    /// When true (Marine Eggs), victory walk plays the matched creature’s `imageName` audio; row labels still use the egg morphotype title.
     let victoryRecapUsesCreatureName: Bool
-    /// When false, keep the game title visible during the success card (marine success art has no title).
-    let hideGameTitleDuringSuccessPhase: Bool
-    /// When false, keep the recap list visible above the success card (Name That / Ptero Eggs style).
-    let collapseRecapListDuringSuccessPhase: Bool
     /// Source hints overlay (Dino Eggs: shape + color). nil = no hints button.
     let sourceHints: [EggsSourceHint]?
     let sourceHintsTitle: String
@@ -260,7 +265,12 @@ struct EggsGameView: View {
     @State private var scanOutcomeAudioStarted = false
     /// True from a correct answer until the next round intro begins — freezes carousel and shows green match.
     @State private var roundAnswered = false
+    /// When true, show the Source Eggs hints overlay.
     @State private var showSourceEggsHints = false
+    /// Prevents a prior round’s CT scan animation from completing after the player has advanced.
+    @State private var scanFlashTask: Task<Void, Never>?
+    /// When the player may answer after CT scan; used for thats-right vs wow-that-was-tricky.
+    @State private var guessChoiceTimer = GuessChoiceTimer()
 
     private var totalRounds: Int { gameConfig.totalRounds }
     private let mainImageDisplaySeconds: Double = 3.0
@@ -340,6 +350,7 @@ struct EggsGameView: View {
             .overlay(alignment: .topTrailing) {
                 if gameConfig.settings.hasSourceHints, !showVictory {
                     Button {
+                        guessChoiceTimer.pauseForHints()
                         showSourceEggsHints = true
                     } label: {
                         Text("Hints")
@@ -362,13 +373,18 @@ struct EggsGameView: View {
                         hints: hints,
                         title: gameConfig.settings.sourceHintsTitle,
                         hintGridIntroAudioKey: gameConfig.settings.sourceHintsGridIntroAudioKey,
-                        onDismiss: { showSourceEggsHints = false }
+                        onDismiss: {
+                            guessChoiceTimer.resumeAfterHints()
+                            showSourceEggsHints = false
+                        }
                     )
                 }
             }
     }
 
     private func resetGameState() {
+        scanFlashTask?.cancel()
+        scanFlashTask = nil
         matchedPairs.removeAll()
         failedAttempts.removeAll()
         introWalkComplete = false
@@ -524,13 +540,8 @@ struct EggsGameView: View {
                 if Task.isCancelled { break }
                 if roundAnswered { continue }
                 if scanInProgress { continue }
+                // Hold on the scan frame until the carousel is armed; then rotate nest ↔ egg ↔ scan.
                 if scannerActive, !postScanCarouselActive { continue }
-                if scannerActive, !roundAnswered {
-                    if mainImagePhase != .scan {
-                        mainImagePhase = .scan
-                    }
-                    continue
-                }
                 let style = nestingStyle ?? eggType ?? "ground-nest"
                 let nestingAvailable = !usesSpecimenOnlyRound && nestingImageExists(style: style)
                 let next = nextMainImagePhase(after: mainImagePhase, nestingAvailable: nestingAvailable)
@@ -586,18 +597,21 @@ struct EggsGameView: View {
         .opacity(scanInProgress ? scanFlashOpacity : 1)
         .onTapGesture {
             guard scannerIsOpen, !scanInProgress, !scannerActive else { return }
+            let roundAtScan = currentRound
             scanInProgress = true
             scanOutcomeAudioStarted = false
             mainImagePhase = usesSpecimenOnlyRound ? .specimen : .egg
             scannerIsOpen = false
             scanFlashOpacity = 1
-            runScanFlashThenBeep {
+            runScanFlashThenBeep(roundAtScan: roundAtScan) {
+                guard roundAtScan == self.currentRound else { return }
                 guard !self.scanOutcomeAudioStarted else { return }
                 self.scanInProgress = false
                 let rolledEmpty = Double.random(in: 0..<1) < 0.2
                 self.scanResultEmpty = rolledEmpty && emptyExists
                 self.hintShown = self.scanResultEmpty || cladeExists
                 self.scannerActive = true
+                self.guessChoiceTimer.start()
                 self.mainImagePhase = .scan
                 self.postScanCarouselActive = true
                 self.playScanOutcomeThenTapCreature(eggClade: eggClade, scanEmpty: self.scanResultEmpty)
@@ -605,7 +619,7 @@ struct EggsGameView: View {
         }
     }
 
-    /// After CT scan: empty → `scanFailedKey`; otherwise clade/creature audio. Uses `chainDelay` so clips are not dropped right after the beep.
+    /// After CT scan: empty → `scanFailedKey`; otherwise egg/species slug audio (never the matched creature name — player guesses from scan art).
     private func playScanOutcomeThenTapCreature(eggClade: String, scanEmpty: Bool) {
         guard !scanOutcomeAudioStarted else { return }
         scanOutcomeAudioStarted = true
@@ -620,18 +634,6 @@ struct EggsGameView: View {
         }
         if scanEmpty {
             speechManager.speak(gameConfig.settings.scanFailedKey, chainDelay: true)
-        } else if usesSpecimenOnlyRound, let creature = currentRoundConfig?.correctCreature {
-            speechManager.speak(
-                audioKey: creature.imageName ?? creature.name,
-                fallbackText: creature.name,
-                chainDelay: true
-            )
-        } else if gameConfig.settings.victoryRecapUsesCreatureName, let creature = currentRoundConfig?.correctCreature {
-            speechManager.speak(
-                audioKey: creature.imageName ?? creature.name,
-                fallbackText: creature.name,
-                chainDelay: true
-            )
         } else {
             let key = morphology.eggAudioKey(eggType: eggClade)
             speechManager.speak(audioKey: key, fallbackText: "", chainDelay: true)
@@ -646,20 +648,28 @@ struct EggsGameView: View {
             .background(RoundedRectangle(cornerRadius: 8).fill(Color.gray.opacity(0.15)))
     }
 
-    private func runScanFlashThenBeep(then: @escaping () -> Void) {
-        Task { @MainActor in
+    private func runScanFlashThenBeep(roundAtScan: Int, then: @escaping () -> Void) {
+        scanFlashTask?.cancel()
+        scanFlashTask = Task { @MainActor in
             for _ in 0..<4 {
+                guard !Task.isCancelled, roundAtScan == currentRound else { return }
                 scanFlashOpacity = 0.5
                 try? await Task.sleep(nanoseconds: 500_000_000)
+                guard !Task.isCancelled, roundAtScan == currentRound else { return }
                 scanFlashOpacity = 1
                 try? await Task.sleep(nanoseconds: 500_000_000)
             }
+            guard !Task.isCancelled, roundAtScan == currentRound else { return }
             try? await Task.sleep(nanoseconds: 2_000_000_000)
+            guard !Task.isCancelled, roundAtScan == currentRound else { return }
             if let url = speechManager.urlForAudio(key: gameConfig.settings.beepKey) {
                 let prev = speechManager.onAudioFinished
                 speechManager.onAudioFinished = {
                     self.speechManager.onAudioFinished = prev
-                    DispatchQueue.main.async { then() }
+                    DispatchQueue.main.async {
+                        guard roundAtScan == self.currentRound else { return }
+                        then()
+                    }
                 }
                 speechManager.playAudioFile(url: url)
             } else {
@@ -767,23 +777,20 @@ struct EggsGameView: View {
         }
     }
 
+    private var tapTheScannerAudioKey: String {
+        gameConfig.settings.roundIntroTapScannerAudioKey ?? "game-dino-eggs-tap-the-scanner"
+    }
+
     private func playTapScannerPrompt() {
-        let scannerKey = gameConfig.settings.roundIntroTapScannerAudioKey ?? "game-dino-eggs-tap-the-scanner"
-        if let url = speechManager.urlForAudio(key: scannerKey) {
+        if let url = speechManager.urlForAudio(key: tapTheScannerAudioKey) {
+            // Keep `advanceIntroWalk` chained via the existing `onAudioFinished` handler.
             speechManager.playAudioFile(url: url)
         } else {
             advanceIntroWalk()
         }
     }
 
-
     // MARK: - Tap Handlers
-
-    /// Non-nil after CT scan completes — player may answer on any carousel phase (nest, egg, or scan).
-    private var currentDisplayedEggType: String? {
-        guard scannerActive else { return nil }
-        return eggType
-    }
 
     private func handleCreatureTap(_ creature: Dinosaur) {
         guard !speechManager.isPlaying, !roundAnswered else { return }
@@ -792,40 +799,38 @@ struct EggsGameView: View {
             return
         }
 
-        if currentDisplayedEggType != nil {
-            // Egg is showing: tap = answer. Correct dinosaur matches the egg.
-            let correctDino = currentRoundConfig?.correctCreature
-            let isCorrectMatch = creature.id == correctDino?.id
+        // If a scan animation is running, wait — otherwise answer directly (CT scan is optional).
+        guard !scanInProgress else { return }
 
-            if isCorrectMatch {
-                matchedPairs.insert(creature.id)
-                failedAttempts.removeAll()
-                roundAnswered = true
-                speechManager.onAudioFinished = {
+        // Tap = answer. Correct dinosaur matches the egg.
+        let correctDino = currentRoundConfig?.correctCreature
+        let isCorrectMatch = creature.id == correctDino?.id
+
+        if isCorrectMatch {
+            let elapsed = guessChoiceTimer.elapsed()
+            guessChoiceTimer.reset()
+            matchedPairs.insert(creature.id)
+            failedAttempts.removeAll()
+            roundAnswered = true
+            let feedbackKey = OrderedTouchFeedback.guessSuccessAudio(elapsed: elapsed)
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = nil
+                let finishRoundAfterFeedback: () -> Void = {
                     self.speechManager.onAudioFinished = nil
-                    self.speechManager.onAudioFinished = {
-                        self.speechManager.onAudioFinished = nil
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                            self.finishRound()
-                        }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+                        self.finishRound()
                     }
-                    self.playAnswerFeedbackAudio(key: "thats-right-you-guessed-it")
                 }
-                speechManager.speak(audioKey: creature.imageName ?? creature.name, fallbackText: creature.name)
-            } else {
-                failedAttempts.insert(creature.id)
-                speechManager.onAudioFinished = {
-                    self.speechManager.onAudioFinished = nil
-                    self.playAnswerFeedbackAudio(key: "try-again")
-                }
-                speechManager.speak(audioKey: creature.imageName ?? creature.name, fallbackText: creature.name)
+                OrderedTouchFeedback.speak(feedbackKey, speechManager: self.speechManager, onFinished: finishRoundAfterFeedback)
             }
-        } else if gameConfig.settings.playsTapScannerPrompt {
-            speechManager.onAudioFinished = nil
-            let scannerKey = gameConfig.settings.roundIntroTapScannerAudioKey ?? "game-dino-eggs-tap-the-scanner"
-            if let url = speechManager.urlForAudio(key: scannerKey) {
-                speechManager.playAudioFile(url: url)
+            speechManager.speak(audioKey: creature.imageName ?? creature.name, fallbackText: creature.name)
+        } else {
+            failedAttempts.insert(creature.id)
+            speechManager.onAudioFinished = {
+                self.speechManager.onAudioFinished = nil
+                OrderedTouchFeedback.speak(OrderedTouchFeedback.tryAgain, speechManager: self.speechManager)
             }
+            speechManager.speak(audioKey: creature.imageName ?? creature.name, fallbackText: creature.name)
         }
     }
 
@@ -838,22 +843,23 @@ struct EggsGameView: View {
     }
 
     private func finishRound() {
+        scanFlashTask?.cancel()
+        scanFlashTask = nil
         // Settle on nest before clearing scan state so an empty scan cannot flash to skeleton.
         mainImagePhase = .nest
         scanInProgress = false
         scannerActive = false
+        guessChoiceTimer.reset()
         postScanCarouselActive = false
         scanOutcomeAudioStarted = false
 
         if let egg = eggType {
             let creature = currentRoundConfig?.correctCreature
-            let displayTitle: String
+            let displayTitle = morphology.eggDisplayTitle(for: egg)
             let audioKey: String
             if gameConfig.settings.victoryRecapUsesCreatureName, let creature {
-                displayTitle = creature.name
                 audioKey = creature.imageName ?? creature.name
             } else {
-                displayTitle = ""
                 audioKey = morphology.eggAudioKey(eggType: egg)
             }
             victoryRounds.append((
@@ -883,8 +889,6 @@ struct EggsGameView: View {
             showSuccessPhase: endSequenceStep == 2,
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
-            hideGameTitleDuringSuccessPhase: gameConfig.settings.hideGameTitleDuringSuccessPhase,
-            collapseRecapListDuringSuccessPhase: gameConfig.settings.collapseRecapListDuringSuccessPhase,
             extendScrollListToMaxWidth: true,
             scrollRows: {
                 ForEach(Array(victoryRounds.enumerated()), id: \.offset) { index, round in
@@ -905,9 +909,7 @@ struct EggsGameView: View {
                 LandGameVictorySuccessStingerThenContinue(
                     candidateSuccessImageNames: [gameConfig.settings.successImageName, "game-\(gameConfig.id)"],
                     catalogGameIdForStinger: gameConfig.id,
-                    imageSide: gameConfig.settings.collapseRecapListDuringSuccessPhase
-                        ? GameCatalogImageMetrics.nameThatVictorySuccessImageSide
-                        : 180,
+                    imageSide: GameCatalogImageMetrics.nameThatVictorySuccessImageSide,
                     speechManager: speechManager,
                     onContinue: playGoodJobAndCrowdThenDismiss
                 )
@@ -1098,9 +1100,7 @@ struct SourceEggsHintsView: View {
 
     private var gridView: some View {
         VStack(spacing: 20) {
-            Text(title)
-                .font(.title2.weight(.semibold))
-                .padding(.top, 44)
+            SourceHintsScreenTitle(title: title)
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
                 ForEach(hints) { hint in
                     Button {

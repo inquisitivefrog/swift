@@ -1,72 +1,39 @@
 {
-  "style_id": "STYLE_CLAY_MASTER",
-  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
-}
-{
-  "flora_library": {
-    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
-    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
-    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
-    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
-    "TIAOJISHAN_ADDITIONS": ["Giant Horsetails", "Dense Conifer forest"],
-    "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
-    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
-    "LANCE_HELL_CREEK_ADDITIONS": ["Palms", "Platanites", "Viburnum"],
-    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
-    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
-    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"],
-    "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"],
-    "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
-    "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
-    "CEDAR_MOUNTAIN_ADDITIONS": ["Paleopus in damp cracks", "Shrubby angiosperms"],
-    "JEHOL_BIOTA_ADDITIONS": ["Water lilies at the edge", "Dense hardwoods"],
-    "CANDELEROS_ADDITIONS": ["Paleopus", "Early flowering reeds"],
-    "KAIPAROWITS_ADDITIONS": ["Giant horsetails", "Mosses", "Dense fern thickets"]
-  }
-}
-{
-  "fauna_library": {
-    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
-    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
-    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
-    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates")"],
-    "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
-    "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)," "Cicadas"],
-    "HELL_CREEK_ADDITIONS:" ["Alphadon (Opossum-like)", "Teiids (fast-running lizards)", "Cicadas", "Early wasps"]
-  }
-}
-{
-  "habitat_id": "FLOODPLAINS",
-  "substrate": "Alluvial mudstone",
-  "visuals": {
-    "ground": "Dense fern-meadows",
-    "water": "Isolated puddles/wallows"
-  }
-}
-{
-  "formation_id": "HELL_CREEK",
-  "base_habitat": "FLOODPLAINS",
-  "period": "LATE_CRETACEOUS",
-  "strata_specifics": {
-    "ground_texture": "Alluvial mudstone",
-    "color_palette": ["Grey", "Ocher"]
-  },
-  "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
-  "fauna_manifest": ["LATE_CRETACEOUS_BASE", "HELL_CREEK_ADDITIONS"]
-}
-{ 
-  "app_image_config": {
-    "layer_1_style": {
-      "style_id": "STYLE_CLAY_MASTER"
-    },
-    "layer_2_setting": {
-     “formation_id”: “HELL_CREEK”,
-      "habitat_id": “FLOODPLAINS"
-    },
-    "layer_3_action": {
-      "subject": “Young Pachycephalosaurus",
-      "features": [“dome head", “”, “bony horns, short spikes around sides and back of skull”, "large soulful eyes", "friendly expressive face"],
-      "action": “Ramming a conifer tree trunk for practice"
-    }
-  } 
-} 
+      "id": "DINO_012_PACHYCEPHALOSAURUS",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "LANCE_HELL_CREEK",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Soft fluvial mudstone floors with patches of brownish-black lignite peat",
+            "color_palette": ["Tan-grey", "Forest green", "Brown", "Brownish-black", "Yellowish-grey"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE", "HELL_CREEK_ADDITIONS"]
+        },
+        "layer_3_action": {
+          "subject": "Young Pachycephalosaurus",
+          "features": [
+            "colossal, oversized bowling-ball shaped bone dome that completely dominates the top of the head",
+            "heavily exaggerated, deeply wrinkled low-profile bone bumps clustered thickly around the back edge of the head shield",
+            "extraordinarily thick, short bulking bull-like neck built to support the massive heavy skull dome",
+            "short blunt snout profile ending in a small cleanly sculpted horny beak",
+            "large prominent round eyes with an inquisitive, gentle gaze",
+            "cleanly closed mouth with an innocent neutral expression",
+            "heavy-set robust bipedal body frame with a plump wide torso and stocky walking legs",
+            "smooth seamless matte clay-like skin with a solid organic moss-green base color",
+            "thick rounded clay proportions built to maximize a heavy, tank-like toy silhouette"
+          ],
+          "action": "A composed, non-aggressive young Pachycephalosaurus with clean high-poly clay geometry is standing completely still in a balanced, low-slung bipedal posture adjacent to a stylized Late Cretaceous tree trunk. The camera frames a stable three-quarter profile from a straight eye-level view, dramatically emphasizing its massive, bulging bowling-ball skull dome and short, extra-thick bull neck to instantly signal its heavy-set, robust tank proportions. It looks forward with quiet curiosity over a soft mudstone floor under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    }

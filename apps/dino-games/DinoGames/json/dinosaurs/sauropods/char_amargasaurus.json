@@ -1,26 +1,26 @@
 {
-  "id": "DINO_168_AMARGASAURUS",
-  "species": "Amargasaurus cazaui",
-  "tech_ref": "DEFAULT_SQUARE",
-  "framing_ref": "SQUARE_HERO_CARD",
-  "style_id": "STYLE_ANIMATED_FEATURE_V3",
-  "formation_ref": "LA_AMARGA",
-  "habitat_ref": "WOODLAND_FLOODPLAINS",
-  "visual_identity": {
-    "color_palette": "Dusty terracotta skin with teal-blue highlights along the neck spines; pale cream underbelly.",
-    "texture": "Leathery skin with fine, pebbled scales; the neck spines have a smooth, horn-like keratin texture at the tips.",
-    "distinguishing_marks": "Two parallel rows of long spines running down the neck; a short, thick tail; large, soulful eyes."
-  },
-  "anatomy_constraints": {
-    "head": "Small, boxy sauropod head with a blunt snout; large expressive yellow eyes; positioned low due to the short neck.",
-    "neck": "Relatively short for a sauropod, featuring two distinct rows of elongated neural spines.",
-    "body": "Compact, muscular sauropod frame; limbs are stout and pillar-like."
-  },
-  "visual_logic": {
-    "subject": "A calm, curious Amargasaurus foraging near a riverbank.",
-    "action": "Leaning its neck down to reach low ferns, showcasing the unique split-spine profile.",
-    "environment": "Background features the mottled red clays and green-grey siltstones of the La Amarga formation under a clear, bright sun."
-  },
-  "personality": "The 'Spiny Wanderer'—gentle, slow-moving, and highly distinctive. He has a peaceful, rhythmic presence.",
-  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC"
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_ANIMATED_FEATURE_V3",
+      "tech_ref": "DEFAULT_SQUARE",
+      "framing_ref": "SQUARE_HERO_CARD"
+    },
+    "layer_2_setting": {
+      "formation_id": "LA_AMARGA_EC",
+      "habitat_default": "WOODLAND_FLOODPLAINS"
+    },
+    "layer_3_action": {
+      "subject": "Amargasaurus",
+      "features": [
+        "relatively short neck for a sauropod, distinctly featuring two parallel rows of long, elongated neural spines running down to the back",
+        "small, boxy skull with a blunt snout, a cleanly closed mouth, and large, soulful expressive yellow eyes",
+        "compact, muscular sauropod frame supported by stout, pillar-like limbs with rounded feet",
+        "short, thick tapering tail held elevated in a gentle curve off the ground",
+        "high-fidelity 3D animated feature film aesthetic with soft, stylized, and slightly rounded contours",
+        "leathery skin texture with fine pebbled scales, shifting to a smooth horn-like keratin texture on the sharp tips of the neck spines",
+        "dusty terracotta base body color accented by vibrant teal-blue highlights tracing the neck spines, transitioning smoothly to a pale cream underbelly"
+      ],
+      "action": "A calm, curious Amargasaurus stands peacefully near a riverbank, leaning its relatively short neck downward to reach low ferns, beautifully showcasing its unique split-spine profile against background hills of mottled red clay and green-grey siltstones under a bright, clear cinematic sun."
+    }
+  }
 }

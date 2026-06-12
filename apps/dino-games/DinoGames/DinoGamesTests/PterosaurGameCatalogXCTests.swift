@@ -48,7 +48,7 @@ final class PterosaurGameCatalogXCTests: XCTestCase {
     func testPteroSmileIsInCatalogWhenAssetsShip() {
         XCTAssertTrue(
             SmilingDinosGameConfigs.isPteroSmilePlayable,
-            "Expected six bundled pterosaur smile portraits and matching tooth art."
+            "Expected enough bundled pterosaur smile portraits and matching tooth art for 3×3 rounds."
         )
         let allIds = Set(PterosaurGameCatalog.games.compactMap(\.id))
         XCTAssertTrue(
@@ -77,13 +77,20 @@ final class PterosaurGameCatalogXCTests: XCTestCase {
         }
         XCTAssertEqual(config.rounds.count, 3)
         XCTAssertEqual(config.id, "ptero-smile")
+        for round in config.rounds {
+            XCTAssertEqual(round.pairs.count, SmilingDinosRound.creaturesPerRound)
+            XCTAssertEqual(round.distractorToothTypes.count, SmilingDinosRound.distractorTeethPerRound)
+        }
     }
 
     func testPteroSmileBundledPortraitAndToothArt() {
         let expected: [(portrait: String, tooth: String)] = [
             ("ptero-smile-quetzalcoatlus", "ptero-smile-tooth-beak-spear"),
+            ("ptero-smile-hatzegopteryx", "ptero-smile-tooth-beak-spear"),
             ("ptero-smile-anuanguera", "ptero-smile-tooth-needle-spike"),
+            ("ptero-smile-ornithocheirus", "ptero-smile-tooth-needle-spike"),
             ("ptero-smile-dimorphodon", "ptero-smile-tooth-peg-slicer"),
+            ("ptero-smile-rhamphorhynchus", "ptero-smile-tooth-peg-slicer"),
             ("ptero-smile-tupandactylus", "ptero-smile-tooth-nutcracker"),
             ("ptero-smile-anurognathus", "ptero-smile-tooth-micro-peg"),
             ("ptero-smile-pterodaustro", "ptero-smile-tooth-comb-filter"),
@@ -97,6 +104,14 @@ final class PterosaurGameCatalogXCTests: XCTestCase {
                 ImageAssetCache.imageExists(named: pair.tooth),
                 "Missing tooth art: \(pair.tooth)"
             )
+        }
+    }
+
+    func testPteroEggsVictoryRecapEggDisplayTitlesAreNonEmpty() {
+        let morphology = PteroEggMorphology.morphology
+        for round in PteroEggsGameConfigs.pteroEggs.rounds {
+            let title = morphology.eggDisplayTitle(for: round.eggType)
+            XCTAssertFalse(title.isEmpty, "Victory recap needs a label for egg clade `\(round.eggType)`")
         }
     }
 }

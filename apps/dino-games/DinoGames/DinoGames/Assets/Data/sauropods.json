@@ -1,0 +1,248 @@
+{
+  "sauropods": [
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER",
+          "tech_ref": "DEFAULT_SQUARE",
+          "framing_ref": "SQUARE_HERO_CARD"
+        },
+        "layer_2_setting": {
+          "formation_id": "MORRISON_LJ",
+          "habitat_default": "SEMI_ARID_PLAINS"
+        },
+        "layer_3_action": {
+          "subject": "Camarasaurus",
+          "features": [
+            "long forelegs creating a distinctly elevated shoulder line higher than the hips",
+            "moderately long neck supporting a deep, boxy, and robust skull profile",
+            "cleanly closed mouth with a friendly, highly expressive face and prominent soulful eyes",
+            "smooth, seamless matte clay-like skin with a vibrant, highly saturated color palette"
+          ],
+          "action": "A friendly, stylized Camarasaurus stretches its neck high to munch on fan-shaped ginkgo leaves near the canopy of an Araucaria and Ginkgo grove."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER",
+          "tech_ref": "DEFAULT_SQUARE",
+          "framing_ref": "SQUARE_HERO_CARD"
+        },
+        "layer_2_setting": {
+          "formation_id": "MORRISON_LJ",
+          "base_habitat": "SEMI_ARID_SEASONAL_FLOODPLAINS"
+        },
+        "layer_3_action": {
+          "subject": "Brontosaurus",
+          "features": [
+            "immensely thick, robust pillar-like neck tapering up to a small, deep skull profile",
+            "stocky, muscular front limbs slightly shorter than the hind limbs, creating a low-slung shoulders stance",
+            "massive, heavy-set wide barrel torso with a prominent chest line",
+            "long whip-like tapering tail held elevated off the ground in a smooth counterbalancing curve",
+            "cleanly closed mouth with an innocent, friendly neutral expression and large round eyes",
+            "smooth seamless matte clay-like skin with a vibrant, high-saturated deep teal base color"
+          ],
+          "action": "The heavy-set Brontosaurus walks slowly across the sun-cracked silt mudflats, its whip-like tail swaying gracefully above the low-lying fern prairies."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER",
+          "tech_ref": "DEFAULT_SQUARE",
+          "framing_ref": "SQUARE_HERO_CARD"
+        },
+        "layer_2_setting": {
+          "formation_id": "MORRISON_LJ",
+          "habitat_default": "SEMI_ARID_PLAINS"
+        },
+        "layer_3_action": {
+          "subject": "Diplodocus",
+          "features": [
+            "immensely long, slender whip-like tail held elevated off the ground in a smooth counterbalancing curve",
+            "long, graceful neck extended out in a predominantly low, horizontal posture parallel to the ground",
+            "slender, narrow skull profile with a cleanly closed mouth showing a friendly and highly expressive face",
+            "smooth, seamless matte clay-like skin with a vibrant, highly saturated color palette"
+          ],
+          "action": "A friendly, stylized Diplodocus with smooth clay-like skin stretches forward, munching a clean path through a lush expanse of fern prairies."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER",
+          "tech_ref": "DEFAULT_SQUARE",
+          "framing_ref": "SQUARE_HERO_CARD"
+        },
+        "layer_2_setting": {
+          "formation_id": "MORRISON_LJ",
+          "habitat_default": "SEMI_ARID_PLAINS"
+        },
+        "layer_3_action": {
+          "subject": "Barosaurus",
+          "features": [
+            "extraordinarily elongated, slender neck built from stretched clay segments, reaching exceptionally high",
+            "moderately long, slender whip-like tail held high off the ground to counterbalance the immense neck",
+            "slender, wedge-shaped skull with a cleanly closed mouth and a gentle, peaceful facial expression",
+            "smooth seamless matte clay-like skin with a vibrant, high-saturation color gradient along its spine"
+          ],
+          "action": "A friendly, stylized Barosaurus rears back slightly on its hind legs, extending its incredibly long clay neck to gently reach the very highest canopy of an ancient Araucaria tree."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER",
+          "tech_ref": "DEFAULT_SQUARE",
+          "framing_ref": "SQUARE_HERO_CARD"
+        },
+        "layer_2_setting": {
+          "formation_id": "MORRISON_LJ",
+          "habitat_default": "SEMI_ARID_SEASONAL_FLOODPLAINS"
+        },
+        "layer_3_action": {
+          "subject": "Brachiosaurus",
+          "features": [
+            "dramatically elongated, towering forelegs that are visibly longer than the hind legs, creating a steeply sloping backline",
+            "high, prominent skull dome crest sitting directly above large, expressive eyes and a friendly closed mouth",
+            "immensely elongated, vertical giraffe-like neck ascending straight up from high, muscular shoulders",
+            "compact, deeply built wedge-shaped body frame that slants down sharply toward the hips",
+            "short, heavy-set tapering tail held in a clean, abbreviated horizontal counter-line",
+            "smooth seamless matte clay-like skin with a vibrant, high-saturated sun-yellow base color"
+          ],
+          "action": "A majestic, friendly Brachiosaurus stands tall on the banks of a drying floodplain, its giraffe-like posture letting it look over a grove of ginkgo trees with a gentle smile."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_ANIMATED_FEATURE_V3",
+          "tech_ref": "DEFAULT_SQUARE",
+          "framing_ref": "SQUARE_HERO_CARD"
+        },
+        "layer_2_setting": {
+          "formation_id": "SHAXIMIAO_MJ",
+          "habitat_default": "WOODED_RIVER_VALLEYS"
+        },
+        "layer_3_action": {
+          "subject": "Mamenchisaurus",
+          "features": [
+            "an extraordinarily long, slender neck spanning nearly 50% of its total body length, extended forward in a wide horizontal sweep",
+            "small, deep skull profile featuring a cleanly closed mouth, large expressive soulful eyes, and an innocent, gentle facial expression",
+            "massive pillar-like legs with thick, rounded feet and blunt, non-threatening claws",
+            "large, heavy-set barrel torso with a deep chest and a gently sloping back line",
+            "exceptionally long, tapering whip-like tail held elevated off the ground in a smooth counterbalancing curve",
+            "high-fidelity 3D animated feature film aesthetic with soft, stylized, slightly rounded edges",
+            "leathery skin with subtle specular highlights, organic pebbled scale patches, and a vibrant pale mint-green base color accented by soft lavender-purple dappled spots along the neck and upper back"
+          ],
+          "action": "A calm, immense Mamenchisaurus stands gracefully among lush, mossy riverbanks, its impossibly long neck sweeping across a wide arc to forage on the high-canopy leaves of ancient Ginkgo trees under bright, cinematic sunlight."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER",
+          "tech_ref": "DEFAULT_SQUARE",
+          "framing_ref": "SQUARE_HERO_CARD"
+        },
+        "layer_2_setting": {
+          "formation_id": "MAEVARANO_LC",
+          "habitat_default": "SEMI_ARID_BADLANDS"
+        },
+        "layer_3_action": {
+          "subject": "Rapetosaurus",
+          "features": [
+            "long, slender neck smoothly tapering up to a small, deep skull profile",
+            "cleanly closed mouth with an innocent, friendly neutral expression and large round eyes",
+            "distinctively wide, robust torso structure with a flat, low-slung back stance",
+            "long tapering tail held elevated off the ground in a smooth counterbalancing curve",
+            "smooth seamless matte clay-like skin with a vibrant, high-saturated color palette"
+          ],
+          "action": "A friendly, stylized Rapetosaurus with smooth clay-like skin stands on the sun-cracked light-grey mudflats, stretching its neck to stretch forward and munch on pine needles from the top of a small conifer tree."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_ANIMATED_FEATURE_V3",
+          "tech_ref": "DEFAULT_SQUARE",
+          "framing_ref": "SQUARE_HERO_CARD"
+        },
+        "layer_2_setting": {
+          "formation_id": "LA_AMARGA_EC",
+          "habitat_default": "WOODLAND_FLOODPLAINS"
+        },
+        "layer_3_action": {
+          "subject": "Amargasaurus",
+          "features": [
+            "relatively short neck for a sauropod, distinctly featuring two parallel rows of long, elongated neural spines running down to the back",
+            "small, boxy skull with a blunt snout, a cleanly closed mouth, and large, soulful expressive yellow eyes",
+            "compact, muscular sauropod frame supported by stout, pillar-like limbs with rounded feet",
+            "short, thick tapering tail held elevated in a gentle curve off the ground",
+            "high-fidelity 3D animated feature film aesthetic with soft, stylized, and slightly rounded contours",
+            "leathery skin texture with fine pebbled scales, shifting to a smooth horn-like keratin texture on the sharp tips of the neck spines",
+            "dusty terracotta base body color accented by vibrant teal-blue highlights tracing the neck spines, transitioning smoothly to a pale cream underbelly"
+          ],
+          "action": "A calm, curious Amargasaurus stands peacefully near a riverbank, leaning its relatively short neck downward to reach low ferns, beautifully showcasing its unique split-spine profile against background hills of mottled red clay and green-grey siltstones under a bright, clear cinematic sun."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER",
+          "tech_ref": "DEFAULT_SQUARE",
+          "framing_ref": "SQUARE_HERO_CARD"
+        },
+        "layer_2_setting": {
+          "formation_id": "MORRISON_LJ",
+          "habitat_default": "SEMI_ARID_SEASONAL_FLOODPLAINS"
+        },
+        "layer_3_action": {
+          "subject": "Juvenile Apatosaurus",
+          "features": [
+            "extraordinarily long, thick pillar-like neck tapering smoothly up from the shoulders",
+            "distinctly boxy, deep skull profile with a gently rounded snout and a friendly closed mouth",
+            "massive, wide barrel-shaped torso supported by four stocky elephantine legs",
+            "whip-like elongated tail held horizontally off the ground in a smooth counterbalancing line",
+            "smooth seamless matte clay-like skin with a vibrant sky-blue base color"
+          ],
+          "action": "A friendly, stylized Juvenile Apatosaurus steps briskly through sun-cracked silt flats, its long sky-blue neck weaving playfully past low horsetails."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER",
+          "tech_ref": "DEFAULT_SQUARE",
+          "framing_ref": "SQUARE_HERO_CARD"
+        },
+        "layer_2_setting": {
+          "formation_id": "HUINCUL_UC",
+          "habitat_default": "WARM_FLUVIAL_PLAINS"
+        },
+        "layer_3_action": {
+          "subject": "Argentinosaurus",
+          "features": [
+            "gargantuan, colossal mountains-sized barrel torso built with immense vertical depth",
+            "stout trunk-like pillar legs thicker than any other sauropod to visually emphasize massive weight distribution",
+            "deep, tall elephantine skull profile with a high nasal ridge, small rounded snout, and friendly closed mouth",
+            "thick, structural girder-like neck rising diagonally at a bold angle from the heavy shoulders",
+            "long, heavy-set tapering tail held completely clear of the ground to balance the front weight",
+            "smooth seamless matte clay-like skin with a deep slate-grey and dark olive mottled base color"
+          ],
+          "action": "An immense, stylized Argentinosaurus strides heavily across a wide river plane, its massive clay torso towering grandly over the conifer clusters along the banks."
+        }
+      }
+    }
+  ]
+}

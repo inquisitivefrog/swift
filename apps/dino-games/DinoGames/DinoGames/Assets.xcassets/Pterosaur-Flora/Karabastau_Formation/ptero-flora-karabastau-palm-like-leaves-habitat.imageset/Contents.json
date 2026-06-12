@@ -1,0 +1,23 @@
+{
+  "images": [
+    {
+      "filename": "ptero-flora-karabastau-palm-like-leaves-habitat-80.png",
+      "idiom": "universal",
+      "scale": "1x"
+    },
+    {
+      "filename": "ptero-flora-karabastau-palm-like-leaves-habitat-160.png",
+      "idiom": "universal",
+      "scale": "2x"
+    },
+    {
+      "filename": "ptero-flora-karabastau-palm-like-leaves-habitat-240.png",
+      "idiom": "universal",
+      "scale": "3x"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}

@@ -5,7 +5,8 @@
 //  Shared layout metrics and success-card art for land games that end with:
 //  “re-introduce” list (scroll + highlight + name audio) → crowd cheering + success game card → dismiss.
 //  Orchestration helpers live in `StandardVictorySequence.swift`.
-//  All Dinosaur (land) games use this pipeline; list shows up to `maxVisibleRecapRows` rows in a fixed viewport, then scrolls.
+//  Land, air, and marine games use this pipeline; list shows up to `maxVisibleRecapRows` rows in a fixed viewport, then scrolls.
+//  Victory is one continuous screen: title + recap list stay visible above the success card.
 //  Dino Puzzle uses `PortraitJigsawPuzzleGameView`, which shares the same recap + finish pattern via this file where wired.
 //
 
@@ -61,6 +62,22 @@ enum StandardVictoryLayout {
     static func listScrollHeightRacing(rowCount: Int, maxScreenHeight: CGFloat) -> CGFloat {
         let base = recapListScrollHeight(itemCount: rowCount)
         return min(base, max(260, maxScreenHeight * 0.58))
+    }
+
+    /// Scroll only after the highlight leaves the first viewport page (e.g. Dino Ages: 9 rows, 3 visible).
+    static func recapScrollTargetId(
+        highlightIndex: Int,
+        itemCount: Int,
+        maxVisibleRows: Int = maxVisibleRecapRows
+    ) -> Int? {
+        guard itemCount > 0, highlightIndex >= 0, highlightIndex < itemCount else { return nil }
+        guard highlightIndex >= maxVisibleRows else { return nil }
+        return highlightIndex
+    }
+
+    /// Bottom-align the highlighted row in the capped viewport so the list advances steadily (avoids center-scroll blanking).
+    static func recapScrollAnchor(maxVisibleRows: Int = maxVisibleRecapRows) -> UnitPoint {
+        .bottom
     }
 }
 
@@ -154,6 +171,7 @@ struct StandardVictoryRecapRowView: View {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(isHighlighted ? Color.accentColor : Color.clear, lineWidth: 2)
         )
+        .animation(.none, value: isHighlighted)
     }
 }
 
@@ -305,6 +323,7 @@ struct StandardVictorySuccessImageView: View {
             resolvedContent
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .accessibilityIdentifier("victory-success-image")
     }
 
     @ViewBuilder
@@ -334,12 +353,12 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
     let listScrollHeight: CGFloat
     let showSuccessPhase: Bool
     let endHighlightIndex: Int
-    /// Shown above the recap list when non-nil and non-empty. Hidden during the success phase when `hideGameTitleDuringSuccessPhase` is true (success card art may already include the title, e.g. Ptero Footprints).
+    /// Shown above the recap list when non-nil and non-empty. Hidden during the success phase only when `hideGameTitleDuringSuccessPhase` is true.
     let gameTitle: String?
-    /// When false, the title stays pinned above the list through the success stinger (e.g. Dino Matrix success art has no title).
-    var hideGameTitleDuringSuccessPhase: Bool = true
-    /// When false, the recap list stays visible above the success card so the two phases read as one screen (Name That Dinosaur / Pterosaur).
-    var collapseRecapListDuringSuccessPhase: Bool = true
+    /// When true, the text title is removed during the success card (legacy two-screen layout).
+    var hideGameTitleDuringSuccessPhase: Bool = false
+    /// When true, the recap list collapses during the success card (legacy two-screen layout).
+    var collapseRecapListDuringSuccessPhase: Bool = false
 
     var rowSpacing: CGFloat = StandardVictoryLayout.rowSpacing
     /// When `nil`, uses SwiftUI’s default horizontal inset (same as `.padding(.horizontal)` with no argument).
@@ -351,6 +370,8 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
     var scrollIndicators: ScrollIndicatorVisibility = .visible
     /// Return `false` to skip `scrollTo` (e.g. index out of range for a dynamic list).
     var highlightScrollValidator: ((Int) -> Bool)? = nil
+    /// Total recap rows; when set, scroll policy skips the first `maxVisibleRecapRows` highlights (no jump on rows 1–3).
+    var recapItemCount: Int? = nil
 
     @ViewBuilder private let scrollRows: () -> ScrollRows
     @ViewBuilder private let successPhase: () -> SuccessPhase
@@ -360,8 +381,8 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
         showSuccessPhase: Bool,
         endHighlightIndex: Int,
         gameTitle: String? = nil,
-        hideGameTitleDuringSuccessPhase: Bool = true,
-        collapseRecapListDuringSuccessPhase: Bool = true,
+        hideGameTitleDuringSuccessPhase: Bool = false,
+        collapseRecapListDuringSuccessPhase: Bool = false,
         rowSpacing: CGFloat = StandardVictoryLayout.rowSpacing,
         listHorizontalPadding: CGFloat? = nil,
         listVerticalPadding: CGFloat = StandardVictoryLayout.listContentVerticalPadding,
@@ -369,6 +390,7 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
         extendScrollListToMaxWidth: Bool = false,
         scrollIndicators: ScrollIndicatorVisibility = .visible,
         highlightScrollValidator: ((Int) -> Bool)? = nil,
+        recapItemCount: Int? = nil,
         @ViewBuilder scrollRows: @escaping () -> ScrollRows,
         @ViewBuilder successPhase: @escaping () -> SuccessPhase
     ) {
@@ -385,6 +407,7 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
         self.extendScrollListToMaxWidth = extendScrollListToMaxWidth
         self.scrollIndicators = scrollIndicators
         self.highlightScrollValidator = highlightScrollValidator
+        self.recapItemCount = recapItemCount
         self.scrollRows = scrollRows
         self.successPhase = successPhase
     }
@@ -406,6 +429,7 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
                     .padding(.bottom, 8)
                     .frame(maxWidth: .infinity)
                     .layoutPriority(2)
+                    .accessibilityIdentifier("victory-game-title")
             }
             if activeListScrollHeight > 0 {
                 scrollSection
@@ -413,6 +437,7 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
             bottomSection
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .accessibilityIdentifier("victory-split-column")
     }
 
     private var scrollSection: some View {
@@ -432,14 +457,34 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
             }
             .scrollIndicators(scrollIndicators)
             .frame(height: activeListScrollHeight)
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("victory-recap-list")
             .onChange(of: endHighlightIndex) { _, newIndex in
-                if let validator = highlightScrollValidator, !validator(newIndex) { return }
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    proxy.scrollTo(newIndex, anchor: .center)
-                }
+                scrollRecapToHighlight(newIndex, proxy: proxy)
             }
         }
+        .id("victory-recap-scroll-reader")
         .frame(maxWidth: .infinity)
+    }
+
+    private func scrollRecapToHighlight(_ newIndex: Int, proxy: ScrollViewProxy) {
+        if let validator = highlightScrollValidator, !validator(newIndex) { return }
+        let itemCount = recapItemCount ?? Int.max
+        guard let target = StandardVictoryLayout.recapScrollTargetId(
+            highlightIndex: newIndex,
+            itemCount: itemCount
+        ) else { return }
+        // Defer and disable animation: animated scrollTo + highlight changes caused the recap list to blank briefly (e.g. Dino Ages item 5).
+        DispatchQueue.main.async {
+            var transaction = Transaction()
+            transaction.disablesAnimations = true
+            withTransaction(transaction) {
+                proxy.scrollTo(
+                    target,
+                    anchor: StandardVictoryLayout.recapScrollAnchor()
+                )
+            }
+        }
     }
 
     @ViewBuilder
@@ -458,10 +503,35 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
         Group {
             if showSuccessPhase {
                 successPhase()
+                    .accessibilityIdentifier("victory-success-phase")
             } else {
                 Spacer()
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
+}
+
+// MARK: - Source hints overlay title (Ages, Eggs, Footprints, Plants)
+
+/// Shared header for full-screen source-hints grids (`Source Ages`, `Source Eggs`, …).
+struct SourceHintsScreenTitle: View {
+    let title: String
+
+    var body: some View {
+        Text(title)
+            .font(.title2.weight(.semibold))
+            .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity)
+            .padding(.top, 44)
+            .padding(.horizontal, 52)
+            .accessibilityIdentifier("source-hints-title")
+    }
+}
+
+enum SourceHintsTitles {
+    static let ages = "Source Ages"
+    static let eggs = "Source Eggs"
+    static let footprints = "Source Footprints"
+    static let plants = "Source Plants"
 }

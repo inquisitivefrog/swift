@@ -46,9 +46,8 @@ private let whoIsTallerHeightMetersById: [Int: Double] = [
     49: 1.2, 50: 2,  51: 7,  52: 5,  53: 6,  54: 7,
 ]
 
-private let sameHeightRelativeThreshold = 0.08
 /// Minimum scale for smaller dinosaur (e.g. 0.1 = 10% of full size). Below this, combination is "too small to see". Relaxed from 0.2 so small dinosaurs can compare with more options.
-private let minVisibleScale: CGFloat = 0.1
+private let minVisibleScale: CGFloat = CGFloat(ComparisonGameLogic.minVisibleHeightRatio)
 /// Reference height (m) for the standing paleontologist in the center slot.
 /// Dinosaur mode keeps the legacy oversized reference for readability; pterosaur mode uses a realistic adult height.
 private let paleontologistHeightMetersDino: Double = 4.5
@@ -74,6 +73,8 @@ struct WhoIsTallerGameView: View {
     @State private var introWalkStep: Int = -1
     /// True while "choose your first dinosaur" is playing; blocks taps until it finishes.
     @State private var isChooseFirstAudioPlaying = false
+    /// Blocks grid taps while negative feedback (e.g. thats-too-small-to-see) is playing.
+    @State private var gridTapsBlocked = false
 
     @State private var dinosaursCompared: [WhoIsTallerItem] = []
     @State private var endSequenceStep: Int = -1
@@ -85,7 +86,7 @@ struct WhoIsTallerGameView: View {
     private var isMarinePool: Bool { gameConfig.poolKind == .marineReptiles }
     private var usesRelativeFirstSelectionScale: Bool { isPterosaurPool || isMarinePool }
     private var introWalkComplete: Bool { displayItems.isEmpty || introWalkStep >= displayItems.count }
-    private var canTapGrid: Bool { introWalkComplete && !isChooseFirstAudioPlaying }
+    private var canTapGrid: Bool { introWalkComplete && !isChooseFirstAudioPlaying && !gridTapsBlocked }
 
     /// Match Measure the Dinosaur layout: measure-dino-* are 140×340 px; paleontologist center 110×340 pt (larger display).
     private let measureSlotWidth: CGFloat = 140
@@ -128,7 +129,7 @@ struct WhoIsTallerGameView: View {
                                             displayImageName: gridImageName(for: item),
                                             isSelected: selectedFirst?.id == item.id || selectedSecond?.id == item.id,
                                             isDisabled: (!canTapGrid) || (selectedFirst != nil && selectedSecond != nil) || (selectedFirst != nil && selectedSecond == nil && !canSelectSecond),
-                                            isTooSmallToSee: wouldBeTooSmall(second: item),
+                                            isTooSmallToSee: selectedFirst != nil && selectedSecond == nil && wouldBeTooSmall(second: item),
                                             isIntroHighlighted: introWalkStep >= 0 && introWalkStep < displayItems.count && introWalkStep == index
                                         ) {
                                             handleItemTap(item)
@@ -335,13 +336,7 @@ struct WhoIsTallerGameView: View {
     /// True when the second dinosaur (the one being selected) would be the smaller one and scaled below minVisibleScale.
     private func wouldBeTooSmall(second: WhoIsTallerItem) -> Bool {
         guard let first = selectedFirst else { return false }
-        let h1 = first.heightMeters
-        let h2 = second.heightMeters
-        guard h2 < h1 else { return false } // Second is larger or same → full size, never block
-        let larger = h1
-        guard larger > 0 else { return false }
-        let ratio = h2 / larger
-        return CGFloat(ratio) < minVisibleScale
+        return ComparisonGameLogic.rejectsSecondHeightPick(firstMeters: first.heightMeters, secondMeters: second.heightMeters)
     }
 
     private func handleItemTap(_ item: WhoIsTallerItem) {
@@ -364,8 +359,15 @@ struct WhoIsTallerGameView: View {
                 }
             }
         } else if selectedSecond == nil {
+            guard canSelectSecond else { return }
             if wouldBeTooSmall(second: item) {
-                speechManager.speak("thats-too-small-to-see")
+                gridTapsBlocked = true
+                OrderedTouchFeedback.speak(ComparisonGameLogic.thatsTooSmallToSee, speechManager: speechManager) {
+                    DispatchQueue.main.async {
+                        self.speechManager.onAudioFinished = nil
+                        self.gridTapsBlocked = false
+                    }
+                }
                 return
             }
             selectedSecond = item
@@ -390,10 +392,11 @@ struct WhoIsTallerGameView: View {
 
     private func playComparisonAudio(taller: WhoIsTallerItem, shorter: WhoIsTallerItem) {
         hasPlayedComparisonAudio = true
-        let tallerH = taller.heightMeters
-        let shorterH = shorter.heightMeters
-        let diff = abs(tallerH - shorterH)
-        let isSameHeight = diff < sameHeightRelativeThreshold * max(tallerH, shorterH)
+        let outcome = ComparisonGameLogic.heightComparisonOutcome(
+            firstMeters: taller.heightMeters,
+            secondMeters: shorter.heightMeters
+        )
+        let isSameHeight = outcome == .aboutTheSame
 
         let advanceAfterDelay = {
             DispatchQueue.main.asyncAfter(deadline: .now() + self.comparisonToNextRoundDelay) {
@@ -402,11 +405,8 @@ struct WhoIsTallerGameView: View {
         }
 
         if isSameHeight {
-            if isMarinePool {
-                speechManager.speak(audioKey: "about-the-same-length", fallbackText: "about the same length")
-            } else {
-                speechManager.speak("they-are-about-the-same-height")
-            }
+            let key = ComparisonGameLogic.heightComparisonResultAudioKey(outcome: .aboutTheSame, isMarine: isMarinePool)
+            speechManager.speak(audioKey: key, fallbackText: isMarinePool ? "about the same length" : "about the same height")
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
                 advanceAfterDelay()
@@ -416,11 +416,11 @@ struct WhoIsTallerGameView: View {
             speechManager.speak(audioKey: audioKey, fallbackText: taller.name)
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
-                if self.isMarinePool {
-                    self.speechManager.speak(audioKey: "is-longer", fallbackText: "is longer", chainDelay: true)
-                } else {
-                    self.speechManager.speak("is-taller", chainDelay: true)
-                }
+                let suffixKey = ComparisonGameLogic.heightComparisonResultAudioKey(
+                    outcome: .firstTaller,
+                    isMarine: self.isMarinePool
+                )
+                self.speechManager.speak(audioKey: suffixKey, fallbackText: self.isMarinePool ? "is longer" : "is taller", chainDelay: true)
                 self.speechManager.onAudioFinished = {
                     self.speechManager.onAudioFinished = nil
                     advanceAfterDelay()
@@ -505,15 +505,8 @@ struct WhoIsTallerGameView: View {
         StandardVictoryLayout.recapListScrollHeight(itemCount: tallerVictoryRecapItems.count)
     }
 
-    /// Marine longer keeps title + recap visible above the success card (Name That style).
-    private var victoryKeepsRecapDuringSuccess: Bool {
-        gameConfig.id == "which-marine-reptile-is-longer"
-    }
-
     private var victorySuccessImageSide: CGFloat {
-        victoryKeepsRecapDuringSuccess
-            ? 180
-            : GameCatalogImageMetrics.nameThatVictorySuccessImageSide
+        GameCatalogImageMetrics.nameThatVictorySuccessImageSide
     }
 
     private var victoryView: some View {
@@ -522,8 +515,6 @@ struct WhoIsTallerGameView: View {
             showSuccessPhase: endSequenceStep == 2,
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
-            hideGameTitleDuringSuccessPhase: !victoryKeepsRecapDuringSuccess,
-            collapseRecapListDuringSuccessPhase: !victoryKeepsRecapDuringSuccess,
             scrollRows: {
                 ForEach(Array(tallerVictoryRecapItems.enumerated()), id: \.element.id) { index, item in
                     StandardVictoryRecapRowView(
@@ -675,37 +666,32 @@ enum WhoIsTallerGameConfigs {
         poolKind: .marineReptiles
     )
 
+    /// Every dinosaur that can appear in Which Dino Is Taller (full pool for CI display-moment tests).
+    static func allEligibleDinosaurItems() -> [WhoIsTallerItem] {
+        MatchingGameConfigs.allDinosaurs.compactMap { d in
+            guard let imageName = d.imageName, imageName.hasPrefix("dino-"),
+                  let height = whoIsTallerHeightMetersById[d.id] else { return nil }
+            let measureName = "measure-\(imageName)"
+            guard ImageAssetCache.imageExists(named: measureName) else { return nil }
+            return WhoIsTallerItem(
+                id: d.id,
+                name: d.name,
+                imageName: d.imageName,
+                emoji: d.icon,
+                heightMeters: height
+            )
+        }
+    }
+
     /// Returns 9 creatures for the pool kind; dinosaurs require `measure-dino-*`; pterosaurs use standing heights from `AirPterosaurData`, square `ptero-*` on the grid, and `ptero-measure-{clade}-{slug}` in comparison slots when present; marine reptiles use `MarineReptileLengthCatalog` and `marine-measure-*` when bundled.
     static func makeRoundItems(excluding alreadyUsedIds: Set<Int> = [], poolKind: WhoIsTallerPoolKind) -> [WhoIsTallerItem] {
         switch poolKind {
         case .dinosaurs:
-            let pool = MatchingGameConfigs.allDinosaurs.filter { d in
-                guard let imageName = d.imageName, imageName.hasPrefix("dino-"),
-                      whoIsTallerHeightMetersById[d.id] != nil,
-                      !alreadyUsedIds.contains(d.id) else { return false }
-                let measureName = "measure-\(imageName)"
-                return ImageAssetCache.imageExists(named: measureName)
-            }
+            let pool = allEligibleDinosaurItems().filter { !alreadyUsedIds.contains($0.id) }
             guard pool.count >= 9 else {
-                return pool.shuffled().prefix(9).map { d in
-                    WhoIsTallerItem(
-                        id: d.id,
-                        name: d.name,
-                        imageName: d.imageName,
-                        emoji: d.icon,
-                        heightMeters: whoIsTallerHeightMetersById[d.id] ?? 1
-                    )
-                }
+                return Array(pool.shuffled().prefix(9))
             }
-            return pool.shuffled().prefix(9).map { d in
-                WhoIsTallerItem(
-                    id: d.id,
-                    name: d.name,
-                    imageName: d.imageName,
-                    emoji: d.icon,
-                    heightMeters: whoIsTallerHeightMetersById[d.id] ?? 1
-                )
-            }
+            return Array(pool.shuffled().prefix(9))
         case .pterosaurs:
             let pool = MatchingGameConfigs.allPterosaurs.filter { d in
                 guard let imageName = d.imageName, imageName.hasPrefix("ptero-"),

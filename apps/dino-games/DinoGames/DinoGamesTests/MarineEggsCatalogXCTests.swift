@@ -37,11 +37,22 @@ final class MarineEggsCatalogXCTests: XCTestCase {
 
     func testMarineEggsVictoryUsesCreatureNameRecap() {
         XCTAssertTrue(MarineEggMorphology.settings.victoryRecapUsesCreatureName)
-        XCTAssertFalse(MarineEggMorphology.settings.hideGameTitleDuringSuccessPhase)
         XCTAssertEqual(
             MarineEggMorphology.morphology.eggAudioKey(eggType: "archelon"),
             "marine-eggs-archelon"
         )
+    }
+
+    func testMarineEggsVictoryRecapEggDisplayTitlesAreNonEmpty() {
+        guard let config = MarineEggsGameConfigs.makeMarineEggs() else {
+            XCTFail("Expected Marine Eggs config")
+            return
+        }
+        let morphology = MarineEggMorphology.morphology
+        for round in config.rounds {
+            let title = morphology.eggDisplayTitle(for: round.eggType)
+            XCTAssertFalse(title.isEmpty, "Victory recap needs a label for egg slug `\(round.eggType)`")
+        }
     }
 
     func testNestEggScanRevealIsBundledAndDistinctFromEggArt() {

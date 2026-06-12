@@ -39,6 +39,17 @@ struct MatrixMaterial: Identifiable {
     func fossilSegment(tuffFossilUsesVolcanicPrefix: Bool) -> String {
         materialSlug == "tuff" && tuffFossilUsesVolcanicPrefix ? "volcanic-tuff" : materialSlug
     }
+
+    /// Bundle audio key for matrix stone narration (e.g. `dino-limestone`, `ptero-chalk`).
+    func audioKey(for progressKind: MatrixGameProgressKind) -> String {
+        let prefix: String
+        switch progressKind {
+        case .dino: prefix = "dino"
+        case .ptero: prefix = "ptero"
+        case .marine: prefix = "marine"
+        }
+        return "\(prefix)-\(materialSlug)"
+    }
 }
 
 enum MatrixGameProgressKind {
@@ -357,7 +368,7 @@ struct DinoMatrixGameView: View {
         optionsWalkIndex = 0
         isAudioPlaying = true
         speechManager.onAudioFinished = { advanceOptionsWalk() }
-        speechManager.speak(question.options[0].name)
+        speechManager.speak(question.options[0].audioKey(for: gameConfig.progressKind))
     }
 
     private func advanceOptionsWalk() {
@@ -375,7 +386,7 @@ struct DinoMatrixGameView: View {
         }
         optionsWalkIndex = next
         speechManager.onAudioFinished = { advanceOptionsWalk() }
-        speechManager.speak(question.options[next].name)
+        speechManager.speak(question.options[next].audioKey(for: gameConfig.progressKind))
     }
 
     private func handleMaterialTap(_ material: MatrixMaterial, question: DinoMatrixRound) {
@@ -386,7 +397,7 @@ struct DinoMatrixGameView: View {
             self.speechManager.onAudioFinished = nil
             self.checkAnswer(material: material, question: question)
         }
-        speechManager.speak(material.name)
+        speechManager.speak(material.audioKey(for: gameConfig.progressKind))
     }
 
     private func checkAnswer(material: MatrixMaterial, question: DinoMatrixRound) {
@@ -428,15 +439,8 @@ struct DinoMatrixGameView: View {
 
     // MARK: - End sequence
 
-    /// Marine Matrix keeps title + recap visible above the success card (Name That style).
-    private var matrixVictoryKeepsRecapDuringSuccess: Bool {
-        gameConfig.id == "marine-matrix"
-    }
-
     private var matrixVictorySuccessImageSide: CGFloat {
-        matrixVictoryKeepsRecapDuringSuccess
-            ? 180
-            : GameCatalogImageMetrics.nameThatVictorySuccessImageSide
+        GameCatalogImageMetrics.nameThatVictorySuccessImageSide
     }
 
     private var dinoMatrixEndSequenceView: some View {
@@ -445,8 +449,6 @@ struct DinoMatrixGameView: View {
             showSuccessPhase: endSequenceStep == 2,
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
-            hideGameTitleDuringSuccessPhase: false,
-            collapseRecapListDuringSuccessPhase: !matrixVictoryKeepsRecapDuringSuccess,
             scrollRows: {
                 ForEach(Array(endRecapRows.enumerated()), id: \.offset) { index, row in
                     let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
@@ -479,7 +481,7 @@ struct DinoMatrixGameView: View {
             if endSequenceMaterials.isEmpty {
                 endSequenceStep = 2
             } else {
-                speechManager.speak(endSequenceMaterials[0].name)
+                speechManager.speak(endSequenceMaterials[0].audioKey(for: gameConfig.progressKind))
                 speechManager.onAudioFinished = { advanceEndHighlight() }
             }
         }
@@ -489,7 +491,7 @@ struct DinoMatrixGameView: View {
         speechManager.onAudioFinished = nil
         endHighlightIndex += 1
         if endHighlightIndex < endSequenceMaterials.count {
-            speechManager.speak(endSequenceMaterials[endHighlightIndex].name)
+            speechManager.speak(endSequenceMaterials[endHighlightIndex].audioKey(for: gameConfig.progressKind))
             speechManager.onAudioFinished = { advanceEndHighlight() }
         } else {
             endSequenceStep = 2

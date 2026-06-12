@@ -1,0 +1,339 @@
+{
+  "large_theropods": [
+    {
+      "id": "DINO_142_CARNOTAURUS",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "LA_COLONIA",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Smooth silty clay and pale ochre coastal flats with soft, clean dust geometry",
+            "color_palette": ["Silt grey", "Sandstone tan", "Vibrant blue", "Pale ochre"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Carnotaurus",
+          "features": [
+            "short deep snub-nosed skull with thick bull-like brow horns",
+            "crimson-red highlights on the horn tips",
+            "long athletic hind legs built for sprinting",
+            "tiny vestigial four-fingered arms tucked flush against the body",
+            "large calm intelligent yellow eyes with a focused expression",
+            "smooth matte burnt-umber clay skin with clean sculpted charcoal-grey osteoderm bumps"
+          ],
+          "action": "A composed, non-aggressive Carnotaurus with high-poly clay geometry is captured mid-stride in a graceful, balanced sprint across a pale ochre coastal flat. The camera frames a clean side profile to dramatically accentuate its unique snub-nosed head shape, prominent bull horns, and athletic, leggy silhouette without any scary or predatory expressions. The background features a simplified, stylized Cretaceous lagoon with sparse, salt-tolerant clay vegetation under soft, balanced studio lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_121_FUKUIRAPTOR",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "KITADANI",
+          "base_habitat": "MEANDERING_RIVER_SYSTEMS",
+          "period": "EARLY_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Smooth, light-grey sandstone riverbed stones with soft rounded edges and blackish organic shale bands",
+            "color_palette": ["Light Grey", "Charcoal", "Reddish-Brown (Tuff)", "Deep Water Blue"]
+          },
+          "flora_manifest": ["EARLY_CRETACEOUS_BASE", "KITADANI_ADDITIONS"],
+          "fauna_manifest": ["EARLY_CRETACEOUS_BASE", "KITADANI_ADDITIONS"]
+        },
+        "layer_3_action": {
+          "subject": "Fukuiraptor",
+          "features": [
+            "slender elongated skull with a slightly pointed snout",
+            "small raised decorative clay ridges above the eyes",
+            "large alert expressive yellow eyes with a curious gaze",
+            "electric-yellow accent tones along the throat",
+            "sleek muscular bipedal frame with a long horizontal counter-balancing tail",
+            "exceptionally strong forelimbs featuring significantly oversized curved megaraptoran black hand claws",
+            "standard, blunt three-toed walking feet with regular weight-bearing claws",
+            "smooth seamless slate-blue matte clay-like skin"
+          ],
+          "action": "A calm, highly inquisitive Fukuiraptor with clean, high-poly clay geometry is navigating a dry, rocky riverbed. It stands balanced on its hind legs, tilting its head curiously while raising one forelimb slightly to clearly showcase the silhouette of its signature oversized, curved black hand claws without any menacing posture or snarls. The camera captures it from a gentle three-quarter angle at eye-level, highlighting its sleek athletic frame. The background features stylized Early Cretaceous river valley ferns and soft studio lighting with clean ambient occlusion. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_084_GIGANOTOSAURUS",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "CANDELEROS",
+          "base_habitat": "SEASONAL_RIVER_PLAINS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Coarse sandstone and conglomerate rock soil with rounded river pebbles",
+            "color_palette": ["Grey", "Red"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "CANDELEROS_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Giganotosaurus",
+          "features": [
+            "exceptionally long low-slung boxy skull with a prominent squared-off chin line", 
+            "subtle low decorative bony ridges extending down the top of the snout",
+            "large calm soulful eyes with an observant gaze",
+            "cleanly closed mouth with a gentle neutral profile",
+            "powerful athletic bipedal stance with long strong hind legs",
+            "proportional forelimbs featuring three distinct fingers with blunt claws",
+            "smooth seamless matte clay-like skin with crisp high-poly musculature"
+          ],
+          "action": "A majestic, non-aggressive Giganotosaurus with clean high-poly clay geometry is walking with a slow, composed stride across a coarse sandstone river plain. The camera frames a balanced three-quarter profile from a straight eye-level view, highlighting the immense horizontal length of its signature boxy skull and athletic body without any menacing or predatory cues. The background features a wide receding waterline, damp muddy banks, and scattered clusters of low early flowering reeds under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_092_GIGANTORAPTOR",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "IREN_DABASU",
+          "base_habitat": "BRAIDED_RIVER_SYSTEMS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Fine-grained yellowish-orange fluvial sandstone and mottled red claystone paths",
+            "color_palette": ["Light Grey", "Yellowish-orange", "Mottled Red", "Dusty Tan"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "IREN_DABASU_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE", "IREN_DABASU_ADDITIONS"]
+        },
+        "layer_3_action": {
+          "subject": "Gigantoraptor",
+          "features": [
+            "deep toothless parrot-like beak",
+            "small decorative bone crest on top of the skull",
+            "vibrant blue skin patches around large calm yellow eyes",
+            "exceptionally long slender bird-like running legs",
+            "large, flat, blunt bird-like walking claws on the feet designed for running weight",
+            "three-fingered hands with large sharp black talons",
+            "short tail tipped with a clean sculpted fan of feathers",
+            "smooth matte dusty ochre and terracotta clay body plumage with navy-blue accent feathers on the forearms"
+          ],
+          "action": "A majestic, non-aggressive Gigantoraptor with clean high-poly clay geometry is standing calmly in a graceful, upright posture among the yellowish-orange sand channels of a braided river system. The camera frames a balanced three-quarter profile at a neutral eye-level view, dramatically showcasing its massive, bird-like running silhouette and parrot-like head without any cartoonish over-rounding or frightening territorial displays. It is tilting its head down with a quiet, curious look toward a small patch of low cretaceous ground shrubs, under soft studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_063_MAJUNGASAURUS",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "MAEVARANO",
+          "base_habitat": "SEMI_ARID_PLAINS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Dry cracked mudflats and sandstone formations surrounded by rolling hills",
+            "color_palette": ["Light-Grey", "White", "Red", "Pale Buff"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Majungasaurus",
+          "features": [
+            "short, exceptionally deep, blunt skull profile", 
+            "single prominent rounded bone horn dome rising from the top of the forehead between the eyes", 
+            "extremely short, stocky, low-slung bipedal body proportions", 
+            "tiny vestigial forelimbs resting tight against the chest", 
+            "large calm intelligent eyes with an observant expression", 
+            "cleanly closed mouth with a gentle neutral profile", 
+            "smooth seamless matte clay-like skin with crisp high-poly muscular volumes"
+          ],
+          "action": "A composed, non-aggressive Majungasaurus with clean high-poly clay geometry is standing calmly behind the thick trunk of a stylized Late Cretaceous ginkgo tree, tilting its head slightly to look outward. The camera frames a stable three-quarter profile from a straight eye-level view, highlighting its uniquely short bull-like head shape and stocky silhouette without any cartoonish over-rounding or frightening predatory gestures. The background displays expansive dry cracked clay flats and distant pale sandstone hills under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_064_MASIAKASAURUS",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "MAEVARANO",
+          "base_habitat": "FLOODPLAINS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Dry cracked mudflats and alluvial mudstone textures surrounded by low rolling hills",
+            "color_palette": ["Light-Grey", "White", "Red"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Masiakasaurus",
+          "features": [
+            "highly unique lower jaw where the front teeth project forward and outward hook-style", 
+            "slender narrow elongated skull with a cleanly closed jawline", 
+            "agile and lightweight small-bodied theropod frame", 
+            "long slender hind legs built for quick balancing steps", 
+            "stiff straight counter-balancing tail held horizontally out behind for stability", 
+            "large calm intelligent eyes with an inquisitive gaze", 
+            "smooth seamless matte clay-like skin with crisp high-poly geometry"
+          ],
+          "action": "A composed, non-aggressive Masiakasaurus with clean high-poly clay geometry is standing calmly behind a stylized Late Cretaceous cycad shrub, tilting its head downward with a quiet curiosity. The camera captures a stable three-quarter profile at a neutral eye-level view, framing its unique forward-jutting snout silhouette and slender, horizontal frame without any scary lunging poses or cartoonish infant roundness. It is observing a tiny clay beetle resting on a cracked mud line under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_035_TORVOSAURUS",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "MORRISON_LJ",
+          "base_habitat": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+          "period": "JURASSIC",
+          "strata_specifics": {
+            "ground_texture": "Pale, dusty tan siltstone earth with white chalky mineral nodules and geometric desiccation mud cracks",
+            "color_palette": ["Variegated red", "Pinkish grey", "Greenish-grey", "Tan", "white"]
+          },
+          "flora_manifest": ["JURASSIC_BASE", "MORRISON_ADDITIONS"],
+          "fauna_manifest": ["JURASSIC_BASE", "MORRISON_ADDITIONS"]
+        },
+        "layer_3_action": {
+          "subject": "Torvosaurus",
+          "features": [
+            "massive elongated exceptionally deep and heavily constructed megalosaurid skull profile", 
+            "prominent thick blunt bone ridges running along the top of the snout in front of the eyes",
+            "large calm intelligent eyes with an inquisitive gaze",
+            "cleanly closed mouth with a gentle neutral expression",
+            "robust muscular bipedal torso with strong powerful hind legs",
+            "heavy forelimbs featuring three distinct fingers with a significantly enlarged thumb claw",
+            "smooth seamless matte clay-like skin with crisp high-poly structural volumes"
+          ],
+          "action": "A composed, non-aggressive Torvosaurus with clean high-poly clay geometry is standing calmly on a dusty tan siltstone plain, tilting its large head downward with a quiet curiosity. The camera captures a stable three-quarter profile from a straight eye-level view, showcasing the immense horizontal depth of its signature megalosaurid skull profile and athletic torso without any menacing lunges, snarls, or baby-like over-rounding. It is observing a small clay teiid lizard resting near dry flash-flood channels, surrounded by stylized sparse Jurassic-base ferns under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_001_TYRANNOSAURUS_REX_YOUNG",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "HELL_CREEK",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Dark rich organic mud flats with soft, clean clay banks",
+            "color_palette": ["Grey", "Ocher", "Brown"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE", "HELL_CREEK_ADDITIONS"]
+        },
+        "layer_3_action": {
+          "subject": "Young Tyrannosaurus Rex",
+          "features": [
+            "deep reinforced boxy skull profile with a thick robust snout bone structure", 
+            "cleanly closed jawline containing thick banana-shaped teeth hidden inside",
+            "large calm soulful eyes with an observant, gentle gaze",
+            "two-fingered small forelimbs held naturally against its chest",
+            "powerful athletic sub-adult frame with muscular running legs",
+            "smooth seamless matte clay-like skin with crisp high-poly bodily contours"
+          ],
+          "action": "A composed, non-aggressive young Tyrannosaurus Rex with clean high-poly clay geometry is wandering calmly across a dark organic mud flat. The camera captures it from a stable three-quarter profile at a neutral eye-level view, dramatically accentuating the structural, deep profile of its jaw and its sturdy athletic frame without any terrifying snarls, predatory postures, or overly rounded baby features. It is looking forward with quiet curiosity toward a group of stylized palm-like Bennettitales near a slow estuary under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_110_UTAHRAPTOR",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "CEDAR_MOUNTAIN",
+          "base_habitat": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+          "period": "EARLY_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Deeply cracked clay with oxidized iron patches and light tan limestone nodules",
+            "color_palette": ["Pale lavender", "Dull green", "Chalky white", "Light tan", "Maroon"]
+          },
+          "flora_manifest": ["EARLY_CRETACEOUS_BASE", "CEDAR_MOUNTAIN_ADDITIONS"],
+          "fauna_manifest": ["EARLY_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Utahraptor",
+          "features": [
+            "robust heavily built dromaeosaurid body frame with muscular proportions",
+            "large calm soulful eyes with an inquisitive, gentle gaze",
+            "cleanly closed mouth with a pleasant neutral expression",
+            "stiff straight counter-balancing tail held horizontally out behind for stability",
+            "strong three-fingered hands with short blunt clay claws held near the chest",
+            "powerful hind legs built with stable weight-bearing walking toes",
+            "inner second toe of each foot specialized and raised off the ground",
+            "raised inner toe features an oversized curved predatory sickle-claw silhouette modified with a thick rounded blunt tip",
+            "smooth seamless matte clay-like skin with crisp high-poly geometry"
+          ],
+          "action": "A composed, non-aggressive Utahraptor with clean high-poly clay geometry is practicing balance, standing steadily on one powerful hind leg while extending the other raised hind leg outward in a stable crane-like posture toward a stylized early Cretaceous ginkgo sapling. The camera frames the dinosaur from a low angle to accentuate its unique, chunky foot anatomy, showcasing its raised sickle-claw as a thick, completely blunt character feature with no sharp predatory points. A small stylized clay bee is resting calmly on the smooth, rounded tip of the extended hind claw, under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_ASPECT_RATIO"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+    "id": "carnotaurus_prestige_stubby",
+    "morphology": "Stubby",
+    "prompt": "High-fidelity 3D animated feature style. Close-up of a smiling Carnotaurus, showing off its distinct prominent brow horns and deep snout. Skin texture: distinct rows of bumpy, pebbled osteoderms and scales. Smile reveals small, uniform, blunt ivory-colored teeth. Large, warm expressive eyes. No human teeth, no sharp predator points.",
+    "visual_logic": "Replaces generic carnivore teeth with the specific morphology for Dino Toothache gameplay.",
+    "style_notes": "SQUARE_HERO_CARD, STYLE_ANIMATED_FEATURE_V3. Ensure the aspect ratio is exactly 1:1."
+  }

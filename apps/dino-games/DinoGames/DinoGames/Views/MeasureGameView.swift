@@ -548,7 +548,7 @@ struct MeasureGameView: View {
                     self.measureTapsBlocked = false
                 }
             }
-            speechManager.speak("thats-too-small-to-see")
+            speechManager.speak(ComparisonGameLogic.thatsTooSmallToSee)
             return
         }
         if wouldBeHugeWhenLeftIsNot(creature) {

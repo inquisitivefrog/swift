@@ -1,0 +1,27 @@
+---
+description: DinoGames test conventions — follow air/sea unit-test patterns
+globs: **/DinoGamesTests/**,**/DinoGamesUITests/**
+alwaysApply: false
+---
+
+# DinoGames tests
+
+Match existing project patterns before adding new test infrastructure.
+
+Air and sea coverage uses **unit XCTests**:
+
+- `@testable import DinoGames`
+- Catalog, config, mechanic, and asset assertions
+- `@MainActor` only when testing `SpeechManager` or other main-actor APIs
+
+Do **not** invent custom launch hooks, UI test host views, or debug HUDs for victory/catalog flows unless the project already uses that pattern. Compare working tests in `DinoGamesTests/` first (e.g. `PterosaurGameCatalogXCTests`, `MarineRacingXCTests`, `StandardVictorySequenceXCTests`).
+
+UI tests: keep smoke tests minimal (e.g. skip-splash → category picker). Prefer unit tests for victory sequence and game logic.
+
+Land games: `LandGameDisplayMomentXCTests` asserts every shipping gameplay moment has bundled **image**, non-empty **display text**, and resolvable **audio**, with spelling alignment (`LandGameDisplayMomentCatalog`). Add new moments there when a land game shows image + label + narration together.
+
+Ordered-touch games (Ages, Flora, Smile, Diets, Eggs): use `OrderedTouchFeedback` for `pick-a-dinosaur-first` (or game-specific pick-first / tap-scanner) when the second column is tapped early, and `great-match` / `wow-that-was-tricky` (or `thats-right-you-guessed-it` for Eggs) when success is slow. `OrderedTouchFeedbackAudioXCTests` verifies Feedback clips exist.
+
+Comparison games (Weigh, Who Is Taller): decision rules live in `ComparisonGameLogic`. `ComparisonGameNegativeXCTests` covers near-equal pairs, left-heavy vs right-heavy massive mismatch, and asymmetric `thats-too-small-to-see` (tiny second only when a tall first is already locked in).
+
+If a test needs a custom app entry point or debug overlay to pass, that is a stop signal — revert to unit-test style instead.

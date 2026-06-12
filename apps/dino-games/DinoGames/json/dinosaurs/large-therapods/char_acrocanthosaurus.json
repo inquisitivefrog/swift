@@ -1,26 +1,35 @@
 {
-  "id": "DINO_175_ACROCANTHOSAURUS",
-  "species": "Acrocanthosaurus atokensis",
-  "tech_ref": "DEFAULT_SQUARE",
-  "framing_ref": "SQUARE_HERO_CARD",
-  "style_id": "STYLE_ANIMATED_FEATURE_V3",
-  "formation_ref": "ANTLERS",
-  "habitat_ref": "WOODLAND_FLOODPLAINS",
-  "visual_identity": {
-    "color_palette": "Deep slate-grey skin with subtle 'burnt-orange' mottling along the high-spine ridge; pale ash-grey underbelly.",
-    "texture": "Leathery skin with fine, pebbled scales; the dorsal ridge features slightly larger, thickened scales.",
-    "distinguishing_marks": "A continuous high ridge of muscle and bone from neck to tail; large, powerful thumb claws; thick brow ridges."
-  },
-  "anatomy_constraints": {
-    "head": "Long, deep skull with narrow snouts; prominent bony ridges above the eyes; large expressive yellow eyes.",
-    "limbs": "Robust arms with three fingers and large claws; powerful, thick-set hind legs built for stability and power.",
-    "body": "Massive theropod frame with exceptionally tall neural spines forming a thick, muscular ridge along the back."
-  },
-  "visual_logic": {
-    "subject": "A powerful, stalking Acrocanthosaurus on the move.",
-    "action": "Navigating a muddy flood plain, its high-spine ridge catching the midday sun.",
-    "environment": "Background features the greyish-green siltstones of the Antlers formation with cycad groves and early flowering plants."
-  },
-  "personality": "The 'High-Spined Stalker'—methodical, powerful, and intimidating. He moves with a heavy, purposeful gait.",
-  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC"
-}
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "CLOVERLY",
+          "base_habitat": "SEMI_ARID_FLOODPLAINS",
+          "period": "EARLY_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Variegated mudstone and light grey silt flats",
+            "color_palette": ["Bright red", "Purplish-grey", "Sandy buff", "Light grey"]
+          },
+          "flora_manifest": ["EARLY_CRETACEOUS_BASE", "CLOVERLY_ADDITIONS"],
+          "fauna_manifest": ["EARLY_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Acrocanthosaurus",
+          "features": [
+            "prominent sculpted continuous high neural-spine muscle ridge from neck to tail", 
+            "deep skull with a clean narrow snout", 
+            "thick smooth brow ridges", 
+            "large calm expressive yellow eyes with a curious gaze", 
+            "robust arms with three functional fingers and sharp thumb claws", 
+            "smooth seamless matte clay-like skin with crisp body contours"
+          ],
+          "action": "A majestic, non-aggressive Acrocanthosaurus with high-poly clay geometry is standing calmly on an open silt flat, turning its head slightly to look toward the camera. The scene is shot from a clear three-quarter profile to showcase its distinct continuous high-spine muscle ridge without any scary hunter cues. The background features stylized early cretaceous conifers and shrubby angiosperms under clean, soft studio lighting with smooth ambient occlusion. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    }

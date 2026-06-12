@@ -1,73 +1,24 @@
 {
-  "style_id": "STYLE_CLAY_MASTER",
-  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
-}
-{
-  "flora_library": {
-    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
-    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
-    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
-    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
-    "TIAOJISHAN_ADDITIONS": ["Hardy Ferns", "Mosses"],
-    "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
-    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
-    "LANCE_HELL_CREEK_ADDITIONS": ["Palms", "Platanites", "Viburnum"],
-    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
-    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
-    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"],
-    "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"],
-    "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
-    "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
-    "CEDAR_MOUNTAIN_ADDITIONS": ["Paleopus in damp cracks", "Shrubby angiosperms"],
-    "JEHOL_BIOTA_ADDITIONS": ["Water lilies at the edge", "Dense hardwoods"]
-  }
-}
-{
-  "fauna_library": {
-    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
-    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
-    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
-    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates")"],
-    "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
-    "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)," "Cicadas"]
-  }
-}
-{
-  "habitat_template": "COASTAL_PLAIN",
-  "physics": {
-    "altitude": "low_estuarine",
-    "water_type": "brackish_tidal",
-    "drainage": "poor"
-  },
-  "visual_logic": {
-    "water_features": "Meandering channels and stagnant oxbows",
-    "atmospheric_effects": ["Coastal haze", "Low-altitude humidity"]
-  }
-}
-{
-  "formation_id": "HELL_CREEK",
-  "base_habitat": "SUBTROPICAL_COASTAL_PLAINS",
-  "period": "LATE_CRETACEOUS",
-  "strata_specifics": {
-    "ground_texture": "Fine-grained fluvial sandstone and mudstone",
-    "color_palette": ["Yellowish-grey", "Dull green", "Ocher"]
-  },
-  "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
-  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
-}
-{
-  "app_image_config": {
-    "layer_1_style": {
-      "style_id": "STYLE_CLAY_MASTER"
-    },
-    "layer_2_setting": {
-      "formation_id": "HELL_CREEK",
-      "habitat_id": "RIVER_VALLEYS"
-    },
-    "layer_3_action": {
-      "subject": “Edmontosaurus",
-      "features": [“non-bony crest", “duckbill snout”, "large soulful eyes", "friendly expressive face"],
-      "action": "standing alert on a riverbank"
-    }
-  }
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "tech_ref": "DEFAULT_SQUARE"
+    },
+    "layer_2_setting": {
+      "formation_id": "LANCE_HELL_CREEK",
+      "base_habitat": "SUBTROPICAL_COASTAL_PLAINS",
+      "period": "LATE_CRETACEOUS",
+      "strata_specifics": {
+        "ground_texture": "Fine-grained fluvial sandstone and mudstone",
+        "color_palette": ["Yellowish-grey", "Dull green", "Ocher"]
+      },
+      "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+      "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+    },
+    "layer_3_action": {
+      "subject": "Edmontosaurus",
+      "features": ["long completely uncrested flat head", "prominent broad duckbill snout", "large soulful eyes", "friendly expressive face", "smooth clay-like skin"],
+      "action": "A friendly, stylized Edmontosaurus with smooth clay-like skin is standing fully alert on its hind legs on a sandy riverbank. Its flat head is held horizontally, emphasizing its lack of a top crest and highlighting its exceptionally wide, spoon-shaped duckbill snout. The background features open river channels with low-lying palms, platanites, and viburnum shrubs under a humid hazy sky. No text."
+    }
+  }
 }

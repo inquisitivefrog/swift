@@ -1,26 +1,36 @@
 {
-  "id": "DINO_135_DEINOCHEIRUS",
-  "species": "Deinocheirus mirificus",
-  "tech_ref": "DEFAULT_SQUARE",
-  "framing_ref": "SQUARE_HERO_CARD",
-  "style_id": "STYLE_ANIMATED_FEATURE_V3",
-  "formation_ref": "NEMEGT",
-  "habitat_ref": "WETLAND_FLUVIO_LACUSTRINE",
-  "visual_identity": {
-    "color_palette": "Muted swamp-brown and moss-grey shaggy feathers; bright 'sun-bleached' yellow on the beak and around the eyes.",
-    "texture": "Thick, shaggy, 'wet' feather texture; leathery, wrinkled skin on the legs and belly; smooth keratinous beak.",
-    "distinguishing_marks": "Massive 2.4-meter arms with three enormous curved claws; a prominent, high muscular hump on the back."
-  },
-  "anatomy_constraints": {
-    "head": "Duck-billed, toothless snout; small eyes set high on the head; deep lower jaw.",
-    "limbs": "Gigantic forelimbs with heavy claws; stout, thick hind legs with blunt, hoof-like toes.",
-    "body": "Large, bulky, pot-bellied torso; tall neural spines forming a distinct ridge over the back."
-  },
-  "visual_logic": {
-    "subject": "A massive, gentle Deinocheirus wading through a shallow lake.",
-    "action": "Using its wide beak to sift through floating aquatic plants while its massive arms hang ready.",
-    "environment": "Background features the Nemegt formation palette of dark organic mud and deep greens, with large conifers and water lilies."
-  },
-  "personality": "The 'Bizarre Giant'—unusual, slow-moving, and strangely majestic. He has a calm, cow-like temperament but is formidable if cornered.",
-  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC"
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {
+      "formation_id": "NEMEGT",
+      "base_habitat": "RIVER_VALLEYS",
+      "period": "LATE_CRETACEOUS",
+      "strata_specifics": {
+        "ground_texture": "Soft waterlogged mudstone channels and light gray sandbar banks",
+        "color_palette": ["Tan", "Light brown", "Grey-white", "Light gray", "Yellowish-grey"]
+      },
+      "flora_manifest": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"],
+      "fauna_manifest": ["LATE_CRETACEOUS_BASE", "NEMEGT_ADDITIONS"]
+    },
+    "layer_3_action": {
+      "subject": "Deinocheirus",
+      "features": [
+        "broad toothless duck-billed snout with a deep sturdy lower jawline profile",
+        "large calm soulful eyes set high on the sides of the skull with an observant gaze",
+        "cleanly closed mouth with a gentle cow-like neutral profile",
+        "massive elongated forelimbs featuring three exceptionally large curved blunt claws",
+        "distinct tall sail-like muscular hump rising smoothly over the back of its large pot-bellied torso",
+        "thick heavy weight-bearing hind legs ending in blunt hoof-like walking toes",
+        "smooth seamless matte swamp-brown clay skin texture with clean sculpted moss-grey shaggy coat volumes"
+      ],
+      "action": "A composed, non-aggressive Deinocheirus with clean high-poly clay geometry is standing calmly in the shallow water channel of a Late Cretaceous river valley. The camera captures a stable three-quarter profile view at a neutral eye-level vantage point, dramatically highlighting the signature horizontal depth of its duck-billed snout, its colossal forearm claws hanging naturally, and its high muscular back hump without any active foraging mess or cartoonish over-rounding. It is looking forward with quiet curiosity near a sandbar bank dotted with stylized early hardwoods under soft, cinematic studio ambient occlusion lighting. No text."
+    },
+    "technical_specs": {
+      "aspect_ratio": "1:1",
+      "resolution": "1024x1024",
+      "framing_preset": "SQUARE_HERO_CARD"
+    }
+  }
 }

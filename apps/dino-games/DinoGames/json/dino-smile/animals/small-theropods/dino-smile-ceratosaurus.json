@@ -1,0 +1,7 @@
+{
+    "id": “ceratosaurus_prestige_hooked_slicer",
+    "morphology": “Hooked Slicer",
+    "prompt": "High-fidelity 3D animated feature style. Close-up of a smiling Ceratosaurus. Smile reveals heavy-duty curved 'hooked-slicer' teeth. Large, warm expressive eyes. No human teeth, no sharp predator points.",
+    "visual_logic": "Replaces generic carnivore teeth with the specific ‘slicer' morphology for Dino Smile gameplay.",
+    "style_notes": "SQUARE_HERO_CARD, STYLE_ANIMATED_FEATURE_V3. Ensure the aspect ratio is exactly 1:1."
+}

@@ -81,6 +81,14 @@ enum LandDinosaurData {
         Dinosaur(id: 69, name: "Struthiomimus", icon: "🦖", imageName: "dino-struthiomimus", characteristicIds: [226, 227]),
     ]
 
+    /// Five diet option labels for Dino Diets! (matches `dino-diets-*` imagesets).
+    static let dinosaurDietTypes = ["Herbivore", "Carnivore", "Piscivore", "Insectivore", "Omnivore"]
+
+    /// Spoken diet name under `Audio/Dino-Diets/dino-diet-{slug}.m4a`.
+    static func dinosaurDietAudioKey(for dietType: String) -> String {
+        "dino-diet-\(dietType.lowercased())"
+    }
+
     /// Diet per dinosaur for Dino Diets! (Herbivore, Carnivore, Piscivore, Insectivore, Omnivore).
     static let dinosaurDietById: [Int: String] = [
         1: "Carnivore", 2: "Herbivore", 3: "Herbivore", 4: "Carnivore", 5: "Herbivore", 6: "Piscivore",

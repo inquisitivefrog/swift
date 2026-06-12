@@ -1,0 +1,122 @@
+{
+  "pachycephalosaurids": [
+    {
+      "id": "DINO_012_PACHYCEPHALOSAURUS",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "LANCE_HELL_CREEK",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Soft fluvial mudstone floors with patches of brownish-black lignite peat",
+            "color_palette": ["Tan-grey", "Forest green", "Brown", "Brownish-black", "Yellowish-grey"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE", "HELL_CREEK_ADDITIONS"]
+        },
+        "layer_3_action": {
+          "subject": "Young Pachycephalosaurus",
+          "features": [
+            "colossal, oversized bowling-ball shaped bone dome that completely dominates the top of the head",
+            "heavily exaggerated, deeply wrinkled low-profile bone bumps clustered thickly around the back edge of the head shield",
+            "extraordinarily thick, short bulking bull-like neck built to support the massive heavy skull dome",
+            "short blunt snout profile ending in a small cleanly sculpted horny beak",
+            "large prominent round eyes with an inquisitive, gentle gaze",
+            "cleanly closed mouth with an innocent neutral expression",
+            "heavy-set robust bipedal body frame with a plump wide torso and stocky walking legs",
+            "smooth seamless matte clay-like skin with a solid organic moss-green base color",
+            "thick rounded clay proportions built to maximize a heavy, tank-like toy silhouette"
+          ],
+          "action": "A composed, non-aggressive young Pachycephalosaurus with clean high-poly clay geometry is standing completely still in a balanced, low-slung bipedal posture adjacent to a stylized Late Cretaceous tree trunk. The camera frames a stable three-quarter profile from a straight eye-level view, dramatically emphasizing its massive, bulging bowling-ball skull dome and short, extra-thick bull neck to instantly signal its heavy-set, robust tank proportions. It looks forward with quiet curiosity over a soft mudstone floor under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_077_STEGOCERAS",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "DINOSAUR_PARK",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Dark rich waterlogged mudstone channels and grey organic marsh banks",
+            "color_palette": ["Grey", "Black", "Dark Green", "Deep Brown", "Forest Green", "Steel Blue", "Olive Gray", "Pale Gray"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "DINOSAUR_PARK_ADDITIONS", "CYCAD_PALMS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE", "HADROSAUR_SPECIFIC_INSECTS"]
+        },
+        "layer_3_action": {
+          "subject": "Young Stegoceras",
+          "features": [
+            "small narrow egg-shaped bone dome capping only the center-top of the head",
+            "a highly distinct, dramatic crown fringe of prominent, uniform nodular clay spikes lining the back shelf margin like a miniature tiara",
+            "slender, elegant elongated bird-like neck extending smoothly from its compact torso",
+            "short compact snout profile with a cleanly sculpted small horny beak",
+            "large prominent round eyes with an inquisitive, gentle gaze",
+            "cleanly closed mouth with an innocent neutral expression",
+            "highly lightweight, sleek, and athletic bipedal frame with slender, agile running legs",
+            "smooth seamless matte clay-like skin with a vibrant high-contrast teal-blue base color",
+            "finely proportioned clay geometry built to maximize a graceful, lightweight gazelle-like silhouette"
+          ],
+          "action": "A composed, non-aggressive young Stegoceras with clean high-poly clay geometry is standing completely still in a poised, upright bipedal posture adjacent to a stylized Late Cretaceous ginkgo tree. The camera frames a stable three-quarter profile from a straight eye-level view, dramatically accentuating its narrow egg-shaped dome, its prominent tiara-like ring of back spikes, and its graceful, slender bird-like neck line to instantly signal its lightweight, agile silhouette. It looks forward with quiet curiosity over a soft marsh bank under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_092_STYGIMOLOCH",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "LANCE_HELL_CREEK",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Soft fluvial mudstone floors with patches of brownish-black lignite peat",
+            "color_palette": ["Tan-grey", "Forest green", "Brown", "Brownish-black", "Yellowish-grey"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE", "HELL_CREEK_ADDITIONS"]
+        },
+        "layer_3_action": {
+          "subject": "Young Stygimoloch",
+          "features": [
+            "small narrow localized dome swelling restricted to the center crown of the head",
+            "cluster of multiple remarkably long, prominent backward-facing rear spikes erupting from the back of the skull shield",
+            "each long dramatic rear spike terminates in a thick, completely rounded blunt tip to look like a friendly clay toy feature",
+            "fringe of small node-like blunt bony bumps surrounding the base of the main spikes along the cheeks",
+            "short compact snout profile ending in a cleanly sculpted small horny beak",
+            "large prominent round eyes with an inquisitive, gentle gaze",
+            "cleanly closed mouth with an innocent neutral expression",
+            "sturdy compact bipedal body frame with a short, thick powerful neck",
+            "lightweight athletic hind legs built for a poised, stable low-slung stance",
+            "smooth seamless matte clay-like skin with a vibrant sunset terracotta-orange base color"
+          ],
+          "action": "A composed, non-aggressive young Stygimoloch with clean high-poly clay geometry is standing completely still in a balanced bipedal posture adjacent to a stylized Late Cretaceous cycad tree. The camera frames a stable three-quarter profile from a straight eye-level view, dramatically showcasing its narrow skull dome and elongated rear head spikes while remaining entirely free of kinetic ramming animations, environmental damage, or territorial combat cues. It looks forward with quiet curiosity over a soft alluvial mudstone plain under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    }
+  ]
+}

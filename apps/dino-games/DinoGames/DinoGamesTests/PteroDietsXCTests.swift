@@ -56,9 +56,9 @@ final class PteroDietsXCTests: XCTestCase {
     func testPteroDietAudioKeys() {
         XCTAssertEqual(AirPterosaurData.pterosaurDietAudioKey(for: "Frugivore"), "ptero-diets-frugivore")
         XCTAssertEqual(AirPterosaurData.pterosaurDietAudioKey(for: "Filter Feeder"), "ptero-diets-filter-feeder")
-        XCTAssertEqual(AirPterosaurData.pterosaurDietAudioKey(for: "Carnivore"), "ptero-diet-carnivore")
-        XCTAssertEqual(AirPterosaurData.pterosaurDietAudioKey(for: "Insectivore"), "ptero-diet-insectivore")
-        XCTAssertEqual(AirPterosaurData.pterosaurDietAudioKey(for: "Piscivore"), "ptero-diet-piscivore")
+        XCTAssertEqual(AirPterosaurData.pterosaurDietAudioKey(for: "Carnivore"), "ptero-diets-carnivore")
+        XCTAssertEqual(AirPterosaurData.pterosaurDietAudioKey(for: "Insectivore"), "ptero-diets-insectivore")
+        XCTAssertEqual(AirPterosaurData.pterosaurDietAudioKey(for: "Piscivore"), "ptero-diets-piscivore")
     }
 
     func testPteroDietAudioFilesExistOnDisk() throws {

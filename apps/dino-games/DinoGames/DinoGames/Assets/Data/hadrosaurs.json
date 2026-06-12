@@ -1,0 +1,119 @@
+{
+  "hadrosaurs": [
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "DINOSAUR_PARK",
+          "base_habitat": "COASTAL_FLOODPLAINS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Bentonitic 'popcorn' clay and dark coal seams",
+            "color_palette": ["Steel grey", "Carbon black", "Creamy tan"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Corythosaurus",
+          "features": ["tall vertical semi-circular helmet crest", "narrow dinner-plate head profile", "friendly expressive face", "smooth clay-like skin"],
+          "action": "A friendly, stylized Corythosaurus with smooth clay-like skin is splashing playfully in a large puddle. The camera angle is an exact side profile to clearly showcase its iconic tall, circular helmet-shaped crest standing out against the background. The scene is lush with Metasequoia trees, taxodium conifers, and floating Azolla ferns. No text."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "LANCE_HELL_CREEK",
+          "base_habitat": "SUBTROPICAL_COASTAL_PLAINS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Fine-grained fluvial sandstone and mudstone",
+            "color_palette": ["Yellowish-grey", "Dull green", "Ocher"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Edmontosaurus",
+          "features": ["long completely uncrested flat head", "prominent broad duckbill snout", "large soulful eyes", "friendly expressive face", "smooth clay-like skin"],
+          "action": "A friendly, stylized Edmontosaurus with smooth clay-like skin is standing fully alert on its hind legs on a sandy riverbank. Its flat head is held horizontally, emphasizing its lack of a top crest and highlighting its exceptionally wide, spoon-shaped duckbill snout. The background features open river channels with low-lying palms, platanites, and viburnum shrubs under a humid hazy sky. No text."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "DINOSAUR_PARK",
+          "base_habitat": "SUBTROPICAL_COASTAL_PLAINS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Dark, rich organic mud",
+            "color_palette": ["Grey", "Black"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "DINOSAUR_PARK_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Lambeosaurus",
+          "features": ["forward-tilting chunky hatchet crest", "backward-pointing rear bony spike", "duck bill", "friendly expressive face", "smooth clay-like skin"],
+          "action": "A friendly, stylized Lambeosaurus with smooth clay-like skin is standing on a dark, muddy plain, tilting its head downward to look curiously at a bright Magnolia flower on the ground. The three-quarter profile clearly emphasizes the top-heavy hatchet shape of the crest leaning out over its face, contrasted with the distinct little spike sticking out the back of its skull. No text."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "TWO_MEDICINE",
+          "base_habitat": "FLOODPLAINS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Dark, rich organic mud",
+            "color_palette": ["Grey", "Ocher", "Brown"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Maiasaura",
+          "features": ["small solid bony crest lump between the eyes", "low-slung wide duckbill snout", "large soulful eyes", "friendly expressive face", "smooth clay-like skin"],
+          "action": "A friendly, stylized Maiasaura with smooth clay-like skin is pacing across a dense green fern-meadow, bowing its head down to search for low-growing horsetails. The camera is positioned at a low three-quarter angle to clearly catch the distinct small, solid bony crest lump situated right between its eyes. The background features open floodplain woodland flats under a soft clear sky. No text."
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "DINOSAUR_PARK",
+          "base_habitat": "FLOODPLAINS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Bentonitic 'popcorn' clay and dark coal seams",
+            "color_palette": ["Steel grey", "Carbon black", "Creamy tan"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Young Parasaurolophus",
+          "features": ["exceptionally long backward-curving hollow tube crest", "sleek horizontal head profile", "large soulful eyes", "friendly expressive face", "smooth clay-like skin"],
+          "action": "A friendly, stylized young Parasaurolophus with smooth clay-like skin is wandering across a wide alluvial floodplain, reaching its head up high toward the sky. The camera angle captures a sweeping side silhouette to dramatically highlight its massive, uniquely long, backward-curving tube crest that sweeps far back past its neck. The background shows distant dense fern-meadows and muddy patches under soft studio lighting. No text."
+        }
+      }
+    }
+  ]
+}

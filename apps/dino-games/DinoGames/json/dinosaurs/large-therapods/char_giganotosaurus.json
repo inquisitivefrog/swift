@@ -1,70 +1,36 @@
 {
-  "style_id": "STYLE_CLAY_MASTER",
-  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {
+      "formation_id": "CANDELEROS",
+      "base_habitat": "SEASONAL_RIVER_PLAINS",
+      "period": "LATE_CRETACEOUS",
+      "strata_specifics": {
+        "ground_texture": "Coarse sandstone and conglomerate rock soil with rounded river pebbles",
+        "color_palette": ["Grey", "Red"]
+      },
+      "flora_manifest": ["LATE_CRETACEOUS_BASE", "CANDELEROS_ADDITIONS"],
+      "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+    },
+    "layer_3_action": {
+      "subject": "Giganotosaurus",
+      "features": [
+        "exceptionally long low-slung boxy skull with a prominent squared-off chin line", 
+        "subtle low decorative bony ridges extending down the top of the snout",
+        "large calm soulful eyes with an observant gaze",
+        "cleanly closed mouth with a gentle neutral profile",
+        "powerful athletic bipedal stance with long strong hind legs",
+        "proportional forelimbs featuring three distinct fingers with blunt claws",
+        "smooth seamless matte clay-like skin with crisp high-poly musculature"
+      ],
+      "action": "A majestic, non-aggressive Giganotosaurus with clean high-poly clay geometry is walking with a slow, composed stride across a coarse sandstone river plain. The camera frames a balanced three-quarter profile from a straight eye-level view, highlighting the immense horizontal length of its signature boxy skull and athletic body without any menacing or predatory cues. The background features a wide receding waterline, damp muddy banks, and scattered clusters of low early flowering reeds under soft, cinematic studio ambient occlusion lighting. No text."
+    },
+    "technical_specs": {
+      "aspect_ratio": "1:1",
+      "resolution": "1024x1024",
+      "framing_preset": "SQUARE_HERO_CARD"
+    }
+  }
 }
-{
-  "flora_library": {
-    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
-    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
-    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
-    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
-    "TIAOJISHAN_ADDITIONS": ["Giant Horsetails", "Dense Conifer forest"],
-    "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
-    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
-    "LANCE_HELL_CREEK_ADDITIONS": ["Palms", "Platanites", "Viburnum"],
-    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
-    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
-    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"],
-    "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"],
-    "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
-    "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
-    "CEDAR_MOUNTAIN_ADDITIONS": ["Paleopus in damp cracks", "Shrubby angiosperms"],
-    "JEHOL_BIOTA_ADDITIONS": ["Water lilies at the edge", "Dense hardwoods"],
-    "CANDELEROS_ADDITIONS": ["Paleopus", "Early flowering reeds"]
-  }
-}
-{
-  "fauna_library": {
-    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
-    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
-    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
-    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates")"],
-    "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
-    "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)," "Cicadas"]
-  }
-}
-{
-  "habitat_id": "SEASONAL_RIVER_PLAINS",
-  "substrate": "Conglomerate and coarse sandstone",
-  "visuals": {
-    "ground": "Rocky soil with rounded river pebbles",
-    "water": "Receding waterlines, muddy banks",
-  }
-}
-{
-  "formation_id": "CANDELEROS",
-  "base_habitat": "SEASONAL_RIVER_PLAINS",
-  "period": "LATE_CRETACEOUS",
-  "strata_specifics": {
-    "ground_texture": "Conglomerate and coarse sandstone",
-    "color_palette": ["Grey", "Red"]
-  },
-  "flora_manifest": ["LATE_CRETACEOUS_BASE", "CANDELEROS_ADDITIONS"],
-  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
-}
-{ 
-  "app_image_config": {
-    "layer_1_style": {
-      "style_id": "STYLE_CLAY_MASTER"
-    },
-    "layer_2_setting": {
-     “formation_id”: “CANDELEROS”,
-      "habitat_id": "SEASONAL_RIVER_PLAINS"
-    },
-    "layer_3_action": {
-      "subject": “Giganotosaurus",
-      "features": [“three-fingered fore legs", “long hind legs”, “long skull”, "large soulful eyes", "friendly expressive face"],
-      "action": “striding across a river plain"
-    }
-  } 
-} 

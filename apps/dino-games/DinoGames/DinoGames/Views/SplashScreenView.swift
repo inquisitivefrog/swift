@@ -75,7 +75,7 @@ struct SplashScreenView: View {
                         CreditsView()
                     }
                     .onAppear {
-                        let skipIntros = CategoryPlaySession.shouldSkipLaunchIntros
+                        let skipIntros = CategoryPlaySession.shouldSkipLaunchIntros || UITestConfiguration.skipSplash
                         if !skipIntros {
                             speechManager.speak("cover-welcome-to-dino-games")
                         }

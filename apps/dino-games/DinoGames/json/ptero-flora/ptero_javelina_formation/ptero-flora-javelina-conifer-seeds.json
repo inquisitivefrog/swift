@@ -1,0 +1,25 @@
+[
+  {
+    "id": "javelina_conifer_quad_001",
+    "species": "Conifers",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "JAVELINA",
+    "environment_details": {
+      "habitat": "SEMI_ARID_FLOODPLAIN",
+      "flora": [
+        "Conifer cone (weathered woody structure, spiraling scales, chunky texture)",
+        "Needle cluster (tufted, rounded tips, olive-drab tone)",
+        "Bark fragment (thick, layered, sun-baked sandstone texture)",
+        "Winged seed (thin, translucent papery wing resting on dusty silt)"
+      ],
+      "ground_palette": ["Dusty Red", "Pale Purple", "Tan", "Olive Drab"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; emphasis on 'clumped' needle groups rather than individual sharp points; tactile, chunkily satisfying bark geometry suited for a high-fidelity 3D animated film."
+    },
+    "visual_logic": {
+      "composition": "Quadrant layout: Top-Left: A mature woody cone; Top-Right: A cluster of olive-drab needles; Bottom-Left: A vertical study of thick, layered bark; Bottom-Right: Two winged seeds resting on a fragment of pale purple claystone.",
+      "ground": "A bed of dusty tan sand and broken claystone blocks.",
+      "lighting": "Bright, even diffused daylight to showcase the varied textures of the arid wood, needles, and mineral matrix clearly."
+    }
+  }
+]

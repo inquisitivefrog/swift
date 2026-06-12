@@ -1,0 +1,7 @@
+{
+    "id": "riparovenator_prestige_peg",
+    "morphology": "Peg",
+    "prompt": "High-fidelity 3D animated feature style. Close-up of a smiling Riparovenator, highlighting its elongated, spinosaurid crocodile-like snout and low crest over the eyes. Skin texture: smooth, water-resistant pebbled scales. Smile reveals blunt, round, pencil-thin ivory-colored 'Peg' teeth. Large, warm expressive eyes. No human teeth, no sharp predator points.",
+    "visual_logic": "Replaces generic carnivore teeth with the specific morphology for Dino Toothache gameplay.",
+    "style_notes": "SQUARE_HERO_CARD, STYLE_ANIMATED_FEATURE_V3. Ensure the aspect ratio is exactly 1:1."
+  }

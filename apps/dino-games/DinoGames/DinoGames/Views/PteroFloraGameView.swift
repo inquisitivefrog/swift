@@ -19,11 +19,19 @@ struct PteroFloraGameConfig {
 
 struct PteroFloraPlant: Identifiable {
     let id: String
+    /// Hyphen slug, e.g. `karabastau`, `javelina`.
+    let formation: String
+    /// Folder under `Audio/Ptero-Flora/`, e.g. `Karabastau`, `Javelina`.
+    let formationFolder: String
+    /// Plant taxon slug in the asset stem, e.g. `cycad`, `araucariacea`.
+    let taxon: String
     let displayName: String
-    let treeImageName: String
-    var seedsImageName: String { treeImageName.replacingOccurrences(of: "-habitat", with: "-seeds") }
-    /// Prefer `ptero-flora-{slug}` → `Flora/Pterosaurs/karabastau/ptero-flora-{slug}.m4a` (see `SpeechManager` / `urlForAudio`); falls back to flat `Flora/Pterosaurs/…`, then spoken `displayName`.
-    let audioKey: String
+
+    /// Shared stem: `ptero-flora-{formation}-{taxon}` (matches imagesets and `.m4a` filename).
+    var assetStem: String { "ptero-flora-\(formation)-\(taxon)" }
+    var treeImageName: String { "\(assetStem)-habitat" }
+    var seedsImageName: String { "\(assetStem)-seeds" }
+    var audioKey: String { assetStem }
 }
 
 private enum PteroFloraMorphTables {
@@ -58,17 +66,10 @@ private enum PteroFloraMorphTables {
     ]
 }
 
-/// Karabastau formation — matches bundled `ptero-flora-*` habitat/seeds art for this formation.
-private let pteroKarabastauPlants: [PteroFloraPlant] = [
-    PteroFloraPlant(id: "cycad", displayName: "Cycads", treeImageName: "ptero-flora-cycad-habitat", audioKey: "ptero-flora-cycad"),
-    PteroFloraPlant(id: "ginkgoales", displayName: "Ginkgoales", treeImageName: "ptero-flora-ginkgoales-habitat", audioKey: "ptero-flora-ginkgoales"),
-    PteroFloraPlant(id: "equisetites", displayName: "Equisetites", treeImageName: "ptero-flora-karabastau-equisetites-habitat", audioKey: "ptero-flora-equisetites"),
-    /// Imagesets use stem `ptero-flora-araucariacea-*` (catalog spelling); keep `id` / audioKey `araucariaceae` for logic + `Flora/Pterosaurs` audio.
-    PteroFloraPlant(id: "araucariaceae", displayName: "Araucariaceae", treeImageName: "ptero-flora-araucariacea-habitat", audioKey: "ptero-flora-araucariaceae"),
-    PteroFloraPlant(id: "palm-like-leaves", displayName: "Palm-like leaves", treeImageName: "ptero-flora-palm-like-leaves-habitat", audioKey: "ptero-flora-palm-like-leaves"),
-    PteroFloraPlant(id: "conifer", displayName: "Conifer", treeImageName: "ptero-flora-karabastau-conifer-habitat", audioKey: "ptero-flora-conifer"),
-    PteroFloraPlant(id: "early-angiosperm", displayName: "Early angiosperm", treeImageName: "ptero-flora-early-angiosperm-habitat", audioKey: "ptero-flora-early-angiosperm"),
-]
+/// Karabastau formation — first shipped set; plant list in `LandGameDisplayMoment.swift`.
+private let pteroKarabastauPlants: [PteroFloraPlant] = {
+    pteroFloraPlants.filter { $0.formation == "karabastau" }
+}()
 
 private let pteroFloraPool: [Dinosaur] = {
     MatchingGameConfigs.allPterosaurs.filter { $0.imageName?.hasPrefix("ptero-") == true }
@@ -165,8 +166,10 @@ struct PteroFloraGameView: View {
                 }
                 .fullScreenCover(isPresented: $showSourceFloraHints) {
                     SourceFloraHintsView(
-                        onDismiss: { showSourceFloraHints = false },
-                        hintGridIntroAudioKey: "game-ptero-flora-tap-the-plant-to-hear-description"
+                        hints: LandGameDisplayMomentCatalog.pteroFloraCategoryHints,
+                        title: SourceHintsTitles.plants,
+                        hintGridIntroAudioKey: "game-ptero-flora-tap-the-plant-to-hear-description",
+                        onDismiss: { showSourceFloraHints = false }
                     )
                 }
         }
@@ -558,6 +561,37 @@ private struct PteroFloraCircleView: View {
         if isMatched { return .green }
         if isIntroHighlighted { return Color.accentColor }
         return Color.gray.opacity(0.4)
+    }
+}
+
+// MARK: - Mechanics (test + catalog surface)
+
+enum PteroFloraMechanics {
+    /// Karabastau formation — first shipped gameplay set.
+    static var shippedPlants: [PteroFloraPlant] {
+        pteroFloraPlants.filter { $0.formation == "karabastau" }
+    }
+
+    static var shippedPlantIds: Set<String> { Set(shippedPlants.map(\.id)) }
+    static var eaterMapPlantIds: Set<String> { Set(PteroFloraMorphTables.eatersByPlantId.keys) }
+    static var nonEaterMapPlantIds: Set<String> { Set(PteroFloraMorphTables.nonEatersByPlantId.keys) }
+
+    static func eaterIds(forPlantId id: String) -> Set<Int> {
+        PteroFloraMorphTables.eatersByPlantId[id] ?? []
+    }
+
+    static func nonEaterIds(forPlantId id: String) -> Set<Int> {
+        PteroFloraMorphTables.nonEatersByPlantId[id] ?? []
+    }
+
+    static func poolEaterCount(forPlantId id: String) -> Int {
+        let eaters = eaterIds(forPlantId: id)
+        return pteroFloraPool.filter { eaters.contains($0.id) }.count
+    }
+
+    static func poolNonEaterCount(forPlantId id: String) -> Int {
+        let nonEaters = nonEaterIds(forPlantId: id)
+        return pteroFloraPool.filter { nonEaters.contains($0.id) }.count
     }
 }
 

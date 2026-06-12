@@ -8,11 +8,11 @@ import XCTest
 
 final class MarineRacingXCTests: XCTestCase {
 
-    func testRacingMarineReptilesConfigUsesBuoyCircleAndMarinePrefix() {
+    func testRacingMarineReptilesConfigUsesSlalomAndMarinePrefix() {
         let config = RacingGameConfigs.racingMarineReptiles
         XCTAssertEqual(config.id, "racing-marine-reptiles")
         XCTAssertEqual(config.assetPrefix, "marine")
-        XCTAssertEqual(config.trackLayout, .marineBuoyCircle(buoyCount: 8)) // eight buoys on exterior ring; slalom wide/tight legs
+        XCTAssertEqual(config.trackLayout, .marineBuoySlalom(buoyCount: 8)) // eight buoys; slalom wide/tight legs
         XCTAssertFalse(config.racers.isEmpty, "Expected featured marine reptiles with bundled body art")
     }
 
@@ -41,6 +41,7 @@ final class MarineRacingXCTests: XCTestCase {
         )
     }
 
+    @MainActor
     func testMarineRacingSelectionPromptsResolveToBundledClips() {
         let speech = SpeechManager()
         XCTAssertNotNil(
@@ -51,5 +52,20 @@ final class MarineRacingXCTests: XCTestCase {
             speech.urlForAudio(key: "game-choose-your-second-marine-reptile"),
             "Racing Marine Reptiles should use Games/game-choose-your-second-marine-reptile.m4a, not TTS"
         )
+    }
+
+    @MainActor
+    func testMarineRacingReadySetGoResolveToBundledClips() {
+        let speech = SpeechManager()
+        for key in [
+            "game-racing-marine-reptiles-ready",
+            "game-racing-marine-reptiles-set",
+            "game-racing-marine-reptiles-go",
+        ] {
+            XCTAssertNotNil(
+                speech.urlForAudio(key: key),
+                "Racing Marine Reptiles countdown should use bundled Games/\(key).m4a, not TTS"
+            )
+        }
     }
 }

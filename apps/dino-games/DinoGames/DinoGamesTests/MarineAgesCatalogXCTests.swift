@@ -38,4 +38,13 @@ final class MarineAgesCatalogXCTests: XCTestCase {
             XCTAssertTrue(ImageAssetNames.knownAssets.contains(name), "Missing bundled asset: \(name)")
         }
     }
+
+    @MainActor
+    func testMarineAgesHintAudioResolvesInBundle() {
+        let speech = SpeechManager()
+        XCTAssertNotNil(
+            speech.urlForAudio(key: "game-marine-ages-tap-the-period-to-hear-description"),
+            "Marine Ages hints button intro should resolve to bundled Games/ clip"
+        )
+    }
 }

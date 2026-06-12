@@ -117,19 +117,50 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return nil
         }
         if normalized.hasPrefix("ptero-flora-") {
-            let rest = String(normalized.dropFirst("ptero-flora-".count))
-            let candidates = [
-                "Flora/Pterosaurs/karabastau/ptero-flora-\(rest)",
-                "Flora/Pterosaurs/ptero-flora-\(rest)",
-            ]
-            for path in candidates {
-                if let url = resolveURL(forPath: path) { return url }
+            for plant in pteroFloraPlants where plant.audioKey == normalized {
+                if let url = resolveURL(forPath: "Ptero-Flora/\(plant.formationFolder)/\(plant.audioKey)") {
+                    return url
+                }
             }
             return nil
         }
-        // Ptero Diets!: diet option clips under `Audio/Ptero-Diets/` (`ptero-diet-*`, `ptero-diets-*`).
+        // Flora category hints: Audio/{Pack}-Flora/hints/{key}.m4a
+        if normalized.hasPrefix("dino-hint-") {
+            if let url = resolveURL(forPath: "Dino-Flora/hints/\(normalized)") { return url }
+            return nil
+        }
+        if normalized.hasPrefix("ptero-hint-") {
+            if let url = resolveURL(forPath: "Ptero-Flora/hints/\(normalized)") { return url }
+            return nil
+        }
+        if normalized.hasPrefix("marine-hint-") {
+            if let url = resolveURL(forPath: "Marine-Flora/hints/\(normalized)") { return url }
+            return nil
+        }
+        // Legacy dino flora hint keys (flora-hint-* → Dino-Flora/hints/dino-hint-*)
+        if normalized.hasPrefix("flora-hint-") {
+            let slug = String(normalized.dropFirst("flora-hint-".count))
+            if let url = resolveURL(forPath: "Dino-Flora/hints/dino-hint-\(slug)") { return url }
+            return nil
+        }
+        // Dino Diets!: diet option clips under `Audio/Dino-Diets/` (`dino-diet-*`; legacy `diet-*` still resolved).
+        if normalized.hasPrefix("dino-diet-") {
+            if let url = resolveURL(forPath: "Dino-Diets/\(normalized)") { return url }
+            return nil
+        }
+        if normalized.hasPrefix("diet-") {
+            let slug = String(normalized.dropFirst("diet-".count))
+            if let url = resolveURL(forPath: "Dino-Diets/dino-diet-\(slug)") { return url }
+            return nil
+        }
+        // Ptero Diets!: diet option clips under `Audio/Ptero-Diets/` (`ptero-diets-*`; legacy `ptero-diet-*` still resolved).
         if normalized.hasPrefix("ptero-diets-") || normalized.hasPrefix("ptero-diet-") {
             if let url = resolveURL(forPath: "Ptero-Diets/\(normalized)") { return url }
+            return nil
+        }
+        // Marine Diets!: diet option clips under `Audio/Marine-Diets/` (`marine-diets-*`).
+        if normalized.hasPrefix("marine-diets-") {
+            if let url = resolveURL(forPath: "Marine-Diets/\(normalized)") { return url }
             return nil
         }
         // Racing clips: `Games/{file}` or `Games/racing-dinosaurs|pterosaurs/{file}` (shared keys like outside-track may live in either pack folder).
@@ -158,6 +189,12 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         if normalized == "marine-eggs" {
             if let url = resolveURL(forPath: "Games/game-marine-eggs") { return url }
         }
+        // Dino / Ptero / Marine Ages!: bundled under `Assets/Audio/Games/` (period covers, find-in, hints).
+        if normalized.hasPrefix("game-dino-ages")
+            || normalized.hasPrefix("game-ptero-ages")
+            || normalized.hasPrefix("game-marine-ages") {
+            if let url = resolveURL(forPath: "Games/\(normalized)") { return url }
+        }
         // Dino Fossil Hunt site clips: `Games/{file}` or `Games/dino-fossil-hunt/{file}` (hint keys → `Audio/Fossil/`).
         if normalized.hasPrefix("game-dino-fossil-hunt") && !normalized.hasPrefix("game-dino-fossil-hunt-hint") {
             if let url = resolveURL(forPath: "Games/\(normalized)") { return url }
@@ -167,6 +204,27 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         }
         if normalized.hasPrefix("game-dino-matrix") || normalized.hasPrefix("game-ptero-matrix") || normalized.hasPrefix("game-marine-matrix") {
             if let url = resolveURL(forPath: "Games/\(normalized)") { return url }
+        }
+        // Matrix stone narration (`dino-limestone`, etc.) under `Audio/*-Materials/` — before generic `dino-*` dinosaur routing.
+        if let matrixPath = Self.matrixMaterialAudioPath(for: normalized) {
+            if let url = resolveURL(forPath: matrixPath) { return url }
+        }
+        // Dino Flora plants: `dino-flora-{formation}-{taxon}` → `Dino-Flora/{FormationFolder}/{stem}.m4a`
+        if normalized.hasPrefix("dino-flora-") {
+            for plant in dinoFloraPlants where plant.audioKey == normalized {
+                if let url = resolveURL(forPath: "Dino-Flora/\(plant.formationFolder)/\(plant.audioKey)") {
+                    return url
+                }
+            }
+        }
+        // Legacy dino flora keys (`flora-{slug}`) during transition — map via plant registry when possible.
+        if normalized.hasPrefix("flora-") && !normalized.hasPrefix("flora-hint-") {
+            let legacySlug = String(normalized.dropFirst("flora-".count))
+            if let plant = dinoFloraPlants.first(where: { $0.taxon == legacySlug || $0.id == legacySlug }) {
+                if let url = resolveURL(forPath: "Dino-Flora/\(plant.formationFolder)/\(plant.audioKey)") {
+                    return url
+                }
+            }
         }
         guard let path = audioFilePath(for: key) else { return nil }
         return resolveURL(forPath: path)
@@ -260,6 +318,9 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
     /// Resolve path (e.g. "Feedback/crowd-cheering") to first found bundle URL (.m4a, .mp3, or .wav).
     private func resolveURL(forPath audioPath: String) -> URL? {
         if let url = bundleURLForExactAudioPath(audioPath) { return url }
+        if let url = Self.resolveMatrixMaterialLegacyURL(forPath: audioPath, lookup: bundleURLForExactAudioPath) {
+            return url
+        }
         if audioPath.hasPrefix("Dino-Materials/") {
             let legacy = (audioPath as NSString).replacingOccurrences(of: "Dino-Materials/", with: "Materials/")
             if let url = bundleURLForExactAudioPath(legacy) { return url }
@@ -393,11 +454,76 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         }
     }
 
+    private static let dinoMatrixMaterialStems: Set<String> = [
+        "limestone", "mudstone", "sandstone", "siltstone", "tuff", "shale",
+        "ironstone", "claystone", "lignite", "conglomerate",
+    ]
+    private static let pteroMatrixMaterialStems: Set<String> = [
+        "bentonite", "chalk", "lignite", "sandstone", "shale", "tuff",
+    ]
+    private static let marineMatrixMaterialStems: Set<String> = [
+        "chalk", "claystone", "ironstone", "limestone", "phosphorite", "shale", "tuff",
+    ]
+
+    /// Matrix stone keys (`dino-limestone`, bare `limestone`, etc.) → `Audio/{Category}-Materials/{prefix}-{stem}.m4a`.
+    /// Must run before generic `dino-*` / `ptero-*` / `marine-*` dinosaur name routing.
+    private static func matrixMaterialAudioPath(for normalized: String) -> String? {
+        func prefixedPath(folder: String, prefix: String, stem: String) -> String {
+            "\(folder)/\(prefix)-\(stem)"
+        }
+        if normalized.hasPrefix("dino-") {
+            let stem = String(normalized.dropFirst("dino-".count))
+            if dinoMatrixMaterialStems.contains(stem) {
+                return prefixedPath(folder: "Dino-Materials", prefix: "dino", stem: stem)
+            }
+        }
+        if dinoMatrixMaterialStems.contains(normalized) {
+            return prefixedPath(folder: "Dino-Materials", prefix: "dino", stem: normalized)
+        }
+        if normalized.hasPrefix("ptero-") {
+            let stem = String(normalized.dropFirst("ptero-".count))
+            if pteroMatrixMaterialStems.contains(stem) {
+                return prefixedPath(folder: "Ptero-Materials", prefix: "ptero", stem: stem)
+            }
+        }
+        if normalized.hasPrefix("marine-") {
+            let stem = String(normalized.dropFirst("marine-".count))
+            if marineMatrixMaterialStems.contains(stem) {
+                return prefixedPath(folder: "Marine-Materials", prefix: "marine", stem: stem)
+            }
+        }
+        return nil
+    }
+
+    /// Tries `{folder}/{prefix}-{stem}` ↔ `{folder}/{stem}` for matrix material folders.
+    private static func resolveMatrixMaterialLegacyURL(
+        forPath audioPath: String,
+        lookup: (String) -> URL?
+    ) -> URL? {
+        let matrixFolders: [(folder: String, prefix: String)] = [
+            ("Dino-Materials", "dino-"),
+            ("Ptero-Materials", "ptero-"),
+            ("Marine-Materials", "marine-"),
+        ]
+        for entry in matrixFolders where audioPath.hasPrefix("\(entry.folder)/") {
+            let fileName = (audioPath as NSString).lastPathComponent
+            if fileName.hasPrefix(entry.prefix) {
+                let without = String(fileName.dropFirst(entry.prefix.count))
+                if let url = lookup("\(entry.folder)/\(without)") { return url }
+            } else if let url = lookup("\(entry.folder)/\(entry.prefix)\(fileName)") { return url }
+        }
+        return nil
+    }
+
     // Map text to audio file paths (case-insensitive matching)
     private func audioFilePath(for text: String) -> String? {
         let normalized = text.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
             .replacingOccurrences(of: " ", with: "-")
             .replacingOccurrences(of: "!", with: "")
+
+        if let matrixPath = Self.matrixMaterialAudioPath(for: normalized) {
+            return matrixPath
+        }
         
         // Dino Lunch: tray contents audio (Trays/contents-{slug})
         if normalized.hasPrefix("contents-") {
@@ -411,13 +537,21 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         if normalized.hasPrefix("clue-") {
             return "Clues/\(normalized)"
         }
-        // Dino Diets!: diet trait audio (Audio/Diets/diet-{slug}.m4a), e.g. diet-herbivore, diet-carnivore
-        if normalized.hasPrefix("diet-") {
-            return "Diets/\(normalized)"
+        // Dino Diets!: dinosaur diet clips (Audio/Dino-Diets/dino-diet-{slug}.m4a; legacy diet-* still resolved)
+        if normalized.hasPrefix("dino-diet-") {
+            return "Dino-Diets/\(normalized)"
         }
-        // Ptero Diets!: pterosaur diet clips (Audio/Ptero-Diets/ptero-diet-{slug}.m4a or ptero-diets-{slug}.m4a)
+        if normalized.hasPrefix("diet-") {
+            let slug = String(normalized.dropFirst("diet-".count))
+            return "Dino-Diets/dino-diet-\(slug)"
+        }
+        // Ptero Diets!: pterosaur diet clips (Audio/Ptero-Diets/ptero-diets-{slug}.m4a; legacy ptero-diet-* still resolved)
         if normalized.hasPrefix("ptero-diets-") || normalized.hasPrefix("ptero-diet-") {
             return "Ptero-Diets/\(normalized)"
+        }
+        // Marine Diets!: marine reptile diet clips (Audio/Marine-Diets/marine-diets-{slug}.m4a)
+        if normalized.hasPrefix("marine-diets-") {
+            return "Marine-Diets/\(normalized)"
         }
         
         // Map common phrases to file names (matching your recorded files)
@@ -955,12 +1089,24 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-dino-flora-tap-the-plant-to-hear-description"
         case "game-dino-flora-tap-the-image":
             return "Games/game-dino-flora-tap-the-image"
-        case "flora-hint-browsers":
-            return "Flora/hint-browsers"
-        case "flora-hint-periods":
-            return "Flora/hint-periods"
-        case "flora-hint-diets":
-            return "Flora/hint-diets"
+        case "flora-hint-browsers", "dino-hint-browsers":
+            return "Dino-Flora/hints/dino-hint-browsers"
+        case "flora-hint-periods", "dino-hint-periods":
+            return "Dino-Flora/hints/dino-hint-periods"
+        case "flora-hint-diets", "dino-hint-diets":
+            return "Dino-Flora/hints/dino-hint-diets"
+        case "ptero-hint-size":
+            return "Ptero-Flora/hints/ptero-hint-size"
+        case "ptero-hint-period":
+            return "Ptero-Flora/hints/ptero-hint-period"
+        case "ptero-hint-diets":
+            return "Ptero-Flora/hints/ptero-hint-diets"
+        case "marine-hint-protection":
+            return "Marine-Flora/hints/marine-hint-protection"
+        case "marine-hint-periods":
+            return "Marine-Flora/hints/marine-hint-periods"
+        case "marine-hint-diets":
+            return "Marine-Flora/hints/marine-hint-diets"
         case "game-dino-push", "dino push":
             return "Games/game-dino-push"
         case "game-dino-push-choose-two-dinosaurs", "choose two dinosaurs":
@@ -1044,9 +1190,18 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             var suffix = String(normalized.dropFirst("dino-char-".count))
             if suffix == "tail-spikes" { suffix = "tail-spike" } // audio file is tail-spike.m4a
             return "\(characteristicSubfolder)/\(suffix)"
-        // Dino Flora plant intros: key flora-{slug} → Flora/Dinosaurs/dino-flora-{slug}.m4a (flora-hint-* handled above)
+        // Dino Flora plant intros: key `dino-flora-{formation}-{taxon}` → `Dino-Flora/{folder}/{key}.m4a` (see `urlForAudio` plant registry).
+        case _ where normalized.hasPrefix("dino-flora-") && !normalized.hasPrefix("dino-flora-hint"):
+            if let plant = dinoFloraPlants.first(where: { $0.audioKey == normalized }) {
+                return "Dino-Flora/\(plant.formationFolder)/\(plant.audioKey)"
+            }
+            return nil
+        // Legacy dino flora plant keys: `flora-{slug}` (prefer plant registry in `urlForAudio`).
         case _ where normalized.hasPrefix("flora-") && !normalized.hasPrefix("flora-hint-"):
             let slug = String(normalized.dropFirst("flora-".count))
+            if let plant = dinoFloraPlants.first(where: { $0.taxon == slug || $0.id == slug }) {
+                return "Dino-Flora/\(plant.formationFolder)/\(plant.audioKey)"
+            }
             return "Flora/Dinosaurs/dino-flora-\(slug)"
         // Fauna: fauna-{slug} → Fauna/{slug}.m4a for Dino Fauna species intros
         case _ where normalized.hasPrefix("fauna-"):
@@ -1089,10 +1244,12 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Body/hindleg"
         case "cervical-vertebrae":
             return "Body/neck"
-        // Ptero Flora plant intros: `ptero-flora-{slug}` → `Flora/Pterosaurs/karabastau/ptero-flora-{slug}.m4a` (Karabastau formation); legacy flat `Flora/Pterosaurs/…` still tried in `urlForAudio`. Must precede generic `ptero-*` → Pterosaurs/.
+        // Ptero Flora plant intros: key `ptero-flora-{formation}-{taxon}` → `Ptero-Flora/{folder}/{key}.m4a` (see `urlForAudio` plant registry).
         case _ where normalized.hasPrefix("ptero-flora-"):
-            let rest = String(normalized.dropFirst("ptero-flora-".count))
-            return "Flora/Pterosaurs/karabastau/ptero-flora-\(rest)"
+            if let plant = pteroFloraPlants.first(where: { $0.audioKey == normalized }) {
+                return "Ptero-Flora/\(plant.formationFolder)/\(plant.audioKey)"
+            }
+            return nil
         // Dinosaurs: Audio/Dinosaurs/{key}.m4a for any other dino-* key (e.g. dino-camarasaurus) for dinosaur name audio
         case _ where normalized.hasPrefix("dino-"):
             return "Dinosaurs/\(normalized)"
@@ -1109,11 +1266,6 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Marine/\(normalized)"
         case _ where normalized.hasPrefix("ichthyo-"):
             return "Marine/\(normalized)"
-
-        // Dino Matrix (and future Ptero/Marine Matrix): stone names → Audio/Dino-Materials/{slug}.m4a
-        case "limestone", "mudstone", "bentonite", "sandstone", "siltstone", "tuff", "amber", "shale",
-             "ironstone", "claystone", "lignite", "phosphorite", "conglomerate", "chalk":
-            return "Dino-Materials/\(normalized)"
 
         default:
             // Debug output to help diagnose mapping issues
@@ -1564,15 +1716,8 @@ struct MatchingGameView: View {
         StandardVictoryLayout.recapListScrollHeight(itemCount: victoryRecapRowCount)
     }
 
-    /// Ptero Diets keeps title + diet recap visible above the success card (same continuous-screen victory as Name That Dinosaur).
-    private var matchingVictoryKeepsRecapDuringSuccess: Bool {
-        gameConfig.id == "ptero-diets"
-    }
-
     private var matchingVictorySuccessImageSide: CGFloat {
-        matchingVictoryKeepsRecapDuringSuccess
-            ? 180
-            : GameCatalogImageMetrics.nameThatVictorySuccessImageSide
+        GameCatalogImageMetrics.nameThatVictorySuccessImageSide
     }
 
     // MARK: - Victory: scrolling list in top half (highlight + name audio); bottom half success card + optional stinger, then good-job + crowd and dismiss
@@ -1582,8 +1727,6 @@ struct MatchingGameView: View {
                 showSuccessPhase: endSequenceStep == 2,
                 endHighlightIndex: endHighlightIndex,
                 gameTitle: dietMatchingDisplayTitle,
-                hideGameTitleDuringSuccessPhase: !matchingVictoryKeepsRecapDuringSuccess,
-                collapseRecapListDuringSuccessPhase: !matchingVictoryKeepsRecapDuringSuccess,
                 scrollRows: {
                     if isDietMatchingGame {
                         ForEach(Array(victoryDiets.enumerated()), id: \.element.type) { index, diet in
@@ -1653,13 +1796,14 @@ struct MatchingGameView: View {
     }
 
     private func dietAudioKey(for characteristic: Characteristic) -> String {
-        if gameConfig.id == "marine-diets" {
+        switch gameConfig.id {
+        case "marine-diets":
             return SeaMarineReptileData.dietAudioKey(for: characteristic.type)
-        }
-        if gameConfig.id == "ptero-diets" {
+        case "ptero-diets":
             return AirPterosaurData.pterosaurDietAudioKey(for: characteristic.type)
+        default:
+            return LandDinosaurData.dinosaurDietAudioKey(for: characteristic.type)
         }
-        return "diet-\(characteristic.type.lowercased())"
     }
 
     private func speakMatchingVictoryRecap(at index: Int) {
@@ -1912,11 +2056,11 @@ struct MatchingGameView: View {
                 DispatchQueue.main.async {  }
             }
             let pickFirstKey: String = {
-                if isMarineMatchingGame { return "pick-a-dinosaur-first" }
-                if isPterosaurMatchingGame { return "pick-a-pterosaur-first" }
-                return "pick-a-dinosaur-first"
+                if isMarineMatchingGame { return OrderedTouchFeedback.pickDinosaurFirst }
+                if isPterosaurMatchingGame { return OrderedTouchFeedback.pickPterosaurFirst }
+                return OrderedTouchFeedback.pickDinosaurFirst
             }()
-            speechManager.speak(pickFirstKey)
+            OrderedTouchFeedback.speak(pickFirstKey, speechManager: speechManager)
             return
         }
         
@@ -1982,12 +2126,10 @@ struct MatchingGameView: View {
             if matchCount == dinosaurs.count {
                 // Third match: Dino Diets! uses 10 s threshold and great-match / wow-that-was-tricky; others use 5 s and great-match / wow-that-was-tricky
                 matchChoiceStartTime = nil // Reset timer after choosing audio
-                let matchAudio: String
-                if isDietMatchingGame {
-                    matchAudio = elapsed > 10 ? "wow-that-was-tricky" : "great-match"
-                } else {
-                    matchAudio = elapsed > 5 ? "wow-that-was-tricky" : "great-match"
-                }
+                let slowThreshold = isDietMatchingGame
+                    ? OrderedTouchFeedback.dietSlowThresholdSeconds
+                    : OrderedTouchFeedback.defaultSlowThresholdSeconds
+                let matchAudio = OrderedTouchFeedback.successMatchAudio(elapsed: elapsed, slowThreshold: slowThreshold)
                 speechManager.onAudioFinished = {
                     DispatchQueue.main.async {
                         self.accumulateVictoryRecapForCompletedRound()
@@ -2004,15 +2146,13 @@ struct MatchingGameView: View {
                         }
                     }
                 }
-                speechManager.speak(matchAudio)
+                OrderedTouchFeedback.speak(matchAudio, speechManager: speechManager)
             } else {
                 // First or second match: Dino Diets! uses 10 s and great-match / wow-that-was-tricky; others use 5 s and great-match / wow-that-was-tricky
-                let matchAudio: String
-                if isDietMatchingGame {
-                    matchAudio = elapsed > 10 ? "wow-that-was-tricky" : "great-match"
-                } else {
-                    matchAudio = elapsed > 5 ? "wow-that-was-tricky" : "great-match"
-                }
+                let slowThreshold = isDietMatchingGame
+                    ? OrderedTouchFeedback.dietSlowThresholdSeconds
+                    : OrderedTouchFeedback.defaultSlowThresholdSeconds
+                let matchAudio = OrderedTouchFeedback.successMatchAudio(elapsed: elapsed, slowThreshold: slowThreshold)
                 matchChoiceStartTime = nil // Reset timer after choosing audio
                 speechManager.onAudioFinished = {
                     DispatchQueue.main.async {
@@ -2020,7 +2160,7 @@ struct MatchingGameView: View {
                         self.selectedCharacteristic = nil
                     }
                 }
-                speechManager.speak(matchAudio)
+                OrderedTouchFeedback.speak(matchAudio, speechManager: speechManager)
             }
         } else {
             // Wrong match - encouragement and permission to continue (no failure count, no game over)

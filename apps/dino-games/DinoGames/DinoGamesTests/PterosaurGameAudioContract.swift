@@ -79,6 +79,7 @@ enum PterosaurGameAudioContracts {
             displayName: "Ptero Ages",
             requiredAudioKeys: [
                 "game-ptero-ages",
+                "game-hint",
                 "game-ptero-ages-jurassic-pterosaurs",
                 "game-ptero-ages-cretaceous-pterosaurs",
                 "game-ptero-ages-find-in-jurassic",
@@ -102,6 +103,9 @@ enum PterosaurGameAudioContracts {
                 "game-ptero-flora",
                 "game-ptero-flora-which-three-pterosaurs",
                 "game-ptero-flora-tap-the-plant-to-hear-description",
+                "ptero-hint-size",
+                "ptero-hint-period",
+                "ptero-hint-diets",
             ]
         ),
         PterosaurGameAudioContract(
@@ -172,6 +176,8 @@ enum PterosaurGameAudioContracts {
             return pteroDietOptionAudioKeys()
         case "ptero-smile":
             return pteroSmileBeakAudioKeys()
+        case "ptero-matrix":
+            return pteroMatrixMaterialAudioKeys()
         default:
             return []
         }
@@ -186,15 +192,7 @@ enum PterosaurGameAudioContracts {
     // MARK: - Dynamic supplements
 
     private static func pteroFloraPlantAudioKeys() -> [String] {
-        [
-            "ptero-flora-cycad",
-            "ptero-flora-ginkgoales",
-            "ptero-flora-equisetites",
-            "ptero-flora-araucariaceae",
-            "ptero-flora-palm-like-leaves",
-            "ptero-flora-conifer",
-            "ptero-flora-early-angiosperm",
-        ]
+        pteroFloraPlants.map(\.audioKey)
     }
 
     private static func pteroFootprintsCladeAudioKeys() -> [String] {
@@ -214,6 +212,11 @@ enum PterosaurGameAudioContracts {
             "micro-peg",
             "comb-filter",
         ].map { PteroSmileMorphology.toothAudioKey(for: $0) }
+    }
+
+    private static func pteroMatrixMaterialAudioKeys() -> [String] {
+        guard let config = PteroMatrixGameConfigs.makePteroMatrix() else { return [] }
+        return config.allMaterials.map { $0.audioKey(for: .ptero) }
     }
 
     /// Egg/nest narration under `Audio/Eggs/Pterosaurs/` (checked on disk in `PterosaurGameAudioFilesXCTests`).

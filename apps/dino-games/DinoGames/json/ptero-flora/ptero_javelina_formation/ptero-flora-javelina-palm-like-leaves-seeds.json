@@ -1,0 +1,25 @@
+[
+  {
+    "id": "javelina_palm_leaves_quad_001",
+    "species": "Palm_like_leaves",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "JAVELINA",
+    "environment_details": {
+      "habitat": "SEMI_ARID_FLOODPLAIN",
+      "flora": [
+        "Emerging frond (tightly coiled, developing fan structure)",
+        "Broad frond segment (showing soft parallel ribbing)",
+        "Fibrous stem base (robust, textured petiole attachment)",
+        "Fossilized leaf impression (flattened, preserved in pale purple claystone)"
+      ],
+      "ground_palette": ["Dusty Red", "Pale Purple", "Tan", "Olive Drab"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; leathery, waxy leaf surfaces; chunky fibrous stems; rounded, safe-looking frond tips; high-specular highlights to contrast with the dusty, arid environment."
+    },
+    "visual_logic": {
+      "composition": "Tiled composition: Top-Left: A tightly curled new frond; Top-Right: A wide shot of a full fan-leaf; Bottom-Left: The textured base where the leaf meets the main stem; Bottom-Right: A leaf impression in a slab of pale purple Javelina claystone.",
+      "ground": "Dusty tan sand and fractured claystone blocks.",
+      "lighting": "Bright, even illumination to distinguish the vibrant olive-drab living tissue from the pale purple fossilized matrix."
+    }
+  }
+]

@@ -81,8 +81,6 @@ enum DinoEggMorphology {
         playsTapScannerPrompt: true,
         showsCreatureNameOnCards: false,
         victoryRecapUsesCreatureName: false,
-        hideGameTitleDuringSuccessPhase: true,
-        collapseRecapListDuringSuccessPhase: true,
         sourceHints: sourceHints,
         sourceHintsTitle: "Source Eggs",
         sourceHintsGridIntroAudioKey: nil,

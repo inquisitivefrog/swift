@@ -18,6 +18,16 @@ struct LandDinosaurGameAudioContract {
 
 enum LandDinosaurGameAudioContracts {
 
+    /// Shared pre-reader handrails for ordered-touch land games (Assets/Audio/Feedback/).
+    static let orderedTouchFeedbackKeys: [String] = [
+        OrderedTouchFeedback.pickDinosaurFirst,
+        OrderedTouchFeedback.wowThatWasTricky,
+        OrderedTouchFeedback.greatMatch,
+        OrderedTouchFeedback.tryAgain,
+        OrderedTouchFeedback.pickAnotherOne,
+        OrderedTouchFeedback.thatsRightYouGuessedIt,
+    ]
+
     /// One contract per config id placed in `GameLevel.visibleInGamePicker` land rows.
     static let all: [LandDinosaurGameAudioContract] = [
         LandDinosaurGameAudioContract(
@@ -77,6 +87,7 @@ enum LandDinosaurGameAudioContracts {
             displayName: "Dino Ages",
             requiredAudioKeys: [
                 "game-dino-ages",
+                "game-hint",
                 "game-dino-ages-jurassic-dinosaurs",
                 "game-dino-ages-cretaceous-dinosaurs",
                 "game-dino-ages-find-in-jurassic",
@@ -100,9 +111,9 @@ enum LandDinosaurGameAudioContracts {
                 "game-dino-flora",
                 "game-dino-flora-which-three-dinosaurs",
                 "game-dino-flora-tap-the-image",
-                "flora-hint-browsers",
-                "flora-hint-periods",
-                "flora-hint-diets",
+                "dino-hint-browsers",
+                "dino-hint-periods",
+                "dino-hint-diets",
             ]
         ),
         LandDinosaurGameAudioContract(
@@ -173,19 +184,12 @@ enum LandDinosaurGameAudioContracts {
 
     // MARK: - Dynamic supplements
 
-    private static let dinoFloraPlantAudioKeysList: [String] = [
-        "flora-horsetails", "flora-moss", "flora-araucaria", "flora-ginkgo", "flora-cycads",
-        "flora-tree-fern", "flora-fern", "flora-charophytes", "flora-clubmoss", "flora-equisetites",
-        "flora-fungi", "flora-ginkgoites", "flora-liverwort", "flora-magnoliid", "flora-paleopus",
-        "flora-taxodium", "flora-totara", "flora-walnut", "flora-water-lilies",
-    ]
-
     private static func dinoFloraPlantAudioKeys() -> [String] {
-        dinoFloraPlantAudioKeysList
+        dinoFloraPlants.map(\.audioKey)
     }
 
     private static func dinoMatrixMaterialAudioKeys() -> [String] {
-        DinoMatrixGameConfigs.dinoMatrix.allMaterials.map { $0.name.lowercased() }
+        DinoMatrixGameConfigs.dinoMatrix.allMaterials.map { $0.audioKey(for: .dino) }
     }
 
     private static func dinoFootprintsCladeAudioKeys() -> [String] {

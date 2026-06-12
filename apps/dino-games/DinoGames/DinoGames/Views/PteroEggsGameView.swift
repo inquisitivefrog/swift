@@ -88,8 +88,6 @@ enum PteroEggMorphology {
         playsTapScannerPrompt: true,
         showsCreatureNameOnCards: false,
         victoryRecapUsesCreatureName: false,
-        hideGameTitleDuringSuccessPhase: true,
-        collapseRecapListDuringSuccessPhase: true,
         sourceHints: nil,
         sourceHintsTitle: "Source Eggs",
         sourceHintsGridIntroAudioKey: nil,

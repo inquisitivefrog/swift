@@ -12,9 +12,12 @@ enum PteroSmileMorphology {
     /// Species slug (from `AirPterosaurData.matrixFossilSlug`) → tooth type slug.
     private static let toothTypeByPortraitSlug: [String: String] = [
         "quetzalcoatlus": "beak-spear",
+        "hatzegopteryx": "beak-spear",
         "anhanguera": "needle-spike",
         "anuanguera": "needle-spike",
+        "ornithocheirus": "needle-spike",
         "dimorphodon": "peg-slicer",
+        "rhamphorhynchus": "peg-slicer",
         "tupandactylus": "nutcracker",
         "anurognathus": "micro-peg",
         "pterodaustro": "comb-filter",

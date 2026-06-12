@@ -119,15 +119,9 @@ enum AirPterosaurData {
         }
     }
 
-    /// Spoken diet name under `Audio/Ptero-Diets/` (e.g. `ptero-diet-carnivore.m4a`, `ptero-diets-frugivore.m4a`).
+    /// Spoken diet name under `Audio/Ptero-Diets/ptero-diets-{slug}.m4a`.
     static func pterosaurDietAudioKey(for dietType: String) -> String {
-        let slug = pterosaurDietAssetSlug(for: dietType)
-        switch dietType {
-        case "Frugivore", "Filter Feeder":
-            return "ptero-diets-\(slug)"
-        default:
-            return "ptero-diet-\(slug)"
-        }
+        "ptero-diets-\(pterosaurDietAssetSlug(for: dietType))"
     }
 
     /// Diet per pterosaur for Ptero Diets! (Frugivore, Carnivore, Piscivore, Insectivore, Filter Feeder).

@@ -1,0 +1,25 @@
+[
+  {
+    "id": "javelina_early_angiosperm_quad_001",
+    "species": "Early_Angiosperms",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+    "formation_ref": "JAVELINA",
+    "environment_details": {
+      "habitat": "SEMI_ARID_FLOODPLAIN",
+      "flora": [
+        "Primitive flower (small, simple pale petals, visible pollen structures)",
+        "Seed pod (rounded, waxy, containing small seeds, adapted for dry seasons)",
+        "Young sprout (slender stem, two simple leaves with olive-drab tone)",
+        "Leaf detail (pinnate venation, tactile green surface texture)"
+      ],
+      "ground_palette": ["Dusty Red", "Pale Purple", "Tan", "Olive Drab"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; soft, appealing floral shapes; focus on delicate but sturdy textures; high-fidelity 3D rendering with subtle translucency in the petals to match the animated feature film aesthetic."
+    },
+    "visual_logic": {
+      "composition": "A four-quadrant tile: Top-Left: Close-up of a primitive bloom; Top-Right: Cross-section of a waxy seed pod; Bottom-Left: A single emerging sprout; Bottom-Right: High-detail texture of a single leaf.",
+      "ground": "Slab of pale purple claystone half-buried in dusty tan sand, providing a beautiful color-contrast backdrop for the botanical anatomy.",
+      "lighting": "Clean, even diffused daylight to highlight botanical structures and mineral textures clearly."
+    }
+  }
+]

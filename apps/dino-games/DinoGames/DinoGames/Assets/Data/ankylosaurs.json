@@ -1,0 +1,139 @@
+{
+  "ankylosaurs": [
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "HELL_CREEK",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Fine-grained fluvial sandstone and mudstone",
+            "color_palette": ["Yellowish-grey", "Dull green", "Ocher"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Juvenile Ankylosaurus",
+          "features": ["tail club", "body armor", "friendly expressive face"],
+          "action": "munching on a fern"
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "HORSESHOE_CANYON",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Soft peat and black mud.",
+            "color_palette": ["Steel grey", "Carbon black"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "HORSESHOE_CANYON_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Edmontonia",
+          "features": ["plain tail", "body armor", "spikes", "friendly expressive face"],
+          "action": "A friendly, stylized Edmontonia with smooth clay-like skin quietly munches a Metasequoia sapling."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "HORSESHOE_CANYON",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Mucky, organic soil with dense plant roots",
+            "color_palette": ["Dark greens", "Browns", "Grey-blues"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "HORSESHOE_CANYON_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Young Euoplocephalus",
+          "features": ["extensive bony armor plates covering its body", "broad, low-slung body", "massive club tail (rounded and friendly)", "small head", "large soulful eyes", "friendly expressive face"],
+          "action": "Gently meandering through dense, low-lying ferns and horsetails in a coastal swampland, slowly munching on plants and looking calm and content."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "HELL_CREEK",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "thick beds of sandstone intermixed with shale and siltstone",
+            "color_palette": ["Red", "Green", "Gray", "Black"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Young Nodosaurus",
+          "features": ["body armor", "bony knobs", "large soulful eyes", "friendly expressive face"],
+          "action": "A friendly, stylized Nodosaurus with smooth clay-like skin is strolling across a plain."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "WESSEX",
+          "base_habitat": "COASTAL_LOWLANDS",
+          "period": "EARLY_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Mucky soil, submerged logs, and thick plant roots",
+            "color_palette": ["Deep greens", "Browns", "Grey-blues", "White for lilies"]
+          },
+          "flora_manifest": ["EARLY_CRETACEOUS_BASE", "WEALDEN_ADDITIONS"],
+          "fauna_manifest": ["EARLY_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Young Polacanthus",
+          "features": ["extensive bony armor plates and prominent shoulder spikes (rounded and friendly)", "large pelvic shield", "low-slung, robust body", "small head", "large soulful eyes", "friendly expressive face", "clubless tail (distinct from Euoplocephalus)"],
+          "action": "Peacefully wading through shallow water amidst floating aquatic plants and early water lilies, gently munching on low-lying vegetation with a calm expression."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    }
+  ]
+}

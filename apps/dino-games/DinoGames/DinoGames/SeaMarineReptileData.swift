@@ -126,9 +126,9 @@ enum SeaMarineReptileData {
         }
     }
 
-    /// Spoken diet name under `Audio/Diets/diet-{slug}.m4a` (shared folder; TTS fallback when missing).
+    /// Spoken diet name under `Audio/Marine-Diets/marine-diets-{slug}.m4a` (TTS fallback when missing).
     static func dietAudioKey(for dietType: String) -> String {
-        "diet-\(dietAssetSlug(for: dietType))"
+        "marine-diets-\(dietAssetSlug(for: dietType))"
     }
 
     /// Inferred diet from clade and species slug (educational defaults for the matching game).

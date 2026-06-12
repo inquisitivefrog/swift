@@ -1,26 +1,26 @@
 {
-  "id": "DINO_088_MAMENCHISAURUS",
-  "species": "Mamenchisaurus sinocanadorum",
-  "tech_ref": "DEFAULT_SQUARE",
-  "framing_ref": "SQUARE_HERO_CARD",
-  "style_id": "STYLE_ANIMATED_FEATURE_V3",
-  "formation_ref": "SHAXIMIAO",
-  "habitat_ref": "RIVER_VALLEYS",
-  "visual_identity": {
-    "color_palette": "Pale mint-green skin with soft lavender-purple dappled spots concentrated along the neck and upper back; smooth cream-colored underbelly.",
-    "texture": "Leathery skin with subtle specular highlights and organic pebbled scales.",
-    "distinguishing_marks": "Small, friendly head with large expressive eyes; an exceptionally long, tapering tail held in a gentle curve off the ground."
-  },
-  "anatomy_constraints": {
-    "neck": "Extremely long, slender neck spanning nearly 50% of the total body length; designed for a wide horizontal sweep.",
-    "limbs": "Massive pillar-like legs with thick, rounded feet and blunt claws.",
-    "body": "Large, heavy-set sauropod frame with a deep chest and sloping back."
-  },
-  "visual_logic": {
-    "subject": "A calm, immense Mamenchisaurus foraging with a rhythmic movement.",
-    "action": "Standing among lush green mossy banks, its neck sweeping across a wide arc to reach high-canopy ginkgos.",
-    "environment": "Background features the Shaximiao formation palette of grayish-green vegetation and a deep blue river with a rocky bed."
-  },
-  "personality": "The 'Gentle Giant'—stoic, immensely powerful, and moves with a thundering but composed pace.",
-  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC"
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_ANIMATED_FEATURE_V3",
+      "tech_ref": "DEFAULT_SQUARE",
+      "framing_ref": "SQUARE_HERO_CARD"
+    },
+    "layer_2_setting": {
+      "formation_id": "SHAXIMIAO_MJ",
+      "habitat_default": "WOODED_RIVER_VALLEYS"
+    },
+    "layer_3_action": {
+      "subject": "Mamenchisaurus",
+      "features": [
+        "an extraordinarily long, slender neck spanning nearly 50% of its total body length, extended forward in a wide horizontal sweep",
+        "small, deep skull profile featuring a cleanly closed mouth, large expressive soulful eyes, and an innocent, gentle facial expression",
+        "massive pillar-like legs with thick, rounded feet and blunt, non-threatening claws",
+        "large, heavy-set barrel torso with a deep chest and a gently sloping back line",
+        "exceptionally long, tapering whip-like tail held elevated off the ground in a smooth counterbalancing curve",
+        "high-fidelity 3D animated feature film aesthetic with soft, stylized, slightly rounded edges",
+        "leathery skin with subtle specular highlights, organic pebbled scale patches, and a vibrant pale mint-green base color accented by soft lavender-purple dappled spots along the neck and upper back"
+      ],
+      "action": "A calm, immense Mamenchisaurus stands gracefully among lush, mossy riverbanks, its impossibly long neck sweeping across a wide arc to forage on the high-canopy leaves of ancient Ginkgo trees under bright, cinematic sunlight."
+    }
+  }
 }

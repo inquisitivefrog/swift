@@ -1,0 +1,7 @@
+{
+    "id": "majungasaurus_prestige_blocky",
+    "morphology": "Blocky",
+    "prompt": "High-fidelity 3D animated feature style. Close-up of a smiling Majungasaurus, featuring its singular rounded horn over its forehead and a rough, textured snout. Skin texture: dense, organic pebbled hide. Smile reveals blunt, thick, square-shaped ivory-colored teeth. Large, warm expressive eyes. No human teeth, no sharp predator points.",
+    "visual_logic": "Replaces generic carnivore teeth with the specific morphology for Dino Toothache gameplay.",
+    "style_notes": "SQUARE_HERO_CARD, STYLE_ANIMATED_FEATURE_V3. Ensure the aspect ratio is exactly 1:1."
+  }

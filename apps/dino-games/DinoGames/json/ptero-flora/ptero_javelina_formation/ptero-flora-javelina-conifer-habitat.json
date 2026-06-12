@@ -1,0 +1,23 @@
+[
+  {
+    "id": "javelina_conifer_001",
+    "species": "Conifers",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "JAVELINA",
+    "environment_details": {
+      "habitat": "SEMI_ARID_FLOODPLAIN",
+      "flora": [
+        "Conifers (hardy, towering, drought-resistant needle-leafed trees)",
+        "Early_Angiosperms (primitive flowering shrubs clustered near rare washes)"
+      ],
+      "ground_palette": ["Dusty Red", "Pale Purple", "Tan", "Olive Drab"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; thick, chunky bark textures weathered by an arid environment; needles appear as soft, clustered tufts rather than sharp points to maintain a stylized aesthetic; focus on the verticality of a resilient desert survivor."
+    },
+    "visual_logic": {
+      "composition": "A dramatic wide-angle shot looking up the massive trunk of a lone conifer towering over a dry flood plain. Strong structural branches stretch out against a vast geological landscape.",
+      "ground": "Dry, sun-cracked dusty red mudflats with cross-bedded tan sandstone channels and scattered purple claystone fragments.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; intense, direct midday sun casting harsh cinematic shadows across the cracked earth, with a hot atmospheric glow on the distant desert horizon."
+    }
+  }
+]

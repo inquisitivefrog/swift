@@ -1,77 +1,38 @@
 {
-  "style_id": "STYLE_CLAY_MASTER",
-  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
-}
-{
-  "flora_library": {
-    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
-    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
-    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
-    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
-    "TIAOJISHAN_ADDITIONS": ["Hardy Ferns", "Mosses"],
-    "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
-    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
-    "LANCE_HELL_CREEK_ADDITIONS": ["Palms", "Platanites", "Viburnum"],
-    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
-    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
-    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"],
-    "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"],
-    "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
-    "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
-    "CEDAR_MOUNTAIN_ADDITIONS": ["Paleopus in damp cracks", "Shrubby angiosperms"],
-  }
-}
-{
-  "fauna_library": {
-    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
-    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
-    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
-    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates")"],
-    "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
-    "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)," "Cicadas"]
-  }
-}
-{
-  "habitat_id": "SEMI_ARID_FLOODPLAINS",
-  "substrate": "Mottled red and green mudstone",
-  "visuals": {
-    "ground": "Deeply cracked clay with oxidized iron patches",
-    "water": "Seasonal braided streams",
-  } 
-} 
-{
-  "formation_id": "CEDAR_MOUNTAIN",
-  "base_habitat": "SEMI_ARID_FLOODPLAINS",
-  "period": “EARLY_CRETACEOUS",
-  "strata_specifics": {
-    "ground_texture": "Deeply cracked clay with oxidized iron patches",
-    "color_palette": ["Red", "Green"]
-  },
-  "flora_manifest": [“EARLY_CRETACEOUS_BASE", "CEDAR_MOUNTAIN_ADDITIONS"],
-  "fauna_manifest": [“EARLY_CRETACEOUS_BASE"]
-}
-{
-  "app_image_config": {
-    "layer_1_style": {
-      "style_id": "STYLE_CLAY_MASTER",
-      "description": "High-poly 3D animation style, cinematic CGI, smooth clay textures, soft studio lighting, tactile 'handmade' feel."
-    },
-    "layer_2_setting": {
-      "habitat_id": “SEMI_ARID_FLOODPLAINS",
-      "formation_id": “CEDAR_MOUNTAIN”,
-    },
-    "layer_3_action": {
-      "subject": “Utahraptor",
-      "features": [
-        "Friendly expressive face",
-        "Large soulful eyes",
-        “Stiff tail used for balance”,
-        “Fore legs have three toes and short claws”,
-        “Hind legs have three toes and short claws”,
-        “Hind legs have one inner toe held high with a softened, blunt, hook-like claw",
-        “Each hook-like claw has a thick, rounded tip to look like a toy or clay model"
-      ],
-      "action": "The friendly dinosaur is practicing karate with one raised hind foot extended in a Karate Kid pose. The raised hind foot is pointing toward a Ginkgo sapling.  The camera angle is low to clearly show the unique but 'softened' foot anatomy, ensuring the  claw looks like a charming character feature rather than a sharp weapon.  A bee is resting on the extended hind foot claw not the fore leg claw and looking at the dinosaur.   The dinosaur is urging the bee to jump off the claw and onto the flower."
-    }
-  }
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {
+      "formation_id": "CEDAR_MOUNTAIN",
+      "base_habitat": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+      "period": "EARLY_CRETACEOUS",
+      "strata_specifics": {
+        "ground_texture": "Deeply cracked clay with oxidized iron patches and light tan limestone nodules",
+        "color_palette": ["Pale lavender", "Dull green", "Chalky white", "Light tan", "Maroon"]
+      },
+      "flora_manifest": ["EARLY_CRETACEOUS_BASE", "CEDAR_MOUNTAIN_ADDITIONS"],
+      "fauna_manifest": ["EARLY_CRETACEOUS_BASE"]
+    },
+    "layer_3_action": {
+      "subject": "Utahraptor",
+      "features": [
+        "robust heavily built dromaeosaurid body frame with muscular proportions",
+        "large calm soulful eyes with an inquisitive, gentle gaze",
+        "cleanly closed mouth with a pleasant neutral expression",
+        "stiff straight counter-balancing tail held horizontally out behind for stability",
+        "strong three-fingered hands with short blunt clay claws held near the chest",
+        "powerful hind legs built with stable weight-bearing walking toes",
+        "inner second toe of each foot specialized and raised off the ground",
+        "raised inner toe features an oversized curved predatory sickle-claw silhouette modified with a thick rounded blunt tip",
+        "smooth seamless matte clay-like skin with crisp high-poly geometry"
+      ],
+      "action": "A composed, non-aggressive Utahraptor with clean high-poly clay geometry is practicing balance, standing steadily on one powerful hind leg while extending the other raised hind leg outward in a stable crane-like posture toward a stylized early Cretaceous ginkgo sapling. The camera frames the dinosaur from a low angle to accentuate its unique, chunky foot anatomy, showcasing its raised sickle-claw as a thick, completely blunt character feature with no sharp predatory points. A small stylized clay bee is resting calmly on the smooth, rounded tip of the extended hind claw, under soft, cinematic studio ambient occlusion lighting. No text."
+    },
+    "technical_specs": {
+      "aspect_ratio": "1:1",
+      "resolution": "1024x1024",
+      "framing_preset": "SQUARE_ASPECT_RATIO"
+    }
+  }
 }

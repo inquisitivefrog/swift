@@ -1,0 +1,23 @@
+---
+description: Core DinoGames project rules — audio UX and CLI discipline
+alwaysApply: true
+---
+
+# DinoGames core
+
+See also `dino-games-coaching.mdc` (how to decide) and `dino-games-tests.mdc` (test patterns).
+
+## Audio UX
+
+Audio must complete before user input is re-enabled.
+
+## CLI commands
+
+Before running shell commands, check current syntax (`<tool> help`, `man`, or `--help`). macOS and Xcode updates change flags and subcommands often (e.g. `xcresulttool`, `simctl`, `launchctl`). Do not assume commands from memory.
+
+After macOS or Xcode upgrades, re-verify simulator destinations instead of reusing hardcoded device IDs:
+
+```bash
+xcrun simctl list devices available
+xcodebuild -scheme DinoGames -showdestinations
+```

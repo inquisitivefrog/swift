@@ -149,12 +149,19 @@ fileprivate enum DinoAgesVariant {
         }
     }
 
+    /// Shared hint-button narration (blue circle → Source Ages / Source Footprints).
+    static let hintCircleAudioKey = "game-hint"
+
     var audioPrefix: String {
         switch self {
         case .dino: return "dino"
         case .ptero: return "ptero"
         case .marine: return "marine"
         }
+    }
+
+    func periodGridIntroAudioKey() -> String {
+        "game-\(audioPrefix)-ages-tap-the-period-to-hear-description"
     }
 }
 
@@ -218,6 +225,8 @@ struct DinoAgesGameView: View {
     @State private var introWalkIndex: Int? = nil
     /// Dinosaur name shown after tap (before feedback).
     @State private var displayedDinoName: String? = nil
+    /// When the player may answer this round; used for great-match vs wow-that-was-tricky.
+    @State private var guessChoiceTimer = GuessChoiceTimer()
     /// When true, show the Source Ages hints overlay.
     @State private var showSourceAgesHints = false
 
@@ -252,7 +261,10 @@ struct DinoAgesGameView: View {
     }
 
     /// Block taps while any clip is playing or a scripted sequence has not finished (audio before input).
-    private var blocksUserInput: Bool { isAudioPlaying || speechManager.isPlaying }
+    private var blocksUserInput: Bool {
+        if isGameComplete { return isAudioPlaying }
+        return isAudioPlaying || speechManager.isPlaying
+    }
 
     var body: some View {
         NavigationView {
@@ -269,6 +281,7 @@ struct DinoAgesGameView: View {
                 .overlay(alignment: .topTrailing) {
                     if period != nil, !isGameComplete {
                         Button {
+                            guessChoiceTimer.pauseForHints()
                             showSourceAgesHints = true
                         } label: {
                             Text("Hints")
@@ -286,7 +299,13 @@ struct DinoAgesGameView: View {
                     }
                 }
                 .fullScreenCover(isPresented: $showSourceAgesHints) {
-                    SourceAgesHintsView(agesVariant: agesVariant, onDismiss: { showSourceAgesHints = false })
+                    SourceAgesHintsView(
+                        agesVariant: agesVariant,
+                        title: SourceHintsTitles.ages,
+                        onDismiss: {
+                        guessChoiceTimer.resumeAfterHints()
+                        showSourceAgesHints = false
+                    })
                 }
         }
     }
@@ -396,8 +415,12 @@ struct DinoAgesGameView: View {
         guard !blocksUserInput else { return }
         guard let p = period, let dinoPeriod = currentPeriodById[dino.id] else { return }
         let isCorrect = (dinoPeriod == p)
+        if isCorrect, matchedIds.contains(dino.id) {
+            OrderedTouchFeedback.speak(OrderedTouchFeedback.pickAnotherOne, speechManager: speechManager)
+            return
+        }
+        let elapsed = guessChoiceTimer.elapsed()
         if isCorrect {
-            if matchedIds.contains(dino.id) { return }
             matchedIds.insert(dino.id)
             matchedOrderThisRound.append(dino.id)
         }
@@ -405,32 +428,28 @@ struct DinoAgesGameView: View {
         isAudioPlaying = true
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
-            self.playFeedbackAfterTap(correct: isCorrect)
+            self.playFeedbackAfterTap(correct: isCorrect, elapsed: elapsed)
         }
         speechManager.speak(audioKey: dino.imageName ?? dino.name, fallbackText: dino.name)
     }
 
-    private func playFeedbackAfterTap(correct: Bool) {
-        speechManager.onAudioFinished = {
+    private func playFeedbackAfterTap(correct: Bool, elapsed: TimeInterval) {
+        let finish: () -> Void = {
             self.speechManager.onAudioFinished = nil
             self.displayedDinoName = nil
             self.isAudioPlaying = false
-            if correct, self.matchedIds.count >= self.matchesNeededPerRound {
-                self.finishRound()
+            if correct {
+                self.guessChoiceTimer.start()
+                if self.matchedIds.count >= self.matchesNeededPerRound {
+                    self.finishRound()
+                }
             }
         }
         if correct {
-            if let url = speechManager.urlForAudio(key: "great-match") {
-                speechManager.playAudioFile(url: url)
-            } else {
-                speechManager.speak("great-match")
-            }
+            let key = OrderedTouchFeedback.successMatchAudio(elapsed: elapsed)
+            OrderedTouchFeedback.speak(key, speechManager: speechManager, onFinished: finish)
         } else {
-            if let url = speechManager.urlForAudio(key: "try-again") {
-                speechManager.playAudioFile(url: url)
-            } else {
-                speechManager.speak("try-again")
-            }
+            OrderedTouchFeedback.speak(OrderedTouchFeedback.tryAgain, speechManager: speechManager, onFinished: finish)
         }
     }
 
@@ -505,16 +524,13 @@ struct DinoAgesGameView: View {
         }
     }
 
-    /// Match Dino Footprints pattern: short hint reminder before the intro walk.
+    /// Before the dinosaur intro walk: point to the Hints circle (`game-hint`), not the period grid.
     private func playHintReminderThenStartIntroWalk() {
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
             self.startIntroWalk()
         }
-        let hintKey = "game-\(agesVariant.audioPrefix)-ages-tap-the-period-to-hear-description"
-        if let url = speechManager.urlForAudio(key: hintKey) {
-            speechManager.playAudioFile(url: url)
-        } else if let url = speechManager.urlForAudio(key: "game-hint") {
+        if let url = speechManager.urlForAudio(key: DinoAgesVariant.hintCircleAudioKey) {
             speechManager.playAudioFile(url: url)
         } else {
             startIntroWalk()
@@ -543,6 +559,7 @@ struct DinoAgesGameView: View {
             introWalkIndex = nil
             displayedDinoName = nil
             isAudioPlaying = false
+            guessChoiceTimer.start()
             return
         }
         introWalkIndex = next
@@ -561,22 +578,7 @@ struct DinoAgesGameView: View {
         endSequenceStep = -1
         endHighlightIndex = 0
         buildSlotsForRound(using: &rng)
-        guard let p = period else { return }
-        isAudioPlaying = true
-        speechManager.onAudioFinished = {
-            self.speechManager.onAudioFinished = nil
-            self.speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                self.startIntroWalk()
-            }
-            let findKey = self.findInPeriodAudioKey(for: p)
-            if let url = self.speechManager.urlForAudio(key: findKey) {
-                self.speechManager.playAudioFile(url: url)
-            } else {
-                self.speechManager.speak(findKey, chainDelay: true)
-            }
-        }
-        speechManager.speak(p.coverAudioKey)
+        playFindInPeriodThenAllowTaps()
     }
 
     // MARK: - End sequence (victory: walk selected dinosaurs, then success card + optional stinger → good-job + crowd)
@@ -587,8 +589,9 @@ struct DinoAgesGameView: View {
             showSuccessPhase: endSequenceStep == 2,
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
+            recapItemCount: victoryWalkDinosaurs.count,
             scrollRows: {
-                ForEach(Array(victoryWalkDinosaurs.enumerated()), id: \.element.id) { index, dino in
+                ForEach(Array(victoryWalkDinosaurs.enumerated()), id: \.offset) { index, dino in
                     let isHighlighted = endSequenceStep >= 1 && index == endHighlightIndex
                     StandardVictoryRecapRowView(
                         item: VictoryRecapDisplayItem(
@@ -618,6 +621,7 @@ struct DinoAgesGameView: View {
             endSequenceStep = 1
             endHighlightIndex = 0
             if victoryWalkDinosaurs.isEmpty {
+                isAudioPlaying = false
                 endSequenceStep = 2
             } else {
                 let d = victoryWalkDinosaurs[0]
@@ -635,6 +639,7 @@ struct DinoAgesGameView: View {
             speechManager.speak(audioKey: d.imageName ?? d.name, fallbackText: d.name)
             speechManager.onAudioFinished = { advanceEndHighlight() }
         } else {
+            isAudioPlaying = false
             endSequenceStep = 2
         }
     }
@@ -768,13 +773,15 @@ private struct SourceAgesPeriodHint: Identifiable {
     let audioKey: String
 }
 
-private let sourceAgesHintPeriods: [SourceAgesPeriodHint] = [
-    SourceAgesPeriodHint(id: "jurassic", imageName: "source-dino-ages-jurassic", displayName: "Jurassic", audioKey: "game-dino-ages-jurassic-dinosaurs"),
-    SourceAgesPeriodHint(id: "cretaceous", imageName: "source-dino-ages-cretaceous", displayName: "Cretaceous", audioKey: "game-dino-ages-cretaceous-dinosaurs"),
-]
+private var sourceAgesHintPeriods: [SourceAgesPeriodHint] {
+    LandGameDisplayMomentCatalog.agesSourceHints.map {
+        SourceAgesPeriodHint(id: $0.id, imageName: $0.imageAssetName, displayName: $0.displayText, audioKey: $0.audioKey)
+    }
+}
 
 fileprivate struct SourceAgesHintsView: View {
     var agesVariant: DinoAgesVariant = .dino
+    var title: String = SourceHintsTitles.ages
     let onDismiss: () -> Void
     @StateObject private var speechManager = SpeechManager()
     @State private var selectedPeriod: SourceAgesPeriodHint?
@@ -810,9 +817,7 @@ fileprivate struct SourceAgesHintsView: View {
 
     private var gridView: some View {
         VStack(spacing: 20) {
-            Text("Source Ages")
-                .font(.title2.weight(.semibold))
-                .padding(.top, 44)
+            SourceHintsScreenTitle(title: title)
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
                 ForEach(hintPeriods) { period in
                     Button {
@@ -880,7 +885,7 @@ fileprivate struct SourceAgesHintsView: View {
     private func playIntroOnce() {
         guard !introPlayed else { return }
         introPlayed = true
-        let introKey = "game-\(agesVariant.audioPrefix)-ages-tap-the-period-to-hear-description"
+        let introKey = agesVariant.periodGridIntroAudioKey()
         if let url = speechManager.urlForAudio(key: introKey) {
             speechManager.onAudioFinished = nil
             speechManager.playAudioFile(url: url)

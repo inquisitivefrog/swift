@@ -640,20 +640,7 @@ struct GuessGameView: View {
         StandardVictoryLayout.recapListScrollHeight(itemCount: guessVictoryRecapItems.count)
     }
 
-    // MARK: - End sequence: same as Dino Diets / Match the Dinosaur — top half list (highlight + name audio), bottom half success card, then good-job + crowd and dismiss
-    /// Name That games keep title + recap visible above the success card so the victory reads as one continuous screen.
-    private var guessVictoryKeepsRecapDuringSuccess: Bool {
-        switch gameConfig.id {
-        case "name-that-dinosaur", "name-that-pterosaur", "name-that-marine-reptile":
-            return true
-        default:
-            return false
-        }
-    }
-
-    private var victoryHidesGameTitleDuringSuccess: Bool {
-        !guessVictoryKeepsRecapDuringSuccess
-    }
+    // MARK: - End sequence: recap walk (highlight + name audio) + success card on one screen, then good-job + crowd and dismiss
 
     private var guessGameEndSequenceView: some View {
         VictorySplitColumnView(
@@ -661,8 +648,6 @@ struct GuessGameView: View {
             showSuccessPhase: endSequenceStep == 2,
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
-            hideGameTitleDuringSuccessPhase: victoryHidesGameTitleDuringSuccess,
-            collapseRecapListDuringSuccessPhase: !guessVictoryKeepsRecapDuringSuccess,
             scrollRows: {
                 ForEach(Array(guessVictoryRecapItems.enumerated()), id: \.element.id) { index, item in
                     StandardVictoryRecapRowView(
@@ -703,11 +688,8 @@ struct GuessGameView: View {
         }
     }
 
-    /// End-sequence success art: full-size when the recap list collapses; smaller when recap stays visible above the card (Name That games).
+    /// End-sequence success art: full 280pt victory card (larger than the 180pt level-2 picker art, which shares a row with two other games).
     private var guessGameSuccessImageSide: CGFloat {
-        if guessVictoryKeepsRecapDuringSuccess {
-            return 180
-        }
         switch gameConfig.id {
         case "name-that-dinosaur", "name-that-pterosaur", "name-that-marine-reptile",
              "dino-footprints", "ptero-footprints", "dino-bones", "whose-bones":
@@ -823,17 +805,11 @@ private struct SourceFootprintCladeHint: Identifiable {
     let audioKey: String  // e.g. footprint-therapod → Footprints/dino-theropod.m4a (audio file uses correct “theropod” spelling)
 }
 
-private let sourceFootprintsHintClades: [SourceFootprintCladeHint] = [
-    SourceFootprintCladeHint(id: "ankylosaur", imageName: "source-footprints-ankylosaur", displayName: "Ankylosaur", audioKey: "footprint-ankylosaur"),
-    SourceFootprintCladeHint(id: "ceratopsian", imageName: "source-footprints-ceratopsian", displayName: "Ceratopsian", audioKey: "footprint-ceratopsian"),
-    SourceFootprintCladeHint(id: "hadrosaur", imageName: "source-footprints-hadrosaur", displayName: "Hadrosaur", audioKey: "footprint-hadrosaur"),
-    SourceFootprintCladeHint(id: "ornithischian", imageName: "source-footprints-ornithischian", displayName: "Ornithischian", audioKey: "footprint-ornithischian"),
-    SourceFootprintCladeHint(id: "ornithomimid", imageName: "source-footprints-ornithomimid", displayName: "Ornithomimid", audioKey: "footprint-ornithomimid"),
-    SourceFootprintCladeHint(id: "sauropod", imageName: "source-footprints-sauropod", displayName: "Sauropod", audioKey: "footprint-sauropod"),
-    SourceFootprintCladeHint(id: "spinosaurid", imageName: "source-footprints-spinosaurid", displayName: "Spinosaurid", audioKey: "footprint-spinosaurid"),
-    SourceFootprintCladeHint(id: "stegosaur", imageName: "source-footprints-stegosaur", displayName: "Stegosaur", audioKey: "footprint-stegosaur"),
-    SourceFootprintCladeHint(id: "theropod", imageName: "source-footprints-theropod", displayName: "Theropod", audioKey: "footprint-therapod"),
-]
+private var sourceFootprintsHintClades: [SourceFootprintCladeHint] {
+    LandGameDisplayMomentCatalog.footprintSourceHints.map {
+        SourceFootprintCladeHint(id: $0.id, imageName: $0.imageAssetName, displayName: $0.displayText, audioKey: $0.audioKey)
+    }
+}
 
 struct SourceFootprintsHintsView: View {
     let onDismiss: () -> Void

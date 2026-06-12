@@ -18,83 +18,112 @@ struct DinoFloraGameConfig {
 
 struct DinoFloraPlant: Identifiable {
     let id: String
+    /// Hyphen slug matching images/audio stem, e.g. `morrison`, `lance-hell-creek`.
+    let formation: String
+    /// Folder under `Audio/Dino-Flora/`, e.g. `Morrison`, `Lance_Hell_Creek`.
+    let formationFolder: String
+    /// Plant taxon slug in the asset stem, e.g. `cycad`, `herbaceous-fern`.
+    let taxon: String
     let displayName: String
-    /// Image set: dino-flora-{slug}-habitat (plant in habitat)
-    let treeImageName: String
-    /// Image set: dino-flora-{slug}-seeds (derived from treeImageName)
-    var seedsImageName: String { treeImageName.replacingOccurrences(of: "-habitat", with: "-seeds") }
-    /// Audio key for plant intro, e.g. "flora-horsetails" → Flora/Dinosaurs/dino-flora-horsetails.m4a
-    let audioKey: String
+
+    /// Shared stem: `dino-flora-{formation}-{taxon}` (matches imagesets and `.m4a` filename).
+    var assetStem: String { "dino-flora-\(formation)-\(taxon)" }
+    var treeImageName: String { "\(assetStem)-habitat" }
+    var seedsImageName: String { "\(assetStem)-seeds" }
+    var audioKey: String { assetStem }
 }
 
-// MARK: - Data (from DINO_FLORA_DATA_MODEL.md)
+// MARK: - Data (from DINO_FLORA_DATA_MODEL.md; plant list in `LandGameDisplayMoment.swift`)
 
-private let dinoFloraPlants: [DinoFloraPlant] = [
-    DinoFloraPlant(id: "horsetails", displayName: "Horsetails", treeImageName: "dino-flora-horsetail-habitat", audioKey: "flora-horsetails"),
-    DinoFloraPlant(id: "moss", displayName: "Moss", treeImageName: "dino-flora-moss-habitat", audioKey: "flora-moss"),
-    DinoFloraPlant(id: "araucaria", displayName: "Araucaria", treeImageName: "dino-flora-araucaria-habitat", audioKey: "flora-araucaria"),
-    DinoFloraPlant(id: "ginkgo", displayName: "Ginkgo", treeImageName: "dino-flora-ginkgo-habitat", audioKey: "flora-ginkgo"),
-    DinoFloraPlant(id: "cycads", displayName: "Cycads", treeImageName: "dino-flora-cycad-habitat", audioKey: "flora-cycads"),
-    DinoFloraPlant(id: "tree-fern", displayName: "Tree Fern", treeImageName: "dino-flora-tree-fern-habitat", audioKey: "flora-tree-fern"),
-    DinoFloraPlant(id: "fern", displayName: "Fern", treeImageName: "dino-flora-herbaceous-fern-habitat", audioKey: "flora-fern"),
-    DinoFloraPlant(id: "charophytes", displayName: "Charophytes", treeImageName: "dino-flora-charophytes-habitat", audioKey: "flora-charophytes"),
-    DinoFloraPlant(id: "clubmoss", displayName: "Clubmoss", treeImageName: "dino-flora-clubmoss-habitat", audioKey: "flora-clubmoss"),
-    DinoFloraPlant(id: "equisetites", displayName: "Equisetites", treeImageName: "dino-flora-jiufotang-equisetites-habitat", audioKey: "flora-equisetites"),
-    DinoFloraPlant(id: "fungi", displayName: "Fungi", treeImageName: "dino-flora-fungi-habitat", audioKey: "flora-fungi"),
-    DinoFloraPlant(id: "ginkgoites", displayName: "Ginkgoites", treeImageName: "dino-flora-ginkgoites-habitat", audioKey: "flora-ginkgoites"),
-    DinoFloraPlant(id: "liverwort", displayName: "Liverwort", treeImageName: "dino-flora-liverwort-habitat", audioKey: "flora-liverwort"),
-    DinoFloraPlant(id: "magnoliid", displayName: "Magnoliid", treeImageName: "dino-flora-magnoliid-habitat", audioKey: "flora-magnoliid"),
-    DinoFloraPlant(id: "paleopus", displayName: "Paleopus", treeImageName: "dino-flora-paleopus-habitat", audioKey: "flora-paleopus"),
-    DinoFloraPlant(id: "taxodium", displayName: "Taxodium", treeImageName: "dino-flora-taxodium-habitat", audioKey: "flora-taxodium"),
-    DinoFloraPlant(id: "totara", displayName: "Totara", treeImageName: "dino-flora-totara-habitat", audioKey: "flora-totara"),
-    DinoFloraPlant(id: "walnut", displayName: "Walnut", treeImageName: "dino-flora-walnut-habitat", audioKey: "flora-walnut"),
-    DinoFloraPlant(id: "water-lilies", displayName: "Water Lilies", treeImageName: "dino-flora-water-lilies-habitat", audioKey: "flora-water-lilies"),
-]
+private let dinoFloraLowEaters: Set<Int> = [2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53]
+private let dinoFloraLowNonEaters: Set<Int> = [7, 14, 21, 23, 40, 43, 44]
+private let dinoFloraTreeEaters: Set<Int> = [7, 14, 21, 23, 40, 44]
+private let dinoFloraTreeNonEaters: Set<Int> = [2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 43, 45, 46, 47, 48, 49, 50, 51, 52, 53]
+private let dinoFloraTreeFernEaters: Set<Int> = [2, 5, 7, 9, 10, 11, 13, 14, 21, 23, 25, 32, 35, 40, 44, 47, 48, 53]
+private let dinoFloraTreeFernNonEaters: Set<Int> = [3, 8, 15, 16, 17, 43, 45, 46, 49, 50, 51, 52]
+private let dinoFloraFernEaters: Set<Int> = [2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 43, 45, 46, 47, 48, 49, 50, 51, 52, 53]
+private let dinoFloraFernNonEaters: Set<Int> = [7, 14, 21, 23, 40, 44]
+private let dinoFloraMixedEaters: Set<Int> = [2, 5, 7, 9, 10, 11, 13, 14, 21, 23, 25, 32, 35, 40, 44, 47, 48, 53]
+private let dinoFloraMixedNonEaters: Set<Int> = [3, 8, 15, 16, 17, 43, 45, 46, 49, 50, 51, 52]
 
 /// Plant slug → dinosaur IDs that eat it. Low/ground plants: low browsers; tree plants: high browsers (sauropods).
 private let floraEatersByPlant: [String: Set<Int>] = [
-    "horsetails": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53]),
-    "moss": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53]),
-    "araucaria": Set([7, 14, 21, 23, 40, 44]),
-    "ginkgo": Set([7, 14, 21, 23, 40, 44]),
-    "cycads": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53]),
-    "tree-fern": Set([2, 5, 7, 9, 10, 11, 13, 14, 21, 23, 25, 32, 35, 40, 44, 47, 48, 53]),
-    "fern": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 43, 45, 46, 47, 48, 49, 50, 51, 52, 53]),
-    "charophytes": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53]),
-    "clubmoss": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53]),
-    "equisetites": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53]),
-    "fungi": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53]),
-    "ginkgoites": Set([7, 14, 21, 23, 40, 44]),
-    "liverwort": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53]),
-    "magnoliid": Set([7, 14, 21, 23, 40, 44]),
-    "paleopus": Set([2, 5, 7, 9, 10, 11, 13, 14, 21, 23, 25, 32, 35, 40, 44, 47, 48, 53]),
-    "taxodium": Set([7, 14, 21, 23, 40, 44]),
-    "totara": Set([7, 14, 21, 23, 40, 44]),
-    "walnut": Set([7, 14, 21, 23, 40, 44]),
-    "water-lilies": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53]),
+    "horsetails": dinoFloraLowEaters,
+    "moss": dinoFloraLowEaters,
+    "araucaria": dinoFloraTreeEaters,
+    "ginkgo": dinoFloraTreeEaters,
+    "cycads": dinoFloraLowEaters,
+    "tree-fern": dinoFloraTreeFernEaters,
+    "fern": dinoFloraFernEaters,
+    "charophytes": dinoFloraLowEaters,
+    "clubmoss": dinoFloraLowEaters,
+    "equisetites": dinoFloraLowEaters,
+    "fungi": dinoFloraLowEaters,
+    "ginkgoites": dinoFloraTreeEaters,
+    "liverwort": dinoFloraLowEaters,
+    "magnoliid": dinoFloraTreeEaters,
+    "paleopus": dinoFloraMixedEaters,
+    "taxodium": dinoFloraTreeEaters,
+    "totara": dinoFloraTreeEaters,
+    "walnut": dinoFloraTreeEaters,
+    "water-lilies": dinoFloraLowEaters,
+    "azolla": dinoFloraLowEaters,
+    "bennettitales": dinoFloraLowEaters,
+    "birch": dinoFloraTreeEaters,
+    "brachyphyllum": dinoFloraTreeEaters,
+    "cypress": dinoFloraTreeEaters,
+    "kauri": dinoFloraTreeEaters,
+    "kelp": dinoFloraLowEaters,
+    "laurel": dinoFloraTreeEaters,
+    "magnolia": dinoFloraTreeEaters,
+    "mamaku": dinoFloraTreeFernEaters,
+    "metasequoia": dinoFloraTreeEaters,
+    "oak": dinoFloraTreeEaters,
+    "palm": dinoFloraTreeEaters,
+    "ponga": dinoFloraTreeFernEaters,
+    "redwood": dinoFloraTreeEaters,
+    "rimu": dinoFloraTreeEaters,
+    "sycamore": dinoFloraTreeEaters,
 ]
 
 /// Plant slug → dinosaur IDs that don't eat it (decoys)
 private let floraNonEatersByPlant: [String: Set<Int>] = [
-    "horsetails": Set([7, 14, 21, 23, 40, 43, 44]),
-    "moss": Set([7, 14, 21, 23, 40, 43, 44]),
-    "araucaria": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53, 43]),
-    "ginkgo": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53, 43]),
-    "cycads": Set([7, 14, 21, 23, 40, 43, 44]),
-    "tree-fern": Set([3, 8, 15, 16, 17, 43, 45, 46, 49, 50, 51, 52]),
-    "fern": Set([7, 14, 21, 23, 40, 44]),
-    "charophytes": Set([7, 14, 21, 23, 40, 43, 44]),
-    "clubmoss": Set([7, 14, 21, 23, 40, 43, 44]),
-    "equisetites": Set([7, 14, 21, 23, 40, 43, 44]),
-    "fungi": Set([7, 14, 21, 23, 40, 43, 44]),
-    "ginkgoites": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53, 43]),
-    "liverwort": Set([7, 14, 21, 23, 40, 43, 44]),
-    "magnoliid": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53, 43]),
-    "paleopus": Set([3, 8, 15, 16, 17, 43, 45, 46, 49, 50, 51, 52]),
-    "taxodium": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53, 43]),
-    "totara": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53, 43]),
-    "walnut": Set([2, 3, 5, 8, 9, 10, 11, 13, 15, 16, 17, 25, 32, 35, 45, 46, 47, 48, 49, 50, 51, 52, 53, 43]),
-    "water-lilies": Set([7, 14, 21, 23, 40, 43, 44]),
+    "horsetails": dinoFloraLowNonEaters,
+    "moss": dinoFloraLowNonEaters,
+    "araucaria": dinoFloraTreeNonEaters,
+    "ginkgo": dinoFloraTreeNonEaters,
+    "cycads": dinoFloraLowNonEaters,
+    "tree-fern": dinoFloraTreeFernNonEaters,
+    "fern": dinoFloraFernNonEaters,
+    "charophytes": dinoFloraLowNonEaters,
+    "clubmoss": dinoFloraLowNonEaters,
+    "equisetites": dinoFloraLowNonEaters,
+    "fungi": dinoFloraLowNonEaters,
+    "ginkgoites": dinoFloraTreeNonEaters,
+    "liverwort": dinoFloraLowNonEaters,
+    "magnoliid": dinoFloraTreeNonEaters,
+    "paleopus": dinoFloraMixedNonEaters,
+    "taxodium": dinoFloraTreeNonEaters,
+    "totara": dinoFloraTreeNonEaters,
+    "walnut": dinoFloraTreeNonEaters,
+    "water-lilies": dinoFloraLowNonEaters,
+    "azolla": dinoFloraLowNonEaters,
+    "bennettitales": dinoFloraLowNonEaters,
+    "birch": dinoFloraTreeNonEaters,
+    "brachyphyllum": dinoFloraTreeNonEaters,
+    "cypress": dinoFloraTreeNonEaters,
+    "kauri": dinoFloraTreeNonEaters,
+    "kelp": dinoFloraLowNonEaters,
+    "laurel": dinoFloraTreeNonEaters,
+    "magnolia": dinoFloraTreeNonEaters,
+    "mamaku": dinoFloraTreeFernNonEaters,
+    "metasequoia": dinoFloraTreeNonEaters,
+    "oak": dinoFloraTreeNonEaters,
+    "palm": dinoFloraTreeNonEaters,
+    "ponga": dinoFloraTreeFernNonEaters,
+    "redwood": dinoFloraTreeNonEaters,
+    "rimu": dinoFloraTreeNonEaters,
+    "sycamore": dinoFloraTreeNonEaters,
 ]
 
 /// Herbivore/omnivore pool for Dino Flora (IDs from data model)
@@ -151,8 +180,9 @@ struct DinoFloraGameView: View {
     @State private var matchedOrderThisRound: [Int] = []
     @State private var introWalkIndex: Int? = nil
     @State private var displayedDinoName: String? = nil
+    @State private var guessChoiceTimer = GuessChoiceTimer()
     @State private var hasStartedGame = false
-    /// When true, show the Source Flora hints overlay (browsers, periods, diets).
+    /// When true, show the Source Plants hints overlay (browsers, periods, diets).
     @State private var showSourceFloraHints = false
     /// When true, show habitat image; oscillates between habitat and seeds every N seconds.
     @State private var showPlantHabitatImage = true
@@ -182,6 +212,7 @@ struct DinoFloraGameView: View {
                 .overlay(alignment: .topTrailing) {
                     if plant != nil, !isGameComplete {
                         Button {
+                            guessChoiceTimer.pauseForHints()
                             showSourceFloraHints = true
                         } label: {
                             Text("Hints")
@@ -197,7 +228,13 @@ struct DinoFloraGameView: View {
                     }
                 }
                 .fullScreenCover(isPresented: $showSourceFloraHints) {
-                    SourceFloraHintsView(onDismiss: { showSourceFloraHints = false })
+                    SourceFloraHintsView(
+                        hints: LandGameDisplayMomentCatalog.dinoFloraCategoryHints,
+                        title: SourceHintsTitles.plants,
+                        onDismiss: {
+                        guessChoiceTimer.resumeAfterHints()
+                        showSourceFloraHints = false
+                    })
                 }
         }
     }
@@ -258,19 +295,9 @@ struct DinoFloraGameView: View {
         }
     }
 
-    /// Jiufotang Equisetites imagesets use `dino-flora-jiufotang-equisetites-*`; keep legacy `dino-flora-equisetites-*` as fallback for older catalogs.
     private func dinoFloraResolvedAssetName(for p: DinoFloraPlant, habitat: Bool) -> String? {
-        let primaryHabitat = p.treeImageName
-        let primarySeeds = p.seedsImageName
-        let candidates: [String] = {
-            if p.id == "equisetites" {
-                let legacyHabitat = "dino-flora-equisetites-habitat"
-                let legacySeeds = "dino-flora-equisetites-seeds"
-                return habitat ? [primaryHabitat, legacyHabitat] : [primarySeeds, legacySeeds]
-            }
-            return [habitat ? primaryHabitat : primarySeeds]
-        }()
-        return candidates.first { ImageAssetCache.imageExists(named: $0) }
+        let name = habitat ? p.treeImageName : p.seedsImageName
+        return ImageAssetCache.imageExists(named: name) ? name : nil
     }
 
     private func plantImage(_ p: DinoFloraPlant) -> some View {
@@ -315,31 +342,42 @@ struct DinoFloraGameView: View {
     private func handleTap(dino: Dinosaur) {
         guard !speechManager.isPlaying, let p = plant else { return }
         let isCorrect = dinoFloraEatsPlant(dino, p)
+        if isCorrect, matchedIds.contains(dino.id) {
+            OrderedTouchFeedback.speak(OrderedTouchFeedback.pickAnotherOne, speechManager: speechManager)
+            return
+        }
+        let elapsed = guessChoiceTimer.elapsed()
         if isCorrect {
-            if matchedIds.contains(dino.id) { return }
             matchedIds.insert(dino.id)
             matchedOrderThisRound.append(dino.id)
         }
         displayedDinoName = dino.name
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
-            self.playFeedbackAfterTap(correct: isCorrect)
+            self.playFeedbackAfterTap(correct: isCorrect, elapsed: elapsed)
         }
         speechManager.speak(audioKey: dino.imageName ?? dino.name, fallbackText: dino.name)
     }
 
-    private func playFeedbackAfterTap(correct: Bool) {
-        speechManager.onAudioFinished = {
+    private func playFeedbackAfterTap(correct: Bool, elapsed: TimeInterval) {
+        let finish: () -> Void = {
             self.speechManager.onAudioFinished = nil
             self.displayedDinoName = nil
-            if correct, self.matchedIds.count >= self.matchesNeededPerRound {
-                self.finishRound()
+            if correct {
+                self.guessChoiceTimer.start()
+                if self.matchedIds.count >= self.matchesNeededPerRound {
+                    self.finishRound()
+                }
             }
         }
         if correct {
-            speechManager.speak("great-match")
+            OrderedTouchFeedback.speak(
+                OrderedTouchFeedback.successMatchAudio(elapsed: elapsed),
+                speechManager: speechManager,
+                onFinished: finish
+            )
         } else {
-            speechManager.speak("try-again")
+            OrderedTouchFeedback.speak(OrderedTouchFeedback.tryAgain, speechManager: speechManager, onFinished: finish)
         }
     }
 
@@ -450,6 +488,7 @@ struct DinoFloraGameView: View {
         if next >= 5 {
             introWalkIndex = nil
             displayedDinoName = nil
+            guessChoiceTimer.start()
             return
         }
         introWalkIndex = next
@@ -612,29 +651,29 @@ private struct DinoFloraCircleView: View {
     }
 }
 
-// MARK: - Source Flora Hints (Dino Flora)
-
-/// One hint category for the Source Flora hints grid. Uses image set source-flora-{id} and audio Flora/hint-{id}.m4a.
-private struct SourceFloraHint: Identifiable {
-    let id: String
-    let imageName: String  // e.g. source-flora-browsers
-    let displayName: String
-    let audioKey: String  // e.g. flora-hint-browsers → Flora/hint-browsers.m4a
-}
-
-private let sourceFloraHints: [SourceFloraHint] = [
-    SourceFloraHint(id: "browsers", imageName: "source-flora-browsers", displayName: "Browsers", audioKey: "flora-hint-browsers"),
-    SourceFloraHint(id: "periods", imageName: "source-flora-periods", displayName: "Periods", audioKey: "flora-hint-periods"),
-    SourceFloraHint(id: "diets", imageName: "source-flora-diets", displayName: "Diets", audioKey: "flora-hint-diets"),
-]
+// MARK: - Source Plants Hints (Dino / Ptero / Marine Flora)
 
 struct SourceFloraHintsView: View {
+    var title: String = SourceHintsTitles.plants
+    let hints: [LandGameDisplayTriad]
     let onDismiss: () -> Void
     /// Optional audio when the hints grid opens (e.g. Dino Flora `game-dino-flora-tap-the-image`, Ptero Flora `game-ptero-flora-tap-the-plant-to-hear-description`). nil = silent.
     var hintGridIntroAudioKey: String? = "game-dino-flora-tap-the-image"
     @State private var speechManager = SpeechManager()
-    @State private var selectedHint: SourceFloraHint?
+    @State private var selectedHint: LandGameDisplayTriad?
     @State private var introPlayed = false
+
+    init(
+        hints: [LandGameDisplayTriad] = LandGameDisplayMomentCatalog.dinoFloraCategoryHints,
+        title: String = SourceHintsTitles.plants,
+        hintGridIntroAudioKey: String? = "game-dino-flora-tap-the-image",
+        onDismiss: @escaping () -> Void
+    ) {
+        self.hints = hints
+        self.title = title
+        self.hintGridIntroAudioKey = hintGridIntroAudioKey
+        self.onDismiss = onDismiss
+    }
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -664,16 +703,14 @@ struct SourceFloraHintsView: View {
 
     private var gridView: some View {
         VStack(spacing: 20) {
-            Text("Source Flora")
-                .font(.title2.weight(.semibold))
-                .padding(.top, 44)
+            SourceHintsScreenTitle(title: title)
             LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                ForEach(sourceFloraHints) { hint in
+                ForEach(hints) { hint in
                     Button {
                         showHintDetail(hint)
                     } label: {
-                        if ImageAssetCache.imageExists(named: hint.imageName) {
-                            Image(hint.imageName)
+                        if ImageAssetCache.imageExists(named: hint.imageAssetName) {
+                            Image(hint.imageAssetName)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(maxWidth: .infinity)
@@ -683,7 +720,7 @@ struct SourceFloraHintsView: View {
                             RoundedRectangle(cornerRadius: 12)
                                 .fill(Color.gray.opacity(0.3))
                                 .frame(height: 120)
-                                .overlay(Text(hint.displayName).font(.caption).foregroundColor(.secondary))
+                                .overlay(Text(hint.displayText).font(.caption).foregroundColor(.secondary))
                         }
                     }
                     .buttonStyle(.plain)
@@ -699,13 +736,13 @@ struct SourceFloraHintsView: View {
         if let hint = selectedHint {
             VStack(spacing: 20) {
                 Spacer()
-                if ImageAssetCache.imageExists(named: hint.imageName) {
-                    Image(hint.imageName)
+                if ImageAssetCache.imageExists(named: hint.imageAssetName) {
+                    Image(hint.imageAssetName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(maxWidth: 320, maxHeight: 320)
                 }
-                Text(hint.displayName)
+                Text(hint.displayText)
                     .font(.title2.weight(.semibold))
                     .foregroundColor(.primary)
                 Spacer()
@@ -723,7 +760,7 @@ struct SourceFloraHintsView: View {
         }
     }
 
-    private func showHintDetail(_ hint: SourceFloraHint) {
+    private func showHintDetail(_ hint: LandGameDisplayTriad) {
         selectedHint = hint
         speechManager.onAudioFinished = nil
         speechManager.onAudioFinished = {
@@ -736,8 +773,33 @@ struct SourceFloraHintsView: View {
         if let url = speechManager.urlForAudio(key: hint.audioKey) {
             speechManager.playAudioFile(url: url)
         } else {
-            speechManager.speak(hint.displayName)
+            speechManager.speak(hint.displayText)
         }
+    }
+}
+
+// MARK: - Mechanics (test + catalog surface)
+
+enum DinoFloraMechanics {
+    static var eaterMapPlantIds: Set<String> { Set(floraEatersByPlant.keys) }
+    static var nonEaterMapPlantIds: Set<String> { Set(floraNonEatersByPlant.keys) }
+
+    static func eaterIds(forPlantId id: String) -> Set<Int> {
+        floraEatersByPlant[id] ?? []
+    }
+
+    static func nonEaterIds(forPlantId id: String) -> Set<Int> {
+        floraNonEatersByPlant[id] ?? []
+    }
+
+    static func poolEaterCount(forPlantId id: String) -> Int {
+        let eaters = eaterIds(forPlantId: id)
+        return dinoFloraPool.filter { eaters.contains($0.id) }.count
+    }
+
+    static func poolNonEaterCount(forPlantId id: String) -> Int {
+        let nonEaters = nonEaterIds(forPlantId: id)
+        return dinoFloraPool.filter { nonEaters.contains($0.id) }.count
     }
 }
 

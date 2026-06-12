@@ -1,0 +1,153 @@
+{
+  "ornithischians": [
+    {
+      "id": "DINO_024_DRYOSAURUS",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "MORRISON_LJ",
+          "base_habitat": "SEMI_ARID_SEASONAL_FLOODPLAINS",
+          "period": "JURASSIC",
+          "strata_specifics": {
+            "ground_texture": "Pale dusty tan earth with white chalky mineral nodules and geometric desiccation mud cracks",
+            "color_palette": ["Variegated red", "Pinkish grey", "Greenish-grey", "Tan", "white"]
+          },
+          "flora_manifest": ["JURASSIC_BASE", "MORRISON_ADDITIONS"],
+          "fauna_manifest": ["JURASSIC_BASE", "MORRISON_ADDITIONS"]
+        },
+        "layer_3_action": {
+          "subject": "Dryosaurus",
+          "features": [
+            "short compact head with a small cleanly sculpted horny beak profile",
+            "large prominent expressive round eyes with a gentle observant gaze",
+            "cleanly closed mouth with an innocent neutral expression",
+            "slender lightweight agile bipedal body frame",
+            "long delicate hind legs built for high-speed running steps",
+            "short finely proportioned five-fingered forelimbs resting naturally near its chest",
+            "smooth seamless matte clay-like skin with crisp high-poly bodily contours"
+          ],
+          "action": "A composed, non-aggressive Dryosaurus with clean high-poly clay geometry is standing calmly behind the vertical trunk of a stylized Jurassic conifer tree, tilting its head slightly to look outward. The camera frames a stable three-quarter profile from a straight eye-level view, highlighting its small bird-like head silhouette and sleek athletic proportions without any cartoonish over-rounding or hyper-infantile chew-toy shapes. The background features a wide tan siltstone plain with clean geometric mud cracks and dry flash-flood channels under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_114_GASPARINISAURA",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "ANACLETO",
+          "base_habitat": "MEANDERING_RIVER_SYSTEMS",
+          "period": "LATE_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Smooth, deep purple-red claystone banks with silty grey mudstone lines",
+            "color_palette": ["Deep Purple-Red", "Maroon", "Silty Grey", "Pale Ochre"]
+          },
+          "flora_manifest": ["LATE_CRETACEOUS_BASE", "ANACLETO_ADDITIONS"],
+          "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Gasparinisaura",
+          "features": [
+            "short compact rounded skull with a small cleanly sculpted horny beak profile",
+            "large dark expressive round eyes with a gentle alert gaze",
+            "cleanly closed mouth with an innocent neutral expression",
+            "small compact agile bipedal body frame",
+            "long slender delicate hind legs built for quick balancing steps",
+            "short finely proportioned five-fingered hands with dark-tipped clay fingers",
+            "long rigid counter-balancing tail held straight horizontally out behind",
+            "smooth seamless matte dusty rose-pink clay skin with charcoal-grey pinstripe lines down the spine"
+          ],
+          "action": "A composed, non-aggressive Gasparinisaura with clean high-poly clay geometry is standing calmly on a deep purple-red clay bank, tilting its small head to the side with an inquisitive, quiet curiosity. The camera captures a stable three-quarter profile from a straight eye-level view, highlighting its tiny bird-like proportions and sleek profile without any cartoonish over-rounding or hyper-infantile chew-toy shapes. The background features a stylized meandering river valley with sparse, low-growing Late Cretaceous ferns under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_055_IGUANODON_JUVENILE",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "WEALDEN",
+          "base_habitat": "RIVER_DELTA_WETLANDS",
+          "period": "EARLY_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Fine-grained yellowish-grey fluvial sandbars and soft peat riverbanks",
+            "color_palette": ["Yellowish-grey", "Dull green", "Ocher", "Mottled red", "Blue-grey clay"]
+          },
+          "flora_manifest": ["EARLY_CRETACEOUS_BASE", "WEALDEN_ADDITIONS"],
+          "fauna_manifest": ["EARLY_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Juvenile Iguanodon",
+          "features": [
+            "elongated professional ornithopod head with a cleanly sculpted toothless beak profile",
+            "large calm soulful eyes with a gentle alert gaze",
+            "cleanly closed mouth with an innocent neutral expression",
+            "compact sub-adult iguanodontian body frame with a strong deep tail",
+            "powerful hind legs built with three stable weight-bearing walking toes",
+            "forelimbs featuring three bound weight-bearing middle fingers and a free outer digit",
+            "prominent conical, completely blunt clay thumb spike on the first digit of each hand",
+            "smooth seamless matte green clay-like skin with crisp high-poly contours"
+          ],
+          "action": "A composed, non-aggressive juvenile Iguanodon with clean high-poly clay geometry is standing steadily in an alert bipedal pose on an un-stabilized sand riverbank. The camera frames a stable three-quarter profile from a straight eye-level view, positioning its forelimbs raised naturally in front of its chest with the blunt clay thumb spikes pointing upwards, completely free of any cartoonish human behaviors or menacing cues. The background displays a calm network of reflective distributary river delta channels dotted with stylized early water lilies and low-growing ferns under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    },
+    {
+      "id": "DINO_071_OURANOSAURUS",
+      "app_image_config": {
+        "layer_1_style": {
+          "style_id": "STYLE_CLAY_MASTER"
+        },
+        "layer_2_setting": {
+          "formation_id": "ELRHAZ",
+          "base_habitat": "RIVER_DELTA_WETLANDS",
+          "period": "EARLY_CRETACEOUS",
+          "strata_specifics": {
+            "ground_texture": "Point bars of gravel and coarse waterlogged sand alongside peat mud flats",
+            "color_palette": ["Grey", "Tan"]
+          },
+          "flora_manifest": ["EARLY_CRETACEOUS_BASE"],
+          "fauna_manifest": ["EARLY_CRETACEOUS_BASE"]
+        },
+        "layer_3_action": {
+          "subject": "Ouranosaurus",
+          "features": [
+            "prominent tall sail-like fin structure rising smoothly down the spine of the back",
+            "long flat-topped elongated duck-billed skull profile",
+            "subtle low rounded bony crest bumps positioned directly in front of the large calm eyes",
+            "cleanly closed mouth with an inquisitive neutral expression",
+            "sturdy iguanodontian quadrapedal posture with heavy weight-bearing front limbs",
+            "smooth seamless matte clay-like skin with crisp high-poly geometry and muscle definition"
+          ],
+          "action": "A composed, non-aggressive Ouranosaurus with clean high-poly clay geometry is standing calmly in the shallow reflective water channels of an early Cretaceous river delta wetlands environment. The camera captures a stable three-quarter profile view at a neutral eye-level vantage point, dramatically highlighting its massive horizontal sail fin silhouette and long duck-billed skull profile without any threatening gestures or cartoonish over-rounding. It is looking downward with quiet curiosity at a cluster of stylized floating aquatic ground cover plants resting on a coarse tan sandbar under soft, cinematic studio ambient occlusion lighting. No text."
+        },
+        "technical_specs": {
+          "aspect_ratio": "1:1",
+          "resolution": "1024x1024",
+          "framing_preset": "SQUARE_HERO_CARD"
+        }
+      }
+    }
+  ]
+}

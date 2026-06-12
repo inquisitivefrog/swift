@@ -25,7 +25,7 @@ These views are shared by several games. The **game type** (and its **config**) 
 | Game | Config ID | Catalog | Description |
 |------|-----------|---------|-------------|
 | **Match the Dinosaur** | `match-the-dinosaur` | Land L1 | Match 3 dinosaurs to “Special Feature” (characteristics: feathers, horns, etc.). Uses `Dino-Characteristics` images and audio. |
-| **Dino Diets!** | `match-the-diet` | Land L2 | Match 3 dinosaurs to **Diet Type** (Herbivore, Carnivore, etc.). Uses `Dinosaur-Diets` images (prefix `diet-`) and `Audio/Diets/diet-{slug}.m4a`. |
+| **Dino Diets!** | `match-the-diet` | Land L2 | Match 3 dinosaurs to **Diet Type** (Herbivore, Carnivore, etc.). Uses `dino-diets-*` images and `Audio/Dino-Diets/dino-diet-{slug}.m4a`. |
 | **Match the Pterosaur** | `match-the-pterosaur` | Air | Same mechanic as Match the Dinosaur but pterosaurs and `Ptero-Characteristics`. |
 
 - **Config type:** `MatchingGameConfig` (e.g. `MatchingGameConfigs.dinoFeatures`, `dinoDietFeatures`, `pterosaurFeatures`).

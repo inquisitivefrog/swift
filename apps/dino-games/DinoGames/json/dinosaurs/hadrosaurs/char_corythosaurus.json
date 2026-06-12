@@ -1,64 +1,24 @@
 {
-  "style_id": "STYLE_CLAY_MASTER",
-  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
-}
-{
-  "flora_library": {
-    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
-    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
-    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
-    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
-    "TIAOJISHAN_ADDITIONS": ["Hardy Ferns", "Mosses"],
-    "CEDAR_MOUNTAIN_NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
-    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
-    "LANCE_HELL_CREEK_ADDITIONS": ["Palms", "Platanites", "Viburnum"],
-    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
-    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
-    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"]
-    "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"]
-  }
-}
-{
-  "fauna_library": {
-    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
-    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
-    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
-    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates")"],
-    "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
-    "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)," "Cicadas"]
-  }
-}
-{
-  "habitat_id": "COASTAL_FLOODPLAINS",
-  "substrate": "Peaty clay and lignite",
-  "visuals": {
-    "ground": "Sticky black mud with salt-marsh grasses (ferns)"
-  },
-  "small_fauna": {
-    "crustaceans": ["Freshwater crabs", "Shrimp"],
-    "fish": ["Gar-like predators"],
-    "reptiles": ["Champsosaurus (crocodile-like but smaller)"]
-  }
-}
-{
-  "formation_id": "DINOSAUR_PARK",
-  "base_habitat": "COASTAL_FLOODPLAINS",
-  "period": "LATE_CRETACEOUS",
-  "strata_specifics": {
-    "ground_texture": "Bentonitic 'popcorn' clay and dark coal seams",
-    "color_palette": ["Steel grey", "Carbon black", "Creamy tan"]
-  },
-  "flora_manifest": ["LATE_CRETACEOUS_BASE", "_ADDITIONS"],
-  "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
-}
-{
-  "app_image_config": {
-    "layer_1_style": "[REF: STYLE_CLAY_MASTER]",
-    "layer_2_setting": “[REF: DINOSAUR_PARK]",
-    "layer_3_action": {
-      "subject": “Corythosaurus",
-      "features": [“cranial crest", "friendly expressive face"],
-      "action": "A friendly, stylized Corythosaurus with smooth clay-like skin is cooling off in a large puddle. The background is lush with Metasequoia trees, taxodium conifers, and floating Azolla ferns. No text."
-    }
-  }
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER",
+      "tech_ref": "DEFAULT_SQUARE"
+    },
+    "layer_2_setting": {
+      "formation_id": "DINOSAUR_PARK",
+      "base_habitat": "COASTAL_FLOODPLAINS",
+      "period": "LATE_CRETACEOUS",
+      "strata_specifics": {
+        "ground_texture": "Bentonitic 'popcorn' clay and dark coal seams",
+        "color_palette": ["Steel grey", "Carbon black", "Creamy tan"]
+      },
+      "flora_manifest": ["LATE_CRETACEOUS_BASE", "_ADDITIONS"],
+      "fauna_manifest": ["LATE_CRETACEOUS_BASE"]
+    },
+    "layer_3_action": {
+      "subject": "Corythosaurus",
+      "features": ["tall vertical semi-circular helmet crest", "narrow dinner-plate head profile", "friendly expressive face", "smooth clay-like skin"],
+      "action": "A friendly, stylized Corythosaurus with smooth clay-like skin is splashing playfully in a large puddle. The camera angle is an exact side profile to clearly showcase its iconic tall, circular helmet-shaped crest standing out against the background. The scene is lush with Metasequoia trees, taxodium conifers, and floating Azolla ferns. No text."
+    }
+  }
 }

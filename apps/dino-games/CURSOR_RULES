@@ -1,1 +1,14 @@
-Audio must complete before user input is re-enabled
+# Human-readable summary. Canonical Cursor rules: .cursor/rules/*.mdc
+
+## Coaching (dino-games-coaching.mdc)
+Offload decisions to the agent; user observes outcomes. Take initiative, but follow in-repo patterns — do not ping-pong generic options or escalate into over-engineered infrastructure. Stop signals: same failure twice, growing test/app hooks, CLI guessing, endless root-cause hunts. At forks: check existing pattern, smallest observable change, verify CLI syntax.
+
+## Core (dino-games-core.mdc)
+Audio must complete before user input is re-enabled.
+
+CLI: Check syntax before running shell commands (`<tool> help`, `man`, or `--help`). macOS and Xcode updates change flags and subcommands often (e.g. xcresulttool, simctl, launchctl). Do not assume commands from memory.
+
+CLI: After macOS or Xcode upgrades, re-verify simulator destinations (`xcrun simctl list devices`, `xcodebuild -showdestinations`) instead of reusing hardcoded device IDs.
+
+## Tests (dino-games-tests.mdc)
+Match existing project patterns before adding new infrastructure. Air and sea coverage uses unit XCTests (`@testable import DinoGames`, catalog/config/asset asserts) — not custom launch hooks or UI test host views. Compare working tests in `DinoGamesTests/` first. If a test needs a custom app entry point to pass, cut scope — use unit tests instead.

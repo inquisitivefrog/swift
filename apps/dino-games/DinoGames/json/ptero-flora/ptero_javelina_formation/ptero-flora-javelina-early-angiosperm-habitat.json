@@ -1,0 +1,23 @@
+[
+  {
+    "id": "javelina_early_angiosperm_001",
+    "species": "Early_Angiosperms",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "JAVELINA",
+    "environment_details": {
+      "habitat": "SEMI_ARID_FLOODPLAIN",
+      "flora": [
+        "Early_Angiosperms (small, primitive flowering clusters clustered tightly near a rare wash)",
+        "Conifers (as background verticality, hardy and drought-resistant)"
+      ],
+      "ground_palette": ["Dusty Red", "Pale Purple", "Tan", "Olive Drab"],
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; soft, stylized petals with tactile, waxy textures; rounded forms avoiding sharp edges; vibrant but natural color accents that stand out against the sun-baked, arid terrain."
+    },
+    "visual_logic": {
+      "composition": "A close-up 'hero' shot of primitive flowering plants emerging resiliently beside a sun-baked petrified log. The background is a soft-focus vista of a vast, dusty semi-arid floodplain horizon.",
+      "ground": "Dry, sun-cracked dusty red mudflats with cross-bedded tan sandstone channels and scattered purple claystone fragments.",
+      "lighting": "SUNNY_EXPOSED_CINEMATIC; intense, direct midday sun casting harsh cinematic shadows across the cracked earth, with a hot atmospheric glow highlighting the delicate translucency of the petals."
+    }
+  }
+]

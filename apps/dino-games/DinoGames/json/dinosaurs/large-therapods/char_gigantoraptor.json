@@ -1,26 +1,36 @@
 {
-  "id": "DINO_092_GIGANTORAPTOR",
-  "species": "Gigantoraptor erlianensis",
-  "tech_ref": "DEFAULT_SQUARE",
-  "framing_ref": "SQUARE_HERO_CARD",
-  "style_id": "STYLE_ANIMATED_FEATURE_V3",
-  "formation_ref": "IREN_DABASU",
-  "habitat_ref": "BRAIDED_RIVER_SYSTEMS",
-  "visual_identity": {
-    "color_palette": "Dusty ochre and terracotta plumage with deep navy-blue accents on the wing-feathers; pale cream underbelly.",
-    "texture": "Dense downy feathering with large, stiff pennaceous feathers on the forearms and tail; smooth, keratinous beak.",
-    "distinguishing_marks": "Vibrant blue skin around the eyes; large, sharp black talons on the hands."
-  },
-  "anatomy_constraints": {
-    "head": "Deep, toothless, parrot-like beak; small crest on the top of the skull; large, expressive yellow eyes.",
-    "limbs": "Exceptionally long, slender legs for high-speed running; three-fingered hands with large claws.",
-    "body": "Giant bird-like frame; short tail tipped with a fan of display feathers."
-  },
-  "visual_logic": {
-    "subject": "A majestic, curious Gigantoraptor inspecting its surroundings.",
-    "action": "Standing among the yellowish-orange sands and mottled red clays of a braided river system.",
-    "environment": "Background features early walnut-like trees and mistletoe-like shrubs under a bright, high-key sun."
-  },
-  "personality": "The 'Vibrant Watcher'—intelligent, visually striking, and surprisingly graceful for its size.",
-  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC"
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {
+      "formation_id": "IREN_DABASU",
+      "base_habitat": "BRAIDED_RIVER_SYSTEMS",
+      "period": "LATE_CRETACEOUS",
+      "strata_specifics": {
+        "ground_texture": "Fine-grained yellowish-orange fluvial sandstone and mottled red claystone paths",
+        "color_palette": ["Light Grey", "Yellowish-orange", "Mottled Red", "Dusty Tan"]
+      },
+      "flora_manifest": ["LATE_CRETACEOUS_BASE", "IREN_DABASU_ADDITIONS"],
+      "fauna_manifest": ["LATE_CRETACEOUS_BASE", "IREN_DABASU_ADDITIONS"]
+    },
+    "layer_3_action": {
+      "subject": "Gigantoraptor",
+      "features": [
+        "deep toothless parrot-like beak",
+        "small decorative bone crest on top of the skull",
+        "vibrant blue skin patches around large calm yellow eyes",
+        "exceptionally long slender bird-like running legs",
+        "three-fingered hands with large sharp black talons",
+        "short tail tipped with a clean sculpted fan of feathers",
+        "smooth matte dusty ochre and terracotta clay body plumage with navy-blue accent feathers on the forearms"
+      ],
+      "action": "A majestic, non-aggressive Gigantoraptor with clean high-poly clay geometry is standing calmly in a graceful, upright posture among the yellowish-orange sand channels of a braided river system. The camera frames a balanced three-quarter profile at a neutral eye-level view, dramatically showcasing its massive, bird-like running silhouette and parrot-like head without any cartoonish over-rounding or frightening territorial displays. It is tilting its head down with a quiet, curious look toward a small patch of low cretaceous ground shrubs, under soft studio ambient occlusion lighting. No text."
+    },
+    "technical_specs": {
+      "aspect_ratio": "1:1",
+      "resolution": "1024x1024",
+      "framing_preset": "SQUARE_HERO_CARD"
+    }
+  }
 }

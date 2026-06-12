@@ -1,74 +1,35 @@
 {
-  "style_id": "STYLE_CLAY_MASTER",
-  "description": "High-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, soft studio lighting with ambient occlusion, tactile 'handmade' feel."
+  "app_image_config": {
+    "layer_1_style": {
+      "style_id": "STYLE_CLAY_MASTER"
+    },
+    "layer_2_setting": {
+      "formation_id": "HELL_CREEK",
+      "base_habitat": "COASTAL_LOWLANDS",
+      "period": "LATE_CRETACEOUS",
+      "strata_specifics": {
+        "ground_texture": "Dark, rich organic mud flats with soft, clean clay banks",
+        "color_palette": ["Grey", "Ocher", "Brown"]
+      },
+      "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
+      "fauna_manifest": ["LATE_CRETACEOUS_BASE", "HELL_CREEK_ADDITIONS"]
+    },
+    "layer_3_action": {
+      "subject": "Young Tyrannosaurus Rex",
+      "features": [
+        "deep reinforced boxy skull profile with a thick robust snout bone structure", 
+        "cleanly closed jawline containing thick banana-shaped teeth hidden inside",
+        "large calm soulful eyes with an observant, gentle gaze",
+        "two-fingered small forelimbs held naturally against its chest",
+        "powerful athletic sub-adult frame with muscular running legs",
+        "smooth seamless matte clay-like skin with crisp high-poly bodily contours"
+      ],
+      "action": "A composed, non-aggressive young Tyrannosaurus Rex with clean high-poly clay geometry is wandering calmly across a dark organic mud flat. The camera captures it from a stable three-quarter profile at a neutral eye-level view, dramatically accentuating the structural, deep profile of its jaw and its sturdy athletic frame without any terrifying snarls, predatory postures, or overly rounded baby features. It is looking forward with quiet curiosity toward a group of stylized palm-like Bennettitales near a slow estuary under soft, cinematic studio ambient occlusion lighting. No text."
+    },
+    "technical_specs": {
+      "aspect_ratio": "1:1",
+      "resolution": "1024x1024",
+      "framing_preset": "SQUARE_HERO_CARD"
+    }
+  }
 }
-{
-  "flora_library": {
-    "JURASSIC_BASE": ["Araucaria", "Brachyphyllum", "Cycads", "Ginkgos", "Tree Ferns"],
-    "EARLY_CRETACEOUS_BASE": ["Cycads", "Conifers", "Tree Ferns", "Ginkgos", "Bennettitales"],
-    "LATE_CRETACEOUS_BASE": ["Ferns", "Conifers", "Ginkgos", "Pines", "Horsetails"],
-    "MORRISON_ADDITIONS": ["Ginkgoales (seasonal leaf drop)", "Fern Prairies"],
-    "TIAOJISHAN_ADDITIONS": ["Giant Horsetails", "Dense Conifer forest"],
-    "NEMEGT_ADDITIONS": ["Deciduous early hardwoods", "Tough ferns"],
-    "HORSESHOE_CANYON_ADDITIONS": ["Metasequoia", "Azolla", "Taxodium"],
-    "LANCE_HELL_CREEK_ADDITIONS": ["Palm-like Bennettitales", "Tree ferns", "Lush canopy"],
-    "JIUFOTANG_ADDITIONS": ["Early birch-like trees", "Paleopus"],
-    "SOLNHOFEN_ADDITIONS": ["Early palm trees", "Pandanus-like shrubs"],
-    "HUINCUL_ADDITIONS": ["Small flowering herbs", "Conifer clusters"],
-    "WEALDEN_ADDITIONS": ["Floating aquatic plants", "Early water lilies"],
-    "CLOVERLY_ADDITIONS": ["Conifer groves", "Paleopus herbs"],
-    "DJADOKHTA_ADDITIONS": ["Sparse scrub", "Desert ferns"],
-    "CEDAR_MOUNTAIN_ADDITIONS": ["Paleopus in damp cracks", "Shrubby angiosperms"],
-    "JEHOL_BIOTA_ADDITIONS": ["Water lilies at the edge", "Dense hardwoods"],
-    "CANDELEROS_ADDITIONS": ["Paleopus", "Early flowering reeds"],
-    "KAIPAROWITS_ADDITIONS": ["Giant horsetails", "Mosses", "Dense fern thickets"],
-    "DAOHUGOU_BEDS_ADDITIONS": ["Evergreen conifers", "Alpine ferns"],
-    "KEM_KEM_ADDITIONS": ["Early Sycamores", "Willow-like shrubs", "Horsetail banks"]
-  }
-}
-{
-  "fauna_library": {
-    "JURASSIC_BASE": ["Dragonflies", "Lacewings", "Beetles", "Jurassic Cockroaches"],
-    "EARLY_CRETACEOUS_BASE": ["Ants", "Wasps", "Crane Flies", "Beetles"],
-    "LATE_CRETACEOUS_BASE": ["Ants", "Bees", "Termites", "Mosquitoes", "Cockroaches"],
-    "SOLNHOFEN_ADDITIONS": ["Flies", "Allodaposuchus (small crocodilian)", "Kogaionid multituberculates")"],
-    "MORRISON2_ADDITIONS": ["Lepidotes (armor-scale fish)", "Eogyrinus (frog)"],
-    "MORRISON_ADDITIONS": ["Alphadon (Opossum-like)", "Teiids (lizard)," "Cicadas"],
-    "HELL_CREEK_ADDITIONS:" ["Alphadon (Opossum-like)", "Teiids (fast-running lizards)", "Cicadas", "Early wasps"]
-  }
-}
-{
-  "habitat_id": "SUBTROPICAL_COASTAL_PLAINS",
-  "physics": { "altitude": "low", "water": "high" },
-  "visuals": {
-    "ground": "Dark, rich organic mud",
-    "water": "Steamy lagoons and slow estuaries",
-  }
-}
-{
-  "formation_id": "HELL_CREEK",
-  "base_habitat": "SUBTROPICAL_COASTAL_PLAINS",
-  "period": "LATE_CRETACEOUS",
-  "strata_specifics": {
-    "ground_texture": "Dark, rich organic mud",
-    "color_palette": ["Grey", "Ocher", "Brown"]
-  },
-  "flora_manifest": ["LATE_CRETACEOUS_BASE", "LANCE_HELL_CREEK_ADDITIONS"],
-  "fauna_manifest": ["LATE_CRETACEOUS_BASE", "HELL_CREEK_ADDITIONS"]
-}
-{ 
-  "app_image_config": {
-    "layer_1_style": {
-      "style_id": "STYLE_CLAY_MASTER"
-    },
-    "layer_2_setting": {
-     “formation_id”: “HELL_CREEK”,
-      "habitat_id": “SUBTROPICAL_COASTAL_PLAINS""
-    },
-    "layer_3_action": {
-      "subject": “Young Tyrannosaurus Rex",
-      "features": [“deep reinforced skull”, “banana-shaped thick teeth”, “two-fingered fore legs”, "large soulful eyes", "friendly expressive face"],
-      "action": “Wandering along a coastal plain"
-    }
-  } 
-} 

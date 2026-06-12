@@ -1,0 +1,23 @@
+{
+  "images": [
+    {
+      "filename": "ptero-flora-tiaojishan-ginkgoites-seeds-80.png",
+      "idiom": "universal",
+      "scale": "1x"
+    },
+    {
+      "filename": "ptero-flora-tiaojishan-ginkgoites-seeds-160.png",
+      "idiom": "universal",
+      "scale": "2x"
+    },
+    {
+      "filename": "ptero-flora-tiaojishan-ginkgoites-seeds-240.png",
+      "idiom": "universal",
+      "scale": "3x"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}

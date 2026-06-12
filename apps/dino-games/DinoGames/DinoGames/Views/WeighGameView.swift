@@ -617,14 +617,9 @@ struct WeighGameView: View {
     /// Uses estimated kg when available to drive both audio result and seesaw behavior.
     private func weighComparison(left: WeighableItem, right: WeighableItem) -> (weightDiff: Int, isNearlySame: Bool, isMassiveDifference: Bool) {
         if let leftKg = estimatedWeightKg(for: left), let rightKg = estimatedWeightKg(for: right) {
-            let heavier = max(leftKg, rightKg)
-            let lighter = min(leftKg, rightKg)
-            let ratio = heavier > 0 ? lighter / heavier : 1
-            let isNearlySame = ratio >= 0.85
-            // "Massive" mismatch: lighter is under 40% of heavier.
-            let isMassiveDifference = ratio < 0.40
+            let result = ComparisonGameLogic.weighComparison(leftKg: leftKg, rightKg: rightKg)
             let weightDiff = leftKg == rightKg ? 0 : (leftKg > rightKg ? 1 : -1)
-            return (weightDiff, isNearlySame, isMassiveDifference)
+            return (weightDiff, result.isNearlySame, result.isMassiveDifference)
         }
 
         let weightDiff = left.weight - right.weight
@@ -782,15 +777,8 @@ struct WeighGameView: View {
         StandardVictoryLayout.recapListScrollHeight(itemCount: weighVictoryRecapItems.count)
     }
 
-    /// Marine weigh keeps title + recap visible above the success card (Name That style).
-    private var weighVictoryKeepsRecapDuringSuccess: Bool {
-        gameConfig.id == "weigh-marine-reptile"
-    }
-
     private var weighVictorySuccessImageSide: CGFloat {
-        weighVictoryKeepsRecapDuringSuccess
-            ? 180
-            : GameCatalogImageMetrics.nameThatVictorySuccessImageSide
+        GameCatalogImageMetrics.nameThatVictorySuccessImageSide
     }
 
     /// Victory screen: same as Dino Diets / Match the Dinosaur — top half list (highlight + name audio), bottom half success image (centered, no wrapper), then good-job + crowd and dismiss.
@@ -800,8 +788,6 @@ struct WeighGameView: View {
             showSuccessPhase: endSequenceStep == 2,
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
-            hideGameTitleDuringSuccessPhase: !weighVictoryKeepsRecapDuringSuccess,
-            collapseRecapListDuringSuccessPhase: !weighVictoryKeepsRecapDuringSuccess,
             scrollRows: {
                 ForEach(Array(weighVictoryRecapItems.enumerated()), id: \.element.id) { index, item in
                     StandardVictoryRecapRowView(

@@ -5,7 +5,7 @@
 //  Racing Dinosaurs!: Player picks two dinosaurs from four per period; they race on an oval track.
 //  Dino racer art: prefer `dino-racer-{clade}-{slug}-*` then legacy `dino-racer-{slug}-*` (slug uses trex for T-Rex).
 //  Racing Pterosaurs: uses `ptero-racer-*` packs (with compatibility for older `ptero-racing-*` names); pool filters by catalog; no `ptero-*` portrait fallback.
-//  Racing Marine Reptiles: eight buoys in a circular sea course; `marine-racer-*` packs with catalog body fallback.
+//  Racing Marine Reptiles: eight buoys; default slalom (wide/tight weave). Classic single-ring layout preserved — see `MarineRacingTrackGeometry` and `RacingTrackLayout.marineBuoyCircle`.
 //
 
 import SwiftUI
@@ -388,8 +388,27 @@ private func finishWinnerImageName(for racer: RacingRacer, config: RacingGameCon
 enum RacingTrackLayout: Equatable {
     case ovalDualLane
     case airportHop
-    /// Eight buoys on one exterior ring; racers weave wide (outside) / tight (inside) on each buoy leg clockwise.
+    /// Preserved Feb 2026 design: buoys and wide legs share one outer ring; inner legs inset 36pt. Revert config to this if slalom is unwanted.
     case marineBuoyCircle(buoyCount: Int = 8)
+    /// Buoys on outer ring; racers alternate wide legs (may clip frame edge) and tight inner legs.
+    case marineBuoySlalom(buoyCount: Int = 8)
+}
+
+private extension RacingTrackLayout {
+    var marineTrackStyle: MarineRacingTrackStyle? {
+        switch self {
+        case .marineBuoyCircle: return .classic
+        case .marineBuoySlalom: return .slalom
+        default: return nil
+        }
+    }
+
+    var marineBuoyCount: Int? {
+        switch self {
+        case .marineBuoyCircle(let count), .marineBuoySlalom(let count): return count
+        default: return nil
+        }
+    }
 }
 
 struct RacingGameConfig {
@@ -566,7 +585,7 @@ struct RacingGameView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .navigationTitle(config.title)
+            .navigationTitle(showVictory ? "" : config.title)
             .navigationBarTitleDisplayMode(.inline)
             .onDisappear {
                 stopRace()
@@ -1102,19 +1121,28 @@ struct RacingGameView: View {
                 }
                 .padding(.horizontal, padding)
             )
-        case .marineBuoyCircle(let buoyCount):
+        case .marineBuoyCircle(let buoyCount), .marineBuoySlalom(let buoyCount):
+            let style = cfg.trackLayout.marineTrackStyle ?? .slalom
             let padding: CGFloat = 24
             let trackWidth = max(1, geometry.size.width - padding * 2)
             let trackHeight = max(120, geometry.size.height - 140)
             let racerSize: CGFloat = 48
-            let waypointSize: CGFloat = 36
-            let outerR = circleLaneRadius(width: trackWidth, height: trackHeight, laneInset: 0)
-            let innerR = circleLaneRadius(width: trackWidth, height: trackHeight, laneInset: marineBuoyCircleLaneInset)
+            let classic = MarineRacingTrackGeometry.classicRadii(width: trackWidth, height: trackHeight)
+            let slalom = MarineRacingTrackGeometry.slalomRadii(width: trackWidth, height: trackHeight)
             let count = max(3, buoyCount)
-            let pos1 = pointOnMarineSlalomCourse(progress: 1.0, width: trackWidth, height: trackHeight, outerR: outerR, innerR: innerR, buoyCount: count)
-            let pos2 = pointOnMarineSlalomCourse(progress: 1.0, width: trackWidth, height: trackHeight, outerR: outerR, innerR: innerR, buoyCount: count)
-            let off1 = marineSlalomRacerOffset(progress: 1.0, racerIndex: 0, width: trackWidth, height: trackHeight, outerR: outerR, innerR: innerR, buoyCount: count)
-            let off2 = marineSlalomRacerOffset(progress: 1.0, racerIndex: 1, width: trackWidth, height: trackHeight, outerR: outerR, innerR: innerR, buoyCount: count)
+            let pos1 = MarineRacingTrackGeometry.pointOnCourse(
+                progress: 1.0, width: trackWidth, height: trackHeight,
+                style: style, radiiClassic: classic, radiiSlalom: slalom, buoyCount: count
+            )
+            let pos2 = pos1
+            let off1 = MarineRacingTrackGeometry.racerOffset(
+                progress: 1.0, racerIndex: 0, width: trackWidth, height: trackHeight,
+                style: style, radiiClassic: classic, radiiSlalom: slalom, buoyCount: count
+            )
+            let off2 = MarineRacingTrackGeometry.racerOffset(
+                progress: 1.0, racerIndex: 1, width: trackWidth, height: trackHeight,
+                style: style, radiiClassic: classic, radiiSlalom: slalom, buoyCount: count
+            )
             let half = racerSize / 2
             let finishLineWidth: CGFloat = 4
             let finishLineHeight: CGFloat = 10
@@ -1124,33 +1152,25 @@ struct RacingGameView: View {
                 VStack(spacing: 8) {
                     Text(finishHeadline)
                         .font(.headline)
-                    ZStack(alignment: .topLeading) {
-                        AirportCourseWaterBackground(width: trackWidth, height: trackHeight)
-                        marineSlalomPath(width: trackWidth, height: trackHeight, outerR: outerR, innerR: innerR, buoyCount: count)
-                            .stroke(Color.white.opacity(0.38), style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
-                        Circle()
-                            .stroke(Color.white.opacity(0.45), style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
-                            .frame(width: outerR * 2, height: outerR * 2)
-                            .offset(x: trackWidth / 2 - outerR, y: trackHeight / 2 - outerR)
-                        ForEach(0..<count, id: \.self) { index in
-                            let buoyProgress = Double(index) / Double(count)
-                            let buoyPoint = pointOnBuoyCircle(progress: buoyProgress, width: trackWidth, height: trackHeight, radius: outerR)
-                            let halfBuoy = waypointSize / 2
-                            buoyMarkerView(index: index, size: waypointSize)
-                                .offset(x: buoyPoint.x - halfBuoy, y: buoyPoint.y - halfBuoy)
+                    marineRacewayZStack(
+                        trackWidth: trackWidth,
+                        trackHeight: trackHeight,
+                        buoyCount: count,
+                        style: style,
+                        waypointSize: 36,
+                        clipWideLegs: style == .slalom,
+                        finishLineWidth: finishLineWidth,
+                        finishLineHeight: finishLineHeight,
+                        finishLineX: finishLineX,
+                        racerOverlays: {
+                            racerView(racer: r1, size: racerSize, pose: .finish)
+                                .offset(x: pos1.x - half + off1.width, y: pos1.y - half + off1.height)
+                            racerView(racer: r2, size: racerSize, pose: .finish)
+                                .offset(x: pos2.x - half + off2.width, y: pos2.y - half + off2.height)
+                            refereeImageViewSmall(finishRefereeName, size: refereeSize)
+                                .offset(x: trackWidth / 2 - refereeSize / 2, y: trackHeight / 2 - refereeSize / 2)
                         }
-                        Rectangle()
-                            .fill(Color.white.opacity(0.95))
-                            .frame(width: finishLineWidth, height: finishLineHeight)
-                            .offset(x: finishLineX, y: trackHeight - finishLineHeight)
-                        racerView(racer: r1, size: racerSize, pose: .finish)
-                            .offset(x: pos1.x - half + off1.width, y: pos1.y - half + off1.height)
-                        racerView(racer: r2, size: racerSize, pose: .finish)
-                            .offset(x: pos2.x - half + off2.width, y: pos2.y - half + off2.height)
-                        refereeImageViewSmall(finishRefereeName, size: refereeSize)
-                            .offset(x: trackWidth / 2 - refereeSize / 2, y: trackHeight / 2 - refereeSize / 2)
-                    }
-                    .frame(width: trackWidth, height: trackHeight)
+                    )
                 }
                 .padding(.horizontal, padding)
             )
@@ -1223,135 +1243,25 @@ struct RacingGameView: View {
         switch config.trackLayout {
         case .airportHop:
             return AnyView(airportTrackView(geometry: geometry, progress1: progress1, progress2: progress2, racer1: r1, racer2: r2, trippedRacerId: trippedRacerId, raceElapsedSeconds: raceElapsedSeconds))
-        case .marineBuoyCircle(let buoyCount):
-            return AnyView(buoyCircleTrackView(geometry: geometry, progress1: progress1, progress2: progress2, racer1: r1, racer2: r2, trippedRacerId: trippedRacerId, raceElapsedSeconds: raceElapsedSeconds, buoyCount: buoyCount))
+        case .marineBuoyCircle(let buoyCount), .marineBuoySlalom(let buoyCount):
+            let style = config.trackLayout.marineTrackStyle ?? .slalom
+            return AnyView(marineRacewayTrackView(
+                geometry: geometry,
+                progress1: progress1,
+                progress2: progress2,
+                racer1: r1,
+                racer2: r2,
+                trippedRacerId: trippedRacerId,
+                raceElapsedSeconds: raceElapsedSeconds,
+                buoyCount: buoyCount,
+                style: style
+            ))
         case .ovalDualLane:
             return AnyView(ovalTrackView(geometry: geometry, progress1: progress1, progress2: progress2, racer1: r1, racer2: r2, trippedRacerId: trippedRacerId, raceElapsedSeconds: raceElapsedSeconds))
         }
     }
 
-    // MARK: - Marine buoy slalom (eight buoys on exterior ring, alternating wide/tight legs)
-
-    private let marineBuoyCircleLaneInset: CGFloat = 36
-
-    private func circleLaneRadius(width: CGFloat, height: CGFloat, laneInset: CGFloat) -> CGFloat {
-        max(40, min(width, height) * 0.36 - laneInset)
-    }
-
-    /// Progress 0…1: buoy positions on the exterior ring (start/finish at bottom center, clockwise).
-    private func pointOnBuoyCircle(progress: Double, width: CGFloat, height: CGFloat, radius: CGFloat) -> CGPoint {
-        let cx = width / 2
-        let cy = height / 2
-        let p = max(0, min(1, progress))
-        let theta = CGFloat.pi / 2 + CGFloat(p) * 2 * CGFloat.pi
-        return CGPoint(x: cx + radius * cos(theta), y: cy + radius * sin(theta))
-    }
-
-    private func marineSlalomRadius(forSegment index: Int, outerR: CGFloat, innerR: CGFloat) -> CGFloat {
-        index % 2 == 0 ? outerR : innerR
-    }
-
-    private func marineSlalomSegmentLengths(outerR: CGFloat, innerR: CGFloat, buoyCount: Int) -> [CGFloat] {
-        let count = max(3, buoyCount)
-        let sweep = 2 * CGFloat.pi / CGFloat(count)
-        return (0..<count).map { marineSlalomRadius(forSegment: $0, outerR: outerR, innerR: innerR) * sweep }
-    }
-
-    /// One lap: buoy 1 outside, buoy 2 inside, … back to the start line at the first buoy.
-    private func pointOnMarineSlalomCourse(
-        progress: Double,
-        width: CGFloat,
-        height: CGFloat,
-        outerR: CGFloat,
-        innerR: CGFloat,
-        buoyCount: Int
-    ) -> CGPoint {
-        let count = max(3, buoyCount)
-        let cx = width / 2
-        let cy = height / 2
-        let p = max(0, progress)
-        if p >= 1 {
-            return CGPoint(x: cx + outerR * cos(CGFloat.pi / 2), y: cy + outerR * sin(CGFloat.pi / 2))
-        }
-        let lengths = marineSlalomSegmentLengths(outerR: outerR, innerR: innerR, buoyCount: count)
-        let total = lengths.reduce(0, +)
-        guard total > 0 else {
-            return CGPoint(x: cx, y: cy + outerR)
-        }
-        var dist = CGFloat(p) * total
-        let segmentSweep = 2 * CGFloat.pi / CGFloat(count)
-        for i in 0..<count {
-            let segLen = lengths[i]
-            if dist <= segLen || i == count - 1 {
-                let t = segLen > 0 ? min(1, dist / segLen) : 0
-                let r = marineSlalomRadius(forSegment: i, outerR: outerR, innerR: innerR)
-                let theta = CGFloat.pi / 2 + CGFloat(i) * segmentSweep + t * segmentSweep
-                return CGPoint(x: cx + r * cos(theta), y: cy + r * sin(theta))
-            }
-            dist -= segLen
-        }
-        return CGPoint(x: cx + outerR * cos(CGFloat.pi / 2), y: cy + outerR * sin(CGFloat.pi / 2))
-    }
-
-    private func marineSlalomRacerOffset(
-        progress: Double,
-        racerIndex: Int,
-        width: CGFloat,
-        height: CGFloat,
-        outerR: CGFloat,
-        innerR: CGFloat,
-        buoyCount: Int
-    ) -> CGSize {
-        let delta = 0.005
-        let p0 = pointOnMarineSlalomCourse(
-            progress: max(0, progress - delta),
-            width: width,
-            height: height,
-            outerR: outerR,
-            innerR: innerR,
-            buoyCount: buoyCount
-        )
-        let p1 = pointOnMarineSlalomCourse(
-            progress: min(1, progress + delta),
-            width: width,
-            height: height,
-            outerR: outerR,
-            innerR: innerR,
-            buoyCount: buoyCount
-        )
-        let dx = p1.x - p0.x
-        let dy = p1.y - p0.y
-        let len = hypot(dx, dy)
-        guard len > 0.5 else { return .zero }
-        let nx = -dy / len
-        let ny = dx / len
-        let side: CGFloat = racerIndex == 0 ? -1 : 1
-        let gap: CGFloat = 11
-        return CGSize(width: nx * gap * side, height: ny * gap * side)
-    }
-
-    private func marineSlalomPath(width: CGFloat, height: CGFloat, outerR: CGFloat, innerR: CGFloat, buoyCount: Int) -> Path {
-        let count = max(3, buoyCount)
-        let samples = count * 28
-        var path = Path()
-        for s in 0...samples {
-            let progress = Double(s) / Double(samples)
-            let pt = pointOnMarineSlalomCourse(
-                progress: progress,
-                width: width,
-                height: height,
-                outerR: outerR,
-                innerR: innerR,
-                buoyCount: count
-            )
-            if s == 0 {
-                path.move(to: pt)
-            } else {
-                path.addLine(to: pt)
-            }
-        }
-        return path
-    }
+    // MARK: - Marine raceway (classic preserved in `MarineRacingTrackGeometry`; slalom is default)
 
     @ViewBuilder
     private func buoyMarkerView(index: Int, size: CGFloat) -> some View {
@@ -1368,14 +1278,78 @@ struct RacingGameView: View {
                 .scaledToFit()
                 .frame(width: size, height: size)
         } else {
-            // Fallback until bundled: `marine-raceway-buoy` or `marine-raceway-buoy-1`…`8` (same pattern as `ptero-raceway-point-*`).
             Text("🛟")
                 .font(.system(size: size * 0.72))
                 .frame(width: size, height: size)
         }
     }
 
-    private func buoyCircleTrackView(
+    @ViewBuilder
+    private func marineRacewayZStack<RacerOverlays: View>(
+        trackWidth: CGFloat,
+        trackHeight: CGFloat,
+        buoyCount: Int,
+        style: MarineRacingTrackStyle,
+        waypointSize: CGFloat,
+        clipWideLegs: Bool,
+        finishLineWidth: CGFloat,
+        finishLineHeight: CGFloat,
+        finishLineX: CGFloat,
+        @ViewBuilder racerOverlays: () -> RacerOverlays
+    ) -> some View {
+        let classic = MarineRacingTrackGeometry.classicRadii(width: trackWidth, height: trackHeight)
+        let slalom = MarineRacingTrackGeometry.slalomRadii(width: trackWidth, height: trackHeight)
+        let count = max(3, buoyCount)
+        let buoyR = MarineRacingTrackGeometry.buoyMarkerRadius(style: style, radiiClassic: classic, radiiSlalom: slalom)
+        let courseStack = ZStack(alignment: .topLeading) {
+            AirportCourseWaterBackground(width: trackWidth, height: trackHeight)
+            if style == .slalom {
+                Circle()
+                    .stroke(Color.white.opacity(0.28), style: StrokeStyle(lineWidth: 2, dash: [5, 7]))
+                    .frame(width: slalom.tightRadius * 2, height: slalom.tightRadius * 2)
+                    .offset(x: trackWidth / 2 - slalom.tightRadius, y: trackHeight / 2 - slalom.tightRadius)
+            }
+            Circle()
+                .stroke(Color.white.opacity(0.45), style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
+                .frame(width: buoyR * 2, height: buoyR * 2)
+                .offset(x: trackWidth / 2 - buoyR, y: trackHeight / 2 - buoyR)
+            MarineRacingTrackGeometry.coursePath(
+                width: trackWidth,
+                height: trackHeight,
+                style: style,
+                radiiClassic: classic,
+                radiiSlalom: slalom,
+                buoyCount: count
+            )
+            .stroke(Color.white.opacity(style == .slalom ? 0.52 : 0.38), style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
+            ForEach(0..<count, id: \.self) { index in
+                let buoyProgress = Double(index) / Double(count)
+                let buoyPoint = MarineRacingTrackGeometry.pointOnBuoyCircle(
+                    progress: buoyProgress,
+                    width: trackWidth,
+                    height: trackHeight,
+                    buoyRadius: buoyR
+                )
+                let halfBuoy = waypointSize / 2
+                buoyMarkerView(index: index, size: waypointSize)
+                    .offset(x: buoyPoint.x - halfBuoy, y: buoyPoint.y - halfBuoy)
+            }
+            Rectangle()
+                .fill(Color.white.opacity(0.95))
+                .frame(width: finishLineWidth, height: finishLineHeight)
+                .offset(x: finishLineX, y: trackHeight - finishLineHeight)
+            racerOverlays()
+        }
+        .frame(width: trackWidth, height: trackHeight)
+
+        if clipWideLegs {
+            courseStack.clipped()
+        } else {
+            courseStack
+        }
+    }
+
+    private func marineRacewayTrackView(
         geometry: GeometryProxy,
         progress1: Double,
         progress2: Double,
@@ -1383,49 +1357,32 @@ struct RacingGameView: View {
         racer2: RacingRacer,
         trippedRacerId: Int?,
         raceElapsedSeconds: Int,
-        buoyCount: Int
+        buoyCount: Int,
+        style: MarineRacingTrackStyle
     ) -> some View {
         let padding: CGFloat = 24
         let trackWidth = max(1, geometry.size.width - padding * 2)
         let trackHeight = max(120, geometry.size.height - 140)
         let racerSize: CGFloat = 48
         let waypointSize: CGFloat = 36
-        let outerR = circleLaneRadius(width: trackWidth, height: trackHeight, laneInset: 0)
-        let innerR = circleLaneRadius(width: trackWidth, height: trackHeight, laneInset: marineBuoyCircleLaneInset)
+        let classic = MarineRacingTrackGeometry.classicRadii(width: trackWidth, height: trackHeight)
+        let slalom = MarineRacingTrackGeometry.slalomRadii(width: trackWidth, height: trackHeight)
         let count = max(3, buoyCount)
-        let pos1 = pointOnMarineSlalomCourse(
-            progress: progress1,
-            width: trackWidth,
-            height: trackHeight,
-            outerR: outerR,
-            innerR: innerR,
-            buoyCount: count
+        let pos1 = MarineRacingTrackGeometry.pointOnCourse(
+            progress: progress1, width: trackWidth, height: trackHeight,
+            style: style, radiiClassic: classic, radiiSlalom: slalom, buoyCount: count
         )
-        let pos2 = pointOnMarineSlalomCourse(
-            progress: progress2,
-            width: trackWidth,
-            height: trackHeight,
-            outerR: outerR,
-            innerR: innerR,
-            buoyCount: count
+        let pos2 = MarineRacingTrackGeometry.pointOnCourse(
+            progress: progress2, width: trackWidth, height: trackHeight,
+            style: style, radiiClassic: classic, radiiSlalom: slalom, buoyCount: count
         )
-        let off1 = marineSlalomRacerOffset(
-            progress: progress1,
-            racerIndex: 0,
-            width: trackWidth,
-            height: trackHeight,
-            outerR: outerR,
-            innerR: innerR,
-            buoyCount: count
+        let off1 = MarineRacingTrackGeometry.racerOffset(
+            progress: progress1, racerIndex: 0, width: trackWidth, height: trackHeight,
+            style: style, radiiClassic: classic, radiiSlalom: slalom, buoyCount: count
         )
-        let off2 = marineSlalomRacerOffset(
-            progress: progress2,
-            racerIndex: 1,
-            width: trackWidth,
-            height: trackHeight,
-            outerR: outerR,
-            innerR: innerR,
-            buoyCount: count
+        let off2 = MarineRacingTrackGeometry.racerOffset(
+            progress: progress2, racerIndex: 1, width: trackWidth, height: trackHeight,
+            style: style, radiiClassic: classic, radiiSlalom: slalom, buoyCount: count
         )
         let half = racerSize / 2
         let finishLineWidth: CGFloat = 4
@@ -1436,36 +1393,28 @@ struct RacingGameView: View {
         return VStack(spacing: 8) {
             Text("Race!")
                 .font(.headline)
-            ZStack(alignment: .topLeading) {
-                AirportCourseWaterBackground(width: trackWidth, height: trackHeight)
-                marineSlalomPath(width: trackWidth, height: trackHeight, outerR: outerR, innerR: innerR, buoyCount: count)
-                    .stroke(Color.white.opacity(0.38), style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
-                Circle()
-                    .stroke(Color.white.opacity(0.45), style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
-                    .frame(width: outerR * 2, height: outerR * 2)
-                    .offset(x: trackWidth / 2 - outerR, y: trackHeight / 2 - outerR)
-                ForEach(0..<count, id: \.self) { index in
-                    let buoyProgress = Double(index) / Double(count)
-                    let buoyPoint = pointOnBuoyCircle(progress: buoyProgress, width: trackWidth, height: trackHeight, radius: outerR)
-                    let halfBuoy = waypointSize / 2
-                    buoyMarkerView(index: index, size: waypointSize)
-                        .offset(x: buoyPoint.x - halfBuoy, y: buoyPoint.y - halfBuoy)
+            marineRacewayZStack(
+                trackWidth: trackWidth,
+                trackHeight: trackHeight,
+                buoyCount: count,
+                style: style,
+                waypointSize: waypointSize,
+                clipWideLegs: style == .slalom,
+                finishLineWidth: finishLineWidth,
+                finishLineHeight: finishLineHeight,
+                finishLineX: finishLineX,
+                racerOverlays: {
+                    racerView(racer: racer1, size: racerSize, pose: trippedRacerId == racer1.id ? .tripped : .running)
+                        .offset(x: pos1.x - half + off1.width, y: pos1.y - half + off1.height)
+                    racerView(racer: racer2, size: racerSize, pose: trippedRacerId == racer2.id ? .tripped : .running)
+                        .offset(x: pos2.x - half + off2.width, y: pos2.y - half + off2.height)
+                    refereeImageViewSmall(startRefereeImageName(prefix: config.assetPrefix), size: refereeSize)
+                        .offset(x: trackWidth / 2 - refereeSize / 2, y: trackHeight / 2 - refereeSize / 2)
+                    speedClockView(racer1: racer1, racer2: racer2, raceElapsedSeconds: raceElapsedSeconds, finishTime1: finishTime1, finishTime2: finishTime2)
+                        .frame(width: trackWidth, height: trackHeight, alignment: .topLeading)
+                        .offset(x: -trackWidth * 0.32, y: -trackHeight * 0.28)
                 }
-                Rectangle()
-                    .fill(Color.white.opacity(0.95))
-                    .frame(width: finishLineWidth, height: finishLineHeight)
-                    .offset(x: finishLineX, y: trackHeight - finishLineHeight)
-                racerView(racer: racer1, size: racerSize, pose: trippedRacerId == racer1.id ? .tripped : .running)
-                    .offset(x: pos1.x - half + off1.width, y: pos1.y - half + off1.height)
-                racerView(racer: racer2, size: racerSize, pose: trippedRacerId == racer2.id ? .tripped : .running)
-                    .offset(x: pos2.x - half + off2.width, y: pos2.y - half + off2.height)
-                refereeImageViewSmall(startRefereeImageName(prefix: config.assetPrefix), size: refereeSize)
-                    .offset(x: trackWidth / 2 - refereeSize / 2, y: trackHeight / 2 - refereeSize / 2)
-                speedClockView(racer1: racer1, racer2: racer2, raceElapsedSeconds: raceElapsedSeconds, finishTime1: finishTime1, finishTime2: finishTime2)
-                    .frame(width: trackWidth, height: trackHeight, alignment: .topLeading)
-                    .offset(x: -trackWidth * 0.32, y: -trackHeight * 0.28)
-            }
-            .frame(width: trackWidth, height: trackHeight)
+            )
         }
         .padding(.horizontal, padding)
     }
@@ -2685,7 +2634,7 @@ struct RacingGameConfigs {
             racers: racers,
             poolMinSpeed: speeds.min(),
             poolMaxSpeed: speeds.max(),
-            trackLayout: .marineBuoyCircle(buoyCount: 8)
+            trackLayout: .marineBuoySlalom(buoyCount: 8) // Revert to `.marineBuoyCircle(buoyCount: 8)` for the preserved classic layout.
         )
     }()
 
