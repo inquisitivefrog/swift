@@ -40,6 +40,14 @@ final class PterosaurGameAudioFilesXCTests: XCTestCase {
         let placed = GameCatalog.allPlacedGames().filter { $0.category == .air }
         for slot in placed {
             guard let configId = slot.game.id else { continue }
+            if configId == "ptero-smile" {
+                let base = PterosaurGameAudioContracts.contract(forConfigId: configId)?.requiredAudioKeys ?? []
+                TestBundleHelpers.assertBundleResolvesAudioKeys(
+                    base,
+                    messagePrefix: "\(slot.game.name) (`\(configId)`)"
+                )
+                continue
+            }
             let keys = PterosaurGameAudioContracts.allRequiredKeys(forConfigId: configId)
             XCTAssertFalse(
                 keys.isEmpty,

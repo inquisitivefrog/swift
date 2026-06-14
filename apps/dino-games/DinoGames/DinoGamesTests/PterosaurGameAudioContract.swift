@@ -204,14 +204,7 @@ enum PterosaurGameAudioContracts {
     }
 
     private static func pteroSmileBeakAudioKeys() -> [String] {
-        [
-            "beak-spear",
-            "needle-spike",
-            "peg-slicer",
-            "nutcracker",
-            "micro-peg",
-            "comb-filter",
-        ].map { PteroSmileMorphology.toothAudioKey(for: $0) }
+        PteroSmilePlayerToothKind.allCases.map(\.audioKey)
     }
 
     private static func pteroMatrixMaterialAudioKeys() -> [String] {

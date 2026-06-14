@@ -11,15 +11,20 @@ import SwiftUI
 @preconcurrency import AVFoundation
 
 /// Display name for tooth type: strips -v1, -v2, -ankylosaurid, -ceratopsian, -stegosaurid before formatting.
-private func dinoSmileToothDisplayName(_ toothType: String) -> String {
-    var s = toothType
-    if let range = s.range(of: #"-v\d+"#, options: .regularExpression) {
-        s.removeSubrange(range)
+private func dinoSmileToothDisplayName(_ toothType: String, line: SmileGameLine) -> String {
+    switch line {
+    case .air:
+        return PteroSmileMorphology.playerLabel(for: toothType)
+    case .land:
+        var s = toothType
+        if let range = s.range(of: #"-v\d+"#, options: .regularExpression) {
+            s.removeSubrange(range)
+        }
+        for suffix in ["-ankylosaurid", "-ceratopsian", "-stegosaurid"] {
+            s = s.replacingOccurrences(of: suffix, with: "")
+        }
+        return s.replacingOccurrences(of: "-", with: " ").capitalized
     }
-    for suffix in ["-ankylosaurid", "-ceratopsian", "-stegosaurid"] {
-        s = s.replacingOccurrences(of: suffix, with: "")
-    }
-    return s.replacingOccurrences(of: "-", with: " ").capitalized
 }
 
 enum SmileGameLine {
@@ -42,11 +47,7 @@ private func playToothAudio(
         let baseKey = "dino-smile-\(toothType)"
         candidateKeys = [baseKey, "\(baseKey)-v1", "\(baseKey)-v2", "dino-smile-tooth-\(toothType)"]
     case .air:
-        candidateKeys = [
-            PteroSmileMorphology.toothAudioKey(for: toothType),
-            "ptero-smile-tooth-\(toothType)",
-            "ptero-smile-\(toothType)",
-        ]
+        candidateKeys = PteroSmileMorphology.playerAudioCandidateKeys(for: toothType)
     }
     let url = candidateKeys.lazy.compactMap { speechManager.urlForAudio(key: $0) }.first
     if let url {
@@ -188,7 +189,7 @@ struct SmilingDinosGameView: View {
             }
             let toothIndex = introWalkStep - 1 - SmilingDinosRound.creaturesPerRound
             if toothIndex >= 0, toothIndex < introTeethOrder.count {
-                return dinoSmileToothDisplayName(introTeethOrder[toothIndex])
+                return dinoSmileToothDisplayName(introTeethOrder[toothIndex], line: gameConfig.line)
             }
         }
         // During gameplay: show user selection
@@ -198,7 +199,7 @@ struct SmilingDinosGameView: View {
             parts.append(dino.name)
         }
         if let tooth = selectedToothType {
-            let formatted = dinoSmileToothDisplayName(tooth)
+            let formatted = dinoSmileToothDisplayName(tooth, line: gameConfig.line)
             parts.append(parts.isEmpty ? formatted : "→ \(formatted)")
         }
         return parts.isEmpty ? nil : parts.joined(separator: " ")
@@ -344,7 +345,7 @@ struct SmilingDinosGameView: View {
             let toothIndex = introWalkStep - 1 - SmilingDinosRound.creaturesPerRound
             if toothIndex >= 0, toothIndex < introTeethOrder.count {
                 let toothType = introTeethOrder[toothIndex]
-                let fallback = dinoSmileToothDisplayName(toothType)
+                let fallback = dinoSmileToothDisplayName(toothType, line: gameConfig.line)
                 playToothAudio(speechManager: speechManager, toothType: toothType, line: gameConfig.line, fallbackText: fallback, onFinished: advanceIntroWalk)
             }
         }
@@ -429,7 +430,7 @@ struct SmilingDinosGameView: View {
         }
 
         // Play tooth audio first, then match feedback
-        let fallback = dinoSmileToothDisplayName(toothType)
+        let fallback = dinoSmileToothDisplayName(toothType, line: gameConfig.line)
         playToothAudio(speechManager: speechManager, toothType: toothType, line: gameConfig.line, fallbackText: fallback) {
             self.speechManager.onAudioFinished = nil
             playMatchFeedback()
@@ -471,7 +472,7 @@ struct SmilingDinosGameView: View {
             let imageName = gameConfig.toothImageName(for: toothType)
             return VictoryRecapDisplayItem(
                 id: toothType,
-                title: dinoSmileToothDisplayName(toothType),
+                title: dinoSmileToothDisplayName(toothType, line: gameConfig.line),
                 imageAssetName: ImageAssetCache.imageExists(named: imageName) ? imageName : nil,
                 fallbackEmoji: "🦷"
             )
@@ -520,7 +521,7 @@ struct SmilingDinosGameView: View {
     private func speakSmileVictoryRecap(at index: Int) {
         guard index < victoryToothTypesUnique.count else { return }
         let toothType = victoryToothTypesUnique[index]
-        let fallback = dinoSmileToothDisplayName(toothType)
+        let fallback = dinoSmileToothDisplayName(toothType, line: gameConfig.line)
         playToothAudio(
             speechManager: speechManager,
             toothType: toothType,
@@ -855,66 +856,45 @@ struct SmilingDinosGameConfigs {
         }
     }
 
+    /// Three rounds × three morphology families (no family repeats across rounds).
+    /// Each round: one random playable pterosaur + tooth per family, plus two random dummy teeth.
     private static func buildPteroSmileRounds(from pool: [Dinosaur]) -> [SmilingDinosRound]? {
-        var usedIds: Set<Int> = []
-        var usedToothTypes: Set<String> = []
-        var rounds: [SmilingDinosRound] = []
+        var byCategory: [String: [Dinosaur]] = [:]
+        for ptero in pool {
+            guard let category = PteroSmileMorphology.morphologyCategory(for: ptero) else { continue }
+            byCategory[category, default: []].append(ptero)
+        }
 
-        let allToothTypes = Set(pool.compactMap { PteroSmileMorphology.smileToothType(for: $0) })
-        let morphGroupByTooth = Dictionary(uniqueKeysWithValues: allToothTypes.map {
-            ($0, PteroSmileMorphology.morphologyGroup(for: $0))
-        })
+        var remainingCategories = byCategory.keys.filter { !(byCategory[$0]?.isEmpty ?? true) }.shuffled()
+        let categoriesNeeded = SmilingDinosRound.creaturesPerRound * 3
+        guard remainingCategories.count >= categoriesNeeded else { return nil }
+
+        let allToothSlugs = Set(pool.compactMap { PteroSmileMorphology.smileToothType(for: $0) })
+        var rounds: [SmilingDinosRound] = []
 
         for roundId in 1...3 {
             let needed = SmilingDinosRound.creaturesPerRound
-            let available = pool.filter { !usedIds.contains($0.id) }
-            let availableWithNewTeeth = available.filter { ptero in
-                guard let toothType = PteroSmileMorphology.smileToothType(for: ptero) else { return false }
-                return !usedToothTypes.contains(toothType)
-            }
-            let selectionPool = availableWithNewTeeth.count >= needed ? availableWithNewTeeth : available
-            let byMorph = Dictionary(grouping: selectionPool) { ptero in
-                PteroSmileMorphology.smileToothType(for: ptero)
-                    .map { PteroSmileMorphology.morphologyGroup(for: $0) } ?? "unknown"
-            }
-            let morphsWithPteros = byMorph.keys.filter { !(byMorph[$0] ?? []).isEmpty }.shuffled()
-            let selected: [Dinosaur]
-            if morphsWithPteros.count >= needed {
-                selected = (0..<needed).compactMap { index in
-                    let group = morphsWithPteros[index]
-                    return (byMorph[group] ?? []).shuffled().first
-                }
-            } else {
-                let shuffled = selectionPool.count >= needed ? selectionPool.shuffled() : pool.shuffled()
-                selected = Array(shuffled.prefix(needed))
-            }
-            guard selected.count == needed, Set(selected.map(\.id)).count == needed else { break }
+            guard remainingCategories.count >= needed else { break }
+
+            let roundCategories = Array(remainingCategories.prefix(needed))
+            remainingCategories.removeFirst(needed)
 
             var pairs: [(Dinosaur, String)] = []
-            var roundToothTypes: Set<String> = []
-            for ptero in selected {
-                guard let toothType = PteroSmileMorphology.smileToothType(for: ptero) else { continue }
-                pairs.append((ptero, toothType))
-                roundToothTypes.insert(toothType)
+            var roundToothSlugs: Set<String> = []
+            for category in roundCategories {
+                guard let ptero = (byCategory[category] ?? []).shuffled().first,
+                      let toothSlug = PteroSmileMorphology.smileToothType(for: ptero) else { continue }
+                pairs.append((ptero, toothSlug))
+                roundToothSlugs.insert(toothSlug)
             }
             guard pairs.count == needed else { break }
 
-            let baseCandidates = allToothTypes.subtracting(roundToothTypes).subtracting(usedToothTypes)
-            let roundMorphGroups = Set(roundToothTypes.compactMap { morphGroupByTooth[$0] })
-            var distractorPool = baseCandidates.filter { candidate in
-                guard let group = morphGroupByTooth[candidate] else { return true }
-                return !roundMorphGroups.contains(group)
-            }
-            if distractorPool.count < SmilingDinosRound.distractorTeethPerRound {
-                distractorPool = allToothTypes.subtracting(roundToothTypes)
-            }
+            let distractorPool = allToothSlugs.subtracting(roundToothSlugs)
+            guard distractorPool.count >= SmilingDinosRound.distractorTeethPerRound else { break }
             let distractors = Array(distractorPool.shuffled().prefix(SmilingDinosRound.distractorTeethPerRound))
             guard distractors.count == SmilingDinosRound.distractorTeethPerRound,
                   Set(distractors).count == SmilingDinosRound.distractorTeethPerRound else { break }
 
-            usedIds.formUnion(selected.map(\.id))
-            usedToothTypes.formUnion(roundToothTypes)
-            usedToothTypes.formUnion(distractors)
             rounds.append(SmilingDinosRound(id: roundId, pairs: pairs, distractorToothTypes: distractors))
         }
 

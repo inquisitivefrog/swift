@@ -72,28 +72,45 @@ final class PterosaurGameCatalogXCTests: XCTestCase {
 
     func testPteroSmileConfigBuildsThreeRounds() {
         guard let config = SmilingDinosGameConfigs.makePteroSmile() else {
-            XCTFail("makePteroSmile() returned nil — check pool size and round builder.")
+            XCTFail("makePteroSmile() returned nil — need 9+ morphology families with bundled portrait + tooth art.")
             return
         }
         XCTAssertEqual(config.rounds.count, 3)
         XCTAssertEqual(config.id, "ptero-smile")
+        var morphologiesAcrossGame: Set<String> = []
         for round in config.rounds {
             XCTAssertEqual(round.pairs.count, SmilingDinosRound.creaturesPerRound)
             XCTAssertEqual(round.distractorToothTypes.count, SmilingDinosRound.distractorTeethPerRound)
+            let roundMorphologies = round.pairs.compactMap { PteroSmileMorphology.morphologyCategory(for: $0.dinosaur) }
+            XCTAssertEqual(Set(roundMorphologies).count, roundMorphologies.count, "Each round should use three distinct morphologies")
+            morphologiesAcrossGame.formUnion(roundMorphologies)
+            let answerTeeth = Set(round.pairs.map(\.toothType))
+            XCTAssertTrue(answerTeeth.isDisjoint(with: round.distractorToothTypes), "Dummy teeth must not match round answers")
         }
+        XCTAssertEqual(morphologiesAcrossGame.count, 9, "Three rounds × three morphologies with no repeats across the game")
+    }
+
+    func testPteroSmileRegistryMatchesREADME() {
+        XCTAssertEqual(PteroSmileMorphology.allCategorySlugs.count, 14)
+        XCTAssertEqual(PteroSmileMorphology.allToothSlugs.count, 43, "44 README pairings; nemicolopterus and wukongopterus share microscopic-needle-pin")
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("quetzalcoatlus")), "elongated-cutting-wedge")
+        XCTAssertEqual(PteroSmileMorphology.morphologyCategory(for: slug("quetzalcoatlus")), "hyper-elongated-spears")
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("anhanguera")), "classic-pelican-javelin")
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("dsungaripterus")), "pebble-crushers")
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("caiuajara")), "pointed-fruit-cutter")
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("eudimorphodon")), "dual-type-pincers")
     }
 
     func testPteroSmileBundledPortraitAndToothArt() {
         let expected: [(portrait: String, tooth: String)] = [
-            ("ptero-smile-quetzalcoatlus", "ptero-smile-tooth-beak-spear"),
-            ("ptero-smile-hatzegopteryx", "ptero-smile-tooth-beak-spear"),
-            ("ptero-smile-anuanguera", "ptero-smile-tooth-needle-spike"),
-            ("ptero-smile-ornithocheirus", "ptero-smile-tooth-needle-spike"),
-            ("ptero-smile-dimorphodon", "ptero-smile-tooth-peg-slicer"),
-            ("ptero-smile-rhamphorhynchus", "ptero-smile-tooth-peg-slicer"),
-            ("ptero-smile-tupandactylus", "ptero-smile-tooth-nutcracker"),
-            ("ptero-smile-anurognathus", "ptero-smile-tooth-micro-peg"),
-            ("ptero-smile-pterodaustro", "ptero-smile-tooth-comb-filter"),
+            ("ptero-smile-quetzalcoatlus", "ptero-smile-tooth-elongated-cutting-wedge"),
+            ("ptero-smile-hatzegopteryx", "ptero-smile-tooth-heavy-axe-beak"),
+            ("ptero-smile-anuanguera", "ptero-smile-tooth-classic-pelican-javelin"),
+            ("ptero-smile-ornithocheirus", "ptero-smile-tooth-crested-terminal-spikes"),
+            ("ptero-smile-scaphognathus", "ptero-smile-tooth-curved-forward-grapplers"),
+            ("ptero-smile-tupandactylus", "ptero-smile-tooth-deep-down-turned-scoop"),
+            ("ptero-smile-jeholopterus", "ptero-smile-tooth-vampire-insect-needles"),
+            ("ptero-smile-noripterus", "ptero-smile-tooth-shell-crushing-pegs"),
         ]
         for pair in expected {
             XCTAssertTrue(
@@ -105,6 +122,14 @@ final class PterosaurGameCatalogXCTests: XCTestCase {
                 "Missing tooth art: \(pair.tooth)"
             )
         }
+    }
+
+    private func slug(_ matrixSlug: String) -> Dinosaur {
+        let match = AirPterosaurData.allPterosaurs.first {
+            AirPterosaurData.matrixFossilSlug(for: $0) == matrixSlug
+        }
+        XCTAssertNotNil(match, "Missing pterosaur registry entry for \(matrixSlug)")
+        return match!
     }
 
     func testPteroEggsVictoryRecapEggDisplayTitlesAreNonEmpty() {
