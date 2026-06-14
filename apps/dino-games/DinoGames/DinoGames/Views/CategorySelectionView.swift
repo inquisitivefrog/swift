@@ -89,6 +89,8 @@ struct CategorySelectionView: View {
     @State private var coverSequenceComplete = false
     @State private var hasStartedCoverSequence = false
     @State private var didAttemptResumeSession = false
+    /// Blocks genre taps while the spoken title plays and navigation pushes to the level picker.
+    @State private var categoryNavigationLocked = false
 
     private func isEnabled(_ root: RootGameType) -> Bool {
         switch root {
@@ -136,7 +138,7 @@ struct CategorySelectionView: View {
             .onDisappear {
                 speechManager.stopCurrentAudio()
             }
-            .allowsHitTesting(coverSequenceComplete)
+            .allowsHitTesting(coverSequenceComplete && !categoryNavigationLocked)
             .navigationDestination(for: CategoryNavRoute.self) { route in
                 switch route {
                 case .gameLevels(let category):
@@ -205,6 +207,8 @@ struct CategorySelectionView: View {
     }
 
     private func handleRootTap(_ root: RootGameType) {
+        guard !categoryNavigationLocked else { return }
+        categoryNavigationLocked = true
         selectedRoot = root
         let category = category(for: root)
         let guided = CategoryPlaySession.shouldUseGuidedMode(for: category)
@@ -214,10 +218,14 @@ struct CategorySelectionView: View {
             gameCanonicalId: nil,
             guidedPlayMode: guided
         )
-        speechManager.speak(root.title)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            navigationPath.append(.gameLevels(category))
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            DispatchQueue.main.async {
+                self.navigationPath.append(.gameLevels(category))
+                self.categoryNavigationLocked = false
+            }
         }
+        speechManager.speak(root.title)
     }
 
     /// After splash: reopen an in-progress guided run (same category / level) when the app was interrupted.

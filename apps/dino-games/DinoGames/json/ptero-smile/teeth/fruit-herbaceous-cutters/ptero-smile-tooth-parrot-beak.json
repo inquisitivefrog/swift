@@ -1,0 +1,10 @@
+{
+    "id": "ui_beak_parrot_tapejara_DECOY",
+    "morphology": "Parrot Beak",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "DECOY CARD: Represents a short, deeply down-curved, nut-cracking parrot-like beak structure.",
+    "prompt": "High-fidelity 3D asset of a short, robust, deeply down-curved Tapejara 'parrot' beak, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The toothless beak curves sharply downward at a steep, hooked angle, optimized for cracking seeds. The texture is a bright, multi-colored matte keratin finish with vibrant reds and yellows. The specimen is centered in a 1:1 square composition, keeping a strict 25% negative space safety margin on all sides, placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows. Illuminated by soft studio lighting."
+  }

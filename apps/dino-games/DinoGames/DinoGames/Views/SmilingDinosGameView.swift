@@ -223,6 +223,7 @@ struct SmilingDinosGameView: View {
             }
             .allowsHitTesting(!isAudioPlaying)
             .opacity(isAudioPlaying ? 0.7 : 1.0)
+            .gameSheetDismissDisabledWhileAudioPlaying(isAudioPlaying)
             .navigationBarTitleDisplayMode(.inline)
         }
     }

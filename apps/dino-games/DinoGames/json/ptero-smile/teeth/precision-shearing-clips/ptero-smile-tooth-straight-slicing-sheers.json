@@ -1,0 +1,10 @@
+{
+    "id": "ui_beak_wedge_caupedactylus",
+    "morphology": "Straight Slicing Shears",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Shows the perfectly straight, uncrested, completely toothless blade beak of Caupedactylus in the open-mouth framework.",
+    "prompt": "High-fidelity 3D asset of the open, completely toothless jaws of a Caupedactylus, viewed from a three quarter view perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The upper and lower jaws form a perfectly straight, clean, wedge-shaped frame opened wide around an empty central mouth cavity. The cutting margins are exceptionally smooth, sharp, and clad in a matte forest-green and pale cream keratin sheath. At the base of the jaw, the stylized head displays pebbled skin textures and large, warm, highly expressive character eyes. The specimen is centered in a 1:1 square composition, ensuring a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with soft contact shadows. Illuminated by balanced studio lighting."
+  }

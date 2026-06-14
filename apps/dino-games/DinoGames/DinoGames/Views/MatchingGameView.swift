@@ -1676,6 +1676,7 @@ struct MatchingGameView: View {
             }
             .allowsHitTesting(!speechManager.isPlaying) // Disable interaction while audio plays
             .opacity(speechManager.isPlaying ? 0.7 : 1.0) // Visual indicator that interaction is disabled
+            .gameSheetDismissDisabledWhileAudioPlaying(speechManager.isPlaying)
             .navigationBarTitleDisplayMode(.inline)
         } // End NavigationView
     } // End body

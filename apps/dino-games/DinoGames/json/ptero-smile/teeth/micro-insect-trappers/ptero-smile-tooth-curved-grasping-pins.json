@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_hook_kunpengopterus",
+    "morphology": "Curved Grasping Pins",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Adapts Kunpengopterus to the open split view, displaying its sharp, slightly backward-curving teeth concentrated at the jaw front.",
+    "prompt": "High-fidelity 3D asset of the open jaws of a Kunpengopterus, viewed from a direct three quarter view perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The long, slender jaws open wide around an empty mouth cavity. Lined strictly along the front section of the outer margins are small, sharply pointed, backward-curving ivory fangs, leaving the back half of the jaw completely smooth. At the base of the jaw hinge, the stylized amber-brown head features smooth skin and large, warm, expressive cartoon character eyes looking upward. The entire specimen is centered in a 1:1 square composition, keeping a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows. Illuminated by soft studio lighting with ambient occlusion."
+  }

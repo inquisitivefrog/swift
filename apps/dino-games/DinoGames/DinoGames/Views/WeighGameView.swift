@@ -39,7 +39,7 @@ struct WeighGameView: View {
     @Binding var isPresented: Bool
     let gameConfig: WeighGameConfig
     
-    @State private var speechManager = SpeechManager()
+    @StateObject private var speechManager = SpeechManager()
     @State private var selectedLeftItem: WeighableItem?
     @State private var selectedRightItem: WeighableItem?
     @State private var isWeighing = false
@@ -64,6 +64,11 @@ struct WeighGameView: View {
     /// True when intro walk is done (or not used); then "choose your first" can play and taps allowed after that.
     private var introWalkComplete: Bool {
         !usesIntroWalkAndFirstPickPrompt || displayItems.isEmpty || introWalkStep >= displayItems.count
+    }
+
+    /// Block taps and dismiss while intro, selection audio, or weighing feedback is playing.
+    private var blocksUserInput: Bool {
+        isChooseFirstAudioPlaying || !introWalkComplete || isWeighing || speechManager.isPlaying
     }
 
     /// Dinosaur + marine weigh: name each grid creature, then "choose your first dinosaur" (shared prompt audio).
@@ -389,11 +394,14 @@ struct WeighGameView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .allowsHitTesting(!blocksUserInput)
+        .gameSheetDismissDisabledWhileAudioPlaying(blocksUserInput)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Done") {
                     isPresented = false
                 }
+                .disabled(blocksUserInput)
             }
         }
         .onAppear {

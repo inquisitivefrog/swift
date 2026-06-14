@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_needle_pterodactylus",
+    "morphology": "Slender Conical Snappers",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Presents Pterodactylus in the open split layout, showing its small, sharp, cone-like teeth restricted mostly to the front half of the jaw.",
+    "prompt": "High-fidelity 3D asset of the open jaws of a Pterodactylus, viewed from a three quarter view perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The slender, pointed jaws open wide around an empty central cavity. The front half of the jaw margins is neatly lined with small, sharp, vertical cone-shaped ivory teeth, while the rear half of the jaw remains completely toothless and smooth. At the base of the jaw, the stylized, pale olive-green head features large, warm, highly expressive character eyes. The entire specimen is centered in a 1:1 square composition, keeping a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with soft contact shadows. Illuminated by balanced studio lighting."
+  }

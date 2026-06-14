@@ -461,6 +461,7 @@ struct GuessGameView: View {
                 isAudioPlaying = false
             }
             .allowsHitTesting(!isAudioPlaying && !isProcessingAnswer && optionsWalkIndex == nil)
+            .gameSheetDismissDisabledWhileAudioPlaying(isAudioPlaying || isProcessingAnswer || optionsWalkIndex != nil)
             // No dimming when audio plays — keep full brightness so dinosaurs are easy to see during intro walk
             .overlay(alignment: .topTrailing) {
                 if isFootprintsGuessGame, currentQuestion != nil, !isGameComplete {
@@ -475,6 +476,8 @@ struct GuessGameView: View {
                             .background(Circle().fill(Color.blue))
                             .frame(width: 72, height: 72)
                     }
+                    .disabled(isAudioPlaying || isProcessingAnswer || optionsWalkIndex != nil)
+                    .opacity((isAudioPlaying || isProcessingAnswer || optionsWalkIndex != nil) ? 0.45 : 1.0)
                     .padding(.top, 8)
                     .padding(.trailing, 16)
                 }

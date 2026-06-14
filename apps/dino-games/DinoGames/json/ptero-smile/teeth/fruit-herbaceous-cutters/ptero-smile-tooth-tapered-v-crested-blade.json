@@ -1,0 +1,10 @@
+{
+    "id": "ui_beak_cutter_bakonydraco",
+    "morphology": "Tapered V-Crested Blade",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Adapts Bakonydraco to the split open layout, showing its toothless, exceptionally tall and deep V-shaped lower jaw.",
+    "prompt": "High-fidelity 3D asset of the open, completely toothless jaws of a Bakonydraco, viewed from a three quarter view perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The lower jaw is remarkably deep, forming a tall, sharp V-shaped wedge opened wide to show the cavernous interior cavity. The smooth cutting edges are covered in a tough matte keratin sheath with warm ochre and terracotta earth tones. At the base of the deep jaw, the stylized head features smooth tan skin and large, expressive cartoon character eyes. Centered perfectly in a 1:1 square composition, ensuring a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows. Illuminated by soft studio lighting with ambient occlusion."
+  }

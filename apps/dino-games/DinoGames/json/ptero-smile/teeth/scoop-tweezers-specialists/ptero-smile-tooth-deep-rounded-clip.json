@@ -1,0 +1,10 @@
+{
+    "id": "ui_beak_crest_tupandactylus",
+    "morphology": "Deep Rounded Clip",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Highlights the deep, toothless, strongly pointed beak tip of Tupandactylus positioned just below its iconic massive crest foundation.",
+    "prompt": "High-fidelity 3D asset of the open, toothless jaws of a Tupandactylus, viewed from a direct three quarter view perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The short, incredibly deep jaw frame opens wide around an empty mouth cavity, ending in a sharp downward-pointing tip. The smooth cutting margins are clad in a matte keratin sheath with vibrant gradients of electric blue and neon orange. At the base of the jaw, the stylized head features a massive rising crest foundation and large, highly expressive cartoon eyes looking toward the viewer. The asset is perfectly centered in a 1:1 square composition, maintaining a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with deep contact shadows. Illuminated by soft studio lighting."
+  }

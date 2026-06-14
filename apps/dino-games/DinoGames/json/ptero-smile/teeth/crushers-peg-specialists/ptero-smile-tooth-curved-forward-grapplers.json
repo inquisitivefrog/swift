@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_hook_campylognathoides",
+    "morphology": "Curved Forward Grapplers",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Emphasizes the deep, short lower jaw and prominent forward-curving fangs of Campylognathoides using the open split framework.",
+    "prompt": "High-fidelity 3D asset of the open jaws of a Campylognathoides, viewed from a top-down split perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The robust, moderately short jaws are spread wide open around a hollow central mouth cavity. The front tip of the jaw features exceptionally large, forward-curving, long ivory fangs, while the rear margins transition into smaller conical teeth. At the base of the jaw hinges, the stylized head displays a cool grey-blue pebbled texture and large, highly expressive character eyes. The entire specimen is centered in a 1:1 square composition, keeping a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows. Illuminated by soft studio lighting with ambient occlusion."
+  }

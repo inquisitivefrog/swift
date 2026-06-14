@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_keel_tropeognathus",
+    "morphology": "Double-Crested Fish Snappers",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Highlights the massive convex, keel-like crests on both the upper and lower jaw tips of Tropeognathus lined with large fangs.",
+    "prompt": "High-fidelity 3D asset of the wide open jaws of a Tropeognathus, viewed from a direct three quarter view perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. Both the upper and lower jaw tips feature immense, semi-circular, blade-like crests or keels projecting vertically from the midlines. The jaw margins are opened wide around a hollow center, lined with large, sharp, slightly outward-curving ivory fangs. At the base of the heavy jaw, the stylized slate-blue head displays large, expressive cartoon eyes. The asset is perfectly centered in a 1:1 square composition with a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with deep contact shadows. Illuminated by soft studio lighting with ambient occlusion to define the massive crest profiles."
+  }

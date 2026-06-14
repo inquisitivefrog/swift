@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_crusher_dsungaripterus_DECOY",
+    "morphology": "Pebble Crushers",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "DECOY CARD: Represents flat, broad, peg-like crushing teeth located deep in the rear jaw.",
+    "prompt": "High-fidelity 3D asset of a rear jaw segment of a Dsungaripterus showing its 'Pebble Crusher' teeth, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The teeth are blunt, flat, thick, and peg-like, looking like smooth, heavy ivory molars designed for crushing shells. The specimen is centered in a 1:1 square composition, keeping a strict 25% negative space safety margin on all sides, placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows. Illuminated by soft studio lighting."
+  }

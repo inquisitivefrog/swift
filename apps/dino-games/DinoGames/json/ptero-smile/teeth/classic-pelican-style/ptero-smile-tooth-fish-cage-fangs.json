@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_needle_anhanguera",
+    "morphology": "Fish Cage Fangs",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Highlights the wildly splayed, long, interlocking needle-sharp fangs at the tip of the Anhanguera jaw.",
+    "prompt": "High-fidelity 3D asset of the tip of an Anhanguera jaw showing its notorious 'Fish Cage' fangs, rendered in a 3D animated feature film aesthetic with soft, stylized, and slightly rounded edges. The rounded, expanded tip of the bone houses long, viciously sharp, forward-splaying ivory fangs that visibly interlock like a bear trap. The teeth have a high-quality polished enamel finish with subtle wet-look highlights. The specimen is oriented vertically and perfectly centered in a 1:1 square composition, carefully scaled to occupy the central power-zone, ensuring a strict 25% negative space safety margin on all four sides. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows. Illuminated by soft studio lighting with ambient occlusion to highlight the terrifying, sharp, interlocking curves."
+  }

@@ -25,7 +25,7 @@ struct LandLevelIntermissionView: View {
     /// Vertical beat: dino scale-up duration + hold at full size (each doubled).
     private let dinoGrowNanoseconds: UInt64 = 2_500_000_000
     private let fullBleedHoldNanoseconds: UInt64 = 440_000_000
-    /// Pause after visuals before returning to the game list so level intro audio is not skipped or colliding with the walk.
+    /// Pause after visuals and crowd audio before returning to the game list.
     private let pauseBeforeDismissNanoseconds: UInt64 = 600_000_000
     
     private var levelImageName: String {
@@ -73,6 +73,7 @@ struct LandLevelIntermissionView: View {
                 }
             }
         }
+        .allowsHitTesting(true)
         .task {
             await runIntermissionSequence()
         }
@@ -101,6 +102,7 @@ struct LandLevelIntermissionView: View {
         }
 
         guard ImageAssetCache.imageExists(named: levelImageName) else {
+            await waitForCrowdToFinish()
             stopCrowd()
             try? await Task.sleep(nanoseconds: pauseBeforeDismissNanoseconds)
             onComplete()
@@ -119,12 +121,14 @@ struct LandLevelIntermissionView: View {
         try? await Task.sleep(nanoseconds: dinoGrowNanoseconds)
         try? await Task.sleep(nanoseconds: fullBleedHoldNanoseconds)
 
-        stopCrowd()
         withAnimation(.easeOut(duration: 0.4)) {
             dinoVisible = false
             gameBadgeVisible = false
         }
         try? await Task.sleep(nanoseconds: 400_000_000)
+
+        await waitForCrowdToFinish()
+        stopCrowd()
         try? await Task.sleep(nanoseconds: pauseBeforeDismissNanoseconds)
         onComplete()
     }
@@ -140,6 +144,15 @@ struct LandLevelIntermissionView: View {
             crowdPlayer = p
         } catch {
             crowdPlayer = nil
+        }
+    }
+
+    @MainActor
+    private func waitForCrowdToFinish() async {
+        guard let player = crowdPlayer else { return }
+        while player.isPlaying {
+            try? await Task.sleep(nanoseconds: 50_000_000)
+            if Task.isCancelled { return }
         }
     }
 

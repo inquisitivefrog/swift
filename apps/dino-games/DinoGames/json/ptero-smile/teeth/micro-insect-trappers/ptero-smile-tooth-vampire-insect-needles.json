@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_needle_jeholopterus",
+    "morphology": "Vampire Insect Needles",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Frames the broad, flat snout of Jeholopterus, emphasizing the prominent, elongated peg-like needle teeth along the open margins.",
+    "prompt": "High-fidelity 3D asset of the open jaws of a Jeholopterus, viewed from a direct top-down split perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The jaws are very broad and short, opening wide around a hollow central cavity. Lining the outer rims are small, sharp, needle-like ivory teeth, with the absolute front teeth being noticeably longer and curving backward aggressively. At the base of the jaw, the stylized head features dense pycnofiber coat textures in rich chocolate-brown and large, warm, dark expressive eyes. Centered perfectly in a 1:1 square composition, ensuring a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with soft contact shadows. Illuminated by balanced studio lighting."
+  }

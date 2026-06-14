@@ -1,0 +1,10 @@
+{
+    "id": "ui_beak_javelin_arambourgiania",
+    "morphology": "Ultra-Elongated Spear",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Highlights the record-breaking, ultra-slender, hyper-elongated spear beak morphology of Arambourgiania.",
+    "prompt": "High-fidelity 3D asset of an exceptionally long and slender Arambourgiania 'Javelin' beak, rendered in a 3D animated feature film aesthetic with soft, stylized, and slightly rounded edges. The toothless jaw profile forms an incredibly elongated, perfectly straight, needle-straight spear structure that tapers seamlessly into a sharp, narrow point. The texture is a flawless, high-quality keratin sheath colored in deep ocher, pale sand, and warm amber tones. The specimen is oriented diagonally across a 1:1 square composition, carefully scaled to maximize its extreme length within the central power-zone, maintaining a strict 25% negative space safety margin at the tip and base. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows to provide realistic physical weight. Illuminated by soft studio lighting with ambient occlusion to accentuate the clean, unbroken geometric lines of this giant predatory instrument."
+  }

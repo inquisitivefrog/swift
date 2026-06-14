@@ -446,7 +446,7 @@ struct RacingGameView: View {
     /// When gameConfig has empty racers (racing-dinosaurs needs period), we show period selection first; effectiveConfig updates when period is chosen.
     @State private var effectiveConfig: RacingGameConfig?
 
-    @State private var speechManager = SpeechManager()
+    @StateObject private var speechManager = SpeechManager()
     @State private var selectedLane1: RacingRacer?
     @State private var selectedLane2: RacingRacer?
     /// Second racer chosen but name audio still playing; we don't transition to pre-race until audio finishes.
@@ -458,7 +458,6 @@ struct RacingGameView: View {
     @State private var raceTimer: Timer?
     @State private var winner: RacingRacer?
     @State private var isTie = false
-    @State private var isAudioPlaying = false
     /// Pre-race: 0 = first position (name + first-position audio), 1 = second position (name + second-position audio), 2 = Ready/Set/Go + referee + whistle on same contestants screen
     @State private var preRaceStep: Int? = nil
     /// Ensures each contestants lane (0 / 1) starts audio exactly once; `onAppear` can skip step 1 when `preRaceStep` advances.
@@ -542,6 +541,8 @@ struct RacingGameView: View {
     }
     private var showRefereeFinishTrack: Bool { postRaceStep == "referee-track" }
     private var showPostRaceAnnouncement: Bool { postRaceStep == "announce" }
+
+    private var blocksUserInput: Bool { speechManager.isPlaying }
     
     var body: some View {
         NavigationView {
@@ -591,6 +592,8 @@ struct RacingGameView: View {
                 stopRace()
                 speechManager.stopCurrentAudio()
             }
+            .allowsHitTesting(!blocksUserInput)
+            .gameSheetDismissDisabledWhileAudioPlaying(blocksUserInput)
         }
     }
 
@@ -700,14 +703,6 @@ struct RacingGameView: View {
                 .padding(.horizontal)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            if selectedLane1 == nil {
-                dismissExpandedAndSetFirstRacer(racer)
-            } else {
-                dismissExpandedAndSetSecondRacer(racer)
-            }
-        }
     }
 
     // MARK: - Pre-race (first position → second position → Ready/Set/Go + referee + whistle → track)

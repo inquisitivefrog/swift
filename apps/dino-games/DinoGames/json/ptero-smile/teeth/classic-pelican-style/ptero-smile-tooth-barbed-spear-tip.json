@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_projector_ludodactylus",
+    "morphology": "Barbed Spear Tip",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Highlights the dramatic, long, backward-curving fangs along a slender jaw that ends in a toothless point.",
+    "prompt": "High-fidelity 3D asset of the long, slender upper and lower jaw of a Ludodactylus, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The very tip of the beak is a sharp, toothless point of hard yellow keratin, but directly behind it, the jaw margins erupt with long, slender, backward-curving ivory fangs that alternate and interlock like a row of fishhooks. The specimen is oriented diagonally and perfectly centered in a 1:1 square composition, maintaining a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows. Illuminated by soft studio lighting."
+  }

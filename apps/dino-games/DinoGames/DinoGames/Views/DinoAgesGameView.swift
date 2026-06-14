@@ -308,6 +308,7 @@ struct DinoAgesGameView: View {
                     })
                 }
         }
+        .gameSheetDismissDisabledWhileAudioPlaying(blocksUserInput)
     }
 
     @ViewBuilder

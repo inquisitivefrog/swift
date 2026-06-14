@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_cage_scaphognathus_v2",
+    "morphology": "Spaced Vertical Pegs V2",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Moves away from a human denture look by framing the distinct, short, boxy reptilian jaw structure in a wide-open view with character-consistent features.",
+    "prompt": "High-fidelity 3D asset of the open jaws of a Scaphognathus, showcasing its distinctively blunt, boxy, non-human reptilian jaw shape from a direct top-down split perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The jaws are spread wide open around a hollow central mouth cavity. Lined strictly along the outer margins are widely spaced, completely vertical peg-like ivory teeth, forming a clear basket-like cage silhouette. The base of the jaw features a stylized, warm terracotta-colored head skin texture with large, expressive, animated cartoon eyes peeking upward. The entire asset is centered in a 1:1 square composition, ensuring a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with soft contact shadows. Illuminated by balanced studio lighting to emphasize the unique, rhythmic gaps between each peg tooth."
+  }

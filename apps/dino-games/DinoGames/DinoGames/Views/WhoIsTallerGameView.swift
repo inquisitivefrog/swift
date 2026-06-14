@@ -62,7 +62,7 @@ struct WhoIsTallerGameView: View {
     @Binding var isPresented: Bool
     let gameConfig: WhoIsTallerGameConfig
 
-    @State private var speechManager = SpeechManager()
+    @StateObject private var speechManager = SpeechManager()
     @State private var roundsCompleted = 0
     private let maxRounds = 3
     @State private var currentRoundItems: [WhoIsTallerItem] = []
@@ -87,6 +87,10 @@ struct WhoIsTallerGameView: View {
     private var usesRelativeFirstSelectionScale: Bool { isPterosaurPool || isMarinePool }
     private var introWalkComplete: Bool { displayItems.isEmpty || introWalkStep >= displayItems.count }
     private var canTapGrid: Bool { introWalkComplete && !isChooseFirstAudioPlaying && !gridTapsBlocked }
+
+    private var blocksUserInput: Bool {
+        !canTapGrid || speechManager.isPlaying
+    }
 
     /// Match Measure the Dinosaur layout: measure-dino-* are 140×340 px; paleontologist center 110×340 pt (larger display).
     private let measureSlotWidth: CGFloat = 140
@@ -160,10 +164,13 @@ struct WhoIsTallerGameView: View {
         }
         .navigationTitle(isGameOver ? "" : gameConfig.title)
         .navigationBarTitleDisplayMode(.inline)
+        .allowsHitTesting(!blocksUserInput)
+        .gameSheetDismissDisabledWhileAudioPlaying(blocksUserInput)
         .toolbar {
             if !isGameOver {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") { isPresented = false }
+                        .disabled(blocksUserInput)
                 }
             }
         }

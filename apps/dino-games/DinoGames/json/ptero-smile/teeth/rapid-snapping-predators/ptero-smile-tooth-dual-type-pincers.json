@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_pincer_dimorphodon",
+    "morphology": "Dual-Type Pincers",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Highlights the two radically distinct tooth shapes (large front fangs and tiny rear pegs) in a single Dimorphodon jaw.",
+    "prompt": "High-fidelity 3D asset of a full upper and lower jaw profile from a Dimorphodon, showcase-focused on its unique 'Dual-Type Pincer' dentition, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The front of the deep, tall beak features four elongated, forward-pointing, needle-sharp ivory fangs, while the rear half of the jaw suddenly switches to a dense row of tiny, uniform, sharp vertical peg teeth. The jaw bones display subtle textures resembling old ivory and soft cream-white enamel finishes. The specimen is oriented diagonally and perfectly centered in a 1:1 square composition, carefully scaled to occupy the central power-zone, ensuring a strict 25% negative space safety margin on all four sides. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows. Illuminated by soft studio lighting with ambient occlusion to deeply contrast the giant front fangs against the miniature rear teeth."
+  }

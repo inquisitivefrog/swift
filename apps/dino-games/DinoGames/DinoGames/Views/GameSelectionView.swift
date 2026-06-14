@@ -110,6 +110,9 @@ struct GameSelectionView: View {
         _selectedLevel = State(initialValue: entryLevel)
         _landLevelIntermissionActive = State(initialValue: category == .land && entryLevel != nil && !resumingGuided)
         _hasPlayedWelcome = State(initialValue: resumingGuided)
+        if category == .land && entryLevel != nil && !resumingGuided {
+            _isAudioPlaying = State(initialValue: true)
+        }
     }
 
     /// Games for the current category and level. When `selectedLevel == nil`, callers typically show the level picker instead of this list.
@@ -559,6 +562,7 @@ struct GameSelectionView: View {
 
             if landLevelIntermissionActive, let level = selectedLevel, !showGameTransition {
                 LandLevelIntermissionView(category: category, level: level) {
+                    isAudioPlaying = true
                     landLevelIntermissionActive = false
                 }
                 .zIndex(10)
@@ -583,6 +587,7 @@ struct GameSelectionView: View {
                 } label: {
                     Image(systemName: "chevron.left")
                 }
+                .disabled(isAudioPlaying || landLevelIntermissionActive || showGameTransition)
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -591,6 +596,7 @@ struct GameSelectionView: View {
             hasPlayedWelcome = false
             lastCompletedGameForGuidedAdvance = nil
             if newLevel != nil {
+                isAudioPlaying = true
                 landLevelIntermissionActive = true
                 if guidedPlayMode {
                     persistPlaySession(gameCanonicalId: nil)
@@ -601,6 +607,7 @@ struct GameSelectionView: View {
         }
         .onChange(of: landLevelIntermissionActive) { _, active in
             if active {
+                isAudioPlaying = true
                 speechManager.stopCurrentAudio()
             }
         }
@@ -2388,6 +2395,7 @@ struct GameTransitionView: View {
                 Spacer()
             }
         }
+        .allowsHitTesting(false)
         .onAppear {
             var didComplete = false
             let completeOnce: () -> Void = {

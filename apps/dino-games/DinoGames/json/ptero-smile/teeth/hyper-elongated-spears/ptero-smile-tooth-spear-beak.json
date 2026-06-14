@@ -1,0 +1,10 @@
+{
+    "id": "ui_beak_spear_quetzalcoatlus",
+    "morphology": "Spear Beak",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Highlights the massive, dagger-like, completely toothless javelin morphology of the Quetzalcoatlus beak.",
+    "prompt": "High-fidelity 3D asset of an exceptionally massive, elongated Quetzalcoatlus 'spear' beak, rendered in a 3D animated feature film aesthetic with soft, stylized, and slightly rounded edges. The toothless jaw forms a perfectly straight, needle-sharp, dagger-like javelin structure. The texture is a smooth, high-quality tactile keratin sheath with a subtle organic sheen, colored in deep amber and ocher tones. The specimen is oriented horizontally and centered in a 1:1 square composition, carefully scaled to occupy the central power-zone, ensuring a strict 25% negative space safety margin on all four sides. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows to provide realistic physical weight and dramatic grounding. Illuminated by soft studio lighting with ambient occlusion to deeply emphasize the incredible elongated, streamlined volume."
+  }

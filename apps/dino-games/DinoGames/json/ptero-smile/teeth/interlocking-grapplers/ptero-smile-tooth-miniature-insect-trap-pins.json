@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_snap_anurognathus",
+    "morphology": "Miniature Insect Trap Pins",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Captures the extraordinarily broad, short, frog-like jaw of Anurognathus filled with tiny pin-like teeth strictly lining the outer rims.",
+    "prompt": "High-fidelity 3D asset of the wide open jaws of an Anurognathus, viewed from a direct top-down split perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The jaw structure is uniquely short, extremely wide, and rounded like a frog's mouth, framing a broad cavernous mouth cavity. The outer margins of both jaws are densely lined with tiny, needle-sharp ivory pin teeth that angle slightly inward. At the base of the short jaw, the stylized, fuzzy moss-green head features exceptionally large, warm, glowing insectivore character eyes. The asset is perfectly centered in a 1:1 square composition with a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with soft contact shadows. Illuminated by soft studio lighting to define the wide, compact frame."
+  }

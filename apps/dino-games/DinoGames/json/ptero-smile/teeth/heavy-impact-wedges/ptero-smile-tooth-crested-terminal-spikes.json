@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_rosette_coloborhynchus",
+    "morphology": "Crested Terminal Spikes",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Highlights the blunt, flattened snout tip of Coloborhynchus with outward-pointing fangs and a distinct upward-projecting premaxillary crest.",
+    "prompt": "High-fidelity 3D asset of the open jaws of a Coloborhynchus, viewed from a three quarter view perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The jaw tips are uniquely flattened and blunt at the absolute front, splaying open to reveal long, massive ivory fangs that project aggressively sideways and forward from the margins. A prominent, rounded, sail-like crest rises directly from the top margin of the snout tip. At the base of the heavy jaw, the stylized teal-colored head features large, expressive character eyes. Centered perfectly in a 1:1 square composition, keeping a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows. Illuminated by dramatic studio lighting with ambient occlusion to sculpt the heavy tooth roots."
+  }

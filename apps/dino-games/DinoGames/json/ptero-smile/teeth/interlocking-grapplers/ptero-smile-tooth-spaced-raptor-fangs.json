@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_trans_darwinopterus",
+    "morphology": "Spaced Raptor Fangs",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Highlights the transitional dental layout of Darwinopterus, showing widely spaced, sharp spike teeth localized entirely at the front tips.",
+    "prompt": "High-fidelity 3D asset of the open jaws of a Darwinopterus, viewed from a three quarter view perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The slender jaws are open wide around a hollow interior frame. The front half of the outer margins is lined with large, widely spaced, sharp ivory spike teeth that project slightly forward, while the rear margins remain completely smooth and toothless. At the base of the jaw, the stylized lavender-tinted head features smooth leather-like skin textures and large, warm, highly expressive character eyes. The asset is centered in a 1:1 square composition, ensuring a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with soft contact shadows. Illuminated by balanced studio lighting."
+  }

@@ -1,0 +1,10 @@
+{
+    "id": "ui_beak_dagger_nyctosaurus",
+    "morphology": "Hyper-Slender Razor Needle",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Frames the hyper-elongated, absolutely toothless, thin needle beak of Nyctosaurus in a wide split format.",
+    "prompt": "High-fidelity 3D asset of the open, completely toothless jaws of a Nyctosaurus, viewed from a three quarter view perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The upper and lower jaws form an incredibly narrow, paper-thin, needle-like beak structure opened wide to show the smooth internal channel. The margins are razor-sharp, clad in a sleek, semi-gloss translucent grey keratin sheath. At the base of the ultra-thin jaw, the stylized head displays large, highly expressive cartoon character eyes. The asset is centered in a 1:1 square composition, carefully scaled to keep a strict 25% negative space safety margin at the delicate tips. Placed flat against a neutral, 50% grey studio floor plane with soft contact shadows. Illuminated by clean studio lighting."
+  }

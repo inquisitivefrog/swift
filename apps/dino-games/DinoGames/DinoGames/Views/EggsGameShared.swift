@@ -347,6 +347,8 @@ struct EggsGameView: View {
         .opacity(speechManager.isPlaying ? 0.7 : 1.0)
         .navigationBarTitleDisplayMode(.inline)
         return NavigationView { content }
+            .allowsHitTesting(!speechManager.isPlaying)
+            .gameSheetDismissDisabledWhileAudioPlaying(speechManager.isPlaying)
             .overlay(alignment: .topTrailing) {
                 if gameConfig.settings.hasSourceHints, !showVictory {
                     Button {
@@ -418,7 +420,7 @@ struct EggsGameView: View {
 
             // CT scanner only (magnify + SEM removed for simpler flow)
             scannerToolRowView
-                .allowsHitTesting(true)
+                .allowsHitTesting(!speechManager.isPlaying)
 
             // Three dinosaurs below (dino-{slug}), tappable—only one matches the displayed egg
             threeCreatureLayout

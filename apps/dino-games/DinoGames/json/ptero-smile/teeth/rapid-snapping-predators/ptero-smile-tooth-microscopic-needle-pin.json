@@ -1,0 +1,10 @@
+{
+    "id": "ui_beak_needle_nemicolopterus",
+    "morphology": "Microscopic Needle Pin",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Frames the hyper-miniature, delicate, completely toothless pointed beak of Nemicolopterus in the wide open split framework.",
+    "prompt": "High-fidelity 3D asset of the open, toothless jaws of a Nemicolopterus, viewed from a three quarter view perspective to highlight its tiny, delicate proportions, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The miniature jaws form a perfectly sharp, straight needle-thin frame opened wide around a small hollow center. The margins are completely smooth and clad in a delicate, semi-translucent emerald-green keratin sheath. At the base of the tiny jaw, the stylized head features large, bright, inquisitive character eyes. Centered perfectly in a 1:1 square composition, ensuring a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with soft contact shadows. Illuminated by clean studio lighting to define the hyper-fine geometric tips."
+  }

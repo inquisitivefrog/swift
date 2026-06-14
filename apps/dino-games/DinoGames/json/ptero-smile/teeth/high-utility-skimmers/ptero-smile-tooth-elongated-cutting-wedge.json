@@ -1,0 +1,10 @@
+{
+    "id": "ui_beak_blade_tupuxuara",
+    "morphology": "Elongated Cutting Wedge",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Frames the long, straight, toothless blade beak of Tupuxuara using the wide open split perspective framework.",
+    "prompt": "High-fidelity 3D asset of the open, completely toothless jaws of a Tupuxuara, viewed from a direct three quarter view perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The upper and lower jaws form a long, highly streamlined wedge-shaped cutting frame, opened wide around an empty central mouth cavity. The razor-sharp cutting margins are perfectly smooth, covered in a matte keratin sheath featuring vibrant gradients of fiery red and yellow. At the base of the jaw hinges, the stylized head features smooth skin and giant, warm, highly expressive character eyes. Centered perfectly in a 1:1 square composition with a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with deep contact shadows. Illuminated by soft studio lighting with ambient occlusion."
+  }

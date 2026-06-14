@@ -1,0 +1,11 @@
+[
+  {
+    "id": "ui_tooth_filter_ctenochasma",
+    "morphology": "Comb Needles",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Highlights the numerous, densely packed, outwards-splaying needle teeth of the Ctenochasma jaw used for micro-prey straining.",
+    "prompt": "High-fidelity 3D asset of a mid-jaw section from a Ctenochasma, showcase-focused on its 'Comb Needle' dentition, rendered in a 3D animated feature film aesthetic with soft, stylized, and slightly rounded edges. The upper and lower jaws feature over a hundred closely packed, extremely slender, elongated needle-like ivory teeth splaying outward along the jaw margins. The teeth have a polished, clean ceramic enamel finish with subtle specular highlights. The specimen is oriented horizontally and perfectly centered in a 1:1 square composition, carefully scaled to occupy the central power-zone, ensuring a strict 25% negative space safety margin on all four sides. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows to provide realistic physical weight and dramatic grounding. Illuminated by soft studio lighting with ambient occlusion to cleanly distinguish the massive row of interlocking comb teeth."
+  }

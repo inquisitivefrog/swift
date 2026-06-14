@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_fence_wukongopterus",
+    "morphology": "Rhythmic Grasping Spikes",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Showcases the distinctively even, widely spaced peg teeth along the open margins of Wukongopterus, anchored to the character base.",
+    "prompt": "High-fidelity 3D asset of the open jaws of a Wukongopterus, viewed from a direct three quarter view perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The upper and lower jaws are opened wide to reveal an elongated hollow interior. Lined neatly along the outer margins is a rhythmic row of moderately sized, sharp ivory cone teeth that are separated by perfectly uniform gaps. At the base of the jaw, the stylized, slate-grey head displays smooth skin textures and large, warm, highly expressive character eyes peeking up. The asset is centered in a 1:1 square composition, keeping a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with soft contact shadows. Illuminated by balanced studio lighting to clearly delineate the tooth spacing."
+  }

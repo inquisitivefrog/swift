@@ -1,0 +1,10 @@
+{
+    "id": "ui_beak_clipper_caiuajara",
+    "morphology": "Deep Down-Turned Scoop",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Frames the highly unique, strongly downturned, toothless scoop beak of Caiuajara within the standard split layout.",
+    "prompt": "High-fidelity 3D asset of the open, toothless jaws of a Caiuajara, viewed from a direct three quarter view perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The jaws are spread wide open around a hollow interior frame, with the front half of the beak bending sharply and dramatically downward to form a deep, specialized nipping hook. The smooth keratin sheath features bright, tropical gradients of magenta and orange. At the base of the jaw hinges, the stylized head features large, expressive character eyes looking up. The asset is centered in a 1:1 square composition, keeping a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with soft contact shadows. Illuminated by clean studio lighting."
+  }

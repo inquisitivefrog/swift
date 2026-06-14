@@ -586,6 +586,7 @@ struct PortraitJigsawPuzzleGameView: View {
             .navigationTitle(line.navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
         }
+        .gameSheetDismissDisabledWhileAudioPlaying(isAudioPlaying)
         .onAppear {
             rounds = PortraitJigsawRoundGenerator.makeRounds(for: line)
             currentRoundIndex = 0

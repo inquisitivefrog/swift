@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_spear_rhamphorhynchus",
+    "morphology": "Forward-Protruding Spikes",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Displays the classic fish-trapping teeth of Rhamphorhynchus, showcasing how the long spikes project forward beyond the toothless tip.",
+    "prompt": "High-fidelity 3D asset of the open jaws of a Rhamphorhynchus, viewed from a three quarter view perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The long, slender jaws open wide around a hollow mouth frame. The absolute tips of the jaws form sharp, toothless yellow keratin points, but the margins directly behind are lined with long, needle-sharp ivory fangs that splay dramatically forward and outward. At the base of the long jaw, the stylized amber-colored head displays large, sharp, highly expressive character eyes. The specimen is centered in a 1:1 square composition, keeping a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with deep contact shadows. Illuminated by soft studio lighting with ambient occlusion."
+  }

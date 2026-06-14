@@ -223,6 +223,8 @@ struct DinoFloraGameView: View {
                                 .background(Circle().fill(Color.blue))
                                 .frame(width: 72, height: 72)
                         }
+                        .disabled(speechManager.isPlaying)
+                        .opacity(speechManager.isPlaying ? 0.45 : 1.0)
                         .padding(.top, 8)
                         .padding(.trailing, 16)
                     }
@@ -237,6 +239,7 @@ struct DinoFloraGameView: View {
                     })
                 }
         }
+        .gameSheetDismissDisabledWhileAudioPlaying(speechManager.isPlaying)
     }
 
     @ViewBuilder

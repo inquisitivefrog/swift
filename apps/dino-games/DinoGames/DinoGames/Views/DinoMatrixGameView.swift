@@ -245,6 +245,7 @@ struct DinoMatrixGameView: View {
                 isAudioPlaying = false
             }
             .allowsHitTesting(!isAudioPlaying && !isProcessingAnswer && optionsWalkIndex == nil)
+            .gameSheetDismissDisabledWhileAudioPlaying(isAudioPlaying || isProcessingAnswer || optionsWalkIndex != nil)
             .navigationBarTitleDisplayMode(.inline)
             .overlay(alignment: .topTrailing) {
                 if !isGameComplete, !gameConfig.sourceHints.isEmpty {

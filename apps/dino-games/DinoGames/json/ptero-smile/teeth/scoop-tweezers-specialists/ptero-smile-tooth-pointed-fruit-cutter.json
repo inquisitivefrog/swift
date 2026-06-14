@@ -1,0 +1,10 @@
+{
+    "id": "ui_beak_nipper_sinopterus",
+    "morphology": "Pointed Fruit Cutter",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Applies the open split layout to Sinopterus, emphasizing the sharp, toothless, slightly downturned tip built for picking and plucking.",
+    "prompt": "High-fidelity 3D asset of the open, toothless jaws of a Sinopterus, viewed from a three quarter view perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The jaws open wide around a hollow central cavity, tapering into a sharp, pointed front tip that curves slightly downward like a stylized bird beak. The smooth keratin coating features rich, deep plum-purple and golden-yellow color tones. At the base of the jaw hinges, the stylized head displays large, warm, highly expressive cartoon character eyes. Centered perfectly in a 1:1 square composition with a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with soft contact shadows. Illuminated by soft studio lighting with ambient occlusion."
+  }

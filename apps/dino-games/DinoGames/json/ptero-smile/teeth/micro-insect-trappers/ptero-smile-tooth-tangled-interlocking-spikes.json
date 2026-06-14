@@ -1,0 +1,10 @@
+{
+    "id": "ui_tooth_trap_guidraco",
+    "morphology": "Tangled Interlocking Spikes",
+    "tech_ref": "DEFAULT_SQUARE",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "STUDIO_GROUNDED",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "Highlights the terrifyingly long, forward-curving, tangled fang clusters at the absolute tip of the Guidraco jaw.",
+    "prompt": "High-fidelity 3D asset of the front muzzle of a Guidraco jaw, showcase-focused on its 'Tangled Spikes' morphology, rendered in a 3D animated feature film aesthetic with soft, stylized, and slightly rounded edges. The tip of the narrow jaw erupts into a chaotic cluster of exceptionally long, curved, needle-sharp ivory fangs splaying wildly forward and outward, completely overlapping when the jaw shuts. The enamel texture is highly polished with prominent organic vertical growth ridges. The specimen is oriented vertically and perfectly centered in a 1:1 square composition, carefully scaled to occupy the central power-zone, ensuring a strict 25% negative space safety margin on all four sides. Placed flat against a neutral, 50% grey studio floor plane with high-contrast contact shadows. Illuminated by soft studio lighting with ambient occlusion to cast dramatic shadows through the open, interlaced lattice of fangs."
+  }
