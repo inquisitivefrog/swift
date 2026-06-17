@@ -1,0 +1,43 @@
+{
+  "image_manifest": {
+    "filename": "game-marine-reptile-race-referee.png",
+    "description": "A 3D rendered asset manifest showing the race referee for the Racing Marine Reptiles game, positioned just above the water surface.",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1",
+    "assets": [
+      {
+        "id": "A1",
+        "name": "Marine Race Referee",
+        "description": "A younger male paleontologist character from the DinoGames library (modeled after 'dino_racer_referee_1'). He is wearing a professional scuba mask pushed up onto his forehead, a black-and-white striped referee jersey worn over a high-tech wetsuit top, and his signature thin-rimmed black circular glasses. He is positioned at the water line, waist-deep, holding a starting flag high with one hand.",
+        "type": "character"
+      },
+      {
+        "id": "A2",
+        "name": "Starting Flag",
+        "description": "A vibrant, checkered racing flag held high, catching the midday sun.",
+        "type": "item"
+      },
+      {
+        "id": "A3",
+        "name": "Ocean Surface Environment",
+        "description": "The surface of a crystal-clear epicontinental seaway with gentle, refractive ripples. The water is a deep cobalt blue, transitioning to a shimmering turquoise near the surface.",
+        "type": "environment"
+      },
+      {
+        "id": "A4",
+        "name": "Visual Effects",
+        "description": "Small, sparkling water droplets caught in the air around the referee's waist, emphasizing the 'just above water' perspective.",
+        "type": "environment"
+      },
+      {
+        "id": "A5",
+        "name": "Bottom Right Watermark",
+        "description": "A small, translucent four-pointed star lens-flare logo located in the bottom-right corner.",
+        "type": "watermark"
+      }
+    ],
+    "constraints": "No people other than the referee. Square aspect ratio, 1:1. No title bars, borders, or negative space in the composition."
+  }
+}

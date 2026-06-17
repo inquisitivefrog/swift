@@ -1,0 +1,9 @@
+{
+      "id": "crinoid_lifecycle_001",
+      "formation": "POSEIDON_SHALE",
+      "type": "LIFECYCLE",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+      "visual_logic": "Grid showing the attachment point on driftwood, the stalk development, and the intricate, feathery arm structures[cite: 1].",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; detailed focus on the radial symmetry of the feeding arms[cite: 1]."
+    }

@@ -1,0 +1,9 @@
+{
+      "id": "conway_lifecycle_001",
+      "formation": "CONWAY_FORMATION",
+      "type": "LIFECYCLE",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+      "visual_logic": "Grid detailing the stalk cross-section, serrated leaf margins, and tiny calcium deposits on algal blades[cite: 1].",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on intricate patterns and tactile surface details[cite: 1]."
+    }

@@ -1,0 +1,9 @@
+{
+      "id": "conway_habitat_001",
+      "formation": "CONWAY_FORMATION",
+      "type": "HABITAT",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "DAPPLED_OPEN",
+      "visual_logic": "View of a calm, sediment-rich coastal sea with patches of ancestral seagrass and calcified seaweed colonies[cite: 1].",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; soft-focus background to emphasize depth and water clarity[cite: 1]."
+    }

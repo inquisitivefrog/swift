@@ -1,0 +1,19 @@
+{
+  "image_manifest": {
+    "filename": "halisaurus_exhausted_corrected.png",
+    "description": "Corrected exhausted pose for Halisaurus, ensuring comedic physical state without illustrative clutter.",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1",
+    "assets": [
+      {
+        "id": "A1",
+        "name": "Halisaurus",
+        "description": "Halisaurus slumped in a tangled, limp heap. Eyes half-closed, comically miserable expression, small drool bubble near snout.",
+        "type": "character"
+      }
+    ],
+    "constraints": "NO text. NO insects. Pure 3D character focus. 1:1 aspect ratio. High-poly, smooth clay-like texture."
+  }
+}

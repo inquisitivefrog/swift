@@ -1,0 +1,10 @@
+{
+      "species": "Elasmosaurus platyurus",
+      "pose": "finished_exhausted",
+      "tech_ref": "DEFAULT_SQUARE",
+      "style_id": "STYLE_CLAY_MASTER",
+      "formation_ref": "PIERRE_SHALE_FW",
+      "habitat_ref": "EPICONTINENTAL_SEAWAY",
+      "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+      "prompt": "The character-consistent Elasmosaurus platyurus from the config library completely wiped out after a grueling loss. SUBJECT ANCHOR: A single, continuous long neck connected directly to a torso with exactly four flippers. Deep sea-foam green dorsal skin with dark forest-green racing stripes. TEXTURE: Smooth, matte clay finish. ACTION: The creature's main body floats limply just below the water's surface, while its incredibly long neck rests completely flat and un-looped over a smooth, horizontal underwater ridge. The neck forms a simple, lazy, continuous wave pattern from chest to head without any self-overlapping, knots, or intersections with the flippers. The four paddles dangle straight down, entirely motionless and flaccid. FACIAL EXPRESSION: Eyes half-closed and drooping in comically miserable, sleepy exhaustion, with a single perfect, glossy clay bubble escaping from its snout. SETTING: The quiet finish line area with lazy, diffused light filtering through the slate blue water over a dark shale floor. ART STYLE: 'STYLE_CLAY_MASTER' with playful physical comedy. LIGHTING: Muted, soft afternoon god-rays. FRAMING: 'SQUARE_HERO_CARD' medium shot capturing the full, hilarious collapse of its long form, keeping all anatomy clearly separated with a 25% negative space buffer around the frame."
+    }

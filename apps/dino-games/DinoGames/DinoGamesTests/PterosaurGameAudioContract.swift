@@ -93,6 +93,7 @@ enum PterosaurGameAudioContracts {
             requiredAudioKeys: [
                 "game-ptero-footprints",
                 "game-footprints-identify-the-footprint",
+                "game-hint",
                 "game-footprints-tap-the-footprint-to-hear-description",
             ]
         ),
@@ -102,6 +103,7 @@ enum PterosaurGameAudioContracts {
             requiredAudioKeys: [
                 "game-ptero-flora",
                 "game-ptero-flora-which-three-pterosaurs",
+                "game-hint",
                 "game-ptero-flora-tap-the-plant-to-hear-description",
                 "ptero-hint-size",
                 "ptero-hint-period",
@@ -126,6 +128,8 @@ enum PterosaurGameAudioContracts {
                 "game-ptero-matrix-identify-the-stone",
                 "game-ptero-matrix-material",
                 "game-ptero-matrix-color",
+                "game-hint",
+                "game-ptero-matrix-tap-the-image",
             ]
         ),
         PterosaurGameAudioContract(

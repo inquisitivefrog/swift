@@ -1,0 +1,9 @@
+{
+  "id": "ui_fossil_tooth_elasmosaurus_01",
+  "species": "Elasmosaurus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "prompt": "High-fidelity 3D asset of a single, long, needle-like Elasmosaurus tooth, rendered in a high-fidelity 3D animated feature film aesthetic. The tooth is slender, slightly recurved, and elegant, showcasing a smooth, high-gloss enamel texture that captures soft light along its sharp, needle-like tip. The object is centered in a 1:1 square composition with a 25% negative space buffer. Set against a neutral, 50% grey floor plane with high-contrast contact shadows for weight. A small, checkered scientific scale bar is positioned at the bottom. The lighting is soft and directional, emphasizing the delicate, elongated form and conical volume of the tooth."
+}

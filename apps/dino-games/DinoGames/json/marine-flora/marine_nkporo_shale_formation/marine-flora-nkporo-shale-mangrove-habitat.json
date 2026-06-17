@@ -1,0 +1,9 @@
+{
+      "id": "mangrove_habitat_001",
+      "formation": "NKPORO_SHALE",
+      "type": "HABITAT",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "DUSK_SILHOUETTE",
+      "visual_logic": "Submerged view of arching, woody prop roots in a murky, nutrient-rich coastal environment[cite: 1].",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; highlights the silhouette of the gnarled roots against the dark water background[cite: 1]."
+    }

@@ -1,0 +1,9 @@
+{
+      "id": "pierre_shale_lifecycle_001",
+      "formation": "PIERRE_SHALE",
+      "type": "LIFECYCLE",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+      "visual_logic": "Grid detailing the air-bladder structure of sargassum-type algae, a seagrass rhizome, and coralline red algae encrusting a rock[cite: 1].",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on clean, distinct shapes for easy identification[cite: 1]."
+    }

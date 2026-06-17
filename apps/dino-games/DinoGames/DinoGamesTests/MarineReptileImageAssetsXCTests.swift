@@ -45,6 +45,10 @@ final class MarineReptileImageAssetsXCTests: XCTestCase {
             "game-marine-reptile-puzzle-success",
             "game-marine-eggs",
             "game-marine-eggs-success",
+            "game-marine-flora",
+            "game-marine-flora-success",
+            "game-marine-footprints",
+            "game-marine-footprints-success",
         ]
 
         for gameCard in requiredGameCards {

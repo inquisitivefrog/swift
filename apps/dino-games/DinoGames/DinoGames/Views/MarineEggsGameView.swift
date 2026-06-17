@@ -172,8 +172,10 @@ enum MarineEggMorphology {
         return nil
     }
 
-    /// CT scan reveal for nest+egg rounds: spawn → live → body card → egg (body avoids a no-op scan that re-shows the egg art).
+    /// CT scan reveal for nest+egg rounds: dedicated scan art → spawn → live → body card → egg.
     static func scanAssetName(forCatalogSlug slug: String) -> String {
+        let dedicated = marineAsset("scan", slug: slug)
+        if ImageAssetCache.imageExists(named: dedicated) { return dedicated }
         let spawn = marineAsset("spawn", slug: slug)
         if ImageAssetCache.imageExists(named: spawn) { return spawn }
         if let live = liveAssetName(forCatalogSlug: slug) { return live }

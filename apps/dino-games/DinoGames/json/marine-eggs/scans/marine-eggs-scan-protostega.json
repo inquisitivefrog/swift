@@ -1,0 +1,8 @@
+{
+    "id": "ui_ct_scan_protostega",
+    "morphology": "gigantic_testudine_egg",
+    "style": "STYLE_CLAY_MASTER",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "state": "baby_protostega_outline_inside",
+    "prompt": "A clean, isolated CT scan view of a Protostega egg. The egg is large and round. The embryo outline is a very large sea turtle, showing long, powerful, wing-like front flippers tucked into the shell. Claymation style, soft grayscale, no background framing or UI."
+  }

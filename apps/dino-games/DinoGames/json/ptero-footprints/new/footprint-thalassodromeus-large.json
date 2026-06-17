@@ -1,0 +1,13 @@
+{
+  "thalassodromid_large": {
+      "species": "Thalassodromeus",
+      "paleontologist": "dino_bones_paleontologist_2",
+      "tool": "Caliper",
+      "action": "Measuring inter-digit spacing",
+      "habitat_ref": "SANTANA_ADDITIONS",
+      "visual_identity": "FORCE_ALTERNATING_STRIDE_SEQUENCE",
+      "morphology": "Elongated manus and pes prints, digits show slight webbing impressions. Stride sequence is wide and deliberate.",
+      "technical_specs": "SQUARE_ASPECT_RATIO",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3"
+    }
+}

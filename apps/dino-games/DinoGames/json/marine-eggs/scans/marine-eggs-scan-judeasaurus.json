@@ -1,0 +1,8 @@
+{
+    "id": "ui_ct_scan_judeasaurus",
+    "morphology": "lizard_egg_small_oval",
+    "style": "STYLE_CLAY_MASTER",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "state": "baby_judeasaurus_outline_inside",
+    "prompt": "A clean, isolated CT scan view of a Judeasaurus egg. The egg is small and oval. The embryo outline shows a slender, long-bodied lizard shape with tiny, tucked-in limbs and a long tail curved in a soft 'S' shape. Claymation style, soft grayscale, no background framing or UI."
+  }

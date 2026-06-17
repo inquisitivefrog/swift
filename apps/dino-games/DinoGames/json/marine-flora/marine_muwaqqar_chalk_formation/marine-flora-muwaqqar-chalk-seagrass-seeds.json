@@ -1,0 +1,9 @@
+{
+      "id": "muwaqqar_lifecycle_001",
+      "formation": "MUWAQQAR_CHALK",
+      "type": "LIFECYCLE",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+      "visual_logic": "Grid displaying the rhizome growth, a single seagrass shoot, and the crusty, nodular growth pattern of coralline algae[cite: 1].",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; clear, simple shapes to highlight biological structural differences[cite: 1]."
+    }

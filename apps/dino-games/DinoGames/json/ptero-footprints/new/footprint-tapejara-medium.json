@@ -1,0 +1,17 @@
+{
+  "asset_id": "tapejarid_medium_updated",
+  "species": "Tapejara",
+  "paleontologist": "dino_bones_paleontologist_3",
+  "pose": "Leaning/Crouching over the print",
+  "action": "Mapping the topographic depth of the pes heel",
+  "tool": "High-precision laser scanner",
+  "habitat_ref": "CRATO_ADDITIONS",
+  "visual_identity": "FORCE_ALTERNATING_STRIDE_SEQUENCE",
+  "morphology": "Broad pes with robust digits. Characteristic deep, rounded plantigrade heel imprint reflecting a more terrestrial-capable gait.",
+  "technical_specs": {
+    "aspect_ratio": "1:1",
+    "framing_constraint": "WIDE_HERO_MACRO",
+    "scale_directive": "Force trackway detail dominance in frame."
+  },
+  "style_notes": "STYLE_ANIMATED_FEATURE_V3"
+}

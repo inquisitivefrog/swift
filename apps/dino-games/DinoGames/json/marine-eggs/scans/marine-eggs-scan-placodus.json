@@ -1,0 +1,8 @@
+{
+    "id": "ui_ct_scan_placodus",
+    "morphology": "placodont_egg_oval",
+    "style": "STYLE_CLAY_MASTER",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "state": "baby_placodus_outline_inside",
+    "prompt": "A clean, isolated CT scan view of a Placodus egg. The egg is thick and oval. The embryo outline is robust, showing a heavy, broad-bodied shape with a slightly arched back and a blunt, rounded head. Claymation style, soft grayscale, no background framing or UI."
+  }

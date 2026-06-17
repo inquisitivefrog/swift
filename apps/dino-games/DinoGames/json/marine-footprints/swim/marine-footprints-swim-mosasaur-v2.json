@@ -1,0 +1,10 @@
+{
+    "id": "trace_mosasaur_swim_002",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUBMERGED_CAUSTIC_LIGHT",
+    "formation_ref": "CARLILE_SHALE",
+    "character_ref": "dino_bones_paleontologist_5",
+    "pose": "A diver using a light-wand to accentuate the sweep of the fin-furrow on the dark seafloor."
+  }

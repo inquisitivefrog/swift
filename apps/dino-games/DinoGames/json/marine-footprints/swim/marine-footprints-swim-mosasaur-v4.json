@@ -1,0 +1,10 @@
+{
+    "id": "trace_mosasaur_swim_004",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUBMERGED_CAUSTIC_LIGHT",
+    "formation_ref": "CARLILE_SHALE",
+    "character_ref": "dino_bones_paleontologist_3",
+    "pose": "A diver carefully brushing silt away from the curved termination of a Mosasaur swim-trace."
+  }

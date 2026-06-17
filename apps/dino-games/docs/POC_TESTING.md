@@ -24,7 +24,7 @@ This POC implements a **simplified Matching Game** to validate core game mechani
 
 ## How to Test
 
-1. **Build and run** the app on iPhone 16 simulator
+1. **Build and run** the app on iPhone 17 simulator
 2. **Tap a dinosaur** (left side) - should:
    - Highlight in blue
    - Scale up slightly

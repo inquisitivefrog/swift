@@ -19,14 +19,14 @@ Common Commands Used
 06. xcodebuild clean
 07. xcodebuild build
 08. xcodebuild -scheme MyApp build
-09. xcodebuild -scheme MyApp -destination "platform=iOS Simulator,name=iPhone 16" build
+09. xcodebuild -scheme MyApp -destination "platform=iOS Simulator,name=iPhone 17" build
 10. xcodebuild -scheme MyApp -destination "generic/platform=iOS" build
 11. xcodebuild -scheme MyApp -configuration Debug -destination "generic/platform=iOS" build
 12. xcodebuild -scheme MyApp -configuration Release -destination "generic/platform=iOS" build
 13. xcodebuild test -scheme MyApp -destination "platform=iOS Simulator,name=iPhone 17"
 14. xcodebuild test -scheme MyAppTests -destination "..."
 15. xcodebuild test -scheme MyApp \
-  -destination "platform=iOS Simulator,name=iPhone 16" \
+  -destination "platform=iOS Simulator,name=iPhone 17" \
   -destination "platform=iOS Simulator,name=iPhone SE" \
   -parallel-testing-enabled YES
 16. xcodebuild archive -scheme MyApp \
@@ -43,7 +43,7 @@ Workflow
 --------
 1. xcodebuild clean -scheme DinoGames
 2. xcodebuild clean -scheme DinoGames -configuration Debug -target DinoGamesTests -destination "platform=IOS Simulator,name=iPhone 17"
-2. xcodebuild clean build test -scheme DinoGames -destination "platform=iOS Simulator,name=iPhone 16"
+2. xcodebuild clean build test -scheme DinoGames -destination "platform=iOS Simulator,name=iPhone 17"
 3. xcodebuild clean archive -scheme MyApp \
   -destination "generic/platform=iOS" \
   -archivePath ./MyApp.xcarchive

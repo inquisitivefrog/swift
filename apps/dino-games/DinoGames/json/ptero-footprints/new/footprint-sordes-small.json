@@ -1,0 +1,17 @@
+{
+  "asset_id": "basal_small_updated",
+  "species": "Sordes",
+  "paleontologist": "dino_bones_preparator_1",
+  "pose": "Prone (lying flat on a mat)",
+  "action": "Detailed excavation and sediment clearing",
+  "tool": "Precision dental pick and air bulb",
+  "habitat_ref": "KARABASTAU_ADDITIONS",
+  "visual_identity": "FORCE_ALTERNATING_STRIDE_SEQUENCE",
+  "morphology": "Very small, narrow manus and pes prints. High-angle claw marks demonstrate sharp, climbing-capable morphology. Footprints are distinct, small, and crisp.",
+  "technical_specs": {
+    "aspect_ratio": "1:1",
+    "framing_constraint": "WIDE_HERO_MACRO",
+    "scale_directive": "Force footprint detail dominance in frame; trackway must occupy 50% of the vertical and horizontal space to highlight delicate claw impressions."
+  },
+  "style_notes": "STYLE_ANIMATED_FEATURE_V3"
+}

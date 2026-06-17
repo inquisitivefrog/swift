@@ -1,0 +1,13 @@
+{
+  "transition_medium": {
+      "species": "Darwinopterus",
+      "paleontologist": "dino_bones_paleontologist_5",
+      "tool": "Dental pick",
+      "action": "Carefully clearing debris from between toes",
+      "habitat_ref": "JEHOL_BIOTA_ADDITIONS",
+      "visual_identity": "FORCE_ALTERNATING_STRIDE_SEQUENCE",
+      "morphology": "Morphology is intermediate between basal and derived. Pes digits are longer and more spread than basal, manus is moderately sized.",
+      "technical_specs": "SQUARE_ASPECT_RATIO",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3"
+    }
+  }

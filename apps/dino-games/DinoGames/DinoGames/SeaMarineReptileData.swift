@@ -250,17 +250,40 @@ enum SeaMarineReptileData {
         let racingAssetBase: String?
     }
 
-    /// Featured species for Racing Marine Reptiles (speeds are educational estimates in mph).
-    private static let marineRacingFeatured: [(displayName: String, speed: Double, icon: String)] = [
-        ("Mosasaurus", 28, "🐋"),
-        ("Elasmosaurus", 12, "🦕"),
-        ("Ichthyosaurus", 35, "🐬"),
-        ("Plesiosaurus", 14, "🦕"),
-        ("Kronosaurus", 22, "🦈"),
-        ("Liopleurodon", 18, "🐊"),
+    private struct MarineRacingCatalogEntry {
+        let slug: String
+        let mesozoicSpan: MesozoicSpan
+    }
+
+    /// Curated playable slugs for Racing Marine Reptiles (Jurassic / Cretaceous only; Permian/Triassic excluded).
+    private static let marineRacingCatalog: [MarineRacingCatalogEntry] = [
+        MarineRacingCatalogEntry(slug: "dakosaurus", mesozoicSpan: .jurassic),
+        MarineRacingCatalogEntry(slug: "ichthyosaurus", mesozoicSpan: .jurassic),
+        MarineRacingCatalogEntry(slug: "plesiosaurus", mesozoicSpan: .jurassic),
+        MarineRacingCatalogEntry(slug: "pliosaurus", mesozoicSpan: .jurassic),
+        MarineRacingCatalogEntry(slug: "platypterygius", mesozoicSpan: .jurassic),
+        MarineRacingCatalogEntry(slug: "brachypterygius", mesozoicSpan: .jurassic),
+        MarineRacingCatalogEntry(slug: "archelon", mesozoicSpan: .cretaceous),
+        MarineRacingCatalogEntry(slug: "elasmosaurus", mesozoicSpan: .cretaceous),
+        MarineRacingCatalogEntry(slug: "halisaurus", mesozoicSpan: .cretaceous),
+        MarineRacingCatalogEntry(slug: "mosasaurus", mesozoicSpan: .cretaceous),
+        MarineRacingCatalogEntry(slug: "platecarpus", mesozoicSpan: .cretaceous),
+        MarineRacingCatalogEntry(slug: "tylosaurus", mesozoicSpan: .cretaceous),
     ]
 
-    /// Builds `marine-racer-{group}-{slug}` / `marine-racing-{group}-{slug}` from catalog body keys.
+    /// Permian / Triassic catalog species with racer art are excluded from the Mesozoic racing pools.
+    static let marineRacingExcludedSlugs: Set<String> = ["mesosaurus", "nothosaurus"]
+
+    static func mesozoicSpanForRacing(slug: String) -> MesozoicSpan? {
+        guard !marineRacingExcludedSlugs.contains(slug) else { return nil }
+        return marineRacingCatalog.first { $0.slug == slug }?.mesozoicSpan
+    }
+
+    private static func marineCreature(forRacingSlug slug: String) -> Dinosaur? {
+        allMarineReptiles.first { matrixFossilSlug(for: $0) == slug }
+    }
+
+    /// Builds `marine-racer-{slug}` (preferred) or legacy `marine-racer-{group}-{slug}` / `marine-racing-{group}-{slug}` from catalog body keys.
     static func marineRacingAssetBase(fromCatalogImageName imageName: String) -> String? {
         let parts = imageName.split(separator: "-").map(String.init)
         guard parts.count >= 3, parts[0].lowercased() == "marine" else { return nil }
@@ -268,35 +291,76 @@ enum SeaMarineReptileData {
         let tail = parts.dropFirst(2).joined(separator: "-").lowercased()
         guard !group.isEmpty, !tail.isEmpty else { return nil }
         let candidates = [
+            "marine-racer-\(tail)",
             "marine-racer-\(group)-\(tail)",
             "marine-racing-\(group)-\(tail)",
         ]
         let known = ImageAssetNames.knownAssets
         return candidates.first { base in
-            known.contains(base + "-ready") || known.contains(base + "-run") || known.contains(base)
+            known.contains(base + "-ready")
+                || known.contains(base + "-finished-excited")
+                || known.contains(base + "-run")
+                || known.contains(base)
         }
     }
 
-    /// Pool for Racing Marine Reptiles: featured species that exist in `allMarineReptiles` with bundled body art.
-    static func marineRacersForRacing() -> [MarineRacingPoolEntry] {
-        let byDisplayName = Dictionary(
-            uniqueKeysWithValues: allMarineReptiles.map { (displayName(from: $0.imageName ?? ""), $0) }
-        )
-        var entries: [MarineRacingPoolEntry] = []
-        for spec in marineRacingFeatured {
-            guard let creature = byDisplayName[spec.displayName],
+    /// Racing Marine Reptiles requires ready + finished excited/exhausted poses (run/trip fall back to ready when missing).
+    static func hasCompleteMarineRacingAssetPack(base: String) -> Bool {
+        guard ImageAssetCache.imageExists(named: base + "-ready") else { return false }
+        let hasExcited = ImageAssetCache.imageExists(named: base + "-finished-excited")
+            || ImageAssetCache.imageExists(named: base + "-finish-excited")
+        let hasExhausted = ImageAssetCache.imageExists(named: base + "-finished-exhausted")
+            || ImageAssetCache.imageExists(named: base + "-finish-exhausted")
+        return hasExcited && hasExhausted
+    }
+
+    /// Educational speed estimates in mph for marine racing pool entries.
+    private static func marineRacingSpeedEstimate(slug: String) -> Double {
+        switch slug {
+        case "ichthyosaurus", "platypterygius", "brachypterygius": return 35
+        case "mosasaurus", "tylosaurus": return 28
+        case "platecarpus": return 24
+        case "kronosaurus", "halisaurus": return 22
+        case "dakosaurus", "pliosaurus", "liopleurodon": return 18
+        case "plesiosaurus": return 14
+        case "elasmosaurus": return 12
+        case "archelon": return 6
+        default: return 15
+        }
+    }
+
+    private static func marineRacingIcon(slug: String) -> String {
+        switch slug {
+        case "mosasaurus", "tylosaurus", "platecarpus", "halisaurus": return "🐋"
+        case "elasmosaurus", "plesiosaurus": return "🦕"
+        case "ichthyosaurus", "platypterygius", "brachypterygius": return "🐬"
+        case "pliosaurus", "dakosaurus", "kronosaurus": return "🦈"
+        case "archelon": return "🐢"
+        case "liopleurodon": return "🐊"
+        default: return "🌊"
+        }
+    }
+
+    /// Pool for Racing Marine Reptiles: curated Mesozoic catalog entries with a complete bundled `marine-racer-{slug}-*` pack.
+    static func marineRacersForRacing(mesozoicSpan period: MesozoicSpan) -> [MarineRacingPoolEntry] {
+        marineRacingCatalog.compactMap { entry in
+            let inPeriod: Bool = switch period {
+            case .jurassic: entry.mesozoicSpan == .jurassic
+            case .cretaceous: entry.mesozoicSpan == .cretaceous
+            case .both: true
+            }
+            guard inPeriod,
+                  let creature = marineCreature(forRacingSlug: entry.slug),
                   let imageName = creature.imageName,
-                  ImageAssetCache.imageExists(named: imageName) else { continue }
-            let base = marineRacingAssetBase(fromCatalogImageName: imageName)
-            entries.append(
-                MarineRacingPoolEntry(
-                    creature: creature,
-                    speed: spec.speed,
-                    icon: spec.icon,
-                    racingAssetBase: base
-                )
+                  ImageAssetCache.imageExists(named: imageName),
+                  let base = marineRacingAssetBase(fromCatalogImageName: imageName),
+                  hasCompleteMarineRacingAssetPack(base: base) else { return nil }
+            return MarineRacingPoolEntry(
+                creature: creature,
+                speed: marineRacingSpeedEstimate(slug: entry.slug),
+                icon: marineRacingIcon(slug: entry.slug),
+                racingAssetBase: base
             )
         }
-        return entries
     }
 }

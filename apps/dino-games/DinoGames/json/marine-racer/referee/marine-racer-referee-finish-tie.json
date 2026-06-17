@@ -1,0 +1,25 @@
+{
+  "image_manifest": {
+    "filename": "marine-reptile-referee-tie.png",
+    "description": "The Marine Reptile Racing Referee judging a tie from the water.",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1",
+    "assets": [
+      {
+        "id": "A1",
+        "name": "Referee Character",
+        "description": "The younger male paleontologist referee (from 'dino_racer_referee_1') wearing the same black-and-white striped jersey over a high-tech wetsuit, with his scuba mask pushed up onto his forehead and his signature thin-rimmed black circular glasses. He is waist-deep in the water, leaning forward with a relieved expression, holding two small silver trophies, one in each hand.",
+        "type": "character"
+      },
+      {
+        "id": "A2",
+        "name": "Ocean Environment",
+        "description": "Refractive turquoise water surface, with subtle splash effects around the referee's waist, confirming he is positioned in the seaway.",
+        "type": "environment"
+      }
+    ],
+    "constraints": "NO cables or circles. Referee must be in the water. 1:1 square aspect ratio; no negative space, borders, or title bars."
+  }
+}

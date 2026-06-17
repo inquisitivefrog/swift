@@ -1,0 +1,8 @@
+{
+    "id": "ui_ct_scan_proganochelys",
+    "morphology": "stem_turtle_egg_round",
+    "style": "STYLE_CLAY_MASTER",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "state": "baby_proganochelys_outline_inside",
+    "prompt": "A clean, isolated CT scan view of a Proganochelys egg. The egg is round. The embryo outline shows a classic turtle shape with a large, visible, rounded shell outline and a small tail protruding slightly. Claymation style, soft grayscale, no background framing or UI."
+  }

@@ -1,0 +1,9 @@
+{
+  "id": "ui_fossil_tooth_mosasaurus_01",
+  "species": "Mosasaurus",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "prompt": "High-fidelity 3D asset of a single, large, blade-like Mosasaurus tooth, rendered in a high-fidelity 3D animated feature film aesthetic. The tooth is robust, laterally compressed, and features a visible serrated cutting edge (zip-like) along the posterior ridge, showcasing a hardened, weathered enamel texture with subtle, earthy fossil highlights. The object is centered in a 1:1 square composition with a 25% negative space buffer. Set against a neutral, 50% grey floor plane with high-contrast contact shadows for weight. A small, checkered scientific scale bar is positioned at the bottom. Lighting is crisp and studio-grade, emphasizing the massive volume, sharpness of the cutting edge, and the structural ridges of the tooth."
+}

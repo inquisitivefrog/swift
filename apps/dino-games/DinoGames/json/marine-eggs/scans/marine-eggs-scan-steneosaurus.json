@@ -1,0 +1,8 @@
+{
+    "id": "ui_ct_scan_steneosaurus",
+    "morphology": "teleosaurid_egg_elongated",
+    "style": "STYLE_CLAY_MASTER",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "state": "baby_steneosaurus_outline_inside",
+    "prompt": "A clean, isolated CT scan view of a Steneosaurus egg. The egg is long. The embryo outline is a long-snouted crocodylomorph, showing an extremely thin, elongated rostrum and a straight, muscular tail. Claymation style, soft grayscale, no background framing or UI."
+  }

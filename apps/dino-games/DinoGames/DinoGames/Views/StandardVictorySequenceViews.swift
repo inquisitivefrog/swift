@@ -535,3 +535,8 @@ enum SourceHintsTitles {
     static let footprints = "Source Footprints"
     static let plants = "Source Plants"
 }
+
+enum SourceHintsIntroAudioKeys {
+    /// Shared “tap to hear a description” intro for Source hints grids (Footprints, Matrix, …).
+    static let tapToHearDescription = "game-footprints-tap-the-footprint-to-hear-description"
+}

@@ -1,0 +1,9 @@
+{
+      "id": "seagrass_lifecycle_001",
+      "formation": "CAMBRIDGE_GREENSAND",
+      "type": "LIFECYCLE",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+      "visual_logic": "Grid detailing the rhizome structure, a single long ribbon-like leaf, and the root system anchored in sediment.",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; close-up views highlighting internal vascular structure and leaf texture[cite: 1]."
+    }

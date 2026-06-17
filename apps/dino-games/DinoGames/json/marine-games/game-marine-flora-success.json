@@ -1,0 +1,10 @@
+{
+  "victory_card": {
+      "id": "marine_flora_victory_002",
+      "format": "1:1_SQUARE",
+      "visual_description": "Vibrant submerged scene with sunlight rays (god rays) piercing through water. Foreground features lush seagrass and colorful algal blades. Title 'MARINE FLORA!' at top; 'Player Wins!' in 3D mastery gold at bottom.",
+      "text_elements": ["MARINE FLORA!", "Player Wins!"],
+      "style": "STYLE_ANIMATED_FEATURE_V3; STYLE_CLAY_MASTER",
+      "safety_margin": "10% perimeter buffer for UI elements"
+    }
+}

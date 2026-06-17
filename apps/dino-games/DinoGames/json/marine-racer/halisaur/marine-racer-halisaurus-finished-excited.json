@@ -1,0 +1,19 @@
+{
+  "image_manifest": {
+    "filename": "halisaurus_win_corrected.png",
+    "description": "Corrected winning pose for Halisaurus, removing all text and 2D elements.",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1",
+    "assets": [
+      {
+        "id": "A1",
+        "name": "Halisaurus",
+        "description": "Halisaurus cutting through the finish line at high speed in a triumphant corkscrew. Joyful, sharp-toothed expression.",
+        "type": "character"
+      }
+    ],
+    "constraints": "NO text. NO 'finish line' markers. Strictly 3D clay-like material rendering. 1:1 aspect ratio."
+  }
+}

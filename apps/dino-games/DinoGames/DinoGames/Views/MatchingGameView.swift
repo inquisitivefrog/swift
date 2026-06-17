@@ -124,6 +124,14 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             }
             return nil
         }
+        if normalized.hasPrefix("marine-flora-") {
+            for plant in marineFloraPlants where plant.audioKey == normalized {
+                if let url = resolveURL(forPath: "Marine-Flora/\(plant.formationFolder)/\(plant.audioKey)") {
+                    return url
+                }
+            }
+            return nil
+        }
         // Flora category hints: Audio/{Pack}-Flora/hints/{key}.m4a
         if normalized.hasPrefix("dino-hint-") {
             if let url = resolveURL(forPath: "Dino-Flora/hints/\(normalized)") { return url }
@@ -1081,6 +1089,10 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-dino-bones-identify-the-skeleton"
         case "game-dino-flora-which-three-dinosaurs":
             return "Games/game-dino-flora-which-three-dinosaurs"
+        case "game-marine-flora-which-three-marine-reptiles":
+            return "Games/game-marine-flora-which-three-marine-reptiles"
+        case "game-marine-flora-tap-the-plant-to-hear-description":
+            return "Games/game-marine-flora-tap-the-plant-to-hear-description"
         case "game-dino-fauna-which-three-dinosaurs-bugs":
             return "Games/game-dino-fauna-which-three-dinosaurs-bugs"
         case "game-dino-fauna-which-three-dinosaurs-animals":
@@ -1248,6 +1260,12 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         case _ where normalized.hasPrefix("ptero-flora-"):
             if let plant = pteroFloraPlants.first(where: { $0.audioKey == normalized }) {
                 return "Ptero-Flora/\(plant.formationFolder)/\(plant.audioKey)"
+            }
+            return nil
+        // Marine Flora plant intros: key `marine-flora-{formation}-{taxon}` → `Marine-Flora/{folder}/{key}.m4a`.
+        case _ where normalized.hasPrefix("marine-flora-"):
+            if let plant = marineFloraPlants.first(where: { $0.audioKey == normalized }) {
+                return "Marine-Flora/\(plant.formationFolder)/\(plant.audioKey)"
             }
             return nil
         // Dinosaurs: Audio/Dinosaurs/{key}.m4a for any other dino-* key (e.g. dino-camarasaurus) for dinosaur name audio

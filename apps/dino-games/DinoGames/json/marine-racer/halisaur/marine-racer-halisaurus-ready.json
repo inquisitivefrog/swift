@@ -1,0 +1,19 @@
+{
+  "image_manifest": {
+    "filename": "halisaurus_start_corrected.png",
+    "description": "Corrected starting pose for Halisaurus, adhering to 3D clay-like style.",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1",
+    "assets": [
+      {
+        "id": "A1",
+        "name": "Halisaurus",
+        "description": "Character-consistent Halisaurus in an elegant S-curve undulation. Slate-blue dorsal palette, creamy white underbelly, fine scale texture. High-specular, clay-like finish.",
+        "type": "character"
+      }
+    ],
+    "constraints": "NO text. NO insects. NO extraneous background clutter. Focus exclusively on the character and the 1:1 ratio. 3D toy-like aesthetic only."
+  }
+}

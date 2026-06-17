@@ -1,0 +1,8 @@
+{
+    "id": "ui_ct_scan_tanystropheus",
+    "morphology": "protorosaur_egg_oval",
+    "style": "STYLE_CLAY_MASTER",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "state": "baby_tanystropheus_outline_inside",
+    "prompt": "A clean, isolated CT scan view of a Tanystropheus egg. The egg is medium-oval. The embryo outline is striking, featuring a disproportionately long, slender neck curled multiple times around the shell interior. Claymation style, soft grayscale, no background framing or UI."
+  }

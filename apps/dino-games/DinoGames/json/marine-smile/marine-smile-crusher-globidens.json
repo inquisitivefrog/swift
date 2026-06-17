@@ -1,0 +1,9 @@
+{
+  "id": "ui_fossil_tooth_globidens_01",
+  "species": "Globidens",
+  "tech_ref": "DEFAULT_SQUARE",
+  "framing_ref": "SQUARE_HERO_CARD",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "prompt": "High-fidelity 3D asset of a single, bulbous, pebble-like Globidens tooth, rendered in a high-fidelity 3D animated feature film aesthetic. The tooth is rounded and hemispherical, designed for crushing, with a smooth, stony texture that displays subtle, realistic imperfections and mineralized enamel depths. The object is centered in a 1:1 square composition with a 25% negative space buffer. Set against a neutral, 50% grey floor plane with high-contrast contact shadows for weight. A small, checkered scientific scale bar is positioned at the bottom. Lighting is soft and volumetric, highlighting the tooth's dense, rounded geometry and solid physical presence."
+}

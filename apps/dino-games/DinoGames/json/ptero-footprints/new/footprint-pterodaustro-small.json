@@ -1,0 +1,13 @@
+{
+  "specialist_small": {
+      "species": "Pterodaustro",
+      "paleontologist": "dino_bones_preparator_5",
+      "tool": "Handheld photographic light wand",
+      "action": "Creating cross-lighting to highlight floor topography",
+      "habitat_ref": "LAGARCITO_ADDITIONS",
+      "visual_identity": "FORCE_ALTERNATING_STRIDE_SEQUENCE",
+      "morphology": "Extremely fine, shallow digits. Manus shows light pressure, pes shows deeper mid-foot indentation from specialized filter-feeding stance.",
+      "technical_specs": "SQUARE_ASPECT_RATIO",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3"
+    }
+}

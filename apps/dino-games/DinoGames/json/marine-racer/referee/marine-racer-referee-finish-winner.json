@@ -1,0 +1,25 @@
+{
+  "image_manifest": {
+    "filename": "marine-racer-referee-final-correction.png",
+    "description": "Final corrected asset showing the Marine Reptile Racing Referee with a complete, anatomically correct upper body and two arms, celebrating a winner from the water.",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1",
+    "assets": [
+      {
+        "id": "A1",
+        "name": "Referee Character",
+        "description": "The younger male paleontologist referee wearing a black-and-white striped referee jersey over a high-tech wetsuit. He has a scuba mask on his forehead and signature thin-rimmed black circular glasses. He has a complete, natural torso and shoulder structure with exactly two arms: his right arm is raised holding a large gold trophy, and his left arm is extended holding a checkered flag.",
+        "type": "character"
+      },
+      {
+        "id": "A2",
+        "name": "Ocean Environment",
+        "description": "Crystal-clear epicontinental seaway water with shimmering surface light and splash effects around the waist, keeping the character positioned in the water.",
+        "type": "environment"
+      }
+    ],
+    "constraints": "Strictly two arms, two shoulders, and a complete torso. NO missing limbs. NO cables or circles. Referee must be in the water. 1:1 square aspect ratio; no negative space, borders, or title bars."
+  }
+}

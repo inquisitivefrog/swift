@@ -55,19 +55,36 @@ final class MarineEggsCatalogXCTests: XCTestCase {
         }
     }
 
-    func testNestEggScanRevealIsBundledAndDistinctFromEggArt() {
+    func testNestEggScanRevealUsesDedicatedScanArtWhenBundled() {
         for slug in MarineEggMorphology.playableNestEggSlugs {
-            let egg = MarineEggMorphology.eggAssetName(forCatalogSlug: slug)
+            let dedicated = "marine-eggs-scan-\(slug)"
             let scan = MarineEggMorphology.scanAssetName(forCatalogSlug: slug)
-            XCTAssertTrue(
-                ImageAssetCache.imageExists(named: scan),
-                "Missing scan asset for \(slug): \(scan)"
-            )
-            XCTAssertTrue(
-                scan != egg || ImageAssetCache.imageExists(named: "marine-eggs-spawn-\(slug)"),
-                "Scan should show spawn/live/body art, not only the same egg image for \(slug)"
+            if ImageAssetNames.knownAssets.contains(dedicated) {
+                XCTAssertEqual(scan, dedicated, "Scan for \(slug) should prefer bundled CT scan art")
+            } else {
+                XCTAssertTrue(
+                    ImageAssetCache.imageExists(named: scan),
+                    "Missing scan asset for \(slug): \(scan)"
+                )
+            }
+            let egg = MarineEggMorphology.eggAssetName(forCatalogSlug: slug)
+            XCTAssertNotEqual(
+                scan,
+                egg,
+                "Scan should not fall back to the same egg image for \(slug) when dedicated scan art is expected"
             )
         }
+    }
+
+    func testMarineScanEmptyAssetIsBundledAndResolved() {
+        XCTAssertTrue(
+            ImageAssetNames.knownAssets.contains("marine-eggs-scan-empty"),
+            "Expected marine-eggs-scan-empty imageset in the catalog"
+        )
+        XCTAssertEqual(
+            MarineEggMorphology.morphology.scansEmptyName(),
+            "marine-eggs-scan-empty"
+        )
     }
 
     func testSpecimenOnlyFishSlugsJoinPool() {

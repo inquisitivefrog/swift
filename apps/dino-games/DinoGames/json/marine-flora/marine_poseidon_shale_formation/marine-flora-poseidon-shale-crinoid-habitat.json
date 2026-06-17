@@ -1,0 +1,9 @@
+{
+      "id": "crinoid_habitat_001",
+      "formation": "POSEIDON_SHALE",
+      "type": "HABITAT",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "DAPPLED_OPEN",
+      "visual_logic": "View of a floating driftwood raft in an open pelagic setting with feathery crinoid colonies radiating outward[cite: 1].",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; emphasizes the scale of the raft against the deep, dark water[cite: 1]."
+    }

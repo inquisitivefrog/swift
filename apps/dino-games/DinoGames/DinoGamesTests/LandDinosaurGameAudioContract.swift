@@ -136,6 +136,8 @@ enum LandDinosaurGameAudioContracts {
                 "game-dino-matrix-identify-the-stone",
                 "game-dino-matrix-material",
                 "game-dino-matrix-color",
+                "game-hint",
+                "game-dino-matrix-tap-the-image",
             ]
         ),
         LandDinosaurGameAudioContract(

@@ -289,10 +289,32 @@ enum LandGameDisplayMomentCatalog {
         return moments
     }
 
+    /// Category hints + every registry plant for Marine Flora CI (sea L3).
+    static func shippingMarineFloraMoments() -> [LandGameDisplayMoment] {
+        var moments = hintMoments(gameId: "marine-flora", hints: marineFloraCategoryHints, prefix: "category-hint")
+        moments += marineFloraPlantMoments()
+        return moments
+    }
+
     private static func pteroFloraPlantMoments() -> [LandGameDisplayMoment] {
         pteroFloraPlants.map { plant in
             LandGameDisplayMoment(
                 gameConfigId: "ptero-flora",
+                context: "plant \(plant.id)",
+                triad: LandGameDisplayTriad(
+                    id: plant.id,
+                    displayText: plant.displayName,
+                    imageAssetName: plant.treeImageName,
+                    audioKey: plant.audioKey
+                )
+            )
+        }
+    }
+
+    private static func marineFloraPlantMoments() -> [LandGameDisplayMoment] {
+        marineFloraPlants.map { plant in
+            LandGameDisplayMoment(
+                gameConfigId: "marine-flora",
                 context: "plant \(plant.id)",
                 triad: LandGameDisplayTriad(
                     id: plant.id,
@@ -598,4 +620,20 @@ let pteroFloraPlants: [PteroFloraPlant] = [
     PteroFloraPlant(id: "tiaojishan-dicksoniaceous-ferns", formation: "tiaojishan", formationFolder: "Tiaojishan", taxon: "dicksoniaceous-ferns", displayName: "Dicksoniaceous Ferns"),
     PteroFloraPlant(id: "tiaojishan-giant-horsetails", formation: "tiaojishan", formationFolder: "Tiaojishan", taxon: "giant-horsetails", displayName: "Giant Horsetails"),
     PteroFloraPlant(id: "tiaojishan-ginkgoites", formation: "tiaojishan", formationFolder: "Tiaojishan", taxon: "ginkgoites", displayName: "Ginkgoites"),
+]
+
+// MARK: - Marine Flora plants
+
+/// Plants for Marine Flora rounds — kept here so tests and `MarineFloraGameView` share one list.
+let marineFloraPlants: [MarineFloraPlant] = [
+    MarineFloraPlant(id: "blue-lias-crinoid", formation: "blue-lias", formationFolder: "Blue_Lias", taxon: "crinoid", displayName: "Crinoid"),
+    MarineFloraPlant(id: "cambridge-greensand-thalassotaenia-seagrass", formation: "cambridge-greensand", formationFolder: "Cambridge_Greensand", taxon: "thalassotaenia-seagrass", displayName: "Thalassotaenia Seagrass"),
+    MarineFloraPlant(id: "carlile-shale-brown-algae", formation: "carlile-shale", formationFolder: "Carlile_Shale", taxon: "brown-algae", displayName: "Brown Algae"),
+    MarineFloraPlant(id: "conway-seaweed", formation: "conway", formationFolder: "Conway", taxon: "seaweed", displayName: "Seaweed"),
+    MarineFloraPlant(id: "muwaqqar-chalk-seagrass", formation: "muwaqqar-chalk", formationFolder: "Muwaqqar_Chalk", taxon: "seagrass", displayName: "Seagrass"),
+    MarineFloraPlant(id: "navesink-seagrass", formation: "navesink", formationFolder: "Navesink", taxon: "seagrass", displayName: "Seagrass"),
+    MarineFloraPlant(id: "nkporo-shale-mangrove", formation: "nkporo-shale", formationFolder: "Nkporo_Shale", taxon: "mangrove", displayName: "Mangrove"),
+    MarineFloraPlant(id: "ouled-abdoun-seagrass", formation: "ouled-abdoun", formationFolder: "Ouled_Abdoun_Basin", taxon: "seagrass", displayName: "Seagrass"),
+    MarineFloraPlant(id: "pierre-shale-algae", formation: "pierre-shale", formationFolder: "Pierre_Shale", taxon: "algae", displayName: "Algae"),
+    MarineFloraPlant(id: "poseidon-shale-crinoid", formation: "poseidon-shale", formationFolder: "Poseidon_Shale", taxon: "crinoid", displayName: "Crinoid"),
 ]

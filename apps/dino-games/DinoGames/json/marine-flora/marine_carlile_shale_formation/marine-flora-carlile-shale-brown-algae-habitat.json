@@ -1,0 +1,9 @@
+{
+      "id": "carlile_habitat_001",
+      "formation": "CARLILE_SHALE",
+      "type": "HABITAT",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "SUBMERGED_CAUSTIC_LIGHT",
+      "visual_logic": "Expansive view of an open marine shelf featuring clusters of brown algae swaying in deep-water currents.",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the layering of different algal heights against a dark, silty floor."
+    }

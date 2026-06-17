@@ -1,0 +1,9 @@
+{
+      "id": "navesink_lifecycle_001",
+      "formation": "NAVESINK",
+      "type": "LIFECYCLE",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+      "visual_logic": "Grid showcasing a single seagrass blade, microscopic plankton cluster, and a detailed look at sediment-binding roots.",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on high-clarity details for individual plant structures[cite: 1]."
+    }

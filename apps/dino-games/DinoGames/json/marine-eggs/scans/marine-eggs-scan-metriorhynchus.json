@@ -1,0 +1,8 @@
+{
+    "id": "ui_ct_scan_metriorhynchus",
+    "morphology": "metriorhynchid_egg_oval",
+    "style": "STYLE_CLAY_MASTER",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "state": "baby_metriorhynchus_outline_inside",
+    "prompt": "A clean, isolated CT scan view of a Metriorhynchus egg. The egg is oval. The embryo outline shows a compact, marine-adapted crocodilian shape, featuring a distinctively narrow snout and a tail beginning to show a downward curvature. Claymation style, soft grayscale, no background framing or UI."
+  }

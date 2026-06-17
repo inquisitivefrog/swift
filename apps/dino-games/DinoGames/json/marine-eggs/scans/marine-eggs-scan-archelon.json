@@ -1,0 +1,8 @@
+{
+    "id": "ui_ct_scan_archelon",
+    "morphology": "testudine_gigantea_egg",
+    "style": "STYLE_CLAY_MASTER",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "state": "baby_archelon_outline_inside",
+    "prompt": "A clean, isolated CT scan view of an Archelon egg. The egg is large and spherical. Inside, a simplified, adorable baby sea turtle embryo outline is visible, showing a broad, rounded carapace shape and stubby, paddle-like limbs tucked neatly against the body. Claymation style, soft grayscale, no background framing or UI."
+  }

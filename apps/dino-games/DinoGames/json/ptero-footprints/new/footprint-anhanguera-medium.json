@@ -1,0 +1,17 @@
+{
+  "asset_id": "ornithocheiroid_medium_updated",
+  "species": "Anhanguera",
+  "paleontologist": "dino_bones_preparator_6",
+  "pose": "Sitting on a field stool",
+  "action": "Mapping trackway topography on a digital tablet",
+  "tool": "Digital tablet and stylus",
+  "habitat_ref": "SANTANA_ADDITIONS",
+  "visual_identity": "FORCE_ALTERNATING_STRIDE_SEQUENCE",
+  "morphology": "Symmetrical print, slender digits with distinct claw tips. Prints suggest efficient terrestrial locomotion with minimal sinking in firmer substrate.",
+  "technical_specs": {
+    "aspect_ratio": "1:1",
+    "framing_constraint": "WIDE_HERO_MACRO",
+    "scale_directive": "Force trackway detail dominance in frame."
+  },
+  "style_notes": "STYLE_ANIMATED_FEATURE_V3"
+}

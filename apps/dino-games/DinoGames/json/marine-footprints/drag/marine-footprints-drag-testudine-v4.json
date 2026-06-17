@@ -1,0 +1,10 @@
+{
+    "id": "trace_testudine_drag_004",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUBMERGED_CAUSTIC_LIGHT",
+    "formation_ref": "PIERRE_SHALE",
+    "character_ref": "dino_bones_paleontologist_3",
+    "pose": "A diver using a waterproof marker-slate to diagram the shape of the flipper displacement."
+  }

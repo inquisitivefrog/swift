@@ -69,12 +69,6 @@ enum PteroSmileMorphology {
         let playerKind: PteroSmilePlayerToothKind
     }
 
-    /// Bundled imageset slug when it differs from README tooth slug.
-    private static let toothImageSlugAliases: [String: String] = [
-        "microscopic-needle-pin": "microscopic-needle-pins",
-        "miniature-insect-trap-pins": "minature-insect-trap-pins",
-    ]
-
     /// Species slug (`AirPterosaurData.matrixFossilSlug`) → morphology + tooth (README.teeth.md).
     private static let entryByPortraitSlug: [String: SpeciesEntry] = [
         "arambourgiania": .init(categorySlug: "hyper-elongated-spears", toothSlug: "ultra-elongated-spear", playerKind: .spear),
@@ -112,7 +106,7 @@ enum PteroSmileMorphology {
         "noripterus": .init(categorySlug: "crushers-peg-specialists", toothSlug: "shell-crushing-pegs", playerKind: .peg),
         "caupedactylus": .init(categorySlug: "precision-shearing-clips", toothSlug: "deep-rounded-clip", playerKind: .clip),
         "eudimorphodon": .init(categorySlug: "precision-shearing-clips", toothSlug: "dual-type-pincers", playerKind: .pincer),
-        "istiodactylus": .init(categorySlug: "precision-shearing-clips", toothSlug: "straight-slicing-sheers", playerKind: .clip),
+        "istiodactylus": .init(categorySlug: "precision-shearing-clips", toothSlug: "straight-slicing-shears", playerKind: .clip),
         "anurognathus": .init(categorySlug: "interlocking-grapplers", toothSlug: "tangled-interlocking-spikes", playerKind: .pin),
         "darwinopterus": .init(categorySlug: "interlocking-grapplers", toothSlug: "curved-grasping-pins", playerKind: .pin),
         "rhamphorhynchus": .init(categorySlug: "interlocking-grapplers", toothSlug: "rhythmic-grasping-spikes", playerKind: .fang),
@@ -121,7 +115,7 @@ enum PteroSmileMorphology {
         "pterodactylus": .init(categorySlug: "raptor-cage-hunters", toothSlug: "needle-cage-braces", playerKind: .pin),
         "pteranodon": .init(categorySlug: "high-utility-skimmers", toothSlug: "barbed-spear-tip", playerKind: .spear),
         "tupuxuara": .init(categorySlug: "high-utility-skimmers", toothSlug: "deep-sub-terminal-notch", playerKind: .clip),
-        "zhejiangopterus": .init(categorySlug: "high-utility-skimmers", toothSlug: "hyper-slender-razor-needle", playerKind: .pin),
+        "zhejiangopterus": .init(categorySlug: "high-utility-skimmers", toothSlug: "hyper-slender-razor-needles", playerKind: .pin),
     ]
 
     /// Bundled portrait imageset slug when it differs from matrix fossil slug.
@@ -192,7 +186,7 @@ enum PteroSmileMorphology {
     }
 
     private static func entry(for dinosaur: Dinosaur) -> SpeciesEntry? {
-        let slug = AirPterosaurData.matrixFossilSlug(for: dinosaur)
+        guard let slug = AirPterosaurData.matrixFossilSlug(for: dinosaur) else { return nil }
         return entryByPortraitSlug[slug]
     }
 
@@ -200,16 +194,12 @@ enum PteroSmileMorphology {
         portraitAssetSlugAliases[matrixSlug] ?? matrixSlug
     }
 
-    private static func bundledToothImageSlug(for toothSlug: String) -> String {
-        toothImageSlugAliases[toothSlug] ?? toothSlug
-    }
-
     static func toothImageAssetName(for toothSlug: String) -> String {
-        "ptero-smile-tooth-\(bundledToothImageSlug(for: toothSlug))"
+        "ptero-smile-tooth-\(toothSlug)"
     }
 
     static func smilePortraitAssetName(for dinosaur: Dinosaur) -> String? {
-        let matrixSlug = AirPterosaurData.matrixFossilSlug(for: dinosaur)
+        guard let matrixSlug = AirPterosaurData.matrixFossilSlug(for: dinosaur) else { return nil }
         let assetSlug = portraitAssetSlug(for: matrixSlug)
         let name = "ptero-smile-\(assetSlug)"
         return ImageAssetCache.imageExists(named: name) ? name : nil

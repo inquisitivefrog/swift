@@ -27,10 +27,17 @@ enum MarineReptileGameCatalog {
                 .dinoAges(DinoAgesGameConfigs.marineAges),
             ]
         case .level3:
-            if let eggs = MarineEggsGameConfigs.makeMarineEggs() {
-                return [.marineEggs(eggs)] // Marine Eggs!
+            var level3: [GameType] = []
+            if let footprints = GuessGameConfigs.makeMarineFootprints() {
+                level3.append(.guess(footprints)) // Marine Footprints!
             }
-            return []
+            if MarineFloraGameConfigs.isPlayable {
+                level3.append(.marineFlora(MarineFloraGameConfigs.marineFlora))
+            }
+            if let eggs = MarineEggsGameConfigs.makeMarineEggs() {
+                level3.append(.marineEggs(eggs)) // Marine Eggs!
+            }
+            return level3
         case .level4:
             var level4: [GameType] = [
                 .matching(MatchingGameConfigs.marineDietFeatures), // Marine Diets

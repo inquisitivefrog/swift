@@ -1,0 +1,10 @@
+{
+  "asset_manifest": {
+    "intro_card": {
+      "id": "marine_flora_intro_001",
+      "format": "1:1_SQUARE",
+      "visual_description": "Underwater scene showing shallow seaway with limestone rocks, calcified algae, and seagrass meadows. Bright surface water above. Title 'MARINE FLORA!' in 3D electric blue font centered at bottom with safe margin.",
+      "text_elements": ["MARINE FLORA!"],
+      "style": "STYLE_ANIMATED_FEATURE_V3; STYLE_CLAY_MASTER",
+      "safety_margin": "10% perimeter buffer for UI elements"
+    }

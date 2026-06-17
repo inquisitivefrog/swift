@@ -1,0 +1,8 @@
+{
+    "id": "ui_ct_scan_henodus",
+    "morphology": "placodont_egg_stout",
+    "style": "STYLE_CLAY_MASTER",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "state": "baby_henodus_outline_inside",
+    "prompt": "A clean, isolated CT scan view of a Henodus egg. The egg is stout. Inside, the embryo outline is distinctively flat and wide, showing a broad, box-like shell outline and a tiny, blunt snout. Claymation style, soft grayscale, no background framing or UI."
+  }

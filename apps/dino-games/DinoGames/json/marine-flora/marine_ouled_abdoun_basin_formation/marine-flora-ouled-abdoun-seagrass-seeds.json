@@ -1,0 +1,9 @@
+{
+      "id": "ouled_abdoun_lifecycle_001",
+      "formation": "OULED_ABDOUN_BASIN",
+      "type": "LIFECYCLE",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+      "visual_logic": "Grid illustrating a cross-section of a seagrass shoot, the nodular texture of coralline algae, and a single brown algae frond[cite: 1].",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on the vibrant, earthy color palette[cite: 1]."
+    }

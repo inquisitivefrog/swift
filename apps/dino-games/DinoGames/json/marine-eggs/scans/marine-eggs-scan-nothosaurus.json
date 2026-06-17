@@ -1,0 +1,8 @@
+{
+    "id": "ui_ct_scan_nothosaurus",
+    "morphology": "nothosaur_egg_elongated",
+    "style": "STYLE_CLAY_MASTER",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "state": "baby_nothosaurus_outline_inside",
+    "prompt": "A clean, isolated CT scan view of a Nothosaurus egg. The egg is elongated. Inside, a cute embryo outline features a very long neck curled in a loop and a long tail, with tiny, paddle-like limbs. Claymation style, soft grayscale, no background framing or UI."
+  }

@@ -57,13 +57,18 @@ struct RacingRacer: Identifiable {
         imageSlug == "t-rex" ? "trex" : imageSlug
     }
 
-    /// Ordered `dino-racer-*` base names: claded first, then legacy without clade during asset migration.
+    /// Ordered `dino-racer-*` base names: legacy flat slug first when bundled, then claded migration path.
     func dinoRacerAssetBases() -> [String] {
         let seg = dinoRacerSpeciesSegment
+        let legacy = "dino-racer-\(seg)"
         if let c = racerAssetClade, !c.isEmpty {
-            return ["dino-racer-\(c)-\(seg)", "dino-racer-\(seg)"]
+            let claded = "dino-racer-\(c)-\(seg)"
+            if ImageAssetCache.imageExists(named: legacy) || ImageAssetCache.imageExists(named: "\(legacy)-ready") {
+                return [legacy, claded]
+            }
+            return [claded, legacy]
         }
-        return ["dino-racer-\(seg)"]
+        return [legacy]
     }
 
     /// Ordered `dino-winner-race-*` names for finish / victory.
@@ -255,7 +260,7 @@ private func racerDisplayImageName(for racer: RacingRacer, config: RacingGameCon
             if ImageAssetCache.imageExists(named: b + "-ready") { return b + "-ready" }
             if ImageAssetCache.imageExists(named: b) { return b }
         case .finish:
-            if let n = firstExistingMarineSuffix(base: b, suffixes: ["-finish-excited", "-finish-exhausted", "-excited"]) { return n }
+            if let n = firstExistingMarineSuffix(base: b, suffixes: ["-finish-excited", "-finished-excited", "-finish-exhausted", "-finished-exhausted", "-excited"]) { return n }
             if let n = firstExistingMarineSuffix(base: b, suffixes: ["-run", "-ready"]) { return n }
             if ImageAssetCache.imageExists(named: b + "-ready") { return b + "-ready" }
         }
@@ -298,39 +303,42 @@ private func winnerDisplayImageName(for racer: RacingRacer, config: RacingGameCo
 }
 
 /// Post-race finish images: `isBroadDelta` picks excited vs exhausted winner pose (non-tie wins use triumph pose).
-/// Fallback to winner-race-{slug} when finish-excited/finish-exhausted images don't exist.
-private func finishRefereeImageName(prefix: String, isBroadDelta: Bool) -> String {
-    if prefix == "ptero", ImageAssetCache.imageExists(named: "ptero-racer-referee-finished-winner") {
-        return "ptero-racer-referee-finished-winner"
+/// Prefers pack-specific `{prefix}-racer-referee-*` before generic `game-referee-*`.
+func finishRefereeImageName(prefix: String, isBroadDelta: Bool) -> String {
+    for candidate in [
+        "\(prefix)-racer-referee-finished-winner",
+        "\(prefix)-racer-referee-finish-winner",
+    ] where ImageAssetCache.imageExists(named: candidate) {
+        return candidate
     }
     let excited = "\(prefix)-racer-referee-finish-excited"
     let worried = "\(prefix)-racer-referee-finish-worried"
     if isBroadDelta, ImageAssetCache.imageExists(named: excited) { return excited }
     if !isBroadDelta, ImageAssetCache.imageExists(named: worried) { return worried }
+    let packFinish = "\(prefix)-racer-referee-finish"
+    if ImageAssetCache.imageExists(named: packFinish) { return packFinish }
     if ImageAssetCache.imageExists(named: "game-referee-finish") { return "game-referee-finish" }
-    return "\(prefix)-racer-referee-finish"
+    return packFinish
 }
 
-private func tieRefereeImageName(prefix: String) -> String {
-    if prefix == "marine", ImageAssetCache.imageExists(named: "marine-racer-referee-finished-tie") {
-        return "marine-racer-referee-finished-tie"
+func tieRefereeImageName(prefix: String) -> String {
+    for candidate in [
+        "\(prefix)-racer-referee-finished-tie",
+        "\(prefix)-racer-referee-finish-tie",
+    ] where ImageAssetCache.imageExists(named: candidate) {
+        return candidate
     }
-    if prefix == "ptero", ImageAssetCache.imageExists(named: "ptero-racer-referee-finished-tie") {
-        return "ptero-racer-referee-finished-tie"
-    }
+    let packFinish = "\(prefix)-racer-referee-finish"
+    if ImageAssetCache.imageExists(named: packFinish) { return packFinish }
     if ImageAssetCache.imageExists(named: "game-referee-finish") { return "game-referee-finish" }
-    return "\(prefix)-racer-referee-finish"
+    return packFinish
 }
 
-private func startRefereeImageName(prefix: String) -> String {
-    if prefix == "marine", ImageAssetCache.imageExists(named: "marine-racer-referee-start") {
-        return "marine-racer-referee-start"
-    }
-    if prefix == "ptero", ImageAssetCache.imageExists(named: "ptero-racer-referee-start") {
-        return "ptero-racer-referee-start"
-    }
+func startRefereeImageName(prefix: String) -> String {
+    let packStart = "\(prefix)-racer-referee-start"
+    if ImageAssetCache.imageExists(named: packStart) { return packStart }
     if ImageAssetCache.imageExists(named: "game-referee-start") { return "game-referee-start" }
-    return "\(prefix)-racer-referee-start"
+    return packStart
 }
 
 private func finishWinnerImageName(for racer: RacingRacer, config: RacingGameConfig, isBroadDelta: Bool) -> String? {
@@ -527,9 +535,13 @@ struct RacingGameView: View {
         }
     }
 
-    /// True when we need to show period selection first (racing-dinosaurs with empty racers).
+    /// True when we need to show period selection first (racing-dinosaurs / pterosaurs / marine with empty racers).
     private var needsPeriodSelection: Bool {
-        gameConfig.racers.isEmpty && (gameConfig.id == "racing-dinosaurs" || gameConfig.id == "racing-pterosaurs")
+        gameConfig.racers.isEmpty && (
+            gameConfig.id == "racing-dinosaurs"
+                || gameConfig.id == "racing-pterosaurs"
+                || gameConfig.id == "racing-marine-reptiles"
+        )
     }
 
     private var showSelection: Bool {
@@ -601,7 +613,13 @@ struct RacingGameView: View {
     private func embeddedPeriodSelectionView(geometry: GeometryProxy) -> some View {
         RacingPeriodSelectionView(isPresented: $isPresented, onSelectPeriod: { config in
             effectiveConfig = config
-        }, gameFamily: gameConfig.id == "racing-pterosaurs" ? .pterosaurs : .dinosaurs, embedMode: true)
+        }, gameFamily: racingPeriodGameFamily(for: gameConfig.id), embedMode: true)
+    }
+
+    private func racingPeriodGameFamily(for configId: String) -> RacingPeriodSelectionView.RacingGameFamily {
+        if configId == "racing-pterosaurs" { return .pterosaurs }
+        if configId == "racing-marine-reptiles" { return .marineReptiles }
+        return .dinosaurs
     }
     
     // MARK: - Selection (2×4 grid, emoji only)
@@ -2526,23 +2544,62 @@ private struct PterosaurRacerPoolEntry {
     let racingAssetBase: String
 }
 
-private let jurassicRacerPool: [RacingRacerPoolEntry] = [
-    RacingRacerPoolEntry(name: "Allosaurus", icon: "🦖", speed: 25, racerAssetClade: "theropod"),
-    RacingRacerPoolEntry(name: "Stegosaurus", icon: "🦎", speed: 12.5, racerAssetClade: "stegosaur"),
-    RacingRacerPoolEntry(name: "Apatosaurus", icon: "🦕", speed: 13.5, racerAssetClade: "sauropod"),
-    RacingRacerPoolEntry(name: "Diplodocus", icon: "🦕", speed: 12, racerAssetClade: "sauropod"),
-    RacingRacerPoolEntry(name: "Compsognathus", icon: "🦖", speed: 40, racerAssetClade: "theropod"),
-    RacingRacerPoolEntry(name: "Brontosaurus", icon: "🦕", speed: 13.5, racerAssetClade: "sauropod"),
+/// Racing Dinosaurs requires ready + finish excited/exhausted poses (run/trip fall back when missing).
+private func hasCompleteDinosaurRacingAssetPack(slug: String) -> Bool {
+    let base = "dino-racer-\(slug)"
+    return ImageAssetCache.imageExists(named: "\(base)-ready")
+        && ImageAssetCache.imageExists(named: "\(base)-finish-excited")
+        && ImageAssetCache.imageExists(named: "\(base)-finish-exhausted")
+}
+
+private enum DinosaurRacingMesozoicSpan {
+    case jurassic
+    case cretaceous
+}
+
+private struct DinosaurRacerCatalogEntry {
+    let slug: String
+    let displayName: String
+    let icon: String
+    let speed: Double
+    let racerAssetClade: String
+    let mesozoicSpan: DinosaurRacingMesozoicSpan
+}
+
+/// Metadata for bundled `dino-racer-{slug}-*` packs; pool is filtered by `hasCompleteDinosaurRacingAssetPack`.
+private let dinosaurRacerCatalog: [DinosaurRacerCatalogEntry] = [
+    DinosaurRacerCatalogEntry(slug: "allosaurus", displayName: "Allosaurus", icon: "🦖", speed: 25, racerAssetClade: "theropod", mesozoicSpan: .jurassic),
+    DinosaurRacerCatalogEntry(slug: "stegosaurus", displayName: "Stegosaurus", icon: "🦎", speed: 12.5, racerAssetClade: "stegosaur", mesozoicSpan: .jurassic),
+    DinosaurRacerCatalogEntry(slug: "apatosaurus", displayName: "Apatosaurus", icon: "🦕", speed: 13.5, racerAssetClade: "sauropod", mesozoicSpan: .jurassic),
+    DinosaurRacerCatalogEntry(slug: "diplodocus", displayName: "Diplodocus", icon: "🦕", speed: 12, racerAssetClade: "sauropod", mesozoicSpan: .jurassic),
+    DinosaurRacerCatalogEntry(slug: "compsognathus", displayName: "Compsognathus", icon: "🦖", speed: 40, racerAssetClade: "theropod", mesozoicSpan: .jurassic),
+    DinosaurRacerCatalogEntry(slug: "brontosaurus", displayName: "Brontosaurus", icon: "🦕", speed: 13.5, racerAssetClade: "sauropod", mesozoicSpan: .jurassic),
+    DinosaurRacerCatalogEntry(slug: "trex", displayName: "T-Rex", icon: "🦖", speed: 25, racerAssetClade: "theropod", mesozoicSpan: .cretaceous),
+    DinosaurRacerCatalogEntry(slug: "triceratops", displayName: "Triceratops", icon: "🦏", speed: 25, racerAssetClade: "ceratopsian", mesozoicSpan: .cretaceous),
+    DinosaurRacerCatalogEntry(slug: "ankylosaurus", displayName: "Ankylosaurus", icon: "🛡️", speed: 4.5, racerAssetClade: "ankylosaur", mesozoicSpan: .cretaceous),
+    DinosaurRacerCatalogEntry(slug: "velociraptor", displayName: "Velociraptor", icon: "🦖", speed: 22.5, racerAssetClade: "theropod", mesozoicSpan: .cretaceous),
+    DinosaurRacerCatalogEntry(slug: "gallimimus", displayName: "Gallimimus", icon: "🦃", speed: 45, racerAssetClade: "ornithomimid", mesozoicSpan: .cretaceous),
+    DinosaurRacerCatalogEntry(slug: "albertosaurus", displayName: "Albertosaurus", icon: "🦖", speed: 25, racerAssetClade: "theropod", mesozoicSpan: .cretaceous),
+    DinosaurRacerCatalogEntry(slug: "parasaurolophus", displayName: "Parasaurolophus", icon: "🦕", speed: 22, racerAssetClade: "hadrosaur", mesozoicSpan: .cretaceous),
+    DinosaurRacerCatalogEntry(slug: "spinosaurus", displayName: "Spinosaurus", icon: "🦖", speed: 20, racerAssetClade: "spinosaurid", mesozoicSpan: .cretaceous),
 ]
 
-private let cretaceousRacerPool: [RacingRacerPoolEntry] = [
-    RacingRacerPoolEntry(name: "T-Rex", icon: "🦖", speed: 25, racerAssetClade: "theropod"),   // Matched with Triceratops—still up for debate
-    RacingRacerPoolEntry(name: "Triceratops", icon: "🦏", speed: 25, racerAssetClade: "ceratopsian"),
-    RacingRacerPoolEntry(name: "Ankylosaurus", icon: "🛡️", speed: 4.5, racerAssetClade: "ankylosaur"),
-    RacingRacerPoolEntry(name: "Velociraptor", icon: "🦖", speed: 22.5, racerAssetClade: "theropod"),
-    RacingRacerPoolEntry(name: "Gallimimus", icon: "🦃", speed: 45, racerAssetClade: "ornithomimid"),
-    RacingRacerPoolEntry(name: "Albertosaurus", icon: "🦖", speed: 25, racerAssetClade: "theropod"),
-]
+private func dinosaurRacerPool(for period: RacingPeriod) -> [RacingRacerPoolEntry] {
+    dinosaurRacerCatalog.compactMap { entry in
+        let inPeriod: Bool = switch period {
+        case .jurassic: entry.mesozoicSpan == .jurassic
+        case .cretaceous: entry.mesozoicSpan == .cretaceous
+        case .both: true
+        }
+        guard inPeriod, hasCompleteDinosaurRacingAssetPack(slug: entry.slug) else { return nil }
+        return RacingRacerPoolEntry(
+            name: entry.displayName,
+            icon: entry.icon,
+            speed: entry.speed,
+            racerAssetClade: entry.racerAssetClade
+        )
+    }
+}
 
 /// Pterosaur pool for Racing Pterosaurs: only species that have a full `ptero-racing-*` art pack in the catalog (`ImageAssetNames`).
 private let pterosaurRacerPool: [PterosaurRacerPoolEntry] = {
@@ -2607,9 +2664,35 @@ struct RacingGameConfigs {
         trackLayout: .airportHop
     )
 
-    /// Racing Marine Reptiles: six featured species, circular course with eight buoys (no period picker).
+    /// Racing Marine Reptiles card config (Both-period preview). Launch uses `racingMarineReptilesNeedsPeriod`.
     static let racingMarineReptiles: RacingGameConfig = {
-        let pool = SeaMarineReptileData.marineRacersForRacing()
+        makeMarineConfig(for: .both)
+    }()
+
+    /// Config with empty racers: RacingGameView shows period selection first, then marine reptile selection.
+    static let racingMarineReptilesNeedsPeriod: RacingGameConfig = RacingGameConfig(
+        id: "racing-marine-reptiles",
+        title: "Racing Marine Reptiles!",
+        introAudio: "racing-marine-reptiles",
+        assetPrefix: "marine",
+        racers: [],
+        poolMinSpeed: nil,
+        poolMaxSpeed: nil,
+        trackLayout: .marineBuoySlalom(buoyCount: 8)
+    )
+
+    static func makeMarineConfig(for period: RacingPeriod) -> RacingGameConfig {
+        let mesozoicSpan: SeaMarineReptileData.MesozoicSpan = switch period {
+        case .jurassic: .jurassic
+        case .cretaceous: .cretaceous
+        case .both: .both
+        }
+        let pool = SeaMarineReptileData.marineRacersForRacing(mesozoicSpan: mesozoicSpan)
+        guard !pool.isEmpty else {
+            return racingMarineReptilesNeedsPeriod
+        }
+        let periodId = period == .both ? "both" : period.rawValue
+        let titleSuffix = period == .both ? "Both" : period.rawValue.capitalized
         let speeds = pool.map(\.speed)
         let racers = pool.map { entry in
             RacingRacer(
@@ -2622,16 +2705,16 @@ struct RacingGameConfigs {
             )
         }
         return RacingGameConfig(
-            id: "racing-marine-reptiles",
-            title: "Racing Marine Reptiles!",
+            id: "racing-marine-reptiles-\(periodId)",
+            title: "Racing Marine Reptiles! (\(titleSuffix))",
             introAudio: "racing-marine-reptiles",
             assetPrefix: "marine",
             racers: racers,
             poolMinSpeed: speeds.min(),
             poolMaxSpeed: speeds.max(),
-            trackLayout: .marineBuoySlalom(buoyCount: 8) // Revert to `.marineBuoyCircle(buoyCount: 8)` for the preserved classic layout.
+            trackLayout: .marineBuoySlalom(buoyCount: 8)
         )
-    }()
+    }
 
     private static func pterosaurPool(for period: RacingPeriod) -> [PterosaurRacerPoolEntry] {
         switch period {
@@ -2681,15 +2764,15 @@ struct RacingGameConfigs {
         let title: String
         switch period {
         case .jurassic:
-            pool = jurassicRacerPool
+            pool = dinosaurRacerPool(for: .jurassic)
             idBase = 100
             title = "Racing Dinosaurs! (Jurassic)"
         case .cretaceous:
-            pool = cretaceousRacerPool
+            pool = dinosaurRacerPool(for: .cretaceous)
             idBase = 200
             title = "Racing Dinosaurs! (Cretaceous)"
         case .both:
-            pool = jurassicRacerPool + cretaceousRacerPool
+            pool = dinosaurRacerPool(for: .both)
             idBase = 0
             title = "Racing Dinosaurs! (Both)"
         }
@@ -2736,6 +2819,23 @@ struct RacingPeriodSelectionView: View {
     enum RacingGameFamily {
         case dinosaurs
         case pterosaurs
+        case marineReptiles
+    }
+
+    private var periodSelectionSubtitle: String {
+        switch gameFamily {
+        case .pterosaurs: return "Only pterosaurs from that period can race."
+        case .marineReptiles: return "Only marine reptiles from that period can race."
+        case .dinosaurs: return "Only dinosaurs from that period can race."
+        }
+    }
+
+    private func config(for period: RacingPeriod) -> RacingGameConfig {
+        switch gameFamily {
+        case .pterosaurs: return RacingGameConfigs.makePterosaurConfig(for: period)
+        case .marineReptiles: return RacingGameConfigs.makeMarineConfig(for: period)
+        case .dinosaurs: return RacingGameConfigs.makeConfig(for: period)
+        }
     }
 
     private let periods: [(name: String, imageAssetName: String, emoji: String, period: RacingPeriod)] = [
@@ -2751,7 +2851,7 @@ struct RacingPeriodSelectionView: View {
                     .fontWeight(.semibold)
                     .padding(.top, 24)
                     .opacity(showText ? 1 : 0)
-                Text(gameFamily == .pterosaurs ? "Only pterosaurs from that period can race." : "Only dinosaurs from that period can race.")
+                Text(periodSelectionSubtitle)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -2788,10 +2888,7 @@ struct RacingPeriodSelectionView: View {
     /// Both period: Jurassic and Cretaceous images side by side, smaller.
     private func bothPeriodCard(isEnabled: Bool) -> some View {
         Button {
-            let config = gameFamily == .pterosaurs
-                ? RacingGameConfigs.makePterosaurConfig(for: .both)
-                : RacingGameConfigs.makeConfig(for: .both)
-            onSelectPeriod(config)
+            onSelectPeriod(config(for: .both))
             if !embedMode { isPresented = false }
         } label: {
             VStack(spacing: 8) {
@@ -2832,10 +2929,7 @@ struct RacingPeriodSelectionView: View {
 
     private func periodCard(name: String, imageAssetName: String, emoji: String, period: RacingPeriod, isEnabled: Bool) -> some View {
         Button {
-            let config = gameFamily == .pterosaurs
-                ? RacingGameConfigs.makePterosaurConfig(for: period)
-                : RacingGameConfigs.makeConfig(for: period)
-            onSelectPeriod(config)
+            onSelectPeriod(config(for: period))
             if !embedMode { isPresented = false }
         } label: {
             VStack(spacing: 8) {

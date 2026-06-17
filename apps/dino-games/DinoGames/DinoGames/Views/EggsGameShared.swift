@@ -95,7 +95,9 @@ struct EggsMorphology {
         case .cladeBased:
             if assetPrefix == "ptero-eggs" { return "ptero-eggs-scan-empty" }
             return "\(assetPrefix)-scans-empty"
-        case .marineSegments:
+        case .marineSegments(let prefix):
+            let marineEmpty = "\(prefix)-scan-empty"
+            if ImageAssetCache.imageExists(named: marineEmpty) { return marineEmpty }
             return "dino-eggs-scans-empty"
         }
     }

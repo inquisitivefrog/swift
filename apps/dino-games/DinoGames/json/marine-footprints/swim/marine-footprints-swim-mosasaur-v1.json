@@ -1,0 +1,10 @@
+{
+    "id": "trace_mosasaur_swim_001",
+    "technical_correction": "REJECT_PHOTOREALISM",
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUBMERGED_CAUSTIC_LIGHT",
+    "formation_ref": "CARLILE_SHALE",
+    "character_ref": "dino_bones_paleontologist_4",
+    "pose": "A paleontologist in full scuba gear (two arms) points to a light, directional furrow in the sand representing a Mosasaur fin-tip touch down."
+  }

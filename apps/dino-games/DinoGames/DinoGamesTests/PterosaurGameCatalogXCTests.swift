@@ -99,6 +99,8 @@ final class PterosaurGameCatalogXCTests: XCTestCase {
         XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("dsungaripterus")), "pebble-crushers")
         XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("caiuajara")), "pointed-fruit-cutter")
         XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("eudimorphodon")), "dual-type-pincers")
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("istiodactylus")), "straight-slicing-shears")
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("zhejiangopterus")), "hyper-slender-razor-needles")
     }
 
     func testPteroSmileBundledPortraitAndToothArt() {

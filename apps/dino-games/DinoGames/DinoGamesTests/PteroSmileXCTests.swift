@@ -16,13 +16,13 @@ final class PteroSmileXCTests: XCTestCase {
         XCTAssertEqual(SmilingDinosGameConfigs.pteroSmile.id, "ptero-smile")
     }
 
-    func testPteroSmileAppearsOnLevel3WhenPlayable() {
+    func testPteroSmileAppearsOnLevel4WhenPlayable() {
         guard SmilingDinosGameConfigs.isPteroSmilePlayable else {
             XCTFail("Ptero Smile needs 9+ morphology families with bundled portrait + tooth art.")
             return
         }
-        let level3 = PterosaurGameCatalog.games(level: .level3)
-        XCTAssertTrue(level3.contains { $0.id == "ptero-smile" })
+        let level4 = PterosaurGameCatalog.games(level: .level4)
+        XCTAssertTrue(level4.contains { $0.id == "ptero-smile" })
     }
 
     func testPteroSmilePickerArt() {
@@ -60,6 +60,8 @@ final class PteroSmileXCTests: XCTestCase {
         XCTAssertEqual(PteroSmileMorphology.allCategorySlugs.count, 14)
         XCTAssertEqual(PteroSmileMorphology.allToothSlugs.count, 43)
         XCTAssertEqual(PteroSmileMorphology.allPlayerToothKinds.count, 12)
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: pteroSlug("istiodactylus")), "straight-slicing-shears")
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: pteroSlug("zhejiangopterus")), "hyper-slender-razor-needles")
     }
 
     func testPteroSmileConfigBuildsThreeRounds() {
@@ -81,18 +83,15 @@ final class PteroSmileXCTests: XCTestCase {
         XCTAssertEqual(morphologiesAcrossGame.count, 9)
     }
 
-    func testPteroSmileToothImageSlugAliasesResolveInCatalog() {
-        let aliases: [(readmeSlug: String, imagesetSuffix: String)] = [
-            ("microscopic-needle-pin", "microscopic-needle-pins"),
-            ("miniature-insect-trap-pins", "minature-insect-trap-pins"),
-        ]
-        for alias in aliases {
-            let asset = PteroSmileMorphology.toothImageAssetName(for: alias.readmeSlug)
-            XCTAssertTrue(
-                ImageAssetNames.knownAssets.contains(asset),
-                "Missing tooth imageset for README slug `\(alias.readmeSlug)` → `\(asset)`"
-            )
+    func testPteroSmileToothImagesetsUseREADMESlugs() {
+        let known = ImageAssetNames.knownAssets
+        let missing = PteroSmileMorphology.allToothSlugs.filter { toothSlug in
+            !known.contains(PteroSmileMorphology.toothImageAssetName(for: toothSlug))
         }
+        XCTAssertTrue(
+            missing.isEmpty,
+            "Missing tooth imagesets for README slugs: \(missing.joined(separator: ", "))"
+        )
     }
 
     // MARK: - Audio
@@ -102,30 +101,18 @@ final class PteroSmileXCTests: XCTestCase {
         let stems = try TestBundleHelpers.audioStems(in: directory)
 
         var missingPrimary: [String] = []
-        var coveredByLegacy: [(kind: String, legacy: String)] = []
 
         for kind in PteroSmilePlayerToothKind.allCases {
             let primary = kind.audioKey
             if stems.contains(primary) { continue }
             missingPrimary.append("\(primary).m4a")
-            if let legacy = kind.legacyAudioKey, stems.contains(legacy) {
-                coveredByLegacy.append((kind: kind.rawValue, legacy: "\(legacy).m4a"))
-            }
         }
 
-        let legacyOnly = Set(PteroSmilePlayerToothKind.allCases.compactMap(\.legacyAudioKey))
-        let orphanLegacy = legacyOnly.filter { legacy in
-            guard stems.contains(legacy) else { return false }
-            return !PteroSmilePlayerToothKind.allCases.contains { $0.audioKey == legacy }
-        }.map { "\($0).m4a" }
-
-        XCTAssertFalse(
+        XCTAssertTrue(
             missingPrimary.isEmpty,
             """
-            Record primary player-kind clips under Assets/Audio/Ptero-Smile/:
+            Missing primary player-kind clips under Assets/Audio/Ptero-Smile/:
             \(missingPrimary.sorted().joined(separator: ", "))
-            Legacy fallbacks on disk for now: \(coveredByLegacy.map { "\($0.kind) → \($0.legacy)" }.sorted().joined(separator: "; "))
-            Orphan legacy clips (rename target): \(orphanLegacy.sorted().joined(separator: ", "))
             """
         )
     }
@@ -171,5 +158,13 @@ final class PteroSmileXCTests: XCTestCase {
             labels.isEmpty,
             "Each player tooth kind needs primary or legacy bundle audio: \(labels.joined(separator: ", "))"
         )
+    }
+
+    private func pteroSlug(_ matrixSlug: String) -> Dinosaur {
+        let match = AirPterosaurData.allPterosaurs.first {
+            AirPterosaurData.matrixFossilSlug(for: $0) == matrixSlug
+        }
+        XCTAssertNotNil(match, "Missing pterosaur registry entry for \(matrixSlug)")
+        return match!
     }
 }

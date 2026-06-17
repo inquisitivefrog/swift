@@ -1,0 +1,22 @@
+{
+  "project": "Ptero Footprints",
+  "version": "1.4.0",
+  "trackway_adjustment_library": {
+    "azhdarchid_large_corrected": {
+      "species": "Quetzalcoatlus",
+      "paleontologist": "dino_bones_paleontologist_4",
+      "pose": "Standing, surveying the trackway",
+      "action": "Initial field identification and site documentation",
+      "tool": "None (binoculars/handheld notebook)",
+      "habitat_ref": "LANCE_HELL_CREEK_ADDITIONS",
+      "visual_identity": "FORCE_ALTERNATING_STRIDE_SEQUENCE",
+      "morphology": "Massive, elongate manus print with strong digit III focus. Pes is robust and plantigrade with wide digit spread; indicates heavy weight-bearing on soft, damp silt.",
+      "technical_specs": {
+        "aspect_ratio": "1:1",
+        "framing_constraint": "WIDE_HERO_MACRO",
+        "scale_directive": "Force large-scale footprint dominance in frame; trackway must occupy 60% of the vertical and horizontal space to accurately reflect adult azhdarchid dimensions"
+      },
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3"
+    }
+  }
+}

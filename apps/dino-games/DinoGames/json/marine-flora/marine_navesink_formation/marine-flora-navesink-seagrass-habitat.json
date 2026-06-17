@@ -1,0 +1,9 @@
+{
+      "id": "navesink_habitat_001",
+      "formation": "NAVESINK",
+      "type": "HABITAT",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "SUBMERGED_CAUSTIC_LIGHT",
+      "visual_logic": "View of a coastal shelf with sparse, hardy seagrass patches and floating planktonic masses.",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; emphasizes soft, rounded seagrass shapes against a slightly murky, nutrient-rich floor."
+    }

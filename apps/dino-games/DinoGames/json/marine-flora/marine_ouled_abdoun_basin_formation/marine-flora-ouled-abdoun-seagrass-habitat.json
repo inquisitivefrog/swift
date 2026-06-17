@@ -1,0 +1,9 @@
+{
+      "id": "ouled_abdoun_habitat_001",
+      "formation": "OULED_ABDOUN_BASIN",
+      "type": "HABITAT",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "SUBMERGED_CAUSTIC_LIGHT",
+      "visual_logic": "Shallow, warm-water shelf view populated by dense meadows of ancestral seagrass and calcified algal structures[cite: 1].",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; warm, glowing light reflecting off sandy, shell-rich seabed[cite: 1]."
+    }

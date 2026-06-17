@@ -1,0 +1,8 @@
+{
+    "id": "ui_ct_scan_dakosaurus",
+    "morphology": "metriorhynchid_egg_oblong",
+    "style": "STYLE_CLAY_MASTER",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "state": "baby_dakosaurus_outline_inside",
+    "prompt": "A clean, isolated CT scan view of a Dakosaurus egg. The egg is oblong. Inside, a cute embryo outline shows a long, streamlined body with a distinct, downward-curving tail tip and a slightly elongated, narrow skull. Claymation style, soft grayscale, no background framing or UI."
+  }

@@ -1,0 +1,8 @@
+{
+  "id": "ui_ct_scan_egg_empty_clay",
+  "morphology": "general_marine_reptile_egg_empty",
+  "style": "STYLE_CLAY_MASTER",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "state": "empty_egg_shell_interior",
+  "prompt": "A clean, isolated CT scan view of an empty marine reptile egg shell. The egg has a soft, ellipsoidal shape characteristic of a marine reptile egg. The external shell is depicted as a simple, soft-textured clay outline. Inside, the egg is completely empty, showing only a clean, uniform, and clear internal negative space with no skeletal structures or embryos visible. The entire image uses a soft, muted grayscale and desaturated clay-like color palette, giving the impression of an internal, X-ray-like view of a hollow shell. No background framing, text, or scanner UI."
+}

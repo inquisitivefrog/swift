@@ -87,6 +87,8 @@ struct DinoMatrixGameConfig {
     let progressKind: MatrixGameProgressKind
     let sourceHints: [MatrixSourceHint]
     let sourceHintsTitle: String
+    /// Spoken once when the Source Matrix hints grid opens (e.g. `game-dino-matrix-tap-the-image`).
+    let sourceHintsGridIntroAudioKey: String?
 
     init(
         id: String,
@@ -101,7 +103,8 @@ struct DinoMatrixGameConfig {
         tuffFossilUsesVolcanicPrefix: Bool,
         progressKind: MatrixGameProgressKind,
         sourceHints: [MatrixSourceHint],
-        sourceHintsTitle: String
+        sourceHintsTitle: String,
+        sourceHintsGridIntroAudioKey: String? = nil
     ) {
         self.id = id
         self.title = title
@@ -116,6 +119,7 @@ struct DinoMatrixGameConfig {
         self.progressKind = progressKind
         self.sourceHints = sourceHints
         self.sourceHintsTitle = sourceHintsTitle
+        self.sourceHintsGridIntroAudioKey = sourceHintsGridIntroAudioKey
     }
 }
 
@@ -237,7 +241,7 @@ struct DinoMatrixGameView: View {
                 guard newRound >= 2, newRound <= 3, currentQuestion != nil else { return }
                 isAudioPlaying = true
                 speechManager.speak(gameConfig.identifyStoneAudioKey)
-                speechManager.onAudioFinished = { startOptionsWalkIfNeeded() }
+                speechManager.onAudioFinished = { playHintReminderThenStartOptionsWalk() }
             }
             .onDisappear {
                 speechManager.onAudioFinished = nil
@@ -270,6 +274,7 @@ struct DinoMatrixGameView: View {
                 SourceMatrixHintsView(
                     hints: gameConfig.sourceHints,
                     title: gameConfig.sourceHintsTitle,
+                    hintGridIntroAudioKey: gameConfig.sourceHintsGridIntroAudioKey,
                     onDismiss: { showSourceMatrixHints = false }
                 )
             }
@@ -322,7 +327,7 @@ struct DinoMatrixGameView: View {
                 .onAppear {
                     isAudioPlaying = true
                     speechManager.speak(gameConfig.identifyStoneAudioKey)
-                    speechManager.onAudioFinished = { startOptionsWalkIfNeeded() }
+                    speechManager.onAudioFinished = { playHintReminderThenStartOptionsWalk() }
                 }
             } else {
                 matrixPromptView
@@ -357,7 +362,20 @@ struct DinoMatrixGameView: View {
         .onAppear {
             isAudioPlaying = true
             speechManager.speak(gameConfig.identifyStoneAudioKey)
-            speechManager.onAudioFinished = { startOptionsWalkIfNeeded() }
+            speechManager.onAudioFinished = { playHintReminderThenStartOptionsWalk() }
+        }
+    }
+
+    /// After “identify the stone”: point to the Hints circle (`game-hint`), then walk matrix options.
+    private func playHintReminderThenStartOptionsWalk() {
+        speechManager.onAudioFinished = {
+            self.speechManager.onAudioFinished = nil
+            self.startOptionsWalkIfNeeded()
+        }
+        if let url = speechManager.urlForAudio(key: "game-hint") {
+            speechManager.playAudioFile(url: url)
+        } else {
+            startOptionsWalkIfNeeded()
         }
     }
 
@@ -778,6 +796,7 @@ struct DinoMatrixGameConfigs {
             progressKind: .dino,
             sourceHints: dinoSourceHints,
             sourceHintsTitle: "Source Matrix",
+            sourceHintsGridIntroAudioKey: "game-dino-matrix-tap-the-image",
             fatalLabel: "Dino Matrix"
         ) else {
             fatalError("Dino Matrix: need at least 3 distinct stones with dino-matrix-{stone}-{creature} image sets")
@@ -799,6 +818,7 @@ struct DinoMatrixGameConfigs {
         progressKind: MatrixGameProgressKind,
         sourceHints: [MatrixSourceHint],
         sourceHintsTitle: String,
+        sourceHintsGridIntroAudioKey: String? = nil,
         fatalLabel: String
     ) -> DinoMatrixGameConfig? {
         let allCandidates = roundCandidates(
@@ -868,7 +888,8 @@ struct DinoMatrixGameConfigs {
             tuffFossilUsesVolcanicPrefix: tuffFossilUsesVolcanicPrefix,
             progressKind: progressKind,
             sourceHints: sourceHints,
-            sourceHintsTitle: sourceHintsTitle
+            sourceHintsTitle: sourceHintsTitle,
+            sourceHintsGridIntroAudioKey: sourceHintsGridIntroAudioKey
         )
     }
 }
@@ -905,6 +926,7 @@ enum PteroMatrixGameConfigs {
             progressKind: .ptero,
             sourceHints: pteroSourceHints,
             sourceHintsTitle: "Source Matrix",
+            sourceHintsGridIntroAudioKey: "game-ptero-matrix-tap-the-image",
             fatalLabel: "Ptero Matrix"
         )
     }
@@ -953,9 +975,11 @@ enum MarineMatrixGameConfigs {
 struct SourceMatrixHintsView: View {
     let hints: [MatrixSourceHint]
     let title: String
+    var hintGridIntroAudioKey: String? = SourceHintsIntroAudioKeys.tapToHearDescription
     let onDismiss: () -> Void
     @StateObject private var speechManager = SpeechManager()
     @State private var selectedHint: MatrixSourceHint?
+    @State private var introPlayed = false
 
     var body: some View {
         ZStack(alignment: .topLeading) {
@@ -982,6 +1006,16 @@ struct SourceMatrixHintsView: View {
         .background(Color(.systemBackground))
         .allowsHitTesting(!speechManager.isPlaying)
         .opacity(speechManager.isPlaying ? 0.85 : 1.0)
+        .onAppear { playIntroOnce() }
+    }
+
+    private func playIntroOnce() {
+        guard !introPlayed else { return }
+        introPlayed = true
+        guard let introKey = hintGridIntroAudioKey,
+              let url = speechManager.urlForAudio(key: introKey) else { return }
+        speechManager.onAudioFinished = nil
+        speechManager.playAudioFile(url: url)
     }
 
     private var gridView: some View {

@@ -179,6 +179,32 @@ private enum PteroFootprintsStorage {
     }
 }
 
+// MARK: - Marine Footprints slot rotation (locomotion × clade track images)
+
+private enum MarineFootprintsStorage {
+    static let usedSlotKeysKey = "marineFootprintsUsedSlotKeys"
+
+    static func loadUsedSlotKeys() -> Set<String> {
+        guard let array = UserDefaults.standard.array(forKey: usedSlotKeysKey) as? [String] else { return [] }
+        return Set(array)
+    }
+
+    static func appendUsedSlotKeys(_ keys: [String], allPossibleSlotKeys: Set<String>) {
+        guard !allPossibleSlotKeys.isEmpty else { return }
+        var current = loadUsedSlotKeys()
+        current.formUnion(keys)
+        if allPossibleSlotKeys.isSubset(of: current) {
+            UserDefaults.standard.removeObject(forKey: usedSlotKeysKey)
+        } else {
+            UserDefaults.standard.set(Array(current), forKey: usedSlotKeysKey)
+        }
+    }
+
+    static func clearUsedSlots() {
+        UserDefaults.standard.removeObject(forKey: usedSlotKeysKey)
+    }
+}
+
 // MARK: - Game Configuration
 
 struct GuessGameConfig {
@@ -234,7 +260,7 @@ struct GuessGameView: View {
     @State private var showSourceFootprintsHints = false
 
     private var isFootprintsGuessGame: Bool {
-        gameConfig.id == "dino-footprints" || gameConfig.id == "ptero-footprints"
+        gameConfig.id == "dino-footprints" || gameConfig.id == "ptero-footprints" || gameConfig.id == "marine-footprints"
     }
 
     /// Tracks first appearance so we only reset on initial load, not when advancing rounds (avoids resetting currentRound when SwiftUI re-invokes onAppear).
@@ -313,7 +339,7 @@ struct GuessGameView: View {
     /// Guess games whose rounds teach non-portrait clues (footprints, silhouettes, skeletons, …).
     private var usesQuestionArtInVictoryRecap: Bool {
         switch gameConfig.id {
-        case "dino-footprints", "ptero-footprints",
+        case "dino-footprints", "ptero-footprints", "marine-footprints",
              "dino-bones", "whose-bones",
              "name-that-dinosaur", "name-that-pterosaur", "name-that-marine-reptile":
             return true
@@ -483,7 +509,9 @@ struct GuessGameView: View {
                 }
             }
             .fullScreenCover(isPresented: $showSourceFootprintsHints) {
-                if gameConfig.id == "ptero-footprints" {
+                if gameConfig.id == "marine-footprints" {
+                    SourceMarineFootprintsHintsView(onDismiss: { showSourceFootprintsHints = false })
+                } else if gameConfig.id == "ptero-footprints" {
                     SourcePteroFootprintsHintsView(onDismiss: { showSourceFootprintsHints = false })
                 } else {
                     SourceFootprintsHintsView(onDismiss: { showSourceFootprintsHints = false })
@@ -497,7 +525,7 @@ struct GuessGameView: View {
     private func startRoundIfNeeded() {
         guard !isGameComplete else { return }
         guard let question = currentQuestion, !question.options.isEmpty, optionsWalkIndex == nil else { return }
-        if gameConfig.id == "dino-footprints" || gameConfig.id == "ptero-footprints" {
+        if gameConfig.id == "dino-footprints" || gameConfig.id == "ptero-footprints" || gameConfig.id == "marine-footprints" {
             isAudioPlaying = true
             speechManager.onAudioFinished = {
                 self.speechManager.onAudioFinished = nil
@@ -1056,6 +1084,218 @@ struct SourcePteroFootprintsHintsView: View {
             speechManager.speak(morph.displayName)
         }
     }
+}
+
+// MARK: - Source Marine Footprints Hints (Marine Footprints)
+
+private struct SourceMarineFootprintSlotHint: Identifiable {
+    let id: String
+    let imageName: String
+    let displayName: String
+    /// `SpeechManager` key → `Marine-Reptile-Clades/clade-*.m4a`
+    let audioKey: String
+}
+
+private var sourceMarineFootprintsHintSlots: [SourceMarineFootprintSlotHint] {
+    MarineFootprintsMechanics.shippedSlots.compactMap { slot in
+        guard let imageName = MarineFootprintsMechanics.bundledImageNames(for: slot).first else { return nil }
+        return SourceMarineFootprintSlotHint(
+            id: slot.slotKey,
+            imageName: imageName,
+            displayName: slot.displayName,
+            audioKey: slot.audioKey
+        )
+    }
+}
+
+struct SourceMarineFootprintsHintsView: View {
+    let onDismiss: () -> Void
+    @State private var speechManager = SpeechManager()
+    @State private var selectedSlot: SourceMarineFootprintSlotHint?
+    @State private var introPlayed = false
+
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            if selectedSlot == nil {
+                gridView
+            } else {
+                detailView
+            }
+
+            Button {
+                onDismiss()
+            } label: {
+                Text("<")
+                    .font(.system(size: 28, weight: .medium))
+                    .foregroundColor(.blue)
+                    .frame(width: 44, height: 44)
+            }
+            .padding(.leading, 8)
+            .padding(.top, 8)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(.systemBackground))
+        .onAppear {
+            playIntroOnce()
+        }
+    }
+
+    private var gridView: some View {
+        VStack(spacing: 20) {
+            Text("Marine track types")
+                .font(.title2.weight(.semibold))
+                .padding(.top, 44)
+            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
+                ForEach(sourceMarineFootprintsHintSlots) { slot in
+                    Button {
+                        showSlotDetail(slot)
+                    } label: {
+                        if ImageAssetCache.imageExists(named: slot.imageName) {
+                            Image(slot.imageName)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: 120)
+                                .clipped()
+                        } else {
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Color.gray.opacity(0.3))
+                                .frame(height: 120)
+                                .overlay(Text(slot.displayName).font(.caption).foregroundColor(.secondary))
+                        }
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding(.horizontal, 24)
+            Spacer()
+        }
+    }
+
+    @ViewBuilder
+    private var detailView: some View {
+        if let slot = selectedSlot {
+            VStack(spacing: 20) {
+                Spacer()
+                if ImageAssetCache.imageExists(named: slot.imageName) {
+                    Image(slot.imageName)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(maxWidth: 320, maxHeight: 320)
+                }
+                Text(slot.displayName)
+                    .font(.title2.weight(.semibold))
+                    .foregroundColor(.primary)
+                Spacer()
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+    }
+
+    private func playIntroOnce() {
+        guard !introPlayed else { return }
+        introPlayed = true
+        if let url = speechManager.urlForAudio(key: "game-footprints-tap-the-footprint-to-hear-description") {
+            speechManager.onAudioFinished = nil
+            speechManager.playAudioFile(url: url)
+        }
+    }
+
+    private func showSlotDetail(_ slot: SourceMarineFootprintSlotHint) {
+        selectedSlot = slot
+        speechManager.onAudioFinished = nil
+        speechManager.onAudioFinished = {
+            speechManager.onAudioFinished = nil
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                selectedSlot = nil
+            }
+        }
+        if let url = speechManager.urlForAudio(key: slot.audioKey) {
+            speechManager.playAudioFile(url: url)
+        } else {
+            speechManager.speak(slot.displayName)
+        }
+    }
+}
+
+// MARK: - Marine Footprints (locomotion + clade)
+
+/// Catalog + test surface for `marine-footprints-{walk|punt|swim|drag}-{clade}` gameplay art.
+enum MarineFootprintsMechanics {
+    struct SlotDefinition: Equatable {
+        let locomotion: String
+        /// Imageset suffix, e.g. `thalattosuchian` in `marine-footprints-walk-thalattosuchian`.
+        let cladeAssetSlug: String
+        /// `marine-{group}-*` segment, e.g. `thala`.
+        let marineGroupRaw: String
+
+        var slotKey: String { "\(locomotion)|\(marineGroupRaw)" }
+        /// Base stem before optional `-v1`…`-v4` variant suffix.
+        var imageBaseName: String { "marine-footprints-\(locomotion)-\(cladeAssetSlug)" }
+        var displayName: String { SeaMarineReptileData.displayTitleForMarineGroup(marineGroupRaw) }
+        var audioKey: String {
+            "marine-clade-\(SeaMarineReptileData.audioSlugForMarineGroupRaw(marineGroupRaw))"
+        }
+    }
+
+    /// All `(locomotion, clade)` pairs the game knows about; grows as new imagesets ship.
+    static let registry: [SlotDefinition] = [
+        SlotDefinition(locomotion: "walk", cladeAssetSlug: "thalattosuchian", marineGroupRaw: "thala"),
+        SlotDefinition(locomotion: "punt", cladeAssetSlug: "nothosaur", marineGroupRaw: "notho"),
+        SlotDefinition(locomotion: "swim", cladeAssetSlug: "mosasaur", marineGroupRaw: "mosa"),
+        SlotDefinition(locomotion: "drag", cladeAssetSlug: "testudine", marineGroupRaw: "testu"),
+    ]
+
+    static func bundledImageNames(for slot: SlotDefinition) -> [String] {
+        let base = slot.imageBaseName
+        var names: [String] = []
+        if ImageAssetCache.imageExists(named: base) { names.append(base) }
+        names += (1...4).compactMap { variant in
+            let name = "\(base)-v\(variant)"
+            return ImageAssetCache.imageExists(named: name) ? name : nil
+        }
+        return names
+    }
+
+    static func pickGameplayImageName(for slot: SlotDefinition) -> String? {
+        bundledImageNames(for: slot).randomElement()
+    }
+
+    static var shippedSlots: [SlotDefinition] {
+        registry.filter { !bundledImageNames(for: $0).isEmpty }
+    }
+
+    static var isPlayable: Bool {
+        GuessGameConfigs.makeMarineFootprints() != nil
+    }
+}
+
+private func pickThreeMarineFootprintSlots(
+    availableSlotKeys: [String],
+    slotByKey: [String: MarineFootprintsMechanics.SlotDefinition]
+) -> [String] {
+    guard !availableSlotKeys.isEmpty else { return [] }
+    let keys = availableSlotKeys.shuffled()
+    var byGroup: [String: [String]] = [:]
+    for key in keys {
+        guard let slot = slotByKey[key] else { continue }
+        byGroup[slot.marineGroupRaw, default: []].append(key)
+    }
+    var picked: [String] = []
+    for group in byGroup.keys.shuffled() {
+        guard picked.count < 3 else { break }
+        if let slotKey = byGroup[group]?.randomElement(), !picked.contains(slotKey) {
+            picked.append(slotKey)
+        }
+    }
+    var remaining = keys.filter { !picked.contains($0) }
+    remaining.shuffle()
+    while picked.count < 3, let next = remaining.popLast() {
+        if !picked.contains(next) {
+            picked.append(next)
+        }
+    }
+    return Array(picked.prefix(3))
 }
 
 // MARK: - Dino Footprints (clade + size)
@@ -1821,6 +2061,67 @@ struct GuessGameConfigs {
                     return "\(pair.morph.rawValue)|\(pair.size.rawValue)"
                 }
                 PteroFootprintsStorage.appendUsedSlotKeys(keys, allPossibleSlotKeys: allPossibleSlotKeys)
+            }
+        )
+    }
+
+    // Marine Footprints!: Each round shows `marine-footprints-{locomotion}-{clade}`; player picks the marine reptile from the matching clade. Two decoys from other clades. Rotation cycles bundled `(locomotion|clade)` slots.
+    static func makeMarineFootprints() -> GuessGameConfig? {
+        let all = SeaMarineReptileData.allMarineReptiles
+        guard all.count >= 5 else { return nil }
+
+        let shipped = MarineFootprintsMechanics.shippedSlots
+        guard shipped.count >= 3 else { return nil }
+
+        let byClade = Dictionary(grouping: all) { SeaMarineReptileData.marineCladeRawValue(for: $0) }
+        let playableSlots = shipped.filter { (byClade[$0.marineGroupRaw]?.isEmpty == false) }
+        guard playableSlots.count >= 3 else { return nil }
+
+        let allPossibleSlotKeys = Set(playableSlots.map(\.slotKey))
+        let slotByKey = Dictionary(uniqueKeysWithValues: playableSlots.map { ($0.slotKey, $0) })
+
+        var availableKeys = playableSlots.map(\.slotKey).filter { !MarineFootprintsStorage.loadUsedSlotKeys().contains($0) }
+        if availableKeys.count < 3 {
+            MarineFootprintsStorage.clearUsedSlots()
+            availableKeys = playableSlots.map(\.slotKey)
+        }
+
+        let pickedSlotKeys = pickThreeMarineFootprintSlots(availableSlotKeys: availableKeys, slotByKey: slotByKey)
+        guard pickedSlotKeys.count == 3 else { return nil }
+
+        var usedQuestionIds: Set<Int> = []
+        var rounds: [RoundQuestion] = []
+        for roundId in 1...3 {
+            let slotKey = pickedSlotKeys[roundId - 1]
+            guard let slot = slotByKey[slotKey],
+                  var candidates = byClade[slot.marineGroupRaw], !candidates.isEmpty else { return nil }
+            candidates.shuffle()
+            let correct = candidates.first { !usedQuestionIds.contains($0.id) } ?? candidates[0]
+            usedQuestionIds.insert(correct.id)
+
+            let decoys = SeaMarineReptileData.pickTwoDecoysDistinctMarineClades(question: correct, pool: all)
+            guard decoys.count == 2 else { return nil }
+
+            var options = [correct] + decoys
+            options.shuffle()
+            guard let questionImageName = MarineFootprintsMechanics.pickGameplayImageName(for: slot) else { return nil }
+            rounds.append(RoundQuestion(
+                id: roundId,
+                questionImageName: questionImageName,
+                questionImageFallback: correct.imageName,
+                correctAnswerId: correct.id,
+                options: options
+            ))
+        }
+
+        return GuessGameConfig(
+            id: "marine-footprints",
+            title: "Marine Footprints!",
+            introAudio: "game-marine-footprints",
+            rounds: rounds,
+            availableDinosaurs: all,
+            victorySideEffect: {
+                MarineFootprintsStorage.appendUsedSlotKeys(pickedSlotKeys, allPossibleSlotKeys: allPossibleSlotKeys)
             }
         )
     }

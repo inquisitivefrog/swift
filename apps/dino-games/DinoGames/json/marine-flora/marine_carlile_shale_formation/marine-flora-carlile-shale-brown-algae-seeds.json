@@ -1,0 +1,9 @@
+{
+      "id": "carlile_lifecycle_001",
+      "formation": "CARLILE_SHALE",
+      "type": "LIFECYCLE",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "BRIGHT_DIFFUSED_DAYLIGHT",
+      "visual_logic": "Grid showcasing a floating bladders-and-fronds detail, close-up of coralline red algae texture, and leaf-base attachments.",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; vibrant contrast between the golden brown algae and calcified red patches[cite: 1]."
+    }

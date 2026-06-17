@@ -93,19 +93,35 @@ enum DentalMorphology {
         guard let base = toothTypeBySlug[slug] else { return nil }
         // Explicit overrides for Dino Smile
         switch slug {
-        case "stegosaurus", "kentrosaurus", "huayangosaurus": return "flute-leaf"
+        case "stegosaurus", "kentrosaurus", "huayangosaurus": return "fluted-leaf"
         case "gallimimus", "ornithomimus", "struthiomimus": return "nipping-beak"
         case "oviraptor", "deinocheirus", "gigantoraptor": return "nutcracker"
         case "triceratops": return "forked-battery"
         case "iguanodon", "ouranosaurus": return "diamond-battery"
         default:
             switch base {
-            case "fluted-leaf-v1", "fluted-leaf-v2": return "flute-leaf"
+            case "fluted-leaf-v1", "fluted-leaf-v2": return "fluted-leaf"
             case "nipping-beak-v1", "nipping-beak-v2": return "nipping-beak"
             case "forked-grinder": return "forked-battery"
             case "diamond-battery-v1": return "diamond-battery"
             default: return base
             }
         }
+    }
+
+    /// Bundled tooth art for Dino Smile rounds.
+    static func smileToothImageAssetName(for toothType: String) -> String {
+        "dino-smile-tooth-\(toothType)"
+    }
+
+    /// Portrait art for a dinosaur slug (without `dino-` prefix).
+    static func smilePortraitImageAssetName(for slug: String) -> String {
+        "dino-smile-\(slug)"
+    }
+
+    /// Same lookup order as land `playToothAudio` in `SmilingDinosGameView`.
+    static func smileToothAudioCandidateKeys(for toothType: String) -> [String] {
+        let baseKey = "dino-smile-\(toothType)"
+        return [baseKey, "\(baseKey)-v1", "\(baseKey)-v2", smileToothImageAssetName(for: toothType)]
     }
 }

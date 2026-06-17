@@ -1,0 +1,9 @@
+{
+      "id": "mangrove_lifecycle_001",
+      "formation": "NKPORO_SHALE",
+      "type": "LIFECYCLE",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "SOFT_FOGGY_MORNING",
+      "visual_logic": "Grid displaying the root-bark texture, small epiphytic algae patches, and the structure of a floating water fern[cite: 1].",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; focuses on varied textures and organic growth patterns[cite: 1]."
+    }

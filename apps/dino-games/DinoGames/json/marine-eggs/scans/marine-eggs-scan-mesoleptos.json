@@ -1,0 +1,8 @@
+{
+    "id": "ui_ct_scan_mesoleptos",
+    "morphology": "elongated_squamate_egg",
+    "style": "STYLE_CLAY_MASTER",
+    "dimensions": "SQUARE_ASPECT_RATIO",
+    "state": "baby_mesoleptos_outline_inside",
+    "prompt": "A clean, isolated CT scan view of a Mesoleptos egg. The egg is elongated. The embryo outline is delicate, showing a very slim, elongated body with tiny, refined limbs, curled snugly against the inner shell wall. Claymation style, soft grayscale, no background framing or UI."
+  }

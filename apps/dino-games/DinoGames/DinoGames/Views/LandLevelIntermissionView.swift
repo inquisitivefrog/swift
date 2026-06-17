@@ -2,7 +2,7 @@
 //  LandLevelIntermissionView.swift
 //  DinoGames
 //
-//  Land (Dinosaurs) only: short visual intermission after picking a level, before level intro audio + game card walk.
+//  Short visual intermission after picking a level (land, air, marine), before level intro audio + game card walk.
 //
 
 import SwiftUI
@@ -11,6 +11,8 @@ import AVFoundation
 struct LandLevelIntermissionView: View {
     let category: GameCategory
     let level: GameLevel
+    /// Shorter level-image + crowd sequence for guided auto-play between levels.
+    var compact: Bool = false
     let onComplete: () -> Void
 
     @State private var gameBadgeVisible = false
@@ -19,14 +21,13 @@ struct LandLevelIntermissionView: View {
     @State private var dinoScale: CGFloat = 0.22
     @State private var crowdPlayer: AVAudioPlayer?
 
-    /// Horizontal badge: hold each position, gap while hidden (each doubled from original).
-    private let flashHoldNanoseconds: UInt64 = 640_000_000
-    private let flashGapNanoseconds: UInt64 = 220_000_000
-    /// Vertical beat: dino scale-up duration + hold at full size (each doubled).
-    private let dinoGrowNanoseconds: UInt64 = 2_500_000_000
-    private let fullBleedHoldNanoseconds: UInt64 = 440_000_000
-    /// Pause after visuals and crowd audio before returning to the game list.
-    private let pauseBeforeDismissNanoseconds: UInt64 = 600_000_000
+    private var flashHoldNanoseconds: UInt64 { compact ? 320_000_000 : 640_000_000 }
+    private var flashGapNanoseconds: UInt64 { compact ? 110_000_000 : 220_000_000 }
+    private var dinoGrowNanoseconds: UInt64 { compact ? 1_200_000_000 : 2_500_000_000 }
+    private var fullBleedHoldNanoseconds: UInt64 { compact ? 220_000_000 : 440_000_000 }
+    private var pauseBeforeDismissNanoseconds: UInt64 { compact ? 250_000_000 : 600_000_000 }
+    private var fadeOutNanoseconds: UInt64 { compact ? 200_000_000 : 400_000_000 }
+    private var preGrowNanoseconds: UInt64 { compact ? 120_000_000 : 240_000_000 }
     
     private var levelImageName: String {
         switch category {
@@ -86,7 +87,7 @@ struct LandLevelIntermissionView: View {
     private func runIntermissionSequence() async {
         startCrowd()
 
-        let hasBadge = ImageAssetCache.imageExists(named: level.gameLevelBadgeImageName)
+        let hasBadge = !compact && ImageAssetCache.imageExists(named: level.gameLevelBadgeImageName)
         if hasBadge {
             for x in [0.22, 0.5, 0.78] as [CGFloat] {
                 withAnimation(.easeOut(duration: 0.16)) {
@@ -109,11 +110,11 @@ struct LandLevelIntermissionView: View {
             return
         }
 
-        dinoScale = 0.22
-        withAnimation(.easeOut(duration: 0.24)) {
+        dinoScale = compact ? 0.45 : 0.22
+        withAnimation(.easeOut(duration: compact ? 0.16 : 0.24)) {
             dinoVisible = true
         }
-        try? await Task.sleep(nanoseconds: 240_000_000)
+        try? await Task.sleep(nanoseconds: preGrowNanoseconds)
 
         withAnimation(.easeInOut(duration: Double(dinoGrowNanoseconds) / 1_000_000_000)) {
             dinoScale = 1.0
@@ -121,11 +122,18 @@ struct LandLevelIntermissionView: View {
         try? await Task.sleep(nanoseconds: dinoGrowNanoseconds)
         try? await Task.sleep(nanoseconds: fullBleedHoldNanoseconds)
 
-        withAnimation(.easeOut(duration: 0.4)) {
+        withAnimation(.easeOut(duration: Double(fadeOutNanoseconds) / 1_000_000_000)) {
             dinoVisible = false
             gameBadgeVisible = false
         }
-        try? await Task.sleep(nanoseconds: 400_000_000)
+        try? await Task.sleep(nanoseconds: fadeOutNanoseconds)
+
+        if compact {
+            stopCrowd()
+            try? await Task.sleep(nanoseconds: pauseBeforeDismissNanoseconds)
+            onComplete()
+            return
+        }
 
         await waitForCrowdToFinish()
         stopCrowd()

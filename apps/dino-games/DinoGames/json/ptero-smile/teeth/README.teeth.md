@@ -52,7 +52,7 @@ Needle Comb Filterers
 Precision Shearing Clips
 1. caupedactylus: deep-rounded-clip
 2. eudimorphodon: dual-type-pincers
-3. istiodactylus: straight-slicing-sheers
+3. istiodactylus: straight-slicing-shears
 
 Rapid Snapping Predators
 1. boreopterus: slender-conical-snappers

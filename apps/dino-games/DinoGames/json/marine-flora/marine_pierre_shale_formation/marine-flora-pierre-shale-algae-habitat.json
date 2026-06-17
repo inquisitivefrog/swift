@@ -1,0 +1,9 @@
+{
+      "id": "pierre_shale_habitat_001",
+      "formation": "PIERRE_SHALE",
+      "type": "HABITAT",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "DAPPLED_OPEN",
+      "visual_logic": "Wide-angle view of a deep, calm seaway with patches of drifting sargassum-type algae and submerged seagrass[cite: 1].",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; soft, moody atmosphere with light filtering down to a dark, silty seafloor[cite: 1]."
+    }

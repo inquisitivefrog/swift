@@ -1,0 +1,9 @@
+{
+      "id": "seagrass_habitat_001",
+      "formation": "CAMBRIDGE_GREENSAND",
+      "type": "HABITAT",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "SUBMERGED_CAUSTIC_LIGHT",
+      "visual_logic": "Wide-angle view of a shallow shelf sea with swaying ribbons of seagrass over a sandy, nodule-rich substrate.",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; focus on expansive meadow layout and light refraction."
+    }

@@ -65,6 +65,22 @@ final class LandDinosaurMechanicCatalogXCTests: XCTestCase {
         let config = RacingGameConfigs.makeConfig(for: .cretaceous)
         XCTAssertEqual(config.assetPrefix, "dino")
         XCTAssertFalse(config.racers.isEmpty, "Expected bundled dino racing art for Cretaceous pool")
+        XCTAssertTrue(
+            config.racers.contains { $0.name == "Parasaurolophus" },
+            "Bundled Parasaurolophus racer art should appear in the Cretaceous pool"
+        )
+        XCTAssertTrue(
+            config.racers.contains { $0.name == "Spinosaurus" },
+            "Bundled Spinosaurus racer art should appear in the Cretaceous pool"
+        )
+    }
+
+    func testRacingDinosaursUsesPackSpecificRefereeStartArt() {
+        XCTAssertTrue(ImageAssetCache.imageExists(named: "dino-racer-referee-start"))
+        XCTAssertTrue(ImageAssetCache.imageExists(named: "game-referee-start"))
+        // Pack-specific art must win over the generic fallback (same rule as Racing Pterosaurs).
+        XCTAssertEqual(startRefereeImageName(prefix: "dino"), "dino-racer-referee-start")
+        XCTAssertEqual(startRefereeImageName(prefix: "ptero"), "ptero-racer-referee-start")
     }
 
     @MainActor

@@ -1,0 +1,9 @@
+{
+      "id": "blue_lias_habitat_001",
+      "formation": "BLUE_LIAS",
+      "type": "HABITAT",
+      "tech_ref": "DEFAULT_SQUARE",
+      "lighting_ref": "DAPPLED_OPEN",
+      "visual_logic": "Wide-angle view of an open marine shelf with floating crinoid rafts drifting over a stratified, limestone-rich seafloor.",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; emphasizes the contrast between the rhythmic limestone layers on the floor and the organic, floating crinoid colonies."
+    }
