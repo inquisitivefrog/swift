@@ -152,7 +152,7 @@ struct GameSelectionView: View {
         return introducedGameListKeys.contains(key)
     }
     
-    /// Navigation bar title. Empty when showing a level's game list so the level header in the scroll is the only level heading.
+    /// Navigation bar title. Empty on the game list — level title lives in the scroll header (nav bar hidden there to avoid a blank strip after sheet dismiss).
     private var gameSelectionTitle: String {
         if selectedLevel != nil { return "" }
         return "Choose a level"
@@ -305,6 +305,26 @@ struct GameSelectionView: View {
             runGuidedPostGameDismissal()
         } else {
             maybeAutoAdvanceToNextLevelAfterGameDismissed()
+        }
+    }
+
+    private var gameSelectionBackDisabled: Bool {
+        isAudioPlaying || landLevelIntermissionActive || showGameTransition
+    }
+
+    private func handleGameSelectionBack() {
+        if showGameTransition {
+            showGameTransition = false
+            selectedGame = nil
+        } else if selectedLevel != nil {
+            if guidedPlayMode {
+                persistPlaySession(gameCanonicalId: nil)
+                onReturnToCategoryMenu()
+            } else {
+                selectedLevel = nil
+            }
+        } else {
+            dismiss()
         }
     }
 
@@ -520,7 +540,7 @@ struct GameSelectionView: View {
     }
 
     /// Game cards list; single ForEach over catalog (shared UI). When category has no games for the selected level, show game-coming-soon image.
-    /// For land + selected level, show a level header (title) at top so it stays visible when returning from a game (nav bar can be unreliable after sheet dismiss).
+    /// Level header (back + title) stays in the scroll so layout is stable when returning from a game sheet.
     @ViewBuilder
     private var gameCardsStack: some View {
         Group {
@@ -558,14 +578,28 @@ struct GameSelectionView: View {
         }
     }
 
-    /// Level header shown at top of game list (title only; image is in level picker).
+    /// Level header at top of game list (title + back). Nav bar is hidden on this screen so sheet dismiss does not leave an empty bar that steals list height.
     private func levelHeaderView(level: GameLevel) -> some View {
-        Text(level.gameListTitle)
-            .font(.headline)
-            .multilineTextAlignment(.center)
-            .foregroundColor(.primary)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 10)
+        HStack(spacing: 10) {
+            Button(action: handleGameSelectionBack) {
+                Image(systemName: "chevron.left")
+                    .font(.body.weight(.semibold))
+                    .frame(width: 44, height: 44)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .disabled(gameSelectionBackDisabled)
+
+            Text(level.gameListTitle)
+                .font(.headline)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.primary)
+                .frame(maxWidth: .infinity)
+
+            // Balance chevron width so title stays centered.
+            Color.clear.frame(width: 44, height: 44)
+        }
+        .padding(.vertical, 4)
     }
     
     var body: some View {
@@ -597,25 +631,13 @@ struct GameSelectionView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    if showGameTransition {
-                        showGameTransition = false
-                        selectedGame = nil
-                    } else if selectedLevel != nil {
-                        if guidedPlayMode {
-                            persistPlaySession(gameCanonicalId: nil)
-                            onReturnToCategoryMenu()
-                        } else {
-                            selectedLevel = nil
-                        }
-                    } else {
-                        dismiss()
+            if selectedLevel == nil {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: handleGameSelectionBack) {
+                        Image(systemName: "chevron.left")
                     }
-                } label: {
-                    Image(systemName: "chevron.left")
+                    .disabled(gameSelectionBackDisabled)
                 }
-                .disabled(isAudioPlaying || landLevelIntermissionActive || showGameTransition)
             }
         }
         .navigationBarBackButtonHidden(true)
@@ -846,7 +868,7 @@ private struct GameSelectionNavigationContent: View {
             return
         }
         if shouldReplayLevelIntroAfterGameDismissed() {
-            // Guided land / air / marine: same-level → next game directly; level-up → intermission + level intro only.
+            // Guided: same-level → next game directly; level-up → intermission + level intro + game walk.
             if guidedPlayMode && !guidedPendingLevelAdvance {
                 onGuidedWalkFinished()
             } else {
@@ -903,7 +925,9 @@ private struct GameSelectionNavigationContent: View {
                     content
                 }
                 .padding()
+                .padding(.bottom, 8)
             }
+            .scrollBounceBehavior(.basedOnSize)
             .onChange(of: gameListScrollToTopToken) { _, _ in
                 scrollGameListToTop(proxy: proxy)
             }
@@ -930,8 +954,9 @@ private struct GameSelectionNavigationContent: View {
                 }
             }
         }
-        .navigationTitle(gameSelectionTitle)
+        .navigationTitle(selectedLevel == nil ? gameSelectionTitle : "")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(selectedLevel == nil ? .automatic : .hidden, for: .navigationBar)
     }
 
     private var contentWithSheets: some View {
@@ -1632,12 +1657,10 @@ private struct GameSelectionNavigationContent: View {
         speechManager.onAudioFinished = nil
         speechManager.onAudioFinished = {
             DispatchQueue.main.async {
-                if self.guidedPlayMode && self.guidedPendingLevelAdvance {
+                if self.guidedPendingLevelAdvance {
                     self.guidedPendingLevelAdvance = false
-                    self.isAudioPlaying = false
-                    self.speechManager.onAudioFinished = nil
-                    self.onGuidedWalkFinished()
-                } else if self.guidedPlayMode || !self.hasIntroducedCurrentGameList {
+                }
+                if self.guidedPlayMode || !self.hasIntroducedCurrentGameList {
                     self.startGameWalk()
                 } else {
                     self.isAudioPlaying = false

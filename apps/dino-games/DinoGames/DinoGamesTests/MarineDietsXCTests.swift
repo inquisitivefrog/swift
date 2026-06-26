@@ -32,4 +32,13 @@ final class MarineDietsXCTests: XCTestCase {
             messagePrefix: "Marine Diets"
         )
     }
+
+    func testHenodusIsHerbivoreInMarineDiets() {
+        let henodus = SeaMarineReptileData.allMarineReptiles.first {
+            $0.imageName == "marine-notho-henodus"
+        }
+        XCTAssertNotNil(henodus, "Expected Henodus in marine reptile catalog")
+        XCTAssertEqual(SeaMarineReptileData.diet(for: henodus!), "Herbivore")
+        XCTAssertEqual(SeaMarineReptileData.marineReptileDietById[henodus!.id], "Herbivore")
+    }
 }

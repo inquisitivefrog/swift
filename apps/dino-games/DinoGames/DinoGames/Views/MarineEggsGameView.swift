@@ -122,6 +122,10 @@ enum MarineEggMorphology {
         eggAudioKeyResolver: { slug in "marine-eggs-\(slug)" }
     )
 
+    static let sourceHints: [EggsSourceHint] = [
+        EggsSourceHint(id: "shape", imageName: "source-marine-eggs-shape", displayName: "Shape", audioKey: "marine-eggs-shape"),
+    ]
+
     static let settings = EggsGameSettings(
         morphology: morphology,
         gameKeyPrefix: "game-marine-eggs",
@@ -139,7 +143,7 @@ enum MarineEggMorphology {
         showsCreatureNameOnCards: false,
         victoryRecapUsesCreatureName: true,
         victoryRecapLabelUsesCreatureName: false,
-        sourceHints: nil,
+        sourceHints: sourceHints,
         sourceHintsTitle: "Source Eggs",
         sourceHintsGridIntroAudioKey: nil,
         playsHintsButtonIntro: false,

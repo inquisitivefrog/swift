@@ -875,8 +875,8 @@ fileprivate struct SourceAgesHintsView: View {
             ]
         case .marine:
             return [
-                SourceAgesPeriodHint(id: "jurassic", imageName: "marine-ages-jurassic", displayName: "Jurassic", audioKey: "game-marine-ages-jurassic-marine-reptiles"),
-                SourceAgesPeriodHint(id: "cretaceous", imageName: "marine-ages-cretaceous", displayName: "Cretaceous", audioKey: "game-marine-ages-cretaceous-marine-reptiles"),
+                SourceAgesPeriodHint(id: "jurassic", imageName: "source-marine-ages-jurassic", displayName: "Jurassic", audioKey: "game-marine-ages-jurassic-marine-reptiles"),
+                SourceAgesPeriodHint(id: "cretaceous", imageName: "source-marine-ages-cretaceous", displayName: "Cretaceous", audioKey: "game-marine-ages-cretaceous-marine-reptiles"),
             ]
         case .dino:
             return sourceAgesHintPeriods

@@ -132,6 +132,8 @@ struct MarineFloraGameView: View {
     @State private var victoryWalkPlants: [MarineFloraPlant] = []
     @State private var matchedOrderThisRound: [Int] = []
     @State private var introWalkIndex: Int? = nil
+    /// False until plant intro, prompt, hint, and all five reptile introductions finish for the round.
+    @State private var reptileSelectionEnabled = false
     @State private var displayedCreatureName: String? = nil
     @State private var hasStartedGame = false
     @State private var showSourceFloraHints = false
@@ -140,6 +142,10 @@ struct MarineFloraGameView: View {
     private let totalRounds = 3
     private let plantHabitatDisplaySeconds: Double = 3.0
     private let matchesNeededPerRound = 3
+
+    private var blocksReptileSelection: Bool {
+        speechManager.isPlaying || !reptileSelectionEnabled
+    }
 
     var body: some View {
         NavigationView {
@@ -156,8 +162,8 @@ struct MarineFloraGameView: View {
                     speechManager.onAudioFinished = nil
                     speechManager.stopCurrentAudio()
                 }
-                .allowsHitTesting(!speechManager.isPlaying)
-                .opacity(speechManager.isPlaying ? 0.85 : 1.0)
+                .allowsHitTesting(!blocksReptileSelection)
+                .opacity(blocksReptileSelection ? 0.85 : 1.0)
                 .overlay(alignment: .topTrailing) {
                     if plant != nil, !isGameComplete {
                         Button {
@@ -171,6 +177,8 @@ struct MarineFloraGameView: View {
                                 .background(Circle().fill(Color.blue))
                                 .frame(width: 72, height: 72)
                         }
+                        .disabled(blocksReptileSelection)
+                        .opacity(blocksReptileSelection ? 0.45 : 1.0)
                         .padding(.top, 8)
                         .padding(.trailing, 16)
                     }
@@ -284,7 +292,7 @@ struct MarineFloraGameView: View {
     }
 
     private func handleTap(creature: Dinosaur) {
-        guard !speechManager.isPlaying, let p = plant else { return }
+        guard reptileSelectionEnabled, !speechManager.isPlaying, let p = plant else { return }
         let isCorrect = marineFloraFitsPlant(creature, p)
         if isCorrect {
             if matchedIds.contains(creature.id) { return }
@@ -371,6 +379,7 @@ struct MarineFloraGameView: View {
         plant = nextPlant
         usedFormationSlugs.insert(nextPlant.formation)
         buildSlotsForRound(using: &rng)
+        reptileSelectionEnabled = false
         playPlantIntroThenWhichThreeMarineReptiles()
     }
 
@@ -425,6 +434,7 @@ struct MarineFloraGameView: View {
         if next >= 5 {
             introWalkIndex = nil
             displayedCreatureName = nil
+            reptileSelectionEnabled = true
             return
         }
         introWalkIndex = next
@@ -449,6 +459,7 @@ struct MarineFloraGameView: View {
         endSequenceStep = -1
         endHighlightIndex = 0
         buildSlotsForRound(using: &rng)
+        reptileSelectionEnabled = false
         playPlantIntroThenWhichThreeMarineReptiles()
     }
 

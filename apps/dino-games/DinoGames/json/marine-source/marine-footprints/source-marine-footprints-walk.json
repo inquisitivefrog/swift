@@ -1,0 +1,17 @@
+{
+    "asset_manifest": {
+      "id": "marine_thalattosuchian_track_01",
+      "project": "MarineFootprints",
+      "clade": "thalattosuchian",
+      "character_ref": "dino_bones_paleontologist_1",
+      "formation_ref": "SOLNHOFEN",
+      "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "tech_ref": "SQUARE_ASPECT_RATIO",
+      "pose": "dino_bones_paleontologist_1 (adult female, long blonde hair, white sun hat, khaki safari vest, pink hiking boots) stands over a shallow limestone bedding plane, holding a magnifying glass down toward a sequence of sharp, curved claw drags left on a prehistoric tidal flat.",
+      "visual_notes": {
+        "ichnology": "The trackway consists of alternating, narrow crocodylomorph paddle-sweeps and crisp, multi-toed claw scuffs. It features sharp, sunken negative impressions showing distinctive four-clawed patterns with thin sediment displacement ridges along the edges.",
+        "ground": "Cream white and ivory platy limestone nodules with fine white sand patches, completely devoid of grass."
+      }
+    }
+  }

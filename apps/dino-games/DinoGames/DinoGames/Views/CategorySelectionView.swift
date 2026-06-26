@@ -80,6 +80,9 @@ private enum CategoryNavRoute: Hashable {
 }
 
 struct CategorySelectionView: View {
+    /// When true, skip the spoken cover walk (returning players / UI tests).
+    var skipLaunchCoverSequence: Bool = false
+
     @State private var navigationPath: [CategoryNavRoute] = []
     @State private var selectedRoot: RootGameType?
     @State private var speechManager = SpeechManager()
@@ -89,6 +92,7 @@ struct CategorySelectionView: View {
     @State private var coverSequenceComplete = false
     @State private var hasStartedCoverSequence = false
     @State private var didAttemptResumeSession = false
+    @State private var didRunLaunchCoverSequence = false
     /// Blocks genre taps while the spoken title plays and navigation pushes to the level picker.
     @State private var categoryNavigationLocked = false
 
@@ -126,14 +130,8 @@ struct CategorySelectionView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                if CategoryPlaySession.shouldSkipLaunchIntros || UITestConfiguration.skipSplash {
-                    skipCoverSequenceForReturningPlayer()
-                } else if !hasStartedCoverSequence {
-                    hasStartedCoverSequence = true
-                    startCoverSequence()
-                }
-                resumeGuidedSessionIfNeeded()
+            .task {
+                await runLaunchCoverSequenceIfNeeded()
             }
             .onDisappear {
                 speechManager.stopCurrentAudio()
@@ -152,7 +150,25 @@ struct CategorySelectionView: View {
         }
     }
 
-    /// Welcome → Dinosaurs → Pterosaurs → Sea (marine), then allow taps.
+    /// Choose a game type → Dinosaurs → Pterosaurs → Sea (marine), then allow taps.
+    /// Welcome plays on the cover splash (`SplashScreenView`) before this screen appears.
+    @MainActor
+    private func runLaunchCoverSequenceIfNeeded() async {
+        guard !didRunLaunchCoverSequence else { return }
+        didRunLaunchCoverSequence = true
+        resumeGuidedSessionIfNeeded()
+
+        if skipLaunchCoverSequence {
+            skipCoverSequenceForReturningPlayer()
+            return
+        }
+        guard !hasStartedCoverSequence else { return }
+        hasStartedCoverSequence = true
+        try? await Task.sleep(for: .milliseconds(200))
+        guard !Task.isCancelled else { return }
+        startCoverSequence()
+    }
+
     private func skipCoverSequenceForReturningPlayer() {
         hasStartedCoverSequence = true
         coverSequenceComplete = true

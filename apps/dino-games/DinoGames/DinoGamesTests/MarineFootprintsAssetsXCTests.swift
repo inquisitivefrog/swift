@@ -24,11 +24,22 @@ final class MarineFootprintsAssetsXCTests: XCTestCase {
         "game-hint",
     ]
 
-    private let cladeHintAudioKeys: [String] = [
-        "marine-clade-thalattosuchia",
-        "marine-clade-nothosaur",
-        "marine-clade-mosasaur",
-        "marine-clade-testudine",
+    private let footprintHintAudioKeys: [String] = [
+        "marine-footprints-walk",
+        "marine-footprints-punt",
+        "marine-footprints-swim",
+        "marine-footprints-drag",
+    ]
+
+    private let footprintHintAudioOnDiskStems: [String] = [
+        "walk", "punt", "swim", "drag",
+    ]
+
+    private let sourceFootprintHintImagesets: [String] = [
+        "source-marine-footprints-walk",
+        "source-marine-footprints-punt",
+        "source-marine-footprints-swim",
+        "source-marine-footprints-drag",
     ]
 
     func testMarineFootprintsRegistryMatchesMechanics() {
@@ -42,6 +53,25 @@ final class MarineFootprintsAssetsXCTests: XCTestCase {
                 slot.imageBaseName,
                 "marine-footprints-\(expected.locomotion)-\(expected.cladeAssetSlug)"
             )
+            XCTAssertEqual(slot.hintAudioKey, "marine-footprints-\(expected.locomotion)")
+            XCTAssertEqual(slot.hintImageName, "source-marine-footprints-\(expected.locomotion)")
+        }
+    }
+
+    func testMarineFootprintsSourceHintImagesetsExistInCatalog() {
+        let known = ImageAssetNames.knownAssets
+        for name in sourceFootprintHintImagesets {
+            XCTAssertTrue(
+                known.contains(name),
+                "Missing Source Marine Footprints hint imageset: \(name)"
+            )
+        }
+    }
+
+    func testMarineFootprintsShippedHintSlotsMatchSourceArt() {
+        XCTAssertEqual(MarineFootprintsMechanics.shippedHintSlots.count, 4)
+        for slot in MarineFootprintsMechanics.shippedHintSlots {
+            XCTAssertTrue(ImageAssetNames.knownAssets.contains(slot.hintImageName))
         }
     }
 
@@ -118,10 +148,19 @@ final class MarineFootprintsAssetsXCTests: XCTestCase {
         XCTAssertTrue(missing.isEmpty, "Missing Marine Footprints gameplay audio keys: \(missing)")
     }
 
+    func testMarineFootprintsHintAudioFilesExistOnDisk() throws {
+        let directory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Marine-Footprints")
+        XCTAssertTrue(TestBundleHelpers.directoryExists(directory), "Missing directory: \(directory.path)")
+        let stems = try TestBundleHelpers.audioStems(in: directory)
+        let expected = Set(footprintHintAudioOnDiskStems.map { $0.lowercased() })
+        let missing = expected.subtracting(stems).sorted()
+        XCTAssertTrue(missing.isEmpty, "Missing Marine Footprints hint audio: \(missing)")
+    }
+
     @MainActor
-    func testMarineFootprintsCladeHintAudioKeysResolveInBundle() {
+    func testMarineFootprintsHintAudioKeysResolveInBundle() {
         let speech = SpeechManager()
-        let missing = cladeHintAudioKeys.filter { speech.urlForAudio(key: $0) == nil }
-        XCTAssertTrue(missing.isEmpty, "Missing Marine Footprints clade hint audio: \(missing)")
+        let missing = footprintHintAudioKeys.filter { speech.urlForAudio(key: $0) == nil }
+        XCTAssertTrue(missing.isEmpty, "Missing Marine Footprints hint audio keys: \(missing)")
     }
 }

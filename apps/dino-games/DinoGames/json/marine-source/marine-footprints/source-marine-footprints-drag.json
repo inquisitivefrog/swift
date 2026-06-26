@@ -1,0 +1,17 @@
+{
+    "asset_manifest": {
+      "id": "marine_testudine_track_01",
+      "project": "MarineFootprints",
+      "clade": "testudine",
+      "character_ref": "dino_bones_paleontologist_4",
+      "formation_ref": "SANTANA_ROMUALDO",
+      "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "tech_ref": "SQUARE_ASPECT_RATIO",
+      "pose": "dino_bones_paleontologist_4 (adult male, Latino, short brown hair, black aviator glasses, khaki shorts) is crouched on his knees over a slab of iron-rich clay, using an air-bulb blower to remove fine silt from a symmetrical, paired trackway.",
+      "visual_notes": {
+        "ichnology": "A highly symmetrical parallel trackway left by a marine turtle. It displays synchronized, paired flipper scrapes (manus) on the left and right sides, accompanied by a continuous, thin, straight central tail-drag line carved deeply into the center.",
+        "ground": "Variegated reddish-brown mud and iron-oxide red laminated limestone with nearby shallow turquoise pools."
+      }
+    }
+  }

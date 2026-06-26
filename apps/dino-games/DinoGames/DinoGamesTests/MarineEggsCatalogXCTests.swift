@@ -106,4 +106,22 @@ final class MarineEggsCatalogXCTests: XCTestCase {
             XCTAssertTrue(ImageAssetNames.knownAssets.contains(round.fixedMainImageAssetName!))
         }
     }
+
+    func testMarineEggsSourceHintAssetsAndAudioExist() throws {
+        XCTAssertTrue(MarineEggMorphology.settings.hasSourceHints)
+        XCTAssertEqual(MarineEggMorphology.sourceHints.count, 1)
+        let hint = MarineEggMorphology.sourceHints[0]
+        XCTAssertEqual(hint.imageName, "source-marine-eggs-shape")
+        XCTAssertEqual(hint.audioKey, "marine-eggs-shape")
+        XCTAssertTrue(ImageAssetNames.knownAssets.contains(hint.imageName))
+
+        let directory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Marine-Eggs/hints")
+        let stems = try TestBundleHelpers.audioStems(in: directory)
+        XCTAssertTrue(stems.contains("marine-eggs-shape"))
+    }
+
+    @MainActor
+    func testMarineEggsSourceHintAudioResolvesInBundle() {
+        XCTAssertNotNil(SpeechManager().urlForAudio(key: "marine-eggs-shape"))
+    }
 }

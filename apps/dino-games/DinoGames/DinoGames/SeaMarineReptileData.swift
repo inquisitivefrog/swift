@@ -154,7 +154,7 @@ enum SeaMarineReptileData {
         "globidens", "carinodens", "placodus", "gavialimimus", "khinjaria", "pannoniasaurus",
     ]
     private static let herbivoreSlugs: Set<String> = [
-        "archelon", "protostega", "mesosaurus", "hupehsuchus", "attenborosaurus",
+        "archelon", "protostega", "mesosaurus", "hupehsuchus", "attenborosaurus", "henodus",
     ]
     private static let teuthivoreSlugs: Set<String> = [
         "temnodontosaurus", "ophthalmosaurus", "eurhinosaurus", "platypterygius", "grendelius",

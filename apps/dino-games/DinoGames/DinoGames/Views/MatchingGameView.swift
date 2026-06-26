@@ -83,6 +83,14 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             }
             return nil
         }
+        if normalized.hasPrefix("marine-footprints-") {
+            let locomotion = String(normalized.dropFirst("marine-footprints-".count))
+            if let url = resolveURL(forPath: "Marine-Footprints/\(locomotion)") { return url }
+            if let legacyPath = audioFilePath(for: key) {
+                return resolveURL(forPath: legacyPath)
+            }
+            return nil
+        }
         if normalized.hasPrefix("ptero-clade-") {
             let slug = String(normalized.dropFirst("ptero-clade-".count))
             let preferredPath = "Pterosaur-Clades/clade-\(slug)"
@@ -201,6 +209,9 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         }
         if normalized.hasPrefix("game-marine-eggs") {
             if let url = resolveURL(forPath: "Games/\(normalized)") { return url }
+        }
+        if normalized == "marine-eggs-shape" {
+            if let url = resolveURL(forPath: "Marine-Eggs/hints/marine-eggs-shape") { return url }
         }
         if normalized == "marine-eggs" {
             if let url = resolveURL(forPath: "Games/game-marine-eggs") { return url }

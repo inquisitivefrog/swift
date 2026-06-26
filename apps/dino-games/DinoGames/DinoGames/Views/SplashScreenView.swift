@@ -15,7 +15,9 @@ struct SplashScreenView: View {
     var body: some View {
         Group {
             if showMainApp {
-                CategorySelectionView()
+                CategorySelectionView(
+                    skipLaunchCoverSequence: CategoryPlaySession.shouldSkipLaunchIntros || UITestConfiguration.skipSplash
+                )
             } else {
                 NavigationStack {
                     ZStack {
@@ -76,14 +78,24 @@ struct SplashScreenView: View {
                     }
                     .onAppear {
                         let skipIntros = CategoryPlaySession.shouldSkipLaunchIntros || UITestConfiguration.skipSplash
-                        if !skipIntros {
-                            speechManager.speak("cover-welcome-to-dino-games")
-                        }
-                        let delay = skipIntros ? 0.8 : 3.5
-                        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
-                            withAnimation {
-                                showMainApp = true
+                        if skipIntros {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                withAnimation { showMainApp = true }
                             }
+                            return
+                        }
+                        speechManager.onAudioFinished = {
+                            speechManager.onAudioFinished = nil
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                                withAnimation { showMainApp = true }
+                            }
+                        }
+                        speechManager.speak("cover-welcome-to-dino-games")
+                        // Safety: never block launch if welcome audio fails to finish.
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
+                            guard !showMainApp else { return }
+                            speechManager.onAudioFinished = nil
+                            withAnimation { showMainApp = true }
                         }
                     }
                 }

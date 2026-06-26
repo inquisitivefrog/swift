@@ -1406,6 +1406,15 @@ struct RacingGameView: View {
         return VStack(spacing: 8) {
             Text("Race!")
                 .font(.headline)
+            speedClockView(
+                racer1: racer1,
+                racer2: racer2,
+                raceElapsedSeconds: raceElapsedSeconds,
+                finishTime1: finishTime1,
+                finishTime2: finishTime2,
+                maxWidth: trackWidth
+            )
+            .frame(maxWidth: .infinity, alignment: .leading)
             marineRacewayZStack(
                 trackWidth: trackWidth,
                 trackHeight: trackHeight,
@@ -1423,9 +1432,6 @@ struct RacingGameView: View {
                         .offset(x: pos2.x - half + off2.width, y: pos2.y - half + off2.height)
                     refereeImageViewSmall(startRefereeImageName(prefix: config.assetPrefix), size: refereeSize)
                         .offset(x: trackWidth / 2 - refereeSize / 2, y: trackHeight / 2 - refereeSize / 2)
-                    speedClockView(racer1: racer1, racer2: racer2, raceElapsedSeconds: raceElapsedSeconds, finishTime1: finishTime1, finishTime2: finishTime2)
-                        .frame(width: trackWidth, height: trackHeight, alignment: .topLeading)
-                        .offset(x: -trackWidth * 0.32, y: -trackHeight * 0.28)
                 }
             )
         }
@@ -1604,6 +1610,15 @@ struct RacingGameView: View {
         return VStack(spacing: 8) {
             Text("Race!")
                 .font(.headline)
+            speedClockView(
+                racer1: racer1,
+                racer2: racer2,
+                raceElapsedSeconds: raceElapsedSeconds,
+                finishTime1: finishTime1,
+                finishTime2: finishTime2,
+                maxWidth: trackWidth
+            )
+            .frame(maxWidth: .infinity, alignment: .leading)
             ZStack(alignment: .topLeading) {
                 AirportCourseWaterBackground(width: trackWidth, height: trackHeight)
                 outerPath
@@ -1681,9 +1696,6 @@ struct RacingGameView: View {
                     .offset(x: pos2.x - half + stagger2.width, y: pos2.y - half + stagger2.height)
                 refereeImageViewSmall(refereeImageName, size: refereeSize)
                     .offset(x: refereeX, y: refereeY)
-                speedClockView(racer1: racer1, racer2: racer2, raceElapsedSeconds: raceElapsedSeconds, finishTime1: finishTime1, finishTime2: finishTime2)
-                    .frame(width: trackWidth, height: trackHeight, alignment: .topLeading)
-                    .offset(x: -trackWidth * 0.32, y: -trackHeight * 0.28)
             }
             .frame(width: trackWidth, height: trackHeight)
         }
@@ -1824,6 +1836,15 @@ struct RacingGameView: View {
         return VStack(spacing: 8) {
             Text("Race!")
                 .font(.headline)
+            speedClockView(
+                racer1: racer1,
+                racer2: racer2,
+                raceElapsedSeconds: raceElapsedSeconds,
+                finishTime1: finishTime1,
+                finishTime2: finishTime2,
+                maxWidth: ovalWidth
+            )
+            .frame(maxWidth: .infinity, alignment: .leading)
             ZStack(alignment: .topLeading) {
                 outerPath
                     .stroke(Color.gray.opacity(0.5), lineWidth: 6)
@@ -1849,8 +1870,6 @@ struct RacingGameView: View {
                 // Referee off the track, at lower bottom of infield near the track edge—close to racers to detect cheating, not blocking or in their path
                 refereeImageViewSmall(startRefereeImageName(prefix: config.assetPrefix), size: refereeSize)
                     .offset(x: ovalWidth / 2 - refereeSize / 2, y: trackInset + innerH - refereeSize - 16)
-                speedClockView(racer1: racer1, racer2: racer2, raceElapsedSeconds: raceElapsedSeconds, finishTime1: finishTime1, finishTime2: finishTime2)
-                    .frame(width: ovalWidth, height: ovalHeight)
             }
             .frame(width: ovalWidth, height: ovalHeight)
         }
@@ -1871,22 +1890,48 @@ struct RacingGameView: View {
 
     private func nameLength(_ name: String) -> Int { name.count }
 
-    private func speedClockView(racer1: RacingRacer, racer2: RacingRacer, raceElapsedSeconds: Int, finishTime1: Int?, finishTime2: Int?) -> some View {
+    private func racingNameFontSize(_ name: String) -> CGFloat {
+        switch name.count {
+        case ...8: return 18
+        case ...12: return 16
+        case ...16: return 14
+        default: return 12
+        }
+    }
+
+    private func speedClockView(
+        racer1: RacingRacer,
+        racer2: RacingRacer,
+        raceElapsedSeconds: Int,
+        finishTime1: Int?,
+        finishTime2: Int?,
+        maxWidth: CGFloat
+    ) -> some View {
         let t1 = finishTime1 ?? raceElapsedSeconds
         let t2 = finishTime2 ?? raceElapsedSeconds
         let maxSpeed = max(racer1.speed, racer2.speed)
         func format(_ sec: Int) -> String { String(format: "%d:%02d", sec / 60, sec % 60) }
-        return VStack(spacing: 4) {
-            Text("\(racer1.name): \(format(t1))")
-                .font(.system(size: nameLength(racer1.name) > 10 ? 14 : 18, weight: .semibold, design: .monospaced))
-                .foregroundColor(.primary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-            Text("\(racer2.name): \(format(t2))")
-                .font(.system(size: nameLength(racer2.name) > 10 ? 14 : 18, weight: .semibold, design: .monospaced))
-                .foregroundColor(.primary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
+
+        func racerRow(_ racer: RacingRacer, seconds: Int) -> some View {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Text(racer.name)
+                    .font(.system(size: racingNameFontSize(racer.name), weight: .semibold))
+                    .foregroundColor(.primary)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.75)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: max(120, maxWidth * 0.68), alignment: .leading)
+                Spacer(minLength: 4)
+                Text(format(seconds))
+                    .font(.system(size: 16, weight: .semibold, design: .monospaced))
+                    .foregroundColor(.primary)
+                    .layoutPriority(1)
+            }
+        }
+
+        return VStack(alignment: .leading, spacing: 4) {
+            racerRow(racer1, seconds: t1)
+            racerRow(racer2, seconds: t2)
             Text("\(formatSpeed(displayedSpeed(racer: racer1, finishTime: finishTime1, maxSpeed: maxSpeed))) / \(formatSpeed(displayedSpeed(racer: racer2, finishTime: finishTime2, maxSpeed: maxSpeed))) mph")
                 .font(.caption)
                 .foregroundColor(.secondary)
@@ -1894,7 +1939,7 @@ struct RacingGameView: View {
         .padding(10)
         .background(Color.black.opacity(0.15))
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: maxWidth, alignment: .leading)
     }
 
     private func racerView(racer: RacingRacer, size: CGFloat, pose: RacingPose = .start) -> some View {

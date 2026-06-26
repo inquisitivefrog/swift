@@ -1125,18 +1125,17 @@ private struct SourceMarineFootprintSlotHint: Identifiable {
     let id: String
     let imageName: String
     let displayName: String
-    /// `SpeechManager` key → `Marine-Reptile-Clades/clade-*.m4a`
+    /// `SpeechManager` key → `Marine-Footprints/{locomotion}.m4a`
     let audioKey: String
 }
 
 private var sourceMarineFootprintsHintSlots: [SourceMarineFootprintSlotHint] {
-    MarineFootprintsMechanics.shippedSlots.compactMap { slot in
-        guard let imageName = MarineFootprintsMechanics.bundledImageNames(for: slot).first else { return nil }
-        return SourceMarineFootprintSlotHint(
-            id: slot.slotKey,
-            imageName: imageName,
-            displayName: slot.displayName,
-            audioKey: slot.audioKey
+    MarineFootprintsMechanics.shippedHintSlots.map { slot in
+        SourceMarineFootprintSlotHint(
+            id: slot.locomotion,
+            imageName: slot.hintImageName,
+            displayName: slot.hintDisplayName,
+            audioKey: slot.hintAudioKey
         )
     }
 }
@@ -1265,10 +1264,12 @@ enum MarineFootprintsMechanics {
         var slotKey: String { "\(locomotion)|\(marineGroupRaw)" }
         /// Base stem before optional `-v1`…`-v4` variant suffix.
         var imageBaseName: String { "marine-footprints-\(locomotion)-\(cladeAssetSlug)" }
+        /// Source reference art for the hints grid (`source-marine-footprints-{locomotion}`).
+        var hintImageName: String { "source-marine-footprints-\(locomotion)" }
+        var hintDisplayName: String { locomotion.prefix(1).uppercased() + locomotion.dropFirst() }
         var displayName: String { SeaMarineReptileData.displayTitleForMarineGroup(marineGroupRaw) }
-        var audioKey: String {
-            "marine-clade-\(SeaMarineReptileData.audioSlugForMarineGroupRaw(marineGroupRaw))"
-        }
+        /// Hint tile narration: `marine-footprints-{locomotion}` → `Audio/Marine-Footprints/{locomotion}.m4a`.
+        var hintAudioKey: String { "marine-footprints-\(locomotion)" }
     }
 
     /// All `(locomotion, clade)` pairs the game knows about; grows as new imagesets ship.
@@ -1296,6 +1297,11 @@ enum MarineFootprintsMechanics {
 
     static var shippedSlots: [SlotDefinition] {
         registry.filter { !bundledImageNames(for: $0).isEmpty }
+    }
+
+    /// Locomotion slots with bundled source hint art (`source-marine-footprints-*`).
+    static var shippedHintSlots: [SlotDefinition] {
+        registry.filter { ImageAssetCache.imageExists(named: $0.hintImageName) }
     }
 
     static var isPlayable: Bool {

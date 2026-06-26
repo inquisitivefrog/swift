@@ -1,0 +1,17 @@
+{
+    "asset_manifest": {
+      "id": "marine_nothosaur_track_01",
+      "project": "MarineFootprints",
+      "clade": "nothosaur",
+      "character_ref": "dino_bones_paleontologist_5",
+      "formation_ref": "POSEIDON_SHALE",
+      "habitat_ref": "PELAGIC_SHELF_SEA",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "tech_ref": "SQUARE_ASPECT_RATIO",
+      "pose": "dino_bones_paleontologist_5 (adult female, Asian, short black hair, light red tee shirt under a safari vest) shines a portable grid-light across a dark mudstone slab to emphasize a series of webbed, five-toed footprints.",
+      "visual_notes": {
+        "ichnology": "A distinct crawling trackway featuring semi-plantigrade rear footprints (pes) with five clear, slender digit impressions showing webbed outlines. The skin impressions between digits are subtly preserved as low-relief textures inside the sunken cavities.",
+        "ground": "Flat, dark-grey abyssal shale floor mixed with jet-black organic debris and scattered ammonite shells."
+      }
+    }
+  }

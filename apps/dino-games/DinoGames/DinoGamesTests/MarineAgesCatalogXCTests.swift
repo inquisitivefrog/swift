@@ -32,6 +32,8 @@ final class MarineAgesCatalogXCTests: XCTestCase {
         for name in [
             "marine-ages-jurassic",
             "marine-ages-cretaceous",
+            "source-marine-ages-jurassic",
+            "source-marine-ages-cretaceous",
             "game-marine-ages",
             "game-marine-ages-success",
         ] {

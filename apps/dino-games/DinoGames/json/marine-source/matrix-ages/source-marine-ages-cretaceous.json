@@ -1,0 +1,12 @@
+{
+    "id": "period_cretaceous_marine_reptile_clades_manifest",
+    "species": "Multiple (Mosasauridae, Elasmosauridae, Polycotylidae, Protostegidae)",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MUWAQQAR_CHALK",
+    "pose": "An expansive underwater landscape composition showcasing a diverse Cretaceous marine reptile ecosystem arrayed along a bright Tethys coastal margin. In the immediate foreground, a massive, apex mosasaur (Tylosaurus) cruises powerfully forward, showing off its long, robust body, powerful paddle flippers, and a deep, vertical tail fin in a commanding three-quarter profile. On the opposite side of the foreground, a giant marine turtle (Protostega) paddles leisurely over the white chalky seabed, its wide leather-back shell sharply defined. Along the sun-drenched midground, an ultra-long-necked elasmosaurid plesiosaur bends its serpentine neck to snatch a prehistoric fish near a school of smaller, fast-swimming polycotylids. Anchoring the deep background, the soft, distant silhouettes of giant sea turtles and hunting mosasaurs fade into the clear turquoise and deep sea blue marine horizon under an intense, high-key tropical sky reflecting off the ocean surface.",
+    "visual_notes": {
+      "flora_fauna": "Fine white chalk sediment beds, grey-marl pebble shelves, and distant patches of marine macroalgae.",
+      "lighting": "Brilliant, intense sunlight fully exposing the shallow water zone, casting moving caustic networks and sharp shadows across the chalk floor."
+    }
+  }

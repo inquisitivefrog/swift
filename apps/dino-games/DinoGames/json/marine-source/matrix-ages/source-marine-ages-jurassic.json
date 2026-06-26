@@ -1,0 +1,12 @@
+{
+    "id": "period_jurassic_marine_reptile_clades_manifest",
+    "species": "Multiple (Ichthyosauridae, Plesiosauridae, Metriorhynchidae, Pliosauridae)",
+    "tech_ref": "DEFAULT_SQUARE",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "POSEIDON_SHALE",
+    "pose": "An expansive underwater landscape composition showcasing a diverse Jurassic marine reptile ecosystem arrayed across a sunlit pelagic shelf sea. In the immediate foreground, a streamlined ichthyosaur (Stenopterygius) glides gracefully through the blue water, its large eye catching the sunlight and its dolphin-like tail fin beating smoothly in a three-quarter profile. On the opposite side of the foreground, a classic long-necked plesiosaur arches its neck elegantly, using its four large flippers to hover above the dark-grey shale floor. Along the vibrant midground, a crocodilian-like marine thalattosuchian (Metriorhynchus) actively pursues a school of fish, its armored skin and paddle-like limbs cutting through the water. Anchoring the deep background, the massive, imposing silhouette of an apex pliosaur cruises effortlessly through the open, deep-blue water column, casting a powerful sense of primeval scale beneath a canopy of shimmering overhead light rays.",
+    "visual_notes": {
+      "flora_fauna": "Scattered ammonite shells resting on the flat shale floor, with schools of fast-moving cephalopods in the water column.",
+      "lighting": "Shimmering, high-contrast aquatic light filtering down from the ocean surface, illuminating floating organic matter and highlighting the distinct body shapes."
+    }
+  }

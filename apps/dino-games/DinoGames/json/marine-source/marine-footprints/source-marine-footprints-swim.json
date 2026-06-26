@@ -1,0 +1,17 @@
+{
+    "asset_manifest": {
+      "id": "marine_mosasaur_track_01",
+      "project": "MarineFootprints",
+      "clade": "mosasaur",
+      "character_ref": "dino_bones_paleontologist_2",
+      "formation_ref": "MUWAQQAR_CHALK",
+      "habitat_ref": "TETHYS_COASTAL_MARGIN",
+      "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+      "tech_ref": "SQUARE_ASPECT_RATIO",
+      "pose": "dino_bones_paleontologist_2 (adult female, short black hair, green sun hat, khaki safari vest, green skirt) bends low near a receding waterline, placing a bright yellow metric scale bar next to a wide, blurred flipper depression.",
+      "visual_notes": {
+        "ichnology": "An broad, shallow, fan-shaped impression representing a massive flipper drag in soft sediment. The track exhibits a faint, wide central axis with five blurred digit channels, appearing as a smooth sunken depression flanked by subtle, asymmetrical mud pillows.",
+        "ground": "Soft white chalk dust and grey-marl pebbles transitioning into clear, deep sea blue shallow water margins."
+      }
+    }
+  }

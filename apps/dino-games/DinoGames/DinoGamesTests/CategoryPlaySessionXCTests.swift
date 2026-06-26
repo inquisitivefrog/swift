@@ -53,4 +53,12 @@ final class CategoryPlaySessionXCTests: XCTestCase {
         )
         XCTAssertFalse(CategoryPlaySession.shouldSkipGuidedLevelIntro(for: .air))
     }
+
+    @MainActor
+    func testCoverWelcomeAudioResolvesInBundle() {
+        XCTAssertNotNil(
+            SpeechManager().urlForAudio(key: "cover-welcome-to-dino-games"),
+            "Landing page welcome clip should resolve from Audio/Cover/cover-welcome-to-dino-games.m4a"
+        )
+    }
 }
