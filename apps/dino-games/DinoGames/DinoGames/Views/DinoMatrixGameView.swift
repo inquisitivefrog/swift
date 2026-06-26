@@ -697,7 +697,7 @@ struct DinoMatrixGameConfigs {
     ]
 
     private static let dinoSourceHints: [MatrixSourceHint] = [
-        MatrixSourceHint(id: "material", imageName: "source-dino-matrix-material", displayName: "Material", audioKey: "game-dino-matrix-material"),
+        MatrixSourceHint(id: "materials", imageName: "source-dino-matrix-materials", displayName: "Materials", audioKey: "game-dino-matrix-material"),
         MatrixSourceHint(id: "color", imageName: "source-dino-matrix-color", displayName: "Color", audioKey: "game-dino-matrix-color"),
     ]
 

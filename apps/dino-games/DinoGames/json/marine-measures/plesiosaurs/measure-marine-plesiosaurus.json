@@ -1,0 +1,15 @@
+[
+  {
+    "id": "char_plesiosaurus_v3_PROFILE",
+    "species": "Plesiosaurus",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "formation_ref": "BLUE_LIAS",
+    "visual_identity": {
+      "pattern_strategy": "Dappled 'Fawn-like' spots in pale lavender-grey across the back; no counter-shading, running uniformly across its horizontal lateral flank.",
+      "integument": "Soft, dolphin-like skin with high specular highlights, mapped cleanly along its horizontal profile.",
+      "facial_silhouette": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The tiny, delicate head is oriented perfectly to face laterally, with its bird-like beady eye and needle-thin teeth aligned parallel to the camera plane."
+    },
+    "pose": "The classic plesiosaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original extreme S-curve neck pose and forward camera-facing gaze are unrolled and stabilized into a flat, level, straight cruising path, extending its delicate head, long neck, compact torso, flippers (flattened toward the camera plane), and tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

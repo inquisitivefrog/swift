@@ -152,6 +152,11 @@ enum PteroSmileMorphology {
         playerKindByToothSlug[toothSlug]
     }
 
+    static func playerKind(for dinosaur: Dinosaur) -> PteroSmilePlayerToothKind? {
+        guard let toothSlug = smileToothType(for: dinosaur) else { return nil }
+        return playerKind(for: toothSlug)
+    }
+
     /// Pre-reader label for narration fallback and on-screen text (e.g. "Fang", not "Crested Terminal Spikes").
     static func playerLabel(for toothSlug: String) -> String {
         playerKind(for: toothSlug)?.displayLabel ?? "Tooth"

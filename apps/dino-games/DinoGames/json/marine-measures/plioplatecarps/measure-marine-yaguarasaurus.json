@@ -1,0 +1,20 @@
+[
+  {
+    "id": "GAME_CARD_YAGUARA_3D_046_PROFILE",
+    "species": "Yaguarasaurus columbianus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "VACA_MUERTA",
+    "habitat_ref": "COASTAL_LOWLANDS",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Sleek 'Sandy Gold' skin with 'Olive' lateral stripes, mimicking tiger shark patterns, mapped uniformly across its horizontal lateral flank.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. Hero focus remains on the elongated, slender skull and the lizard-like neck oriented parallel to the camera plane.",
+      "environment": {
+        "water": "Warm, silt-rich coastal water with 'River-Silt Brown' particulates, balanced to keep the lateral outline completely measurable.",
+        "biota": "The submerged tree roots and large prehistoric turtles are shifted entirely into the distant background layers to preserve a sharp, unobstructed silhouette line."
+      }
+    },
+    "pose": "The primitive tethysaurine mosasaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original tight curling pose is unrolled and stabilized into a flat, level, straight cruising path, extending its slender skull, flexible torso, limbs, and long tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

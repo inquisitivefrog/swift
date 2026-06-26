@@ -164,12 +164,16 @@ struct EggsGameSettings {
     let playsTapScannerPrompt: Bool
     /// Pre-reader play: hide creature names under portrait cards.
     let showsCreatureNameOnCards: Bool
-    /// When true (Marine Eggs), victory walk plays the matched creature’s `imageName` audio; row labels still use the egg morphotype title.
+    /// When true (Marine / Ptero Eggs), victory walk plays the matched creature’s `imageName` audio instead of egg morphotype clips.
     let victoryRecapUsesCreatureName: Bool
+    /// When true (Ptero Eggs), victory recap row labels use the matched creature name instead of egg/clade morphotype titles.
+    let victoryRecapLabelUsesCreatureName: Bool
     /// Source hints overlay (Dino Eggs: shape + color). nil = no hints button.
     let sourceHints: [EggsSourceHint]?
     let sourceHintsTitle: String
     let sourceHintsGridIntroAudioKey: String?
+    /// When true (Ptero Eggs), round intro plays `game-hint` before tap-scanner / creature walk.
+    let playsHintsButtonIntro: Bool
     let onVictoryComplete: (String) -> Void
 
     var usesCompactRoundIntro: Bool { roundIntroNestAudioKey != nil }
@@ -179,6 +183,7 @@ struct EggsGameSettings {
 /// Ordered steps for the per-round intro audio walk.
 private enum EggsIntroWalkStep {
     case gameplayDirections
+    case hintsButton
     case eggTypeAudio
     case nestAudio
     case tapScanner
@@ -307,6 +312,9 @@ struct EggsGameView: View {
             if settings.playsEggNestNameIntro {
                 steps.append(.creatureName(index: 0))
             }
+            if settings.playsHintsButtonIntro {
+                steps.append(.hintsButton)
+            }
             if settings.playsTapScannerPrompt {
                 steps.append(.tapScanner)
             }
@@ -316,6 +324,9 @@ struct EggsGameView: View {
             if settings.playsEggNestNameIntro, settings.roundIntroNestAudioKey != nil {
                 steps.append(.nestAudio)
             }
+            if settings.playsHintsButtonIntro {
+                steps.append(.hintsButton)
+            }
             if settings.playsTapScannerPrompt {
                 steps.append(.tapScanner)
             }
@@ -324,6 +335,9 @@ struct EggsGameView: View {
         if settings.playsEggNestNameIntro {
             steps.append(.eggTypeAudio)
             steps.append(.nestAudio)
+        }
+        if settings.playsHintsButtonIntro {
+            steps.append(.hintsButton)
         }
         if settings.playsTapScannerPrompt {
             steps.append(.tapScanner)
@@ -755,6 +769,12 @@ struct EggsGameView: View {
         switch step {
         case .gameplayDirections:
             advanceIntroWalk()
+        case .hintsButton:
+            if let url = speechManager.urlForAudio(key: "game-hint") {
+                speechManager.playAudioFile(url: url)
+            } else {
+                advanceIntroWalk()
+            }
         case .eggTypeAudio:
             guard let eggType else { advanceIntroWalk(); return }
             speechManager.speak(audioKey: morphology.eggAudioKey(eggType: eggType), fallbackText: "")
@@ -859,7 +879,12 @@ struct EggsGameView: View {
 
         if let egg = eggType {
             let creature = currentRoundConfig?.correctCreature
-            let displayTitle = morphology.eggDisplayTitle(for: egg)
+            let displayTitle: String
+            if gameConfig.settings.victoryRecapLabelUsesCreatureName, let creature {
+                displayTitle = creature.name
+            } else {
+                displayTitle = morphology.eggDisplayTitle(for: egg)
+            }
             let audioKey: String
             if gameConfig.settings.victoryRecapUsesCreatureName, let creature {
                 audioKey = creature.imageName ?? creature.name

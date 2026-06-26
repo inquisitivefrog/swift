@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ui_element_marine_measuring_tape_265x22_meters",
+    "asset_type": "UI_ENVIRONMENT_DECORATION",
+    "tech_ref": "CUSTOM_HORIZONTAL_RIBBON",
+    "target_resolution": "265x22",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "MUWAQQAR_CHALK",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "subject": "A rugged, heavy-duty flexible surveyor's measuring tape ribbon submersed horizontally in seawater.",
+      "composition": "The yellow tape ribbon spans completely flat from the left frame boundary to the right, filling the entire 22px height with clean horizontal lines. It features subtle dimensional thickness and rounded 3D edges to look like a physical object in the scene layer.",
+      "markings": "Optimized for macro-scale length comparison. Bold black tick marks denote major increments with large, highly legible black and red digits running sequentially from '0m' on the left up to '22m' on the far right. Standard fractional centimeter lines are omitted entirely to maintain clean, sharp contrast at a tiny pixel height.",
+      "environment": {
+        "water": "Clear turquoise water matching the high-visibility Tethys Coastal Margin context. Microscopic organic sea drift and tiny sunlit micro-bubbles sit tightly behind the ribbon to ground it underwater.",
+        "lighting": "Bright sunlight filters vertically down through the water column, creating sharp, vertical 'god-ray' highlights that rake across the yellow tape surface, giving it an authentic cinematic shimmer without obstructing the meter numbers."
+      }
+    }
+  }
+]

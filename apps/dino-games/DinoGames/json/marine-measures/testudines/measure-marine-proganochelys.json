@@ -1,0 +1,21 @@
+[
+  {
+    "id": "GAME_CARD_PROGANO_3D_022_PROFILE",
+    "species": "Proganochelys quenstedti",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "SOLNHOFEN",
+    "habitat_ref": "COASTAL_LOWLANDS",
+    "lighting_ref": "DAPPLED_OPEN",
+    "visual_logic": {
+      "surface_detail": "Rugged, high-dome shell with individual 'scute' plates rendered in 'Rusty Iron-Orange' and 'Dirty Ochre', running continuously along its horizontal profile.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. Hero focus remains on the long, non-retractable neck covered in bony defensive spikes and the club-like, spiked tail oriented parallel to the camera plane.",
+      "facial_expression": "Alert and somewhat grumpy; small amber eyes adjusted to face cleanly from a lateral perspective.",
+      "environment": {
+        "ground": "Damp, leafy forest floor near a riverbank with mossy limestone outcrops, leveled to keep the lateral outline completely measurable.",
+        "biota": "The Triassic ferns and curious early mammal (Vincelestes) are shifted entirely into the distant background layers to preserve a sharp, unobstructed silhouette line."
+      }
+    },
+    "pose": "The primitive stem-turtle is oriented entirely in a strict lateral profile view, crawling horizontally from left to right parallel to the frame boundaries. The original low-slung crawl with a sharply turned head is unrolled and stabilized into a flat, level, straight cruising path, extending its spiked neck, high-dome carapace, heavily armored limbs, and spiked tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

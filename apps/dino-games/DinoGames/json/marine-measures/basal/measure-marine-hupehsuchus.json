@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_HUPEH_3D_011_PROFILE",
+    "species": "Hupehsuchus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "JIUFOTANG",
+    "habitat_ref": "FORESTED_VOLCANIC_LAKE_SYSTEM",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Interlocking dermal ossicles along the spine rendered as smooth, rounded 'toy-like' armor plates, fully visible along its top horizontal ridge line.",
+      "environment": "Blue-green caldera lake water with suspended volcanic ash particles restricted entirely to background layers to keep the silhouette sharp.",
+      "color_palette": "Cool grey skin with 'Purple-gray' highlights on the tail fin, mapped cleanly across its horizontal lateral flank."
+    },
+    "pose": "The unique marine reptile is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original vertical breaching pose is unrolled and stabilized into a flat, level cruising path, extending its toothless bird-like beak, armor-plated torso, flippers, and distinct tail fin end-to-end to trace flawlessly alongside the central UI measuring tape system."
+  }
+]

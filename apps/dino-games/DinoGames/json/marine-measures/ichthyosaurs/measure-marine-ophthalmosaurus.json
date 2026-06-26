@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_ICHTHY_3D_038_PROFILE",
+    "species": "Ophthalmosaurus icenicus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "OXFORD_CLAY",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Deep 'Midnight Blue' skin with high-gloss finish to handle extreme water pressure, running uniformly across its full horizontal lateral flank.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. Hero focus remains on the massive, saucer-shaped orbit and reflective pupil, oriented perfectly to face laterally in the frame.",
+      "environment": "The transition zone between sunlit surface and the dark 'Twilight Zone' of the sea. Light gradients are smoothed horizontally across the background layer to keep the silhouette sharp.",
+      "pose": "The ichthyosaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original vertical dive position is unrolled and stabilized into a flat, level, straight cruising path, extending its dolphin-like snout, robust torso, dorsal fin, and deep tail fluke end-to-end to cleanly track alongside the central UI measuring tape system. The massive eye catches a stray beam of light hitting parallel to the camera plane."
+    }
+  }
+]

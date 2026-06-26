@@ -37,6 +37,7 @@ final class MarineEggsCatalogXCTests: XCTestCase {
 
     func testMarineEggsVictoryUsesCreatureNameRecap() {
         XCTAssertTrue(MarineEggMorphology.settings.victoryRecapUsesCreatureName)
+        XCTAssertFalse(MarineEggMorphology.settings.victoryRecapLabelUsesCreatureName)
         XCTAssertEqual(
             MarineEggMorphology.morphology.eggAudioKey(eggType: "archelon"),
             "marine-eggs-archelon"

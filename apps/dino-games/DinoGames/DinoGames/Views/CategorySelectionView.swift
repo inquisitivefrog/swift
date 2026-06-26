@@ -244,16 +244,16 @@ struct CategorySelectionView: View {
     }
 
     private func returnToCategoryMenu() {
+        speechManager.stopCurrentAudio()
+        speechManager.onAudioFinished = nil
         navigationPath.removeAll()
         coverSequenceComplete = true
         enabledDinosaurs = true
         enabledPterosaurs = true
         enabledSea = true
-        speechManager.onAudioFinished = nil
-        speechManager.onAudioFinished = {
-            self.speechManager.onAudioFinished = nil
+        DispatchQueue.main.async {
+            self.speechManager.speak("cover-choose-a-game-type")
         }
-        speechManager.speak("cover-choose-a-game-type")
     }
 }
 

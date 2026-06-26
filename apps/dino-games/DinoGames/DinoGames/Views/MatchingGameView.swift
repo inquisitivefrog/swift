@@ -76,6 +76,13 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             }
             return nil
         }
+        if normalized.hasPrefix("ptero-footprints-") {
+            if let url = resolveURL(forPath: "Ptero-Footprints/\(normalized)") { return url }
+            if let legacyPath = audioFilePath(for: key) {
+                return resolveURL(forPath: legacyPath)
+            }
+            return nil
+        }
         if normalized.hasPrefix("ptero-clade-") {
             let slug = String(normalized.dropFirst("ptero-clade-".count))
             let preferredPath = "Pterosaur-Clades/clade-\(slug)"
@@ -138,6 +145,7 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return nil
         }
         if normalized.hasPrefix("ptero-hint-") {
+            if let url = resolveURL(forPath: "Ptero-Eggs/hints/\(normalized)") { return url }
             if let url = resolveURL(forPath: "Ptero-Flora/hints/\(normalized)") { return url }
             return nil
         }
@@ -659,6 +667,8 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Feedback/you-cannot-choose-that-one-now"
         case "thats-too-small-to-see", "that's too small to see", "too small to see":
             return "Feedback/thats-too-small-to-see"
+        case "thats-too-big-to-see", "that's too big to see", "too big to see":
+            return "Feedback/thats-too-big-to-see"
 
         // Dinosaur characteristics (Dino-Characteristics folder)
         case "teeth":
@@ -912,6 +922,8 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-ptero-eggs-scan-failed"
         case "game-ptero-eggs-tap-the-pterosaur":
             return "Games/game-ptero-eggs-tap-the-pterosaur"
+        case "game-ptero-eggs-tap-the-image":
+            return "Games/game-ptero-eggs-tap-the-image"
         case "game-ptero-eggs-gameplay-directions", "games-ptero-eggs-gameplay-directions":
             return "Games/game-ptero-eggs-gameplay-directions"
         case "game-dino-eggs", "dino-eggs":
@@ -1163,6 +1175,9 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Footprints/dino-spinosaurid"
         case "footprint-stegosaur", "stegosaur":
             return "Footprints/dino-stegosaur"
+        // Ptero Footprints hints: key `ptero-footprints-{clade}` → `Ptero-Footprints/ptero-footprints-{clade}.m4a`
+        case _ where normalized.hasPrefix("ptero-footprints-"):
+            return "Ptero-Footprints/\(normalized)"
         // Pterosaur clades: key `ptero-clade-{slug}` → `Pterosaur-Clades/clade-{slug}.m4a` (see `urlForAudio` preferred path)
         case _ where normalized.hasPrefix("ptero-clade-"):
             let slug = String(normalized.dropFirst("ptero-clade-".count))

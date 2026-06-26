@@ -11,6 +11,7 @@ enum DeveloperSessionFlags {
     /// `UserDefaults` key. When `true`:
     /// - Every difficulty level is unlocked (Land, Air, Marine).
     /// - Land **concept prerequisites** (`LandDinosaurGamePairing`) are ignored so any listed game is playable.
+    /// - Guided auto-play is off — pick a level, then tap any game.
     ///
     /// Enable (Simulator or device):
     /// `defaults write com.inquisitivefrog.DinoGames devUnlockAllGameLevels -bool YES`
@@ -21,5 +22,10 @@ enum DeveloperSessionFlags {
 
     static var unlockAllGameLevels: Bool {
         UserDefaults.standard.bool(forKey: unlockAllGameLevelsUserDefaultsKey)
+    }
+
+    /// Manual level + game selection for QA (same switch as `unlockAllGameLevels`).
+    static var manualGameSelection: Bool {
+        unlockAllGameLevels
     }
 }

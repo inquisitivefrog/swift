@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_001_PROFILE",
+    "species": "Thalassotitan atrox",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "OULED_ABDOUN_BASIN",
+    "visual_logic": {
+      "color_palette": "Dark slate-blue with a creamy-yellow underbelly and a subtle 'frill' of dark clay scales along the spine, running clearly across its entire horizontal length.",
+      "pattern_strategy": "Mottled 'Ochre' and 'Bone White' patches; heavy scarring rendered with deep red-brown gouges slicing across its massive horizontal flank.",
+      "facial_silhouette": "Short, conical snout with massive, worn-down teeth for crushing bone; wide gape, oriented completely parallel to the frame edge in profile view.",
+      "texture": "Small, overlapping diamond-shaped clay scales; glossy black eyes facing laterally.",
+      "environment": "Vibrant blue water with massive white 'clay' splashes localized in the background and perimeter layers to maintain a high-contrast silhouette edge around the reptile."
+    },
+    "pose": "A strict, clean side-profile view of the giant apex mosasaur swimming steadily from left to right across the wide asset frame. The entire animal—from its short, powerful jaw and barrel-shaped body down to its broad, propelling paddle flippers and elongated hypocercal tail fin—is extended horizontally to flawlessly match the tracking lines of the central UI measuring tape interface. Its massive jaws are open parallel to the frame, showcasing the 'chipped paint' texture of its ivory-colored teeth."
+  }
+]

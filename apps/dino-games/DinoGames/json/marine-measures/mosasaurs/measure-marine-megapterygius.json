@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_001_MEGAPTERYGIUS_PROFILE",
+    "species": "Megapterygius wakayamaensis",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "MORENO_FORMATION",
+    "visual_logic": {
+      "color_palette": "Dark slate-blue with a creamy-yellow underbelly and a subtle 'frill' of dark clay scales along the spine, running continuously from head to tail.",
+      "pattern_strategy": "Solid 'Steel Grey' with 'cobalt' iridescent patches on the massive flippers, fully visible across the expansive horizontal side profile.",
+      "facial_silhouette": "Wing-like oversized flippers dominate the silhouette, dwarfing the tapered head which is aligned in a strict profile view parallel to the frame edge.",
+      "texture": "Small, overlapping diamond-shaped clay scales; glossy black eyes facing laterally.",
+      "environment": "Vibrant blue water with massive white 'clay' splashes relocated to the outer background layers to maintain an unobstructed silhouette path."
+    },
+    "pose": "The specialized mosasaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original banking whale-like turn is stabilized into a flat, level cruising path, allowing the tapered head, elongated body, exceptionally oversized wing-like flippers (flattened toward the camera plane), and tail to stretch end-to-end to cleanly track alongside the central UI measuring tape system for precise top-by-bottom length analysis."
+  }
+]

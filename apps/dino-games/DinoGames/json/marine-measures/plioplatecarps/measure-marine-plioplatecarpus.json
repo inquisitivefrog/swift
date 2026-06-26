@@ -1,0 +1,20 @@
+[
+  {
+    "id": "GAME_CARD_PLIOPLATE_3D_045_PROFILE",
+    "species": "Plioplatecarpus marshi",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "MAASTRICHT_FORMATION",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "surface_detail": "Leathery skin with 'Deep Teal' and 'Charcoal' mottling for low-light camouflage, mapped uniformly across its full horizontal lateral flank.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. Hero focus remains on the short, robust snout and the large eye orbit oriented parallel to the camera plane.",
+      "environment": {
+        "water": "Deep indigo-green water with diffused moonlight rays, balanced to keep the lateral outline completely measurable.",
+        "biota": "The heavy marine snow and floating 'Belemnitella' silhouettes are shifted entirely into the distant background layers to preserve a sharp, unobstructed silhouette line."
+      }
+    },
+    "pose": "The medium-sized mosasaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original vertical rising strike pose is unrolled and stabilized into a flat, level, straight cruising path, extending its robust snout, streamlined body, paddles, and down-turned tail fluke end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "id": "pteroflora_period_hint_card",
+  "type": "HINT_CARD",
+  "tech_ref": "SQUARE_ASPECT_RATIO",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "CRATO_FORMATION",
+  "environment_details": {
+    "habitat": "COASTAL_LOWLANDS",
+    "flora": [
+      "Ruffordia fern (vibrant green, matching era)",
+      "Endressinia early flower (brightly blooming, matching era)",
+      "Anachronistic primitive stalk (rendered as a cold grey stone fossil)"
+    ],
+    "fauna": [
+      "Tapejara (vibrant, fully colored Cretaceous pterosaur)"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; rounded toy-like proportions; pure pictorial storytelling; zero text, symbols, or UI charts."
+  },
+  "visual_logic": {
+    "composition": "The scene uses a pure color-to-stone visual contrast to show time matching within a single frame. In the center, a beautifully colored Tapejara pterosaur is happily perched on a lush, vibrant green Ruffordia fern cluster next to a bright, blooming pink Endressinia flower. Everything they touch is full of life and color, showing they belong together. Right next to them, a plant from the wrong time period is drawn as a cold, lifeless grey stone statue, completely out of place in the warm environment, making it immediately obvious to a child that it doesn't belong to the living world of the pterosaur.",
+    "ground": "Pale buff and cream-colored platy limestone floor.",
+    "background": "Soft, muted coastal lowland haze with a distant, warm sunlit sky.",
+    "lighting": "Bright, clear daylight that illuminates the colorful, living elements while casting flat, dull shadows under the mismatched stone plant."
+  }
+}

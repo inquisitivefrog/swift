@@ -32,15 +32,15 @@ enum LandGameDisplayMomentCatalog {
     // MARK: - Source hint grids (shared by views + tests)
 
     static let footprintSourceHints: [LandGameDisplayTriad] = [
-        LandGameDisplayTriad(id: "ankylosaur", displayText: "Ankylosaur", imageAssetName: "source-footprints-ankylosaur", audioKey: "footprint-ankylosaur"),
-        LandGameDisplayTriad(id: "ceratopsian", displayText: "Ceratopsian", imageAssetName: "source-footprints-ceratopsian", audioKey: "footprint-ceratopsian"),
-        LandGameDisplayTriad(id: "hadrosaur", displayText: "Hadrosaur", imageAssetName: "source-footprints-hadrosaur", audioKey: "footprint-hadrosaur"),
-        LandGameDisplayTriad(id: "ornithischian", displayText: "Ornithischian", imageAssetName: "source-footprints-ornithischian", audioKey: "footprint-ornithischian"),
-        LandGameDisplayTriad(id: "ornithomimid", displayText: "Ornithomimid", imageAssetName: "source-footprints-ornithomimid", audioKey: "footprint-ornithomimid"),
-        LandGameDisplayTriad(id: "sauropod", displayText: "Sauropod", imageAssetName: "source-footprints-sauropod", audioKey: "footprint-sauropod"),
-        LandGameDisplayTriad(id: "spinosaurid", displayText: "Spinosaurid", imageAssetName: "source-footprints-spinosaurid", audioKey: "footprint-spinosaurid"),
-        LandGameDisplayTriad(id: "stegosaur", displayText: "Stegosaur", imageAssetName: "source-footprints-stegosaur", audioKey: "footprint-stegosaur"),
-        LandGameDisplayTriad(id: "theropod", displayText: "Theropod", imageAssetName: "source-footprints-theropod", audioKey: "footprint-therapod"),
+        LandGameDisplayTriad(id: "ankylosaur", displayText: "Ankylosaur", imageAssetName: "source-dino-footprints-ankylosaur", audioKey: "footprint-ankylosaur"),
+        LandGameDisplayTriad(id: "ceratopsian", displayText: "Ceratopsian", imageAssetName: "source-dino-footprints-ceratopsian", audioKey: "footprint-ceratopsian"),
+        LandGameDisplayTriad(id: "hadrosaur", displayText: "Hadrosaur", imageAssetName: "source-dino-footprints-hadrosaur", audioKey: "footprint-hadrosaur"),
+        LandGameDisplayTriad(id: "ornithischian", displayText: "Ornithischian", imageAssetName: "source-dino-footprints-ornithischian", audioKey: "footprint-ornithischian"),
+        LandGameDisplayTriad(id: "ornithomimid", displayText: "Ornithomimid", imageAssetName: "source-dino-footprints-ornithomimid", audioKey: "footprint-ornithomimid"),
+        LandGameDisplayTriad(id: "sauropod", displayText: "Sauropod", imageAssetName: "source-dino-footprints-sauropod", audioKey: "footprint-sauropod"),
+        LandGameDisplayTriad(id: "spinosaurid", displayText: "Spinosaurid", imageAssetName: "source-dino-footprints-spinosaurid", audioKey: "footprint-spinosaurid"),
+        LandGameDisplayTriad(id: "stegosaur", displayText: "Stegosaur", imageAssetName: "source-dino-footprints-stegosaur", audioKey: "footprint-stegosaur"),
+        LandGameDisplayTriad(id: "theropod", displayText: "Theropod", imageAssetName: "source-dino-footprints-theropod", audioKey: "footprint-therapod"),
     ]
 
     static let agesSourceHints: [LandGameDisplayTriad] = [
@@ -49,21 +49,21 @@ enum LandGameDisplayMomentCatalog {
     ]
 
     static let dinoFloraCategoryHints: [LandGameDisplayTriad] = [
-        LandGameDisplayTriad(id: "browsers", displayText: "Browsers", imageAssetName: "source-flora-browsers", audioKey: "dino-hint-browsers"),
-        LandGameDisplayTriad(id: "periods", displayText: "Periods", imageAssetName: "source-flora-periods", audioKey: "dino-hint-periods"),
-        LandGameDisplayTriad(id: "diets", displayText: "Diets", imageAssetName: "source-flora-diets", audioKey: "dino-hint-diets"),
+        LandGameDisplayTriad(id: "browsers", displayText: "Browsers", imageAssetName: "source-dino-flora-browsers", audioKey: "dino-hint-browsers"),
+        LandGameDisplayTriad(id: "periods", displayText: "Periods", imageAssetName: "source-dino-flora-periods", audioKey: "dino-hint-periods"),
+        LandGameDisplayTriad(id: "diets", displayText: "Diets", imageAssetName: "source-dino-flora-diets", audioKey: "dino-hint-diets"),
     ]
 
     static let pteroFloraCategoryHints: [LandGameDisplayTriad] = [
-        LandGameDisplayTriad(id: "size", displayText: "Size", imageAssetName: "source-flora-size", audioKey: "ptero-hint-size"),
-        LandGameDisplayTriad(id: "period", displayText: "Period", imageAssetName: "source-flora-periods", audioKey: "ptero-hint-period"),
-        LandGameDisplayTriad(id: "diets", displayText: "Diets", imageAssetName: "source-flora-diets", audioKey: "ptero-hint-diets"),
+        LandGameDisplayTriad(id: "size", displayText: "Size", imageAssetName: "source-ptero-flora-size", audioKey: "ptero-hint-size"),
+        LandGameDisplayTriad(id: "period", displayText: "Period", imageAssetName: "source-ptero-flora-period", audioKey: "ptero-hint-period"),
+        LandGameDisplayTriad(id: "diet", displayText: "Diets", imageAssetName: "source-ptero-flora-diet", audioKey: "ptero-hint-diets"),
     ]
 
     static let marineFloraCategoryHints: [LandGameDisplayTriad] = [
-        LandGameDisplayTriad(id: "protection", displayText: "Protection", imageAssetName: "source-flora-protection", audioKey: "marine-hint-protection"),
-        LandGameDisplayTriad(id: "periods", displayText: "Periods", imageAssetName: "source-flora-periods", audioKey: "marine-hint-periods"),
-        LandGameDisplayTriad(id: "diets", displayText: "Diets", imageAssetName: "source-flora-diets", audioKey: "marine-hint-diets"),
+        LandGameDisplayTriad(id: "protection", displayText: "Protection", imageAssetName: "source-marine-flora-protection", audioKey: "marine-hint-protection"),
+        LandGameDisplayTriad(id: "period", displayText: "Periods", imageAssetName: "source-marine-flora-period", audioKey: "marine-hint-periods"),
+        LandGameDisplayTriad(id: "diet", displayText: "Diets", imageAssetName: "source-marine-flora-diet", audioKey: "marine-hint-diets"),
     ]
 
     /// Dino Flora category hints (`dinoFloraCategoryHints`).

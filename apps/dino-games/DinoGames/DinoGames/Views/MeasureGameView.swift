@@ -371,10 +371,10 @@ struct MeasureGameView: View {
         return max(rawScale, minScale)
     }
 
-    /// Center image: paleontologist standing with tape measure. Use asset "measure-paleontologist-tape" (110×340 pt for larger display).
+    /// Center image: paleontologist on ladder with tape measure (`measure-dino-paleontologist-ladder`, 110×340 pt display).
     /// Bottom-aligned so it lines up with left/right dinosaurs for height comparison.
     private var measureCenterImage: some View {
-        let name = "measure-paleontologist-tape"
+        let name = "measure-dino-paleontologist-ladder"
         return Group {
             if ImageAssetCache.imageExists(named: name) {
                 Image(name)

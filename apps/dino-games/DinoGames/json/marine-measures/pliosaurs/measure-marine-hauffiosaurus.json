@@ -1,0 +1,18 @@
+[
+  {
+    "id": "char_hauffiosaurus_001_v2_PROFILE",
+    "species": "Hauffiosaurus zanoni",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "POSEIDON_SHALE",
+    "lighting_ref": "SUNNY_EXPOSED",
+    "morphology_overrides": {
+      "neck": "Distinctly long and slender for a pliosaur; significantly longer than the skull, oriented parallel to the frame boundaries for full-length assessment.",
+      "skull": "Small, narrow, and needle-like; optimized for snatching small fish and cephalopods, configured in a strict side-profile view.",
+      "body": "Aerodynamic and gracile; visible transition between the neck and the shoulder girdle, displayed cleanly across its horizontal profile.",
+      "patterning": "Dainty, stippled spots that look like ink-flicks concentrated along the spine, mapped uniformly across its horizontal lateral flank.",
+      "negative_prompt": "thick neck, blocky head, massive skull, heavy torso"
+    },
+    "pose": "The transitional pliosaurid is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original dynamic 'S-Curve' banking turn is unrolled and stabilized into a flat, level, straight cruising path, extending its narrow, needle-like skull, intermediate slender neck, streamlined torso, flippers (flattened toward the camera plane), and tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

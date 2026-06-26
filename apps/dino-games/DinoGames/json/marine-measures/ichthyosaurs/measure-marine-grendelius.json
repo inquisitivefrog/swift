@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_ICHTHY_3D_033_PROFILE",
+    "species": "Grendelius mordax",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "KIMMERIDGE_CLAY",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Rugged skin with 'Dark Charcoal' dorsal coloring and subtle scarring to indicate a high-tier predator status, fully displayed across its expansive horizontal side flank.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. Emphasis remains on the 'bitey' nature of the snout—shorter and more robust than Ophthalmosaurus, with prominent teeth cleanly visible in a lateral jawline orientation parallel to the frame edge.",
+      "environment": "Murky, nutrient-dense Jurassic waters. The suspended sediment is restricted to the background layers to maintain a sharp, measurable horizontal silhouette line around the entire animal.",
+      "pose": "The ichthyosaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original head-on lunge is unrolled into a flat, level horizontal swimming path, stretching its robust snout, heavy torso, dorsal fin, and deep tail fluke end-to-end to track flawlessly along the central UI measuring tape system. The jaws remain open parallel to the frame to highlight the prominent predatory teeth."
+    }
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_ICHTHY_3D_032_PROFILE",
+    "species": "Eurhinosaurus longirostris",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "POSIDONIA_SHALE",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Glistening skin with 'Violet-Grey' tones. The texture is incredibly smooth to emphasize its low-drag morphology along the horizontal torso.",
+      "anatomy_focus": "Strict profile view emphasizing the full horizontal length of the animal. Hero focus remains strongly on the 'Swordfish-like' snout, where the drastically elongated upper jaw is displayed perfectly parallel to the frame edge.",
+      "environment": "Deep teal water over a dark organic mud substrate characteristic of the Posidonia Shale. The bait ball of small fish is pushed to the background layer to prevent cluttering the horizontal silhouette path.",
+      "pose": "The animal is oriented entirely in a side-profile view, swimming horizontally from left to right across the card to maximize the utilization of the horizontal layout. The long snout, streamlined body, dorsal fin, and deep tail fluke are fully extended parallel to the frame boundaries to cleanly track with the central UI measuring tape system."
+    }
+  }
+]

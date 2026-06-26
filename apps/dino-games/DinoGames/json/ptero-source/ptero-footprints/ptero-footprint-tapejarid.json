@@ -8,10 +8,11 @@
     "habitat_ref": "TROPICAL_WETLAND_LAGOONS",
     "style_ref": "STYLE_ANIMATED_FEATURE_V3",
     "tech_ref": "SQUARE_ASPECT_RATIO",
-    "pose": "dino_bones_paleontologist_2 (female grad student, green sun hat, green skirt) is measuring a broad, fleshy footprint in reddish-brown mud with her checkered scale bar.",
+    "pose": "dino_bones_paleontologist_2 (female grad student, short black hair, green sun hat, light green blouse under a khaki safari vest, green skirt, and black hiking boots) is kneeling down on the ground, holding a small checkered scale bar right next to a small, bird-sized pterosaur footprint. The entire footprint is much smaller than her hand, emphasizing its delicate, realistic scale compared to the human character.",
     "visual_notes": {
-      "ichnology": "Tracks are broad and robust. The hand prints are rotated significantly outward. The rear feet show deep, wide toe depressions. All claw marks are rendered as V-shaped cavities where mud has been displaced and pushed upward around the hole.",
-      "ground": "Variegated reddish-brown iron-rich clay with small shallow turquoise pools."
+      "ichnology": "Tracks are broad and robust for a pterosaur but physically small, roughly the length of a few human fingers. The hand prints (manus) are positioned next to the foot prints (pes) and are rotated significantly outward. The rear feet show three clear, wide toe depressions. All tiny claw marks are rendered as V-shaped cavities where mud has been displaced and pushed upward around the hole.",
+      "ground": "Variegated reddish-brown iron-rich clay mud with small shallow turquoise pools scattered nearby.",
+      "style_notes": "STYLE_ANIMATED_FEATURE_V3; adult human proportions with soft, stylized, and slightly rounded edges; focus on accurate scale comparison; no text."
     }
   }
 }

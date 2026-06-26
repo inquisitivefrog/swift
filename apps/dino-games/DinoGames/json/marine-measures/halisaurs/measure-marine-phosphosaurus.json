@@ -1,0 +1,23 @@
+[
+  {
+    "id": "GAME_CARD_PHOSPHO_3D_014_PROFILE",
+    "species": "Phosphosaurus bernardi",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "HAKEL_FORMATION",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DEEP_SEA_LUMINESCENCE",
+    "visual_logic": {
+      "surface_detail": "Sleek, obsidian-toned skin with a faint, iridescent violet shimmer; skin appears 'hydrodynamic' and slightly translucent in thinner areas like the tail fin, running continuously along its horizontal profile.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The massive eyes are adapted to the lateral format, keeping the deep, reflective amber-gold pupil facing side-on and aligned parallel to the camera plane.",
+      "bioluminescent_logic": "Subtle, bioluminescent 'Blue-Cyan' photophores along the lateral line, glowing faintly to illuminate its path across the horizontal length of the frame.",
+      "environment": {
+        "water": "Deep, midnight-blue water. The drifting 'marine snow' organic particles are pushed entirely into background layers to maintain a crisp, unobstructed silhouette path.",
+        "lighting": "Low-key lighting where the primary light sources are the animal's own bioluminescence and a distant, shimmering moon-glow, balanced to keep the lateral outline completely measurable."
+      },
+      "facial_expression": "Intense, focused, and alert; the expression of a specialized nocturnal predator, adjusted for a clear lateral profile layout view."
+    },
+    "pose": "The small mosasaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original vertical diving pose into the abyss is unrolled and stabilized into a flat, level, straight cruising path. This stretches its alert head, elongated torso, tightly tucked flippers, and translucent tail fin end-to-end to cleanly track alongside the central UI measuring tape system.",
+    "negative_constraints": "No bright sunlight; no terrestrial elements; avoid making the eyes look scary—keep them 'soulful' and 'observational' per character specs."
+  }
+]

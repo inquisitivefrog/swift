@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_ICHTHY_3D_035_PROFILE",
+    "species": "Kyhytysuka sachicasorum",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "Paja_Formation",
+    "habitat_ref": "EPICONTINENTAL_SEAWAY",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Leathery skin with 'Sandy Brown' mottling; specialized tooth arrangement is mapped cleanly along the lateral jawline across its horizontal side profile.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. Hero focus remains heavily on the unique 'macro-predatory' teeth—displaying the varying sizes of crushing and piercing teeth oriented perfectly parallel to the frame edge.",
+      "environment": "Warm, shallow Cretaceous seas with high-key lighting, maintaining clear water conditions with background elements set deep to prevent obstruction.",
+      "pose": "The ichthyosaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original active clamping pose is converted into a level, straight cruising path, extending its specialized fanged snout, torpedo-shaped torso, dorsal fin, and deep tail fluke end-to-end to trace flawlessly alongside the central UI measuring tape system. The ammonite is held straight or relocated to a background layer to ensure the lower silhouette line stays perfectly crisp and measurable."
+    }
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "id": "GAME_CARD_STENEO_3D_029_PROFILE",
+    "species": "Steneosaurus bollensis",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "SOLNHOFEN",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Mottled 'Olive Green' and 'Sandy Tan' skin with visible, flattened osteoderms mapped continuously along its expansive horizontal back profile.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. Hero focus remains heavily on the 'needle-thin' snout, displaying the interlocking teeth perfectly parallel to the frame edge.",
+      "facial_expression": "Observational and patient; large eyes adjusted for the lateral profile layout view.",
+      "environment": {
+        "water": "Shallow, sun-lit lagoon water over 'Creamy White' carbonate mud.",
+        "biota": "The cluster of 'Ancestral Seagrass' and small crustaceans are pushed entirely into the distant background layers to preserve a sharp, unobstructed silhouette line."
+      },
+      "pose": "The marine crocodilian is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original stationary seabed position is converted into a level, straight cruising path, extending its elongated fanged snout, armored torso, limbs, and long tail end-to-end to cleanly track alongside the central UI measuring tape system."
+    }
+  }
+]

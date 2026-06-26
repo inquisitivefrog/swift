@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_MICRO_017_PROFILE",
+    "species": "Microcleidus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "OXFORD_CLAY",
+    "visual_logic": {
+      "color_palette": "Olive-green with muddy-brown mottling and high-contrast white spots on the flippers, running continuously along its horizontal profile.",
+      "action": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The hovering behavior is stabilized parallel to the frame boundaries.",
+      "environment": "Deep blue water with olive-green sediment clouds. The cluster of large clay ammonites and distant clay-textured fauna are shifted entirely into the background layers to preserve a sharp, measurable silhouette line."
+    },
+    "pose": "The microcleidid plesiosaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original vertical suspension and upward-looking pose are unrolled and stabilized into a flat, level, straight cruising path, stretching its small head, long neck, compact body, large flippers (flattened toward the camera plane), and tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

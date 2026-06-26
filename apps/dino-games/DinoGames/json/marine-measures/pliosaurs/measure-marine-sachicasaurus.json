@@ -1,0 +1,15 @@
+[
+  {
+    "id": "char_sachicasaurus_v3_PROFILE",
+    "species": "Sachicasaurus",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "formation_ref": "PAJA",
+    "visual_identity": {
+      "pattern_strategy": "Mottled 'Lichen-like' patches of rusty orange on a dark grey base, mimicking sea-floor concretions, clearly mapped out along its expansive horizontal flank.",
+      "integument": "Extremely weathered hide; deep dermal folds around the massive shoulder and limb joints are fully exposed in this lateral view.",
+      "facial_silhouette": "Massive, boxy muzzle; the lower jaw is particularly deep and powerful, shown in crisp profile parallel to the frame edge."
+    },
+    "pose": "A strict side-profile view capturing the full length of the giant pliosaur as it swims horizontally from left to right. The animal maintains a level, straight trajectory to align perfectly with the tracking format of the UI's measuring tape system. Its massive boxy head, thick body, extended paddle-flippers, and tapering tail span the card horizontally while it slowly patrols along the seafloor, kicking up 'Paja Formation' silt clouds in the background layer behind its silhouette."
+  }
+]

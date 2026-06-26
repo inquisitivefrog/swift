@@ -1,0 +1,20 @@
+[
+  {
+    "id": "GAME_CARD_NOTHO_3D_019_PROFILE",
+    "species": "Nothosaurus mirabilis",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "SOLNHOFEN",
+    "habitat_ref": "COASTAL_LOWLANDS",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Smooth, seal-like skin with a dark 'Navy Blue' dorsal pattern and dappled 'Silver-Grey' spots for light-refractive camouflage, running continuously along its horizontal profile.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. Hero focus is on the long, slender neck and the 'interlocking needle-teeth' protruding from the jaws, positioned completely parallel to the frame edge.",
+      "environment": {
+        "water": "Warm, shallow coastal water.",
+        "biota": "The schools of small prehistoric fish and 'Ivory' limestone outcrops are shifted entirely into the distant background layers to maintain a clean, measurable silhouette line."
+      },
+      "pose": "The marine reptile is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original stationary rock-basking pose is converted into a level, straight cruising path, allowing the fanged skull, elongated slender neck, streamlined torso, webbed limbs (flattened to the camera plane), and tail to extend end-to-end to track flawlessly alongside the central UI measuring tape system."
+    }
+  }
+]

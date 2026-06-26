@@ -106,6 +106,13 @@ final class MarineFloraXCTests: XCTestCase {
         XCTAssertEqual(Set(moments.map(\.gameConfigId)), ["marine-flora"])
     }
 
+    func testMarineFloraDisplayMomentsHaveImagesInAssetCatalog() {
+        let known = ImageAssetNames.knownAssets
+        let missing = moments.filter { !known.contains($0.imageAssetName) }
+        let labels = missing.map { "\($0.context) → `\($0.imageAssetName)`" }
+        XCTAssertTrue(labels.isEmpty, "Missing imagesets: \(labels.joined(separator: "; "))")
+    }
+
     func testMarineFloraCategoryHintImagesContainHintIdSlug() {
         let hints = LandGameDisplayMomentCatalog.marineFloraCategoryHints
         let misaligned = hints.filter { hint in
@@ -113,7 +120,8 @@ final class MarineFloraXCTests: XCTestCase {
             return !hint.imageAssetName.lowercased().contains(hint.id)
                 && !hint.imageAssetName.lowercased().contains(slug)
         }
-        XCTAssertTrue(misaligned.isEmpty, "Hint images should include hint id slug")
+        let labels = misaligned.map { "\($0.id): image `\($0.imageAssetName)`" }
+        XCTAssertTrue(labels.isEmpty, "Hint images should include hint id slug: \(labels.joined(separator: "; "))")
     }
 
     @MainActor
@@ -122,6 +130,7 @@ final class MarineFloraXCTests: XCTestCase {
         let keys = [
             "game-marine-flora",
             "game-marine-flora-which-three-marine-reptiles",
+            "game-marine-flora-tap-the-plant-to-hear-description",
             "game-hint",
             "marine-hint-protection",
             "marine-hint-periods",
@@ -129,5 +138,27 @@ final class MarineFloraXCTests: XCTestCase {
         ]
         let missing = keys.filter { speech.urlForAudio(key: $0) == nil }
         XCTAssertTrue(missing.isEmpty, "Missing marine flora gameplay audio: \(missing)")
+    }
+
+    func testMarineFloraPlantAudioFilesExistOnDisk() throws {
+        let root = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Marine-Flora")
+        var missing: [String] = []
+        for plant in marineFloraPlants {
+            let path = root
+                .appendingPathComponent(plant.formationFolder)
+                .appendingPathComponent("\(plant.audioKey).m4a")
+            if !FileManager.default.fileExists(atPath: path.path) {
+                missing.append("\(plant.formationFolder)/\(plant.audioKey).m4a")
+            }
+        }
+        XCTAssertTrue(missing.isEmpty, "Missing marine flora plant audio: \(missing)")
+    }
+
+    @MainActor
+    func testMarineFloraPlantAudioResolvesInBundle() {
+        TestBundleHelpers.assertBundleResolvesAudioKeys(
+            marineFloraPlants.map(\.audioKey),
+            messagePrefix: "Marine Flora plant"
+        )
     }
 }

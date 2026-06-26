@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_ICHTHY_3D_031_PROFILE",
+    "species": "Cymbospondylus youngorum",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "FAVRET_FORMATION",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Tactile, leathery skin with 'Slate Grey' and 'Dull Green' mottling; appears more 'reptilian' and less fish-like than later species, mapped continuously across its massive horizontal flank.",
+      "anatomy_focus": "Strict side-profile view fully accounting for its massive 17-meter scale. Hero focus is placed on its immense horizontal body length and the elongated, slender tail that lacks a large dorsal fluke, stretching cleanly parallel to the frame edge.",
+      "environment": "Triassic open ocean with warm, sun-drenched surface waters. The school of smaller cephalopods is relocated to a distant background layer to ensure an unobstructed silhouette path for size measurement.",
+      "pose": "The animal is oriented entirely in a side-profile view, swimming horizontally from left to right across the card. Its body exhibits a subtle, elongated horizontal undulation that perfectly spans the wide layout, maximizing visual alignment with the central UI measuring tape system."
+    }
+  }
+]

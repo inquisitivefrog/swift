@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_MESO_3D_010_V2_PROFILE",
+    "species": "Mesosaurus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "LA_AMARGA",
+    "habitat_ref": "WARM_FLUVIAL_PLAINS",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Glistening, semi-aquatic skin with deep terracotta and rusty orange patterns, running uniformly across its full horizontal lateral flank.",
+      "environment": "Sluggish stream with thick clusters of Charophytes and giant Equisetites (horsetails). All plant and water elements are shifted entirely into the distant background layers to preserve a sharp, measurable silhouette line.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The continuous spine, needle-teeth within the slender snout, and small flat paddle limbs are all aligned perfectly parallel to the frame edge."
+    },
+    "pose": "The small anapsid reptile is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original graceful 'S' shape on a mudbank is unrolled and stabilized into a flat, level, straight cruising path, extending its fanged snout, elongated torso, small paddle limbs (flattened toward the camera plane), and whip-like tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

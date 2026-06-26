@@ -12,17 +12,17 @@ import XCTest
 
 final class DinoFootprintsAssetsXCTests: XCTestCase {
 
-    /// Imagesets for the Source Footprints full-screen hint grid (`source-footprints-{clade}`).
+    /// Imagesets for the Source Footprints full-screen hint grid (`source-dino-footprints-{clade}`).
     private let sourceFootprintHintImagesets: [String] = [
-        "source-footprints-ankylosaur",
-        "source-footprints-ceratopsian",
-        "source-footprints-hadrosaur",
-        "source-footprints-ornithischian",
-        "source-footprints-ornithomimid",
-        "source-footprints-sauropod",
-        "source-footprints-spinosaurid",
-        "source-footprints-stegosaur",
-        "source-footprints-theropod",
+        "source-dino-footprints-ankylosaur",
+        "source-dino-footprints-ceratopsian",
+        "source-dino-footprints-hadrosaur",
+        "source-dino-footprints-ornithischian",
+        "source-dino-footprints-ornithomimid",
+        "source-dino-footprints-sauropod",
+        "source-dino-footprints-spinosaurid",
+        "source-dino-footprints-stegosaur",
+        "source-dino-footprints-theropod",
     ]
 
     /// Audio keys for hint tiles → `Footprints/dino-{clade}.m4a` via `SpeechManager` / `audioFilePath`.

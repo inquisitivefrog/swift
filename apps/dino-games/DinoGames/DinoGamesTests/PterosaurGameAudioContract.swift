@@ -118,6 +118,9 @@ enum PterosaurGameAudioContracts {
                 "game-ptero-eggs-gameplay-directions",
                 "game-dino-eggs-beep",
                 "game-dino-eggs-scan-failed",
+                "game-hint",
+                "game-ptero-eggs-tap-the-image",
+                "ptero-hint-shape",
             ]
         ),
         PterosaurGameAudioContract(
@@ -200,7 +203,10 @@ enum PterosaurGameAudioContracts {
     }
 
     private static func pteroFootprintsCladeAudioKeys() -> [String] {
-        PterosaurGuessGroup.allCases.map { "ptero-clade-\($0.cladeAudioSlug)" }
+        PterosaurGuessGroup.allCases.map { group in
+            let stem = group == .transitional ? "transition" : group.rawValue
+            return "ptero-footprints-\(stem)"
+        }
     }
 
     private static func pteroDietOptionAudioKeys() -> [String] {

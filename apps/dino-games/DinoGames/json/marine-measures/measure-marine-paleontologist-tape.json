@@ -1,0 +1,13 @@
+[
+  {
+    "id": "referee_marine_length_01",
+    "character_ref": "dino_bones_paleontologist_1",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "MUWAQQAR_CHALK",
+    "pose": "Vertical composition. An adult female paleontologist is floating underwater, her body aligned vertically to fill the frame. Her entire body from the top of her floating blonde hair down to her pink hiking boots spans the vertical height of the card, with a strict 15% negative space buffer at the absolute bottom for UI overlap. She is positioned facing right, looking with a focused, friendly, and analytical expression at a yellow tape measure she is actively holding. Her left hand extends downward to pull the tape taut, while her right hand holds the tape reel at chest level. Her head is tilted slightly toward the right frame edge where the offscreen marine reptiles will be tracked.",
+    "environment_logic": "Set within the Tethys Coastal Margin over a high-albedo white chalky seafloor. Clear turquoise water fills the background with visible light-ray refraction ('god-rays') filtering down tightly around the character. Background elements like marine flora or small ammonites are pulled into the immediate background layer directly behind her silhouette to eliminate vast, empty vertical dead space.",
+    "uniform_override": "Character wears her signature light pink blouse beneath her khaki safari vest, white shorts, and pink hiking boots. A vintage scuba tank is strapped over her vest, and her white sun hat is replaced with a clear glass diving mask on her face to allow her expressive eyes to remain fully visible. Hair floats softly upward in the water current."
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_004_PROFILE",
+    "species": "Globidens alabamaensis",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "PIERRE_SHALE",
+    "visual_logic": {
+      "pattern_strategy": "Large, dark 'pebble' rosettes on a tan/ochre base, fully displayed across the broad lateral side flank.",
+      "color_palette": "Deep violet-grey with white 'pebbled' spots on the flippers; rounded bulbous molar teeth visible within the jaw structure.",
+      "facial_silhouette": "Short, rounded muzzle; visible blunt, globe-shaped crushing teeth shown clearly in a lateral profile view parallel to the frame edge.",
+      "environment": "Deep blue water with a silty seafloor scattered with shell fragments. The seafloor elements are pushed into the low background layers to keep the underbelly silhouette crisp."
+    },
+    "pose": "The massive mosasaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original angled crushing action is stabilized into a straight, level cruising path, allowing the blunt-snouted head, robust torso, paddle-flippers, and heavy tail to stretch end-to-end to cleanly track alongside the central UI measuring tape system. Sharp, geometric flecks of paint representing broken inoceramid shell fragments float horizontally behind the jaws to maintain a clean outline."
+  }
+]

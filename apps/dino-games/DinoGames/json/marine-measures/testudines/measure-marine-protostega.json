@@ -1,0 +1,20 @@
+[
+  {
+    "id": "GAME_CARD_PROTOSTEGA_3D_023_PROFILE",
+    "species": "Protostega gigas",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "NIOBRARA_CHALK",
+    "habitat_ref": "EPICONTINENTAL_SEAWAY",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Smooth, hydrodynamic skin with 'Teal' and 'Seafoam Green' countershading, with shell rib-ridges beneath a leathery surface running continuously along its horizontal profile.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. Hero focus remains on the powerful paddle-like limbs and the wide, flat skull oriented parallel to the camera plane.",
+      "environment": {
+        "water": "Sun-drenched, turquoise water over a high-albedo 'Cream White' chalk seafloor, balanced to keep the lateral outline completely measurable.",
+        "biota": "The floating rafts of Crinoids and drifting 'Azure' jellyfish are shifted entirely into the distant background layers to preserve a sharp, unobstructed silhouette line."
+      }
+    },
+    "pose": "The giant marine turtle is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original tilted mid-turn pose is unrolled and stabilized into a flat, level, straight cruising path, extending its flat skull, leathery shell, massive flippers (flattened toward the camera plane), and tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

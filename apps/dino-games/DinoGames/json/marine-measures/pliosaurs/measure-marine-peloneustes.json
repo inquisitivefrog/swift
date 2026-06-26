@@ -1,0 +1,15 @@
+[
+  {
+    "id": "char_peloneustes_v3_PROFILE",
+    "species": "Peloneustes",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "OXFORD_CLAY",
+    "visual_identity": {
+      "pattern_strategy": "Translucent 'Leopard-Seal' rosettes clustered near the flippers and tail, mapped cleanly along its horizontal profile.",
+      "integument": "Sleek and oily-looking skin texture optimized for high-speed diving, running uniformly across its horizontal lateral flank.",
+      "facial_silhouette": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The very long, thin, needle-point snout is oriented perfectly parallel to the camera plane."
+    },
+    "pose": "The small pliosaurid is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original dynamic mid-dive pose is unrolled and stabilized into a flat, level, straight cruising path, extending its needle-point snout, short neck, gracile torso, flippers (flattened toward the camera plane), and tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

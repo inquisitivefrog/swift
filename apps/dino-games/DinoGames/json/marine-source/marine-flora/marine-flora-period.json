@@ -1,0 +1,24 @@
+{
+  "id": "marineflora_period_match_hint_card",
+  "type": "HINT_CARD",
+  "tech_ref": "SQUARE_ASPECT_RATIO",
+  "lighting_ref": "STUDIO_SOFT",
+  "formation_ref": "BLUE_LIAS",
+  "environment_details": {
+    "habitat": "OPEN_OCEAN_PELAGIC",
+    "flora": [
+      "Floating Crinoid rafts attached to driftwood"
+    ],
+    "fauna": [
+      "Ammonites",
+      "Belemnites"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; soft, stylized rounded toy-like forms; clear historical mismatch storytelling."
+  },
+  "visual_logic": {
+    "composition": "An expressive, comedic underwater scene emphasizing chronological confusion. ON THE LEFT SIDE: The paleontologist character 'dino_bones_paleontologist_1' is swimming forward, her long blonde hair floating in water currents beneath a customized clear-dome diving helmet. She is wearing a pink diving vest over her uniform and enthusiastically holds out a large, leafy bunch of Late Cretaceous Thalassotaenia seagrass. ON THE RIGHT SIDE: Three massive Jurassic marine reptiles float close together, looking completely bewildered. Their big, expressive animated eyes are wide with confusion, and they share a signature friendly smirk as they gesture with puzzled flippers toward the floating crinoid rafts above them, clearly indicating that the modern seaweed she brought belongs to a completely different Mesozoic Age period.",
+    "ground": "Flat, dark blue-grey clay-rich shale base lost in deep, soft-edged shadows.",
+    "background": "Deep indigo and charcoal-tinted pelagic water column filled with distant swirling silver bubble trails.",
+    "lighting": "Soft underwater studio lighting with heavy ambient occlusion, creating clear contact depth and accentuating the rounded, tactile feel of the characters."
+  }
+}

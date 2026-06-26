@@ -870,8 +870,8 @@ fileprivate struct SourceAgesHintsView: View {
         switch agesVariant {
         case .ptero:
             return [
-                SourceAgesPeriodHint(id: "jurassic", imageName: "ptero-ages-jurassic", displayName: "Jurassic", audioKey: "game-ptero-ages-jurassic-pterosaurs"),
-                SourceAgesPeriodHint(id: "cretaceous", imageName: "ptero-ages-cretaceous", displayName: "Cretaceous", audioKey: "game-ptero-ages-cretaceous-pterosaurs"),
+                SourceAgesPeriodHint(id: "jurassic", imageName: "source-ptero-ages-jurassic", displayName: "Jurassic", audioKey: "game-ptero-ages-jurassic-pterosaurs"),
+                SourceAgesPeriodHint(id: "cretaceous", imageName: "source-ptero-ages-cretaceous", displayName: "Cretaceous", audioKey: "game-ptero-ages-cretaceous-pterosaurs"),
             ]
         case .marine:
             return [

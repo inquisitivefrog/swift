@@ -45,6 +45,9 @@ enum MarineReptileGameCatalog {
             if let matrix = MarineMatrixGameConfigs.makeMarineMatrix() {
                 level4.insert(.marineMatrix(matrix), at: 0) // Marine Matrix (when fossil image sets are bundled)
             }
+            if let smile = GuessGameConfigs.makeMarineSmile() {
+                level4.append(.guess(smile)) // Marine Smile!
+            }
             return level4
         default:
             return []

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_001_PROFILE",
+    "species": "Pannoniasaurus inexpectatus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "CSEHBANYA_FORMATION",
+    "visual_logic": {
+      "color_palette": "Dark slate-blue with a creamy-yellow underbelly and a subtle 'frill' of dark clay scales along the spine, running continuously along its horizontal profile.",
+      "facial_silhouette": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The flattened, croc-like skull is oriented perfectly to face laterally in the frame, allowing a clean view of the powerful jaw.",
+      "pattern_strategy": "Jagged, mud-brown 'bark' patterns to blend with roots, mapped uniformly across its full horizontal lateral flank.",
+      "environment": "Vibrant blue water. The massive white 'clay' splashes and Metasequoia leaf litter are shifted entirely into the distant background layers to preserve a sharp, measurable silhouette line."
+    },
+    "pose": "The freshwater mosasaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original resting pose on the riverbed is unrolled and stabilized into a flat, level, straight cruising path, extending its flattened skull, elongated torso, limbs, and tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

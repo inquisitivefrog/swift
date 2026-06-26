@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_TYLO_002_PROFILE",
+    "species": "Kaikaifilu hervei",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "LOPEZ_DE_BERTODANO_FORMATION",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "visual_logic": {
+      "color_palette": "Deep indigo and midnight blue with pale silver 'ventral' spots running cleanly along its long horizontal underbelly.",
+      "pattern_strategy": "Biological 'frost' patterns—white leopard-like spots concentrated around the flippers and neck, fully mapped out across its side profile.",
+      "eyes": "Large, pitch-black 'low-light' eyes facing laterally, adjusted for the dark Antarctic profile view.",
+      "environment": "Frigid, deep-blue water with high concentrations of marine snow. Faint silhouettes of icebergs are kept high in the absolute background layer, keeping the perimeter crisp around the subject's silhouette."
+    },
+    "pose": "A strict side-profile view capturing the full horizontal length and massive frame of the giant tylosaurine mosasaur as it swims steadily from left to right. The animal is aligned straight across the horizontal card layout to precisely trace alongside the UI measuring tape system. Its uniquely blunt, 'tank-like' head structure, stocky neck, long barrel-shaped body, all four extended paddle-flippers, and heavy tail fin span the frame horizontally parallel to the card edges."
+  }
+]

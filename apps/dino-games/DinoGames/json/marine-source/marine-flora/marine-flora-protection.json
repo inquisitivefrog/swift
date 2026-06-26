@@ -1,0 +1,26 @@
+{
+  "id": "marineflora_protection_hint_card",
+  "type": "HINT_CARD",
+  "tech_ref": "SQUARE_ASPECT_RATIO",
+  "lighting_ref": "DAPPLED_OPEN",
+  "formation_ref": "POSEIDON_SHALE",
+  "environment_details": {
+    "habitat": "PELAGIC_SHELF_SEA",
+    "flora": [
+      "Sargassum-like algae",
+      "Floating Crinoid rafts (Seirocrinus)"
+    ],
+    "fauna": [
+      "Stenopterygius",
+      "Belemnites",
+      "Ammonites (Harpoceras)"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; action-driven composition; high-fidelity textures; no text."
+  },
+  "visual_logic": {
+    "composition": "An organic game of peek-a-boo illustrating ecological protection. FOREGROUND CANOPY: A dense, vertical thicket of golden-brown Sargassum-like algae and trailing crinoid anchors fills the center-left frame. Peeking out from behind the thick strands are several small, highly expressive primitive belemnites and tiny fish, coverage-shielded as they playfully mock the larger animals. BACKGROUND UPPER RIGHT: Two large, beautifully rendered Stenopterygius marine reptiles swim by in a sleek, horizontal profile. They are squinting their eyes and scanning the open water, completely oblivious to the common prey hiding just inches away in the safety of the protective flora structure.",
+    "ground": "Flat, jet-black bituminous mud floor scattered with beautifully patterned, hollow ammonite shells.",
+    "background": "Deep indigo-to-black water columns creating an atmospheric perspective that isolates the warm tones of the algae.",
+    "lighting": "Bright afternoon surface light filtering weakly downwards through the floating crinoid rafts, casting soft, dappled golden highlights and long patterns across the hiding prey."
+  }
+}

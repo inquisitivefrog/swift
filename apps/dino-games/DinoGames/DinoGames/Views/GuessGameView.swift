@@ -126,6 +126,29 @@ private enum NameThatMarineReptileStorage {
     }
 }
 
+// MARK: - Marine Smile used-creature persistence (one fresh smiling reptile per tooth type when possible)
+
+private enum MarineSmileStorage {
+    static let usedCreatureIdsKey = "marineSmileUsedCreatureIds"
+
+    static func loadUsedCreatureIds() -> Set<Int> {
+        guard let array = UserDefaults.standard.array(forKey: usedCreatureIdsKey) as? [Int] else { return [] }
+        return Set(array)
+    }
+
+    static func appendUsedCreatureIds(_ ids: [Int]) {
+        var current = loadUsedCreatureIds()
+        current.formUnion(ids)
+        UserDefaults.standard.set(Array(current), forKey: usedCreatureIdsKey)
+    }
+
+    static func clearIfNeeded(playableCount: Int, roundCount: Int) {
+        if playableCount < roundCount {
+            UserDefaults.standard.removeObject(forKey: usedCreatureIdsKey)
+        }
+    }
+}
+
 // MARK: - Dino Footprints slot rotation (clade × size footprint images)
 
 private enum DinoFootprintsStorage {
@@ -722,8 +745,8 @@ struct GuessGameView: View {
     /// End-sequence success art: full 280pt victory card (larger than the 180pt level-2 picker art, which shares a row with two other games).
     private var guessGameSuccessImageSide: CGFloat {
         switch gameConfig.id {
-        case "name-that-dinosaur", "name-that-pterosaur", "name-that-marine-reptile",
-             "dino-footprints", "ptero-footprints", "dino-bones", "whose-bones":
+        case "name-that-dinosaur", "name-that-pterosaur", "name-that-marine-reptile", "marine-smile",
+             "dino-footprints", "ptero-footprints", "marine-footprints", "dino-bones", "whose-bones":
             return GameCatalogImageMetrics.nameThatVictorySuccessImageSide
         default:
             return 180
@@ -759,16 +782,26 @@ struct GuessGameView: View {
         )
     }
 
-    private var usesMarineGameSpecificFeedback: Bool {
-        gameConfig.id == "name-that-marine-reptile"
-    }
-
     private var correctGuessAudioKey: String {
-        usesMarineGameSpecificFeedback ? "game-name-that-marine-reptile-thats-right" : "thats-right-you-guessed-it"
+        switch gameConfig.id {
+        case "marine-smile":
+            return "game-name-that-marine-reptile-thats-right"
+        case "name-that-marine-reptile":
+            return "game-name-that-marine-reptile-thats-right"
+        default:
+            return "thats-right-you-guessed-it"
+        }
     }
 
     private var tryAgainAudioKey: String {
-        usesMarineGameSpecificFeedback ? "game-name-that-marine-reptile-try-again" : "try-again"
+        switch gameConfig.id {
+        case "marine-smile":
+            return "game-name-that-marine-reptile-try-again"
+        case "name-that-marine-reptile":
+            return "game-name-that-marine-reptile-try-again"
+        default:
+            return "try-again"
+        }
     }
 }
 
@@ -828,10 +861,10 @@ struct DinosaurOptionCard: View {
 
 // MARK: - Source Footprints Hints (Dino Footprints)
 
-/// One clade entry for the 2×2 source-footprints hints grid. Uses image set source-footprints-{clade} and audio `Footprints/dino-{clade}.m4a` (land); reserve `ptero-` / `marine-` prefixes in the same folder for future games.
+/// One clade entry for the Source Footprints hints grid. Uses `source-dino-footprints-{clade}` and audio `Footprints/dino-{clade}.m4a` (land); ptero/marine use separate source hint imagesets.
 private struct SourceFootprintCladeHint: Identifiable {
     let id: String
-    let imageName: String  // e.g. source-footprints-theropod (imageset name in Assets)
+    let imageName: String  // e.g. source-dino-footprints-theropod (imageset name in Assets)
     let displayName: String
     let audioKey: String  // e.g. footprint-therapod → Footprints/dino-theropod.m4a (audio file uses correct “theropod” spelling)
 }
@@ -962,7 +995,7 @@ private struct SourcePteroFootprintMorphHint: Identifiable {
     let id: String
     let imageName: String
     let displayName: String
-    /// `SpeechManager` key → `Pterosaur-Clades/clade-*.m4a`
+    /// `SpeechManager` key → `Ptero-Footprints/ptero-footprints-{clade}.m4a`
     let audioKey: String
 }
 
@@ -970,9 +1003,9 @@ private let sourcePteroFootprintsHintMorphs: [SourcePteroFootprintMorphHint] = P
     let stem = group == .transitional ? "transition" : group.rawValue
     return SourcePteroFootprintMorphHint(
         id: stem,
-        imageName: "source-footprint-\(stem)",
+        imageName: "source-ptero-footprints-\(stem)",
         displayName: group.displayName,
-        audioKey: "ptero-clade-\(group.cladeAudioSlug)"
+        audioKey: "ptero-footprints-\(stem)"
     )
 }
 
@@ -1842,7 +1875,76 @@ struct GuessGameConfigs {
             }
         )
     }
-    
+
+    // Marine Smile!: tooth reference image on top, three smiling marine reptiles below — one per tooth type per game (crusher, needle-spike, slicer). Same guess flow as Name That Marine Reptile.
+    static func makeMarineSmile() -> GuessGameConfig? {
+        let roundCount = 3
+        let all = MarineSmileMorphology.playableCreatures
+        guard all.count >= roundCount else { return nil }
+
+        let poolByType = MarineSmileMorphology.creaturesByToothType(in: all)
+        guard MarineSmileToothType.allCases.allSatisfy({ (poolByType[$0]?.isEmpty == false) }) else {
+            return nil
+        }
+        for type in MarineSmileToothType.allCases {
+            guard MarineSmileMorphology.referenceToothImageName(for: type) != nil else { return nil }
+        }
+
+        var usedIds = MarineSmileStorage.loadUsedCreatureIds()
+        func candidates(for type: MarineSmileToothType, excluding gameIds: Set<Int>) -> [Dinosaur] {
+            (poolByType[type] ?? []).filter { !usedIds.contains($0.id) && !gameIds.contains($0.id) }
+        }
+
+        var gameUsedIds: Set<Int> = []
+        var rounds: [RoundQuestion] = []
+        for (index, toothType) in MarineSmileToothType.allCases.shuffled().enumerated() {
+            var correctPool = candidates(for: toothType, excluding: gameUsedIds)
+            if correctPool.isEmpty {
+                MarineSmileStorage.clearIfNeeded(playableCount: all.count, roundCount: roundCount)
+                usedIds = []
+                correctPool = candidates(for: toothType, excluding: gameUsedIds)
+            }
+            guard let correct = correctPool.shuffled().first else { return nil }
+            gameUsedIds.insert(correct.id)
+
+            let decoys = MarineSmileMorphology.pickTwoDecoysOtherToothTypes(
+                correct: correct,
+                poolByType: poolByType,
+                excludedIds: gameUsedIds
+            )
+            guard decoys.count == 2 else { return nil }
+            gameUsedIds.formUnion(decoys.map(\.id))
+
+            guard let questionImageName = MarineSmileMorphology.referenceToothImageName(for: toothType) else {
+                return nil
+            }
+            var options = [correct] + decoys
+            options.shuffle()
+            rounds.append(
+                RoundQuestion(
+                    id: index + 1,
+                    questionImageName: questionImageName,
+                    questionImageFallback: questionImageName,
+                    correctAnswerId: correct.id,
+                    options: options
+                )
+            )
+        }
+
+        guard rounds.count == roundCount else { return nil }
+
+        return GuessGameConfig(
+            id: "marine-smile",
+            title: "Marine Smile!",
+            introAudio: "game-marine-smile",
+            rounds: rounds,
+            availableDinosaurs: all,
+            victorySideEffect: {
+                MarineSmileStorage.appendUsedCreatureIds(rounds.map(\.correctAnswerId))
+            }
+        )
+    }
+
     // Dino Footprints!: Each round shows `footprint-{clade}-{size}` for one footprint tier. Pool is sorted by size within each morphotype clade. Rotation cycles every occupiable (clade×size) slot so all bundled footprint tiers surface over time; each game prefers three distinct clades for decoys (two other morphotypes).
     static var dinoFootprints: GuessGameConfig {
         let landDinosaurs = MatchingGameConfigs.allDinosaurs.filter { $0.imageName?.hasPrefix("dino-") == true }

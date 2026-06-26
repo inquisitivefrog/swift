@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_001",
+    "species": "Mosasaurus hoffmannii",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "MAASTRICHT_FORMATION",
+    "visual_logic": {
+      "color_palette": "Dark slate-blue with a creamy-yellow underbelly and a subtle 'frill' of dark clay scales along the spine.",
+      "facial_silhouette": "Massive, powerful jaw with a prominent 'pterygoid' tooth row visible in the throat.",
+      "pattern_strategy": "Deep sea-green with 'cracked' vertical white stripes across the flank.",
+      "texture": "Small, overlapping diamond-shaped clay scales; glossy black eyes.",
+      "environment": "Vibrant blue water with long, horizontal underwater sunbeams cutting across the frame to establish a clear tracking line.",
+      "pose": "A full-body horizontal profile view stretching completely from the left edge to the right edge of the frame. The massive 15-to-17-meter body is aligned perfectly flat in the upper half of the image, keeping the bottom half clear so a second species can easily be drawn or stacked directly beneath it for side-by-side length comparison. Rather than breaching vertically, it cruises horizontally just beneath the surface, its long paddle-like flippers aligned flat along its side, and its powerful eel-like tail extending straight out to the side edge."
+    }
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "marine-smile-xenodens-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "marine-smile-xenodens-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "marine-smile-xenodens-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

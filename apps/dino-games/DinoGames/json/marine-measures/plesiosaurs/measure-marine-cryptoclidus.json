@@ -1,0 +1,15 @@
+[
+  {
+    "id": "GAME_CARD_PLESIO_CLAY_001_PROFILE",
+    "species": "Cryptoclidus eurymerus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_CLAY_MASTER",
+    "formation_ref": "OXFORD_CLAY",
+    "visual_logic": {
+      "color_palette": "Pale sea-foam green with dark forest-green 'tiger' stripes along the neck, mapping cleanly and evenly across the elongated horizontal profile.",
+      "texture": "Glossy 'wet clay' finish; visible interlocking needle-teeth made of white clay oriented perfectly parallel to the frame edge in a lateral profile view.",
+      "action": "Cruising steadily in a horizontal trajectory from left to right across the wide frame layout."
+    },
+    "pose": "A strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The original twisting neck action is completely unrolled into a flat, level, horizontal swimming path parallel to the frame boundaries. The long neck, robust clay torso, four extended paddle-flippers (flattened toward the camera plane), and tail stretch end-to-end to cleanly track alongside the central UI measuring tape system, while the small school of clay fish is moved entirely into the distant background layer to ensure an unobstructed silhouette path."
+  }
+]

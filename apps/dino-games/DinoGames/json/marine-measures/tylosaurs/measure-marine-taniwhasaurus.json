@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_TYLO_003_PROFILE",
+    "species": "Taniwhasaurus antarcticus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "CONWAY_FORMATION",
+    "habitat_ref": "EPICONTINENTAL_SEAWAY",
+    "visual_logic": {
+      "color_palette": "Muddy brown-green with 'Glauconitic' green highlights along the spine, running seamlessly from head to tail across its long horizontal profile.",
+      "pattern_strategy": "Jagged, vertical 'river-reed' stripes in dark tan across its side flank to help it camouflage in the silty Conway waters.",
+      "eyes": "Bright copper eyes with high reflectivity, facing laterally in the profile view.",
+      "environment": "Murky, 'Silt Grey' water with visible organic debris. Large, rounded calcareous concretions sit on the sea floor in the lower background layer to keep the reptile's profile clean and un-obscured."
+    },
+    "pose": "A strict side-profile view displaying the full horizontal length of the marine reptile swimming from left to right. To accommodate the length tracking format of the UI measuring tape, the serpentine S-curve is smoothed into a level, elongated horizontal swimming pose parallel to the frame edge, cleanly mapping out its streamlined neck, long torso, extended paddle flippers, and powerful sweeping tail fin."
+  }
+]

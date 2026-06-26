@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_JUDEA_3D_009_PROFILE",
+    "species": "Judeasaurus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "HVAR_DEPOSITS",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Tactile, leathery skin texture with 'Silver-Grey' and 'Coral White' highlights, running uniformly across its extended horizontal profile.",
+      "environment": "Fine white carbonate sand floor with refractive 'caustic' light patterns dancing on the reptile's back. Sand and lighting textures are layered into the background to preserve a sharp, measurable silhouette line.",
+      "facial_expression": "A signature friendly smirk and large, dark aquatic eyes oriented perfectly to face laterally in the frame."
+    },
+    "pose": "The small marine lizard is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original relaxed gliding pose is stabilized into a flat, level, straight cruising path, extending its smirking head, elongated torso, limbs (flattened toward the camera plane), and long tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

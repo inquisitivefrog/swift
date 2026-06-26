@@ -1,0 +1,15 @@
+[ 
+  {
+    "id": "char_kronosaurus_v3_PROFILE", 
+    "species": "Kronosaurus", 
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "formation_ref": "PAJA", 
+    "visual_identity": { 
+      "pattern_strategy": "Disruptive Orca-style masking; stark, large white patches over eyes and running horizontally along the lower flank, highly visible across the long profile view.", 
+      "integument": "Rough, leathery shark-skin with visible battle-scarring and parasite marks detailing its massive flank.",
+      "facial_silhouette": "Industrial-beam straight jawline; massive, exposed interlocking conical teeth even when the mouth is closed, oriented parallel to the frame edge." 
+    }, 
+    "pose": "A strict side-profile view capturing the full horizontal mass of the apex pliosaur as it swims steadily from left to right. Its large skull, barrel chest, all four massive paddle-flippers mid-stroke, and short tapering tail are fully extended horizontally to precisely trace alongside the UI measuring tape system. Water ripples smoothly over its high-contrast black and white hide." 
+  }
+]

@@ -1,0 +1,15 @@
+[
+  {
+    "id": "char_liopleurodon_v3_PROFILE",
+    "species": "Liopleurodon",
+    "style_id": "STYLE_CLAY_MASTER",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "formation_ref": "OXFORD_CLAY",
+    "visual_identity": {
+      "pattern_strategy": "Jagged 'Shattered' vertical stripes in charcoal and deep indigo for ambush camouflage, completely visible mapped across the broad lateral flank.",
+      "integument": "Smooth but thick hide with prominent sensory pits along the snout tip, shown clearly in side profile.",
+      "facial_silhouette": "Hydrodynamic triangular head with a slightly upturned 'predatory' snout, oriented parallel to the frame edge."
+    },
+    "pose": "A strict side-profile view capturing the full horizontal length and heavy mass of the apex pliosaur swimming steadily from left to right. The entire animal—from its elongated triangular snout down through its barrel body, broad paddle-flippers, and short tail—stretches levelly across the wide frame to perfectly align with the UI measuring tape system. It tracks cleanly through the Oxford Clay silts, with suspended muddy particulates restricted to the background layers to maintain a crisp, measurable silhouette line."
+  }
+]

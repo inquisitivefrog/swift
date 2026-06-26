@@ -16,6 +16,7 @@ final class ComparisonGameNegativeXCTests: XCTestCase {
     func testComparisonNegativeFeedbackAudioResolves() {
         let keys = [
             "thats-too-small-to-see",
+            "thats-too-big-to-see",
             "they-are-about-the-same-height",
             "they-both-weigh-about-the-same",
             "is-taller",
@@ -29,6 +30,7 @@ final class ComparisonGameNegativeXCTests: XCTestCase {
         let directory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Feedback")
         let stems = try TestBundleHelpers.audioStems(in: directory)
         XCTAssertTrue(stems.contains("thats-too-small-to-see"), "Missing Feedback/thats-too-small-to-see.m4a")
+        XCTAssertTrue(stems.contains("thats-too-big-to-see"), "Missing Feedback/thats-too-big-to-see.m4a")
     }
 
     // MARK: - Who Is Taller — height pairs (catalog-backed meters)
@@ -130,6 +132,57 @@ final class ComparisonGameNegativeXCTests: XCTestCase {
         XCTAssertEqual(ComparisonGameLogic.heightSecondPickResult(firstMeters: huge, secondMeters: tiny), .tooSmallToSee)
         XCTAssertEqual(ComparisonGameLogic.heightSecondPickResult(firstMeters: huge, secondMeters: medium), .allowed)
         XCTAssertEqual(ComparisonGameLogic.thatsTooSmallToSee, "thats-too-small-to-see")
+    }
+
+    func testMarineLengthComparison_blocksTinySecondAgainstGiantFirst() {
+        let shastasaurusM = 21.0
+        let henodusM = 1.0
+        let dallasaurusM = 3.0
+        let platecarpusM = 6.0
+
+        XCTAssertEqual(
+            ComparisonGameLogic.marineLengthSecondPickResult(firstMeters: shastasaurusM, secondMeters: henodusM),
+            .tooSmallToSee
+        )
+        XCTAssertEqual(
+            ComparisonGameLogic.marineLengthSecondPickResult(firstMeters: shastasaurusM, secondMeters: dallasaurusM),
+            .tooSmallToSee
+        )
+        XCTAssertEqual(
+            ComparisonGameLogic.marineLengthSecondPickResult(firstMeters: shastasaurusM, secondMeters: platecarpusM),
+            .allowed
+        )
+        XCTAssertFalse(
+            ComparisonGameLogic.rejectsSecondHeightPick(
+                firstMeters: shastasaurusM,
+                secondMeters: dallasaurusM,
+                isMarine: false
+            )
+        )
+    }
+
+    func testMarineLengthComparison_blocksHugeSecondAgainstTinyFirst() {
+        let mosasaurusM = 17.0
+        let dolichorhynchopsM = 3.5
+        let henodusM = 1.0
+        let globidensM = 6.0
+
+        XCTAssertEqual(
+            ComparisonGameLogic.marineLengthSecondPickResult(firstMeters: dolichorhynchopsM, secondMeters: mosasaurusM),
+            .tooBigToSee
+        )
+        XCTAssertEqual(
+            ComparisonGameLogic.marineLengthSecondPickResult(firstMeters: mosasaurusM, secondMeters: dolichorhynchopsM),
+            .tooSmallToSee
+        )
+        XCTAssertEqual(
+            ComparisonGameLogic.marineLengthSecondPickResult(firstMeters: henodusM, secondMeters: globidensM),
+            .tooBigToSee
+        )
+        XCTAssertEqual(
+            ComparisonGameLogic.marineLengthSecondPickResult(firstMeters: globidensM, secondMeters: henodusM),
+            .tooSmallToSee
+        )
     }
 
     // MARK: - Weigh the Dinosaur — weight pairs (catalog-backed kg)

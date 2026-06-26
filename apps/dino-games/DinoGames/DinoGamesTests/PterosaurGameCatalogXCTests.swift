@@ -86,6 +86,14 @@ final class PterosaurGameCatalogXCTests: XCTestCase {
             morphologiesAcrossGame.formUnion(roundMorphologies)
             let answerTeeth = Set(round.pairs.map(\.toothType))
             XCTAssertTrue(answerTeeth.isDisjoint(with: round.distractorToothTypes), "Dummy teeth must not match round answers")
+            let allTeethInRound = round.pairs.map(\.toothType) + round.distractorToothTypes
+            let playerKindsInRound = allTeethInRound.compactMap { PteroSmileMorphology.playerKind(for: $0) }
+            XCTAssertEqual(
+                playerKindsInRound.count,
+                Set(playerKindsInRound).count,
+                "Each round should have at most one tooth per player alias; got \(playerKindsInRound.map(\.displayLabel))"
+            )
+            XCTAssertEqual(playerKindsInRound.count, allTeethInRound.count)
         }
         XCTAssertEqual(morphologiesAcrossGame.count, 9, "Three rounds × three morphologies with no repeats across the game")
     }
@@ -134,11 +142,19 @@ final class PterosaurGameCatalogXCTests: XCTestCase {
         return match!
     }
 
-    func testPteroEggsVictoryRecapEggDisplayTitlesAreNonEmpty() {
+    func testPteroEggsVictoryRecapUsesSpeciesNamesNotClades() {
+        XCTAssertTrue(PteroEggMorphology.settings.victoryRecapUsesCreatureName)
+        XCTAssertTrue(PteroEggMorphology.settings.victoryRecapLabelUsesCreatureName)
         let morphology = PteroEggMorphology.morphology
         for round in PteroEggsGameConfigs.pteroEggs.rounds {
-            let title = morphology.eggDisplayTitle(for: round.eggType)
-            XCTAssertFalse(title.isEmpty, "Victory recap needs a label for egg clade `\(round.eggType)`")
+            let speciesTitle = round.correctCreature.name
+            let cladeTitle = morphology.eggDisplayTitle(for: round.eggType)
+            XCTAssertFalse(speciesTitle.isEmpty)
+            XCTAssertNotEqual(
+                speciesTitle,
+                cladeTitle,
+                "Victory recap should name the matched pterosaur (`\(speciesTitle)`), not the egg clade (`\(cladeTitle)`)"
+            )
         }
     }
 }

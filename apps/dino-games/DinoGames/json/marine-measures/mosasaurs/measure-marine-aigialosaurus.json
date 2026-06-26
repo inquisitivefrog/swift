@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_001_PROFILE",
+    "species": "Aigialosaurus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "HVAR_DEPOSITS",
+    "visual_logic": {
+      "color_palette": "Dark slate-blue with a creamy-yellow underbelly and a subtle 'frill' of dark clay scales along the spine, running continuously along its horizontal profile.",
+      "pattern_strategy": "Sun-dappled camouflage; pale sand-colored body with dark 'fractal' spots mapped cleanly across its horizontal lateral flank.",
+      "facial_silhouette": "Small, lizard-like head with large, alert eyes; transitional semi-aquatic features oriented perfectly to face laterally in the frame.",
+      "texture": "Small, overlapping diamond-shaped clay scales; glossy black eyes, rendered parallel to the camera plane.",
+      "environment": "Vibrant blue water. The massive white 'clay' splashes are shifted entirely into the distant background layers to preserve a sharp, measurable silhouette line."
+    },
+    "pose": "The primitive semi-aquatic mosasauroid is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original stationary rock-basking pose is unrolled and stabilized into a flat, level, straight cruising path. This stretches its lizard-like head, slender body with wet-look impasto highlights, limbs, and tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

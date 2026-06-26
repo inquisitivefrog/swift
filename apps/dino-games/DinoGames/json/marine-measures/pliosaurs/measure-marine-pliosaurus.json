@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_PLESIO_008_PROFILE",
+    "species": "Pliosaurus funkei",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "KIMMERIDGE_CLAY",
+    "visual_logic": {
+      "color_palette": "Orca-style black and white high-contrast coloring; smooth pearlescent clay texture.",
+      "action": "Cruising steadily in a horizontal trajectory from left to right across the wide frame.",
+      "environment": "Dark blue water matching the deep Kimmeridge depths. A high-detail clay Arietites ammonite is shifted into the distant background layer to prevent cluttering the horizontal silhouette path.",
+      "pose": "A strict, massive lateral profile view displaying the full length of the apex predator parallel to the frame. The animal is swimming horizontally, perfectly aligned with the tracking format of the measuring tape interface. Its massive jaws, short thick neck, powerful barrel-shaped body, and large horizontal flippers are fully extended, with the tail-fin rendered in a series of thick, expressive strokes at the trailing edge."
+    }
+  }
+]

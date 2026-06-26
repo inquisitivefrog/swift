@@ -138,9 +138,11 @@ enum MarineEggMorphology {
         playsTapScannerPrompt: true,
         showsCreatureNameOnCards: false,
         victoryRecapUsesCreatureName: true,
+        victoryRecapLabelUsesCreatureName: false,
         sourceHints: nil,
         sourceHintsTitle: "Source Eggs",
         sourceHintsGridIntroAudioKey: nil,
+        playsHintsButtonIntro: false,
         onVictoryComplete: { MarineReptileProgress.notifyCompletionIfMarineGame(configId: $0) }
     )
 

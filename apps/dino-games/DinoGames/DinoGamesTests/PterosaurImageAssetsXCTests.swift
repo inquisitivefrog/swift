@@ -96,8 +96,8 @@ final class PterosaurImageAssetsXCTests: XCTestCase {
         for group in PterosaurGuessGroup.allCases {
             let stem = group == .transitional ? "transition" : group.rawValue
             XCTAssertTrue(
-                known.contains("source-footprint-\(stem)"),
-                "Missing pterosaur source-footprint hint imageset for \(group.rawValue)"
+                known.contains("source-ptero-footprints-\(stem)"),
+                "Missing pterosaur source-ptero-footprints hint imageset for \(group.rawValue)"
             )
             for size in ["small", "medium", "large"] {
                 let tier = "ptero-footprint-\(stem)-\(size)"

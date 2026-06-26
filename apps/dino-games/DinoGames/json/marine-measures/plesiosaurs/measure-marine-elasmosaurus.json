@@ -1,0 +1,20 @@
+[
+  {
+    "id": "DINO_PLESIO_011",
+    "species": "Elasmosaurus platyurus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "framing_ref": "SQUARE_HERO_CARD",
+    "style_id": "STYLE_CLAY_MASTER",
+    "formation_ref": "PIERRE_SHALE",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "visual_logic": {
+      "color_palette": "Deep sea-foam green dorsal skin with dark forest-green 'racing stripes' along the entire neck; pale cream-colored underbelly.",
+      "texture": "Smooth, matte clay finish with high-gloss finish on the eyes and inside the mouth.",
+      "action": "A full-body horizontal profile view stretching completely from the left edge to the right edge of the frame. The massive, 14-meter body is aligned perfectly flat in the upper half of the image, keeping the bottom half clear so a second species can easily be drawn or stacked directly beneath it for side-by-side length comparison. Rather than curving its long neck into a double 'S' shape, its extraordinarily long neck is extended out perfectly straight and horizontal along the tracking line to showcase its full length.",
+      "environment": {
+        "water": "Slate blue water with long, horizontal underwater sunbeams cutting straight across the wide frame to establish a clear tracking line.",
+        "biota": "A school of small, silver-clay Enchodus fish darting horizontally in the background plane through the particulates (marine snow)."
+      }
+    }
+  }
+]

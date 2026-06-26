@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_TYLO_001",
+    "species": "Tylosaurus (Hainosaurus variant)",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "MAASTRICHT_FORMATION",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "visual_logic": {
+      "color_palette": "Military-olive green dorsal side with a pale cream underbelly; dark charcoal 'ramming' rostrum.",
+      "pattern_strategy": "Mottled slate-grey counter-shading along the flanks with a sharp red 'eye-mask' streak for character appeal.",
+      "eyes": "Cold, intelligent amber eyes with horizontal pupils.",
+      "environment": "Vibrant Oceanic Cyan water of the Maastricht; long, horizontal underwater sunbeams cutting across the frame to establish a clear tracking line with sharp caustic patterns on the creature's back."
+    },
+    "pose": "A full-body horizontal profile view stretching completely from the left edge to the right edge of the frame. The massive 13-to-14-meter body is aligned flat in the lower half of the image, keeping the top half clear so a second species can be drawn or stacked directly above it for side-by-side length comparison. Its long, heavy snout points straight forward, and the sweeping, shark-like tail fluke is positioned horizontally along the profile plane."
+  }
+]

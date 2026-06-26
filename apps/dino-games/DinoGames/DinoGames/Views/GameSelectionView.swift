@@ -260,12 +260,30 @@ struct GameSelectionView: View {
 
     private func autoLaunchNextGuidedGame() {
         guard guidedPlayMode, !showGameTransition else { return }
+        if GameCatalog.isCategoryFullyPlayed(category) {
+            finishGuidedCategoryAndReturnToMenu()
+            return
+        }
         guard let game = gameForGuidedAutoLaunch() else { return }
         guard isCurrentCategoryGamePlayable(game) else { return }
         if let canonical = GameCatalog.canonicalId(for: game, category: category) {
             persistPlaySession(gameCanonicalId: canonical)
         }
         handleGameTap(game)
+    }
+
+    /// Guided run finished every game in every visible level — return to the game-type menu immediately.
+    private func finishGuidedCategoryAndReturnToMenu() {
+        CategoryPlaySession.save(category: category, level: nil, gameCanonicalId: nil, guidedPlayMode: false)
+        speechManager.stopCurrentAudio()
+        speechManager.onAudioFinished = nil
+        isAudioPlaying = false
+        gameWalkIndex = nil
+        hasPlayedWelcome = true
+        landLevelIntermissionActive = false
+        guidedPendingLevelAdvance = false
+        pendingGuidedAutoLaunch = false
+        onReturnToCategoryMenu()
     }
 
     /// Guided post-game: level-up, category completion → top menu, or re-walk + next game.
@@ -275,14 +293,7 @@ struct GameSelectionView: View {
         }
         maybeAutoAdvanceToNextLevelAfterGameDismissed()
         if GameCatalog.isCategoryFullyPlayed(category) {
-            // Land, air, and marine: category complete → game type menu (no level intro replay).
-            CategoryPlaySession.save(category: category, level: nil, gameCanonicalId: nil, guidedPlayMode: false)
-            speechManager.stopCurrentAudio()
-            speechManager.onAudioFinished = nil
-            isAudioPlaying = false
-            gameWalkIndex = nil
-            hasPlayedWelcome = true
-            onReturnToCategoryMenu()
+            finishGuidedCategoryAndReturnToMenu()
             return
         }
         CategoryPlaySession.clearGameSlot()
@@ -827,6 +838,13 @@ private struct GameSelectionNavigationContent: View {
 
     private func runPostGameSheetDismissalSideEffects() {
         onPostGameSheetDismissalCleanup()
+        if guidedPlayMode && GameCatalog.isCategoryFullyPlayed(category) {
+            speechManager.stopCurrentAudio()
+            speechManager.onAudioFinished = nil
+            isAudioPlaying = false
+            gameWalkIndex = nil
+            return
+        }
         if shouldReplayLevelIntroAfterGameDismissed() {
             // Guided land / air / marine: same-level → next game directly; level-up → intermission + level intro only.
             if guidedPlayMode && !guidedPendingLevelAdvance {

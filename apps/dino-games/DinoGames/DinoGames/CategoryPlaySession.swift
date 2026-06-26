@@ -74,11 +74,13 @@ enum CategoryPlaySession {
 
     /// Guided auto-play until every game in every non-empty visible level has been completed once.
     static func shouldUseGuidedMode(for category: GameCategory) -> Bool {
-        !GameCatalog.isCategoryFullyPlayed(category)
+        if DeveloperSessionFlags.manualGameSelection { return false }
+        return !GameCatalog.isCategoryFullyPlayed(category)
     }
 
     /// True when we should restore into an in-progress guided run on cold start.
     static var hasResumableGuidedSession: Bool {
+        if DeveloperSessionFlags.manualGameSelection { return false }
         let snap = load()
         guard let category = snap.category, snap.guidedPlayMode else { return false }
         return shouldUseGuidedMode(for: category)

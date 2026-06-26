@@ -1,0 +1,21 @@
+[
+  {
+    "id": "GAME_CARD_PLATECARP_3D_044_PROFILE",
+    "species": "Platecarpus tympaniticus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "NIOBRARA_CHALK",
+    "habitat_ref": "EPICONTINENTAL_SEAWAY",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Hydrodynamic skin with 'Azure Blue' dorsal tones and 'Creamy White' countershading. Features very fine, diamond-shaped scales that create a subtle shimmering texture under direct light, mapped consistently along the full lateral profile.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. Hero focus remains heavily on the downward-bending 'hypocercal' tail fluke and the large, rounded flippers, which are extended parallel to the frame boundaries.",
+      "facial_expression": "Intelligent and alert; soulful amber eyes facing laterally with a focused predatory gaze.",
+      "environment": {
+        "water": "Crystal-clear turquoise water over a high-albedo 'Cream White' chalk floor.",
+        "biota": "The school of silvery 'Gillicus' fish is shifted entirely into the distant background layer to ensure the mosasaur's horizontal silhouette lines remain completely clean and measurable."
+      },
+      "pose": "The mosasaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original aggressive 45-degree banking turn is stabilized into a flat, level cruising path, extending its alert head, long torso, extended flippers, and distinct downward-curved tail fluke end-to-end to cleanly track along the central UI measuring tape system."
+    }
+  }
+]

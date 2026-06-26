@@ -1,0 +1,21 @@
+[
+  {
+    "id": "GAME_CARD_GILLICUS_3D_026_PROFILE",
+    "species": "Gillicus arcuatus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "NIOBRARA_CHALK",
+    "habitat_ref": "EPICONTINENTAL_SEAWAY",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Uniform 'Silver-Blue' metallic scales with a delicate and streamlined texture, running continuously along its horizontal profile.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The short, blunt snout, tiny fine teeth, and oversized eye are oriented perfectly parallel to the camera plane.",
+      "facial_expression": "Wide-eyed and alert with a 'startled' but soulful look, adjusted to face cleanly from a lateral perspective.",
+      "environment": {
+        "water": "Sun-drenched upper water column with suspended 'Cream White' chalk dust, balanced to keep the lateral outline completely measurable.",
+        "biota": "The massive floating rafts of sea lilies (Crinoids) and blurred schooling individuals in the bait ball are shifted entirely into the distant background layers to preserve a sharp, unobstructed silhouette line."
+      }
+    },
+    "pose": "The predatory ichthyodectid fish is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original dynamic mid-turn schooling pose is unrolled and stabilized into a flat, level, straight cruising path, extending its blunt head, streamlined torso, fins (flattened toward the camera plane), and deeply forked tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

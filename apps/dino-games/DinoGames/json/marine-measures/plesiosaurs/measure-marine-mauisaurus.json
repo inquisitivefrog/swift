@@ -1,0 +1,14 @@
+[
+  {
+    "id": "DINO_MAUI_016",
+    "species": "Mauisaurus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "CONWAY_FORMATION",
+    "visual_logic": {
+      "color_palette": "Dark silt-grey with brilliant 'Jarositic' yellow racing stripes along the spine.",
+      "environment": "Hazy dark-grey water with long, horizontal underwater sunbeams cutting straight across the wide frame to establish a clear tracking line and diffused yellow light shafts with floating sediment.",
+      "pose": "A full-body horizontal profile view stretching completely from the left edge to the right edge of the frame. The massive, 12-to-13-meter long body is aligned perfectly flat in the upper half of the image, keeping the bottom half clear so a second species can easily be drawn or stacked directly beneath it for side-by-side length comparison. Rather than bending its neck into an extreme S-curve or playful 'U' shape, its long neck and tail extend out straight and horizontal along the tracking line to showcase its maximum scale."
+    }
+  }
+]

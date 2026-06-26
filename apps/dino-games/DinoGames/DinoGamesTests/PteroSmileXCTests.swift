@@ -48,6 +48,19 @@ final class PteroSmileXCTests: XCTestCase {
         XCTAssertEqual(PteroSmileMorphology.toothAudioKey(for: "pebble-crushers"), "ptero-smile-peg")
     }
 
+    func testPteroSmileVictoryRecapDedupesPlayerLabels() {
+        let matchedSlugs = [
+            "crested-terminal-spikes",
+            "forward-protruding-spikes",
+            "spaced-raptor-fangs",
+            "pebble-crushers",
+        ]
+        let unique = smileVictoryRecapToothSlugs(matchedSlugs, line: .air)
+        XCTAssertEqual(unique.count, 2)
+        XCTAssertEqual(PteroSmileMorphology.playerLabel(for: unique[0]), "Fang")
+        XCTAssertEqual(PteroSmileMorphology.playerLabel(for: unique[1]), "Peg")
+    }
+
     func testPteroSmilePlayerAudioKeysListedInContract() {
         let keys = PterosaurGameAudioContracts.supplementalAudioKeys(forConfigId: "ptero-smile")
         let expected = PteroSmilePlayerToothKind.allCases.map(\.audioKey)
@@ -79,6 +92,14 @@ final class PteroSmileXCTests: XCTestCase {
             morphologiesAcrossGame.formUnion(roundMorphologies)
             let answerTeeth = Set(round.pairs.map(\.toothType))
             XCTAssertTrue(answerTeeth.isDisjoint(with: round.distractorToothTypes))
+            let allTeethInRound = round.pairs.map(\.toothType) + round.distractorToothTypes
+            let playerKindsInRound = allTeethInRound.compactMap { PteroSmileMorphology.playerKind(for: $0) }
+            XCTAssertEqual(
+                playerKindsInRound.count,
+                Set(playerKindsInRound).count,
+                "Each round should have at most one tooth per player alias (Fang, Peg, …); got \(playerKindsInRound.map(\.displayLabel))"
+            )
+            XCTAssertEqual(playerKindsInRound.count, allTeethInRound.count)
         }
         XCTAssertEqual(morphologiesAcrossGame.count, 9)
     }

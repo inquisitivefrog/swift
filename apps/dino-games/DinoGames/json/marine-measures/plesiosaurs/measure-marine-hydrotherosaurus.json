@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_HYDRO_014_PROFILE",
+    "species": "Hydrotherosaurus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "MORENO_FORMATION",
+    "visual_logic": {
+      "color_palette": "Steel-blue with striking white 'eye-spots' distributed evenly along the extended horizontal neck; pearlescent clay texture.",
+      "action": "Cruising levelly across the frame, fully extending its hyper-elongated neck anatomy.",
+      "environment": "Deep indigo water with sharp, prismatic god-rays filtering vertically down from the surface, creating an elegant backdrop that does not disrupt the long silhouette."
+    },
+    "pose": "A strict side-profile view specifically designed to account for the animal's extreme long-necked proportions. The coiled neck and vertical descent are fully unrolled into a straight, level horizontal line swimming from left to right parallel to the frame edge. This allows the exceptionally long neck, compact body, and tail to map cleanly and end-to-end against the UI's tracking measuring tape layout."
+  }
+]

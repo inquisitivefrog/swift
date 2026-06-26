@@ -1,0 +1,15 @@
+[
+  {
+    "id": "char_simolestes_v3_PROFILE",
+    "species": "Simolestes",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "OXFORD_CLAY",
+    "visual_identity": {
+      "pattern_strategy": "High-contrast zebra-like banding on the flippers only; solid dark charcoal body running continuously along its horizontal profile.",
+      "integument": "Thick, armor-like skin on the dorsal side, mapped uniformly across its full horizontal lateral flank.",
+      "facial_silhouette": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The comically blunt, short snout is oriented perfectly to face laterally in the frame."
+    },
+    "pose": "The robust pliosaurid is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original aggressive forward lunge and front-facing wide mouth are unrolled and stabilized into a flat, level, straight cruising path, extending its blunt pitbull-like head, short neck, powerful heavy torso, limbs (flattened toward the camera plane), and tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

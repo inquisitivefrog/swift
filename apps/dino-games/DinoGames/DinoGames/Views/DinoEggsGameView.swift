@@ -81,9 +81,11 @@ enum DinoEggMorphology {
         playsTapScannerPrompt: true,
         showsCreatureNameOnCards: false,
         victoryRecapUsesCreatureName: false,
+        victoryRecapLabelUsesCreatureName: false,
         sourceHints: sourceHints,
         sourceHintsTitle: "Source Eggs",
         sourceHintsGridIntroAudioKey: nil,
+        playsHintsButtonIntro: false,
         onVictoryComplete: { LandDinosaurProgress.notifyCompletionIfLandGame(configId: $0) }
     )
 

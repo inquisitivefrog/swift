@@ -11,7 +11,7 @@ import AVFoundation
 struct LandLevelIntermissionView: View {
     let category: GameCategory
     let level: GameLevel
-    /// Shorter level-image + crowd sequence for guided auto-play between levels.
+    /// Shorter badge flash + level-image + crowd sequence for guided auto-play between levels.
     var compact: Bool = false
     let onComplete: () -> Void
 
@@ -87,7 +87,7 @@ struct LandLevelIntermissionView: View {
     private func runIntermissionSequence() async {
         startCrowd()
 
-        let hasBadge = !compact && ImageAssetCache.imageExists(named: level.gameLevelBadgeImageName)
+        let hasBadge = ImageAssetCache.imageExists(named: level.gameLevelBadgeImageName)
         if hasBadge {
             for x in [0.22, 0.5, 0.78] as [CGFloat] {
                 withAnimation(.easeOut(duration: 0.16)) {

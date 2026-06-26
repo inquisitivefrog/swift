@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_001_KHINJARIA_PROFILE",
+    "species": "Khinjaria acuta",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "OULED_ABDOUN_BASIN",
+    "visual_logic": {
+      "color_palette": "Dark slate-blue with a creamy-yellow underbelly and a subtle 'frill' of dark clay scales along the spine, stretching horizontally from head to tail.",
+      "pattern_strategy": "High-contrast 'Phosphatic Gold' tiger-striping mapped vertically across its near-black, elongated horizontal hide.",
+      "facial_silhouette": "Nightmarish, shortened face with exceptionally high eyes and huge teeth, shown in a striking profile parallel to the frame edge.",
+      "texture": "Small, overlapping diamond-shaped clay scales; glossy black eyes facing laterally.",
+      "environment": "Vibrant blue water with massive white 'clay' splashes pushed to the outer perimeter and background layers to prevent breaking the subject's clean silhouette path."
+    },
+    "pose": "A strict side-profile view capturing the full horizontal length of the specialized mosasaur swimming steadily from left to right. The original vertical descent is converted into a level, horizontal cruising path parallel to the frame boundaries, allowing its high-set eyes, robust shortened skull, long torso, and powerful tail to track flawlessly alongside the UI's measuring tape system."
+  }
+]

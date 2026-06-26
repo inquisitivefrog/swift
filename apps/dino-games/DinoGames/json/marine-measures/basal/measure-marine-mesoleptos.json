@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_MESOLEP_3D_012_PROFILE",
+    "species": "Mesoleptos",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "HVAR_DEPOSITS",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Fine, smooth scales with 'Turquoise' and 'Oceanic Cyan' dappled patterns for camouflage, running continuously along its horizontal profile.",
+      "environment": "Sun-drenched shallow water. The 'Ancestral Seagrass' and school of small prehistoric fish are pushed entirely into the distant background layers to preserve a clean, measurable silhouette line.",
+      "lighting_logic": "Midday sun creating crisp shadows on the seafloor to ground the 3D model, with light elements smoothed to keep the lateral boundaries sharp."
+    },
+    "pose": "The marine reptile is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original dynamic, predatory neck curve is completely unrolled and stabilized into a flat, level cruising path, allowing its head, elongated torso, paddling limbs (flattened toward the camera plane), and tail to stretch end-to-end to trace flawlessly alongside the central UI measuring tape system."
+  }
+]

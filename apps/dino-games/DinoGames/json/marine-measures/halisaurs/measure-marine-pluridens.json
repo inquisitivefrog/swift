@@ -1,0 +1,21 @@
+[
+  {
+    "id": "GAME_CARD_PLURI_3D_017_PROFILE",
+    "species": "Pluridens calabariensis",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "NKPORO_SHALE",
+    "habitat_ref": "COASTAL_LOWLANDS",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Thick, leathery skin with 'Dark Green-Grey' mottling; tactile ridges along the spine for a more 'armored' appearance, clearly visible running horizontally along its back.",
+      "anatomy_focus": "Strict profile view emphasizing the full horizontal length of the animal. Hero focus remains on the jaw—extremely long, displayed parallel to the frame, with an unusual abundance of small, sharp teeth ('Pluridens' meaning 'many teeth') exposed.",
+      "facial_expression": "A rugged, 'tough' look with deep-set, soulful amber eyes visible in profile view.",
+      "environment": {
+        "water": "Murky 'River-Silt' brown transitioning to deep teal; reflecting a high-energy coastal environment.",
+        "biota": "Mangrove-like 'Roots' submerged in the background and schools of large, armored fish swimming horizontally alongside."
+      },
+      "pose": "The animal is oriented entirely in a side-profile view, swimming horizontally from left to right across the card to maximize the utilization of the horizontal layout. Its mouth is slightly agape to showcase the unique dental arrangement and extreme jaw length, perfectly aligning with the tracking layout of the game's measuring tape mechanics."
+    }
+  }
+]

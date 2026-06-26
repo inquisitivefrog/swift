@@ -1,0 +1,25 @@
+{
+  "id": "marineflora_diet_match_hint_card",
+  "type": "HINT_CARD",
+  "tech_ref": "SQUARE_ASPECT_RATIO",
+  "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+  "formation_ref": "HAKEL_FORMATION",
+  "environment_details": {
+    "habitat": "EPICONTINENTAL_SEAWAY",
+    "flora": [
+      "Thalassotaenia (Ancestral Seagrass)"
+    ],
+    "fauna": [
+      "Small marine lizards",
+      "Eurypholis (long-snouted fish)",
+      "Stomatopods (Mantis shrimp)"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; character-driven physical comedy; expressive facial animations; no text."
+  },
+  "visual_logic": {
+    "composition": "A humorous underwater interaction scene. IN THE CENTER: The friendly paleontologist character 'dino_bones_paleontologist_4' is floating weightlessly, wearing a bright yellow scuba tank and a diving mask customized to fit perfectly over his signature thin-rimmed BLACK aviator lens glasses. He holds out a wicker basket overflowing with hard-shelled ammonites, offering them like treats. SURROUNDING HIM: Three stylized marine reptiles float in a circle, wearing deeply unimpressed, stubborn expressions. One turns its back entirely to stare at a school of sleek Eurypholis fish, another uses a front flipper to plug its nose, and the third pushes the basket away with a single polite but firm claw, showcasing that hard-shelled durophagous food is definitely not on their menu.",
+    "ground": "Pale, high-albedo chalky seafloor with scattered white inoceramid shells and patches of green seagrass.",
+    "background": "Crystal-clear shallow turquoise ocean waters shimmering with sunlit depth and soft-edged shadows.",
+    "lighting": "Bright, direct midday sunlight cutting down through the shallow water column, throwing crisp refractive patterns across the character's dive suit and the sleek hides of the reptiles."
+  }
+}

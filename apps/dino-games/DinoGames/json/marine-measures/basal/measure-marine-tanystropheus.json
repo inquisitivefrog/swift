@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_TANY_3D_013_PROFILE",
+    "species": "Tanystropheus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "SOLNHOFEN",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Leathery, 'Ivory' and 'Soft Beige' skin with subtle specular highlights on the neck vertebrae, running continuously along its hyper-elongated horizontal profile.",
+      "environment": "White limestone 'Plattenkalk' floor with high-key ground reflection. Ground elements are shifted entirely into the lowest background layers to preserve a crisp lower silhouette.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The impossibly long, stiff neck remains the hero element, aligned completely straight and parallel to the frame boundaries."
+    },
+    "pose": "The unique reptile is oriented entirely in a strict lateral profile view, positioned horizontally from left to right parallel to the frame boundaries. The original stationary sandbar crane pose is converted into a flat, level horizontal trajectory, stretching its small head, hyper-extended rod-like neck, compact torso, limbs, and long tail end-to-end to trace flawlessly alongside the central UI measuring tape system."
+  }
+]

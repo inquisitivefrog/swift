@@ -1,0 +1,16 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_006_PROFILE",
+    "species": "Prognathodon currii",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "MAASTRICHT_FORMATION",
+    "visual_logic": {
+      "color_palette": "Rusty-orange with a pale grey belly; heavy matte-clay skin texture running smoothly across the full length of the animal.",
+      "environment": "Dark slate water with silver 'marine snow' floating in the background layers, keeping the perimeter crisp and clean around the subject's silhouette.",
+      "pattern_strategy": "Solid dark lead-grey with 'scuffed' silver highlights on the brow, fully visible in a lateral view.",
+      "facial_silhouette": "Heavy, reinforced 'bulldog' jaw with massive vertical depth, shown perfectly in profile view parallel to the frame edge."
+    },
+    "pose": "A strict side-profile view capturing the full horizontal length and heavy mass of the massive mosasaur as it swims steadily from left to right. The animal is aligned flat across the wide card layout to flawlessly match the tracking format of the UI's measuring tape system. Its massive bulldog-like head, thick body, extended paddle flippers, and heavy hypocercal tail fin span the frame horizontally with its sun-lit eyes facing laterally."
+  }
+]

@@ -1,0 +1,21 @@
+[
+  {
+    "id": "GAME_CARD_PLACO_3D_020_PROFILE",
+    "species": "Placodus gigas",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "SOLNHOFEN",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Thick, leathery skin with 'Dull Ochre' and 'Sandy Tan' tones, featuring a row of small, rounded bony knobs along the spine running continuously across its horizontal profile.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. Hero focus remains on the forward-jutting incisors and the massive flat crushing plates inside the jaw, oriented parallel to the camera plane.",
+      "facial_expression": "A slightly comical, 'stout' expression with a signature friendly smirk adjusted to face cleanly from a lateral perspective.",
+      "environment": {
+        "water": "Shallow water over a rocky sea floor with abundant brachiopods and bivalve clusters, balanced to keep the lateral outline completely measurable.",
+        "biota": "The scattered shells and 'Ancestral Seagrass' are shifted entirely into the distant background layers to preserve a sharp, measurable silhouette line."
+      }
+    },
+    "pose": "The placodont reptile is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original downward diving pose toward the seabed is unrolled and stabilized into a flat, level, straight cruising path, stretching its stout, smirking snout, armored torso, limbs, and tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

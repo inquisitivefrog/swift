@@ -1,0 +1,20 @@
+[
+  {
+    "id": "GAME_CARD_ENCHODUS_3D_025_PROFILE",
+    "species": "Enchodus petrosus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "NAVESINK_FORMATION",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "DUSK_SILHOUETTE",
+    "visual_logic": {
+      "surface_detail": "Slender, needle-like body with 'Iridescent Violet' and 'Slate' tones; very smooth, small-scale texture running continuously along its horizontal profile.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. Hero focus remains on the 'Saber-Teeth' fangs at the front of the jaw, oriented perfectly parallel to the camera plane.",
+      "environment": {
+        "water": "Deep olive-tinted 'Greensand' water, balanced to keep the lateral outline completely measurable.",
+        "biota": "The cloud of bubbles, high particulate marine snow, and distant silhouettes of giant mosasaurs are shifted entirely into the lowest background layers to preserve a sharp, unobstructed silhouette line."
+      }
+    },
+    "pose": "The saber-toothed predatory fish is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. Its straight, arrow-like trajectory is stabilized into a flat, level, straight cruising path, extending its fanged head, slender torso, fins (flattened toward the camera plane), and tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

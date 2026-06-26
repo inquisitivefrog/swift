@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_ATTEN_013_PROFILE",
+    "species": "Attenborosaurus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "BLUE_LIAS",
+    "visual_logic": {
+      "color_palette": "Slate-grey skin with sharp, charcoal-blue dorsal patches and a brilliant white throat, mapping cleanly across the hyper-long neck and lateral flank.",
+      "action": "Cruising steadily in a horizontal trajectory from left to right across the wide layout frame.",
+      "environment": "Turquoise shallow water. The floating crinoid rafts and belemnites are shifted entirely into the distant background layers to keep the long silhouette path completely unobstructed."
+    },
+    "pose": "A strict side-profile view configured to properly display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The original 45-degree tilted head and curious neck posture are unrolled into a flat, level, horizontal swimming path parallel to the frame edges. The long neck, streamlined torso, four extended flippers, and tail stretch end-to-end to align perfectly with the UI's tracking measuring tape layout, with its mouth adjusted parallel to the frame to maintain a friendly 'smirk'."
+  }
+]

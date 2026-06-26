@@ -1,0 +1,26 @@
+{
+  "id": "pteroflora_diet_hint_card",
+  "type": "HINT_CARD",
+  "tech_ref": "SQUARE_ASPECT_RATIO",
+  "lighting_ref": "DAPPLED_OPEN",
+  "formation_ref": "JIUFOTANG",
+  "environment_details": {
+    "habitat": "FORESTED_VOLCANIC_LAKE_SYSTEM",
+    "flora": [
+      "Early birch-like trees (fruiting branch structures)",
+      "Paleopus herbs (flowering/sprouting ground plants)"
+    ],
+    "fauna": [
+      "Small herbivorous pterosaur feeding on botanical growth",
+      "Early Cretaceous insects (lacewings/beetles swarm)",
+      "Insectivorous pterosaur snapping an insect out of mid-air"
+    ],
+    "style_notes": "STYLE_ANIMATED_FEATURE_V3; action-driven composition; clear cause-and-effect relationship; no text."
+  },
+  "visual_logic": {
+    "composition": "The scene displays two distinct interactive feeding behaviors. ON THE LOWER LEFT: A small, specialized pterosaur is delicately plucking early seed-pods or proto-fruits directly from the low branches of a birch-like tree. ON THE UPPER RIGHT: A lush patch of Paleopus flowers has attracted a buzzing swarm of primitive lacewings and beetles. A quick, agile pterosaur is frozen mid-dive, its beak wide open as it snaps up an insect hovering right above the blossoms, clearly showing how the flora acts as an ecological magnet for its food source.",
+    "ground": "Slippery, light-colored grey-green volcanic mud covered in fallen leaves.",
+    "background": "Deep blue-green caldera lake visible through the dense hardwood tree trunks.",
+    "lighting": "Bright afternoon sun filtered through thin leaves, casting warm highlights and dappled patterns across the foraging animals."
+  }
+}

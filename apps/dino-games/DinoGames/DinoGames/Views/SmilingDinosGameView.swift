@@ -32,6 +32,14 @@ enum SmileGameLine {
     case air
 }
 
+/// First tooth slug per player-facing label for victory recap (Ptero aliases collapse duplicates).
+func smileVictoryRecapToothSlugs(_ slugs: [String], line: SmileGameLine) -> [String] {
+    var seenLabels = Set<String>()
+    return slugs.filter { slug in
+        seenLabels.insert(dinoSmileToothDisplayName(slug, line: line)).inserted
+    }
+}
+
 /// Play tooth/beak shape audio. Land tries dino-smile-{toothType} variants; air tries ptero-smile-tooth-{toothType}.
 private func playToothAudio(
     speechManager: SpeechManager,
@@ -462,9 +470,9 @@ struct SmilingDinosGameView: View {
     // MARK: - Victory (shared: recap tooth shapes → success stinger → good-job + crowd)
 
     /// Deduplicated tooth types for victory display (preserves order of first appearance).
+    /// Ptero Smile maps many morphology slugs to the same player label (e.g. three "Fang"s); recap shows each label once.
     private var victoryToothTypesUnique: [String] {
-        var seen = Set<String>()
-        return victoryToothTypes.filter { seen.insert($0).inserted }
+        smileVictoryRecapToothSlugs(victoryToothTypes, line: gameConfig.line)
     }
 
     private var smileVictoryRecapItems: [VictoryRecapDisplayItem] {
@@ -857,7 +865,7 @@ struct SmilingDinosGameConfigs {
     }
 
     /// Three rounds × three morphology families (no family repeats across rounds).
-    /// Each round: one random playable pterosaur + tooth per family, plus two random dummy teeth.
+    /// Each round: one playable pterosaur per family, plus two dummy teeth — at most one tooth per player alias (Fang, Peg, …) so pairs stay unambiguous.
     private static func buildPteroSmileRounds(from pool: [Dinosaur]) -> [SmilingDinosRound]? {
         var byCategory: [String: [Dinosaur]] = [:]
         for ptero in pool {
@@ -873,32 +881,101 @@ struct SmilingDinosGameConfigs {
         var rounds: [SmilingDinosRound] = []
 
         for roundId in 1...3 {
-            let needed = SmilingDinosRound.creaturesPerRound
-            guard remainingCategories.count >= needed else { break }
-
-            let roundCategories = Array(remainingCategories.prefix(needed))
-            remainingCategories.removeFirst(needed)
-
-            var pairs: [(Dinosaur, String)] = []
-            var roundToothSlugs: Set<String> = []
-            for category in roundCategories {
-                guard let ptero = (byCategory[category] ?? []).shuffled().first,
-                      let toothSlug = PteroSmileMorphology.smileToothType(for: ptero) else { continue }
-                pairs.append((ptero, toothSlug))
-                roundToothSlugs.insert(toothSlug)
+            guard let picked = tryPickPteroSmileRound(
+                roundId: roundId,
+                byCategory: byCategory,
+                remainingCategories: remainingCategories,
+                allToothSlugs: allToothSlugs
+            ) else { break }
+            rounds.append(picked.round)
+            for category in picked.usedCategories {
+                remainingCategories.removeAll { $0 == category }
             }
-            guard pairs.count == needed else { break }
-
-            let distractorPool = allToothSlugs.subtracting(roundToothSlugs)
-            guard distractorPool.count >= SmilingDinosRound.distractorTeethPerRound else { break }
-            let distractors = Array(distractorPool.shuffled().prefix(SmilingDinosRound.distractorTeethPerRound))
-            guard distractors.count == SmilingDinosRound.distractorTeethPerRound,
-                  Set(distractors).count == SmilingDinosRound.distractorTeethPerRound else { break }
-
-            rounds.append(SmilingDinosRound(id: roundId, pairs: pairs, distractorToothTypes: distractors))
         }
 
         guard rounds.count >= 3 else { return nil }
         return Array(rounds.prefix(3))
+    }
+
+    private static func tryPickPteroSmileRound(
+        roundId: Int,
+        byCategory: [String: [Dinosaur]],
+        remainingCategories: [String],
+        allToothSlugs: Set<String>
+    ) -> (round: SmilingDinosRound, usedCategories: [String])? {
+        let needed = SmilingDinosRound.creaturesPerRound
+        guard remainingCategories.count >= needed else { return nil }
+
+        for _ in 0..<64 {
+            let trialCategories = Array(remainingCategories.shuffled().prefix(needed))
+            guard let pairs = pickPteroPairsWithDistinctPlayerKinds(
+                categories: trialCategories,
+                byCategory: byCategory
+            ), pairs.count == needed else { continue }
+
+            let usedSlugs = Set(pairs.map(\.1))
+            let usedKinds = Set(pairs.compactMap { PteroSmileMorphology.playerKind(for: $0.0) })
+            guard usedKinds.count == needed else { continue }
+
+            guard let distractors = pickPteroDistractorTeeth(
+                from: allToothSlugs,
+                excludingSlugs: usedSlugs,
+                excludingKinds: usedKinds,
+                count: SmilingDinosRound.distractorTeethPerRound
+            ) else { continue }
+
+            return (
+                SmilingDinosRound(id: roundId, pairs: pairs, distractorToothTypes: distractors),
+                trialCategories
+            )
+        }
+        return nil
+    }
+
+    /// One pterosaur per morphology family, each with a distinct player tooth alias.
+    private static func pickPteroPairsWithDistinctPlayerKinds(
+        categories: [String],
+        byCategory: [String: [Dinosaur]]
+    ) -> [(Dinosaur, String)]? {
+        func search(
+            index: Int,
+            pairs: [(Dinosaur, String)],
+            usedKinds: Set<PteroSmilePlayerToothKind>
+        ) -> [(Dinosaur, String)]? {
+            if index >= categories.count { return pairs }
+            let category = categories[index]
+            for ptero in (byCategory[category] ?? []).shuffled() {
+                guard let toothSlug = PteroSmileMorphology.smileToothType(for: ptero),
+                      let kind = PteroSmileMorphology.playerKind(for: ptero),
+                      !usedKinds.contains(kind) else { continue }
+                if let result = search(
+                    index: index + 1,
+                    pairs: pairs + [(ptero, toothSlug)],
+                    usedKinds: usedKinds.union([kind])
+                ) {
+                    return result
+                }
+            }
+            return nil
+        }
+        return search(index: 0, pairs: [], usedKinds: [])
+    }
+
+    private static func pickPteroDistractorTeeth(
+        from allToothSlugs: Set<String>,
+        excludingSlugs: Set<String>,
+        excludingKinds: Set<PteroSmilePlayerToothKind>,
+        count: Int
+    ) -> [String]? {
+        var usedKinds = excludingKinds
+        var picked: [String] = []
+        for slug in allToothSlugs.subtracting(excludingSlugs).shuffled() {
+            guard let kind = PteroSmileMorphology.playerKind(for: slug),
+                  !usedKinds.contains(kind) else { continue }
+            picked.append(slug)
+            usedKinds.insert(kind)
+            if picked.count == count { return picked }
+        }
+        return nil
     }
 }

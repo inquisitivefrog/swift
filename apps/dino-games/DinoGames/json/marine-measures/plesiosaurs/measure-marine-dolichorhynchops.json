@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_DOLIC_015_PROFILE",
+    "species": "Dolichorhynchops",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "NIOBRARA_CHALK",
+    "visual_logic": {
+      "color_palette": "Azure-blue body with a high-contrast black 'mask' around the eyes and a pale cream underbelly, running continuously along its horizontal profile.",
+      "action": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The swift darting motion is stabilized parallel to the frame boundaries.",
+      "environment": "Bright azure water with a high-albedo chalky white seafloor visible below. The school of silver clay fish is shifted entirely into the distant background layers to preserve a sharp, measurable silhouette line."
+    },
+    "pose": "The polycotylid plesiosaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original dynamic lunge is unrolled and stabilized into a flat, level, straight cruising path, extending its long beak-like snout, compact aerodynamic torso, flippers (tucked and aligned to the camera plane), and short tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

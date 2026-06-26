@@ -1,0 +1,17 @@
+[
+  {
+    "id": "GAME_CARD_MOSA_CLAY_003_PROFILE",
+    "species": "Clidastes propython",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_CLAY_MASTER",
+    "framing_ref": "WIDE_PROFILE_CARD",
+    "formation_ref": "NIOBRARA_CHALK",
+    "visual_logic": {
+      "color_palette": "Light sandy-tan with dark chocolate 'jagged' stripes; glossy white clay teeth visible within the jaw structure.",
+      "environment": "Clear sunlit water with shimmering caustic light patterns. Light effects are layered entirely into the background to preserve a sharp, measurable silhouette line.",
+      "pattern_strategy": "Counter-shaded 'Azure Blue' and 'Cream White' with a jagged 'lightning' stripe along the lateral line, mapping cleanly across the expansive horizontal flank.",
+      "facial_silhouette": "Streamlined and narrow; optimized for high-speed pursuit, aligned in a strict profile view parallel to the frame edge."
+    },
+    "pose": "The small mosasaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original tight, serpentine curve is unrolled into a flat, level, straight cruising path. This stretches its narrow skull, slender torso, paddle-flippers, and tail end-to-end to cleanly track along the central UI measuring tape system for precise top-by-bottom length analysis. The tail-fluke remains stylized as a splash of vibrant, semi-translucent paint but is flattened to stay parallel to the frame."
+  }
+]

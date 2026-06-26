@@ -1,0 +1,20 @@
+[
+  {
+    "id": "GAME_CARD_HENODUS_3D_018_PROFILE",
+    "species": "Henodus chelyops",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "SOLNHOFEN",
+    "habitat_ref": "TROPICAL_ISLAND_LAGOONS",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Broad, square-shaped 'bony shield' with a tactile, weathered stone texture on top and soft, pale-peach skin on the underside, displayed cleanly across its horizontal profile.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The broad, extremely flat head with its wide mouth is oriented completely parallel to the frame edge, keeping the small, soulful eye positioned side-on.",
+      "environment": {
+        "water": "Shallow, crystalline turquoise water with refractive 'caustics' dancing on the armor, balanced to keep the lateral outline completely measurable.",
+        "biota": "The white carbonate sand bed, Triassic algae, and small floating crustaceans are shifted entirely into the lowest background layers to preserve a sharp, measurable silhouette line."
+      }
+    },
+    "pose": "The turtle-like placodont is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original stationary resting pose on the sand bed is converted into a flat, level, straight cruising path, extending its flat skull, box-like armored carapace, short limbs, and tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

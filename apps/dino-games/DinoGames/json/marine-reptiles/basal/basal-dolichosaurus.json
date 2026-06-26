@@ -1,17 +1,19 @@
+and this one please.
+
 [
-  {
-    "id": "GAME_CARD_DOLICHO_3D_008",
-    "species": "Dolichosaurus",
-    "tech_ref": "DEFAULT_SQUARE",
-    "style_id": "STYLE_ANIMATED_FEATURE_V3",
-    "formation_ref": "WEALDEN",
-    "habitat_ref": "COASTAL_LOWLANDS",
-    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
-    "visual_logic": {
-      "surface_detail": "Soft, pebbled lizard scales with a slight iridescent sheen; moss-green dorsal palette transitioning to a pale cream underbelly.",
-      "environment": "Shallow brackish water with floating 'Salviniales' (water ferns).",
-      "cinematic_effect": "Subtle 'god-rays' penetrating the water to highlight the 3D volume of the elongated neck."
-    },
-    "pose": "Coiled playfully around a submerged conifer branch, head turned toward the camera with an expressive, curious gaze."
-  }
+  {
+    "id": "GAME_CARD_DOLICHO_3D_008",
+    "species": "Dolichosaurus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "WEALDEN",
+    "habitat_ref": "COASTAL_LOWLANDS",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Soft, pebbled lizard scales with a slight iridescent sheen; moss-green dorsal palette transitioning to a pale cream underbelly.",
+      "environment": "Shallow brackish water with floating 'Salviniales' (water ferns).",
+      "cinematic_effect": "Subtle 'god-rays' penetrating the water to highlight the 3D volume of the elongated neck."
+    },
+    "pose": "Coiled playfully around a submerged conifer branch, head turned toward the camera with an expressive, curious gaze."
+  }
 ]

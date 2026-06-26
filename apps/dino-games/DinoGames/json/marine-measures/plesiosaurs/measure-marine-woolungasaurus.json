@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_WOOLU_021_PROFILE",
+    "species": "Woolungasaurus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "PAJA",
+    "visual_logic": {
+      "color_palette": "Rusty-orange with deep iron-grey counter-shading and a pale buff throat, mapping cleanly across the hyper-elongated neck and lateral flank.",
+      "action": "Cruising steadily in a horizontal trajectory from left to right across the wide frame, showing powerful, rhythmic flipper strokes.",
+      "environment": "Deep Sea Blue water with orange sediment clouds. The large coiled ammonites are shifted entirely into the distant background layer to ensure the long silhouette path remains unobstructed."
+    },
+    "pose": "A strict side-profile view configured to properly account for the animal's extreme long-necked elasmosaurid proportions. The diagonal forward lunge is unrolled into a flat, level horizontal swimming path parallel to the frame edges. The exceptionally long neck, robust torso, four extended paddle-flippers, and tail stretch end-to-end to align perfectly with the UI's tracking measuring tape layout, with its mouth slightly open parallel to the frame to showcase its blunt clay teeth."
+  }
+]

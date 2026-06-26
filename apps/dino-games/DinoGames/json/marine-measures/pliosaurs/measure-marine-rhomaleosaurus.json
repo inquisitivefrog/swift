@@ -1,0 +1,15 @@
+[
+  {
+    "id": "char_rhomaleosaurus_v4_PROFILE",
+    "species": "Rhomaleosaurus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "BLUE_LIAS",
+    "visual_identity": {
+      "technique": "Layered dry-brushing; highlights use 'Pyrite Gold' impasto to create a metallic, mineral-flecked skin texture, mapped evenly along its horizontal profile.",
+      "lighting": "Atmospheric scattering; soft, diffused 'Limestone White' glow from above hitting the powerful neck muscles, illuminating the lateral profile cleanly.",
+      "patterning": "High-contrast 'Charcoal' banding on the flippers, rendered with aggressive, quick palette-knife swipes, with the paddles flattened to the camera plane."
+    },
+    "pose": "The rhomaleosaurid is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original 'S-curve' banking turn is completely unrolled into a flat, level, straight cruising path. This layout configuration stretches its robust skull, powerful intermediate-length neck, broad torso, and tail end-to-end to cleanly trace alongside the central UI measuring tape system for precise top-by-bottom length comparisons."
+  }
+]

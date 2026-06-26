@@ -72,6 +72,10 @@ enum PteroEggMorphology {
         imageLookupKey: { bundledImageKey(forClade: $0) }
     )
 
+    static let sourceHints: [EggsSourceHint] = [
+        EggsSourceHint(id: "shape", imageName: "source-ptero-eggs-shape", displayName: "Shape", audioKey: "ptero-hint-shape"),
+    ]
+
     static let settings = EggsGameSettings(
         morphology: morphology,
         gameKeyPrefix: "game-ptero-eggs",
@@ -87,10 +91,12 @@ enum PteroEggMorphology {
         playsEggNestNameIntro: false,
         playsTapScannerPrompt: true,
         showsCreatureNameOnCards: false,
-        victoryRecapUsesCreatureName: false,
-        sourceHints: nil,
+        victoryRecapUsesCreatureName: true,
+        victoryRecapLabelUsesCreatureName: true,
+        sourceHints: sourceHints,
         sourceHintsTitle: "Source Eggs",
-        sourceHintsGridIntroAudioKey: nil,
+        sourceHintsGridIntroAudioKey: "game-ptero-eggs-tap-the-image",
+        playsHintsButtonIntro: true,
         onVictoryComplete: { PterosaurProgress.notifyCompletionIfPterosaurGame(configId: $0) }
     )
 }

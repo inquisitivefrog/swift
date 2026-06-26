@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_MURAE_018_PROFILE",
+    "species": "Muraenosaurus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "OXFORD_CLAY",
+    "visual_logic": {
+      "color_palette": "Pale lavender-grey with dark navy-blue 'dappled' spots; high-gloss highlights on skin mapped continuously along the extended lateral flank.",
+      "action": "Cruising steadily in a horizontal trajectory from left to right across the wide layout frame.",
+      "environment": "Murky greenish-grey water with high-detail suspended particulates (marine snow) restricted to background layers to keep the outline clean."
+    },
+    "pose": "A strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The original horizontal neck posture is stabilized into a perfectly flat, level swimming path parallel to the frame boundaries. The exceptionally long neck, rounded torso, paddle-flippers (flattened to the camera plane), and tail extend end-to-end to trace cleanly alongside the central UI measuring tape system."
+  }
+]

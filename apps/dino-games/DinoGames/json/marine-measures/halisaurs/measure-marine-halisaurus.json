@@ -1,0 +1,20 @@
+[
+  {
+    "id": "GAME_CARD_HALI_3D_015_PROFILE",
+    "species": "Halisaurus platyspondylus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "NAVESINK_FORMATION",
+    "habitat_ref": "PELAGIC_SHELF_SEA",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Smooth, hydrodynamic skin with a 'Slate Blue' dorsal palette and 'Creamy White' underbelly; very fine, almost invisible scale texture, mapped uniformly across its extended horizontal profile.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. Hero focus remains on the snake-like, elongated body and the small, primitive flippers displaying visible digit structures parallel to the camera plane.",
+      "environment": {
+        "water": "Cold, olive-tinted 'Greensand' water with high nutrient density and floating marine snow.",
+        "biota": "The clusters of coiled ammonites and 'Ancestral Seagrass' are shifted entirely into the distant background layers to preserve a sharp, measurable silhouette line."
+      }
+    },
+    "pose": "The halisaurine mosasaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original wide 'S-curve' eel-like undulation is unrolled and stabilized into a flat, level, straight cruising path. This configuration stretches its tapered head, elongated serpentine torso, primitive flippers, and tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

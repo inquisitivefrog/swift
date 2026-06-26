@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_APHRO_012_PROFILE",
+    "species": "Aphrosaurus",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "MORENO_FORMATION",
+    "visual_logic": {
+      "color_palette": "Deep sea-foam green with silvery-white high-contrast underbelly markings, running continuously along its horizontal profile.",
+      "action": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The elegant neck curve is stabilized parallel to the frame boundaries.",
+      "environment": "Deep Cobalt water. The suspended marine snow, distant silhouetted squid, and white-clay cavitation bubbles are shifted entirely into the background layers to preserve a sharp, measurable silhouette line."
+    },
+    "pose": "The elasmosaurid plesiosaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original curved gliding and active downward stroke pose is stabilized into a flat, level, straight cruising path, extending its head, hyper-elongated neck, streamlined torso, flippers (flattened toward the camera plane), and tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

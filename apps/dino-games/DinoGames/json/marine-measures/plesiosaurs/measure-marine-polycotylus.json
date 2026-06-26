@@ -1,0 +1,15 @@
+[
+  {
+    "id": "DINO_PLESIO_010_PROFILE",
+    "species": "Polycotylus latipinnis",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_CLAY_MASTER",
+    "formation_ref": "PIERRE_SHALE",
+    "visual_logic": {
+      "color_palette": "Earth-tone brown and tan with dark mahogany 'racing stripes', running continuously along its horizontal profile.",
+      "action": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. The mid-flap motion is stabilized parallel to the frame boundaries.",
+      "environment": "Grey-blue water. The drifting seagrass fragments and organic particulates are shifted entirely into the distant background layers to preserve a sharp, measurable silhouette line."
+    },
+    "pose": "The short-necked polycotylid plesiosaur is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original dynamic angled flipper pose is unrolled and stabilized into a flat, level, straight cruising path, extending its elongated jaws, thick muscular torso, broad paddles (flattened toward the camera plane), and short tail end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]

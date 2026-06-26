@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "measure-marine-grendelius-80.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "measure-marine-grendelius-160.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "measure-marine-grendelius-240.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "id": "char_megacephalosaurus_v3_PROFILE",
+    "species": "Megacephalosaurus",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "formation_ref": "CARLILE_SHALE",
+    "visual_identity": {
+      "pattern_strategy": "Bold 'Racing Stripes' in oxide-red running horizontally from the brow, across the massive skull, down to the shoulders, fully tracking along its side profile.",
+      "integument": "Rugged, pebbled texture particularly thick around the massive, compact neck transition.",
+      "facial_silhouette": "Oversized 'Block-Head' silhouette; the skull depth is massive, creating a powerful 'Bulldog' facial profile oriented parallel to the frame edge."
+    },
+    "pose": "A strict side-profile view capturing the full horizontal length and heavy mass of the large-headed pliosaur as it swims steadily from left to right. The animal is aligned straight across the horizontal card layout to precisely trace alongside the UI measuring tape system. Its iconic oversized 'Block-Head' skull, broad body, paddle-flippers, and short tail are extended parallel to the frame, with cinematic sunlight casting down from the top edge to accentuate its massive horizontal silhouette outlines."
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "GAME_CARD_METRIO_3D_028_PROFILE",
+    "species": "Metriorhynchus geoffroyi",
+    "tech_ref": "WIDE_WEIGHT_CARD",
+    "style_id": "STYLE_ANIMATED_FEATURE_V3",
+    "formation_ref": "WESSEX",
+    "habitat_ref": "COASTAL_LOWLANDS",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "visual_logic": {
+      "surface_detail": "Sleek, 'Oceanic Blue' skin with 'Silver-Grey' countershading on the belly, completely smooth like a dolphin's skin, running continuously along its horizontal profile.",
+      "anatomy_focus": "Strict side-profile view configured to display the animal's maximum horizontal length for accurate top-by-bottom size comparisons. Hero focus remains on the four paddle-like flippers and the downward-curved tail vertebrae supporting the fluke, oriented parallel to the camera plane.",
+      "environment": {
+        "water": "Deep teal water with diffused sunlight rays, balanced to keep the lateral outline completely measurable.",
+        "biota": "The marine snow, school of 'Leptolepis' fish, and forest of kelp-like algae are shifted entirely into the distant background layers to preserve a sharp, unobstructed silhouette line."
+      }
+    },
+    "pose": "The fully marine metriorhynchid crocodyliform is oriented entirely in a strict lateral profile view, swimming horizontally from left to right parallel to the frame boundaries. The original dynamic high-speed mid-roll chase pose is unrolled and stabilized into a flat, level, straight cruising path, extending its elongated snout, streamlined torso, differentiated paddle limbs, and hypocercal tail fluke end-to-end to cleanly track alongside the central UI measuring tape system."
+  }
+]
