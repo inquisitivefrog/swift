@@ -118,6 +118,7 @@ enum PterosaurGameAudioContracts {
                 "game-ptero-eggs-gameplay-directions",
                 "game-dino-eggs-beep",
                 "game-dino-eggs-scan-failed",
+                "game-dino-eggs-tap-the-scanner",
                 "game-hint",
                 "game-ptero-eggs-tap-the-image",
                 "ptero-hint-shape",
@@ -222,17 +223,13 @@ enum PterosaurGameAudioContracts {
         return config.allMaterials.map { $0.audioKey(for: .ptero) }
     }
 
-    /// Egg/nest narration under `Audio/Eggs/Pterosaurs/` (checked on disk in `PterosaurGameAudioFilesXCTests`).
+    /// Egg/nest narration under `Audio/Ptero-Eggs/` (checked on disk in `PterosaurGameAudioFilesXCTests`).
     static func pteroEggsMorphotypeAudioKeysOnDisk() -> [String] {
         var keys: [String] = []
-        for clade in PteroEggMorphology.shippedClades {
+        for clade in PteroEggMorphology.shippedClades.sorted() {
             let bundled = PteroEggMorphology.bundledImageKey(forClade: clade)
             keys.append("ptero-eggs-\(bundled)")
-            keys.append("ptero-nests-\(bundled)")
-            if bundled != clade {
-                keys.append("ptero-eggs-\(clade)")
-                keys.append("ptero-nests-\(clade)")
-            }
+            keys.append("ptero-eggs-nests-\(bundled)")
         }
         return keys
     }

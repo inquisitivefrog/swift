@@ -3,6 +3,7 @@
 //  DinoGames
 //
 //  Marine Eggs!: sea eggs game using shared EggsGameView (same CT-scanner flow as Dino/Ptero Eggs).
+//  Audio: morphotype clips under `Audio/Marine-Eggs/` (hint under `Marine-Eggs/hints/`); gameplay UI under `Audio/Games/`.
 //
 //  Round kinds:
 //  - **Nest + egg** (`marine-eggs-egg-{slug}` + `marine-eggs-nest-{slug}`): main image alternates nest ↔ egg;

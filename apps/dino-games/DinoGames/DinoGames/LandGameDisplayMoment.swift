@@ -842,6 +842,7 @@ enum LandGameDisplayMomentCatalog {
             )
         }
         let config = PteroEggsGameConfigs.pteroEggs
+        let morphology = PteroEggMorphology.morphology
         for round in config.rounds {
             if let moment = creatureMoment(
                 gameId: "ptero-eggs",
@@ -850,8 +851,31 @@ enum LandGameDisplayMomentCatalog {
             ) {
                 moments.append(moment)
             }
-            // Egg/nest triads omitted until `ptero-eggs-{clade}` / `ptero-nests-{clade}` narration ships
-            // (see `PterosaurGameAudioFilesXCTests.testPteroEggsMorphotypeAudioResolvesInBundleWhenPresent`).
+            let eggImage = morphology.eggImageName(eggType: round.eggType)
+            moments.append(
+                LandGameDisplayMoment(
+                    gameConfigId: "ptero-eggs",
+                    context: "round \(round.id) egg \(round.eggType)",
+                    triad: LandGameDisplayTriad(
+                        id: round.eggType,
+                        displayText: morphology.eggDisplayTitle(for: round.eggType),
+                        imageAssetName: eggImage,
+                        audioKey: morphology.eggAudioKey(eggType: round.eggType)
+                    )
+                )
+            )
+            moments.append(
+                LandGameDisplayMoment(
+                    gameConfigId: "ptero-eggs",
+                    context: "round \(round.id) nest \(round.nestingStyle)",
+                    triad: LandGameDisplayTriad(
+                        id: "\(round.nestingStyle)-nest",
+                        displayText: morphology.nestingFallbackText(round.nestingStyle),
+                        imageAssetName: morphology.nestingImageName(style: round.nestingStyle),
+                        audioKey: morphology.nestingAudioKey(style: round.nestingStyle)
+                    )
+                )
+            )
         }
         return moments
     }
@@ -1169,7 +1193,6 @@ enum LandGameDisplayMomentCatalog {
             )
         }
         guard let config = MarineEggsGameConfigs.makeMarineEggs() else { return moments }
-        let morphology = MarineEggMorphology.morphology
         for round in config.rounds {
             if let moment = creatureMoment(
                 gameId: "marine-eggs",
@@ -1178,19 +1201,7 @@ enum LandGameDisplayMomentCatalog {
             ) {
                 moments.append(moment)
             }
-            let eggImage = morphology.eggImageName(eggType: round.eggType)
-            moments.append(
-                LandGameDisplayMoment(
-                    gameConfigId: "marine-eggs",
-                    context: "round \(round.id) egg \(round.eggType)",
-                    triad: LandGameDisplayTriad(
-                        id: round.eggType,
-                        displayText: morphology.eggDisplayTitle(for: round.eggType),
-                        imageAssetName: eggImage,
-                        audioKey: morphology.eggAudioKey(eggType: round.eggType)
-                    )
-                )
-            )
+            // Egg slug triads omitted until `marine-eggs-{slug}` narration ships under `Audio/Marine-Eggs/`.
         }
         return moments
     }
@@ -1235,23 +1246,11 @@ enum LandGameDisplayMomentCatalog {
 
     private static func marineSmileMoments() -> [LandGameDisplayMoment] {
         var moments: [LandGameDisplayMoment] = []
-        for type in MarineSmileToothType.allCases {
-            guard let toothImage = MarineSmileMorphology.referenceToothImageName(for: type) else { continue }
-            moments.append(
-                LandGameDisplayMoment(
-                    gameConfigId: "marine-smile",
-                    context: "reference tooth \(type.rawValue)",
-                    triad: LandGameDisplayTriad(
-                        id: type.rawValue,
-                        displayText: type.displayName,
-                        imageAssetName: toothImage,
-                        audioKey: type.toothAudioKey
-                    )
-                )
-            )
-        }
+        // Reference tooth + per-portrait `marine-smile-*` narration omitted until Marine-Smile audio ships.
         for creature in MarineSmileMorphology.playableCreatures {
-            guard let smileImage = creature.imageName, !creature.name.isEmpty else { continue }
+            guard let smileImage = creature.imageName,
+                  let bodyAudio = marineBodyPortraitAssetName(forSmileAsset: smileImage),
+                  !creature.name.isEmpty else { continue }
             moments.append(
                 LandGameDisplayMoment(
                     gameConfigId: "marine-smile",
@@ -1260,12 +1259,24 @@ enum LandGameDisplayMomentCatalog {
                         id: "smile-\(creature.id)",
                         displayText: creature.name,
                         imageAssetName: smileImage,
-                        audioKey: smileImage
+                        audioKey: bodyAudio
                     )
                 )
             )
         }
         return moments
+    }
+
+    private static func marineBodyPortraitAssetName(forSmileAsset smileAsset: String) -> String? {
+        guard smileAsset.hasPrefix("marine-smile-") else { return nil }
+        let slug = String(smileAsset.dropFirst("marine-smile-".count))
+        let slugCandidates = [slug, "pllioplatecarpus" == slug ? "plioplatecarpus" : nil].compactMap { $0 }
+        for candidate in slugCandidates {
+            if let match = SeaMarineReptileData.allMarineReptiles.first(where: { $0.imageName?.hasSuffix("-\(candidate)") == true })?.imageName {
+                return match
+            }
+        }
+        return nil
     }
 
     static func creatureMoment(

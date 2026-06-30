@@ -91,11 +91,11 @@ final class LandDinosaurGameAudioFilesXCTests: XCTestCase {
     }
 
     func testDinoEggsMorphotypeAudioExistsOnDisk() throws {
-        let directory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Eggs")
+        let directory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Dino-Eggs")
         let stems = try TestBundleHelpers.audioStems(in: directory)
         let clades = LandDinosaurGameAudioContracts.supplementalAudioKeys(forConfigId: "dino-eggs")
             .filter { $0.hasPrefix("dino-eggs-") && !$0.contains("scans") && !$0.hasPrefix("game-") }
         let missing = Set(clades).subtracting(stems).sorted()
-        XCTAssertTrue(missing.isEmpty, "Missing Dino Eggs clade narration under Eggs/: \(missing)")
+        XCTAssertTrue(missing.isEmpty, "Missing Dino Eggs clade narration under Dino-Eggs/: \(missing)")
     }
 }

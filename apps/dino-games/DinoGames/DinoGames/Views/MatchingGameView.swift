@@ -200,7 +200,7 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         if normalized == "racing-dinosaurs" || normalized == "racing dinosaurs" {
             if let url = resolveURL(forPath: "Games/game-racing-dinosaurs") { return url }
         }
-        // Dino Eggs UI clips: `Games/{file}` or `Games/dino-eggs/{file}` (egg morphotype keys `dino-eggs-*` stay under `Audio/Eggs/`).
+        // Dino Eggs UI clips: `Games/{file}` or `Games/dino-eggs/{file}` (morphotype keys `dino-eggs-*` → `Audio/Dino-Eggs/`).
         if normalized.hasPrefix("game-dino-eggs") {
             if let url = resolveURL(forPath: "Games/\(normalized)") { return url }
         }
@@ -364,7 +364,7 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         let fileName = (audioPath as NSString).lastPathComponent
         if let resourcePath = Bundle.main.resourcePath, let enumerator = FileManager.default.enumerator(atPath: resourcePath) {
             // Require the parent folder in the match path so e.g. `Dinosaur-Clades/stegosaur` does not pick up
-            // `Eggs/dino-eggs-stegosaur.m4a` (same basename suffix) during fuzzy search.
+            // `Dino-Eggs/dino-eggs-stegosaur.m4a` (same basename suffix) during fuzzy search.
             let requiredSubdir: String?
             if audioPath.contains("/") {
                 let dir = ((audioPath as NSString).deletingLastPathComponent as String).lowercased()
@@ -1253,15 +1253,19 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         // Marine Smile (when bundled): marine-smile-* → Marine-Smile/{key}.m4a
         case _ where normalized.hasPrefix("marine-smile-"):
             return "Marine-Smile/\(normalized)"
-        // Ptero Eggs: ptero-eggs-{clade} / ptero-nests-{clade} → Eggs/Pterosaurs/{key}.m4a
-        case _ where normalized.hasPrefix("ptero-eggs-") || normalized.hasPrefix("ptero-nests-"):
-            return "Eggs/Pterosaurs/\(normalized)"
-        // Marine Eggs: marine-eggs-{slug} → Eggs/Marine-Reptiles/{key}.m4a (when bundled)
+        // Ptero Eggs morphotype narration under Audio/Ptero-Eggs/ (`ptero-eggs-{clade}`, `ptero-eggs-nests-{clade}`).
+        case _ where normalized.hasPrefix("ptero-eggs-"):
+            return "Ptero-Eggs/\(normalized)"
+        // Legacy nest alias before bundled `ptero-eggs-nests-*` keys shipped.
+        case _ where normalized.hasPrefix("ptero-nests-"):
+            let suffix = String(normalized.dropFirst("ptero-nests-".count))
+            return "Ptero-Eggs/ptero-eggs-nests-\(suffix)"
+        // Marine Eggs morphotype narration under Audio/Marine-Eggs/ (`marine-eggs-{slug}`, `marine-eggs-nest-{slug}` when bundled).
         case _ where normalized.hasPrefix("marine-eggs-"):
-            return "Eggs/Marine-Reptiles/\(normalized)"
-        // Dino Eggs: dino-eggs-* → Eggs/dino-eggs-{eggType}.m4a for egg intro audio
+            return "Marine-Eggs/\(normalized)"
+        // Dino Eggs morphotype narration under Audio/Dino-Eggs/ (`dino-eggs-{clade}`, `dino-eggs-nesting-{style}`, scans).
         case _ where normalized.hasPrefix("dino-eggs-"):
-            return "Eggs/\(normalized)"
+            return "Dino-Eggs/\(normalized)"
         // Dino Toothache: dino-toothache-* → Toothache/dino-toothache-{slug}.m4a for tooth intro audio
         case _ where normalized.hasPrefix("dino-toothache-"):
             return "Toothache/\(normalized)"

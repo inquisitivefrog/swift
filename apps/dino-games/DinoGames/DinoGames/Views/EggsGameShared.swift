@@ -36,6 +36,8 @@ struct EggsMorphology {
     let imageLookupKey: ((String) -> String)?
     /// When set (Marine Eggs), spoken egg keys use `marine-eggs-{slug}` instead of `marine-eggs-egg-{slug}`.
     let eggAudioKeyResolver: ((String) -> String)?
+    /// When set (Ptero Eggs), nest narration uses bundled clade suffix (e.g. `ptero-eggs-nests-transition`).
+    let nestAudioKeyResolver: ((String) -> String)?
 
     init(
         assetPrefix: String,
@@ -49,7 +51,8 @@ struct EggsMorphology {
         randomColorsAsset: @escaping (String) -> String?,
         eggImageNameResolver: ((String) -> String)? = nil,
         imageLookupKey: ((String) -> String)? = nil,
-        eggAudioKeyResolver: ((String) -> String)? = nil
+        eggAudioKeyResolver: ((String) -> String)? = nil,
+        nestAudioKeyResolver: ((String) -> String)? = nil
     ) {
         self.assetPrefix = assetPrefix
         self.nestAssetPrefix = nestAssetPrefix
@@ -63,6 +66,7 @@ struct EggsMorphology {
         self.eggImageNameResolver = eggImageNameResolver
         self.imageLookupKey = imageLookupKey
         self.eggAudioKeyResolver = eggAudioKeyResolver
+        self.nestAudioKeyResolver = nestAudioKeyResolver
     }
 
     func bundledImageKey(forClade clade: String) -> String {
@@ -118,6 +122,7 @@ struct EggsMorphology {
     }
 
     func nestingAudioKey(style: String) -> String {
+        if let nestAudioKeyResolver { return nestAudioKeyResolver(style) }
         switch assetStyle {
         case .cladeBased:
             if let nest = nestAssetPrefix { return "\(nest)-\(style)" }

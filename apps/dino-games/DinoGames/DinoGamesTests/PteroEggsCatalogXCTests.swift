@@ -38,6 +38,107 @@ final class PteroEggsCatalogXCTests: XCTestCase {
         XCTAssertTrue(ImageAssetNames.knownAssets.contains(PteroEggMorphology.scanAssetName(forClade: "basal")))
     }
 
+    func testUndiscoveredEggCladesAreExcludedFromShippedCatalog() {
+        let undiscovered: Set<String> = ["tapejarid", "thalassodromid"]
+        XCTAssertFalse(
+            undiscovered.isSubset(of: PteroEggMorphology.shippedClades),
+            "Tapejarid and thalassodromid eggs are not discovered yet; keep them out of shipped clades"
+        )
+        for clade in undiscovered {
+            XCTAssertFalse(PteroEggMorphology.shippedClades.contains(clade))
+        }
+    }
+
+    func testUndiscoveredCladePterosaursHaveNoEggType() {
+        let undiscoveredGroups: Set<PterosaurGuessGroup> = [.tapejarid, .thalassodromid]
+        let undiscoveredPterosaurs = MatchingGameConfigs.allPterosaurs.filter { ptero in
+            guard let imageName = ptero.imageName,
+                  let group = PterosaurGuessGroup.guessGroup(forImageName: imageName) else { return false }
+            return undiscoveredGroups.contains(group)
+        }
+        XCTAssertFalse(
+            undiscoveredPterosaurs.isEmpty,
+            "Expected tapejarid/thalassodromid pterosaurs in the registry for this gate test"
+        )
+        for ptero in undiscoveredPterosaurs {
+            XCTAssertNil(
+                PteroEggMorphology.eggType(for: ptero),
+                "\(ptero.name) (`\(ptero.imageName ?? "")`) should not map to an egg clade until eggs are discovered"
+            )
+        }
+    }
+
+    func testUndiscoveredEggCladesRemainOutsideEggGameAssetsAndAudio() throws {
+        let undiscovered = ["tapejarid", "thalassodromid"]
+        let known = ImageAssetNames.knownAssets
+        let morphology = PteroEggMorphology.morphology
+
+        for clade in undiscovered {
+            XCTAssertFalse(known.contains(morphology.eggImageName(eggType: clade)))
+            XCTAssertFalse(known.contains(morphology.nestingImageName(style: clade)))
+            XCTAssertFalse(known.contains(PteroEggMorphology.scanAssetName(forClade: clade)))
+        }
+
+        let morphotypeKeys = PterosaurGameAudioContracts.pteroEggsMorphotypeAudioKeysOnDisk()
+        for clade in undiscovered {
+            XCTAssertFalse(morphotypeKeys.contains("ptero-eggs-\(clade)"))
+            XCTAssertFalse(morphotypeKeys.contains("ptero-eggs-nests-\(clade)"))
+        }
+
+        let directory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Ptero-Eggs")
+        let stems = try TestBundleHelpers.audioStems(in: directory)
+        for clade in undiscovered {
+            XCTAssertFalse(stems.contains("ptero-eggs-\(clade)"))
+            XCTAssertFalse(stems.contains("ptero-eggs-nests-\(clade)"))
+        }
+
+        for round in PteroEggsGameConfigs.pteroEggs.rounds {
+            XCTAssertFalse(undiscovered.contains(round.eggType))
+            XCTAssertFalse(undiscovered.contains(round.nestingStyle))
+        }
+    }
+
+    func testPteroEggsMorphotypeAudioIsCheckedSeparatelyFromMainContract() {
+        let morphotypeKeys = Set(PterosaurGameAudioContracts.pteroEggsMorphotypeAudioKeysOnDisk())
+        let mainContractKeys = Set(PterosaurGameAudioContracts.allRequiredKeys(forConfigId: "ptero-eggs"))
+
+        XCTAssertFalse(morphotypeKeys.isEmpty)
+        XCTAssertTrue(
+            mainContractKeys.isDisjoint(with: morphotypeKeys),
+            "Morphotype narration stays on the dedicated on-disk contract, not `requiredAudioKeys`"
+        )
+        XCTAssertTrue(morphotypeKeys.contains("ptero-eggs-basal"))
+        XCTAssertFalse(mainContractKeys.contains("ptero-eggs-basal"))
+    }
+
+    func testTransitionalEggAndNestAudioUseBundledTransitionSuffix() {
+        let morphology = PteroEggMorphology.morphology
+        XCTAssertEqual(morphology.eggAudioKey(eggType: "transitional"), "ptero-eggs-transition")
+        XCTAssertEqual(morphology.nestingAudioKey(style: "transitional"), "ptero-eggs-nests-transition")
+    }
+
+    func testTransitionalEggNestAndScanImagesUseBundledTransitionSuffix() {
+        XCTAssertEqual(PteroEggMorphology.bundledImageKey(forClade: "transitional"), "transition")
+        XCTAssertEqual(PteroEggMorphology.bundledImageKey(forClade: "basal"), "basal")
+
+        let morphology = PteroEggMorphology.morphology
+        XCTAssertEqual(morphology.eggImageName(eggType: "transitional"), "ptero-eggs-transition")
+        XCTAssertEqual(morphology.nestingImageName(style: "transitional"), "ptero-nests-transition")
+        XCTAssertEqual(PteroEggMorphology.scanAssetName(forClade: "transitional"), "ptero-eggs-scan-transition")
+        XCTAssertEqual(morphology.randomColorsAsset("transitional"), "ptero-eggs-transition")
+
+        let known = ImageAssetNames.knownAssets
+        XCTAssertTrue(known.contains("ptero-eggs-transition"))
+        XCTAssertTrue(known.contains("ptero-nests-transition"))
+        XCTAssertTrue(known.contains("ptero-eggs-scan-transition"))
+
+        let transitionalPterosaur = MatchingGameConfigs.allPterosaurs.first {
+            $0.imageName == "ptero-trans-darwinopterus"
+        }
+        XCTAssertNotNil(transitionalPterosaur)
+        XCTAssertEqual(PteroEggMorphology.eggType(for: transitionalPterosaur!), "transitional")
+    }
+
     func testPteroEggsVictoryUsesCreatureNameRecap() {
         XCTAssertTrue(PteroEggMorphology.settings.victoryRecapUsesCreatureName)
         XCTAssertTrue(PteroEggMorphology.settings.victoryRecapLabelUsesCreatureName)
@@ -63,6 +164,11 @@ final class PteroEggsCatalogXCTests: XCTestCase {
         XCTAssertEqual(Set(config.rounds.map(\.correctCreature.id)).count, 3)
     }
 
+    func testPteroEggsConfigBuildsThreeDistinctEggClades() {
+        let config = PteroEggsGameConfigs.pteroEggs
+        XCTAssertEqual(Set(config.rounds.map(\.eggType)).count, 3)
+    }
+
     func testPteroEggsPickerAndSuccessArt() {
         let known = ImageAssetNames.knownAssets
         XCTAssertTrue(known.contains("game-ptero-eggs"), "Missing picker art: game-ptero-eggs")
@@ -73,11 +179,15 @@ final class PteroEggsCatalogXCTests: XCTestCase {
         )
     }
 
-    func testPteroEggsDisplayMomentsIncludeSourceHintsAndCreatureTriads() {
+    func testPteroEggsDisplayMomentsIncludeSourceHintsCreatureEggAndNestTriads() {
         let hintMoments = eggsMoments.filter { $0.context.hasPrefix("source-hint ") }
         XCTAssertEqual(hintMoments.count, PteroEggMorphology.sourceHints.count)
         let creatureMoments = eggsMoments.filter { $0.context.contains(" creature") }
         XCTAssertEqual(creatureMoments.count, 3, "Expected one creature triad per round")
+        let eggMoments = eggsMoments.filter { $0.context.contains(" egg ") }
+        XCTAssertEqual(eggMoments.count, 3, "Expected one egg triad per round")
+        let nestMoments = eggsMoments.filter { $0.context.contains(" nest ") }
+        XCTAssertEqual(nestMoments.count, 3, "Expected one nest triad per round")
     }
 
     func testPteroEggsDisplayMomentsHaveImagesInAssetCatalog() {
@@ -137,20 +247,64 @@ final class PteroEggsCatalogXCTests: XCTestCase {
         }
     }
 
+    func testPteroEggsMorphotypeAudioFilesExistOnDisk() throws {
+        let directory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Ptero-Eggs")
+        let stems = try TestBundleHelpers.audioStems(in: directory)
+        let keys = PterosaurGameAudioContracts.pteroEggsMorphotypeAudioKeysOnDisk()
+        let missing = Set(keys).subtracting(stems).sorted()
+        XCTAssertTrue(
+            missing.isEmpty,
+            "Missing Ptero Eggs morphotype narration under Ptero-Eggs/: \(missing)"
+        )
+    }
+
     func testPteroEggsSourceHintAssetsAndAudioExist() throws {
         XCTAssertEqual(PteroEggMorphology.sourceHints.count, 1)
-        for hint in PteroEggMorphology.sourceHints {
-            XCTAssertTrue(ImageAssetNames.knownAssets.contains(hint.imageName))
-        }
-        let directory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Games")
-        let stems = try TestBundleHelpers.audioStems(in: directory)
-        XCTAssertTrue(stems.contains("game-ptero-eggs-tap-the-image"))
+        let hint = PteroEggMorphology.sourceHints[0]
+        XCTAssertEqual(hint.imageName, "source-ptero-eggs-shape")
+        XCTAssertEqual(hint.audioKey, "ptero-hint-shape")
+        XCTAssertTrue(ImageAssetNames.knownAssets.contains(hint.imageName))
+
+        let hintDirectory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Ptero-Eggs/hints")
+        let hintStems = try TestBundleHelpers.audioStems(in: hintDirectory)
+        XCTAssertTrue(hintStems.contains("ptero-hint-shape"))
+
+        let gamesDirectory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Games")
+        let gamesStems = try TestBundleHelpers.audioStems(in: gamesDirectory)
+        XCTAssertTrue(gamesStems.contains("game-ptero-eggs-tap-the-image"))
     }
 
     @MainActor
     func testPteroEggsSourceHintAudioResolvesInBundle() {
         let speech = SpeechManager()
         XCTAssertNotNil(speech.urlForAudio(key: "ptero-hint-shape"))
+    }
+
+    func testPteroEggsAudioContractIncludesAllRuntimeGameplayKeys() {
+        let settings = PteroEggMorphology.settings
+        var runtimeKeys: [String] = [
+            PteroEggsGameConfigs.pteroEggs.introAudio,
+            settings.gameplayDirectionsAudioKey,
+            settings.beepKey,
+            settings.scanFailedKey,
+        ]
+        if settings.playsHintsButtonIntro {
+            runtimeKeys.append("game-hint")
+        }
+        if let tapScanner = settings.roundIntroTapScannerAudioKey {
+            runtimeKeys.append(tapScanner)
+        }
+        if let gridIntro = settings.sourceHintsGridIntroAudioKey {
+            runtimeKeys.append(gridIntro)
+        }
+        runtimeKeys.append(contentsOf: (settings.sourceHints ?? []).map(\.audioKey))
+
+        let contracted = Set(PterosaurGameAudioContracts.allRequiredKeys(forConfigId: "ptero-eggs"))
+        let missing = Set(runtimeKeys).subtracting(contracted).sorted()
+        XCTAssertTrue(
+            missing.isEmpty,
+            "Ptero Eggs audio contract missing runtime keys: \(missing)"
+        )
     }
 
     @MainActor

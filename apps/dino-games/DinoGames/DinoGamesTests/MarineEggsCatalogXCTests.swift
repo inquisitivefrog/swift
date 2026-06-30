@@ -8,6 +8,29 @@ import XCTest
 
 final class MarineEggsCatalogXCTests: XCTestCase {
 
+    private var eggsMoments: [LandGameDisplayMoment] {
+        LandGameDisplayMomentCatalog.shippingMarineMoments().filter { $0.gameConfigId == "marine-eggs" }
+    }
+
+    /// Slugs referenced by bundled `marine-eggs-{egg|nest|live|spawn}-*` imagesets.
+    private var discoveredCatalogSlugs: Set<String> {
+        let prefixes = [
+            "marine-eggs-egg-",
+            "marine-eggs-nest-",
+            "marine-eggs-live-",
+            "marine-eggs-spawn-",
+        ]
+        var slugs: Set<String> = []
+        for name in ImageAssetNames.knownAssets {
+            for prefix in prefixes {
+                guard name.hasPrefix(prefix) else { continue }
+                let slug = String(name.dropFirst(prefix.count))
+                if !slug.isEmpty { slugs.insert(slug) }
+            }
+        }
+        return slugs
+    }
+
     func testMarineCatalogBuildsWithoutFatalErrorWhenEggsUnavailable() {
         XCTAssertNoThrow({
             _ = MarineReptileGameCatalog.games
@@ -15,9 +38,12 @@ final class MarineEggsCatalogXCTests: XCTestCase {
         }())
     }
 
-    func testLandVictoryConfigIdDoesNotTargetMarineCategory() {
-        XCTAssertEqual(GameCategory.forCatalogConfigId("weigh-dinosaur"), .land)
-        XCTAssertNotEqual(GameCategory.forCatalogConfigId("weigh-dinosaur"), .marineReptiles)
+    func testMarineEggsConfigMapsToMarineReptilesCategory() {
+        guard MarineEggsGameConfigs.makeMarineEggs() != nil else {
+            XCTFail("Expected Marine Eggs to be playable for category mapping")
+            return
+        }
+        XCTAssertEqual(GameCategory.forCatalogConfigId("marine-eggs"), .marineReptiles)
     }
 
     func testMarineEggAssetsEnablePlayableGame() {
@@ -44,6 +70,45 @@ final class MarineEggsCatalogXCTests: XCTestCase {
         )
     }
 
+    func testMarineEggsVictoryRecapUsesSpeciesAudioAndMorphotypeLabels() {
+        guard let config = MarineEggsGameConfigs.makeMarineEggs() else {
+            XCTFail("Expected Marine Eggs config")
+            return
+        }
+        let settings = MarineEggMorphology.settings
+        let morphology = MarineEggMorphology.morphology
+
+        for round in config.rounds {
+            let creature = round.correctCreature
+            let morphotypeLabel = morphology.eggDisplayTitle(for: round.eggType)
+            let morphotypeAudioKey = morphology.eggAudioKey(eggType: round.eggType)
+            let speciesAudioKey = creature.imageName ?? creature.name
+
+            // Mirrors `EggsGameShared` victory row construction for Marine Eggs settings.
+            let displayTitle = settings.victoryRecapLabelUsesCreatureName
+                ? creature.name
+                : morphotypeLabel
+            let victoryAudioKey = settings.victoryRecapUsesCreatureName
+                ? speciesAudioKey
+                : morphotypeAudioKey
+
+            XCTAssertFalse(creature.name.isEmpty)
+            XCTAssertFalse(morphotypeLabel.isEmpty)
+            XCTAssertEqual(displayTitle, morphotypeLabel, "Recap row text should stay on morphotype labels")
+            XCTAssertEqual(victoryAudioKey, speciesAudioKey, "Recap narration should use the matched creature body-card audio")
+            XCTAssertNotEqual(
+                victoryAudioKey,
+                morphotypeAudioKey,
+                "Recap audio should name the marine reptile (`\(speciesAudioKey)`), not morphotype clip (`\(morphotypeAudioKey)`)"
+            )
+            XCTAssertEqual(speciesAudioKey, creature.imageName)
+            XCTAssertTrue(
+                speciesAudioKey.hasPrefix("marine-"),
+                "Expected marine body-card audio key, got `\(speciesAudioKey)`"
+            )
+        }
+    }
+
     func testMarineEggsVictoryRecapEggDisplayTitlesAreNonEmpty() {
         guard let config = MarineEggsGameConfigs.makeMarineEggs() else {
             XCTFail("Expected Marine Eggs config")
@@ -53,6 +118,36 @@ final class MarineEggsCatalogXCTests: XCTestCase {
         for round in config.rounds {
             let title = morphology.eggDisplayTitle(for: round.eggType)
             XCTAssertFalse(title.isEmpty, "Victory recap needs a label for egg slug `\(round.eggType)`")
+        }
+    }
+
+    func testMarineEggsConfigBuildsThreeDistinctCreatureRounds() {
+        guard let config = MarineEggsGameConfigs.makeMarineEggs() else {
+            XCTFail("Expected Marine Eggs config")
+            return
+        }
+        XCTAssertEqual(config.id, "marine-eggs")
+        XCTAssertEqual(config.rounds.count, 3)
+        XCTAssertEqual(Set(config.rounds.map(\.correctCreature.id)).count, 3)
+    }
+
+    func testMarineEggsConfigBuildsThreeDistinctEggSlugs() {
+        guard let config = MarineEggsGameConfigs.makeMarineEggs() else {
+            XCTFail("Expected Marine Eggs config")
+            return
+        }
+        XCTAssertEqual(Set(config.rounds.map(\.eggType)).count, 3)
+        XCTAssertEqual(Set(config.rounds.map(\.nestingStyle)).count, 3)
+    }
+
+    func testPlayableSlugsMatchRoundAssetGate() {
+        XCTAssertFalse(discoveredCatalogSlugs.isEmpty, "Expected marine-eggs egg/nest/live/spawn art in the catalog")
+        for slug in discoveredCatalogSlugs.sorted() {
+            XCTAssertEqual(
+                MarineEggMorphology.allPlayableSlugs.contains(slug),
+                MarineEggMorphology.roundAssetsExist(forSlug: slug),
+                "Playable slug gate mismatch for `\(slug)`"
+            )
         }
     }
 
@@ -88,6 +183,24 @@ final class MarineEggsCatalogXCTests: XCTestCase {
         )
     }
 
+    @MainActor
+    func testMarineEggsReadySetGoAndScannerPromptsResolveToBundledClips() {
+        let settings = MarineEggMorphology.settings
+        XCTAssertTrue(settings.playsTapScannerPrompt)
+        XCTAssertEqual(settings.roundIntroTapScannerAudioKey, "game-dino-eggs-tap-the-scanner")
+
+        let speech = SpeechManager()
+        for key in [
+            "game-marine-eggs",
+            "game-marine-eggs-gameplay-directions",
+            "game-dino-eggs-tap-the-scanner",
+            "game-dino-eggs-beep",
+            "game-dino-eggs-scan-failed",
+        ] {
+            XCTAssertNotNil(speech.urlForAudio(key: key), "Missing bundled Marine Eggs clip: \(key)")
+        }
+    }
+
     func testSpecimenOnlyFishSlugsJoinPool() {
         XCTAssertTrue(MarineEggMorphology.playableSpecimenOnlySlugs.contains("enchodus"))
         XCTAssertTrue(MarineEggMorphology.playableSpecimenOnlySlugs.contains("gillicus"))
@@ -107,6 +220,59 @@ final class MarineEggsCatalogXCTests: XCTestCase {
         }
     }
 
+    func testMarineEggsDisplayMomentsIncludeSourceHintsAndCreatureTriads() {
+        guard MarineEggsGameConfigs.makeMarineEggs() != nil else {
+            XCTFail("Expected Marine Eggs to be playable for display-moment tests")
+            return
+        }
+        let hintMoments = eggsMoments.filter { $0.context.hasPrefix("source-hint ") }
+        XCTAssertEqual(hintMoments.count, MarineEggMorphology.sourceHints.count)
+        let creatureMoments = eggsMoments.filter { $0.context.contains(" creature") }
+        XCTAssertEqual(creatureMoments.count, 3, "Expected one creature triad per round")
+        let eggMoments = eggsMoments.filter { $0.context.contains(" egg ") }
+        XCTAssertEqual(
+            eggMoments.count,
+            0,
+            "Egg triads ship when morphotype narration is bundled under Audio/Marine-Eggs/"
+        )
+        let nestMoments = eggsMoments.filter { $0.context.contains(" nest ") }
+        XCTAssertEqual(
+            nestMoments.count,
+            0,
+            "Nest triads ship when morphotype narration is bundled under Audio/Marine-Eggs/"
+        )
+    }
+
+    func testMarineEggsDisplayMomentsHaveImagesInAssetCatalog() {
+        guard MarineEggsGameConfigs.makeMarineEggs() != nil else {
+            XCTFail("Expected Marine Eggs to be playable for display-moment tests")
+            return
+        }
+        let known = ImageAssetNames.knownAssets
+        let missing = eggsMoments.filter { !known.contains($0.imageAssetName) }
+        let labels = missing.map { "\($0.context) → `\($0.imageAssetName)`" }
+        XCTAssertTrue(labels.isEmpty, "Missing imagesets: \(labels.joined(separator: "; "))")
+    }
+
+    @MainActor
+    func testMarineEggsDisplayMomentsHaveResolvableAudio() {
+        guard MarineEggsGameConfigs.makeMarineEggs() != nil else {
+            XCTFail("Expected Marine Eggs to be playable for display-moment tests")
+            return
+        }
+        let speech = SpeechManager()
+        let missing = eggsMoments.filter { moment in
+            LandGameDisplayMomentCatalog.audioCandidateKeys(for: moment)
+                .compactMap { speech.urlForAudio(key: $0) }
+                .isEmpty
+        }
+        let labels = missing.map { moment in
+            let keys = LandGameDisplayMomentCatalog.audioCandidateKeys(for: moment).joined(separator: "|")
+            return "\(moment.context) → audio `\(keys)`"
+        }
+        XCTAssertTrue(labels.isEmpty, "Missing bundle audio: \(labels.joined(separator: "; "))")
+    }
+
     func testMarineEggsSourceHintAssetsAndAudioExist() throws {
         XCTAssertTrue(MarineEggMorphology.settings.hasSourceHints)
         XCTAssertEqual(MarineEggMorphology.sourceHints.count, 1)
@@ -123,5 +289,80 @@ final class MarineEggsCatalogXCTests: XCTestCase {
     @MainActor
     func testMarineEggsSourceHintAudioResolvesInBundle() {
         XCTAssertNotNil(SpeechManager().urlForAudio(key: "marine-eggs-shape"))
+    }
+
+    func testMarineEggAndNestAudioKeysUseMarineEggsPrefix() {
+        let morphology = MarineEggMorphology.morphology
+        XCTAssertEqual(morphology.eggAudioKey(eggType: "archelon"), "marine-eggs-archelon")
+        XCTAssertEqual(morphology.nestingAudioKey(style: "mesoleptos"), "marine-eggs-nest-mesoleptos")
+    }
+
+    func testMarineEggsMorphotypeAudioIsCheckedSeparatelyFromGameplayPrompts() {
+        let morphotypeKeys = Set(MarineEggsAudioContracts.marineEggsMorphotypeAudioKeysOnDisk())
+        let gameplayKeys = Set(MarineEggsAudioContracts.allRequiredKeys(forConfigId: "marine-eggs"))
+
+        XCTAssertFalse(morphotypeKeys.isEmpty)
+        XCTAssertTrue(
+            gameplayKeys.isDisjoint(with: morphotypeKeys),
+            "Morphotype narration stays on the dedicated on-disk contract, not gameplay `requiredAudioKeys`"
+        )
+        XCTAssertTrue(morphotypeKeys.contains("marine-eggs-archelon"))
+        XCTAssertFalse(gameplayKeys.contains("marine-eggs-archelon"))
+    }
+
+    func testMarineEggsAudioContractIncludesAllRuntimeGameplayKeys() {
+        guard let config = MarineEggsGameConfigs.makeMarineEggs() else {
+            XCTFail("Expected Marine Eggs config")
+            return
+        }
+        let settings = MarineEggMorphology.settings
+        var runtimeKeys: [String] = [
+            config.introAudio,
+            config.gameplayDirectionsAudio,
+            settings.beepKey,
+            settings.scanFailedKey,
+        ]
+        if settings.playsHintsButtonIntro {
+            runtimeKeys.append("game-hint")
+        }
+        if let tapScanner = settings.roundIntroTapScannerAudioKey {
+            runtimeKeys.append(tapScanner)
+        }
+        if let gridIntro = settings.sourceHintsGridIntroAudioKey {
+            runtimeKeys.append(gridIntro)
+        }
+        runtimeKeys.append(contentsOf: (settings.sourceHints ?? []).map(\.audioKey))
+
+        let contracted = Set(MarineEggsAudioContracts.allRequiredKeys(forConfigId: "marine-eggs"))
+        let missing = Set(runtimeKeys).subtracting(contracted).sorted()
+        XCTAssertTrue(
+            missing.isEmpty,
+            "Marine Eggs audio contract missing runtime keys: \(missing)"
+        )
+    }
+
+    func testMarineEggsMorphotypeAudioFilesExistOnDisk() throws {
+        let directory = TestBundleHelpers.urlUnderProjectRoot("DinoGames/Assets/Audio/Marine-Eggs")
+        let stems = try TestBundleHelpers.audioStems(in: directory)
+        let keys = MarineEggsAudioContracts.marineEggsMorphotypeAudioKeysOnDisk()
+        let missing = Set(keys).subtracting(stems).sorted()
+        XCTAssertTrue(
+            missing.isEmpty,
+            "Missing Marine Eggs morphotype narration under Marine-Eggs/: \(missing)"
+        )
+    }
+
+    @MainActor
+    func testMarineEggsMorphotypeAudioResolvesInBundleWhenPresent() {
+        let keys = MarineEggsAudioContracts.marineEggsMorphotypeAudioKeysOnDisk()
+        let speech = SpeechManager()
+        let missing = keys.filter { speech.urlForAudio(key: $0) == nil }.sorted()
+        XCTAssertTrue(
+            missing.isEmpty,
+            """
+            Missing Marine Eggs morphotype narration (expected under Assets/Audio/Marine-Eggs/ as \
+            marine-eggs-{slug}.m4a and marine-eggs-nest-{slug}.m4a): \(missing)
+            """
+        )
     }
 }

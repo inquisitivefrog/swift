@@ -114,17 +114,17 @@ final class SeaGameDisplayMomentXCTests: XCTestCase {
         }
     }
 
-    func testMarineSmilePortraitMomentsUseSmileImageAndMatchingAudio() throws {
+    func testMarineSmilePortraitMomentsUseBodyAudioWithSmileImage() throws {
         guard MarineSmileMorphology.isPlayable else {
             throw XCTSkip("Marine Smile assets not bundled in this catalog snapshot.")
         }
         let smileMoments = moments.filter { $0.gameConfigId == "marine-smile" && $0.context.hasPrefix("smile ") }
         XCTAssertFalse(smileMoments.isEmpty)
         let mismatched = smileMoments.filter {
-            !$0.imageAssetName.hasPrefix("marine-smile-") || $0.audioKey != $0.imageAssetName
+            !$0.imageAssetName.hasPrefix("marine-smile-") || !$0.audioKey.hasPrefix("marine-")
         }
         let labels = mismatched.map { "\($0.context): image `\($0.imageAssetName)` audio `\($0.audioKey)`" }
-        XCTAssertTrue(labels.isEmpty, "Smile portraits use marine-smile art + matching narration key: \(labels.joined(separator: "; "))")
+        XCTAssertTrue(labels.isEmpty, "Smile portraits use marine-smile art + marine body name audio: \(labels.joined(separator: "; "))")
     }
 
     func testMarineFloraPlantIdsAlignWithAudioAndImageSlugs() {

@@ -111,8 +111,8 @@ final class PterosaurGameAudioFilesXCTests: XCTestCase {
         XCTAssertTrue(
             missing.isEmpty,
             """
-            Missing Ptero Eggs morphotype narration (expected under Assets/Audio/Eggs/Pterosaurs/ as \
-            ptero-eggs-{clade}.m4a and ptero-nests-{clade}.m4a): \(missing)
+            Missing Ptero Eggs morphotype narration (expected under Assets/Audio/Ptero-Eggs/ as \
+            ptero-eggs-{clade}.m4a and ptero-eggs-nests-{clade}.m4a): \(missing)
             """
         )
     }

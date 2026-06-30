@@ -4,6 +4,7 @@
 //
 //  Ptero Eggs!: air eggs game using shared EggsGameView (same CT-scanner flow as Dino Eggs).
 //  Assets: `ptero-eggs-{clade}`, `ptero-nests-{clade}` (clade = PterosaurGuessGroup raw value).
+//  Audio: `Audio/Ptero-Eggs/ptero-eggs-{clade}.m4a`, `ptero-eggs-nests-{clade}.m4a` (transitional → transition).
 //
 
 import SwiftUI
@@ -69,7 +70,9 @@ enum PteroEggMorphology {
             return ImageAssetCache.imageExists(named: name) ? name : nil
         },
         eggImageNameResolver: { clade in "ptero-eggs-\(bundledImageKey(forClade: clade))" },
-        imageLookupKey: { bundledImageKey(forClade: $0) }
+        imageLookupKey: { bundledImageKey(forClade: $0) },
+        eggAudioKeyResolver: { clade in "ptero-eggs-\(bundledImageKey(forClade: clade))" },
+        nestAudioKeyResolver: { clade in "ptero-eggs-nests-\(bundledImageKey(forClade: clade))" }
     )
 
     static let sourceHints: [EggsSourceHint] = [
@@ -117,13 +120,16 @@ struct PteroEggsGameConfigs {
         let byGroup = Dictionary(grouping: pool) { groupById[$0.id] ?? .basal }
         let allGroups = Array(byGroup.keys).filter { !(byGroup[$0] ?? []).isEmpty }
         var usedIds: Set<Int> = []
+        var usedEggClades: Set<String> = []
         var rounds: [PteroEggsRound] = []
 
         for roundId in 1...pteroEggsRoundCount {
             let availableGroups = allGroups.filter { group in
-                (byGroup[group] ?? []).contains { p in
-                    guard !usedIds.contains(p.id), let clade = PteroEggMorphology.eggType(for: p) else { return false }
-                    return eggAndNestReady(clade: clade)
+                let clade = group.rawValue
+                guard !usedEggClades.contains(clade) else { return false }
+                return (byGroup[group] ?? []).contains { p in
+                    guard !usedIds.contains(p.id), let eggClade = PteroEggMorphology.eggType(for: p) else { return false }
+                    return eggAndNestReady(clade: eggClade)
                 }
             }
             guard let chosenGroup = availableGroups.randomElement() else { break }
@@ -141,6 +147,7 @@ struct PteroEggsGameConfigs {
 
             usedIds.insert(correct.id)
             usedIds.formUnion(distractors.map(\.id))
+            usedEggClades.insert(clade)
             rounds.append(PteroEggsRound(
                 id: roundId,
                 correctCreature: correct,

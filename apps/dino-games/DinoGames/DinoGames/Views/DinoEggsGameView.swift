@@ -3,6 +3,7 @@
 //  DinoGames
 //
 //  Dino Eggs: land eggs game using shared EggsGameView framework.
+//  Audio: morphotype clips under `Audio/Dino-Eggs/`; gameplay UI under `Audio/Games/`.
 //
 
 import SwiftUI
