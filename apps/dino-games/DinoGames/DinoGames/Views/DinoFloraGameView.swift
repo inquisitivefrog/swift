@@ -784,6 +784,9 @@ struct SourceFloraHintsView: View {
 // MARK: - Mechanics (test + catalog surface)
 
 enum DinoFloraMechanics {
+    static var registryFormationSlugs: Set<String> { Set(dinoFloraPlants.map(\.formation)) }
+    static var registryPlantIds: Set<String> { Set(dinoFloraPlants.map(\.id)) }
+
     static var eaterMapPlantIds: Set<String> { Set(floraEatersByPlant.keys) }
     static var nonEaterMapPlantIds: Set<String> { Set(floraNonEatersByPlant.keys) }
 

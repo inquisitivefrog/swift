@@ -31,18 +31,7 @@ struct WhoIsTallerGameConfig {
     let poolKind: WhoIsTallerPoolKind
 }
 
-// MARK: - Height Data (shared with Measure)
-
-/// Standing / at-the-hip height (m) for game scaling — keep in sync with `dinosaurEstimatedHeightMetersById` in MeasureGameView.
-private let whoIsTallerHeightMetersById: [Int: Double] = [
-    1: 12,  2: 9,   3: 9,   4: 0.55,  5: 12,  6: 15,  7: 22,  8: 8,
-    9: 9,   10: 8,  11: 9,  12: 1.5, 13: 9,  14: 18, 15: 2,  16: 5,
-    17: 4,  18: 6,  19: 0.25, 20: 0.22, 21: 26, 22: 6,  23: 20, 24: 5,
-    25: 7,  26: 0.35, 27: 1.75,  28: 18, 29: 1,  30: 0.22, 31: 16, 32: 6,
-    33: 0.32, 34: 0.22, 35: 8,  36: 4,  37: 0.25, 38: 0.6, 39: 6,  40: 18,
-    41: 7,  42: 6,  43: 1.2, 44: 20, 45: 6,  46: 7,  47: 9,  48: 7,
-    49: 1.2, 50: 2,  51: 7,  52: 5,  53: 6,  54: 7,
-]
+// MARK: - Height Data (shared with Measure via `LandDinosaurHeightCatalog`)
 
 /// Minimum scale for smaller dinosaur (e.g. 0.1 = 10% of full size). Below this, combination is "too small to see". Relaxed from 0.2 so small dinosaurs can compare with more options.
 private let minVisibleScale: CGFloat = CGFloat(ComparisonGameLogic.minVisibleHeightRatio)
@@ -965,9 +954,8 @@ enum WhoIsTallerGameConfigs {
     static func allEligibleDinosaurItems() -> [WhoIsTallerItem] {
         MatchingGameConfigs.allDinosaurs.compactMap { d in
             guard let imageName = d.imageName, imageName.hasPrefix("dino-"),
-                  let height = whoIsTallerHeightMetersById[d.id] else { return nil }
-            let measureName = "measure-\(imageName)"
-            guard ImageAssetCache.imageExists(named: measureName) else { return nil }
+                  let height = LandDinosaurHeightCatalog.standingHeightMeters(forCreatureId: d.id),
+                  LandDinosaurHeightCatalog.measureDinoImageName(forImageName: imageName) != nil else { return nil }
             return WhoIsTallerItem(
                 id: d.id,
                 name: d.name,
@@ -983,10 +971,7 @@ enum WhoIsTallerGameConfigs {
         switch poolKind {
         case .dinosaurs:
             let pool = allEligibleDinosaurItems().filter { !alreadyUsedIds.contains($0.id) }
-            guard pool.count >= 9 else {
-                return Array(pool.shuffled().prefix(9))
-            }
-            return Array(pool.shuffled().prefix(9))
+            return makeComparableDinoHeightRoundItems(from: pool, count: 9)
         case .pterosaurs:
             let pool = MatchingGameConfigs.allPterosaurs.filter { d in
                 guard let imageName = d.imageName, imageName.hasPrefix("ptero-"),
@@ -1037,6 +1022,30 @@ enum WhoIsTallerGameConfigs {
     }
 
     /// Picks nine marine reptiles so every grid cell has at least one valid second pick in-round.
+    /// Picks nine dinosaurs so every grid cell has at least one valid second pick in-round.
+    private static func makeComparableDinoHeightRoundItems(from pool: [WhoIsTallerItem], count: Int) -> [WhoIsTallerItem] {
+        guard pool.count >= count else { return Array(pool.shuffled().prefix(count)) }
+
+        for _ in 0..<60 {
+            let round = Array(pool.shuffled().prefix(count))
+            if LandDinosaurHeightCatalog.dinoRoundHeightsAreFullyComparable(round.map(\.heightMeters)) {
+                return round
+            }
+        }
+
+        let sorted = pool.sorted { $0.heightMeters < $1.heightMeters }
+        if sorted.count >= count {
+            for start in 0...(sorted.count - count) {
+                let window = Array(sorted[start..<(start + count)])
+                if LandDinosaurHeightCatalog.dinoRoundHeightsAreFullyComparable(window.map(\.heightMeters)) {
+                    return window.shuffled()
+                }
+            }
+        }
+
+        return Array(pool.shuffled().prefix(count))
+    }
+
     private static func makeComparableMarineLengthRoundItems(from pool: [WhoIsTallerItem], count: Int) -> [WhoIsTallerItem] {
         guard pool.count >= count else { return Array(pool.shuffled().prefix(count)) }
 

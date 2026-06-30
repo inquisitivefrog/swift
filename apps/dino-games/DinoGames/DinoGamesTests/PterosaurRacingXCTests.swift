@@ -8,11 +8,20 @@ import XCTest
 
 final class PterosaurRacingXCTests: XCTestCase {
 
+    private var racingMoments: [LandGameDisplayMoment] {
+        LandGameDisplayMomentCatalog.shippingAirMoments().filter { $0.gameConfigId == "racing-pterosaurs" }
+    }
+
     func testRacingPterosaursCardConfigRequiresPeriodSelection() {
         let config = RacingGameConfigs.racingPterosaursCardConfig
         XCTAssertEqual(config.id, "racing-pterosaurs")
         XCTAssertEqual(config.assetPrefix, "ptero")
         XCTAssertTrue(config.racers.isEmpty, "Card config should route through period selection before race setup.")
+        let level2 = PterosaurGameCatalog.games(level: .level2)
+        XCTAssertTrue(level2.contains {
+            guard case .racing(let cfg) = $0 else { return false }
+            return PterosaurProgress.canonicalId(for: cfg.id) == "racing-pterosaurs"
+        })
     }
 
     func testPteroRacingAssetBaseDerivedFromCatalogImageName() {
@@ -114,5 +123,105 @@ final class PterosaurRacingXCTests: XCTestCase {
         if contains("Dsungaripterus", in: jurassic), contains("Dsungaripterus", in: cretaceous) {
             XCTAssertTrue(contains("Dsungaripterus", in: both))
         }
+    }
+
+    func testPterosaurProgressCanonicalIdForRacing() {
+        XCTAssertEqual(PterosaurProgress.canonicalId(for: "racing-pterosaurs"), "racing-pterosaurs")
+        XCTAssertEqual(PterosaurProgress.canonicalId(for: "racing-pterosaurs-jurassic"), "racing-pterosaurs")
+    }
+
+    @MainActor
+    func testPteroRacingSelectionPromptsResolveToBundledClips() {
+        let speech = SpeechManager()
+        XCTAssertNotNil(
+            speech.urlForAudio(key: "game-racer-choose-your-first-pterosaur-to-race"),
+            "Racing Pterosaurs should use Games/game-racer-choose-your-first-pterosaur-to-race.m4a, not TTS"
+        )
+        XCTAssertNotNil(
+            speech.urlForAudio(key: "game-racer-choose-your-second-pterosaur-to-race"),
+            "Racing Pterosaurs should use Games/game-racer-choose-your-second-pterosaur-to-race.m4a, not TTS"
+        )
+    }
+
+    @MainActor
+    func testPteroRacingReadySetGoResolveToBundledClips() {
+        let speech = SpeechManager()
+        for key in [
+            "game-racing-pterosaurs-ready",
+            "game-racing-pterosaurs-set",
+            "game-racing-pterosaurs-go",
+        ] {
+            XCTAssertNotNil(
+                speech.urlForAudio(key: key),
+                "Racing Pterosaurs countdown should use bundled Games/\(key).m4a, not TTS"
+            )
+        }
+    }
+
+    func testPteroRacingBundledRefereeArtExists() {
+        for name in [
+            "ptero-racer-referee-start",
+            "ptero-racer-referee-finished-winner",
+            "ptero-racer-referee-finished-tie",
+        ] {
+            XCTAssertTrue(ImageAssetNames.knownAssets.contains(name), "Missing bundled referee art: \(name)")
+        }
+    }
+
+    func testPteroRacingUsesPackSpecificRefereeArt() {
+        XCTAssertEqual(startRefereeImageName(prefix: "ptero"), "ptero-racer-referee-start")
+        XCTAssertEqual(finishRefereeImageName(prefix: "ptero", isBroadDelta: true), "ptero-racer-referee-finished-winner")
+        XCTAssertEqual(tieRefereeImageName(prefix: "ptero"), "ptero-racer-referee-finished-tie")
+    }
+
+    // MARK: - Picker / victory art
+
+    func testRacingPterosaursPickerAndSuccessArt() {
+        let known = ImageAssetNames.knownAssets
+        XCTAssertTrue(known.contains("game-racing-pterosaurs"), "Missing picker art: game-racing-pterosaurs")
+        let successCandidates = ["game-racing-pterosaurs-success", "game-racing-pterosaurs"]
+        XCTAssertTrue(
+            successCandidates.contains { known.contains($0) },
+            "Missing victory art. Tried: \(successCandidates)"
+        )
+    }
+
+    // MARK: - Display moments
+
+    func testRacingPterosaursDisplayMomentsCoverPeriodHintsAndRacers() throws {
+        let periodHints = racingMoments.filter { $0.context.hasPrefix("period ") }
+        XCTAssertEqual(periodHints.count, 2, "Expected Jurassic and Cretaceous period hints")
+        let jurassicRacers = racingMoments.filter { $0.context.hasPrefix("jurassic racer ") }
+        let cretaceousRacers = racingMoments.filter { $0.context.hasPrefix("cretaceous racer ") }
+        let jurassicConfig = RacingGameConfigs.makePterosaurConfig(for: .jurassic)
+        let cretaceousConfig = RacingGameConfigs.makePterosaurConfig(for: .cretaceous)
+        guard !jurassicConfig.racers.isEmpty else {
+            throw XCTSkip("No Jurassic pterosaur racers with bundled art in the test catalog yet.")
+        }
+        XCTAssertEqual(jurassicRacers.count, jurassicConfig.racers.count)
+        XCTAssertEqual(cretaceousRacers.count, cretaceousConfig.racers.count)
+        XCTAssertEqual(racingMoments.count, periodHints.count + jurassicRacers.count + cretaceousRacers.count)
+    }
+
+    func testRacingPterosaursDisplayMomentsHaveImagesInAssetCatalog() {
+        let known = ImageAssetNames.knownAssets
+        let missing = racingMoments.filter { !known.contains($0.imageAssetName) }
+        let labels = missing.map { "\($0.context) → `\($0.imageAssetName)`" }
+        XCTAssertTrue(labels.isEmpty, "Missing imagesets: \(labels.joined(separator: "; "))")
+    }
+
+    @MainActor
+    func testRacingPterosaursDisplayMomentsHaveResolvableAudio() {
+        let speech = SpeechManager()
+        let missing = racingMoments.filter { moment in
+            LandGameDisplayMomentCatalog.audioCandidateKeys(for: moment)
+                .compactMap { speech.urlForAudio(key: $0) }
+                .isEmpty
+        }
+        let labels = missing.map { moment in
+            let keys = LandGameDisplayMomentCatalog.audioCandidateKeys(for: moment).joined(separator: "|")
+            return "\(moment.context) → audio `\(keys)`"
+        }
+        XCTAssertTrue(labels.isEmpty, "Missing bundle audio: \(labels.joined(separator: "; "))")
     }
 }

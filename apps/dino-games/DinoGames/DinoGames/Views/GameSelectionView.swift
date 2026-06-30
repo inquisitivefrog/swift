@@ -421,9 +421,6 @@ struct GameSelectionView: View {
                             guard !isCategoryLevelLocked(level) else { return }
                             // Activate intermission before `selectedLevel` so `onChange(of: showingGameList)` cannot
                             // run level intro audio ahead of the level image + crowd sequence.
-                            hasPlayedWelcome = false
-                            isAudioPlaying = true
-                            landLevelIntermissionActive = true
                             selectedLevel = level
                         }
                     )
@@ -432,9 +429,14 @@ struct GameSelectionView: View {
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
         }
+        .accessibilityIdentifier("level-picker")
         .onAppear {
             // Manual replay only: guided auto-play skips the level picker (and this prompt).
             guard !guidedPlayMode else { return }
+            if UITestConfiguration.skipGameSelectionIntros {
+                isAudioPlaying = false
+                return
+            }
             // Level picker should be tappable after the prompt finishes.
             // While the prompt is playing, we temporarily disable hit testing via `isAudioPlaying`.
             // Use speak() so we get the same fade-out as other intros and avoid a post-audio click.
@@ -574,6 +576,7 @@ struct GameSelectionView: View {
                     onTap: { handleGameTap(gameType) }
                 )
                 .id(gameType.id)
+                .accessibilityIdentifier(gameType.id.map { "game-\($0)" } ?? "game-unknown")
             }
         }
     }
@@ -643,15 +646,22 @@ struct GameSelectionView: View {
         .navigationBarBackButtonHidden(true)
         .onChange(of: selectedLevel) { _, newLevel in
             // So the game-name walk runs for each level when the list changes (non-readers memorize by hearing names).
-            hasPlayedWelcome = false
             lastCompletedGameForGuidedAdvance = nil
             if newLevel != nil {
-                isAudioPlaying = true
-                landLevelIntermissionActive = true
+                if UITestConfiguration.skipGameSelectionIntros {
+                    hasPlayedWelcome = true
+                    isAudioPlaying = false
+                    landLevelIntermissionActive = false
+                } else {
+                    hasPlayedWelcome = false
+                    isAudioPlaying = true
+                    landLevelIntermissionActive = true
+                }
                 if guidedPlayMode {
                     persistPlaySession(gameCanonicalId: nil)
                 }
             } else {
+                hasPlayedWelcome = false
                 landLevelIntermissionActive = false
             }
         }
@@ -1647,6 +1657,13 @@ private struct GameSelectionNavigationContent: View {
 
     private func runWelcomeAndWalkIfNeeded() {
         guard showingGameList, !hasPlayedWelcome else { return }
+        if UITestConfiguration.skipGameSelectionIntros {
+            hasPlayedWelcome = true
+            isAudioPlaying = false
+            speechManager.onAudioFinished = nil
+            gameWalkIndex = nil
+            return
+        }
         if landLevelIntermissionActive { return }
         if guidedPlayMode && GameCatalog.isCategoryFullyPlayed(category) { return }
         if selectedLevel != nil {
@@ -2412,6 +2429,7 @@ private struct LevelCard: View {
         }
         .buttonStyle(.plain)
         .disabled(isLocked)
+        .accessibilityIdentifier("level-\(level.rawValue)")
     }
 }
 
@@ -2523,6 +2541,10 @@ struct GameTransitionView: View {
         }
         .allowsHitTesting(false)
         .onAppear {
+            if UITestConfiguration.skipGameSelectionIntros {
+                onComplete()
+                return
+            }
             var didComplete = false
             let completeOnce: () -> Void = {
                 guard !didComplete else { return }

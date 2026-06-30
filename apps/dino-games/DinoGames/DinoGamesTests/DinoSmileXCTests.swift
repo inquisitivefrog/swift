@@ -10,6 +10,10 @@ import XCTest
 
 final class DinoSmileXCTests: XCTestCase {
 
+    private var smileMoments: [LandGameDisplayMoment] {
+        LandGameDisplayMomentCatalog.shippingLandMoments().filter { $0.gameConfigId == "smiling-dinos" }
+    }
+
     // MARK: - Config / catalog
 
     func testDinoSmileConfigId() {
@@ -176,6 +180,47 @@ final class DinoSmileXCTests: XCTestCase {
             [config.introAudio, config.gameplayDirectionsAudio],
             messagePrefix: "Dino Smile"
         )
+    }
+
+    // MARK: - Display moments
+
+    func testDinoSmileDisplayMomentsCoverLiveConfigRounds() {
+        let config = SmilingDinosGameConfigs.smilingDinos
+        XCTAssertFalse(smileMoments.isEmpty)
+        for round in config.rounds {
+            let smileMomentsForRound = smileMoments.filter { $0.context.hasPrefix("round \(round.id) smile ") }
+            XCTAssertEqual(smileMomentsForRound.count, round.pairs.count)
+            let toothMoments = smileMoments.filter { $0.context.hasPrefix("round \(round.id) tooth ") }
+            XCTAssertEqual(toothMoments.count, round.pairs.count)
+            let distractorMoments = smileMoments.filter { $0.context.hasPrefix("round \(round.id) distractor tooth ") }
+            XCTAssertEqual(distractorMoments.count, round.distractorToothTypes.count)
+        }
+        let expectedTotal = config.rounds.reduce(0) { partial, round in
+            partial + round.pairs.count * 2 + round.distractorToothTypes.count
+        }
+        XCTAssertEqual(smileMoments.count, expectedTotal)
+    }
+
+    func testDinoSmileDisplayMomentsHaveImagesInAssetCatalog() {
+        let known = ImageAssetNames.knownAssets
+        let missing = smileMoments.filter { !known.contains($0.imageAssetName) }
+        let labels = missing.map { "\($0.context) → `\($0.imageAssetName)`" }
+        XCTAssertTrue(labels.isEmpty, "Missing imagesets: \(labels.joined(separator: "; "))")
+    }
+
+    @MainActor
+    func testDinoSmileDisplayMomentsHaveResolvableAudio() {
+        let speech = SpeechManager()
+        let missing = smileMoments.filter { moment in
+            LandGameDisplayMomentCatalog.audioCandidateKeys(for: moment)
+                .compactMap { speech.urlForAudio(key: $0) }
+                .isEmpty
+        }
+        let labels = missing.map { moment in
+            let keys = LandGameDisplayMomentCatalog.audioCandidateKeys(for: moment).joined(separator: "|")
+            return "\(moment.context) → audio `\(keys)`"
+        }
+        XCTAssertTrue(labels.isEmpty, "Missing bundle audio: \(labels.joined(separator: "; "))")
     }
 
     // MARK: - Helpers

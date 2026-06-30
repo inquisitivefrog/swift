@@ -8,6 +8,62 @@ import XCTest
 
 final class PterosaurGameCatalogXCTests: XCTestCase {
 
+    /// Canonical progress ids (runtime config ids may differ, e.g. `racing-pterosaurs-jurassic`).
+    private let shippingCanonicalByLevel: [GameLevel: [String]] = [
+        .level1: ["weigh-pterosaur", "which-ptero-is-taller", "ptero-puzzle"],
+        .level2: ["name-that-pterosaur", "racing-pterosaurs", "ptero-ages"],
+        .level3: ["ptero-footprints", "ptero-flora", "ptero-eggs"],
+    ]
+
+    private func expectedLevel4CanonicalIds() -> [String] {
+        var ids: [String] = []
+        if PteroMatrixGameConfigs.makePteroMatrix() != nil {
+            ids.append("ptero-matrix")
+        }
+        ids.append("ptero-diets")
+        if SmilingDinosGameConfigs.isPteroSmilePlayable {
+            ids.append("ptero-smile")
+        }
+        return ids
+    }
+
+    func testVisibleAirLevelsAreOneThroughFour() {
+        XCTAssertEqual(GameLevel.visibleInGamePicker, [.level1, .level2, .level3, .level4])
+    }
+
+    func testEachShippingAirLevelOneThroughThreeHasThreeGamesInCatalogOrder() {
+        for level in [GameLevel.level1, .level2, .level3] {
+            let expected = shippingCanonicalByLevel[level] ?? []
+            let games = PterosaurGameCatalog.games(level: level)
+            XCTAssertEqual(games.count, 3, "Air level \(level.number) should list three games")
+            let actual = games.compactMap { $0.id.map { PterosaurProgress.canonicalId(for: $0) } }
+            XCTAssertEqual(actual, expected, "Air level \(level.number) canonical catalog order")
+        }
+    }
+
+    func testShippingAirLevelFourMatchesPlacedOptionalGames() {
+        let expected = expectedLevel4CanonicalIds()
+        XCTAssertFalse(expected.isEmpty, "Air level 4 should always include Ptero Diets")
+        let games = PterosaurGameCatalog.games(level: .level4)
+        XCTAssertEqual(games.count, expected.count, "Air level 4 game count should match placed optional games")
+        let actual = games.compactMap { $0.id.map { PterosaurProgress.canonicalId(for: $0) } }
+        XCTAssertEqual(actual, expected, "Air level 4 canonical catalog order")
+    }
+
+    func testShippingAirGamesMapToAirProgressCategory() {
+        let ids = GameLevel.visibleInGamePicker.flatMap { PterosaurGameCatalog.games(level: $0).compactMap(\.id) }
+        for id in ids {
+            XCTAssertEqual(GameCategory.forCatalogConfigId(id), .air, "Config `\(id)` should map to air")
+        }
+    }
+
+    func testAirCatalogBuildsWithoutFatalError() {
+        XCTAssertNoThrow({
+            _ = PterosaurGameCatalog.games
+            _ = PterosaurProgress.allPterosaurGameCanonicalIds
+        }())
+    }
+
     func testPteroMatrixFossilSlugMatchesBundledComposites() {
         let dimorphodon = AirPterosaurData.allPterosaurs.first { $0.imageName == "ptero-basal-dimorphodon" }
         XCTAssertEqual(AirPterosaurData.matrixFossilSlug(for: dimorphodon!), "dimorphodon")

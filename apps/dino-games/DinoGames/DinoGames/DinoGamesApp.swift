@@ -88,6 +88,7 @@ struct DinoGamesApp: App {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .onAppear {
+                    UITestConfiguration.applyLaunchOverridesIfNeeded()
                     lockToPortrait()
                 }
         }

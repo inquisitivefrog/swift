@@ -3,7 +3,7 @@
 //  DinoGamesTests
 //
 //  Catalog + asset/audio/mechanic contracts for Ptero Flora. Parallels Dino Flora coverage in
-//  `LandDinosaurMechanicCatalogXCTests` and `LandGameDisplayMomentXCTests`.
+//  `DinoFloraXCTests` and `LandGameDisplayMomentXCTests`.
 //
 
 import XCTest

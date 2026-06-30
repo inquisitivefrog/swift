@@ -234,6 +234,14 @@ struct CategorySelectionView: View {
             gameCanonicalId: nil,
             guidedPlayMode: guided
         )
+        if UITestConfiguration.skipGameSelectionIntros {
+            speechManager.onAudioFinished = nil
+            DispatchQueue.main.async {
+                self.navigationPath.append(.gameLevels(category))
+                self.categoryNavigationLocked = false
+            }
+            return
+        }
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
             DispatchQueue.main.async {

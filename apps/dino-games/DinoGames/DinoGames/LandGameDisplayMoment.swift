@@ -66,6 +66,30 @@ enum LandGameDisplayMomentCatalog {
         LandGameDisplayTriad(id: "diet", displayText: "Diets", imageAssetName: "source-marine-flora-diet", audioKey: "marine-hint-diets"),
     ]
 
+    static let marineAgesSourceHints: [LandGameDisplayTriad] = [
+        LandGameDisplayTriad(
+            id: "jurassic",
+            displayText: "Jurassic",
+            imageAssetName: "source-marine-ages-jurassic",
+            audioKey: "game-marine-ages-jurassic-marine-reptiles"
+        ),
+        LandGameDisplayTriad(
+            id: "cretaceous",
+            displayText: "Cretaceous",
+            imageAssetName: "source-marine-ages-cretaceous",
+            audioKey: "game-marine-ages-cretaceous-marine-reptiles"
+        ),
+    ]
+
+    static let marineFootprintSourceHints: [LandGameDisplayTriad] = MarineFootprintsMechanics.registry.map { slot in
+        LandGameDisplayTriad(
+            id: slot.locomotion,
+            displayText: slot.hintDisplayName,
+            imageAssetName: slot.hintImageName,
+            audioKey: slot.hintAudioKey
+        )
+    }
+
     /// Dino Flora category hints (`dinoFloraCategoryHints`).
     static var floraCategoryHints: [LandGameDisplayTriad] { dinoFloraCategoryHints }
 
@@ -80,11 +104,39 @@ enum LandGameDisplayMomentCatalog {
         return [base, "\(base)-v1", "\(base)-v2", "dino-smile-tooth-\(toothType)"]
     }
 
+    static let pteroFootprintSourceHints: [LandGameDisplayTriad] = PterosaurGuessGroup.allCases.map { group in
+        let stem = group == .transitional ? "transition" : group.rawValue
+        return LandGameDisplayTriad(
+            id: stem,
+            displayText: group.displayName,
+            imageAssetName: "source-ptero-footprints-\(stem)",
+            audioKey: "ptero-footprints-\(stem)"
+        )
+    }
+
+    static let pteroAgesSourceHints: [LandGameDisplayTriad] = [
+        LandGameDisplayTriad(
+            id: "jurassic",
+            displayText: "Jurassic",
+            imageAssetName: "source-ptero-ages-jurassic",
+            audioKey: "game-ptero-ages-jurassic-pterosaurs"
+        ),
+        LandGameDisplayTriad(
+            id: "cretaceous",
+            displayText: "Cretaceous",
+            imageAssetName: "source-ptero-ages-cretaceous",
+            audioKey: "game-ptero-ages-cretaceous-pterosaurs"
+        ),
+    ]
+
     /// Keys to try when resolving bundle audio for a moment (gameplay fallbacks).
     static func audioCandidateKeys(for moment: LandGameDisplayMoment) -> [String] {
         if moment.gameConfigId == "smiling-dinos", moment.context.contains("tooth") {
             let toothType = moment.triad.id
             return landToothAudioCandidateKeys(for: toothType)
+        }
+        if moment.gameConfigId == "ptero-smile", moment.context.contains("tooth") {
+            return PteroSmileMorphology.playerAudioCandidateKeys(for: moment.triad.id)
         }
         return [moment.audioKey]
     }
@@ -107,6 +159,60 @@ enum LandGameDisplayMomentCatalog {
         moments += footprintRoundMoments()
         moments += dietOptionMoments()
         moments += smileMoments()
+        return moments
+    }
+
+    // MARK: - Aggregated shipping air moments
+
+    static func shippingAirMoments() -> [LandGameDisplayMoment] {
+        var moments: [LandGameDisplayMoment] = []
+        moments += weighPterosaurMoments()
+        moments += pteroTallerMoments()
+        moments += pteroPuzzleMoments()
+        moments += pteroRacingMoments()
+        moments += hintMoments(gameId: "ptero-footprints", hints: pteroFootprintSourceHints, prefix: "source-hint")
+        moments += hintMoments(gameId: "ptero-ages", hints: pteroAgesSourceHints, prefix: "source-hint")
+        moments += shippingPteroFloraMoments()
+        moments += pteroEggsMoments()
+        moments += nameThatPterosaurMoments()
+        moments += pteroFootprintRoundMoments()
+        moments += pteroDietOptionMoments()
+        if let matrix = PteroMatrixGameConfigs.makePteroMatrix() {
+            moments += pteroMatrixMoments(config: matrix)
+        }
+        if SmilingDinosGameConfigs.isPteroSmilePlayable {
+            moments += pteroSmileMoments()
+        }
+        return moments
+    }
+
+    // MARK: - Aggregated shipping marine moments
+
+    static func shippingMarineMoments() -> [LandGameDisplayMoment] {
+        var moments: [LandGameDisplayMoment] = []
+        moments += weighMarineReptileMoments()
+        moments += marineTallerMoments()
+        moments += marinePuzzleMoments()
+        moments += marineRacingMoments()
+        moments += nameThatMarineReptileMoments()
+        moments += hintMoments(gameId: "marine-ages", hints: marineAgesSourceHints, prefix: "source-hint")
+        if GuessGameConfigs.makeMarineFootprints() != nil {
+            moments += hintMoments(gameId: "marine-footprints", hints: marineFootprintSourceHints, prefix: "source-hint")
+            moments += marineFootprintRoundMoments()
+        }
+        if MarineFloraGameConfigs.isPlayable {
+            moments += shippingMarineFloraMoments()
+        }
+        if MarineEggsGameConfigs.makeMarineEggs() != nil {
+            moments += marineEggsMoments()
+        }
+        moments += marineDietOptionMoments()
+        if let matrix = MarineMatrixGameConfigs.makeMarineMatrix() {
+            moments += marineMatrixMoments(config: matrix)
+        }
+        if GuessGameConfigs.makeMarineSmile() != nil {
+            moments += marineSmileMoments()
+        }
         return moments
     }
 
@@ -153,6 +259,95 @@ enum LandGameDisplayMomentCatalog {
         }
         let fallback = racer.effectiveFallbackImageName(prefix: assetPrefix)
         return ImageAssetCache.imageExists(named: fallback) ? fallback : nil
+    }
+
+    /// Ready pose for pterosaur racing grid (`RacingGameView.racerDisplayImageName`, ptero start pose).
+    static func pteroRacingRacerReadyImageName(for racer: RacingRacer) -> String? {
+        guard let base = racer.pteroRacingAssetBase else { return nil }
+        if ImageAssetCache.imageExists(named: base + "-ready") { return base + "-ready" }
+        if ImageAssetCache.imageExists(named: base) { return base }
+        return nil
+    }
+
+    /// Grid cell uses square `ptero-*`; comparison slots use bundled `ptero-measure-*` when present.
+    static func pteroTallerGridImageName(for item: WhoIsTallerItem) -> String? {
+        let base = item.imageName ?? pteroTallerNameFallbackStem(for: item)
+        return ImageAssetCache.imageExists(named: base) ? base : nil
+    }
+
+    static func pteroTallerMeasureImageName(for item: WhoIsTallerItem) -> String? {
+        let base = item.imageName ?? pteroTallerNameFallbackStem(for: item)
+        let prefix = "ptero-"
+        guard base.hasPrefix(prefix) else { return nil }
+        let tail = String(base.dropFirst(prefix.count))
+        guard !tail.isEmpty else { return nil }
+        let measureName = "ptero-measure-\(tail)"
+        if ImageAssetCache.imageExists(named: measureName) { return measureName }
+        return ImageAssetCache.imageExists(named: base) ? base : nil
+    }
+
+    static func pteroTallerAudioStem(for item: WhoIsTallerItem) -> String {
+        item.imageName ?? pteroTallerNameFallbackStem(for: item)
+    }
+
+    private static func pteroTallerNameFallbackStem(for item: WhoIsTallerItem) -> String {
+        let slug = item.name.lowercased().replacingOccurrences(of: " ", with: "-")
+        return "ptero-\(slug)"
+    }
+
+    /// Grid/comparison art for Weigh the Marine Reptile (`WeighGameView.weighImageName`).
+    static func weighMarineDisplayImageName(for baseImageName: String) -> String {
+        let parts = baseImageName.split(separator: "-", omittingEmptySubsequences: false)
+        if parts.count >= 3, parts[0] == "marine" {
+            let clade = String(parts[1])
+            let baseName = parts.dropFirst(2).joined(separator: "-")
+            let preferredMarineNames = [
+                "weight-marine-\(clade)-\(baseName)",
+                "weigh-marine-\(clade)-\(baseName)",
+                "weight-marine-\(clade)",
+                "weigh-marine-\(clade)",
+            ]
+            for candidate in preferredMarineNames where ImageAssetCache.imageExists(named: candidate) {
+                return candidate
+            }
+        }
+        let weighName = "weigh-\(baseImageName)"
+        if ImageAssetCache.imageExists(named: weighName) { return weighName }
+        return baseImageName
+    }
+
+    static func marineTallerGridImageName(for item: WhoIsTallerItem) -> String? {
+        let base = item.imageName ?? marineTallerNameFallbackStem(for: item)
+        return ImageAssetCache.imageExists(named: base) ? base : nil
+    }
+
+    static func marineTallerMeasureImageName(for item: WhoIsTallerItem) -> String? {
+        let base = item.imageName ?? marineTallerNameFallbackStem(for: item)
+        if let name = MarineReptileLengthCatalog.measureMarineImageName(forImageName: base) { return name }
+        return ImageAssetCache.imageExists(named: base) ? base : nil
+    }
+
+    static func marineTallerAudioStem(for item: WhoIsTallerItem) -> String {
+        item.imageName ?? marineTallerNameFallbackStem(for: item)
+    }
+
+    private static func marineTallerNameFallbackStem(for item: WhoIsTallerItem) -> String {
+        let slug = item.name.lowercased().replacingOccurrences(of: " ", with: "-")
+        return "marine-\(slug)"
+    }
+
+    static func marineSilhouetteAssetName(forBodyImage base: String) -> String? {
+        let parts = base.split(separator: "-", omittingEmptySubsequences: true)
+        guard parts.count >= 3, parts[0] == "marine" else { return nil }
+        let silhouette = "marine-\(parts[1])-silhouette-\(parts.dropFirst(2).joined(separator: "-"))"
+        return ImageAssetCache.imageExists(named: silhouette) ? silhouette : nil
+    }
+
+    static func marineRacingRacerReadyImageName(for racer: RacingRacer) -> String? {
+        guard let base = racer.marineRacingAssetBase else { return nil }
+        if ImageAssetCache.imageExists(named: base + "-ready") { return base + "-ready" }
+        if ImageAssetCache.imageExists(named: base) { return base }
+        return nil
     }
 
     // MARK: - Builders
@@ -280,6 +475,13 @@ enum LandGameDisplayMomentCatalog {
                 )
             )
         }
+    }
+
+    /// Category hints + every registry plant for Dino Flora CI (land L3).
+    static func shippingDinoFloraMoments() -> [LandGameDisplayMoment] {
+        var moments = hintMoments(gameId: "dino-flora", hints: dinoFloraCategoryHints, prefix: "category-hint")
+        moments += floraPlantMoments()
+        return moments
     }
 
     /// Category hints + every registry plant for Ptero Flora CI (air L3).
@@ -508,6 +710,560 @@ enum LandGameDisplayMomentCatalog {
                     )
                 )
             }
+        }
+        return moments
+    }
+
+    private static func weighPterosaurMoments() -> [LandGameDisplayMoment] {
+        let pool = MatchingGameConfigs.allPterosaurs.filter { ptero in
+            guard let imageName = ptero.imageName, imageName.hasPrefix("ptero-"),
+                  AirPterosaurData.pterosaurEstimatedWeightKgById[ptero.id] != nil else { return false }
+            return true
+        }
+        return pool.compactMap { ptero in
+            guard let base = ptero.imageName else { return nil }
+            return LandGameDisplayMoment(
+                gameConfigId: "weigh-pterosaur",
+                context: "grid \(ptero.name)",
+                triad: LandGameDisplayTriad(
+                    id: "weigh-\(ptero.id)",
+                    displayText: ptero.name,
+                    imageAssetName: base,
+                    audioKey: base
+                )
+            )
+        }
+    }
+
+    private static func pteroTallerMoments() -> [LandGameDisplayMoment] {
+        let items = allEligiblePterosaurTallerItems()
+        var moments: [LandGameDisplayMoment] = []
+        for item in items {
+            let audio = pteroTallerAudioStem(for: item)
+            if let gridImage = pteroTallerGridImageName(for: item) {
+                moments.append(
+                    LandGameDisplayMoment(
+                        gameConfigId: "which-ptero-is-taller",
+                        context: "grid \(item.name)",
+                        triad: LandGameDisplayTriad(
+                            id: "taller-grid-\(item.id)",
+                            displayText: item.name,
+                            imageAssetName: gridImage,
+                            audioKey: audio
+                        )
+                    )
+                )
+            }
+            if let measureImage = pteroTallerMeasureImageName(for: item) {
+                moments.append(
+                    LandGameDisplayMoment(
+                        gameConfigId: "which-ptero-is-taller",
+                        context: "comparison \(item.name)",
+                        triad: LandGameDisplayTriad(
+                            id: "taller-measure-\(item.id)",
+                            displayText: item.name,
+                            imageAssetName: measureImage,
+                            audioKey: audio
+                        )
+                    )
+                )
+            }
+        }
+        return moments
+    }
+
+    private static func allEligiblePterosaurTallerItems() -> [WhoIsTallerItem] {
+        MatchingGameConfigs.allPterosaurs.compactMap { ptero in
+            guard let imageName = ptero.imageName, imageName.hasPrefix("ptero-"),
+                  AirPterosaurData.pterosaurStandingHeightMetersById[ptero.id] != nil,
+                  ImageAssetCache.imageExists(named: imageName) else { return nil }
+            return WhoIsTallerItem(
+                id: ptero.id,
+                name: ptero.name,
+                imageName: ptero.imageName,
+                emoji: ptero.icon,
+                heightMeters: AirPterosaurData.pterosaurStandingHeightMetersById[ptero.id] ?? 1
+            )
+        }
+    }
+
+    private static func pteroPuzzleMoments() -> [LandGameDisplayMoment] {
+        let pool = AirPterosaurData.allPterosaurs
+        return PterosaurGuessGroup.allCases.compactMap { group in
+            let inGroup = pool
+                .filter { PterosaurGuessGroup.guessGroup(forImageName: $0.imageName ?? "") == group }
+                .sorted { $0.name < $1.name }
+            guard let ptero = inGroup.first(where: { ($0.imageName).map { ImageAssetCache.imageExists(named: $0) } ?? false }) else {
+                return nil
+            }
+            return creatureMoment(gameId: "ptero-puzzle", context: "group \(group.rawValue) creature", dinosaur: ptero)
+        }
+    }
+
+    private static func pteroRacingMoments() -> [LandGameDisplayMoment] {
+        let periodHints: [LandGameDisplayTriad] = [
+            LandGameDisplayTriad(id: "jurassic", displayText: "Jurassic", imageAssetName: "period-jurassic", audioKey: "cover-jurassic"),
+            LandGameDisplayTriad(id: "cretaceous", displayText: "Cretaceous", imageAssetName: "period-cretaceous", audioKey: "cover-cretaceous"),
+        ]
+        var moments = hintMoments(gameId: "racing-pterosaurs", hints: periodHints, prefix: "period")
+        for period in [RacingPeriod.jurassic, .cretaceous] {
+            let config = RacingGameConfigs.makePterosaurConfig(for: period)
+            for racer in config.racers {
+                guard let image = pteroRacingRacerReadyImageName(for: racer) else { continue }
+                let audio = racer.effectiveFallbackImageName(prefix: config.assetPrefix)
+                moments.append(
+                    LandGameDisplayMoment(
+                        gameConfigId: "racing-pterosaurs",
+                        context: "\(period.rawValue) racer \(racer.name)",
+                        triad: LandGameDisplayTriad(
+                            id: "racer-\(period.rawValue)-\(racer.id)",
+                            displayText: racer.name,
+                            imageAssetName: image,
+                            audioKey: audio
+                        )
+                    )
+                )
+            }
+        }
+        return moments
+    }
+
+    private static func pteroEggsMoments() -> [LandGameDisplayMoment] {
+        var moments = PteroEggMorphology.sourceHints.map { hint in
+            LandGameDisplayMoment(
+                gameConfigId: "ptero-eggs",
+                context: "source-hint \(hint.id)",
+                triad: LandGameDisplayTriad(
+                    id: hint.id,
+                    displayText: hint.displayName,
+                    imageAssetName: hint.imageName,
+                    audioKey: hint.audioKey
+                )
+            )
+        }
+        let config = PteroEggsGameConfigs.pteroEggs
+        for round in config.rounds {
+            if let moment = creatureMoment(
+                gameId: "ptero-eggs",
+                context: "round \(round.id) creature",
+                dinosaur: round.correctCreature
+            ) {
+                moments.append(moment)
+            }
+            // Egg/nest triads omitted until `ptero-eggs-{clade}` / `ptero-nests-{clade}` narration ships
+            // (see `PterosaurGameAudioFilesXCTests.testPteroEggsMorphotypeAudioResolvesInBundleWhenPresent`).
+        }
+        return moments
+    }
+
+    private static func nameThatPterosaurMoments() -> [LandGameDisplayMoment] {
+        AirPterosaurData.nameThatPterosaurPool.compactMap { ptero in
+            guard let base = ptero.imageName else { return nil }
+            let silhouette = AirPterosaurData.silhouetteAssetName(forBodyImage: base)
+            guard ImageAssetCache.imageExists(named: silhouette) else { return nil }
+            return LandGameDisplayMoment(
+                gameConfigId: "name-that-pterosaur",
+                context: "silhouette \(ptero.name)",
+                triad: LandGameDisplayTriad(
+                    id: "silhouette-\(ptero.id)",
+                    displayText: ptero.name,
+                    imageAssetName: silhouette,
+                    audioKey: base
+                )
+            )
+        }
+    }
+
+    private static func pteroFootprintRoundMoments() -> [LandGameDisplayMoment] {
+        let config = GuessGameConfigs.pteroFootprints
+        var moments: [LandGameDisplayMoment] = []
+        for round in config.rounds {
+            moments.append(
+                LandGameDisplayMoment(
+                    gameConfigId: config.id,
+                    context: "round \(round.id) footprint",
+                    triad: LandGameDisplayTriad(
+                        id: "round-\(round.id)-footprint",
+                        displayText: "Footprint",
+                        imageAssetName: round.questionImageName,
+                        audioKey: "game-footprints-identify-the-footprint"
+                    )
+                )
+            )
+            for option in round.options {
+                if let moment = creatureMoment(
+                    gameId: config.id,
+                    context: "round \(round.id) option \(option.name)",
+                    dinosaur: option
+                ) {
+                    moments.append(moment)
+                }
+            }
+        }
+        return moments
+    }
+
+    private static func pteroDietOptionMoments() -> [LandGameDisplayMoment] {
+        MatchingGameConfigs.pteroDietOptions.compactMap { diet in
+            guard let imageName = diet.imageName, !diet.type.isEmpty else { return nil }
+            return LandGameDisplayMoment(
+                gameConfigId: "ptero-diets",
+                context: "diet \(diet.type)",
+                triad: LandGameDisplayTriad(
+                    id: diet.type.lowercased(),
+                    displayText: diet.type,
+                    imageAssetName: imageName,
+                    audioKey: AirPterosaurData.pterosaurDietAudioKey(for: diet.type)
+                )
+            )
+        }
+    }
+
+    private static func pteroMatrixMoments(config: DinoMatrixGameConfig) -> [LandGameDisplayMoment] {
+        var moments = config.sourceHints.map { hint in
+            LandGameDisplayMoment(
+                gameConfigId: config.id,
+                context: "source-hint \(hint.id)",
+                triad: LandGameDisplayTriad(
+                    id: hint.id,
+                    displayText: hint.displayName,
+                    imageAssetName: hint.imageName,
+                    audioKey: hint.audioKey
+                )
+            )
+        }
+        for round in config.rounds {
+            guard let ptero = round.dinosaur else { continue }
+            if let moment = creatureMoment(gameId: config.id, context: "round \(round.id) creature", dinosaur: ptero) {
+                moments.append(moment)
+            }
+        }
+        return moments
+    }
+
+    private static func pteroSmileMoments() -> [LandGameDisplayMoment] {
+        let config = SmilingDinosGameConfigs.pteroSmile
+        var moments: [LandGameDisplayMoment] = []
+        for round in config.rounds {
+            for (index, pair) in round.pairs.enumerated() {
+                guard let smileImage = PteroSmileMorphology.smilePortraitAssetName(for: pair.dinosaur),
+                      let portraitKey = pair.dinosaur.imageName, !pair.dinosaur.name.isEmpty else { continue }
+                moments.append(
+                    LandGameDisplayMoment(
+                        gameConfigId: config.id,
+                        context: "round \(round.id) smile \(index)",
+                        triad: LandGameDisplayTriad(
+                            id: "smile-\(pair.dinosaur.id)",
+                            displayText: pair.dinosaur.name,
+                            imageAssetName: smileImage,
+                            audioKey: portraitKey
+                        )
+                    )
+                )
+                let toothImage = config.toothImageName(for: pair.toothType)
+                let toothText = PteroSmileMorphology.playerLabel(for: pair.toothType)
+                moments.append(
+                    LandGameDisplayMoment(
+                        gameConfigId: config.id,
+                        context: "round \(round.id) tooth \(pair.toothType)",
+                        triad: LandGameDisplayTriad(
+                            id: pair.toothType,
+                            displayText: toothText,
+                            imageAssetName: toothImage,
+                            audioKey: PteroSmileMorphology.toothAudioKey(for: pair.toothType)
+                        )
+                    )
+                )
+            }
+            for distractor in round.distractorToothTypes {
+                let distractorImage = config.toothImageName(for: distractor)
+                moments.append(
+                    LandGameDisplayMoment(
+                        gameConfigId: config.id,
+                        context: "round \(round.id) distractor tooth \(distractor)",
+                        triad: LandGameDisplayTriad(
+                            id: distractor,
+                            displayText: PteroSmileMorphology.playerLabel(for: distractor),
+                            imageAssetName: distractorImage,
+                            audioKey: PteroSmileMorphology.toothAudioKey(for: distractor)
+                        )
+                    )
+                )
+            }
+        }
+        return moments
+    }
+
+    private static func weighMarineReptileMoments() -> [LandGameDisplayMoment] {
+        MarineReptileWeighCatalog.allEntries.map { entry in
+            let displayImage = weighMarineDisplayImageName(for: entry.imageAssetName)
+            return LandGameDisplayMoment(
+                gameConfigId: "weigh-marine-reptile",
+                context: "grid \(entry.displayName)",
+                triad: LandGameDisplayTriad(
+                    id: "weigh-\(entry.stableId)",
+                    displayText: entry.displayName,
+                    imageAssetName: displayImage,
+                    audioKey: entry.imageAssetName
+                )
+            )
+        }
+    }
+
+    private static func allEligibleMarineReptileTallerItems() -> [WhoIsTallerItem] {
+        SeaMarineReptileData.allMarineReptiles.compactMap { marine in
+            guard let imageName = marine.imageName, imageName.hasPrefix("marine-"),
+                  MarineReptileLengthCatalog.totalLengthMeters(forImageName: imageName) != nil,
+                  ImageAssetCache.imageExists(named: imageName) else { return nil }
+            return WhoIsTallerItem(
+                id: marine.id,
+                name: marine.name,
+                imageName: marine.imageName,
+                emoji: marine.icon,
+                heightMeters: MarineReptileLengthCatalog.totalLengthMeters(forImageName: imageName) ?? 1
+            )
+        }
+    }
+
+    private static func marineTallerMoments() -> [LandGameDisplayMoment] {
+        let items = allEligibleMarineReptileTallerItems()
+        var moments: [LandGameDisplayMoment] = []
+        for item in items {
+            let audio = marineTallerAudioStem(for: item)
+            if let gridImage = marineTallerGridImageName(for: item) {
+                moments.append(
+                    LandGameDisplayMoment(
+                        gameConfigId: "which-marine-reptile-is-longer",
+                        context: "grid \(item.name)",
+                        triad: LandGameDisplayTriad(
+                            id: "taller-grid-\(item.id)",
+                            displayText: item.name,
+                            imageAssetName: gridImage,
+                            audioKey: audio
+                        )
+                    )
+                )
+            }
+            if let measureImage = marineTallerMeasureImageName(for: item) {
+                moments.append(
+                    LandGameDisplayMoment(
+                        gameConfigId: "which-marine-reptile-is-longer",
+                        context: "comparison \(item.name)",
+                        triad: LandGameDisplayTriad(
+                            id: "taller-measure-\(item.id)",
+                            displayText: item.name,
+                            imageAssetName: measureImage,
+                            audioKey: audio
+                        )
+                    )
+                )
+            }
+        }
+        return moments
+    }
+
+    private static func marinePuzzleMoments() -> [LandGameDisplayMoment] {
+        let pool = SeaMarineReptileData.allMarineReptiles
+        let groups = Array(Set(pool.map { SeaMarineReptileData.marineCladeRawValue(for: $0) })).sorted()
+        return groups.compactMap { group in
+            let inGroup = pool
+                .filter { SeaMarineReptileData.marineCladeRawValue(for: $0) == group }
+                .sorted { $0.name < $1.name }
+            guard let creature = inGroup.first(where: { ($0.imageName).map { ImageAssetCache.imageExists(named: $0) } ?? false }) else {
+                return nil
+            }
+            return creatureMoment(
+                gameId: "marine-reptile-puzzle",
+                context: "group \(group) creature",
+                dinosaur: creature
+            )
+        }
+    }
+
+    private static func marineRacingMoments() -> [LandGameDisplayMoment] {
+        let periodHints: [LandGameDisplayTriad] = [
+            LandGameDisplayTriad(id: "jurassic", displayText: "Jurassic", imageAssetName: "period-jurassic", audioKey: "cover-jurassic"),
+            LandGameDisplayTriad(id: "cretaceous", displayText: "Cretaceous", imageAssetName: "period-cretaceous", audioKey: "cover-cretaceous"),
+        ]
+        var moments = hintMoments(gameId: "racing-marine-reptiles", hints: periodHints, prefix: "period")
+        for period in [RacingPeriod.jurassic, .cretaceous, .both] {
+            let config = RacingGameConfigs.makeMarineConfig(for: period)
+            guard !config.racers.isEmpty else { continue }
+            for racer in config.racers {
+                guard let image = marineRacingRacerReadyImageName(for: racer) else { continue }
+                let audio = racer.effectiveFallbackImageName(prefix: config.assetPrefix)
+                moments.append(
+                    LandGameDisplayMoment(
+                        gameConfigId: "racing-marine-reptiles",
+                        context: "\(period.rawValue) racer \(racer.name)",
+                        triad: LandGameDisplayTriad(
+                            id: "racer-\(period.rawValue)-\(racer.id)",
+                            displayText: racer.name,
+                            imageAssetName: image,
+                            audioKey: audio
+                        )
+                    )
+                )
+            }
+        }
+        return moments
+    }
+
+    private static func nameThatMarineReptileMoments() -> [LandGameDisplayMoment] {
+        SeaMarineReptileData.allMarineReptiles.compactMap { marine in
+            guard let base = marine.imageName,
+                  let silhouette = marineSilhouetteAssetName(forBodyImage: base) else { return nil }
+            return LandGameDisplayMoment(
+                gameConfigId: "name-that-marine-reptile",
+                context: "silhouette \(marine.name)",
+                triad: LandGameDisplayTriad(
+                    id: "silhouette-\(marine.id)",
+                    displayText: marine.name,
+                    imageAssetName: silhouette,
+                    audioKey: base
+                )
+            )
+        }
+    }
+
+    private static func marineFootprintRoundMoments() -> [LandGameDisplayMoment] {
+        guard let config = GuessGameConfigs.makeMarineFootprints() else { return [] }
+        var moments: [LandGameDisplayMoment] = []
+        for round in config.rounds {
+            moments.append(
+                LandGameDisplayMoment(
+                    gameConfigId: config.id,
+                    context: "round \(round.id) footprint",
+                    triad: LandGameDisplayTriad(
+                        id: "round-\(round.id)-footprint",
+                        displayText: "Footprint",
+                        imageAssetName: round.questionImageName,
+                        audioKey: "game-footprints-identify-the-footprint"
+                    )
+                )
+            )
+            for option in round.options {
+                if let moment = creatureMoment(
+                    gameId: config.id,
+                    context: "round \(round.id) option \(option.name)",
+                    dinosaur: option
+                ) {
+                    moments.append(moment)
+                }
+            }
+        }
+        return moments
+    }
+
+    private static func marineEggsMoments() -> [LandGameDisplayMoment] {
+        var moments = MarineEggMorphology.sourceHints.map { hint in
+            LandGameDisplayMoment(
+                gameConfigId: "marine-eggs",
+                context: "source-hint \(hint.id)",
+                triad: LandGameDisplayTriad(
+                    id: hint.id,
+                    displayText: hint.displayName,
+                    imageAssetName: hint.imageName,
+                    audioKey: hint.audioKey
+                )
+            )
+        }
+        guard let config = MarineEggsGameConfigs.makeMarineEggs() else { return moments }
+        let morphology = MarineEggMorphology.morphology
+        for round in config.rounds {
+            if let moment = creatureMoment(
+                gameId: "marine-eggs",
+                context: "round \(round.id) creature",
+                dinosaur: round.correctCreature
+            ) {
+                moments.append(moment)
+            }
+            let eggImage = morphology.eggImageName(eggType: round.eggType)
+            moments.append(
+                LandGameDisplayMoment(
+                    gameConfigId: "marine-eggs",
+                    context: "round \(round.id) egg \(round.eggType)",
+                    triad: LandGameDisplayTriad(
+                        id: round.eggType,
+                        displayText: morphology.eggDisplayTitle(for: round.eggType),
+                        imageAssetName: eggImage,
+                        audioKey: morphology.eggAudioKey(eggType: round.eggType)
+                    )
+                )
+            )
+        }
+        return moments
+    }
+
+    private static func marineDietOptionMoments() -> [LandGameDisplayMoment] {
+        MatchingGameConfigs.marineDietOptions.compactMap { diet in
+            guard let imageName = diet.imageName, !diet.type.isEmpty else { return nil }
+            return LandGameDisplayMoment(
+                gameConfigId: "marine-diets",
+                context: "diet \(diet.type)",
+                triad: LandGameDisplayTriad(
+                    id: diet.type.lowercased(),
+                    displayText: diet.type,
+                    imageAssetName: imageName,
+                    audioKey: SeaMarineReptileData.dietAudioKey(for: diet.type)
+                )
+            )
+        }
+    }
+
+    private static func marineMatrixMoments(config: DinoMatrixGameConfig) -> [LandGameDisplayMoment] {
+        var moments = config.sourceHints.map { hint in
+            LandGameDisplayMoment(
+                gameConfigId: config.id,
+                context: "source-hint \(hint.id)",
+                triad: LandGameDisplayTriad(
+                    id: hint.id,
+                    displayText: hint.displayName,
+                    imageAssetName: hint.imageName,
+                    audioKey: hint.audioKey
+                )
+            )
+        }
+        for round in config.rounds {
+            guard let marine = round.dinosaur else { continue }
+            if let moment = creatureMoment(gameId: config.id, context: "round \(round.id) creature", dinosaur: marine) {
+                moments.append(moment)
+            }
+        }
+        return moments
+    }
+
+    private static func marineSmileMoments() -> [LandGameDisplayMoment] {
+        var moments: [LandGameDisplayMoment] = []
+        for type in MarineSmileToothType.allCases {
+            guard let toothImage = MarineSmileMorphology.referenceToothImageName(for: type) else { continue }
+            moments.append(
+                LandGameDisplayMoment(
+                    gameConfigId: "marine-smile",
+                    context: "reference tooth \(type.rawValue)",
+                    triad: LandGameDisplayTriad(
+                        id: type.rawValue,
+                        displayText: type.displayName,
+                        imageAssetName: toothImage,
+                        audioKey: type.toothAudioKey
+                    )
+                )
+            )
+        }
+        for creature in MarineSmileMorphology.playableCreatures {
+            guard let smileImage = creature.imageName, !creature.name.isEmpty else { continue }
+            moments.append(
+                LandGameDisplayMoment(
+                    gameConfigId: "marine-smile",
+                    context: "smile \(creature.name)",
+                    triad: LandGameDisplayTriad(
+                        id: "smile-\(creature.id)",
+                        displayText: creature.name,
+                        imageAssetName: smileImage,
+                        audioKey: smileImage
+                    )
+                )
+            )
         }
         return moments
     }

@@ -30,22 +30,32 @@ private enum DinoAgesPeriod: String, CaseIterable {
 
 // MARK: - Dino Ages pool and period (Jurassic / Cretaceous)
 
-/// Dino image set names (dino-*) that are Jurassic period. Used to filter the pool.
-private let dinoAgesJurassicImageNames: Set<String> = [
-    "dino-anchiornis", "dino-apatosaurus", "dino-archaeopteryx", "dino-brachiosaurus", "dino-camarasaurus",
-    "dino-ceratosaurus", "dino-compsognathus", "dino-diplodocus", "dino-dryosaurus", "dino-eosinopteryx",
-    "dino-allosaurus", "dino-pedopenna", "dino-stegosaurus", "dino-torvosaurus", "dino-xiaotingia"
-]
+enum DinoAgesMechanics {
+    /// Dino image set names (dino-*) that are Jurassic period.
+    static let jurassicImageNames: Set<String> = [
+        "dino-anchiornis", "dino-apatosaurus", "dino-archaeopteryx", "dino-brachiosaurus", "dino-camarasaurus",
+        "dino-ceratosaurus", "dino-compsognathus", "dino-diplodocus", "dino-dryosaurus", "dino-eosinopteryx",
+        "dino-allosaurus", "dino-pedopenna", "dino-stegosaurus", "dino-torvosaurus", "dino-xiaotingia",
+    ]
 
-/// Dino image set names (dino-*) that are Cretaceous period. Used to filter the pool.
-private let dinoAgesCretaceousImageNames: Set<String> = [
-    "dino-albertosaurus", "dino-ankylosaurus", "dino-argentinosaurus", "dino-baryonyx", "dino-chasmosaurus",
-    "dino-corythosaurus", "dino-deinonychus", "dino-dromaeosaurus", "dino-edmontosaurus", "dino-gallimimus",
-    "dino-giganotosaurus", "dino-iguanodon", "dino-kosmoceratops", "dino-majungasaurus", "dino-masiakasaurus",
-    "dino-microraptor", "dino-pachycephalosaurus", "dino-parasaurolophus", "dino-rapetosaurus", "dino-spinosaurus",
-    "dino-therizinosaurus", "dino-torosaurus", "dino-trex", "dino-triceratops", "dino-troodon",
-    "dino-oviraptor", "dino-utahraptor", "dino-velociraptor"
-]
+    /// Dino image set names (dino-*) that are Cretaceous period.
+    static let cretaceousImageNames: Set<String> = [
+        "dino-albertosaurus", "dino-ankylosaurus", "dino-argentinosaurus", "dino-baryonyx", "dino-chasmosaurus",
+        "dino-corythosaurus", "dino-deinonychus", "dino-dromaeosaurus", "dino-edmontosaurus", "dino-gallimimus",
+        "dino-giganotosaurus", "dino-iguanodon", "dino-kosmoceratops", "dino-majungasaurus", "dino-masiakasaurus",
+        "dino-microraptor", "dino-pachycephalosaurus", "dino-parasaurolophus", "dino-rapetosaurus", "dino-spinosaurus",
+        "dino-therizinosaurus", "dino-torosaurus", "dino-trex", "dino-triceratops", "dino-troodon",
+        "dino-oviraptor", "dino-utahraptor", "dino-velociraptor",
+    ]
+
+    /// Three correct picks × three rounds without reuse.
+    static let minimumUniqueDinosPerPeriod = 9
+
+    /// Matches gameplay: explicit Jurassic list, otherwise Cretaceous (see `dinoAgesPeriodById`).
+    fileprivate static func mesozoicPeriod(forImageName name: String) -> DinoAgesPeriod {
+        jurassicImageNames.contains(name) ? .jurassic : .cretaceous
+    }
+}
 
 /// All dinosaurs that have a dino- imageset: catalog (ids 1–13) + extras (ids 14–37) so all 37 asset sets are included.
 private let dinoAgesPool: [Dinosaur] = {
@@ -92,7 +102,7 @@ private let dinoAgesPeriodById: [Int: DinoAgesPeriod] = {
     var map: [Int: DinoAgesPeriod] = [:]
     for d in dinoAgesPool {
         guard let name = d.imageName else { continue }
-        map[d.id] = dinoAgesJurassicImageNames.contains(name) ? .jurassic : .cretaceous
+        map[d.id] = DinoAgesMechanics.mesozoicPeriod(forImageName: name)
     }
     return map
 }()

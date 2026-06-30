@@ -2589,55 +2589,14 @@ private struct PterosaurRacerPoolEntry {
     let racingAssetBase: String
 }
 
-/// Racing Dinosaurs requires ready + finish excited/exhausted poses (run/trip fall back when missing).
-private func hasCompleteDinosaurRacingAssetPack(slug: String) -> Bool {
-    let base = "dino-racer-\(slug)"
-    return ImageAssetCache.imageExists(named: "\(base)-ready")
-        && ImageAssetCache.imageExists(named: "\(base)-finish-excited")
-        && ImageAssetCache.imageExists(named: "\(base)-finish-exhausted")
-}
-
-private enum DinosaurRacingMesozoicSpan {
-    case jurassic
-    case cretaceous
-}
-
-private struct DinosaurRacerCatalogEntry {
-    let slug: String
-    let displayName: String
-    let icon: String
-    let speed: Double
-    let racerAssetClade: String
-    let mesozoicSpan: DinosaurRacingMesozoicSpan
-}
-
-/// Metadata for bundled `dino-racer-{slug}-*` packs; pool is filtered by `hasCompleteDinosaurRacingAssetPack`.
-private let dinosaurRacerCatalog: [DinosaurRacerCatalogEntry] = [
-    DinosaurRacerCatalogEntry(slug: "allosaurus", displayName: "Allosaurus", icon: "🦖", speed: 25, racerAssetClade: "theropod", mesozoicSpan: .jurassic),
-    DinosaurRacerCatalogEntry(slug: "stegosaurus", displayName: "Stegosaurus", icon: "🦎", speed: 12.5, racerAssetClade: "stegosaur", mesozoicSpan: .jurassic),
-    DinosaurRacerCatalogEntry(slug: "apatosaurus", displayName: "Apatosaurus", icon: "🦕", speed: 13.5, racerAssetClade: "sauropod", mesozoicSpan: .jurassic),
-    DinosaurRacerCatalogEntry(slug: "diplodocus", displayName: "Diplodocus", icon: "🦕", speed: 12, racerAssetClade: "sauropod", mesozoicSpan: .jurassic),
-    DinosaurRacerCatalogEntry(slug: "compsognathus", displayName: "Compsognathus", icon: "🦖", speed: 40, racerAssetClade: "theropod", mesozoicSpan: .jurassic),
-    DinosaurRacerCatalogEntry(slug: "brontosaurus", displayName: "Brontosaurus", icon: "🦕", speed: 13.5, racerAssetClade: "sauropod", mesozoicSpan: .jurassic),
-    DinosaurRacerCatalogEntry(slug: "trex", displayName: "T-Rex", icon: "🦖", speed: 25, racerAssetClade: "theropod", mesozoicSpan: .cretaceous),
-    DinosaurRacerCatalogEntry(slug: "triceratops", displayName: "Triceratops", icon: "🦏", speed: 25, racerAssetClade: "ceratopsian", mesozoicSpan: .cretaceous),
-    DinosaurRacerCatalogEntry(slug: "ankylosaurus", displayName: "Ankylosaurus", icon: "🛡️", speed: 4.5, racerAssetClade: "ankylosaur", mesozoicSpan: .cretaceous),
-    DinosaurRacerCatalogEntry(slug: "velociraptor", displayName: "Velociraptor", icon: "🦖", speed: 22.5, racerAssetClade: "theropod", mesozoicSpan: .cretaceous),
-    DinosaurRacerCatalogEntry(slug: "gallimimus", displayName: "Gallimimus", icon: "🦃", speed: 45, racerAssetClade: "ornithomimid", mesozoicSpan: .cretaceous),
-    DinosaurRacerCatalogEntry(slug: "albertosaurus", displayName: "Albertosaurus", icon: "🦖", speed: 25, racerAssetClade: "theropod", mesozoicSpan: .cretaceous),
-    DinosaurRacerCatalogEntry(slug: "parasaurolophus", displayName: "Parasaurolophus", icon: "🦕", speed: 22, racerAssetClade: "hadrosaur", mesozoicSpan: .cretaceous),
-    DinosaurRacerCatalogEntry(slug: "spinosaurus", displayName: "Spinosaurus", icon: "🦖", speed: 20, racerAssetClade: "spinosaurid", mesozoicSpan: .cretaceous),
-]
-
 private func dinosaurRacerPool(for period: RacingPeriod) -> [RacingRacerPoolEntry] {
-    dinosaurRacerCatalog.compactMap { entry in
-        let inPeriod: Bool = switch period {
-        case .jurassic: entry.mesozoicSpan == .jurassic
-        case .cretaceous: entry.mesozoicSpan == .cretaceous
-        case .both: true
-        }
-        guard inPeriod, hasCompleteDinosaurRacingAssetPack(slug: entry.slug) else { return nil }
-        return RacingRacerPoolEntry(
+    let span: LandDinosaurRacingCatalog.MesozoicSpan = switch period {
+    case .jurassic: .jurassic
+    case .cretaceous: .cretaceous
+    case .both: .both
+    }
+    return LandDinosaurRacingCatalog.dinosaurRacersForRacing(mesozoicSpan: span).map { entry in
+        RacingRacerPoolEntry(
             name: entry.displayName,
             icon: entry.icon,
             speed: entry.speed,

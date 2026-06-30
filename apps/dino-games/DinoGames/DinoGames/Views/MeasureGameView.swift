@@ -38,18 +38,7 @@ struct MeasureGameConfig {
     let poolKind: MeasurePoolKind
 }
 
-// MARK: - Dinosaur height (for measure comparison; same IDs as Weigh game)
-
-/// Standing / at-the-hip height (m) per id (1–54). Keep in sync with `whoIsTallerHeightMetersById` in WhoIsTallerGameView.
-private let dinosaurEstimatedHeightMetersById: [Int: Double] = [
-    1: 12,  2: 9,   3: 9,   4: 0.55,  5: 12,  6: 15,  7: 22,  8: 8,
-    9: 9,   10: 8,  11: 9,  12: 1.5, 13: 9,  14: 18, 15: 2,  16: 5,
-    17: 4,  18: 6,  19: 0.25, 20: 0.22, 21: 26, 22: 6,  23: 20, 24: 5,
-    25: 7,  26: 0.35, 27: 1.75,  28: 18, 29: 1,  30: 0.22, 31: 16, 32: 6,
-    33: 0.32, 34: 0.22, 35: 8,  36: 4,  37: 0.25, 38: 0.6, 39: 6,  40: 18,
-    41: 7,  42: 6,  43: 1.2, 44: 20, 45: 6,  46: 7,  47: 9,  48: 7,
-    49: 1.2, 50: 2,  51: 7,  52: 5,  53: 6,  54: 7,
-]
+// MARK: - Dinosaur height (for measure comparison; shared with Which Dino Is Taller via `LandDinosaurHeightCatalog`)
 
 // Threshold for "about the same height": relative difference < this value. Tight (8%) so e.g. 2×Edmontonia (14m) does not match Brontosaurus (20m).
 private let sameHeightRelativeThreshold = 0.08
@@ -106,7 +95,7 @@ enum MeasureGameConfigs {
             let cladesWithSmall: [DinoClade]
             if let maxH = remainingHeight, maxH > 0 {
                 cladesWithSmall = clades.filter { clade in
-                    (byClade[clade] ?? []).contains { (dinosaurEstimatedHeightMetersById[$0.id] ?? 0) <= maxH }
+                    (byClade[clade] ?? []).contains { (LandDinosaurHeightCatalog.standingHeightMetersById[$0.id] ?? 0) <= maxH }
                 }
             } else {
                 cladesWithSmall = []
@@ -116,10 +105,10 @@ enum MeasureGameConfigs {
                 guard let candidates = byClade[clade], !candidates.isEmpty else { return nil }
                 let d: Dinosaur
                 if clade == forceOneSmall, let maxH = remainingHeight, maxH > 0 {
-                    let smallEnough = candidates.filter { (dinosaurEstimatedHeightMetersById[$0.id] ?? 0) <= maxH }
+                    let smallEnough = candidates.filter { (LandDinosaurHeightCatalog.standingHeightMetersById[$0.id] ?? 0) <= maxH }
                     d = smallEnough.randomElement()!
                 } else if let maxH = remainingHeight, maxH > 0 {
-                    let smallEnough = candidates.filter { (dinosaurEstimatedHeightMetersById[$0.id] ?? 0) <= maxH }
+                    let smallEnough = candidates.filter { (LandDinosaurHeightCatalog.standingHeightMetersById[$0.id] ?? 0) <= maxH }
                     d = (smallEnough.isEmpty ? candidates : smallEnough).randomElement()!
                 } else {
                     d = candidates.randomElement()!
@@ -153,7 +142,7 @@ enum MeasureGameConfigs {
         let candidates = pool.filter { (cladeById[$0.id] ?? .theropod) == clade }
         guard let d: Dinosaur = {
             if let maxH = maxHeight, maxH > 0 {
-                let smallEnough = candidates.filter { (dinosaurEstimatedHeightMetersById[$0.id] ?? 0) <= maxH }
+                let smallEnough = candidates.filter { (LandDinosaurHeightCatalog.standingHeightMetersById[$0.id] ?? 0) <= maxH }
                 return (smallEnough.isEmpty ? candidates : smallEnough).randomElement()
             }
             return candidates.randomElement()
@@ -163,7 +152,7 @@ enum MeasureGameConfigs {
 
     /// True if at least one creature in the round can be matched: some subset (1–5) of the others sums to within 8% of its height.
     private static func isRoundWinnable(_ creatures: [Dinosaur]) -> Bool {
-        let heights = creatures.map { (id: $0.id, h: dinosaurEstimatedHeightMetersById[$0.id] ?? 1) }
+        let heights = creatures.map { (id: $0.id, h: LandDinosaurHeightCatalog.standingHeightMetersById[$0.id] ?? 1) }
         for (refIdx, ref) in heights.enumerated() {
             let others = heights.enumerated().filter { $0.offset != refIdx }.map { $0.element }
             if canMatch(target: ref.h, from: others.map(\.h), threshold: sameHeightRelativeThreshold) {
@@ -362,8 +351,8 @@ struct MeasureGameView: View {
         guard let first = selectedFirst, !selectedRightStack.isEmpty else {
             return selectedFirst != nil ? 1.0 : 0
         }
-        let hLeft = dinosaurEstimatedHeightMetersById[first.id] ?? 1
-        let stackTotalH = selectedRightStack.reduce(0.0) { $0 + (dinosaurEstimatedHeightMetersById[$1.id] ?? 1) }
+        let hLeft = LandDinosaurHeightCatalog.standingHeightMetersById[first.id] ?? 1
+        let stackTotalH = selectedRightStack.reduce(0.0) { $0 + (LandDinosaurHeightCatalog.standingHeightMetersById[$1.id] ?? 1) }
         let maxH = max(hLeft, stackTotalH)
         if maxH <= 0 { return 1.0 }
         let rawScale: CGFloat = hLeft >= stackTotalH ? 1.0 : CGFloat(hLeft / maxH)
@@ -428,15 +417,15 @@ struct MeasureGameView: View {
     /// Right side: tower scaled by (stack total / left height) with head room; each segment at least measureMinSegmentHeight, then fit in 340pt.
     /// When left >= stack, right tower is scaled down by 8% so the left reference is always visually dominant (avoids image aspect-ratio mismatch).
     private var measureRightTowerView: some View {
-        let sorted = selectedRightStack.sorted { (dinosaurEstimatedHeightMetersById[$0.id] ?? 0) > (dinosaurEstimatedHeightMetersById[$1.id] ?? 0) }
-        let stackTotalH = sorted.reduce(0.0) { $0 + (dinosaurEstimatedHeightMetersById[$1.id] ?? 1) }
-        let leftH = selectedFirst.flatMap { dinosaurEstimatedHeightMetersById[$0.id] } ?? 1
+        let sorted = selectedRightStack.sorted { (LandDinosaurHeightCatalog.standingHeightMetersById[$0.id] ?? 0) > (LandDinosaurHeightCatalog.standingHeightMetersById[$1.id] ?? 0) }
+        let stackTotalH = sorted.reduce(0.0) { $0 + (LandDinosaurHeightCatalog.standingHeightMetersById[$1.id] ?? 1) }
+        let leftH = selectedFirst.flatMap { LandDinosaurHeightCatalog.standingHeightMetersById[$0.id] } ?? 1
         let maxH = max(leftH, stackTotalH)
         let proportional: CGFloat = maxH > 0 ? CGFloat(stackTotalH / maxH) : 0
         let buffer: CGFloat = leftH >= stackTotalH ? 0.92 : 1.0  // right 8% smaller when left is reference
         let rawTowerHeight: CGFloat = min(measureAreaHeight, measureAreaHeight * proportional * buffer)
         let rawHeights: [CGFloat] = sorted.map { c in
-            let h = dinosaurEstimatedHeightMetersById[c.id] ?? 1
+            let h = LandDinosaurHeightCatalog.standingHeightMetersById[c.id] ?? 1
             let portion = stackTotalH > 0 ? (h / stackTotalH) : (1.0 / Double(sorted.count))
             return max(rawTowerHeight * CGFloat(portion), measureMinSegmentHeight)
         }
@@ -494,7 +483,7 @@ struct MeasureGameView: View {
                 return
             }
             selectedFirst = creature
-            let leftH = dinosaurEstimatedHeightMetersById[creature.id] ?? 1
+            let leftH = LandDinosaurHeightCatalog.standingHeightMetersById[creature.id] ?? 1
             replaceGridSlotAfterUse(index: index, preferringSmallEnough: leftH)
             speechManager.onAudioFinished = nil
             measureTapsBlocked = true
@@ -512,7 +501,7 @@ struct MeasureGameView: View {
         if creature.id == selectedFirst?.id {
             if selectedRightStack.isEmpty, let first = selectedFirst {
                 // Same dinosaur tapped twice with empty stack: "X is as tall as X"
-                let leftH = dinosaurEstimatedHeightMetersById[first.id] ?? 1
+                let leftH = LandDinosaurHeightCatalog.standingHeightMetersById[first.id] ?? 1
                 replaceGridSlotAfterUse(index: index, preferringSmallEnough: leftH)
                 measureTapsBlocked = true
                 playMeasureSameHeightSequence(left: first, stack: [creature]) {
@@ -618,9 +607,9 @@ struct MeasureGameView: View {
     /// Uses a lower threshold than display floor so small dinosaurs (e.g. Pedopenna with Dryosaurus) are allowed.
     private func wouldSegmentBeTooSmall(_ creature: MeasureCreature) -> Bool {
         guard let first = selectedFirst else { return false }
-        let leftH = dinosaurEstimatedHeightMetersById[first.id] ?? 1
-        let creatureH = dinosaurEstimatedHeightMetersById[creature.id] ?? 1
-        let newStackTotal = selectedRightStack.reduce(0.0) { $0 + (dinosaurEstimatedHeightMetersById[$1.id] ?? 1) } + creatureH
+        let leftH = LandDinosaurHeightCatalog.standingHeightMetersById[first.id] ?? 1
+        let creatureH = LandDinosaurHeightCatalog.standingHeightMetersById[creature.id] ?? 1
+        let newStackTotal = selectedRightStack.reduce(0.0) { $0 + (LandDinosaurHeightCatalog.standingHeightMetersById[$1.id] ?? 1) } + creatureH
         let towerH = leftH > 0 ? min(measureAreaHeight, measureAreaHeight * CGFloat(newStackTotal / leftH)) : measureAreaHeight
         let segmentH = newStackTotal > 0 ? towerH * CGFloat(creatureH / newStackTotal) : 0
         return segmentH < measureMinSegmentHeightForRejection
@@ -629,8 +618,8 @@ struct MeasureGameView: View {
     /// True if left reference is not huge and creature is huge. Wrong scale → "you can't be serious."
     private func wouldBeHugeWhenLeftIsNot(_ creature: MeasureCreature) -> Bool {
         guard let first = selectedFirst else { return false }
-        let leftH = dinosaurEstimatedHeightMetersById[first.id] ?? 1
-        let creatureH = dinosaurEstimatedHeightMetersById[creature.id] ?? 1
+        let leftH = LandDinosaurHeightCatalog.standingHeightMetersById[first.id] ?? 1
+        let creatureH = LandDinosaurHeightCatalog.standingHeightMetersById[creature.id] ?? 1
         let leftIsHuge = leftH > measureSizeBucketHugeThreshold
         let creatureIsHuge = creatureH > measureSizeBucketHugeThreshold
         return !leftIsHuge && creatureIsHuge
@@ -643,10 +632,10 @@ struct MeasureGameView: View {
     private func wouldRequireTooMany(_ creature: MeasureCreature) -> Bool {
         guard !selectedRightStack.isEmpty else { return false }  // Allow first add; one-per-dinosaur prevents endless stacking
         guard let first = selectedFirst else { return false }
-        let leftH = dinosaurEstimatedHeightMetersById[first.id] ?? 1
-        let creatureH = dinosaurEstimatedHeightMetersById[creature.id] ?? 1
+        let leftH = LandDinosaurHeightCatalog.standingHeightMetersById[first.id] ?? 1
+        let creatureH = LandDinosaurHeightCatalog.standingHeightMetersById[creature.id] ?? 1
         guard creatureH > 0 else { return true }
-        let currentSum = selectedRightStack.reduce(0.0) { $0 + (dinosaurEstimatedHeightMetersById[$1.id] ?? 1) }
+        let currentSum = selectedRightStack.reduce(0.0) { $0 + (LandDinosaurHeightCatalog.standingHeightMetersById[$1.id] ?? 1) }
         let remainingHeight = leftH - currentSum
         guard remainingHeight > 0 else { return false }
         return remainingHeight / creatureH > measureRatioCap
@@ -655,17 +644,17 @@ struct MeasureGameView: View {
     /// True if this creature alone is bigger than the entire left reference. Absurd choice → "you can't be serious" (not "too tall").
     private func wouldExceedReferenceAlone(_ creature: MeasureCreature) -> Bool {
         guard let first = selectedFirst else { return false }
-        let leftH = dinosaurEstimatedHeightMetersById[first.id] ?? 1
-        let creatureH = dinosaurEstimatedHeightMetersById[creature.id] ?? 1
+        let leftH = LandDinosaurHeightCatalog.standingHeightMetersById[first.id] ?? 1
+        let creatureH = LandDinosaurHeightCatalog.standingHeightMetersById[creature.id] ?? 1
         return creatureH > leftH
     }
 
     /// True if adding this creature would make the right stack taller than the left reference (overshoot). Reject before adding so the user can try smaller dinosaurs.
     private func wouldOvershoot(_ creature: MeasureCreature) -> Bool {
         guard let first = selectedFirst else { return false }
-        let leftH = dinosaurEstimatedHeightMetersById[first.id] ?? 1
-        let creatureH = dinosaurEstimatedHeightMetersById[creature.id] ?? 1
-        let currentSum = selectedRightStack.reduce(0.0) { $0 + (dinosaurEstimatedHeightMetersById[$1.id] ?? 1) }
+        let leftH = LandDinosaurHeightCatalog.standingHeightMetersById[first.id] ?? 1
+        let creatureH = LandDinosaurHeightCatalog.standingHeightMetersById[creature.id] ?? 1
+        let currentSum = selectedRightStack.reduce(0.0) { $0 + (LandDinosaurHeightCatalog.standingHeightMetersById[$1.id] ?? 1) }
         return currentSum + creatureH > leftH
     }
 
@@ -684,8 +673,8 @@ struct MeasureGameView: View {
     private func refreshGridWithSmallEnoughOptions() {
         guard gameConfig.poolKind == .dinosaurs,
               let first = selectedFirst else { return }
-        let leftH = dinosaurEstimatedHeightMetersById[first.id] ?? 1
-        let stackSum = selectedRightStack.reduce(0.0) { $0 + (dinosaurEstimatedHeightMetersById[$1.id] ?? 1) }
+        let leftH = LandDinosaurHeightCatalog.standingHeightMetersById[first.id] ?? 1
+        let stackSum = selectedRightStack.reduce(0.0) { $0 + (LandDinosaurHeightCatalog.standingHeightMetersById[$1.id] ?? 1) }
         let remainingHeight = leftH - stackSum
         guard remainingHeight > 0 else { return }
         var excludeIds = usedCreatureIds
@@ -721,20 +710,20 @@ struct MeasureGameView: View {
     /// True when selecting first and this creature is the smallest in the grid (block to avoid nowhere-to-go).
     /// Only blocks when at least 2 distinct heights exist so the user has a valid choice.
     private func isSmallestInGrid(_ creature: MeasureCreature) -> Bool {
-        let heights = measureGridSlots.map { dinosaurEstimatedHeightMetersById[$0.creature.id] ?? 0 }
+        let heights = measureGridSlots.map { LandDinosaurHeightCatalog.standingHeightMetersById[$0.creature.id] ?? 0 }
         guard heights.count >= 2 else { return false }
         let minH = heights.min() ?? 0
         let maxH = heights.max() ?? 0
         guard minH < maxH else { return false }  // All same size: don't block
-        let creatureH = dinosaurEstimatedHeightMetersById[creature.id] ?? 0
+        let creatureH = LandDinosaurHeightCatalog.standingHeightMetersById[creature.id] ?? 0
         return creatureH <= minH
     }
 
     /// True when first is chosen and this creature would be too small to display (gray out in grid).
     private func isTooSmallToChoose(_ creature: MeasureCreature) -> Bool {
         guard let first = selectedFirst else { return false }
-        let leftH = dinosaurEstimatedHeightMetersById[first.id] ?? 1
-        let creatureH = dinosaurEstimatedHeightMetersById[creature.id] ?? 1
+        let leftH = LandDinosaurHeightCatalog.standingHeightMetersById[first.id] ?? 1
+        let creatureH = LandDinosaurHeightCatalog.standingHeightMetersById[creature.id] ?? 1
         if leftH <= 0 { return false }
         let segmentIfAlone = measureAreaHeight * CGFloat(creatureH / leftH)
         return segmentIfAlone < measureMinSegmentHeightForRejection
@@ -792,8 +781,8 @@ struct MeasureGameView: View {
             playCloseEnoughFailsafe()
             return
         }
-        let hLeft = dinosaurEstimatedHeightMetersById[first.id] ?? 1
-        let stackSum = selectedRightStack.reduce(0.0) { $0 + (dinosaurEstimatedHeightMetersById[$1.id] ?? 1) }
+        let hLeft = LandDinosaurHeightCatalog.standingHeightMetersById[first.id] ?? 1
+        let stackSum = selectedRightStack.reduce(0.0) { $0 + (LandDinosaurHeightCatalog.standingHeightMetersById[$1.id] ?? 1) }
         let maxH = max(hLeft, stackSum)
         let relDiff = maxH > 0 ? abs(hLeft - stackSum) / maxH : 0
         if relDiff <= sameHeightRelativeThreshold {

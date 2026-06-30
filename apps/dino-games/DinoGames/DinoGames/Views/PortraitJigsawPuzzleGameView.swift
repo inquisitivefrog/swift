@@ -585,6 +585,8 @@ struct PortraitJigsawPuzzleGameView: View {
             }
             .navigationTitle(line.navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("\(line.catalogGameId)-screen")
         }
         .gameSheetDismissDisabledWhileAudioPlaying(isAudioPlaying)
         .onAppear {

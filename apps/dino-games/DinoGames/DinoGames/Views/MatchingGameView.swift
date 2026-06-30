@@ -890,12 +890,11 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Games/game-weigh-marine-reptile"
         case "game-weigh-the-marine-reptile":
             return "Games/game-weigh-the-marine-reptile"
-        case "can-you-name-the-dinosaur", "can you name the dinosaur", "game-intro-guess-dinosaur":
-            return "Games/game-can-you-name-the-dinosaur"
-        case "name-that-dinosaur", "name that dinosaur":
-            return "Games/name-that-dinosaur"
-        case "can-you-name-that-dinosaur", "can you name that dinosaur":
+        case "can-you-name-the-dinosaur", "can you name the dinosaur", "game-intro-guess-dinosaur",
+             "can-you-name-that-dinosaur", "can you name that dinosaur":
             return "Games/game-can-you-name-that-dinosaur"
+        case "name-that-dinosaur", "name that dinosaur":
+            return "Games/game-name-that-dinosaur"
         case "can-you-name-the-pterosaur", "can you name the pterosaur":
             return "Games/game-can-you-name-that-pterosaur"
         case "can-you-name-the-mosasaur", "can you name the mosasaur":

@@ -76,6 +76,10 @@ struct LandLevelIntermissionView: View {
         }
         .allowsHitTesting(true)
         .task {
+            if UITestConfiguration.skipGameSelectionIntros {
+                onComplete()
+                return
+            }
             await runIntermissionSequence()
         }
         .onDisappear {

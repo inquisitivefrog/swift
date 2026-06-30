@@ -11,26 +11,27 @@ Shipping land games only. Check off as covered.
 - [x] Image + text + audio triad per gameplay moment (`LandGameDisplayMomentXCTests`)
 - [x] Ordered-touch feedback audio (`OrderedTouchFeedbackAudioXCTests`) — pick-first + slow-response clips
 - [x] Comparison negative cases (`ComparisonGameNegativeXCTests`) — near-equal, asymmetric mismatch, too-small-to-see
+- [x] Config smoke build (`LandDinosaurMechanicCatalogXCTests`) — all 12 configs instantiate
 
 ## Level 1
-- [x] Weigh the Dinosaur — mechanic (`LandDinosaurMechanicCatalogXCTests`)
-- [x] Which Dino Is Taller — mechanic
-- [x] Dino Puzzle — config + art
+- [x] Weigh the Dinosaur — `WeighTheDinosaurXCTests` (+ `LandDinosaurWeighCatalogXCTests`)
+- [x] Which Dino Is Taller — `WhichDinoIsTallerXCTests` (+ `LandDinosaurHeightCatalogXCTests`)
+- [x] Dino Puzzle — `DinoPuzzleXCTests`
 
 ## Level 2
-- [x] Name That Dinosaur — production config + silhouettes
-- [x] Racing Dinosaurs — config + progress id
-- [x] Dino Ages — placement + period art
+- [x] Name That Dinosaur — `NameThatDinosaurXCTests`
+- [x] Racing Dinosaurs — `LandDinosaurRacingXCTests`
+- [x] Dino Ages — `DinoAgesCatalogXCTests`
 
 ## Level 3
-- [x] Dino Footprints — dedicated file (`DinoFootprintsAssetsXCTests`)
-- [x] Dino Flora — plants + success art
-- [x] Dino Eggs — rounds + clade assets
+- [x] Dino Footprints — `DinoFootprintsXCTests` (+ `DinoFootprintsAssetsXCTests`)
+- [x] Dino Flora — `DinoFloraXCTests`
+- [x] Dino Eggs — `DinoEggsCatalogXCTests`
 
 ## Level 4
-- [x] Dino Matrix — config + level 4
-- [x] Dino Diets — diet audio + success art (`DinoDietsXCTests` + victory assets)
-- [x] Dino Smile — config + level 4
+- [x] Dino Matrix — `DinoMatrixCatalogXCTests`
+- [x] Dino Diets — `DinoDietsXCTests`
+- [x] Dino Smile — `DinoSmileXCTests`
 
 ## Shared victory
 - [x] `crowd-cheering` resolves in bundle

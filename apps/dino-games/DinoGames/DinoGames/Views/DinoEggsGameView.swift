@@ -22,6 +22,16 @@ struct DinoEggsGameView: View {
 // MARK: - Dino egg morphology
 
 enum DinoEggMorphology {
+    /// Egg morphotype clades used by Dino Eggs rounds and victory recap audio.
+    static let eggMorphotypeClades: [String] = [
+        "ankylosaur", "ceratopsian", "hadrosaur", "large-theropod", "ornithischian",
+        "ornithomimid", "sauropod", "small-theropod", "stegosaur",
+    ]
+
+    static var playableEggClades: Set<String> {
+        Set(eggMorphotypeClades.filter { roundAssetsExist(for: $0) })
+    }
+
     private static let eggTypeBySlug: [String: String] = [
         "trex": "large-theropod", "triceratops": "ceratopsian", "stegosaurus": "stegosaur", "velociraptor": "small-theropod",
         "therizinosaurus": "ornithischian", "spinosaurus": "large-theropod", "apatosaurus": "sauropod", "ankylosaurus": "ankylosaur",

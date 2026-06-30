@@ -22,6 +22,7 @@ enum DeveloperSessionFlags {
 
     static var unlockAllGameLevels: Bool {
         UserDefaults.standard.bool(forKey: unlockAllGameLevelsUserDefaultsKey)
+            || UITestConfiguration.unlockAllLevels
     }
 
     /// Manual level + game selection for QA (same switch as `unlockAllGameLevels`).

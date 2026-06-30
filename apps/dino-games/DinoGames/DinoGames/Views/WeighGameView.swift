@@ -1060,31 +1060,30 @@ struct WeighGameConfigs {
 
     /// Returns 9 dinosaurs: one per clade (9 clades), shuffled for random grid order. Excludes ids already used this game.
     static func makeRandomDinosaurItems(excluding alreadyUsedIds: Set<Int> = []) -> [WeighableItem] {
-        let cladeById = LandDinosaurCladeCatalog.cladeByCreatureId
-        let pool = MatchingGameConfigs.allDinosaurs.filter { d in
-            d.imageName != nil && d.imageName!.hasPrefix("dino-") && MatchingGameConfigs.dinosaurEstimatedWeightKgById[d.id] != nil && !alreadyUsedIds.contains(d.id)
-        }
-        let byClade = Dictionary(grouping: pool) { cladeById[$0.id] ?? .theropod }
-        var chosen: [Dinosaur] = []
+        let pool = LandDinosaurWeighCatalog.allEntries.filter { !alreadyUsedIds.contains($0.stableId) }
+        let byClade = Dictionary(grouping: pool) { $0.clade }
+        var chosen: [LandDinosaurWeighCatalog.Entry] = []
         for clade in DinoClade.allCases {
             guard let candidates = byClade[clade], !candidates.isEmpty else { continue }
             chosen.append(candidates.randomElement()!)
         }
         while chosen.count < 9 {
-            let extras = pool.filter { d in !chosen.contains(where: { $0.id == d.id }) }
+            let taken = Set(chosen.map(\.stableId))
+            let extras = pool.filter { !taken.contains($0.stableId) }
             guard let one = extras.randomElement() else { break }
             chosen.append(one)
         }
         // Assign ranks by weight order (lightest=1, heaviest=9), then shuffle for random grid display
-        let sortedByWeight = chosen.sorted { (MatchingGameConfigs.dinosaurEstimatedWeightKgById[$0.id] ?? 0) < (MatchingGameConfigs.dinosaurEstimatedWeightKgById[$1.id] ?? 0) }
-        let rankById = Dictionary(uniqueKeysWithValues: sortedByWeight.enumerated().map { ($0.element.id, $0.offset + 1) })
-        return chosen.shuffled().map { d in
-            WeighableItem(
-                id: d.id,
-                name: d.name,
-                imageName: d.imageName,
-                emoji: d.icon,
-                weight: rankById[d.id] ?? 1,
+        let sortedByWeight = chosen.sorted { $0.weightKg < $1.weightKg }
+        let rankById = Dictionary(uniqueKeysWithValues: sortedByWeight.enumerated().map { ($0.element.stableId, $0.offset + 1) })
+        return chosen.shuffled().map { entry in
+            let dino = MatchingGameConfigs.allDinosaurs.first { $0.id == entry.stableId }
+            return WeighableItem(
+                id: entry.stableId,
+                name: entry.displayName,
+                imageName: entry.imageAssetName,
+                emoji: dino?.icon ?? "🦖",
+                weight: rankById[entry.stableId] ?? 1,
                 category: "dinosaur"
             )
         }
