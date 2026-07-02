@@ -755,43 +755,53 @@ struct DinoPushGameView: View {
     }
 
     private var dinoPushSuccessImageView: some View {
-        Group {
-            if ImageAssetCache.imageExists(named: "game-dino-push-success") {
-                Image("game-dino-push-success")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else if ImageAssetCache.imageExists(named: "game-dino-push") {
-                Image("game-dino-push")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 280, height: 280)
-            } else {
-                Text("🦖")
-                    .font(.system(size: 120))
+        VStack(spacing: 0) {
+            Group {
+                if ImageAssetCache.imageExists(named: "game-dino-push-success") {
+                    Image("game-dino-push-success")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 280, height: 280)
+                } else if ImageAssetCache.imageExists(named: "game-dino-push") {
+                    Image("game-dino-push")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 280, height: 280)
+                } else {
+                    Text("🦖")
+                        .font(.system(size: 120))
+                }
             }
+            StandardVictoryCategoryProgressLabel(catalogGameConfigId: config.id)
         }
     }
 
     private func playGoodJobAndCrowdThenDismiss() {
+        let finishDismissal = {
+            self.speechManager.onAudioFinished = nil
+            LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.config.id)
+            self.isPresented = false
+        }
+        let afterCelebration = {
+            StandardVictorySequence.playGuidedCategoryProgressAudioIfNeeded(
+                catalogGameConfigId: self.config.id,
+                speechManager: self.speechManager,
+                onComplete: finishDismissal
+            )
+        }
         let goodJobURL = speechManager.urlForAudio(key: "good-job-you-got-them-all")
         let crowdURL = speechManager.urlForAudio(key: "crowd-cheering")
         if let u1 = goodJobURL, let u2 = crowdURL {
             speechManager.playTogether(url1: u1, url2: u2) {
-                self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.config.id)
-                self.isPresented = false
+                afterCelebration()
             }
         } else if let u = goodJobURL ?? crowdURL {
             speechManager.onAudioFinished = {
-                self.speechManager.onAudioFinished = nil
-                LandDinosaurProgress.notifyCompletionIfLandGame(configId: self.config.id)
-                self.isPresented = false
+                afterCelebration()
             }
             speechManager.playAudioFile(url: u)
         } else {
-            LandDinosaurProgress.notifyCompletionIfLandGame(configId: config.id)
-            isPresented = false
+            afterCelebration()
         }
     }
 

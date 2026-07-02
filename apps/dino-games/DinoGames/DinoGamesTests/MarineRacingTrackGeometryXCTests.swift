@@ -50,4 +50,68 @@ final class MarineRacingTrackGeometryXCTests: XCTestCase {
         }
         XCTAssertEqual(count, 8)
     }
+
+    func testSlalomProgressStepsHaveSimilarScreenDistance() {
+        let w: CGFloat = 320
+        let h: CGFloat = 280
+        let radii = MarineRacingTrackGeometry.slalomRadii(width: w, height: h)
+        let steps = 64
+        var distances: [CGFloat] = []
+        var previous = MarineRacingTrackGeometry.pointOnSlalomCourse(
+            progress: 0, width: w, height: h, radii: radii, buoyCount: 8
+        )
+        for step in 1...steps {
+            let progress = Double(step) / Double(steps)
+            let point = MarineRacingTrackGeometry.pointOnSlalomCourse(
+                progress: progress, width: w, height: h, radii: radii, buoyCount: 8
+            )
+            distances.append(hypot(point.x - previous.x, point.y - previous.y))
+            previous = point
+        }
+        guard let maxDist = distances.max(), let minDist = distances.min(), minDist > 0 else {
+            return XCTFail("Expected non-zero slalom step distances")
+        }
+        XCTAssertLessThan(
+            maxDist / minDist,
+            2.2,
+            "Slalom path should not teleport at buoys; max/min step ratio was \(maxDist / minDist)"
+        )
+    }
+
+    func testSlalomLaneOffsetDoesNotSpinOnInnerRadialLeg() {
+        let w: CGFloat = 320
+        let h: CGFloat = 280
+        let style = MarineRacingTrackStyle.slalom
+        let classic = MarineRacingTrackGeometry.classicRadii(width: w, height: h)
+        let slalom = MarineRacingTrackGeometry.slalomRadii(width: w, height: h)
+        // First radial leg (wide → tight), progress ~0.086–0.151 for 320×280 track.
+        let radialStart = 0.095
+        let radialEnd = 0.145
+        let samples = 12
+        var offsets: [CGSize] = []
+        for i in 0...samples {
+            let progress = radialStart + (radialEnd - radialStart) * Double(i) / Double(samples)
+            offsets.append(
+                MarineRacingTrackGeometry.racerOffset(
+                    progress: progress,
+                    racerIndex: 0,
+                    width: w,
+                    height: h,
+                    style: style,
+                    radiiClassic: classic,
+                    radiiSlalom: slalom,
+                    buoyCount: 8
+                )
+            )
+        }
+        guard let first = offsets.first else { return XCTFail("Missing offset samples") }
+        for offset in offsets.dropFirst() {
+            let delta = hypot(offset.width - first.width, offset.height - first.height)
+            XCTAssertLessThan(
+                delta,
+                3,
+                "Lane offset should stay stable along inner radial leg; saw spin delta \(delta)"
+            )
+        }
+    }
 }

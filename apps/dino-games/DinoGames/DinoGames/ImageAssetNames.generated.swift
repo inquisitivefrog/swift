@@ -1238,6 +1238,7 @@ enum ImageAssetNames {
         "marine-eggs-egg-judeasaurus",
         "marine-eggs-egg-mesoleptos",
         "marine-eggs-egg-metriorhynchus",
+        "marine-eggs-egg-mosasaurus",
         "marine-eggs-egg-nothosaurus",
         "marine-eggs-egg-placodus",
         "marine-eggs-egg-proganochelys",

@@ -88,15 +88,20 @@ enum DinoEggMorphology {
         creatureEmoji: "🦖",
         roundIntroNestAudioKey: { clade in "game-dino-eggs-nest-\(clade)" },
         roundIntroTapScannerAudioKey: "game-dino-eggs-tap-the-scanner",
+        scannerNotAvailableAudioKey: nil,
+        repeatsGameplayDirectionsEachRound: true,
+        roundIntroCreatureGridAudioKey: nil,
         playsEggNestNameIntro: false,
         playsTapScannerPrompt: true,
         showsCreatureNameOnCards: false,
+        showsCreatureNameDuringIntro: true,
         victoryRecapUsesCreatureName: false,
         victoryRecapLabelUsesCreatureName: false,
+        victoryRecapDeduplicatesByAudioKey: true,
         sourceHints: sourceHints,
         sourceHintsTitle: "Source Eggs",
         sourceHintsGridIntroAudioKey: nil,
-        playsHintsButtonIntro: false,
+        playsHintsButtonIntro: true,
         onVictoryComplete: { LandDinosaurProgress.notifyCompletionIfLandGame(configId: $0) }
     )
 

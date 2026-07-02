@@ -130,38 +130,30 @@ enum MarineRacingTrackGeometry {
         radiiSlalom: MarineSlalomRadii,
         buoyCount: Int
     ) -> CGSize {
-        let delta = 0.005
-        let pointOnCourse: (Double) -> CGPoint = { p in
-            switch style {
-            case .classic:
-                return pointOnClassicCourse(
-                    progress: p,
-                    width: width,
-                    height: height,
-                    radii: radiiClassic,
-                    buoyCount: buoyCount
-                )
-            case .slalom:
-                return pointOnSlalomCourse(
-                    progress: p,
-                    width: width,
-                    height: height,
-                    radii: radiiSlalom,
-                    buoyCount: buoyCount
-                )
+        switch style {
+        case .classic:
+            return alternatingArcCourseOffset(
+                progress: progress,
+                racerIndex: racerIndex,
+                width: width,
+                height: height,
+                buoyCount: buoyCount,
+                finishRadius: radiiClassic.outerRadius
+            ) { index in
+                classicSegmentRadius(index: index, radii: radiiClassic)
+            }
+        case .slalom:
+            return alternatingArcCourseOffset(
+                progress: progress,
+                racerIndex: racerIndex,
+                width: width,
+                height: height,
+                buoyCount: buoyCount,
+                finishRadius: radiiSlalom.wideRadius
+            ) { index in
+                slalomSegmentRadius(index: index, radii: radiiSlalom)
             }
         }
-        let p0 = pointOnCourse(max(0, progress - delta))
-        let p1 = pointOnCourse(min(1, progress + delta))
-        let dx = p1.x - p0.x
-        let dy = p1.y - p0.y
-        let len = hypot(dx, dy)
-        guard len > 0.5 else { return .zero }
-        let nx = -dy / len
-        let ny = dx / len
-        let side: CGFloat = racerIndex == 0 ? -1 : 1
-        let gap: CGFloat = 11
-        return CGSize(width: nx * gap * side, height: ny * gap * side)
     }
 
     static func coursePath(
@@ -248,7 +240,156 @@ enum MarineRacingTrackGeometry {
         }
     }
 
-    // MARK: - Shared arc sampler
+    // MARK: - Shared arc + radial sampler
+
+    private enum AlternatingCourseLegKind {
+        case arc(segmentIndex: Int)
+        case radial(afterSegment: Int)
+    }
+
+    private struct AlternatingCourseLeg {
+        let kind: AlternatingCourseLegKind
+        let length: CGFloat
+    }
+
+    private struct AlternatingCourseSample {
+        let point: CGPoint
+        /// Unit tangent in the direction of increasing race progress.
+        let tangent: CGVector
+    }
+
+    private static func alternatingCourseLegs(
+        buoyCount: Int,
+        radiusForSegment: (Int) -> CGFloat
+    ) -> (legs: [AlternatingCourseLeg], segmentSweep: CGFloat, count: Int) {
+        let count = max(3, buoyCount)
+        let segmentSweep = 2 * CGFloat.pi / CGFloat(count)
+        var legs: [AlternatingCourseLeg] = []
+        legs.reserveCapacity(count * 2)
+        for i in 0..<count {
+            let r = radiusForSegment(i)
+            legs.append(AlternatingCourseLeg(kind: .arc(segmentIndex: i), length: r * segmentSweep))
+            let rNext = radiusForSegment((i + 1) % count)
+            legs.append(AlternatingCourseLeg(kind: .radial(afterSegment: i), length: abs(r - rNext)))
+        }
+        return (legs, segmentSweep, count)
+    }
+
+    private static func unitTangent(
+        for kind: AlternatingCourseLegKind,
+        t: CGFloat,
+        segmentSweep: CGFloat,
+        segmentCount: Int,
+        radiusForSegment: (Int) -> CGFloat
+    ) -> CGVector {
+        switch kind {
+        case .arc(let i):
+            let theta0 = CGFloat.pi / 2 + CGFloat(i) * segmentSweep
+            let theta = theta0 + t * segmentSweep
+            return CGVector(dx: -sin(theta), dy: cos(theta))
+        case .radial(let i):
+            let theta = CGFloat.pi / 2 + CGFloat(i + 1) * segmentSweep
+            let rFrom = radiusForSegment(i)
+            let rTo = radiusForSegment((i + 1) % segmentCount)
+            let radialSign: CGFloat = rTo >= rFrom ? 1 : -1
+            return CGVector(dx: cos(theta) * radialSign, dy: sin(theta) * radialSign)
+        }
+    }
+
+    /// On radial legs, keep lane offset aligned with the departing arc tangent (stable through the junction).
+    private static func laneOffsetTangent(
+        for kind: AlternatingCourseLegKind,
+        t: CGFloat,
+        segmentSweep: CGFloat,
+        segmentCount: Int,
+        radiusForSegment: (Int) -> CGFloat
+    ) -> CGVector {
+        switch kind {
+        case .arc:
+            return unitTangent(
+                for: kind,
+                t: t,
+                segmentSweep: segmentSweep,
+                segmentCount: segmentCount,
+                radiusForSegment: radiusForSegment
+            )
+        case .radial(let i):
+            return unitTangent(
+                for: .arc(segmentIndex: i),
+                t: 1,
+                segmentSweep: segmentSweep,
+                segmentCount: segmentCount,
+                radiusForSegment: radiusForSegment
+            )
+        }
+    }
+
+    /// One lap = alternating circular arcs and radial legs at each buoy (no radius teleport).
+    private static func sampleAlternatingArcCourse(
+        progress: Double,
+        width: CGFloat,
+        height: CGFloat,
+        buoyCount: Int,
+        finishRadius: CGFloat,
+        radiusForSegment: (Int) -> CGFloat
+    ) -> AlternatingCourseSample {
+        let cx = width / 2
+        let cy = height / 2
+        let p = max(0, progress)
+        if p >= 1 {
+            return AlternatingCourseSample(
+                point: CGPoint(x: cx + finishRadius * cos(CGFloat.pi / 2), y: cy + finishRadius * sin(CGFloat.pi / 2)),
+                tangent: CGVector(dx: -1, dy: 0)
+            )
+        }
+
+        let (legs, segmentSweep, count) = alternatingCourseLegs(
+            buoyCount: buoyCount,
+            radiusForSegment: radiusForSegment
+        )
+        let total = legs.reduce(CGFloat(0)) { $0 + $1.length }
+        guard total > 0 else {
+            return AlternatingCourseSample(
+                point: CGPoint(x: cx, y: cy + finishRadius),
+                tangent: CGVector(dx: 0, dy: -1)
+            )
+        }
+
+        var dist = CGFloat(p) * total
+        for (index, leg) in legs.enumerated() {
+            if dist <= leg.length || index == legs.count - 1 {
+                let t = leg.length > 0 ? min(1, dist / leg.length) : 0
+                let point: CGPoint
+                switch leg.kind {
+                case .arc(let i):
+                    let r = radiusForSegment(i)
+                    let theta0 = CGFloat.pi / 2 + CGFloat(i) * segmentSweep
+                    let theta = theta0 + t * segmentSweep
+                    point = CGPoint(x: cx + r * cos(theta), y: cy + r * sin(theta))
+                case .radial(let i):
+                    let rFrom = radiusForSegment(i)
+                    let rTo = radiusForSegment((i + 1) % count)
+                    let theta = CGFloat.pi / 2 + CGFloat(i + 1) * segmentSweep
+                    let r = rFrom + t * (rTo - rFrom)
+                    point = CGPoint(x: cx + r * cos(theta), y: cy + r * sin(theta))
+                }
+                let tangent = laneOffsetTangent(
+                    for: leg.kind,
+                    t: t,
+                    segmentSweep: segmentSweep,
+                    segmentCount: count,
+                    radiusForSegment: radiusForSegment
+                )
+                return AlternatingCourseSample(point: point, tangent: tangent)
+            }
+            dist -= leg.length
+        }
+
+        return AlternatingCourseSample(
+            point: CGPoint(x: cx + finishRadius * cos(CGFloat.pi / 2), y: cy + finishRadius * sin(CGFloat.pi / 2)),
+            tangent: CGVector(dx: -1, dy: 0)
+        )
+    }
 
     private static func pointOnAlternatingArcCourse(
         progress: Double,
@@ -258,30 +399,40 @@ enum MarineRacingTrackGeometry {
         finishRadius: CGFloat,
         radiusForSegment: (Int) -> CGFloat
     ) -> CGPoint {
-        let count = max(3, buoyCount)
-        let cx = width / 2
-        let cy = height / 2
-        let p = max(0, progress)
-        if p >= 1 {
-            return CGPoint(x: cx + finishRadius * cos(CGFloat.pi / 2), y: cy + finishRadius * sin(CGFloat.pi / 2))
-        }
-        let segmentSweep = 2 * CGFloat.pi / CGFloat(count)
-        let lengths = (0..<count).map { radiusForSegment($0) * segmentSweep }
-        let total = lengths.reduce(0, +)
-        guard total > 0 else {
-            return CGPoint(x: cx, y: cy + finishRadius)
-        }
-        var dist = CGFloat(p) * total
-        for i in 0..<count {
-            let segLen = lengths[i]
-            if dist <= segLen || i == count - 1 {
-                let t = segLen > 0 ? min(1, dist / segLen) : 0
-                let r = radiusForSegment(i)
-                let theta = CGFloat.pi / 2 + CGFloat(i) * segmentSweep + t * segmentSweep
-                return CGPoint(x: cx + r * cos(theta), y: cy + r * sin(theta))
-            }
-            dist -= segLen
-        }
-        return CGPoint(x: cx + finishRadius * cos(CGFloat.pi / 2), y: cy + finishRadius * sin(CGFloat.pi / 2))
+        sampleAlternatingArcCourse(
+            progress: progress,
+            width: width,
+            height: height,
+            buoyCount: buoyCount,
+            finishRadius: finishRadius,
+            radiusForSegment: radiusForSegment
+        ).point
+    }
+
+    private static func alternatingArcCourseOffset(
+        progress: Double,
+        racerIndex: Int,
+        width: CGFloat,
+        height: CGFloat,
+        buoyCount: Int,
+        finishRadius: CGFloat,
+        radiusForSegment: (Int) -> CGFloat
+    ) -> CGSize {
+        let sample = sampleAlternatingArcCourse(
+            progress: progress,
+            width: width,
+            height: height,
+            buoyCount: buoyCount,
+            finishRadius: finishRadius,
+            radiusForSegment: radiusForSegment
+        )
+        let tangent = sample.tangent
+        let len = hypot(tangent.dx, tangent.dy)
+        guard len > 0.001 else { return .zero }
+        let nx = -tangent.dy / len
+        let ny = tangent.dx / len
+        let side: CGFloat = racerIndex == 0 ? -1 : 1
+        let gap: CGFloat = 11
+        return CGSize(width: nx * gap * side, height: ny * gap * side)
     }
 }

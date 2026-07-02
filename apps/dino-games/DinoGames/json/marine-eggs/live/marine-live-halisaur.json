@@ -1,0 +1,7 @@
+{
+  "id": "ui_birth_halisaur_clade",
+  "clade": "Halisaur",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. An underwater scene capturing a halisaurine mosasaur live-birth puzzle. The adult mother is rendered entirely as a sharp, dark teal-blue silhouette — sleek, eel-like marine lizard outline with modest paddle flippers, no skin detail. Tail-first from the shadow emerges a tiny, fully detailed newborn halisaur: smooth light-green clay, oversized soulful eyes, miniature flippers, blunt needle-tooth smile. SETTING: Late Cretaceous open marine seaway. LIGHTING: Deep-water godrays from behind the mother, silhouetting her while highlighting the colorful newborn and soft bubble halo. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+  "visual_logic": "Mother as dark silhouette hides species ID; newborn halisaurine proportions and cheerful clay face are the puzzle clues for the Halisaur clade."
+}

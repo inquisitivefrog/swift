@@ -1,0 +1,11 @@
+[
+  {
+    "id": "marine_reptile_completion_all_levels_v3",
+    "app_image_config": {
+      "layer_1_style": "STYLE_ANIMATED_FEATURE_V3: 1024x1024 px, high-poly 3D animated film style, Octane render, cinematic lighting, soft clay textures, vibrant saturated colors.",
+      "layer_2_setting": "Setting: [REF: BLUE_LIAS], A sweeping, majestic shallow coral reef lagoon at a brilliant golden hour, with rays of sunlight piercing the crystal-clear turquoise water.",
+      "layer_3_action": "A joyful group of iconic marine reptiles celebrating together in the water. A massive Mosasaurus swims near the center, its mouth open in a cheerful, proud roar; flanking it are a long-necked Elasmosaurus and a sleek Ichthyosaurus breaching the surface playfully. They feature large, expressive eyes and a smooth, tactile clay texture, maintaining natural aquatic swimming poses without being anthropomorphic. Large, clear bold text at the top center reads 'Congratulations!'.",
+      "aspect_ratio": "1:1"
+    }
+  }
+]

@@ -30,6 +30,10 @@ final class DinoEggsCatalogXCTests: XCTestCase {
         )
     }
 
+    func testDinoEggsProgressCategoryIsLand() {
+        XCTAssertEqual(GameCategory.forCatalogConfigId("dino-eggs"), .land)
+    }
+
     func testHadrosaurHasMatchingEggNestAndScan() {
         XCTAssertTrue(DinoEggMorphology.playableEggClades.contains("hadrosaur"))
         XCTAssertTrue(ImageAssetNames.knownAssets.contains("dino-egg-colors-hadrosaur"))
@@ -60,6 +64,13 @@ final class DinoEggsCatalogXCTests: XCTestCase {
         XCTAssertEqual(config.id, "dino-eggs")
         XCTAssertEqual(config.rounds.count, 3)
         XCTAssertEqual(Set(config.rounds.map(\.eggType)).count, 3)
+    }
+
+    func testDinoEggsConfigBuildsThreeDistinctCreatureRounds() {
+        let config = DinoEggsGameConfigs.dinoEggs
+        XCTAssertEqual(config.id, "dino-eggs")
+        XCTAssertEqual(config.rounds.count, 3)
+        XCTAssertEqual(Set(config.rounds.map(\.correctCreature.id)).count, 3)
     }
 
     func testDinoEggsPickerAndSuccessArt() {
@@ -160,15 +171,57 @@ final class DinoEggsCatalogXCTests: XCTestCase {
 
     @MainActor
     func testDinoEggsReadySetGoAndScannerPromptsResolveToBundledClips() {
+        XCTAssertTrue(DinoEggMorphology.settings.playsHintsButtonIntro)
         let speech = SpeechManager()
         for key in [
             "game-dino-eggs",
             "game-dino-eggs-gameplay-directions",
             "game-dino-eggs-tap-the-scanner",
+            "game-hint",
             "game-dino-eggs-beep",
             "game-dino-eggs-scan-failed",
         ] {
             XCTAssertNotNil(speech.urlForAudio(key: key), "Missing bundled Dino Eggs clip: \(key)")
         }
+    }
+
+    func testDinoEggsMorphotypeAudioIsCheckedSeparatelyFromMainContract() {
+        let morphotypeKeys = Set(LandDinosaurGameAudioContracts.dinoEggsMorphotypeAudioKeysOnDisk())
+        let mainContractKeys = Set(LandDinosaurGameAudioContracts.allRequiredKeys(forConfigId: "dino-eggs"))
+
+        XCTAssertFalse(morphotypeKeys.isEmpty)
+        XCTAssertTrue(
+            mainContractKeys.isDisjoint(with: morphotypeKeys),
+            "Morphotype narration stays on the dedicated on-disk contract, not `requiredAudioKeys`"
+        )
+        XCTAssertTrue(morphotypeKeys.contains("dino-eggs-hadrosaur"))
+        XCTAssertFalse(mainContractKeys.contains("dino-eggs-hadrosaur"))
+    }
+
+    func testDinoEggsAudioContractIncludesAllRuntimeGameplayKeys() {
+        let settings = DinoEggMorphology.settings
+        var runtimeKeys: [String] = [
+            DinoEggsGameConfigs.dinoEggs.introAudio,
+            settings.gameplayDirectionsAudioKey,
+            settings.beepKey,
+            settings.scanFailedKey,
+        ]
+        if settings.playsHintsButtonIntro {
+            runtimeKeys.append("game-hint")
+        }
+        if let tapScanner = settings.roundIntroTapScannerAudioKey {
+            runtimeKeys.append(tapScanner)
+        }
+        if let gridIntro = settings.sourceHintsGridIntroAudioKey {
+            runtimeKeys.append(gridIntro)
+        }
+        runtimeKeys.append(contentsOf: (settings.sourceHints ?? []).map(\.audioKey))
+
+        let contracted = Set(LandDinosaurGameAudioContracts.allRequiredKeys(forConfigId: "dino-eggs"))
+        let missing = Set(runtimeKeys).subtracting(contracted).sorted()
+        XCTAssertTrue(
+            missing.isEmpty,
+            "Dino Eggs audio contract missing runtime keys: \(missing)"
+        )
     }
 }

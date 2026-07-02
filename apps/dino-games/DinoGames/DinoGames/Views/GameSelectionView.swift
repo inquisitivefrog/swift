@@ -89,6 +89,7 @@ struct GameSelectionView: View {
     @State private var selectedLevel: GameLevel? = nil
     /// Visual + crowd intermission after picking a level; blocks level intro until finished (land, air, marine).
     @State private var landLevelIntermissionActive = false
+    @State private var guidedCategoryCompletionActive = false
     @ObservedObject private var landProgress = LandDinosaurProgress.shared
     @ObservedObject private var marineProgress = MarineReptileProgress.shared
     @ObservedObject private var pterosaurProgress = PterosaurProgress.shared
@@ -272,17 +273,24 @@ struct GameSelectionView: View {
         handleGameTap(game)
     }
 
-    /// Guided run finished every game in every visible level — return to the game-type menu immediately.
+    /// Guided run finished every game in every visible level — celebrate, then return to the game-type menu.
     private func finishGuidedCategoryAndReturnToMenu() {
         CategoryPlaySession.save(category: category, level: nil, gameCanonicalId: nil, guidedPlayMode: false)
         speechManager.stopCurrentAudio()
         speechManager.onAudioFinished = nil
-        isAudioPlaying = false
         gameWalkIndex = nil
         hasPlayedWelcome = true
         landLevelIntermissionActive = false
         guidedPendingLevelAdvance = false
         pendingGuidedAutoLaunch = false
+        selectedLevel = nil
+        guidedCategoryCompletionActive = true
+        isAudioPlaying = true
+    }
+
+    private func completeGuidedCategoryCelebrationAndReturnToMenu() {
+        guidedCategoryCompletionActive = false
+        isAudioPlaying = false
         onReturnToCategoryMenu()
     }
 
@@ -309,7 +317,7 @@ struct GameSelectionView: View {
     }
 
     private var gameSelectionBackDisabled: Bool {
-        isAudioPlaying || landLevelIntermissionActive || showGameTransition
+        isAudioPlaying || landLevelIntermissionActive || guidedCategoryCompletionActive || showGameTransition
     }
 
     private func handleGameSelectionBack() {
@@ -411,19 +419,25 @@ struct GameSelectionView: View {
     @ViewBuilder
     private var levelPickerContent: some View {
         ScrollView {
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 4), spacing: 16) {
-                ForEach(GameLevel.visibleInGamePicker) { level in
-                    LevelCard(
-                        category: category,
-                        level: level,
-                        isLocked: isCategoryLevelLocked(level),
-                        onTap: {
-                            guard !isCategoryLevelLocked(level) else { return }
-                            // Activate intermission before `selectedLevel` so `onChange(of: showingGameList)` cannot
-                            // run level intro audio ahead of the level image + crowd sequence.
-                            selectedLevel = level
-                        }
-                    )
+            VStack(spacing: 12) {
+                if !guidedPlayMode, let snapshot = GameCatalog.categoryProgressSnapshot(for: category) {
+                    CategoryProgressLevelPickerHeader(snapshot: snapshot)
+                }
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 4), spacing: 16) {
+                    ForEach(GameLevel.visibleInGamePicker) { level in
+                        LevelCard(
+                            category: category,
+                            level: level,
+                            isLocked: isCategoryLevelLocked(level),
+                            progressLabel: guidedPlayMode ? nil : GameCatalog.levelProgressLabel(for: level, category: category),
+                            onTap: {
+                                guard !isCategoryLevelLocked(level) else { return }
+                                // Activate intermission before `selectedLevel` so `onChange(of: showingGameList)` cannot
+                                // run level intro audio ahead of the level image + crowd sequence.
+                                selectedLevel = level
+                            }
+                        )
+                    }
                 }
             }
             .padding(.horizontal, 20)
@@ -571,6 +585,7 @@ struct GameSelectionView: View {
                     imageName: gameType.imageName,
                     isSelected: selectedGameId == gameType.id || (gameWalkIndex != nil && gameWalkIndex == index),
                     isIntroduced: hasIntroducedCurrentGameList || (gameWalkIndex == nil && !isAudioPlaying) || (gameWalkIndex != nil && index <= gameWalkIndex!),
+                    showCompletionCheckmark: guidedPlayMode && GameCatalog.hasPlayed(gameType, category: category),
                     showName: showGameName && selectedGameId == gameType.id,
                     isDisabled: isAudioPlaying || !isCurrentCategoryGamePlayable(gameType),
                     onTap: { handleGameTap(gameType) }
@@ -632,6 +647,13 @@ struct GameSelectionView: View {
                 }
                 .zIndex(10)
             }
+
+            if guidedCategoryCompletionActive, !showGameTransition {
+                CategoryGuidedCompletionView(category: category) {
+                    completeGuidedCategoryCelebrationAndReturnToMenu()
+                }
+                .zIndex(11)
+            }
         }
         .toolbar {
             if selectedLevel == nil {
@@ -682,7 +704,7 @@ struct GameSelectionView: View {
         .onChange(of: pendingGuidedAutoLaunch) { _, shouldLaunch in
             guard shouldLaunch else { return }
             pendingGuidedAutoLaunch = false
-            DispatchQueue.main.asyncAfter(deadline: .now() + (guidedPlayMode ? 0.05 : 0.15)) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + (guidedPlayMode ? 0.35 : 0.15)) {
                 autoLaunchNextGuidedGame()
             }
         }
@@ -873,7 +895,6 @@ private struct GameSelectionNavigationContent: View {
         if guidedPlayMode && GameCatalog.isCategoryFullyPlayed(category) {
             speechManager.stopCurrentAudio()
             speechManager.onAudioFinished = nil
-            isAudioPlaying = false
             gameWalkIndex = nil
             return
         }
@@ -2357,12 +2378,31 @@ enum GameType {
     }
 }
 
+private struct CategoryProgressLevelPickerHeader: View {
+    let snapshot: CategoryProgressSnapshot
+
+    var body: some View {
+        VStack(spacing: 4) {
+            Text(snapshot.category.categoryProgressMenuTitle)
+                .font(.subheadline)
+                .foregroundColor(.secondary)
+            Text(snapshot.displayText)
+                .font(.title3.weight(.semibold))
+                .multilineTextAlignment(.center)
+                .accessibilityIdentifier("category-progress-header")
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.bottom, 4)
+    }
+}
+
 // MARK: - Level card (4×2 grid: image above, text below)
 
 private struct LevelCard: View {
     let category: GameCategory
     let level: GameLevel
     var isLocked: Bool = false
+    var progressLabel: String? = nil
     let onTap: () -> Void
 
     private var levelImageName: String {
@@ -2407,6 +2447,12 @@ private struct LevelCard: View {
                         .foregroundColor(.primary)
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
+                    if let progressLabel {
+                        Text(progressLabel)
+                            .font(.caption.weight(.semibold))
+                            .foregroundColor(.secondary)
+                            .accessibilityIdentifier("level-progress-\(level.rawValue)")
+                    }
                 }
                 .padding(10)
                 .frame(maxWidth: .infinity)
@@ -2447,50 +2493,61 @@ struct GameCard: View {
     let isSelected: Bool
     /// True when this card has been introduced during the walk (or walk is done). Like category cards: all start dim, brighten when introduced, stay bright.
     let isIntroduced: Bool
+    /// Guided first-play only: show a checkmark when this catalog game was completed earlier in the run.
+    var showCompletionCheckmark: Bool = false
     let showName: Bool
     let isDisabled: Bool
     let onTap: () -> Void
     
     var body: some View {
         Button(action: onTap) {
-            VStack(spacing: 15) {
-                // Large icon/image - use image if available, otherwise emoji
-                if let imageName = imageName, ImageAssetCache.imageExists(named: imageName) {
-                    Image(imageName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: GameCatalogImageMetrics.levelTwoListGameImageSide, height: GameCatalogImageMetrics.levelTwoListGameImageSide)
-                        .brightness(imageName == "game-name-that-dinosaur" ? 0.2 : 0)
-                } else {
-                    Text(icon)
-                        .font(.system(size: 100))
+            ZStack(alignment: .topTrailing) {
+                VStack(spacing: 15) {
+                    if let imageName = imageName, ImageAssetCache.imageExists(named: imageName) {
+                        Image(imageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: GameCatalogImageMetrics.levelTwoListGameImageSide, height: GameCatalogImageMetrics.levelTwoListGameImageSide)
+                            .brightness(imageName == "game-name-that-dinosaur" ? 0.2 : 0)
+                    } else {
+                        Text(icon)
+                            .font(.system(size: 100))
+                    }
+
+                    if showName {
+                        Text(gameType.name)
+                            .font(.headline)
+                            .foregroundColor(.primary)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(2)
+                            .padding(.horizontal, 5)
+                            .transition(.opacity.combined(with: .move(edge: .bottom)))
+                    }
                 }
-                
-                // Show name when selected (for parents) - removed description to prevent truncation
-                if showName {
-                    Text(gameType.name)
-                        .font(.headline)
-                        .foregroundColor(.primary)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2)
-                        .padding(.horizontal, 5)
-                        .transition(.opacity.combined(with: .move(edge: .bottom)))
+                .frame(width: 260, height: showName ? 240 : 210)
+                .background(
+                    RoundedRectangle(cornerRadius: 20)
+                        .fill(isSelected ? Color.blue.opacity(0.2) : Color.gray.opacity(0.1))
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 3)
+                )
+                .opacity(isIntroduced ? 1.0 : 0.7)
+                .scaleEffect(isSelected ? 1.05 : 1.0)
+                .animation(.spring(response: 0.3), value: isSelected)
+                .animation(.spring(response: 0.28), value: isIntroduced)
+                .animation(.spring(response: 0.3), value: showName)
+
+                if showCompletionCheckmark {
+                    Image(systemName: "checkmark.circle.fill")
+                        .font(.title2)
+                        .symbolRenderingMode(.palette)
+                        .foregroundStyle(Color.white, Color.green)
+                        .padding(10)
+                        .accessibilityLabel("Completed")
                 }
             }
-            .frame(width: 260, height: showName ? 240 : 210)
-            .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(isSelected ? Color.blue.opacity(0.2) : Color.gray.opacity(0.1))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 3)
-            )
-            .opacity(isIntroduced ? 1.0 : 0.7)
-            .scaleEffect(isSelected ? 1.05 : 1.0)
-            .animation(.spring(response: 0.3), value: isSelected)
-            .animation(.spring(response: 0.28), value: isIntroduced)
-            .animation(.spring(response: 0.3), value: showName)
         }
         .buttonStyle(.plain)
         .disabled(isDisabled)

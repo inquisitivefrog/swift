@@ -1,0 +1,71 @@
+//
+//  CategoryProgressXCTests.swift
+//  DinoGamesTests
+//
+
+import XCTest
+@testable import DinoGames
+
+@MainActor
+final class CategoryProgressXCTests: XCTestCase {
+
+    override func setUp() {
+        super.setUp()
+        resetCatalogProgress()
+    }
+
+    override func tearDown() {
+        resetCatalogProgress()
+        super.tearDown()
+    }
+
+    private func resetCatalogProgress() {
+        UserDefaults.standard.removeObject(forKey: "landDinosaurPlayedCanonicalGameIds")
+        UserDefaults.standard.removeObject(forKey: "pterosaurPlayedCanonicalGameIds")
+        UserDefaults.standard.removeObject(forKey: "marineReptilePlayedCanonicalGameIds")
+        LandDinosaurProgress.shared.reloadStoredProgressForTesting()
+        PterosaurProgress.shared.reloadStoredProgressForTesting()
+        MarineReptileProgress.shared.reloadStoredProgressForTesting()
+    }
+
+    func testLandCategoryHasTwelvePlayableGames() {
+        XCTAssertEqual(GameCatalog.totalGameCount(for: .land), 12)
+    }
+
+    func testVictoryProgressSnapshotIncludesCurrentGameBeforePersist() {
+        LandDinosaurProgress.shared.markPlayed(canonicalGameId: "weigh-dinosaur")
+        let snapshot = GameCatalog.victoryProgressSnapshot(forConfigId: "name-that-dinosaur")
+        XCTAssertEqual(snapshot?.completed, 2)
+        XCTAssertEqual(snapshot?.total, 12)
+        XCTAssertEqual(snapshot?.displayText, "Completed 2 of 12 games")
+    }
+
+    func testVictoryProgressSnapshotDoesNotIncrementOnReplay() {
+        LandDinosaurProgress.shared.markPlayed(canonicalGameId: "weigh-dinosaur")
+        let snapshot = GameCatalog.victoryProgressSnapshot(forConfigId: "weigh-dinosaur")
+        XCTAssertEqual(snapshot?.completed, 1)
+    }
+
+    func testProgressAudioKeyUsesCompletedAndTotal() {
+        XCTAssertEqual(CategoryProgressCopy.audioKey(completed: 5, total: 12), "games-completed-5-of-12")
+    }
+
+    func testGuidedCompletionArtAndAudioResolveForEachCategory() {
+        for category in GameCategory.allCases {
+            let image = CategoryGuidedCompletion.imageName(for: category)
+            XCTAssertTrue(
+                ImageAssetCache.imageExists(named: image),
+                "Missing guided completion art: \(image)"
+            )
+        }
+        let speech = SpeechManager()
+        XCTAssertNotNil(
+            speech.urlForAudio(key: CategoryGuidedCompletion.congratulationsAudioKey),
+            "Missing Feedback/congratulations-you-completed-all-games"
+        )
+        XCTAssertNotNil(
+            speech.urlForAudio(key: CategoryGuidedCompletion.crowdAudioKey),
+            "Missing Feedback/crowd-cheering"
+        )
+    }
+}

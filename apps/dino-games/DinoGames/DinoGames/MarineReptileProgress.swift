@@ -57,6 +57,12 @@ final class MarineReptileProgress: ObservableObject {
         objectWillChange.send()
     }
 
+    func reloadStoredProgressForTesting() {
+        let stored = UserDefaults.standard.stringArray(forKey: defaultsKey) ?? []
+        playedCanonicalGameIds = Set(stored)
+        objectWillChange.send()
+    }
+
     static func notifyCompletionIfMarineGame(configId: String) {
         let canonical = canonicalId(for: configId)
         guard allMarineGameCanonicalIds.contains(canonical) else { return }

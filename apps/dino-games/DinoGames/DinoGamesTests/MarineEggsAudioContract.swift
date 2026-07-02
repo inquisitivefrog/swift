@@ -41,14 +41,13 @@ enum MarineEggsAudioContracts {
         contract(forConfigId: id)?.requiredAudioKeys ?? []
     }
 
-    /// Egg/nest narration under `Audio/Marine-Eggs/` for nest+egg morphotypes (checked on disk in `MarineEggsCatalogXCTests`).
+    /// Clade morphotype narration under `Audio/Marine-Eggs/` (checked on disk in `MarineEggsCatalogXCTests`).
     static func marineEggsMorphotypeAudioKeysOnDisk() -> [String] {
-        let morphology = MarineEggMorphology.morphology
-        var keys: [String] = []
-        for slug in MarineEggMorphology.playableNestEggSlugs.sorted() {
-            keys.append(morphology.eggAudioKey(eggType: slug))
-            keys.append(morphology.nestingAudioKey(style: slug))
-        }
-        return keys
+        let eggClades = ["basal", "mosasaur", "nothosaur", "testudine", "thalattosuchia"]
+        let liveClades = ["halisaur", "ichthyosaur", "plesiosaur", "pliosaur", "tylosaur"]
+        let spawnClades = ["teleostei"]
+        return eggClades.map { "marine-eggs-\($0)" }
+            + liveClades.map { "marine-live-\($0)" }
+            + spawnClades.map { "marine-spawn-\($0)" }
     }
 }

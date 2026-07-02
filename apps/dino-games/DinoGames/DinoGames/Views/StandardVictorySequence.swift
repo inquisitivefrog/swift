@@ -36,6 +36,10 @@ enum StandardVictorySequence {
 
     /// Plays crowd cheering once, then runs `onComplete` (typically dismiss).
     static func playCrowdCheeringThen(speechManager: SpeechManager, onComplete: @escaping () -> Void) {
+        if UITestConfiguration.skipAudioPlayback {
+            onComplete()
+            return
+        }
         if let url = speechManager.urlForAudio(key: crowdAudioKey) {
             speechManager.onAudioFinished = {
                 speechManager.onAudioFinished = nil
@@ -45,6 +49,43 @@ enum StandardVictorySequence {
         } else {
             onComplete()
         }
+    }
+
+    /// Crowd cheer, then guided-only category progress narration, then `onComplete`.
+    static func playCrowdCheeringThenCategoryProgress(
+        catalogGameConfigId: String,
+        speechManager: SpeechManager,
+        onComplete: @escaping () -> Void
+    ) {
+        playCrowdCheeringThen(speechManager: speechManager) {
+            playGuidedCategoryProgressAudioIfNeeded(
+                catalogGameConfigId: catalogGameConfigId,
+                speechManager: speechManager,
+                onComplete: onComplete
+            )
+        }
+    }
+
+    /// Spoken `Completed N of M` during guided first-play only; uses bundled clip or TTS fallback.
+    static func playGuidedCategoryProgressAudioIfNeeded(
+        catalogGameConfigId: String,
+        speechManager: SpeechManager,
+        onComplete: @escaping () -> Void
+    ) {
+        guard let snapshot = GameCatalog.victoryProgressSnapshot(forConfigId: catalogGameConfigId),
+              CategoryPlaySession.shouldUseGuidedMode(for: snapshot.category) else {
+            onComplete()
+            return
+        }
+        if UITestConfiguration.skipAudioPlayback {
+            onComplete()
+            return
+        }
+        speechManager.onAudioFinished = {
+            speechManager.onAudioFinished = nil
+            onComplete()
+        }
+        speechManager.speak(audioKey: snapshot.audioKey, fallbackText: snapshot.displayText)
     }
 
     /// After crowd + success card: notify catalog progress and close the game sheet.

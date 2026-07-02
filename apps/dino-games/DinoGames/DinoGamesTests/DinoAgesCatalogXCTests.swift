@@ -12,6 +12,11 @@ final class DinoAgesCatalogXCTests: XCTestCase {
 
     private var config: DinoAgesGameConfig { DinoAgesGameConfigs.dinoAges }
 
+    private var agesMoments: [LandGameDisplayMoment] {
+        LandGameDisplayMomentCatalog.shippingLandMoments()
+            .filter { $0.gameConfigId == "dino-ages" }
+    }
+
     // MARK: - Config / catalog
 
     func testDinoAgesConfigIdAndIntro() {
@@ -98,6 +103,21 @@ final class DinoAgesCatalogXCTests: XCTestCase {
         let agesHintMoments = LandGameDisplayMomentCatalog.shippingLandMoments()
             .filter { $0.gameConfigId == "dino-ages" && $0.context.hasPrefix("source-hint") }
         XCTAssertEqual(agesHintMoments.count, 2)
+    }
+
+    @MainActor
+    func testDinoAgesDisplayMomentsHaveResolvableAudio() {
+        let speech = SpeechManager()
+        let missing = agesMoments.filter { moment in
+            LandGameDisplayMomentCatalog.audioCandidateKeys(for: moment)
+                .compactMap { speech.urlForAudio(key: $0) }
+                .isEmpty
+        }
+        let labels = missing.map { moment in
+            let keys = LandGameDisplayMomentCatalog.audioCandidateKeys(for: moment).joined(separator: "|")
+            return "\(moment.context) → audio `\(keys)`"
+        }
+        XCTAssertTrue(labels.isEmpty, "Missing bundle audio: \(labels.joined(separator: "; "))")
     }
 
     // MARK: - Audio

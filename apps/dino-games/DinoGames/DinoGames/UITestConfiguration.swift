@@ -40,6 +40,22 @@ enum UITestConfiguration {
         isActive && (environment["UITEST_FAST_NAVIGATION"] == "1" || arguments.contains("-uiTestFastNavigation"))
     }
 
+    /// `-uiTestSkipAudio` / `UITEST_SKIP_AUDIO=1` completes audio callbacks immediately (victory E2E).
+    static var skipAudioPlayback: Bool {
+        isActive && (environment["UITEST_SKIP_AUDIO"] == "1" || arguments.contains("-uiTestSkipAudio"))
+    }
+
+    /// `UITEST_INSTANT_VICTORY_GAME=dino-puzzle` jumps matching game views straight to victory recap.
+    static var instantVictoryGameId: String? {
+        guard isActive else { return nil }
+        let fromEnv = environment["UITEST_INSTANT_VICTORY_GAME"]?.trimmingCharacters(in: .whitespacesAndNewlines)
+        if let fromEnv, !fromEnv.isEmpty { return fromEnv }
+        if arguments.contains("-uiTestInstantVictory") {
+            return environment["UITEST_INSTANT_VICTORY_GAME"] ?? "dino-puzzle"
+        }
+        return nil
+    }
+
     /// Clear saved guided-play session so UI tests start from the category picker.
     static func applyLaunchOverridesIfNeeded() {
         guard fastNavigation else { return }

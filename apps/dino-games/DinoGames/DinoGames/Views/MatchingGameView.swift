@@ -61,6 +61,22 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         completionTimeoutWorkItem?.cancel()
         completionTimeoutWorkItem = nil
     }
+
+    /// UI tests skip playback so victory recap → crowd → dismiss can run without waiting on clips.
+    private func finishAudioImmediatelyIfUITestSkip() -> Bool {
+        guard UITestConfiguration.skipAudioPlayback else { return false }
+        stopCurrentAudio()
+        isPlaying = false
+        cancelCompletionTimeout()
+        let callback = onAudioFinished
+        onAudioFinished = nil
+        if callback != nil {
+            DispatchQueue.main.async {
+                callback?()
+            }
+        }
+        return true
+    }
     
     /// Returns bundle URL for a given audio key (e.g. "crowd-cheering", "Allosaurus") if found; nil otherwise.
     func urlForAudio(key: String) -> URL? {
@@ -212,6 +228,9 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         }
         if normalized == "marine-eggs-shape" {
             if let url = resolveURL(forPath: "Marine-Eggs/hints/marine-eggs-shape") { return url }
+        }
+        if normalized == "marine-eggs-scanner-not-available" {
+            if let url = resolveURL(forPath: "Games/marine-eggs/marine-eggs-scanner-not-available") { return url }
         }
         if normalized == "marine-eggs" {
             if let url = resolveURL(forPath: "Games/game-marine-eggs") { return url }
@@ -860,6 +879,8 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Feedback/congratulations"
         case "congratulations-you-did-it", "congratulations you did it":
             return "Feedback/congratulations-you-did-it"
+        case "congratulations-you-completed-all-games", "congratulations you completed all games":
+            return "Feedback/congratulations-you-completed-all-games"
 
         // Categories (Land / Sea / Air)
         // You currently placed these files in `Assets/Audio/Games/`:
@@ -1260,7 +1281,13 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
         case _ where normalized.hasPrefix("ptero-nests-"):
             let suffix = String(normalized.dropFirst("ptero-nests-".count))
             return "Ptero-Eggs/ptero-eggs-nests-\(suffix)"
-        // Marine Eggs morphotype narration under Audio/Marine-Eggs/ (`marine-eggs-{slug}`, `marine-eggs-nest-{slug}` when bundled).
+        // Marine Eggs live-birth narration under Audio/Marine-Eggs/ (`marine-live-{clade}.m4a`).
+        case _ where normalized.hasPrefix("marine-live-"):
+            return "Marine-Eggs/\(normalized)"
+        // Marine Eggs spawn narration under Audio/Marine-Eggs/ (`marine-spawn-{clade}.m4a`).
+        case _ where normalized.hasPrefix("marine-spawn-"):
+            return "Marine-Eggs/\(normalized)"
+        // Marine Eggs egg-clade narration under Audio/Marine-Eggs/ (`marine-eggs-{clade}.m4a`).
         case _ where normalized.hasPrefix("marine-eggs-"):
             return "Marine-Eggs/\(normalized)"
         // Dino Eggs morphotype narration under Audio/Dino-Eggs/ (`dino-eggs-{clade}`, `dino-eggs-nesting-{style}`, scans).
@@ -1326,6 +1353,7 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
     /// - Parameter chainDelay: If true, use a shorter delay (e.g. when chaining name + "is heavier") so the gap between clips is smaller.
     /// When `chainDelay` is true, rate limiting is skipped so scripted sequences (e.g. speak → `playAudioFile` → speak) are not dropped.
     func speak(_ text: String, chainDelay: Bool = false) {
+        if finishAudioImmediatelyIfUITestSkip() { return }
         let now = Date()
         if !chainDelay {
             // Rate limiting: prevent audio overload from rapid taps (not applied to intentional chains).
@@ -1362,6 +1390,7 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
     
     /// Use when playing dinosaur (or creature) name audio: look up by audioKey (e.g. dino imageName) so Audio/Dinosaurs/*.m4a is used when present; use fallbackText for TTS if no file is found.
     func speak(audioKey: String, fallbackText: String, chainDelay: Bool = false) {
+        if finishAudioImmediatelyIfUITestSkip() { return }
         let now = Date()
         if !chainDelay {
             guard now.timeIntervalSince(lastPlayTime) >= minimumPlayInterval else {
@@ -1394,6 +1423,7 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
     }
 
     func playAudioFile(url: URL, fallbackSpeakText: String? = nil) {
+        if finishAudioImmediatelyIfUITestSkip() { return }
         ensureAudioSessionActive()
         do {
             // Stop any current player (only if still playing—e.g. interrupted) to avoid click when chaining
@@ -1581,6 +1611,7 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
     ]
 
     func startSpeaking(_ text: String) {
+        if finishAudioImmediatelyIfUITestSkip() { return }
         ensureAudioSessionActive()
         let utterance: AVSpeechUtterance
         if let attributed = buildAttributedStringWithIPA(text) {

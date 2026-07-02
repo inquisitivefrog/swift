@@ -2,7 +2,8 @@
 //  WeighTheDinosaurXCTests.swift
 //  DinoGamesTests
 //
-//  Catalog, asset, audio, and round-mechanic contracts for Weigh the Dinosaur (land L1).
+//  Game config, progress, round mechanics, and gameplay audio for Weigh the Dinosaur (land L1).
+//  Catalog, display-moment, and mass contracts live in `LandDinosaurWeighCatalogXCTests`.
 //
 
 import XCTest
@@ -11,10 +12,6 @@ import XCTest
 final class WeighTheDinosaurXCTests: XCTestCase {
 
     private var templateConfig: WeighGameConfig { WeighGameConfigs.weighDinosaur }
-
-    private var weighMoments: [LandGameDisplayMoment] {
-        LandGameDisplayMomentCatalog.shippingLandMoments().filter { $0.gameConfigId == "weigh-dinosaur" }
-    }
 
     // MARK: - Config / catalog
 
@@ -52,24 +49,6 @@ final class WeighTheDinosaurXCTests: XCTestCase {
         )
     }
 
-    // MARK: - Playable pool
-
-    func testEveryCladeHasPlayableWeighEntry() {
-        for clade in DinoClade.allCases {
-            let hasMember = LandDinosaurWeighCatalog.allEntries.contains { $0.clade == clade }
-            XCTAssertTrue(
-                hasMember,
-                "Clade \(clade.rawValue) needs at least one dinosaur in the weigh catalog"
-            )
-        }
-    }
-
-    func testWeighCatalogPoolMatchesDisplayMomentsCount() {
-        let expectedCount = LandDinosaurWeighCatalog.allEntries.count
-        XCTAssertGreaterThan(expectedCount, 9)
-        XCTAssertEqual(weighMoments.count, expectedCount, "Each catalog creature should have a display moment")
-    }
-
     // MARK: - Round mechanics
 
     func testWeighDinosaurRandomizedConfigHasNineItems() {
@@ -86,18 +65,6 @@ final class WeighTheDinosaurXCTests: XCTestCase {
         XCTAssertEqual(ids.count, 9, "Each grid cell should feature a distinct dinosaur")
     }
 
-    func testWeighDinosaurRandomizedItemsPreferOnePerClade() {
-        let items = WeighGameConfigs.makeRandomDinosaurItems()
-        let clades = Set(
-            items.compactMap { LandDinosaurCladeCatalog.cladeByCreatureId[$0.id] }
-        )
-        XCTAssertEqual(
-            clades.count,
-            9,
-            "Expected one creature per clade in the 3×3 grid; got clades: \(clades.map(\.rawValue).sorted())"
-        )
-    }
-
     func testWeighDinosaurExcludingUsedIdsProducesFreshCreatures() {
         let firstRound = WeighGameConfigs.makeRandomDinosaurItems()
         let usedIds = Set(firstRound.map(\.id))
@@ -108,72 +75,6 @@ final class WeighTheDinosaurXCTests: XCTestCase {
             Set(secondRound.map(\.id)).isDisjoint(with: usedIds),
             "Second round should avoid dinosaurs already weighed when the pool is large enough"
         )
-    }
-
-    func testWeighDinosaurItemWeightsTrackCatalogMassOrder() {
-        let items = WeighGameConfigs.makeRandomDinosaurItems()
-        let sortedByRank = items.sorted { $0.weight < $1.weight }
-        for index in 0..<(sortedByRank.count - 1) {
-            let lighter = sortedByRank[index]
-            let heavier = sortedByRank[index + 1]
-            let lighterKg = LandDinosaurWeighCatalog.weightKgByStableId[lighter.id] ?? 0
-            let heavierKg = LandDinosaurWeighCatalog.weightKgByStableId[heavier.id] ?? 0
-            XCTAssertLessThanOrEqual(
-                lighterKg,
-                heavierKg,
-                "Rank \(lighter.weight) (\(lighter.name)) should not outweigh rank \(heavier.weight) (\(heavier.name))"
-            )
-        }
-    }
-
-    // MARK: - Assets
-
-    func testWeighDisplayImagesExistOrFallbackToPortrait() {
-        let known = ImageAssetNames.knownAssets
-        for entry in LandDinosaurWeighCatalog.allEntries {
-            let weighName = "weigh-\(entry.imageAssetName)"
-            let hasWeighArt = known.contains(weighName)
-            let hasPortrait = known.contains(entry.imageAssetName)
-            XCTAssertTrue(
-                hasWeighArt || hasPortrait,
-                "Missing weigh art and portrait for \(entry.displayName): tried `\(weighName)` and `\(entry.imageAssetName)`"
-            )
-        }
-    }
-
-    func testWeighDisplayImageNamingMatchesDisplayMomentCatalog() {
-        for entry in LandDinosaurWeighCatalog.allEntries {
-            let expected = LandGameDisplayMomentCatalog.weighDisplayImageName(for: entry.imageAssetName)
-            XCTAssertFalse(expected.isEmpty)
-            XCTAssertTrue(
-                ImageAssetNames.knownAssets.contains(expected),
-                "Display moment image missing for \(entry.displayName): `\(expected)`"
-            )
-        }
-    }
-
-    // MARK: - Display moments
-
-    func testWeighDinosaurDisplayMomentsHaveImagesInAssetCatalog() {
-        let known = ImageAssetNames.knownAssets
-        let missing = weighMoments.filter { !known.contains($0.imageAssetName) }
-        let labels = missing.map { "\($0.context) → `\($0.imageAssetName)`" }
-        XCTAssertTrue(labels.isEmpty, "Missing imagesets: \(labels.joined(separator: "; "))")
-    }
-
-    @MainActor
-    func testWeighDinosaurDisplayMomentsHaveResolvableAudio() {
-        let speech = SpeechManager()
-        let missing = weighMoments.filter { moment in
-            LandGameDisplayMomentCatalog.audioCandidateKeys(for: moment)
-                .compactMap { speech.urlForAudio(key: $0) }
-                .isEmpty
-        }
-        let labels = missing.map { moment in
-            let keys = LandGameDisplayMomentCatalog.audioCandidateKeys(for: moment).joined(separator: "|")
-            return "\(moment.context) → audio `\(keys)`"
-        }
-        XCTAssertTrue(labels.isEmpty, "Missing bundle audio: \(labels.joined(separator: "; "))")
     }
 
     // MARK: - Audio

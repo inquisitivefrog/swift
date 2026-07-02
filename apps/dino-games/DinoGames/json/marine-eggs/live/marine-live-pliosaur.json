@@ -1,0 +1,7 @@
+{
+  "id": "ui_birth_pliosaur_clade",
+  "clade": "Pliosaur",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. An underwater scene of pliosaur live birth. The adult mother is a powerful dark silhouette: short thick neck, enormous crocodile-like head profile, massive flippers, torpedo body — all detail hidden in shadow. A detailed newborn pliosaur pup — stocky clay body, large head for its size, fierce cute eyes, tiny flippers — exits tail-first from the shadow with a burst of bubbles. SETTING: Jurassic deep shelf sea. LIGHTING: Dramatic side backlighting; mother as black silhouette, pup in warm amber highlight. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+  "visual_logic": "Short-neck, big-headed mother outline plus chunky newborn pup identify the Pliosaur clade."
+}

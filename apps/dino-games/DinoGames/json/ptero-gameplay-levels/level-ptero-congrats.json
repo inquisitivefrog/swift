@@ -1,0 +1,11 @@
+[
+  {
+    "id": "pterosaur_completion_all_levels_v3",
+    "app_image_config": {
+      "layer_1_style": "STYLE_ANIMATED_FEATURE_V3: 1024x1024 px, high-poly 3D animated film style, Octane render, cinematic lighting, soft clay textures, vibrant saturated colors.",
+      "layer_2_setting": "Setting: A sweeping, stylized cliffside overlook at a breathtaking golden hour sunset, looking out over a misty prehistoric ocean with distant sea stacks.",
+      "layer_3_action": "Wide Shot of a happy group of iconic pterosaurs celebrating together on the cliff. A giant Quetzalcoatlus stands tall with wings neatly folded, looking down proudly; next to it, a Tupandactylus with its spectacular large head crest and a Pteranodon both look up toward the sky with open beaks as if rejoicing. They feature expressive, bright eyes and a tactile 'downy' clay texture on their bodies while maintaining natural quadrupedal and perched poses. Large, clear bold text at the top center reads 'Congratulations!'.",
+      "aspect_ratio": "1:1"
+    }
+  }
+]

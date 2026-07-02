@@ -139,9 +139,9 @@ final class PteroEggsCatalogXCTests: XCTestCase {
         XCTAssertEqual(PteroEggMorphology.eggType(for: transitionalPterosaur!), "transitional")
     }
 
-    func testPteroEggsVictoryUsesCreatureNameRecap() {
-        XCTAssertTrue(PteroEggMorphology.settings.victoryRecapUsesCreatureName)
-        XCTAssertTrue(PteroEggMorphology.settings.victoryRecapLabelUsesCreatureName)
+    func testPteroEggsVictoryUsesCladeRecapNotSpeciesNames() {
+        XCTAssertFalse(PteroEggMorphology.settings.victoryRecapUsesCreatureName)
+        XCTAssertFalse(PteroEggMorphology.settings.victoryRecapLabelUsesCreatureName)
         XCTAssertEqual(
             PteroEggMorphology.morphology.eggAudioKey(eggType: "basal"),
             "ptero-eggs-basal"
@@ -167,6 +167,10 @@ final class PteroEggsCatalogXCTests: XCTestCase {
     func testPteroEggsConfigBuildsThreeDistinctEggClades() {
         let config = PteroEggsGameConfigs.pteroEggs
         XCTAssertEqual(Set(config.rounds.map(\.eggType)).count, 3)
+    }
+
+    func testPteroEggsVictoryRecapDeduplicatesByCladeAudio() {
+        XCTAssertTrue(PteroEggMorphology.settings.victoryRecapDeduplicatesByAudioKey)
     }
 
     func testPteroEggsPickerAndSuccessArt() {

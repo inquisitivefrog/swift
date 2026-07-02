@@ -106,6 +106,13 @@ final class LandDinosaurProgress: ObservableObject {
         objectWillChange.send()
     }
 
+    /// Test-only: re-read `UserDefaults` into memory after clearing stored ids.
+    func reloadStoredProgressForTesting() {
+        let stored = UserDefaults.standard.stringArray(forKey: defaultsKey) ?? []
+        playedCanonicalGameIds = Set(stored)
+        objectWillChange.send()
+    }
+
     /// Posted from game views after a successful run (not when the player taps Done early).
     static func notifyCompletionIfLandGame(configId: String) {
         let canonical = canonicalId(for: configId)

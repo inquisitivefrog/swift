@@ -124,6 +124,8 @@ enum LandDinosaurGameAudioContracts {
                 "game-dino-eggs-gameplay-directions",
                 "game-dino-eggs-beep",
                 "game-dino-eggs-scan-failed",
+                "game-dino-eggs-tap-the-scanner",
+                "game-hint",
                 "game-dino-eggs-shape",
                 "game-dino-eggs-color",
             ]
@@ -184,6 +186,14 @@ enum LandDinosaurGameAudioContracts {
         return Array(Set(base + extra)).sorted()
     }
 
+    /// Egg morphotype narration under `Audio/Dino-Eggs/` (checked on disk in `DinoEggsCatalogXCTests`).
+    static func dinoEggsMorphotypeAudioKeysOnDisk() -> [String] {
+        dinoEggMorphotypeClades.compactMap { clade in
+            guard DinoEggMorphology.roundAssetsExist(for: clade) else { return nil }
+            return "dino-eggs-\(clade)"
+        }
+    }
+
     // MARK: - Dynamic supplements
 
     private static func dinoFloraPlantAudioKeys() -> [String] {
@@ -208,14 +218,9 @@ enum LandDinosaurGameAudioContracts {
     ]
 
     private static func dinoEggsSupplementalKeys() -> [String] {
-        var keys: [String] = []
-        for clade in dinoEggMorphotypeClades where DinoEggMorphology.roundAssetsExist(for: clade) {
-            keys.append("dino-eggs-\(clade)")
-            keys.append("game-dino-eggs-nest-\(clade)")
-            let scan = DinoEggMorphology.scanAssetName(for: clade)
-            keys.append(scan)
+        dinoEggMorphotypeClades.compactMap { clade in
+            guard DinoEggMorphology.roundAssetsExist(for: clade) else { return nil }
+            return "game-dino-eggs-nest-\(clade)"
         }
-        keys.append("dino-eggs-scans-empty")
-        return keys
     }
 }

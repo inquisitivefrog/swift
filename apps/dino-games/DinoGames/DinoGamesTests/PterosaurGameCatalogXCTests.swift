@@ -198,18 +198,18 @@ final class PterosaurGameCatalogXCTests: XCTestCase {
         return match!
     }
 
-    func testPteroEggsVictoryRecapUsesSpeciesNamesNotClades() {
-        XCTAssertTrue(PteroEggMorphology.settings.victoryRecapUsesCreatureName)
-        XCTAssertTrue(PteroEggMorphology.settings.victoryRecapLabelUsesCreatureName)
+    func testPteroEggsVictoryRecapUsesCladeLabelsNotSpeciesNames() {
+        XCTAssertFalse(PteroEggMorphology.settings.victoryRecapUsesCreatureName)
+        XCTAssertFalse(PteroEggMorphology.settings.victoryRecapLabelUsesCreatureName)
         let morphology = PteroEggMorphology.morphology
         for round in PteroEggsGameConfigs.pteroEggs.rounds {
             let speciesTitle = round.correctCreature.name
             let cladeTitle = morphology.eggDisplayTitle(for: round.eggType)
-            XCTAssertFalse(speciesTitle.isEmpty)
+            XCTAssertFalse(cladeTitle.isEmpty)
             XCTAssertNotEqual(
                 speciesTitle,
                 cladeTitle,
-                "Victory recap should name the matched pterosaur (`\(speciesTitle)`), not the egg clade (`\(cladeTitle)`)"
+                "Victory recap should use egg clade (`\(cladeTitle)`), not species (`\(speciesTitle)`)"
             )
         }
     }

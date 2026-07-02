@@ -560,8 +560,8 @@ struct PortraitJigsawPuzzleGameView: View {
         if endHighlightIndex < creatures.count {
             let d = creatures[endHighlightIndex]
             let key = d.imageName ?? d.name.lowercased().replacingOccurrences(of: " ", with: "-")
-            speechManager.speak(audioKey: key, fallbackText: d.name)
             speechManager.onAudioFinished = { advanceEndHighlight() }
+            speechManager.speak(audioKey: key, fallbackText: d.name)
         } else {
             endSequenceStep = 2
         }
@@ -590,6 +590,13 @@ struct PortraitJigsawPuzzleGameView: View {
         }
         .gameSheetDismissDisabledWhileAudioPlaying(isAudioPlaying)
         .onAppear {
+            if UITestConfiguration.instantVictoryGameId == line.catalogGameId {
+                if rounds.isEmpty {
+                    rounds = PortraitJigsawRoundGenerator.makeRounds(for: line)
+                }
+                isGameComplete = true
+                return
+            }
             rounds = PortraitJigsawRoundGenerator.makeRounds(for: line)
             currentRoundIndex = 0
             isGameComplete = false
@@ -780,8 +787,8 @@ struct PortraitJigsawPuzzleGameView: View {
                 endSequenceStep = 1
                 let d = creatures[0]
                 let key = d.imageName ?? d.name.lowercased().replacingOccurrences(of: " ", with: "-")
-                speechManager.speak(audioKey: key, fallbackText: d.name)
                 speechManager.onAudioFinished = { advanceEndHighlight() }
+                speechManager.speak(audioKey: key, fallbackText: d.name)
             }
         }
     }

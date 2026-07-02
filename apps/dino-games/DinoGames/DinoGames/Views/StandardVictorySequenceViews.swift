@@ -175,11 +175,33 @@ struct StandardVictoryRecapRowView: View {
     }
 }
 
+// MARK: - Category progress (victory success card)
+
+/// Quiet caption under the success game card: `Completed N of M games`.
+struct StandardVictoryCategoryProgressLabel: View {
+    let catalogGameConfigId: String
+
+    var body: some View {
+        if let text = GameCatalog.victoryProgressDisplayText(forConfigId: catalogGameConfigId) {
+            Text(text)
+                .font(.headline)
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.75)
+                .padding(.horizontal, 16)
+                .padding(.top, 4)
+                .accessibilityIdentifier("victory-category-progress")
+        }
+    }
+}
+
 // MARK: - Success card + crowd (standard finish)
 
 /// Shows the success game card (`game-{id}-success`) and plays crowd cheering once; then `onComplete` (dismiss).
 struct StandardVictoryCrowdThenSuccessView: View {
     let candidateSuccessImageNames: [String]
+    let catalogGameConfigId: String?
     let imageSide: CGFloat
     let missingPolicy: StandardVictorySuccessImageView.MissingAssetPolicy
     let speechManager: SpeechManager
@@ -195,6 +217,7 @@ struct StandardVictoryCrowdThenSuccessView: View {
         onComplete: @escaping () -> Void
     ) {
         self.candidateSuccessImageNames = StandardVictorySequence.defaultSuccessImageCandidates(gameConfigId: gameConfigId)
+        self.catalogGameConfigId = gameConfigId
         self.imageSide = imageSide
         self.missingPolicy = missingPolicy
         self.speechManager = speechManager
@@ -203,12 +226,14 @@ struct StandardVictoryCrowdThenSuccessView: View {
 
     init(
         candidateSuccessImageNames: [String],
+        catalogGameConfigId: String? = nil,
         imageSide: CGFloat = GameCatalogImageMetrics.nameThatVictorySuccessImageSide,
         missingPolicy: StandardVictorySuccessImageView.MissingAssetPolicy = .emojiCelebration,
         speechManager: SpeechManager,
         onComplete: @escaping () -> Void
     ) {
         self.candidateSuccessImageNames = candidateSuccessImageNames
+        self.catalogGameConfigId = catalogGameConfigId
         self.imageSide = imageSide
         self.missingPolicy = missingPolicy
         self.speechManager = speechManager
@@ -216,11 +241,16 @@ struct StandardVictoryCrowdThenSuccessView: View {
     }
 
     var body: some View {
-        StandardVictorySuccessImageView(
-            candidateAssetNames: candidateSuccessImageNames,
-            imageSide: imageSide,
-            missingPolicy: missingPolicy
-        )
+        VStack(spacing: 0) {
+            StandardVictorySuccessImageView(
+                candidateAssetNames: candidateSuccessImageNames,
+                imageSide: imageSide,
+                missingPolicy: missingPolicy
+            )
+            if let catalogGameConfigId {
+                StandardVictoryCategoryProgressLabel(catalogGameConfigId: catalogGameConfigId)
+            }
+        }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear(perform: startCrowdThenComplete)
     }
@@ -228,7 +258,15 @@ struct StandardVictoryCrowdThenSuccessView: View {
     private func startCrowdThenComplete() {
         guard !didStartFinish else { return }
         didStartFinish = true
-        StandardVictorySequence.playCrowdCheeringThen(speechManager: speechManager, onComplete: onComplete)
+        if let catalogGameConfigId {
+            StandardVictorySequence.playCrowdCheeringThenCategoryProgress(
+                catalogGameConfigId: catalogGameConfigId,
+                speechManager: speechManager,
+                onComplete: onComplete
+            )
+        } else {
+            StandardVictorySequence.playCrowdCheeringThen(speechManager: speechManager, onComplete: onComplete)
+        }
     }
 }
 

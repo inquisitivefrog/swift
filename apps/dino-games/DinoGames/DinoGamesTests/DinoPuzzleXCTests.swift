@@ -16,6 +16,11 @@ final class DinoPuzzleXCTests: XCTestCase {
         .dinosaur(config)
     }
 
+    private var puzzleMoments: [LandGameDisplayMoment] {
+        LandGameDisplayMomentCatalog.shippingLandMoments()
+            .filter { $0.gameConfigId == "dino-puzzle" }
+    }
+
     // MARK: - Config / catalog
 
     func testDinoPuzzleConfigIdAndIntro() {
@@ -97,6 +102,28 @@ final class DinoPuzzleXCTests: XCTestCase {
                 "Missing display moment for clade \(clade.rawValue)"
             )
         }
+    }
+
+    func testDinoPuzzleDisplayMomentsHaveImagesInAssetCatalog() {
+        let known = ImageAssetNames.knownAssets
+        let missing = puzzleMoments.filter { !known.contains($0.imageAssetName) }
+        let labels = missing.map { "\($0.context) → `\($0.imageAssetName)`" }
+        XCTAssertTrue(labels.isEmpty, "Missing imagesets: \(labels.joined(separator: "; "))")
+    }
+
+    @MainActor
+    func testDinoPuzzleDisplayMomentsHaveResolvableAudio() {
+        let speech = SpeechManager()
+        let missing = puzzleMoments.filter { moment in
+            LandGameDisplayMomentCatalog.audioCandidateKeys(for: moment)
+                .compactMap { speech.urlForAudio(key: $0) }
+                .isEmpty
+        }
+        let labels = missing.map { moment in
+            let keys = LandGameDisplayMomentCatalog.audioCandidateKeys(for: moment).joined(separator: "|")
+            return "\(moment.context) → audio `\(keys)`"
+        }
+        XCTAssertTrue(labels.isEmpty, "Missing bundle audio: \(labels.joined(separator: "; "))")
     }
 
     // MARK: - Jigsaw patterns

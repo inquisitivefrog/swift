@@ -1,0 +1,8 @@
+{
+  "id": "ui_egg_mosasaur",
+  "morphology": "mosasauroid_pelagic",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "prompt": "High-fidelity 3D render of a single Mosasaur egg next to a standard rugby ball. Shape: massive, visibly deflated and partially collapsed oblong capsule with delicate crinkles and folds. Texture: matte, ultra-thin parchment-like soft shell, translucent milky-cream color without distinct pores. Background: clean, empty light-grey studio background. A single small scale bar at the bottom. Soft studio lighting.",
+  "visual_logic": "Features a giant, soft-shelled oblong egg that appears partially collapsed, mirroring the ovoviviparous vestigial egg structure of advanced pelagic lepidosaurs.",
+  "style_notes": "Only one scale bar."
+}

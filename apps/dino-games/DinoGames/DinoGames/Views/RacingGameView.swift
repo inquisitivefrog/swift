@@ -443,9 +443,64 @@ private func racingSuccessImageCandidates(for config: RacingGameConfig) -> [Stri
 
 // MARK: - Main View
 
-private let tickInterval: TimeInterval = 0.5
-private let stepPerTick: Double = 0.05 // Progress per tick; faster racer gains more (speed/maxSpeed) * stepPerTick
-private let tripDuration: TimeInterval = 3.0 // 3 ticks (seconds) the faster dino is paused when tripped
+/// Land/air: half-second ticks. Marine slalom uses finer ticks for smoother motion on tight turns.
+private let landAirRaceTickInterval: TimeInterval = 0.5
+private let landAirRaceStepPerTick: Double = 0.05
+private let marineRaceTickInterval: TimeInterval = 0.25
+private let marineRaceStepPerTick: Double = 0.025
+private let tripDuration: TimeInterval = 3.0 // Wall-clock pause when the faster racer trips
+
+private func raceTickInterval(for config: RacingGameConfig) -> TimeInterval {
+    config.assetPrefix == "marine" ? marineRaceTickInterval : landAirRaceTickInterval
+}
+
+private func raceStepPerTick(for config: RacingGameConfig) -> Double {
+    config.assetPrefix == "marine" ? marineRaceStepPerTick : landAirRaceStepPerTick
+}
+
+/// Positions a marine racer by animating `progress` along the course path (arc + radial legs).
+private struct MarineRacerCoursePlacement: AnimatableModifier {
+    var progress: Double
+    let racerIndex: Int
+    let trackWidth: CGFloat
+    let trackHeight: CGFloat
+    let style: MarineRacingTrackStyle
+    let buoyCount: Int
+    let radiiClassic: MarineClassicRadii
+    let radiiSlalom: MarineSlalomRadii
+    let racerHalfSize: CGFloat
+
+    var animatableData: Double {
+        get { progress }
+        set { progress = newValue }
+    }
+
+    func body(content: Content) -> some View {
+        let pos = MarineRacingTrackGeometry.pointOnCourse(
+            progress: progress,
+            width: trackWidth,
+            height: trackHeight,
+            style: style,
+            radiiClassic: radiiClassic,
+            radiiSlalom: radiiSlalom,
+            buoyCount: buoyCount
+        )
+        let off = MarineRacingTrackGeometry.racerOffset(
+            progress: progress,
+            racerIndex: racerIndex,
+            width: trackWidth,
+            height: trackHeight,
+            style: style,
+            radiiClassic: radiiClassic,
+            radiiSlalom: radiiSlalom,
+            buoyCount: buoyCount
+        )
+        content.offset(
+            x: pos.x - racerHalfSize + off.width,
+            y: pos.y - racerHalfSize + off.height
+        )
+    }
+}
 
 struct RacingGameView: View {
     @Binding var isPresented: Bool
@@ -1381,23 +1436,6 @@ struct RacingGameView: View {
         let classic = MarineRacingTrackGeometry.classicRadii(width: trackWidth, height: trackHeight)
         let slalom = MarineRacingTrackGeometry.slalomRadii(width: trackWidth, height: trackHeight)
         let count = max(3, buoyCount)
-        let pos1 = MarineRacingTrackGeometry.pointOnCourse(
-            progress: progress1, width: trackWidth, height: trackHeight,
-            style: style, radiiClassic: classic, radiiSlalom: slalom, buoyCount: count
-        )
-        let pos2 = MarineRacingTrackGeometry.pointOnCourse(
-            progress: progress2, width: trackWidth, height: trackHeight,
-            style: style, radiiClassic: classic, radiiSlalom: slalom, buoyCount: count
-        )
-        let off1 = MarineRacingTrackGeometry.racerOffset(
-            progress: progress1, racerIndex: 0, width: trackWidth, height: trackHeight,
-            style: style, radiiClassic: classic, radiiSlalom: slalom, buoyCount: count
-        )
-        let off2 = MarineRacingTrackGeometry.racerOffset(
-            progress: progress2, racerIndex: 1, width: trackWidth, height: trackHeight,
-            style: style, radiiClassic: classic, radiiSlalom: slalom, buoyCount: count
-        )
-        let half = racerSize / 2
         let finishLineWidth: CGFloat = 4
         let finishLineHeight: CGFloat = 10
         let finishLineX = trackWidth / 2 - finishLineWidth / 2
@@ -1426,10 +1464,32 @@ struct RacingGameView: View {
                 finishLineHeight: finishLineHeight,
                 finishLineX: finishLineX,
                 racerOverlays: {
-                    racerView(racer: racer1, size: racerSize, pose: trippedRacerId == racer1.id ? .tripped : .running)
-                        .offset(x: pos1.x - half + off1.width, y: pos1.y - half + off1.height)
-                    racerView(racer: racer2, size: racerSize, pose: trippedRacerId == racer2.id ? .tripped : .running)
-                        .offset(x: pos2.x - half + off2.width, y: pos2.y - half + off2.height)
+                    marineRacerOnCourse(
+                        racer: racer1,
+                        size: racerSize,
+                        pose: trippedRacerId == racer1.id ? .tripped : .running,
+                        progress: progress1,
+                        racerIndex: 0,
+                        trackWidth: trackWidth,
+                        trackHeight: trackHeight,
+                        style: style,
+                        buoyCount: count,
+                        radiiClassic: classic,
+                        radiiSlalom: slalom
+                    )
+                    marineRacerOnCourse(
+                        racer: racer2,
+                        size: racerSize,
+                        pose: trippedRacerId == racer2.id ? .tripped : .running,
+                        progress: progress2,
+                        racerIndex: 1,
+                        trackWidth: trackWidth,
+                        trackHeight: trackHeight,
+                        style: style,
+                        buoyCount: count,
+                        radiiClassic: classic,
+                        radiiSlalom: slalom
+                    )
                     refereeImageViewSmall(startRefereeImageName(prefix: config.assetPrefix), size: refereeSize)
                         .offset(x: trackWidth / 2 - refereeSize / 2, y: trackHeight / 2 - refereeSize / 2)
                 }
@@ -1957,6 +2017,38 @@ struct RacingGameView: View {
         .frame(width: size, height: size)
     }
 
+    /// Marine slalom: animate along course progress (not linear screen offset) between ticks.
+    @ViewBuilder
+    private func marineRacerOnCourse(
+        racer: RacingRacer,
+        size: CGFloat,
+        pose: RacingPose,
+        progress: Double,
+        racerIndex: Int,
+        trackWidth: CGFloat,
+        trackHeight: CGFloat,
+        style: MarineRacingTrackStyle,
+        buoyCount: Int,
+        radiiClassic: MarineClassicRadii,
+        radiiSlalom: MarineSlalomRadii
+    ) -> some View {
+        racerView(racer: racer, size: size, pose: pose)
+            .modifier(
+                MarineRacerCoursePlacement(
+                    progress: progress,
+                    racerIndex: racerIndex,
+                    trackWidth: trackWidth,
+                    trackHeight: trackHeight,
+                    style: style,
+                    buoyCount: buoyCount,
+                    radiiClassic: radiiClassic,
+                    radiiSlalom: radiiSlalom,
+                    racerHalfSize: size / 2
+                )
+            )
+            .animation(.linear(duration: marineRaceTickInterval), value: progress)
+    }
+
     private func laneView(racer: RacingRacer, progress: Double, trackWidth: CGFloat, laneHeight: CGFloat, emojiSize: CGFloat) -> some View {
         let racerX = max(0, progress * (trackWidth - emojiSize - CGFloat(4)))
         return ZStack(alignment: .leading) {
@@ -2036,7 +2128,9 @@ struct RacingGameView: View {
         var lagTicksRemainingByRacerId: [Int: Int] = [:]
         var nextLagWaypointIndexByRacerId: [Int: Int] = [r1.id: 0, r2.id: 0]
 
-        raceTimer = Timer.scheduledTimer(withTimeInterval: tickInterval, repeats: true) { _ in
+        let tickInterval = raceTickInterval(for: config)
+        let stepPerTick = raceStepPerTick(for: config)
+        let timer = Timer(timeInterval: tickInterval, repeats: true) { _ in
             DispatchQueue.main.async {
                 let isTripped = trippedRacerId != nil
                 if let ticks = lagTicksRemainingByRacerId[r1.id], ticks > 0 {
@@ -2160,6 +2254,8 @@ struct RacingGameView: View {
                 }
             }
         }
+        RunLoop.main.add(timer, forMode: .common)
+        raceTimer = timer
         // Let first motion happen on the first timer tick so racers visibly start at A.
     }
 

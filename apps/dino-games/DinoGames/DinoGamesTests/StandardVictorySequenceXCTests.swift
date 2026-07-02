@@ -10,6 +10,13 @@ import XCTest
 @MainActor
 final class StandardVictorySequenceXCTests: XCTestCase {
 
+    override func setUp() {
+        UserDefaults.standard.removeObject(forKey: "nameThatDinosaurUsedCreatureIds")
+        UserDefaults.standard.removeObject(forKey: "nameThatDinosaurUsedCladeRawValues")
+        UserDefaults.standard.removeObject(forKey: "dinoFootprintsUsedSlotKeys")
+        super.setUp()
+    }
+
     override func tearDown() {
         UserDefaults.standard.removeObject(forKey: "landDinosaurPlayedCanonicalGameIds")
         UserDefaults.standard.removeObject(forKey: "marineReptilePlayedCanonicalGameIds")
@@ -123,6 +130,43 @@ final class StandardVictorySequenceXCTests: XCTestCase {
 
         speech.onAudioFinished?()
         XCTAssertTrue(completed)
+    }
+
+    func testBeginRecapWalkWalksNineItemRecapThenCompletes() {
+        let spoken = spokenIndicesAfterFullRecapWalk(itemCount: 9)
+        XCTAssertEqual(spoken, Array(0..<9))
+    }
+
+    func testNineItemRecapWalkScrollTargetsKickInAfterThirdHighlight() {
+        let progress = recapWalkProgress(itemCount: 9)
+        XCTAssertTrue(progress.completed)
+        XCTAssertEqual(progress.highlightTrail.first, 0)
+        XCTAssertEqual(progress.highlightTrail.last, 9, "After final audio, highlight advances past last row")
+        for highlight in progress.highlightTrail where highlight < 9 {
+            let target = StandardVictoryLayout.recapScrollTargetId(highlightIndex: highlight, itemCount: 9)
+            if highlight < StandardVictoryLayout.maxVisibleRecapRows {
+                XCTAssertNil(target, "Highlight \(highlight) should stay in first viewport page")
+            } else {
+                XCTAssertEqual(target, highlight)
+            }
+        }
+    }
+
+    func testLandFootprintsRecapWalkVisitsEveryRowViaSharedHelper() {
+        UserDefaults.standard.removeObject(forKey: "dinoFootprintsUsedSlotKeys")
+        let config = GuessGameConfigs.dinoFootprints
+        let items = LandVictoryRecapPreview.guessItems(from: config)
+        LandVictoryRecapPreview.assertRecapRowsHaveDisplayableContent(items, minimumCount: 3)
+        let spoken = spokenIndicesAfterFullRecapWalk(itemCount: items.count)
+        XCTAssertEqual(spoken, Array(0..<items.count))
+    }
+
+    func testLandWeighRecapWalkVisitsEveryRowViaSharedHelper() {
+        let config = WeighGameConfigs.weighDinosaurRandomized()
+        let items = LandVictoryRecapPreview.weighItems(from: config.items)
+        XCTAssertEqual(items.count, 9)
+        let spoken = spokenIndicesAfterFullRecapWalk(itemCount: items.count)
+        XCTAssertEqual(spoken, Array(0..<9))
     }
 
     // MARK: - dismissAfterVictory
@@ -327,8 +371,14 @@ final class StandardVictorySequenceXCTests: XCTestCase {
         let footprintItems = LandVictoryRecapPreview.guessItems(from: footprintsConfig)
         LandVictoryRecapPreview.assertRecapRowsHaveDisplayableContent(footprintItems, minimumCount: 3)
         for (item, round) in zip(footprintItems, footprintsConfig.rounds) {
-            XCTAssertEqual(item.imageAssetName, round.questionImageName)
-            XCTAssertTrue(round.questionImageName.contains("footprint"))
+            guard let dinosaur = round.options.first(where: { $0.id == round.correctAnswerId }) else { continue }
+            XCTAssertEqual(item.title, dinosaur.name)
+            if ImageAssetCache.imageExists(named: round.questionImageName) {
+                XCTAssertEqual(item.imageAssetName, round.questionImageName)
+                XCTAssertTrue(round.questionImageName.contains("footprint"))
+            } else {
+                XCTAssertEqual(item.imageAssetName, dinosaur.imageName)
+            }
         }
 
         // L3 — Dino Flora: plant display names + habitat art
@@ -408,5 +458,50 @@ final class StandardVictorySequenceXCTests: XCTestCase {
             let smile = SmilingDinosGameConfigs.pteroSmile
             XCTAssertEqual(smile.rounds.count, 3)
         }
+    }
+
+    // MARK: - Recap walk simulation
+
+    @MainActor
+    private func spokenIndicesAfterFullRecapWalk(itemCount: Int) -> [Int] {
+        let speech = SpeechManager()
+        var spoken: [Int] = []
+        var completed = false
+
+        StandardVictorySequence.beginRecapWalk(
+            itemCount: itemCount,
+            setEndSequenceStep: { _ in },
+            setEndHighlightIndex: { _ in },
+            speechManager: speech,
+            speakItem: { spoken.append($0) },
+            onRecapComplete: { completed = true }
+        )
+
+        while !completed, speech.onAudioFinished != nil {
+            speech.onAudioFinished?()
+        }
+        return spoken
+    }
+
+    @MainActor
+    private func recapWalkProgress(itemCount: Int) -> (spoken: [Int], highlightTrail: [Int], completed: Bool) {
+        let speech = SpeechManager()
+        var spoken: [Int] = []
+        var highlightTrail: [Int] = []
+        var completed = false
+
+        StandardVictorySequence.beginRecapWalk(
+            itemCount: itemCount,
+            setEndSequenceStep: { _ in },
+            setEndHighlightIndex: { highlightTrail.append($0) },
+            speechManager: speech,
+            speakItem: { spoken.append($0) },
+            onRecapComplete: { completed = true }
+        )
+
+        while !completed, speech.onAudioFinished != nil {
+            speech.onAudioFinished?()
+        }
+        return (spoken, highlightTrail, completed)
     }
 }

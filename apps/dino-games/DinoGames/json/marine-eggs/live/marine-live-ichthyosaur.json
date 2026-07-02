@@ -1,0 +1,7 @@
+{
+  "id": "ui_birth_ichthyosaur_clade",
+  "clade": "Ichthyosaur",
+  "dimensions": "SQUARE_ASPECT_RATIO",
+  "prompt": "High-fidelity 3D animated style. **SQUARE_HERO_CARD** framing. An underwater Jurassic scene of ichthyosaur live birth. The adult mother ichthyosaur is a long, dolphin-shaped dark indigo silhouette with crescent tail and dorsal fin — no markings visible. A miniature, full-color newborn ichthyosaur pup — smooth grey-blue clay, enormous round eyes, tiny pointed snout — slides tail-first from the mother's shadow, surrounded by shimmering bubbles. SETTING: Open Jurassic pelagic sea. LIGHTING: Bright sun shafts from the surface, backlighting the mother silhouette while the pup catches warm rim light. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'.",
+  "visual_logic": "Dolphin-like mother silhouette plus detailed baby ichthyosaur eyes and snout signal the Ichthyosaur clade without naming a species."
+}
