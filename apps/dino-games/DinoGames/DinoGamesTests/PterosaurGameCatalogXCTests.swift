@@ -156,25 +156,25 @@ final class PterosaurGameCatalogXCTests: XCTestCase {
 
     func testPteroSmileRegistryMatchesREADME() {
         XCTAssertEqual(PteroSmileMorphology.allCategorySlugs.count, 14)
-        XCTAssertEqual(PteroSmileMorphology.allToothSlugs.count, 43, "44 README pairings; nemicolopterus and wukongopterus share microscopic-needle-pin")
-        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("quetzalcoatlus")), "elongated-cutting-wedge")
+        XCTAssertEqual(PteroSmileMorphology.allToothSlugs.count, 42, "43 README tooth slugs; elongated-cutting-wedge unassigned")
         XCTAssertEqual(PteroSmileMorphology.morphologyCategory(for: slug("quetzalcoatlus")), "hyper-elongated-spears")
-        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("anhanguera")), "classic-pelican-javelin")
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("scaphognathus")), "spaced-vertical-pegs")
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("tupandactylus")), "deep-rounded-clip")
         XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("dsungaripterus")), "pebble-crushers")
-        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("caiuajara")), "pointed-fruit-cutter")
-        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("eudimorphodon")), "dual-type-pincers")
-        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("istiodactylus")), "straight-slicing-shears")
-        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("zhejiangopterus")), "hyper-slender-razor-needles")
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("caiuajara")), "deep-down-turned-scoop")
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("eudimorphodon")), "multi-cusped-saws")
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("istiodactylus")), "duck-razor-bill")
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: slug("zhejiangopterus")), "slender-javelin-bill")
     }
 
     func testPteroSmileBundledPortraitAndToothArt() {
         let expected: [(portrait: String, tooth: String)] = [
-            ("ptero-smile-quetzalcoatlus", "ptero-smile-tooth-elongated-cutting-wedge"),
+            ("ptero-smile-quetzalcoatlus", "ptero-smile-tooth-spear-beak"),
             ("ptero-smile-hatzegopteryx", "ptero-smile-tooth-heavy-axe-beak"),
-            ("ptero-smile-anuanguera", "ptero-smile-tooth-classic-pelican-javelin"),
-            ("ptero-smile-ornithocheirus", "ptero-smile-tooth-crested-terminal-spikes"),
-            ("ptero-smile-scaphognathus", "ptero-smile-tooth-curved-forward-grapplers"),
-            ("ptero-smile-tupandactylus", "ptero-smile-tooth-deep-down-turned-scoop"),
+            ("ptero-smile-anuanguera", "ptero-smile-tooth-fish-cage-fangs"),
+            ("ptero-smile-ornithocheirus", "ptero-smile-tooth-spoon-tipped-fangs"),
+            ("ptero-smile-scaphognathus", "ptero-smile-tooth-spaced-vertical-pegs"),
+            ("ptero-smile-tupandactylus", "ptero-smile-tooth-deep-rounded-clip"),
             ("ptero-smile-jeholopterus", "ptero-smile-tooth-vampire-insect-needles"),
             ("ptero-smile-noripterus", "ptero-smile-tooth-shell-crushing-pegs"),
         ]

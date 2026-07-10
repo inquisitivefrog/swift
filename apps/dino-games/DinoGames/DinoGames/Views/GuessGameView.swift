@@ -421,7 +421,7 @@ struct GuessGameView: View {
                         // Top: Question image (silhouette), then round label below
                         VStack(spacing: 10) {
                             // Question image: primary silhouette, then dinosaur alternate `dino-silhouette-*`, then tinted body (pterosaurs skip dino path when fallback is `ptero-*`).
-                            if UIImage(named: question.questionImageName) != nil {
+                            if ImageAssetCache.imageExists(named: question.questionImageName) {
                                 Image(question.questionImageName)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
@@ -436,7 +436,7 @@ struct GuessGameView: View {
                                     guard !baseName.isEmpty else { return nil }
                                     return "dino-silhouette-\(baseName)"
                                 }()
-                                if let dinoAlt, UIImage(named: dinoAlt) != nil {
+                                if let dinoAlt, ImageAssetCache.imageExists(named: dinoAlt) {
                                     Image(dinoAlt)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
@@ -1340,7 +1340,7 @@ private func pickThreeMarineFootprintSlots(
 // MARK: - Dino Footprints (clade + size)
 
 /// Footprint image sets: `footprint-{clade}-{size}` (small|medium|large) or `footprint-{clade}-{variant}-medium` for variety; gameplay picks the tier that matches the correct dinosaur’s map entry.
-/// Use imageNameForAsset for lookup; asset names use "therapod" (common misspelling) for theropod.
+/// Use imageNameForAsset for lookup; asset imagesets are `footprint-{assetStem}-{size}`.
 /// Separate from `DinoClade` / `LandDinosaurCladeCatalog` (9 buckets for land games); morphological buckets for Dino Footprints assets.
 private enum FootprintClade: String, CaseIterable {
     case ankylosaur
@@ -1353,12 +1353,9 @@ private enum FootprintClade: String, CaseIterable {
     case stegosaur
     case theropod
 
-    /// Name used in footprint image set names (footprint-{this}-{size}). Matches Assets.xcassets spelling.
+    /// Name used in footprint image set names (footprint-{this}-{size}).
     var imageNameForAsset: String {
-        switch self {
-        case .theropod: return "therapod"  // assets are footprint-therapod-* (misspelling)
-        default: return rawValue
-        }
+        rawValue
     }
 }
 
@@ -1505,12 +1502,14 @@ private func footprintImageName(clade: FootprintClade, size: DinoSize) -> String
     let base = clade.imageNameForAsset
     if size == .medium {
         let variants = (1...3).map { "footprint-\(base)-\($0)-medium" }
-        let available = variants.filter { UIImage(named: $0) != nil }
+        let available = variants.filter { ImageAssetCache.imageExists(named: $0) }
         if let pick = available.randomElement() { return pick }
     }
     let direct = "footprint-\(base)-\(size.rawValue)"
-    if UIImage(named: direct) != nil { return direct }
-    return "footprint-\(base)-medium"
+    if ImageAssetCache.imageExists(named: direct) { return direct }
+    let medium = "footprint-\(base)-medium"
+    if ImageAssetCache.imageExists(named: medium) { return medium }
+    return direct
 }
 
 /// Picks three `(clade|size)` slots for one game: prefers three different clades when available slots allow.

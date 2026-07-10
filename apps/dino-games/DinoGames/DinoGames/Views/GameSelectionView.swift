@@ -2384,8 +2384,8 @@ private struct CategoryProgressLevelPickerHeader: View {
     var body: some View {
         VStack(spacing: 4) {
             Text(snapshot.category.categoryProgressMenuTitle)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+                .font(.title3.weight(.semibold))
+                .multilineTextAlignment(.center)
             Text(snapshot.displayText)
                 .font(.title3.weight(.semibold))
                 .multilineTextAlignment(.center)

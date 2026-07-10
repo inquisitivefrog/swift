@@ -1,7 +1,7 @@
 {
-    "id": "ptero-thal-kariridraco",
-    "morphology": "Keratinous-Spear-Beak",
-    "tech_ref": "DEFAULT_SQUARE",
-    "prompt": "High-fidelity 3D animated feature style. Close-up profile of a smiling Kariridraco. Features a prominent, stylized, swept-back head crest and a short, straight, completely toothless beak curved into a happy smirk. The smooth beak looks like a friendly, solid plastic toy tool in bright lime-green. Enormous, soulful cartoon eyes beam with playful friendliness. Soft plush textures emphasize a zero-grit appearance.",
-    "visual_logic": "Pairs the unique swept crest shape with a clean, compact, toothless spear-beak profile delivered with maximum preschool warmth."
-  }
+  "id": "ptero-thal-kariridraco",
+  "morphology": "Keratinous-Spear-Beak",
+  "tech_ref": "DEFAULT_SQUARE",
+  "prompt": "High-fidelity 3D animated feature film style. Close-up profile of a charismatic Kariridraco. Features a prominent, stylized, swept-back head crest and a smooth, toothless beak with a gentle upward curve at the tip, like a little fishing hook — still clearly an organic bird beak, not a hand tool. The beak features a realistic, semi-matte keratin shell texture in a vibrant lime-green. Expressive, naturally proportioned eyes radiate intelligent friendliness. Fine, detailed leathery skin textures and soft downy pycnofibers line the head, displaying elegant specular highlights under clean cinematic lighting.",
+  "visual_logic": "Balances the specialized organic bird beak anatomy with its gentle hook-like tip and swept crest using high-quality textures and cinematic depth, completely avoiding mechanical tool or child's toy aesthetics."
+}

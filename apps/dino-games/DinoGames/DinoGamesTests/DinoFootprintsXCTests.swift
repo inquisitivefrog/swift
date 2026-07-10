@@ -129,10 +129,9 @@ final class DinoFootprintsXCTests: XCTestCase {
                 XCTFail("Round \(round.id) missing correct morphotype")
                 continue
             }
-            let assetStem = clade == "theropod" ? "therapod" : clade
             XCTAssertTrue(
-                round.questionImageName.contains(assetStem),
-                "Round \(round.id) footprint \(round.questionImageName) should include morphotype stem `\(assetStem)` for \(correct.name)"
+                round.questionImageName.contains(clade),
+                "Round \(round.id) footprint \(round.questionImageName) should include morphotype stem `\(clade)` for \(correct.name)"
             )
         }
     }

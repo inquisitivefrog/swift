@@ -1,7 +1,7 @@
 {
-    "id": "ptero-spec-gnathosaurus",
-    "morphology": "Comb-Bristle-Battery",
-    "tech_ref": "DEFAULT_SQUARE",
-    "prompt": "High-fidelity 3D animated feature style. Close-up headshot of a smiling Gnathosaurus. The slender jaws flare out into a rounded, spoon-shaped tip at the front, shaped into a cheerful smirk. A warm smile reveals a neat row of slender, slightly out-pointing, comb-like golden teeth that look like a soft toy brush. Bright, expressive cartoon eyes radiating a playful energy.",
-    "visual_logic": "Emphasizes the signature spatula-tipped jaw shape and its accompanying comb-filter teeth in a bright, inviting format."
-  }
+  "id": "ptero-spec-gnathosaurus",
+  "morphology": "Comb-Bristle-Battery",
+  "tech_ref": "DEFAULT_SQUARE",
+  "prompt": "High-fidelity 3D animated feature style. Close-up headshot of a smiling Gnathosaurus. The profile highlights its perfectly straight, remarkably narrow, and elongated jaws shaped into a cheerful smirk. A warm smile reveals a dense, neat row of exceptionally fine, needle-like golden comb teeth tightly lining the jaw margins, resembling a soft toy brush. Bright, expressive cartoon eyes radiating a playful energy.",
+  "visual_logic": "Emphasizes the signature straight, narrow jaw structure and the dense, delicate comb-needle teeth running precisely along the margins in a bright, inviting format."
+}

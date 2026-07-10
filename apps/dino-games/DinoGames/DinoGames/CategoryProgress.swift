@@ -123,7 +123,7 @@ extension GameCategory {
         switch self {
         case .land: return "Dinosaur games"
         case .air: return "Pterosaur games"
-        case .marineReptiles: return "Sea games"
+        case .marineReptiles: return "Marine Reptile games"
         }
     }
 }

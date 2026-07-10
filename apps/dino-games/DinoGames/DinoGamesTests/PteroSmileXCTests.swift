@@ -71,10 +71,30 @@ final class PteroSmileXCTests: XCTestCase {
 
     func testPteroSmileRegistryMatchesREADME() {
         XCTAssertEqual(PteroSmileMorphology.allCategorySlugs.count, 14)
-        XCTAssertEqual(PteroSmileMorphology.allToothSlugs.count, 43)
+        XCTAssertEqual(PteroSmileMorphology.allToothSlugs.count, 42)
         XCTAssertEqual(PteroSmileMorphology.allPlayerToothKinds.count, 12)
-        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: pteroSlug("istiodactylus")), "straight-slicing-shears")
-        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: pteroSlug("zhejiangopterus")), "hyper-slender-razor-needles")
+    }
+
+    /// Bundled tooth-card art names its species in JSON prompts; portrait pairings must follow the art, not stale README rows.
+    func testPteroSmilePortraitToothPairingsMatchBundledArt() {
+        let artAligned: [(String, String)] = [
+            ("scaphognathus", "spaced-vertical-pegs"),
+            ("tupandactylus", "deep-rounded-clip"),
+            ("anurognathus", "miniature-insect-trap-pins"),
+            ("gnathosaurus", "filter-tooth-field"),
+            ("ctenochasma", "comb-needles"),
+            ("dimorphodon", "dual-type-pincers"),
+            ("sinopterus", "pointed-fruit-cutter"),
+            ("caiuajara", "deep-down-turned-scoop"),
+            ("kariridraco", "up-turned-tweezers"),
+        ]
+        for (species, toothSlug) in artAligned {
+            XCTAssertEqual(
+                PteroSmileMorphology.smileToothType(for: pteroSlug(species)),
+                toothSlug,
+                "\(species) smile should pair with bundled tooth art `\(toothSlug)`"
+            )
+        }
     }
 
     func testPteroSmileConfigBuildsThreeRounds() {

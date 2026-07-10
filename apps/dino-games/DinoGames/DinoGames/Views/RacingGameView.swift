@@ -1253,8 +1253,6 @@ struct RacingGameView: View {
         let innerH = ovalHeight - trackInset * 2
         let innerCornerRadius = max(0, cornerRadius - trackInset / 2)
         let refereeSize: CGFloat = 64
-        let outerPath = RoundedRectangle(cornerRadius: cornerRadius).path(in: CGRect(x: 0, y: 0, width: ovalWidth, height: ovalHeight))
-        let innerPath = RoundedRectangle(cornerRadius: innerCornerRadius).path(in: CGRect(x: 0, y: 0, width: innerW, height: innerH))
         let innerR = min(innerCornerRadius, min(innerW, innerH) / 2)
         let pt1Outer = pointOnRoundedRect(progress: 1.0, width: ovalWidth, height: ovalHeight)
         let pt2Outer = pointOnRoundedRect(progress: 1.0, width: ovalWidth, height: ovalHeight)
@@ -1266,31 +1264,19 @@ struct RacingGameView: View {
         let pos1 = racer1OnInner ? pt1Inner : pt1Outer
         let pos2 = racer1OnInner ? pt2Outer : pt2Inner
         let half = racerSize / 2
-        let finishLineWidth: CGFloat = 4
-        let finishLineRowHeight: CGFloat = 10
-        let finishLineX = ovalWidth / 2 - finishLineWidth / 2
-        // Referee off the track, at lower bottom of infield near the track edge—close to racers to detect cheating, not blocking or in their path
         let refereeFinishX = ovalWidth / 2 - refereeSize / 2
         let refereeFinishY = trackInset + innerH - refereeSize - 16
         return AnyView(VStack(spacing: 8) {
             Text(finishHeadline)
                 .font(.headline)
             ZStack(alignment: .topLeading) {
-                outerPath
-                    .stroke(Color.gray.opacity(0.5), lineWidth: 6)
-                    .frame(width: ovalWidth, height: ovalHeight)
-                innerPath
-                    .stroke(Color.gray.opacity(0.35), lineWidth: 6)
-                    .frame(width: innerW, height: innerH)
-                    .offset(x: trackInset, y: trackInset)
-                Rectangle()
-                    .fill(Color.white.opacity(0.95))
-                    .frame(width: finishLineWidth, height: finishLineRowHeight)
-                    .offset(x: finishLineX, y: ovalHeight - finishLineRowHeight)
-                Rectangle()
-                    .fill(Color.white.opacity(0.95))
-                    .frame(width: finishLineWidth, height: finishLineRowHeight)
-                    .offset(x: finishLineX, y: trackInset + innerH - finishLineRowHeight)
+                OvalDualLaneCourseChrome(
+                    width: ovalWidth,
+                    height: ovalHeight,
+                    trackInset: trackInset,
+                    cornerRadius: cornerRadius,
+                    showFinishLines: true
+                )
                 racerView(racer: r1, size: racerSize, pose: .finish)
                     .offset(x: pos1.x - half, y: pos1.y - half)
                 racerView(racer: r2, size: racerSize, pose: .finish)
@@ -1854,12 +1840,10 @@ struct RacingGameView: View {
         let racerSize: CGFloat = 48
         let cornerRadius = min(min(ovalWidth, ovalHeight) * 0.18, min(ovalWidth, ovalHeight) / 4)
 
-        // Rounded-rectangle tracks (outer and inner)
-        let outerPath = RoundedRectangle(cornerRadius: cornerRadius).path(in: CGRect(x: 0, y: 0, width: ovalWidth, height: ovalHeight))
+        // Rounded-rectangle tracks (outer and inner) — chrome drawn by `OvalDualLaneCourseChrome`.
         let innerW = ovalWidth - trackInset * 2
         let innerH = ovalHeight - trackInset * 2
         let innerCornerRadius = max(0, cornerRadius - trackInset / 2)
-        let innerPath = RoundedRectangle(cornerRadius: innerCornerRadius).path(in: CGRect(x: 0, y: 0, width: innerW, height: innerH))
 
         // Outer and inner positions: progress 0 = finish line (center bottom), progress 1 = finish line after one lap.
         // Outer lane is longer; outer runner gets a staggered start (same arc distance per lap as inner — like track and field).
@@ -1889,9 +1873,6 @@ struct RacingGameView: View {
         let pos2 = racer1OnInner ? pt2Outer : pt2Inner
 
         let half = racerSize / 2
-        let finishLineWidth: CGFloat = 4
-        let finishLineRowHeight: CGFloat = 10 // One row at center bottom
-        let finishLineX = ovalWidth / 2 - finishLineWidth / 2
         let refereeSize: CGFloat = 64
         return VStack(spacing: 8) {
             Text("Race!")
@@ -1906,23 +1887,13 @@ struct RacingGameView: View {
             )
             .frame(maxWidth: .infinity, alignment: .leading)
             ZStack(alignment: .topLeading) {
-                outerPath
-                    .stroke(Color.gray.opacity(0.5), lineWidth: 6)
-                    .frame(width: ovalWidth, height: ovalHeight)
-                innerPath
-                    .stroke(Color.gray.opacity(0.35), lineWidth: 6)
-                    .frame(width: innerW, height: innerH)
-                    .offset(x: trackInset, y: trackInset)
-                // Start/finish line on outer track (one row at center bottom)
-                Rectangle()
-                    .fill(Color.white.opacity(0.95))
-                    .frame(width: finishLineWidth, height: finishLineRowHeight)
-                    .offset(x: finishLineX, y: ovalHeight - finishLineRowHeight)
-                // Start/finish line on inner track (one row at center bottom)
-                Rectangle()
-                    .fill(Color.white.opacity(0.95))
-                    .frame(width: finishLineWidth, height: finishLineRowHeight)
-                    .offset(x: finishLineX, y: trackInset + innerH - finishLineRowHeight)
+                OvalDualLaneCourseChrome(
+                    width: ovalWidth,
+                    height: ovalHeight,
+                    trackInset: trackInset,
+                    cornerRadius: cornerRadius,
+                    showFinishLines: true
+                )
                 racerView(racer: racer1, size: racerSize, pose: trippedRacerId == racer1.id ? .tripped : .running)
                     .offset(x: pos1.x - half, y: pos1.y - half)
                 racerView(racer: racer2, size: racerSize, pose: trippedRacerId == racer2.id ? .tripped : .running)
@@ -2575,6 +2546,184 @@ struct RacingGameView: View {
             isPresented: $isPresented,
             speechManager: speechManager
         )
+    }
+}
+
+// MARK: - Dinosaur oval course chrome (infield grass + dirt track band)
+
+/// Even-odd fill: outer rounded rect minus inner lane — the dirt racing surface between the two lane lines.
+private struct OvalTrackBandShape: Shape {
+    let outerCornerRadius: CGFloat
+    let innerCornerRadius: CGFloat
+    let trackInset: CGFloat
+    let size: CGSize
+
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.addRoundedRect(
+            in: CGRect(origin: .zero, size: size),
+            cornerSize: CGSize(width: outerCornerRadius, height: outerCornerRadius)
+        )
+        let innerSize = CGSize(width: size.width - trackInset * 2, height: size.height - trackInset * 2)
+        path.addRoundedRect(
+            in: CGRect(x: trackInset, y: trackInset, width: innerSize.width, height: innerSize.height),
+            cornerSize: CGSize(width: innerCornerRadius, height: innerCornerRadius)
+        )
+        return path
+    }
+}
+
+private struct OvalInfieldGrassBackground: View {
+    let cornerRadius: CGFloat
+    let size: CGSize
+
+    var body: some View {
+        ZStack {
+            LinearGradient(
+                colors: [
+                    Color(red: 0.56, green: 0.80, blue: 0.42),
+                    Color(red: 0.34, green: 0.62, blue: 0.26),
+                    Color(red: 0.28, green: 0.52, blue: 0.22),
+                ],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            Canvas { context, canvasSize in
+                let bladeCount = max(24, Int(canvasSize.width * canvasSize.height / 520))
+                for i in 0..<bladeCount {
+                    let seed = i &* 73 &+ 19
+                    let x = CGFloat(seed % 997) / 997.0 * canvasSize.width
+                    let y = CGFloat((seed &* 131) % 991) / 991.0 * canvasSize.height
+                    let height = 5 + CGFloat(seed % 7)
+                    var blade = Path()
+                    blade.move(to: CGPoint(x: x, y: y))
+                    blade.addLine(to: CGPoint(x: x + CGFloat((seed % 5) - 2), y: y - height))
+                    context.stroke(
+                        blade,
+                        with: .color(Color(red: 0.18, green: 0.42, blue: 0.14).opacity(0.22 + Double(seed % 3) * 0.06)),
+                        lineWidth: 1
+                    )
+                }
+            }
+            .opacity(0.55)
+            LinearGradient(
+                colors: [Color.white.opacity(0.12), Color.clear, Color.black.opacity(0.06)],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        }
+        .frame(width: size.width, height: size.height)
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+    }
+}
+
+private struct OvalTrackDirtTexture: View {
+    let size: CGSize
+
+    var body: some View {
+        Canvas { context, canvasSize in
+            let speckCount = max(30, Int(canvasSize.width * canvasSize.height / 420))
+            for i in 0..<speckCount {
+                let seed = i &* 89 &+ 7
+                let x = CGFloat(seed % 983) / 983.0 * canvasSize.width
+                let y = CGFloat((seed &* 157) % 977) / 977.0 * canvasSize.height
+                let w = 2 + CGFloat(seed % 4)
+                let h = 1 + CGFloat((seed >> 3) % 3)
+                let rect = CGRect(x: x, y: y, width: w, height: h)
+                context.fill(
+                    Path(ellipseIn: rect),
+                    with: .color(Color(red: 0.38, green: 0.28, blue: 0.16).opacity(0.12 + Double(seed % 4) * 0.05))
+                )
+            }
+            for i in 0..<8 {
+                let y = canvasSize.height * (CGFloat(i) + 0.5) / 8.0
+                var streak = Path()
+                streak.move(to: CGPoint(x: 0, y: y))
+                streak.addLine(to: CGPoint(x: canvasSize.width, y: y + CGFloat((i % 3) - 1)))
+                context.stroke(
+                    streak,
+                    with: .color(Color(red: 0.48, green: 0.36, blue: 0.22).opacity(0.08)),
+                    lineWidth: 1.5
+                )
+            }
+        }
+    }
+}
+
+private struct OvalDualLaneCourseChrome: View {
+    let width: CGFloat
+    let height: CGFloat
+    let trackInset: CGFloat
+    let cornerRadius: CGFloat
+    var showFinishLines: Bool = true
+
+    private var innerWidth: CGFloat { width - trackInset * 2 }
+    private var innerHeight: CGFloat { height - trackInset * 2 }
+    private var innerCornerRadius: CGFloat { max(0, cornerRadius - trackInset / 2) }
+    private var courseSize: CGSize { CGSize(width: width, height: height) }
+    private var innerSize: CGSize { CGSize(width: innerWidth, height: innerHeight) }
+
+    var body: some View {
+        let outerPath = RoundedRectangle(cornerRadius: cornerRadius).path(in: CGRect(origin: .zero, size: courseSize))
+        let innerPath = RoundedRectangle(cornerRadius: innerCornerRadius).path(in: CGRect(origin: .zero, size: innerSize))
+        let trackBand = OvalTrackBandShape(
+            outerCornerRadius: cornerRadius,
+            innerCornerRadius: innerCornerRadius,
+            trackInset: trackInset,
+            size: courseSize
+        )
+        let finishLineWidth: CGFloat = 4
+        let finishLineRowHeight: CGFloat = 10
+        let finishLineX = width / 2 - finishLineWidth / 2
+        let outerEdge = Color(red: 0.44, green: 0.33, blue: 0.21)
+        let innerEdge = Color(red: 0.50, green: 0.38, blue: 0.24)
+
+        ZStack(alignment: .topLeading) {
+            RoundedRectangle(cornerRadius: cornerRadius + 2)
+                .fill(Color(red: 0.88, green: 0.93, blue: 0.84))
+                .frame(width: width, height: height)
+
+            trackBand
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color(red: 0.72, green: 0.58, blue: 0.38),
+                            Color(red: 0.58, green: 0.44, blue: 0.28),
+                            Color(red: 0.64, green: 0.50, blue: 0.32),
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    style: FillStyle(eoFill: true)
+                )
+                .overlay {
+                    OvalTrackDirtTexture(size: courseSize)
+                        .clipShape(trackBand)
+                }
+
+            OvalInfieldGrassBackground(cornerRadius: innerCornerRadius, size: innerSize)
+                .offset(x: trackInset, y: trackInset)
+
+            outerPath
+                .stroke(outerEdge, lineWidth: 3)
+                .frame(width: width, height: height)
+            innerPath
+                .stroke(innerEdge, lineWidth: 3)
+                .frame(width: innerWidth, height: innerHeight)
+                .offset(x: trackInset, y: trackInset)
+
+            if showFinishLines {
+                Rectangle()
+                    .fill(Color.white.opacity(0.95))
+                    .frame(width: finishLineWidth, height: finishLineRowHeight)
+                    .offset(x: finishLineX, y: height - finishLineRowHeight)
+                Rectangle()
+                    .fill(Color.white.opacity(0.95))
+                    .frame(width: finishLineWidth, height: finishLineRowHeight)
+                    .offset(x: finishLineX, y: trackInset + innerHeight - finishLineRowHeight)
+            }
+        }
+        .frame(width: width, height: height)
     }
 }
 

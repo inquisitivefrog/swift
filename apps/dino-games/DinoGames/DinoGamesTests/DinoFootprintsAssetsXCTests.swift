@@ -51,7 +51,7 @@ final class DinoFootprintsAssetsXCTests: XCTestCase {
         "dino-theropod",
     ]
 
-    /// `(FootprintClade.rawValue, asset base string)` — asset base matches `footprint-{base}-{size}` on disk (`theropod` → `therapod`).
+    /// `(FootprintClade.rawValue, asset base string)` — asset base matches `footprint-{base}-{size}` on disk.
     private let footprintGameplayClades: [(clade: String, assetBase: String)] = [
         ("ankylosaur", "ankylosaur"),
         ("ceratopsian", "ceratopsian"),
@@ -61,7 +61,7 @@ final class DinoFootprintsAssetsXCTests: XCTestCase {
         ("sauropod", "sauropod"),
         ("spinosaurid", "spinosaurid"),
         ("stegosaur", "stegosaur"),
-        ("theropod", "therapod"),
+        ("theropod", "theropod"),
     ]
 
     private let footprintSizes = ["small", "medium", "large"]
