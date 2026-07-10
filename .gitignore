@@ -11,6 +11,7 @@
 *.xcworkspace/xcuserdata/
 *.xcworkspace/xcshareddata/swiftpm/
 DerivedData/
+.derivedData*/
 *.hmap
 *.ipa
 *.dSYM.zip

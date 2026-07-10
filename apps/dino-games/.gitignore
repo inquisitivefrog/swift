@@ -2,7 +2,8 @@
 .DS_Store
 
 # Xcode
-.derivedData-sim/
+.derivedData*/
+DerivedData/
 build/
 *.pbxuser
 !default.pbxuser
@@ -16,7 +17,6 @@ xcuserdata
 *.xccheckout
 *.xcuserstate
 *.moved-aside
-DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
