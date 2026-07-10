@@ -4,6 +4,9 @@
 # Xcode
 .derivedData*/
 DerivedData/
+
+# Local test / CLI output (regenerated on demand)
+logs/
 build/
 *.pbxuser
 !default.pbxuser

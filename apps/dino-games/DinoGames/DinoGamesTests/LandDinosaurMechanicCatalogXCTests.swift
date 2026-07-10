@@ -4,7 +4,7 @@
 //
 //  Cross-game smoke: every shipping land config builds without fatal errors.
 //  Per-game contracts (config, assets, audio, display moments, rounds) live in
-//  dedicated *XCTests.swift files — see `LAND_GAME_TEST_CHECKLIST.md`.
+//  dedicated *XCTests.swift files.
 //
 
 import XCTest

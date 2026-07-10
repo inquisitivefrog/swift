@@ -1,8 +1,0 @@
-{
-  "app_image_config": {
-    "layer_1_style": "1024x1024 px, high-poly 3D animation style, cinematic CGI, Octane render, vibrant saturated colors, smooth clay textures, studio lighting, neutral white background.",
-    "layer_2_character": "Character Sheet / Model Turnaround of Dr. Aris Thorne: Middle-aged male paleontologist, short-trimmed salt-and-pepper beard, friendly face, sturdy physique. Wearing a signature wide-brimmed felt fedora, khaki explorer button-down shirt with rolled sleeves, and an olive-green utility vest with many pockets.",
-    "layer_3_composition": "Three full-body views of the same character in a single row: Front view, Side profile view, and Back view. T-pose stance, neutral expression. High-angle perspective to match game assets. Text labels 'FRONT', 'SIDE', and 'BACK' beneath each figure.",
-    "aspect_ratio": "1:1"
-  }
-}
