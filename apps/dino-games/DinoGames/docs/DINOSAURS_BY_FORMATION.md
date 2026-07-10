@@ -73,14 +73,8 @@ So “sorting species by formation” = one such object per formation, with `din
 
 ## Formation slug vs JSON formation files
 
-Your repo has `json/formations/<name>_formation.json` (e.g. `hell_creek_formation.json`) with habitat/period data but **no** `dinoImageNames`. The **game** expects formation config (with `dinoImageNames`) either:
+Your repo has `json/dino-formations/<name>_formation.json` (habitat/period scene data) and `formation_id` on each `json/dinosaurs/char_*.json`. **`DinoFormationsCatalog`** loads both at runtime: formation metadata from `json/dino-formations/`, species lists grouped from matching `formation_id` on char files (with `MORRISON` → `MORRISON_LJ` prefix matching).
 
-- in the app bundle under `Formations/<slug>.json` (e.g. `Formations/hell-creek.json`), or  
-- in the fallback list in `DinoFormationsGameView.swift` (currently Hell Creek, Morrison, Cloverly).
-
-To support all 24 formations in the game you can:
-
-1. Add `Formations/<slug>.json` in the app bundle for each formation, with `name`, `dinoImageNames`, `hintLocation`, `hintPeriod`, and ensure each playable formation has ≥3 `dinoImageNames` that exist in the dinosaur pool, or  
-2. Extend the fallback list in code (same structure, more formations).
+To add formations: add or fix `*_formation.json` under `json/dino-formations/` and ensure ≥3 char files reference that `formation_id` with shipped `dino-*` images.
 
 The table above gives you the “species sorted by formation” view and which formations already have ≥3 species.

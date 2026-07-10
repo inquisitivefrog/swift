@@ -16,103 +16,17 @@ struct DinoFormationsGameConfig {
 
 // MARK: - Formation (named fossil formation)
 
-struct DinoFormation: Identifiable {
-    let id: String
-    /// Display name, e.g. "Hell Creek"
-    let name: String
-    /// Asset name for formation image, e.g. "formation-hell-creek"
-    let imageName: String
-    /// Audio key for "Find the dinosaurs from [name]", e.g. "game-dino-formations-find-in-hell-creek"
-    let findInFormationAudioKey: String
-    /// Dino image set names (dino-*) found in this formation.
-    let dinoImageNames: Set<String>
-    /// Hint: state(s)/province and country, e.g. "Montana, Wyoming, USA" or "Alberta, Canada"
-    let hintLocation: String?
-    /// Hint: Mesozoic period, e.g. "Late Cretaceous"
-    let hintPeriod: String?
+/// Same pool as Name That Dinosaur: all bundled `dino-*` portraits from `LandDinosaurData`.
+private let dinoFormationsPool: [Dinosaur] = LandDinosaurData.allDinosaurs.filter {
+    $0.imageName?.hasPrefix("dino-") == true
 }
 
-/// JSON format for formation files in Formations/<id>.json (e.g. cloverly.json, hell-creek.json).
-private struct FormationJSON: Decodable {
-    let name: String
-    let dinoImageNames: [String]
-    let hintLocation: String?
-    let hintPeriod: String?
-}
-
-/// Formation → dinosaurs: only formations that have at least 3 dinosaurs in the game pool are playable (3 correct + 2 decoys per round).
-/// List is dynamic: any Formations/*.json in the bundle is loaded; adding new formations requires no code changes.
+/// Formation → dinosaurs: loaded from `json/dino-formations` + `json/dinosaurs/char_*.json`.
 private let dinoFormationsList: [DinoFormation] = {
-    var list: [DinoFormation] = []
-    guard let urls = Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: "Formations") else {
-        return fallbackFormationsList
-    }
-    for url in urls.sorted(by: { $0.lastPathComponent < $1.lastPathComponent }) {
-        let id = url.deletingPathExtension().lastPathComponent
-        guard let data = try? Data(contentsOf: url),
-              let json = try? JSONDecoder().decode(FormationJSON.self, from: data),
-              json.dinoImageNames.count >= 3 else { continue }
-        list.append(DinoFormation(
-            id: id,
-            name: json.name,
-            imageName: "formation-\(id)",
-            findInFormationAudioKey: "game-dino-formations-find-in-\(id)",
-            dinoImageNames: Set(json.dinoImageNames),
-            hintLocation: json.hintLocation,
-            hintPeriod: json.hintPeriod
-        ))
-    }
     let poolImageNames = Set(dinoFormationsPool.compactMap(\.imageName))
-    list = list.filter { formation in
+    return DinoFormationsCatalog.playableFormations.filter { formation in
         formation.dinoImageNames.filter { poolImageNames.contains($0) }.count >= 3
     }
-    return list.isEmpty ? fallbackFormationsList : list
-}()
-
-private let fallbackFormationsList: [DinoFormation] = [
-    DinoFormation(id: "hell-creek", name: "Hell Creek", imageName: "formation-hell-creek", findInFormationAudioKey: "game-dino-formations-find-in-hell-creek", dinoImageNames: ["dino-trex", "dino-triceratops", "dino-ankylosaurus", "dino-edmontosaurus", "dino-pachycephalosaurus", "dino-torosaurus"], hintLocation: "Montana, North Dakota, South Dakota, Wyoming, USA", hintPeriod: "Late Cretaceous"),
-    DinoFormation(id: "morrison", name: "Morrison", imageName: "formation-morrison", findInFormationAudioKey: "game-dino-formations-find-in-morrison", dinoImageNames: ["dino-stegosaurus", "dino-apatosaurus", "dino-brachiosaurus", "dino-diplodocus", "dino-camarasaurus", "dino-dryosaurus", "dino-ceratosaurus"], hintLocation: "Colorado, Utah, Wyoming, Montana, USA", hintPeriod: "Late Jurassic"),
-    DinoFormation(id: "cloverly", name: "Cloverly", imageName: "formation-cloverly", findInFormationAudioKey: "game-dino-formations-find-in-cloverly", dinoImageNames: ["dino-deinonychus", "dino-apatosaurus", "dino-edmontosaurus"], hintLocation: "Montana, Wyoming, USA", hintPeriod: "Early Cretaceous"),
-]
-
-/// Same pool as Dino Ages: all dinosaurs with dino-* image sets.
-private let dinoFormationsPool: [Dinosaur] = {
-    let fromCatalog = MatchingGameConfigs.allDinosaurs.filter { $0.imageName?.hasPrefix("dino-") == true }
-    let extras: [Dinosaur] = [
-        Dinosaur(id: 14, name: "Camarasaurus", icon: "🦕", imageName: "dino-camarasaurus", characteristicIds: []),
-        Dinosaur(id: 15, name: "Dryosaurus", icon: "🦎", imageName: "dino-dryosaurus", characteristicIds: []),
-        Dinosaur(id: 16, name: "Gallimimus", icon: "🦵", imageName: "dino-gallimimus", characteristicIds: []),
-        Dinosaur(id: 17, name: "Pachycephalosaurus", icon: "🦏", imageName: "dino-pachycephalosaurus", characteristicIds: []),
-        Dinosaur(id: 18, name: "Albertosaurus", icon: "🦖", imageName: "dino-albertosaurus", characteristicIds: []),
-        Dinosaur(id: 19, name: "Anchiornis", icon: "🦅", imageName: "dino-anchiornis", characteristicIds: []),
-        Dinosaur(id: 20, name: "Archaeopteryx", icon: "🦅", imageName: "dino-archaeopteryx", characteristicIds: []),
-        Dinosaur(id: 21, name: "Argentinosaurus", icon: "🦕", imageName: "dino-argentinosaurus", characteristicIds: []),
-        Dinosaur(id: 22, name: "Baryonyx", icon: "🦖", imageName: "dino-baryonyx", characteristicIds: []),
-        Dinosaur(id: 23, name: "Brachiosaurus", icon: "🦕", imageName: "dino-brachiosaurus", characteristicIds: []),
-        Dinosaur(id: 24, name: "Ceratosaurus", icon: "🦖", imageName: "dino-ceratosaurus", characteristicIds: []),
-        Dinosaur(id: 25, name: "Chasmosaurus", icon: "🦏", imageName: "dino-chasmosaurus", characteristicIds: []),
-        Dinosaur(id: 26, name: "Compsognathus", icon: "🦎", imageName: "dino-compsognathus", characteristicIds: []),
-        Dinosaur(id: 27, name: "Deinonychus", icon: "🦖", imageName: "dino-deinonychus", characteristicIds: []),
-        Dinosaur(id: 28, name: "Diplodocus", icon: "🦕", imageName: "dino-diplodocus", characteristicIds: []),
-        Dinosaur(id: 29, name: "Dromaeosaurus", icon: "🦖", imageName: "dino-dromaeosaurus", characteristicIds: []),
-        Dinosaur(id: 30, name: "Eosinopteryx", icon: "🦅", imageName: "dino-eosinopteryx", characteristicIds: []),
-        Dinosaur(id: 31, name: "Giganotosaurus", icon: "🦖", imageName: "dino-giganotosaurus", characteristicIds: []),
-        Dinosaur(id: 32, name: "Kosmoceratops", icon: "🦏", imageName: "dino-kosmoceratops", characteristicIds: []),
-        Dinosaur(id: 33, name: "Microraptor", icon: "🦅", imageName: "dino-microraptor", characteristicIds: []),
-        Dinosaur(id: 34, name: "Pedopenna", icon: "🦅", imageName: "dino-pedopenna", characteristicIds: []),
-        Dinosaur(id: 35, name: "Torosaurus", icon: "🦏", imageName: "dino-torosaurus", characteristicIds: []),
-        Dinosaur(id: 36, name: "Utahraptor", icon: "🦖", imageName: "dino-utahraptor", characteristicIds: []),
-        Dinosaur(id: 37, name: "Xiaotingia", icon: "🦅", imageName: "dino-xiaotingia", characteristicIds: []),
-        Dinosaur(id: 38, name: "Masiakasaurus", icon: "🦖", imageName: "dino-masiakasaurus", characteristicIds: []),
-        Dinosaur(id: 39, name: "Torvosaurus", icon: "🦖", imageName: "dino-torvosaurus", characteristicIds: []),
-        Dinosaur(id: 40, name: "Rapetosaurus", icon: "🦕", imageName: "dino-rapetosaurus", characteristicIds: []),
-        Dinosaur(id: 41, name: "Majungasaurus", icon: "🦖", imageName: "dino-majungasaurus", characteristicIds: []),
-        Dinosaur(id: 42, name: "Allosaurus", icon: "🦖", imageName: "dino-allosaurus", characteristicIds: []),
-        Dinosaur(id: 43, name: "Oviraptor", icon: "🦅", imageName: "dino-oviraptor", characteristicIds: []),
-    ]
-    let combined = fromCatalog + extras
-    var seen: Set<Int> = []
-    return combined.filter { seen.insert($0.id).inserted }
 }()
 
 /// Dinosaur belongs to formation if its imageName is in that formation's set.
