@@ -117,11 +117,24 @@ Simple, morphology-first traits so young players can match **body features** and
 
 ## Implementation notes for Match the Dinosaur
 
-1. **Existing `dino-char-*` types in code:** Teeth, Footprints, Frill, Horns, Spikes, Claws, Fast, Toe Claw, Long Claws, Feathers, Sail, Swims, Long Neck, Big, Armor, Club Tail, Crest, Duck Bill, Thumb Spike, Smart, Big Eyes.
-2. **New types you may want to add** (with new image sets, e.g. `dino-char-two-feet`, `dino-char-four-feet`, `dino-char-long-tail`, `dino-char-long-snout`, `dino-char-dome-head`, `dino-char-small`):
+1. **Live data:** `LandDinosaurData.allDinosaurs` + `characteristicIds`; round building in `MatchingGameView.swift` / `MatchingGameConfigs.dinoFeatures`. Game id: `match-the-dinosaur` (catalog level 7, not in the shipping 12).
+2. **Round rules:** One characteristic per dinosaur per round; no duplicate trait **types** among the three dinosaurs or decoy options in that round.
+3. **Feathers:** Single type **Feathers** with image `dino-char-proto-feathers` (proto-feathers). Pennaceous/flight feather assets are not used in this game.
+4. **Diet traits** (carnivore, herbivore, piscivore, insectivore, omnivore): Not used in Match the Dinosaur — reserved for **Dino Diets!** (`match-the-diet`).
+5. **Existing `dino-char-*` types in code:** Teeth, Footprints, Frill, Horns, Spikes, Claws, Fast, Toe Claw, Long Claws, Feathers, Sail, Swims, Long Neck, Big, Armor, Club Tail, Crest, Duck Bill, Thumb Spike, Smart, Big Eyes.
+6. **New types you may want to add** (with new image sets, e.g. `dino-char-two-feet`, `dino-char-four-feet`, `dino-char-long-tail`, `dino-char-long-snout`, `dino-char-dome-head`, `dino-char-small`):
    - **Two Feet**, **Four Feet**, **Long Tail**, **Long Snout**, **Dome Head**, **Small**.
-3. **General traits (optional later):** Footprints Found, Eggs Found, Runs Fast, Carnivore, Herbivore, Eats Fish – can share icons with existing or new `dino-char-*` assets.
-4. **Per-dinosaur:** Give each dinosaur **at least one** characteristic (prefer morphology). Dinosaurs that currently have `characteristicIds: []` (15, 38–43, and any in extras) need entries in `allCharacteristics` and those ids in `characteristicIds` so they can appear in Match the Dinosaur.
-5. **Duplicate types:** Multiple dinosaurs can share a type (e.g. **Crest** on Corythosaurus, Parasaurolophus, Oviraptor). The game already ensures no duplicate *labels* in a single round by picking one characteristic per dinosaur with a distinct type when building the round.
+7. **General traits (optional later):** Footprints Found, Eggs Found, Runs Fast, Carnivore, Herbivore, Eats Fish – can share icons with existing or new `dino-char-*` assets.
+8. **Per-dinosaur:** Give each dinosaur **at least one** characteristic (prefer morphology). Dinosaurs that currently have `characteristicIds: []` need entries in `allCharacteristics` and those ids in `characteristicIds` so they can appear in Match the Dinosaur.
+9. **Duplicate types:** Multiple dinosaurs can share a type (e.g. **Crest** on Corythosaurus, Parasaurolophus, Oviraptor). The game already ensures no duplicate *labels* in a single round by picking one characteristic per dinosaur with a distinct type when building the round.
+
+### Argentinosaurus (id 21) — Big vs Long Neck
+
+Argentinosaurus currently has **Long Neck** and **Big**. In play, children often prefer **Big** because Argentinosaurus is famous for being one of the largest dinosaurs. Sauropods with long-neck and/or big traits include Apatosaurus, Camarasaurus, Argentinosaurus, Brachiosaurus, Diplodocus, Rapetosaurus, and Brontosaurus.
+
+If you want Argentinosaurus to emphasize **Big** when the game ships:
+
+1. **Use only Big:** Change Argentinosaurus `characteristicIds` in `LandDinosaurData.swift` from `[57, 58]` to `[58]`. Whenever Argentinosaurus is in a round, only “Big” is offered for him.
+2. **Big + Long Tail:** Add a `Characteristic` with `dinosaurId: 21` and type `"Long Tail"` (reuse image `dino-char-long-tail`), then set `characteristicIds` to `[58, newId]` so his traits are Big and Long Tail and “Big” is the obvious choice.
 
 If you tell me your preferred mix (e.g. “only morphology, no diet words” or “add Footprints / Eggs for a few”), I can narrow the list to exactly 1–2 traits per dinosaur and then we can map them into `allDinosaurs` and `allCharacteristics` in code and add any new `dino-char-*` assets you want.

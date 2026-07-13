@@ -1,0 +1,7 @@
+{ 
+  "image_prompts": [ 
+    { 
+      "prompt": "Full body shot of the character-consistent Ankylosaurus from the libraries.characters.dino_racer_ankylosaurus config in a full-speed running pose. SUBJECT ANCHOR: Extremely wide and squat frame; slate-grey stony armor; deep moss-green lower skin; pale cream-colored side spikes. Broad triangular head with exactly four backward-pointing horns and amber eyes. Heavy, chipped slate-grey bone tail club. ACTION: He is in a powerful, low-slung 'power walk' or 'heavy roll' stride. His legs are churning and his body is slightly angled, with his tail club held horizontally as a counterbalance. SETTING: Isolated on a solid, uniform chroma-key green background (#00FF00). No dirt, no track, no dust, and no background flora.  FACIAL EXPRESSION: Focused and determined, eyes fixed ahead. ART STYLE: 'STYLE_ANIMATED_FEATURE_V3'. LIGHTING: 'SUNNY_EXPOSED_CINEMATIC' highlighting the armor's texture, with no casting shadows on the environment. FRAMING: 'SQUARE_HERO_CARD' dynamic side-profile, clean studio asset style." 
+    } 
+  ] 
+}

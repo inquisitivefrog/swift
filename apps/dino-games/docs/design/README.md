@@ -1,22 +1,21 @@
-# Design & Brainstorming
+# Design
 
-Design docs and brainstorming from the Dino Games project, grouped for easier reading and future adaptation.
+Product philosophy, child UX guidelines, and technical design decisions. For raw early ideas see [brainstorm/](../brainstorm/).
 
 ## Structure
 
 | Folder | Contents |
 |--------|----------|
-| **brainstorming/** | Raw ideas and session notes (game proposals, research, session summaries). |
-| **philosophy/** | Core design principles, psychology guidelines, gameplay-first philosophy. |
-| **guidelines/** | Legal, privacy, and advocacy considerations (COPPA, social concerns). |
-| **technical/** | Feasibility, asset strategies, touch/UI technical design. |
+| **philosophy/** | Core design principles, psychology, gameplay-first thinking |
+| **guidelines/** | Legal, privacy, advocacy (COPPA, social concerns) |
+| **technical/** | Feasibility, asset strategies, touch/UI technical design |
 
-**Game-specific design and concepts** live in **docs/gameplay/** (sibling to design/), not here.
+Game-specific design lives in [gameplay/](../gameplay/). Asset and audio tables live in [reference/](../reference/).
 
 ## Quick links
 
-- **Start here:** [SESSION_NOTES.md](brainstorming/SESSION_NOTES.md) · [BRAINSTORMING.md](brainstorming/BRAINSTORMING.md) · [DESIGN_PHILOSOPHY.md](philosophy/DESIGN_PHILOSOPHY.md)
-- **Key decisions:** [TECHNICAL_FEASIBILITY.md](technical/TECHNICAL_FEASIBILITY.md) · [PRIVACY_LEGAL.md](guidelines/PRIVACY_LEGAL.md) · [CHILD_PSYCHOLOGY_GUIDELINES.md](philosophy/CHILD_PSYCHOLOGY_GUIDELINES.md)
-- **Game concepts & implementation:** [docs/gameplay/](../gameplay/); asset/audio guides in `technical/`.
+- **Start here:** [philosophy/DESIGN_PHILOSOPHY.md](philosophy/DESIGN_PHILOSOPHY.md) · [philosophy/CHILD_PSYCHOLOGY_GUIDELINES.md](philosophy/CHILD_PSYCHOLOGY_GUIDELINES.md)
+- **Key decisions:** [technical/TECHNICAL_FEASIBILITY.md](technical/TECHNICAL_FEASIBILITY.md) · [guidelines/PRIVACY_LEGAL.md](guidelines/PRIVACY_LEGAL.md)
+- **Early ideation:** [brainstorm/BRAINSTORMING.md](../brainstorm/BRAINSTORMING.md)
 
-See **docs/FILE_INDEX.md** for the full list and paths.
+See [FILE_INDEX.md](../FILE_INDEX.md) for the full list.

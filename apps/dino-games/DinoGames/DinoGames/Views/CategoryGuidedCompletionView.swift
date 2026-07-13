@@ -57,18 +57,22 @@ struct CategoryGuidedCompletionView: View {
             }
             await runCelebrationSequence()
         }
-        .onDisappear {
-            speechManager.stopCurrentAudio()
-        }
     }
 
     @MainActor
     private func runCelebrationSequence() async {
-        startCelebrationAudio()
+        async let audio: Void = playCelebrationAudioSequence()
+        async let visuals: Void = runVisualCelebrationSequence()
+        _ = await (audio, visuals)
+        try? await Task.sleep(nanoseconds: 300_000_000)
+        guard !Task.isCancelled else { return }
+        onComplete()
+    }
 
+    @MainActor
+    private func runVisualCelebrationSequence() async {
         guard ImageAssetCache.imageExists(named: imageName) else {
             try? await Task.sleep(nanoseconds: 2_000_000_000)
-            onComplete()
             return
         }
 
@@ -77,39 +81,30 @@ struct CategoryGuidedCompletionView: View {
             artVisible = true
         }
         try? await Task.sleep(nanoseconds: 240_000_000)
+        guard !Task.isCancelled else { return }
 
         withAnimation(.spring(response: 0.55, dampingFraction: 0.82)) {
             emojisVisible = true
         }
-
         withAnimation(.easeInOut(duration: 2.5)) {
             artScale = 1.0
         }
-        try? await Task.sleep(nanoseconds: 2_500_000_000)
-        try? await Task.sleep(nanoseconds: 440_000_000)
+        try? await Task.sleep(nanoseconds: 2_940_000_000)
+        guard !Task.isCancelled else { return }
 
         withAnimation(.easeOut(duration: 0.4)) {
             artVisible = false
             emojisVisible = false
         }
         try? await Task.sleep(nanoseconds: 400_000_000)
-
-        while speechManager.isPlaying {
-            try? await Task.sleep(nanoseconds: 50_000_000)
-            if Task.isCancelled { return }
-        }
-
-        try? await Task.sleep(nanoseconds: 300_000_000)
-        onComplete()
     }
 
-    private func startCelebrationAudio() {
-        let congratsURL = speechManager.urlForAudio(key: CategoryGuidedCompletion.congratulationsAudioKey)
-        let crowdURL = speechManager.urlForAudio(key: CategoryGuidedCompletion.crowdAudioKey)
-        if let u1 = congratsURL, let u2 = crowdURL {
-            speechManager.playTogether(url1: u1, url2: u2) {}
-        } else if let url = congratsURL ?? crowdURL {
-            speechManager.playAudioFile(url: url)
+    @MainActor
+    private func playCelebrationAudioSequence() async {
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            CategoryGuidedCompletionAudio.playCelebrationSequence(speechManager: speechManager) {
+                continuation.resume()
+            }
         }
     }
 

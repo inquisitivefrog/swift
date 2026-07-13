@@ -1,0 +1,12 @@
+"id": "HC_SCENE_04_DEFEND",
+"scene_type": "defend",
+"style_ref": "STYLE_ANIMATED_FEATURE_V3",
+"lighting_ref": "STUDIO_GROUNDED",
+"formation_ref": "HELL_CREEK",
+"pose": "A high-stakes, crowded defensive standoff. The adult feathered Dakotaraptor (from image_28.png) is standing over the Orodromeus carcass (who still has the cartoon 'X' eyes). The Dakotaraptor has one large, feathered foot placed firmly on the carcass's chest in a possessive, defensive posture. It is facing forward, head lowered, with a fierce, protective, yet comical 'don't-you-dare' expression. Surrounding the central pair in a rough semi-circle, approaching cautiously, are four additional adult dinosaurs: two Pachycephalosaurus adults with domed heads (one brown, one reddish) and two Troodon adults (sleek and feathery). All four are stopped in their tracks, looking wary and slightly intimidated by the Dakotaraptor's display. The Pachycephalosaurus hold their heads low in a potential 'ramming' threat pose, while the Troodon are more upright. The surrounding Hell Creek foliage is dense and detailed, filling the square frame, emphasizing the confined space.",
+"render_parameters": {
+"aspect_ratio": "1:1",
+"framing": "SQUARE_HERO_CARD",
+"negative_constraints": "No graphic violence, strictly toy-like 'X' eye effect, no negative space, absolute edge-to-edge 1:1 composition, multi-dinosaur interaction"
+}
+}

@@ -15,24 +15,28 @@ To open the project:
 
 ## Project Structure
 
-After Xcode setup, your project structure is:
-
 ```
 DinoGames/
-├── DinoGames.xcodeproj/          # ← Xcode project file (open this!)
-│   └── project.pbxproj
-├── DinoGames/                    # Main app target
-│   ├── DinoGamesApp.swift
-│   ├── ContentView.swift
-│   ├── Persistence.swift
-│   ├── Views/                    # SwiftUI views (ready for game views)
-│   ├── Models/                   # Data models (ready for game models)
-│   ├── Services/                 # Business logic (ready for game services)
-│   ├── Assets.xcassets/          # Images, colors, icons
-│   └── DinoGames.xcdatamodeld/  # Core Data model
-├── DinoGamesTests/               # Unit tests
-└── DinoGamesUITests/             # UI tests
+├── DinoGames.xcodeproj/
+├── DinoGames/                    # App target
+│   ├── App/                      # Entry point, persistence
+│   ├── Views/                    # Game screens (+ Views/Shared/)
+│   ├── Catalogs/                 # Game & mechanic registries
+│   ├── Data/                     # Species pools, display moments
+│   ├── Progress/                 # Save state
+│   ├── GameLogic/                # Shared game logic
+│   ├── Morphology/               # Smile & dental helpers
+│   ├── Support/                  # Image cache, generated names
+│   ├── Assets.xcassets/
+│   ├── Assets/Audio/
+│   └── DinoGames.xcdatamodeld/
+├── json/                         # Authoring JSON (bundled)
+├── images/                       # Source art (not bundled)
+├── DinoGamesTests/
+└── DinoGamesUITests/
 ```
+
+Documentation lives in `apps/dino-games/docs/` — see [architecture/OVERVIEW.md](../architecture/OVERVIEW.md).
 
 ## Current Status
 

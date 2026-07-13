@@ -1,0 +1,13 @@
+{
+  "id": "HC_SCENE_08_FEED_PACK",
+  "scene_type": "feed_PACK",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "HELL_CREEK",
+  "pose": "A multi-species interaction shot. The REF_TYRANNOSAURUS_REX_ADULT is no longer in the frame. The PACK of REF_TROODON_ADULTs is shown with their backs turned, comically waddling away towards the edge of the frame, having yielded the food. In the foreground, a group of three adult Pachycephalosaurus (REF_PACHYCEPHALOSAURUS_ADULT), with their characteristic domed heads and soft, tactile skin textures, are cautiously approaching the carcass to feed. One Pachycephalosaurus is already beginning to feed on the clean, stylized raw steak (a boneless cut) lying on the forest floor. The Orodromeus carcass is significantly smaller than in previous scenes, now reduced to only the head and torso; both hind legs, forelegs, and the tail are entirely missing[cite: 1].",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "negative_constraints": "No graphic violence, strictly toy-like 'X' eye effect on carcass, no text, no borders, no extraneous people or IDs, strictly two arms per dinosaur, no negative space[cite: 1]"
+  }
+}

@@ -1,8 +1,12 @@
-I need images of smiling dinosaurs for my educational video game for small children.
-
-{
-    "id": “acrocanthosaurus_prestige_grand_blade",
-    "morphology": “Grand Blade",
-    "prompt": "High-fidelity 3D animated feature style. Close-up of a smiling Acrocanthosaurus. Smile reveals large, thin, symmetrical ‘grand blade' teeth. Large, warm expressive eyes. No human teeth, no sharp predator points.",
-    "visual_logic": "Replaces generic carnivore teeth with the specific ‘blade' morphology for Dino Smile gameplay."
-}
+[
+  {
+    "id": "acro_prestige_grand_blade_headshot_eyes_open",
+    "morphology": "Grand Blade",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "CONWAY_FORMATION",
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "This standalone asset card introduces the Acrocanthosaurus for the gameplay pairing. It maps the same relatable, kid-friendly 'baby-tooth' gapped structure onto a brand new species profile, showcasing the sharp, curved, and flattened 'Grand Blade' tooth morphology while maintaining friendly, wide-open eyes.",
+    "prompt": "A centered close-up headshot of a friendly Acrocanthosaurus, rendered in a high-fidelity 3D animated feature film style with soft, stylized, and slightly rounded edges. The character profile clearly features a prominent, low muscular ridge running down the top of its head and neck. The large, expressive brown eyes are wide open with a warm, cheerful, and completely non-threatening gaze directed at the viewer. Its mouth is wide open in a happy smile, presenting an endearing front-row gapped pattern where two upper front teeth are completely missing. Crucially, all visible teeth feature the specialized 'Grand Blade' morphology: they are cleanly white, sharp, distinctly knife-like, and laterally compressed (flattened from side-to-side) with subtle serrations, completely replacing the thick, round teeth of other predators. The skin has a beautiful, organic pebbled texture. Set against a bright, sunlit prehistoric landscape with clear blue sky. 1:1 square composition with crisp midday shadows and bright highlights."
+  }
+]

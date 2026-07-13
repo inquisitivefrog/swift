@@ -1,0 +1,13 @@
+{
+  "id": "REF_AVISAURUS_ADULT",
+  "species": "Avisaurus",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "HELL_CREEK",
+  "visual_notes": "Appealing, friendly avian proportions; soft, detailed feather textures; large, expressive eyes; rounded, capable talons; gentle, inquisitive facial expression.",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "negative_constraints": "No trophy cups, no text, no borders, no extraneous people or IDs, strictly two arms[cite: 1]"
+  }
+}

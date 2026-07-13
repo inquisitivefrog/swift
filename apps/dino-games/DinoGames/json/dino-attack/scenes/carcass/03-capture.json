@@ -1,0 +1,12 @@
+{
+  "id": "HC_SCENE_03_STATIC",
+  "scene_type": "capture_static",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "HELL_CREEK",
+  "pose": "A perfectly centered, intimate portrait. The REF_DAKOTARAPTOR_ADULT is standing completely still, facing the viewer with a curious, friendly head-tilt. It is looking directly down at the REF_ORODROMEUS_ADULT, who is sprawled on its back in the foreground with cartoon 'X' eyes. The camera is high-angle, looking down. The Dakotaraptor's full face, eyes, and beak are prominent and sharply in focus as it inspects the Orodromeus. The background is a shallow-focus, dappled forest floor.",
+  "render_parameters": {
+  "aspect_ratio": "1:1",
+  "framing": "SQUARE_HERO_CARD",
+  "negative_constraints": "No dynamic motion blur, strictly standing and looking down, no aggressive posture, no negative space, absolute edge-to-edge 1:1 composition" }
+}

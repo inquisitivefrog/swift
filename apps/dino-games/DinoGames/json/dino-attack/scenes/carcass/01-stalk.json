@@ -1,0 +1,26 @@
+{
+  "id": "HC_SCENE_01_STALK",
+  "scene_type": "stalk",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "HELL_CREEK",
+  "pose": "Adult Dakotaraptor in a low, hidden crouch within ground ferns, stalking an adult Orodromeus eating a plant in the foreground.",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "character_specs": {
+      "dakotaraptor": {
+        "color_base": "warm tan or light brown",
+        "color_accents": "cream colored feathers on arms and tail",
+        "texture": "feathered",
+        "behavior": "stalking"
+      },
+      "orodromeus": {
+        "color_base": "light",
+        "texture": "scaled",
+        "behavior": "eating"
+      }
+    },
+    "negative_constraints": "No trophy cups, no text, no borders, no extraneous people or IDs, strictly two arms, no negative space"
+  }
+}

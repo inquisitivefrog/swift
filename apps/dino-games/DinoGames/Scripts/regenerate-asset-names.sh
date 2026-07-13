@@ -5,7 +5,7 @@
 
 set -e
 cd "$(dirname "$0")/.."
-OUTPUT="DinoGames/ImageAssetNames.generated.swift"
+OUTPUT="DinoGames/Support/ImageAssetNames.generated.swift"
 
 {
   echo "// Auto-generated - do not edit. Run Scripts/regenerate-asset-names.sh to regenerate."

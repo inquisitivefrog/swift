@@ -1,0 +1,13 @@
+{
+  "id": "HC_SCENE_08_FEED_DAKOTA",
+  "scene_type": "feed_dakota",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "HELL_CREEK",
+  "pose": "The group of adult Pachycephalosaurus is shown with their backs turned, departing the scene. Approaching from the opposite side, the adult Dakotaraptor (REF_DAKOTASAURUS_ADULT) enters the clearing, cautiously but excitedly approaching the remaining Orodromeus remains. The Dakotaraptor is captured in the moment it begins feeding on a stylized chicken drumstick placed near the carcass. The Orodromeus carcass is now fully skeletonized, reduced strictly to the skull and ribcage bones, showing no remaining soft tissue.",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "negative_constraints": "No graphic violence, strictly toy-like 'X' eye effect on skull, no text, no labels, no borders, no extraneous people or IDs, strictly two arms per dinosaur, no negative space"
+  }
+}

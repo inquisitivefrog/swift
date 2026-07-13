@@ -1,0 +1,13 @@
+{
+  "id": "REF_DAKOTARAPTOR_ADULT",
+  "species": "Dakotaraptor",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "LANCE_HELL_CREEK",
+  "visual_notes": "Sleek, powerful adult proportions; soft, downy feather textures; large, expressive, intelligent eyes; capable but rounded sickle claws; friendly, alert posture.",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "negative_constraints": "No trophy cups, no text, no borders, no extraneous people or IDs, strictly two arms[cite: 1]"
+  }
+}

@@ -262,7 +262,7 @@ struct GameSelectionView: View {
     private func autoLaunchNextGuidedGame() {
         guard guidedPlayMode, !showGameTransition else { return }
         if GameCatalog.isCategoryFullyPlayed(category) {
-            finishGuidedCategoryAndReturnToMenu()
+            scheduleGuidedCategoryCelebrationIfNeeded()
             return
         }
         guard let game = gameForGuidedAutoLaunch() else { return }
@@ -275,8 +275,9 @@ struct GameSelectionView: View {
 
     /// Guided run finished every game in every visible level — celebrate, then return to the game-type menu.
     private func finishGuidedCategoryAndReturnToMenu() {
+        guard !guidedCategoryCompletionActive else { return }
         CategoryPlaySession.save(category: category, level: nil, gameCanonicalId: nil, guidedPlayMode: false)
-        speechManager.stopCurrentAudio()
+        showGameTransition = false
         speechManager.onAudioFinished = nil
         gameWalkIndex = nil
         hasPlayedWelcome = true
@@ -286,6 +287,18 @@ struct GameSelectionView: View {
         selectedLevel = nil
         guidedCategoryCompletionActive = true
         isAudioPlaying = true
+    }
+
+    /// Defer category celebration until the game sheet has dismissed so victory audio and layout settle.
+    private func scheduleGuidedCategoryCelebrationIfNeeded() {
+        guard guidedPlayMode, GameCatalog.isCategoryFullyPlayed(category) else { return }
+        guard !guidedCategoryCompletionActive else { return }
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(350))
+            guard !Task.isCancelled else { return }
+            guard guidedPlayMode, GameCatalog.isCategoryFullyPlayed(category) else { return }
+            finishGuidedCategoryAndReturnToMenu()
+        }
     }
 
     private func completeGuidedCategoryCelebrationAndReturnToMenu() {
@@ -301,7 +314,7 @@ struct GameSelectionView: View {
         }
         maybeAutoAdvanceToNextLevelAfterGameDismissed()
         if GameCatalog.isCategoryFullyPlayed(category) {
-            finishGuidedCategoryAndReturnToMenu()
+            scheduleGuidedCategoryCelebrationIfNeeded()
             return
         }
         CategoryPlaySession.clearGameSlot()
@@ -887,14 +900,18 @@ private struct GameSelectionNavigationContent: View {
     /// Called from sheet-dismiss handlers (after the same delay as state reset). Runs level-up advance if applicable, then scrolls the list to the level header; avoids relying on `onChange` of the derived `noOtherGameShowing` flag, which can miss updates.
     /// Skip level intro replay when guided auto-play finished the whole category (Dinosaurs, Pterosaurs, or Marine Reptiles).
     private func shouldReplayLevelIntroAfterGameDismissed() -> Bool {
-        !(guidedPlayMode && GameCatalog.isCategoryFullyPlayed(category))
+        CategoryGuidedCompletion.shouldReplayLevelIntroAfterGameDismissed(
+            guidedPlayMode: guidedPlayMode,
+            categoryFullyPlayed: GameCatalog.isCategoryFullyPlayed(category)
+        )
     }
 
     private func runPostGameSheetDismissalSideEffects() {
         onPostGameSheetDismissalCleanup()
-        if guidedPlayMode && GameCatalog.isCategoryFullyPlayed(category) {
-            speechManager.stopCurrentAudio()
-            speechManager.onAudioFinished = nil
+        if CategoryGuidedCompletion.shouldSkipPostGameSheetAudioReset(
+            guidedPlayMode: guidedPlayMode,
+            categoryFullyPlayed: GameCatalog.isCategoryFullyPlayed(category)
+        ) {
             gameWalkIndex = nil
             return
         }

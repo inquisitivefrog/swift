@@ -1,0 +1,13 @@
+{
+  "id": "HC_SCENE_06_FEED_trex",
+  "scene_type": "feed_trex",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "HELL_CREEK",
+  "pose": "REF_TYRANNOSAURUS_REX_ADULT standing near the REF_ORODROMEUS_ADULT carcass. The T-Rex is gulping down a stylized drumstick with a satisfied expression[cite: 1]. The carcass is noticeably smaller than in previous scenes, with the hind legs now missing[cite: 1].",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "negative_constraints": "No graphic violence, strictly toy-like 'X' eye effect, no text, no borders, no extraneous people or IDs, strictly two arms[cite: 1]"
+  }
+}

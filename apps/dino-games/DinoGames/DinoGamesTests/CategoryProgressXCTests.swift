@@ -68,4 +68,102 @@ final class CategoryProgressXCTests: XCTestCase {
             "Missing Feedback/crowd-cheering"
         )
     }
+
+    // MARK: - Guided category celebration guardrails
+
+    func testCelebrationAudioKeysPlayCongratulationsBeforeCrowd() {
+        XCTAssertEqual(
+            CategoryGuidedCompletion.celebrationAudioKeys,
+            [
+                CategoryGuidedCompletion.congratulationsAudioKey,
+                CategoryGuidedCompletion.crowdAudioKey,
+            ]
+        )
+    }
+
+    func testShouldSkipPostGameSheetAudioResetOnlyForGuidedCategoryComplete() {
+        XCTAssertTrue(
+            CategoryGuidedCompletion.shouldSkipPostGameSheetAudioReset(
+                guidedPlayMode: true,
+                categoryFullyPlayed: true
+            )
+        )
+        XCTAssertFalse(
+            CategoryGuidedCompletion.shouldSkipPostGameSheetAudioReset(
+                guidedPlayMode: false,
+                categoryFullyPlayed: true
+            )
+        )
+        XCTAssertFalse(
+            CategoryGuidedCompletion.shouldSkipPostGameSheetAudioReset(
+                guidedPlayMode: true,
+                categoryFullyPlayed: false
+            )
+        )
+        XCTAssertFalse(
+            CategoryGuidedCompletion.shouldSkipPostGameSheetAudioReset(
+                guidedPlayMode: false,
+                categoryFullyPlayed: false
+            )
+        )
+    }
+
+    func testShouldReplayLevelIntroAfterGameDismissedInvertsCategoryCompleteSkip() {
+        XCTAssertFalse(
+            CategoryGuidedCompletion.shouldReplayLevelIntroAfterGameDismissed(
+                guidedPlayMode: true,
+                categoryFullyPlayed: true
+            )
+        )
+        XCTAssertTrue(
+            CategoryGuidedCompletion.shouldReplayLevelIntroAfterGameDismissed(
+                guidedPlayMode: true,
+                categoryFullyPlayed: false
+            )
+        )
+        XCTAssertTrue(
+            CategoryGuidedCompletion.shouldReplayLevelIntroAfterGameDismissed(
+                guidedPlayMode: false,
+                categoryFullyPlayed: true
+            )
+        )
+    }
+
+    func testCelebrationAudioSequencePlaysBothClipsBeforeCompleting() {
+        let speech = SpeechManager()
+        var completed = false
+
+        CategoryGuidedCompletionAudio.playCelebrationSequence(speechManager: speech) {
+            completed = true
+        }
+
+        if speech.urlForAudio(key: CategoryGuidedCompletion.congratulationsAudioKey) != nil {
+            XCTAssertFalse(completed, "Crowd should play after congratulations")
+            XCTAssertNotNil(speech.onAudioFinished)
+            speech.onAudioFinished?()
+        }
+
+        if speech.urlForAudio(key: CategoryGuidedCompletion.crowdAudioKey) != nil {
+            XCTAssertFalse(completed, "Completion should wait for crowd audio")
+            XCTAssertNotNil(speech.onAudioFinished)
+            speech.onAudioFinished?()
+        }
+
+        XCTAssertTrue(completed)
+    }
+
+    func testCelebrationAudioSequenceDoesNotCompleteIfStoppedMidClip() {
+        let speech = SpeechManager()
+        var completed = false
+
+        CategoryGuidedCompletionAudio.playCelebrationSequence(speechManager: speech) {
+            completed = true
+        }
+
+        XCTAssertNotNil(speech.onAudioFinished)
+        speech.stopCurrentAudio()
+
+        XCTAssertFalse(completed, "Stopping audio mid-sequence must not fire completion early")
+        XCTAssertNotNil(speech.onAudioFinished, "Callback should remain until clip finishes normally")
+    }
 }

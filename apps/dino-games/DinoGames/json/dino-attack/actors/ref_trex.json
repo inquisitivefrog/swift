@@ -1,0 +1,13 @@
+{
+  "id": "REF_TYRANNOSAURUS_REX_ADULT",
+  "species": "Tyrannosaurus rex",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "HELL_CREEK",
+  "visual_notes": "Massive, powerful, but benevolent-giant proportions; soft-textured, thick skin; kind, gentle eyes; friendly, smirking expression; robust, capable build; purposeful, friendly-waddle movement.",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "negative_constraints": "No trophy cups, no text, no borders, no extraneous people or IDs, strictly two arms[cite: 1]"
+  }
+}

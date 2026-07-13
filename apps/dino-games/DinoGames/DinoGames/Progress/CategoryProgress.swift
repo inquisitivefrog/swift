@@ -147,4 +147,19 @@ enum CategoryGuidedCompletion {
         case .marineReptiles: return ["🎉", "🐢", "🌟", "🎊", "✨", "🌊"]
         }
     }
+
+    /// Bundled clips for the all-12-games celebration, in playback order.
+    static var celebrationAudioKeys: [String] {
+        [congratulationsAudioKey, crowdAudioKey]
+    }
+
+    /// Guided category complete: post-game sheet dismiss must not call `stopCurrentAudio` (celebration plays next).
+    static func shouldSkipPostGameSheetAudioReset(guidedPlayMode: Bool, categoryFullyPlayed: Bool) -> Bool {
+        guidedPlayMode && categoryFullyPlayed
+    }
+
+    /// Level intro + game-card walk replay after a game sheet dismisses.
+    static func shouldReplayLevelIntroAfterGameDismissed(guidedPlayMode: Bool, categoryFullyPlayed: Bool) -> Bool {
+        !shouldSkipPostGameSheetAudioReset(guidedPlayMode: guidedPlayMode, categoryFullyPlayed: categoryFullyPlayed)
+    }
 }

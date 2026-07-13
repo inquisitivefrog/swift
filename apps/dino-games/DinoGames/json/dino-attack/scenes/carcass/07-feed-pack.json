@@ -1,0 +1,13 @@
+{
+  "id": "HC_SCENE_07_FEED_PACK",
+  "scene_type": "feed_pack",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "HELL_CREEK",
+  "pose": "A multi-dinosaur interaction shot. The colossal REF_TYRANNOSAURUS_REX_ADULT is waddling away toward the rear of the stage with its back turned to the other dinosaurs[cite: 1]. In the midground, the PACK of REF_TROODON_ADULTs (at least three adults) cautiously approaches the food[cite: 1]. They exhibit intelligent, alert postures as they prepare to dine[cite: 1]. One Troodon is beginning to feed on a stylized raw steak that lies near the Orodromeus remains[cite: 1]. The Orodromeus carcass is only partially consumed; the back, stomach, and forelegs remain intact and look normal, ensuring food remains for later[cite: 1].",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "negative_constraints": "No graphic violence, strictly toy-like 'X' eye effect on carcass, no text, no borders, no extraneous people or IDs, strictly two arms per dinosaur, no negative space[cite: 1]"
+  }
+}

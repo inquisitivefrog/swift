@@ -1,0 +1,11 @@
+[
+  {
+    "id": "hell_creek_klepto_01_the_catch",
+    "species": "Acheroraptor temertyorum",
+    "tech_ref": "SQUARE_HERO_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "LANCE_HELL_CREEK",
+    "pose": "STYLE_ANIMATED_FEATURE_V3 aesthetic (high-fidelity 3D, expressive eyes, rounded forms). A small, sleek, feathered Acheroraptor stands triumphantly in a bright clearing. In a crucial correction, it uses realistic (but stylized) bipedal dinosaur proportions, not human proportions. It has large, soulful brown eyes and is wearing a proud, playful smirk. It is meticulously holding and investigating a freshly-caught *Orodromeus* (a small bipedal dinosaur, rendered as a sanitized, blood-free, non-graphic carcass with x symbols for eyes). No picnic sandwich artifacts are present. The dynamic pose emphasizes the infamous raised toe-claws on both feet, which are prominent. The composition is a perfectly centered square with a strict 25% negative space buffer on all sides, ensuring a clear, heroic framing of the central action.",
+    "environment_notes": "Surrounded by a lush forest understory of ferns, mossy banks, towering tree ferns, and a dense Metasequoia canopy. Bright Cretaceous sun filters through the canopy, creating warm highlights and soft, hazy atmospheric depth on the distant horizon."
+  }
+]

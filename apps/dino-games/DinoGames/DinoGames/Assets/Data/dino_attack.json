@@ -1,0 +1,78 @@
+{
+  "id": "REF_AVISAURUS_ADULT",
+  "species": "Avisaurus",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "HELL_CREEK",
+  "visual_notes": "Appealing, friendly avian proportions; soft, detailed feather textures; large, expressive eyes; rounded, capable talons; gentle, inquisitive facial expression.",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "negative_constraints": "No trophy cups, no text, no borders, no extraneous people or IDs, strictly two arms[cite: 1]"
+  }
+}
+{
+  "id": "REF_DAKOTARAPTOR_ADULT",
+  "species": "Dakotaraptor",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "LANCE_HELL_CREEK",
+  "visual_notes": "Sleek, powerful adult proportions; soft, downy feather textures; large, expressive, intelligent eyes; capable but rounded sickle claws; friendly, alert posture.",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "negative_constraints": "No trophy cups, no text, no borders, no extraneous people or IDs, strictly two arms[cite: 1]"
+  }
+}
+{
+  "id": "REF_ORODROMEUS_ADULT",
+  "species": "Orodromeus",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "TWO_MEDICINE",
+  "visual_notes": "Mature but cute-proportioned adult; soft, smooth skin textures; large, approachable facial features; small, rounded hooves; inquisitive, gentle expression.",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "negative_constraints": "No trophy cups, no text, no borders, no extraneous people or IDs, strictly two arms[cite: 1]"
+  }
+}
+{
+  "id": "REF_QUETZALCOATLUS_ADULT",
+  "species": "Quetzalcoatlus",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "HELL_CREEK",
+  "visual_notes": "Benevolent-giant form; soft, tactile skin textures; kind, gentle beak design; large, expressive, warm eyes; powerful but non-threatening posture.",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "negative_constraints": "No trophy cups, no text, no borders, no extraneous people or IDs, strictly two arms, no negative space"
+  }
+}
+{
+  "id": "REF_TROODON_ADULT",
+  "species": "Troodon",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "DINOSAUR_PARK",
+  "visual_notes": "Slender, agile adult build; mottled, detailed feather textures; large, keen, friendly eyes; intelligent, alert facial expression; highly capable, lightweight form.",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "negative_constraints": "No trophy cups, no text, no borders, no extraneous people or IDs, strictly two arms[cite: 1]"
+  }
+}
+{
+  "id": "REF_TYRANNOSAURUS_REX_ADULT",
+  "species": "Tyrannosaurus rex",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "HELL_CREEK",
+  "visual_notes": "Massive, powerful, but benevolent-giant proportions; soft-textured, thick skin; kind, gentle eyes; friendly, smirking expression; robust, capable build; purposeful, friendly-waddle movement.",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "negative_constraints": "No trophy cups, no text, no borders, no extraneous people or IDs, strictly two arms[cite: 1]"
+  }
+}

@@ -1,0 +1,11 @@
+{ "id": "HC_SCENE_02_CHASE",
+  "scene_type": "chase",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "HELL_CREEK",
+  "pose": "REF_DAKOTARAPTOR_ADULT in a full, determined, high-energy stride chasing REF_ORODROMEUS_ADULT with a comical, frantic expression; dynamic motion blur to emphasize speed.",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "negative_constraints": "No trophy cups, no text, no borders, no extraneous people or IDs, strictly two arms, no negative space, absolute edge-to-edge 1:1 composition" }
+}

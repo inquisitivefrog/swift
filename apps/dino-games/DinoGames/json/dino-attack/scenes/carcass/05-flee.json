@@ -1,0 +1,13 @@
+{
+  "id": "HC_SCENE_05_FLEE",
+  "scene_type": "flee",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "HELL_CREEK",
+  "pose": "A wide-angle long shot capturing total chaos. In the center foreground, the Orodromeus carcass (still with its cartoon 'X' eyes) lies abandoned on the forest floor. Sprouting outwards from the carcass in a frantic, comical, multi-directional scramble are the fleeing dinosaurs, all adults: the brown-feathered Dakotaraptor sprinting left, the reddish Pachycephalosaurus stumbling right, and the two grey Troodons darting into the background undergrowth. Looming large in the background, approaching the carcass from the opposite direction with massive, heavy footfalls, is the adult Tyrannosaurus Rex, its huge jaws open in a powerful, intimidating, stylized growl. Motion lines emphasize the sudden, panicked movement of the scattering smaller dinosaurs. The environment is the dense Hell Creek foliage, filling the frame and emphasizing the confined space of the panic. The camera is static, capturing the entire fleeing action.",
+  "render_parameters": {
+    "aspect_ratio": "16:9",
+    "framing": "CINEMATIC_WIDESCREEN",
+    "negative_constraints": "No graphic violence, strictly toy-like 'X' eye effect, no close-ups, no negative space, absolute edge-to-edge 16:9 composition, extreme dynamic action"
+  }
+}

@@ -11,6 +11,17 @@ struct SplashScreenView: View {
     @State private var showMainApp = false
     @State private var showCredits = false
     @State private var speechManager = SpeechManager()
+    @State private var welcomeAudioFinished = false
+    @State private var minimumDisplayElapsed = false
+    @State private var advanceTask: Task<Void, Never>?
+
+    /// Minimum time on splash before auto-advance can fire (lets users read on-screen copyright).
+    private static let minimumDisplayDuration: Duration = .seconds(5)
+    /// Extra pause after welcome audio ends before leaving the splash.
+    private static let postWelcomeReadingDelay: Duration = .seconds(3)
+    /// Never block launch if welcome audio fails to finish.
+    private static let splashSafetyTimeout: Duration = .seconds(20)
+    private static let skipIntroDelay: Duration = .milliseconds(800)
 
     var body: some View {
         Group {
@@ -76,31 +87,76 @@ struct SplashScreenView: View {
                     .sheet(isPresented: $showCredits) {
                         CreditsView()
                     }
+                    .onChange(of: showCredits) { _, isPresented in
+                        if isPresented {
+                            advanceTask?.cancel()
+                            speechManager.stopCurrentAudio()
+                            speechManager.onAudioFinished = nil
+                            welcomeAudioFinished = true
+                        } else {
+                            scheduleAdvanceIfReady(after: Self.postWelcomeReadingDelay)
+                        }
+                    }
                     .onAppear {
-                        let skipIntros = CategoryPlaySession.shouldSkipLaunchIntros || UITestConfiguration.skipSplash
-                        if skipIntros {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                                withAnimation { showMainApp = true }
-                            }
-                            return
-                        }
-                        speechManager.onAudioFinished = {
-                            speechManager.onAudioFinished = nil
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                                withAnimation { showMainApp = true }
-                            }
-                        }
-                        speechManager.speak("cover-welcome-to-dino-games")
-                        // Safety: never block launch if welcome audio fails to finish.
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 8) {
-                            guard !showMainApp else { return }
-                            speechManager.onAudioFinished = nil
-                            withAnimation { showMainApp = true }
-                        }
+                        handleSplashAppear()
+                    }
+                    .onDisappear {
+                        advanceTask?.cancel()
                     }
                 }
             }
         }
+    }
+
+    private func handleSplashAppear() {
+        let skipIntros = CategoryPlaySession.shouldSkipLaunchIntros || UITestConfiguration.skipSplash
+        if skipIntros {
+            advanceTask = Task { @MainActor in
+                try? await Task.sleep(for: Self.skipIntroDelay)
+                guard !Task.isCancelled else { return }
+                withAnimation { showMainApp = true }
+            }
+            return
+        }
+
+        Task { @MainActor in
+            try? await Task.sleep(for: Self.minimumDisplayDuration)
+            minimumDisplayElapsed = true
+            advanceToMainAppIfReady()
+        }
+
+        speechManager.onAudioFinished = {
+            speechManager.onAudioFinished = nil
+            welcomeAudioFinished = true
+            scheduleAdvanceIfReady(after: Self.postWelcomeReadingDelay)
+        }
+        speechManager.speak("cover-welcome-to-dino-games")
+
+        Task { @MainActor in
+            try? await Task.sleep(for: Self.splashSafetyTimeout)
+            guard !showMainApp else { return }
+            welcomeAudioFinished = true
+            minimumDisplayElapsed = true
+            advanceToMainAppIfReady()
+        }
+    }
+
+    private func scheduleAdvanceIfReady(after delay: Duration) {
+        advanceTask?.cancel()
+        advanceTask = Task { @MainActor in
+            if delay > .zero {
+                try? await Task.sleep(for: delay)
+            }
+            guard !Task.isCancelled else { return }
+            advanceToMainAppIfReady()
+        }
+    }
+
+    private func advanceToMainAppIfReady() {
+        guard !showMainApp else { return }
+        guard welcomeAudioFinished, minimumDisplayElapsed, !showCredits else { return }
+        speechManager.onAudioFinished = nil
+        withAnimation { showMainApp = true }
     }
 }
 

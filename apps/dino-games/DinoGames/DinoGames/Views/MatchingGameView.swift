@@ -1968,10 +1968,11 @@ struct MatchingGameView: View {
                             .font(.headline)
                         
                         ForEach(Array(dinosaurs.enumerated()), id: \.element.id) { index, dinosaur in
+                            let isMatched = matchedPairs.contains { $0.dinosaurId == dinosaur.id }
                             DinosaurCard(
                                 dinosaur: dinosaur,
-                                isSelected: selectedDinosaur?.id == dinosaur.id,
-                                isMatched: matchedPairs.contains { $0.dinosaurId == dinosaur.id },
+                                isSelected: selectedDinosaur?.id == dinosaur.id && !isMatched,
+                                isMatched: isMatched,
                                 hasFailedAttempt: failedAttempts.contains { $0.dinosaurId == dinosaur.id },
                                 isIntroHighlighted: !introWalkComplete && introWalkStep == index,
                                 onTap: {
@@ -2017,7 +2018,7 @@ struct MatchingGameView: View {
     private func startIntroWalkIfNeeded() {
         guard !introWalkComplete, dinosaurs.count >= 3, characteristics.count >= 5 else {
             if !introWalkComplete && (dinosaurs.count < 3 || characteristics.count < 5) {
-                introWalkComplete = true
+                finishIntroWalk()
             }
             return
         }
@@ -2063,7 +2064,7 @@ struct MatchingGameView: View {
         speechManager.onAudioFinished = nil
         introWalkStep += 1
         if introWalkStep >= 8 {
-            introWalkComplete = true
+            finishIntroWalk()
             return
         }
         speechManager.onAudioFinished = { advanceIntroWalk() }
@@ -2079,11 +2080,25 @@ struct MatchingGameView: View {
             }
         }
     }
+
+    /// End intro walk and clear the first-column highlight so it does not look like a stuck selection.
+    private func finishIntroWalk() {
+        introWalkComplete = true
+        introWalkStep = -1
+    }
+
+    /// If the player taps during intro, skip the walk so highlights do not stick on the first creature.
+    private func endIntroWalkForGameplay() {
+        guard !introWalkComplete else { return }
+        speechManager.onAudioFinished = nil
+        finishIntroWalk()
+    }
     
     private func handleDinosaurTap(_ dinosaur: Dinosaur) {
         // Don't allow interaction while audio is playing
         guard !speechManager.isPlaying else { return }
-        
+        endIntroWalkForGameplay()
+
         // If this creature is fully matched, play handrail and don't allow selection.
         if isDietMatchingGame {
             if matchedPairs.contains(where: { $0.dinosaurId == dinosaur.id }) {
@@ -2128,7 +2143,8 @@ struct MatchingGameView: View {
     private func handleCharacteristicTap(_ characteristic: Characteristic) {
         // Don't allow interaction while audio is playing
         guard !speechManager.isPlaying else { return }
-        
+        endIntroWalkForGameplay()
+
         // Handrail: must select a creature first (dinosaur or pterosaur by game type)
         if selectedDinosaur == nil {
             speechManager.onAudioFinished = {
@@ -2201,7 +2217,12 @@ struct MatchingGameView: View {
             let newPair = MatchedPair(dinosaurId: dinosaur.id, characteristicId: characteristic.id)
             matchedPairs.insert(newPair)
             let matchCount = matchedPairs.count
-            
+
+            if matchCount < dinosaurs.count {
+                selectedDinosaur = nil
+                selectedCharacteristic = nil
+            }
+
             if matchCount == dinosaurs.count {
                 // Third match: Dino Diets! uses 10 s threshold and great-match / wow-that-was-tricky; others use 5 s and great-match / wow-that-was-tricky
                 matchChoiceStartTime = nil // Reset timer after choosing audio

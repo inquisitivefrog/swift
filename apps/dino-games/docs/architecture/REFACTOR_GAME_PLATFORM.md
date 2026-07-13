@@ -78,7 +78,7 @@ Append **newest first** when something unexpectedly widens scope or changes dire
 - Unified media-contract (PR 3 slice): `DinoGamesTests/UnifiedGameMediaContractXCTests.swift`
 - Land / air / marine lists: `DinosaurGameCatalog.swift`, `PterosaurGameCatalog.swift`, `MarineReptileGameCatalog.swift`
 - Example JSON-driven flows: `DinoGames/Views/DinoFormationsGameView.swift`, `DinoGames/Views/DinoHabitatsGameView.swift`
-- Asset name set: `DinoGames/ImageAssetNames.generated.swift` (regenerate via `Scripts/regenerate-asset-names.sh` when catalog changes)
+- Asset name set: `DinoGames/Support/ImageAssetNames.generated.swift` (regenerate via `Scripts/regenerate-asset-names.sh` when catalog changes)
 
 ---
 

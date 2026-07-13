@@ -1,0 +1,13 @@
+{
+  "id": "REF_ORODROMEUS_ADULT",
+  "species": "Orodromeus",
+  "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+  "lighting_ref": "STUDIO_GROUNDED",
+  "formation_ref": "TWO_MEDICINE",
+  "visual_notes": "Mature but cute-proportioned adult; soft, smooth skin textures; large, approachable facial features; small, rounded hooves; inquisitive, gentle expression.",
+  "render_parameters": {
+    "aspect_ratio": "1:1",
+    "framing": "SQUARE_HERO_CARD",
+    "negative_constraints": "No trophy cups, no text, no borders, no extraneous people or IDs, strictly two arms[cite: 1]"
+  }
+}

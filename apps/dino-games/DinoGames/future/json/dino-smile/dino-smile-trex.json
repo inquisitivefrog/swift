@@ -1,0 +1,12 @@
+[
+  {
+    "id": "trex_prestige_banana_headshot_eyes_open_v2",
+    "morphology": "Banana",
+    "tech_ref": "SQUARE_ASPECT_RATIO",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "LANCE_HELL_CREEK",
+    "style_preset": "STYLE_ANIMATED_FEATURE_V3",
+    "visual_logic": "This standalone asset card is fully independent. It generates the friendly, eyes-open T-Rex headshot with wide-open, large brown eyes, explicitly incorporating the 'baby-tooth' gapped front row structure alongside the thick, blunt, ivory-colored 'Banana' tooth morphology for the Dino Toothache gameplay pairing.",
+    "prompt": "A centered close-up headshot of a friendly Tyrannosaurus rex, rendered in a high-fidelity 3D animated feature film style with soft, stylized, and slightly rounded forms. The T-Rex is expressing pure, joyful excitement with its large, brown, and soulful eyes wide open, looking directly at the viewer with a warm, playful, and completely non-threatening gaze. Its mouth is wide open in a big, cheerful smile, presenting a distinct front-row gapped pattern where two prominent upper front teeth are completely missing, leaving a classic, endearing 'baby-tooth' gap. Crucially, all visible teeth are blunt, heavy, thick, and ivory-colored, reflecting a realistic 'Banana' morphology that explicitly replaces any human-like or generic sharp carnivore teeth. The skin exhibits a detailed, organic pebbled texture. The character is set against a lush, sunlit Cretaceous landscape with soft palms and a clear blue sky. The composition is a clean 1:1 square frame with high-key midday sunlight creating warm highlights and soft cinematic shadows."
+  }
+]
