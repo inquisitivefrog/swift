@@ -6,56 +6,74 @@
 //
 
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    var body: some View {
+        NavigationStack {
+            List {
+                ForEach(GameCatalog.sections, id: \.genre) { section in
+                    Section {
+                        ForEach(section.games) { game in
+                            NavigationLink(value: game.id) {
+                                GameRow(game: game)
+                            }
+                        }
+                    } header: {
+                        Label(section.genre.title, systemImage: section.genre.systemImage)
+                    }
+                }
+            }
+            .navigationTitle("Games")
+            .navigationDestination(for: GameID.self) { gameID in
+                gameDestination(for: gameID)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func gameDestination(for id: GameID) -> some View {
+        switch id {
+        case .ticTacToe:
+            TicTacToeView()
+        case .sudoku:
+            SudokuView()
+        case .easyFrench:
+            EasyFrenchView()
+        case .undergroundMaze:
+            UndergroundMazeView()
+        case .sideScroller:
+            SideScrollerView()
+        case .gridMovement:
+            GridMovementView()
+        }
+    }
+}
+
+private struct GameRow: View {
+    let game: GameEntry
 
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                    }
-                }
-                .onDelete(perform: deleteItems)
+        Label {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(game.title)
+                    .font(.headline)
+                Text(game.subtitle)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                Text(game.difficulty.title)
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
+        } icon: {
+            Image(systemName: game.systemImage)
+                .font(.title2)
+                .foregroundStyle(.tint)
+                .frame(width: 36)
         }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
-        }
+        .padding(.vertical, 4)
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }

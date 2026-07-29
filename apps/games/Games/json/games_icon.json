@@ -1,0 +1,57 @@
+{
+  "name": "classic_game_controller_icon",
+  "version": "1.0.0",
+  "dimensions": {
+    "width": 1024,
+    "height": 1024,
+    "unit": "px"
+  },
+  "format": "png",
+  "layers": [
+    {
+      "name": "background",
+      "type": "fill",
+      "color": "#1a1a1a"
+    },
+    {
+      "name": "controller_body",
+      "type": "vector_shape",
+      "style": "retro_snes_rounded_rectangle",
+      "color": "#dcdcdc",
+      "center": [512, 512],
+      "size": [700, 380]
+    },
+    {
+      "name": "d_pad",
+      "type": "vector_shape",
+      "style": "directional_cross",
+      "color": "#333333",
+      "center": [300, 512],
+      "size": [120, 120]
+    },
+    {
+      "name": "action_buttons",
+      "type": "group",
+      "layout": "diamond_4_button",
+      "center": [724, 512],
+      "buttons": [
+        {"label": "X", "color": "#3b5998", "position": [724, 462]},
+        {"label": "A", "color": "#cc0000", "position": [774, 512]},
+        {"label": "B", "color": "#ffcc00", "position": [724, 562]},
+        {"label": "Y", "color": "#009900", "position": [674, 512]}
+      ]
+    },
+    {
+      "name": "select_start_buttons",
+      "type": "group",
+      "buttons": [
+        {"name": "select", "shape": "pill", "color": "#777777", "position": [462, 540], "size": [50, 15]},
+        {"name": "start", "shape": "pill", "color": "#777777", "position": [562, 540], "size": [50, 15]}
+      ]
+    }
+  ],
+  "metadata": {
+    "description": "A 1024x1024 flat vector icon inspired by the classic SNES controller layout.",
+    "tags": ["gaming", "icon", "retro", "controller", "ui"]
+  }
+}
