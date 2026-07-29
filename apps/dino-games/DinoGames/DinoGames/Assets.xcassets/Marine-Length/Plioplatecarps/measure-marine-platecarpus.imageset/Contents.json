@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "measure-marine-platecarpus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "measure-marine-platecarpus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "measure-marine-platecarpus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "measure-marine-platecarpus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "measure-marine-platecarpus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "measure-marine-platecarpus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

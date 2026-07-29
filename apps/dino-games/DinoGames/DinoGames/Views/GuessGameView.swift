@@ -410,14 +410,37 @@ struct GuessGameView: View {
                 if isGameComplete {
                     guessGameEndSequenceView
                 } else {
-            VStack(spacing: 30) {
+            GeometryReader { geometry in
+                let safeWidth = max(geometry.size.width, 1)
+                let safeHeight = max(geometry.size.height, 1)
+                // Phone-tuned baselines; grow on iPad (Footprints / Name That / Bones share this layout).
+                let playMaxScale: CGFloat = 1.85
+                let clueSide = min(
+                    GameCatalogImageMetrics.scaled(340, safeWidth: safeWidth, maxScale: playMaxScale),
+                    safeWidth * 0.72,
+                    safeHeight * 0.52
+                )
+                let optionSpacing = GameCatalogImageMetrics.scaled(14, safeWidth: safeWidth, maxScale: playMaxScale)
+                let optionRowHPad: CGFloat = 12
+                // DinosaurOptionCard chrome is imageSide+12 (idle) or imageSide+36 (highlight) — budget for highlight.
+                let optionCardChrome: CGFloat = 36
+                let optionRowAvail = max(1, safeWidth - optionRowHPad * 2 - optionSpacing * 2)
+                let maxOptionCardWidth = optionRowAvail / 3
+                let optionImageSide = min(
+                    GameCatalogImageMetrics.scaled(150, safeWidth: safeWidth, maxScale: playMaxScale),
+                    max(56, maxOptionCardWidth - optionCardChrome)
+                )
+                let titleFontSize = GameCatalogImageMetrics.scaled(34, safeWidth: safeWidth, maxScale: playMaxScale)
+                let roundFontSize = GameCatalogImageMetrics.scaled(20, safeWidth: safeWidth, maxScale: playMaxScale)
+                let optionLabelFontSize = GameCatalogImageMetrics.scaled(17, safeWidth: safeWidth, maxScale: playMaxScale)
+                VStack(spacing: GameCatalogImageMetrics.scaled(20, safeWidth: safeWidth, maxScale: playMaxScale)) {
                 Text(gameConfig.title)
-                    .font(.largeTitle)
+                    .font(.system(size: titleFontSize, weight: .bold))
                     .padding(.top)
 
                 if let question = currentQuestion {
                     // Main game area - one question at a time
-                    VStack(spacing: 40) {
+                    VStack(spacing: GameCatalogImageMetrics.scaled(24, safeWidth: safeWidth, maxScale: playMaxScale)) {
                         // Top: Question image (silhouette), then round label below
                         VStack(spacing: 10) {
                             // Question image: primary silhouette, then dinosaur alternate `dino-silhouette-*`, then tinted body (pterosaurs skip dino path when fallback is `ptero-*`).
@@ -425,7 +448,7 @@ struct GuessGameView: View {
                                 Image(question.questionImageName)
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .frame(width: 250, height: 250)
+                                    .frame(width: clueSide, height: clueSide)
                             } else {
                                 let fallbackKey = question.questionImageFallback?.lowercased() ?? ""
                                 let isPterosaurBody = fallbackKey.hasPrefix("ptero-")
@@ -440,45 +463,49 @@ struct GuessGameView: View {
                                     Image(dinoAlt)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: 250, height: 250)
+                                        .frame(width: clueSide, height: clueSide)
                                 } else if let fallback = question.questionImageFallback, !fallback.isEmpty {
                                     Image(fallback)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: 250, height: 250)
+                                        .frame(width: clueSide, height: clueSide)
                                         .colorMultiply(.black)
                                         .opacity(0.8)
                                 } else {
                                     RoundedRectangle(cornerRadius: 15)
                                         .fill(Color.black.opacity(0.5))
-                                        .frame(width: 250, height: 250)
+                                        .frame(width: clueSide, height: clueSide)
                                 }
                             }
                             Text("Round \(currentRound) of \(gameConfig.rounds.count)")
-                                .font(.headline)
+                                .font(.system(size: roundFontSize, weight: .semibold))
                                 .foregroundColor(.secondary)
                         }
                         .padding()
                         
                         // Bottom: 3 dinosaur options in a row (options walk highlights each, then tap enabled)
-                        HStack(spacing: 8) {
+                        HStack(spacing: optionSpacing) {
                             ForEach(Array(question.options.enumerated()), id: \.element.id) { index, dinosaur in
                                 DinosaurOptionCard(
                                     dinosaur: dinosaur,
                                     isSelected: selectedDinosaur?.id == dinosaur.id,
                                     isDisabled: isProcessingAnswer || isAudioPlaying || optionsWalkIndex != nil,
                                     isHighlighted: optionsWalkIndex == index,
+                                    imageSide: optionImageSide,
+                                    labelFontSize: optionLabelFontSize,
                                     onTap: {
                                         handleDinosaurTap(dinosaur, question: question)
                                     }
                                 )
                             }
                         }
-                        .padding(.horizontal, 12)
+                        .padding(.horizontal, optionRowHPad)
                     }
                     .frame(maxWidth: .infinity)
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } // GeometryReader
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -514,21 +541,26 @@ struct GuessGameView: View {
             // No dimming when audio plays — keep full brightness so dinosaurs are easy to see during intro walk
             .overlay(alignment: .topTrailing) {
                 if isFootprintsGuessGame, currentQuestion != nil, !isGameComplete {
-                    Button {
-                        showSourceFootprintsHints = true
-                    } label: {
-                        Text("Hints")
-                            .font(.caption.weight(.semibold))
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 10)
-                            .background(Circle().fill(Color.blue))
-                            .frame(width: 72, height: 72)
+                    GeometryReader { geo in
+                        let safeWidth = max(geo.size.width, 1)
+                        let playMaxScale: CGFloat = 1.85
+                        let hintSide = GameCatalogImageMetrics.scaled(72, safeWidth: safeWidth, maxScale: playMaxScale)
+                        let hintFont = GameCatalogImageMetrics.scaled(12, safeWidth: safeWidth, maxScale: playMaxScale)
+                        Button {
+                            showSourceFootprintsHints = true
+                        } label: {
+                            Text("Hints")
+                                .font(.system(size: hintFont, weight: .semibold))
+                                .foregroundColor(.white)
+                                .frame(width: hintSide, height: hintSide)
+                                .background(Circle().fill(Color.blue))
+                        }
+                        .disabled(isAudioPlaying || isProcessingAnswer || optionsWalkIndex != nil)
+                        .opacity((isAudioPlaying || isProcessingAnswer || optionsWalkIndex != nil) ? 0.45 : 1.0)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                        .padding(.top, 8)
+                        .padding(.trailing, 16)
                     }
-                    .disabled(isAudioPlaying || isProcessingAnswer || optionsWalkIndex != nil)
-                    .opacity((isAudioPlaying || isProcessingAnswer || optionsWalkIndex != nil) ? 0.45 : 1.0)
-                    .padding(.top, 8)
-                    .padding(.trailing, 16)
                 }
             }
             .fullScreenCover(isPresented: $showSourceFootprintsHints) {
@@ -742,7 +774,7 @@ struct GuessGameView: View {
         }
     }
 
-    /// End-sequence success art: full 280pt victory card (larger than the 180pt level-2 picker art, which shares a row with two other games).
+    /// End-sequence success art: full victory card (larger than the level-2 picker art, which shares a row with two other games).
     private var guessGameSuccessImageSide: CGFloat {
         switch gameConfig.id {
         case "name-that-dinosaur", "name-that-pterosaur", "name-that-marine-reptile", "marine-smile",
@@ -813,6 +845,8 @@ struct DinosaurOptionCard: View {
     let isDisabled: Bool
     /// When true (e.g. Find Mama options walk), show same highlight and name as selected.
     var isHighlighted: Bool = false
+    var imageSide: CGFloat = 90
+    var labelFontSize: CGFloat = 15
     let onTap: () -> Void
 
     private var showHighlight: Bool { isSelected || isHighlighted }
@@ -825,25 +859,29 @@ struct DinosaurOptionCard: View {
                     Image(imageName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 90, height: 90)
+                        .frame(width: imageSide, height: imageSide)
                 } else {
                     Text(dinosaur.icon)
-                        .font(.system(size: 60))
+                        .font(.system(size: min(60, imageSide * 0.67)))
                 }
 
                 // Dinosaur name (shown when selected or highlighted during options walk)
                 if showHighlight {
                     Text(dinosaur.name)
-                        .font(.subheadline.weight(.semibold))
+                        .font(.system(size: labelFontSize, weight: .semibold))
                         .foregroundColor(.primary)
                         .lineLimit(1)
                         .minimumScaleFactor(0.55)
                         .allowsTightening(true)
                         .multilineTextAlignment(TextAlignment.center)
+                        .frame(width: imageSide + 20)
                         .transition(.opacity.combined(with: .move(edge: .bottom)))
                 }
             }
-            .frame(width: showHighlight ? 120 : 100, height: showHighlight ? 150 : 120)
+            .frame(
+                width: showHighlight ? imageSide + 36 : imageSide + 12,
+                height: showHighlight ? imageSide + labelFontSize + 48 : imageSide + 32
+            )
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(showHighlight ? Color.blue.opacity(0.3) : Color.gray.opacity(0.1))
@@ -910,54 +948,67 @@ struct SourceFootprintsHintsView: View {
     }
 
     private var gridView: some View {
-        VStack(spacing: 20) {
-            Text("Source Footprints")
-                .font(.title2.weight(.semibold))
-                .padding(.top, 44)
-            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                ForEach(sourceFootprintsHintClades) { clade in
-                    Button {
-                        showCladeDetail(clade)
-                    } label: {
-                        if UIImage(named: clade.imageName) != nil {
-                            Image(clade.imageName)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 120)
-                                .clipped()
-                        } else {
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.gray.opacity(0.3))
-                                .frame(height: 120)
-                                .overlay(Text(clade.displayName).font(.caption).foregroundColor(.secondary))
+        GeometryReader { geometry in
+            let safeWidth = max(geometry.size.width, 1)
+            let cardHeight = SourceHintsLayout.gridCardHeight(safeWidth: safeWidth)
+            let spacing = SourceHintsLayout.gridSpacing(safeWidth: safeWidth)
+            let hPad = SourceHintsLayout.horizontalPadding(safeWidth: safeWidth)
+            let titleFont = SourceHintsLayout.titleFont(safeWidth: safeWidth)
+            let fallbackFont = SourceHintsLayout.fallbackLabelFont(safeWidth: safeWidth)
+            AlwaysVisibleScrollbarScrollView {
+                VStack(spacing: spacing) {
+                    SourceHintsScreenTitle(title: "Source Footprints", fontSize: titleFont)
+                    LazyVGrid(columns: [GridItem(.flexible(), spacing: spacing), GridItem(.flexible(), spacing: spacing)], spacing: spacing) {
+                        ForEach(sourceFootprintsHintClades) { clade in
+                            Button {
+                                showCladeDetail(clade)
+                            } label: {
+                                if UIImage(named: clade.imageName) != nil {
+                                    Image(clade.imageName)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height: cardHeight)
+                                        .clipped()
+                                } else {
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(Color.gray.opacity(0.3))
+                                        .frame(height: cardHeight)
+                                        .overlay(Text(clade.displayName).font(.system(size: fallbackFont)).foregroundColor(.secondary))
+                                }
+                            }
+                            .buttonStyle(.plain)
                         }
                     }
-                    .buttonStyle(.plain)
+                    .padding(.horizontal, hPad)
+                    .padding(.bottom, spacing)
                 }
             }
-            .padding(.horizontal, 24)
-            Spacer()
         }
     }
 
     @ViewBuilder
     private var detailView: some View {
         if let clade = selectedClade {
-            VStack(spacing: 20) {
-                Spacer()
-                if UIImage(named: clade.imageName) != nil {
-                    Image(clade.imageName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 320, maxHeight: 320)
+            GeometryReader { geometry in
+                let safeWidth = max(geometry.size.width, 1)
+                let detailSide = SourceHintsLayout.detailImageSide(safeWidth: safeWidth)
+                let labelFont = SourceHintsLayout.detailLabelFont(safeWidth: safeWidth)
+                VStack(spacing: 20) {
+                    Spacer()
+                    if UIImage(named: clade.imageName) != nil {
+                        Image(clade.imageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: detailSide, maxHeight: detailSide)
+                    }
+                    Text(clade.displayName)
+                        .font(.system(size: labelFont, weight: .semibold))
+                        .foregroundColor(.primary)
+                    Spacer()
                 }
-                Text(clade.displayName)
-                    .font(.title2.weight(.semibold))
-                    .foregroundColor(.primary)
-                Spacer()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 
@@ -1042,54 +1093,65 @@ struct SourcePteroFootprintsHintsView: View {
     }
 
     private var gridView: some View {
-        VStack(spacing: 20) {
-            Text("Pterosaur track types")
-                .font(.title2.weight(.semibold))
-                .padding(.top, 44)
-            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                ForEach(sourcePteroFootprintsHintMorphs) { morph in
-                    Button {
-                        showMorphDetail(morph)
-                    } label: {
-                        if UIImage(named: morph.imageName) != nil {
-                            Image(morph.imageName)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 120)
-                                .clipped()
-                        } else {
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.gray.opacity(0.3))
-                                .frame(height: 120)
-                                .overlay(Text(morph.displayName).font(.caption).foregroundColor(.secondary))
+        GeometryReader { geometry in
+            let safeWidth = max(geometry.size.width, 1)
+            let cardHeight = SourceHintsLayout.gridCardHeight(safeWidth: safeWidth)
+            let spacing = SourceHintsLayout.gridSpacing(safeWidth: safeWidth)
+            let hPad = SourceHintsLayout.horizontalPadding(safeWidth: safeWidth)
+            let titleFont = SourceHintsLayout.titleFont(safeWidth: safeWidth)
+            let fallbackFont = SourceHintsLayout.fallbackLabelFont(safeWidth: safeWidth)
+            VStack(spacing: spacing) {
+                SourceHintsScreenTitle(title: "Pterosaur track types", fontSize: titleFont)
+                LazyVGrid(columns: [GridItem(.flexible(), spacing: spacing), GridItem(.flexible(), spacing: spacing)], spacing: spacing) {
+                    ForEach(sourcePteroFootprintsHintMorphs) { morph in
+                        Button {
+                            showMorphDetail(morph)
+                        } label: {
+                            if UIImage(named: morph.imageName) != nil {
+                                Image(morph.imageName)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: cardHeight)
+                                    .clipped()
+                            } else {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: cardHeight)
+                                    .overlay(Text(morph.displayName).font(.system(size: fallbackFont)).foregroundColor(.secondary))
+                            }
                         }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
+                .padding(.horizontal, hPad)
+                Spacer()
             }
-            .padding(.horizontal, 24)
-            Spacer()
         }
     }
 
     @ViewBuilder
     private var detailView: some View {
         if let morph = selectedMorph {
-            VStack(spacing: 20) {
-                Spacer()
-                if UIImage(named: morph.imageName) != nil {
-                    Image(morph.imageName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 320, maxHeight: 320)
+            GeometryReader { geometry in
+                let safeWidth = max(geometry.size.width, 1)
+                let detailSide = SourceHintsLayout.detailImageSide(safeWidth: safeWidth)
+                let labelFont = SourceHintsLayout.detailLabelFont(safeWidth: safeWidth)
+                VStack(spacing: 20) {
+                    Spacer()
+                    if UIImage(named: morph.imageName) != nil {
+                        Image(morph.imageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: detailSide, maxHeight: detailSide)
+                    }
+                    Text(morph.displayName)
+                        .font(.system(size: labelFont, weight: .semibold))
+                        .foregroundColor(.primary)
+                    Spacer()
                 }
-                Text(morph.displayName)
-                    .font(.title2.weight(.semibold))
-                    .foregroundColor(.primary)
-                Spacer()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 
@@ -1173,54 +1235,65 @@ struct SourceMarineFootprintsHintsView: View {
     }
 
     private var gridView: some View {
-        VStack(spacing: 20) {
-            Text("Marine track types")
-                .font(.title2.weight(.semibold))
-                .padding(.top, 44)
-            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                ForEach(sourceMarineFootprintsHintSlots) { slot in
-                    Button {
-                        showSlotDetail(slot)
-                    } label: {
-                        if ImageAssetCache.imageExists(named: slot.imageName) {
-                            Image(slot.imageName)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 120)
-                                .clipped()
-                        } else {
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.gray.opacity(0.3))
-                                .frame(height: 120)
-                                .overlay(Text(slot.displayName).font(.caption).foregroundColor(.secondary))
+        GeometryReader { geometry in
+            let safeWidth = max(geometry.size.width, 1)
+            let cardHeight = SourceHintsLayout.gridCardHeight(safeWidth: safeWidth)
+            let spacing = SourceHintsLayout.gridSpacing(safeWidth: safeWidth)
+            let hPad = SourceHintsLayout.horizontalPadding(safeWidth: safeWidth)
+            let titleFont = SourceHintsLayout.titleFont(safeWidth: safeWidth)
+            let fallbackFont = SourceHintsLayout.fallbackLabelFont(safeWidth: safeWidth)
+            VStack(spacing: spacing) {
+                SourceHintsScreenTitle(title: "Marine track types", fontSize: titleFont)
+                LazyVGrid(columns: [GridItem(.flexible(), spacing: spacing), GridItem(.flexible(), spacing: spacing)], spacing: spacing) {
+                    ForEach(sourceMarineFootprintsHintSlots) { slot in
+                        Button {
+                            showSlotDetail(slot)
+                        } label: {
+                            if ImageAssetCache.imageExists(named: slot.imageName) {
+                                Image(slot.imageName)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: cardHeight)
+                                    .clipped()
+                            } else {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: cardHeight)
+                                    .overlay(Text(slot.displayName).font(.system(size: fallbackFont)).foregroundColor(.secondary))
+                            }
                         }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
+                .padding(.horizontal, hPad)
+                Spacer()
             }
-            .padding(.horizontal, 24)
-            Spacer()
         }
     }
 
     @ViewBuilder
     private var detailView: some View {
         if let slot = selectedSlot {
-            VStack(spacing: 20) {
-                Spacer()
-                if ImageAssetCache.imageExists(named: slot.imageName) {
-                    Image(slot.imageName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 320, maxHeight: 320)
+            GeometryReader { geometry in
+                let safeWidth = max(geometry.size.width, 1)
+                let detailSide = SourceHintsLayout.detailImageSide(safeWidth: safeWidth)
+                let labelFont = SourceHintsLayout.detailLabelFont(safeWidth: safeWidth)
+                VStack(spacing: 20) {
+                    Spacer()
+                    if ImageAssetCache.imageExists(named: slot.imageName) {
+                        Image(slot.imageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: detailSide, maxHeight: detailSide)
+                    }
+                    Text(slot.displayName)
+                        .font(.system(size: labelFont, weight: .semibold))
+                        .foregroundColor(.primary)
+                    Spacer()
                 }
-                Text(slot.displayName)
-                    .font(.title2.weight(.semibold))
-                    .foregroundColor(.primary)
-                Spacer()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 

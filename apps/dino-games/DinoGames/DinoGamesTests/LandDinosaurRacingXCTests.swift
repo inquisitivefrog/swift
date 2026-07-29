@@ -267,4 +267,32 @@ final class LandDinosaurRacingXCTests: XCTestCase {
         }
         XCTAssertTrue(labels.isEmpty, "Missing bundle audio: \(labels.joined(separator: "; "))")
     }
+
+    // MARK: - Trip-adjusted mph
+
+    func testTripAdjustedSpeedUsesLandStepNotHardcodedTen() {
+        // Gallimimus 45 mph, clean finish 20 ticks → catalog speed; tripped finish 26 ticks.
+        let clean = RacingSpeedMath.effectiveAverageSpeedMph(
+            finishTicks: 20,
+            raceMaxSpeedMph: 45,
+            stepPerTick: 0.05
+        )
+        let tripped = RacingSpeedMath.effectiveAverageSpeedMph(
+            finishTicks: 26,
+            raceMaxSpeedMph: 45,
+            stepPerTick: 0.05
+        )
+        XCTAssertEqual(clean, 45, accuracy: 0.01)
+        XCTAssertEqual(tripped, 20 * 45 / 26, accuracy: 0.01) // ≈ 34.6
+        XCTAssertNotEqual(tripped, 10 * 45 / 26, accuracy: 0.01) // old buggy half-speed
+    }
+
+    func testTripAdjustedSpeedUsesMarineStep() {
+        let tripped = RacingSpeedMath.effectiveAverageSpeedMph(
+            finishTicks: 52,
+            raceMaxSpeedMph: 40,
+            stepPerTick: 0.025
+        )
+        XCTAssertEqual(tripped, 40 * 40 / 52, accuracy: 0.01)
+    }
 }

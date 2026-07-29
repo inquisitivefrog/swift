@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "testu-protostega-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-testu-protostega-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "testu-protostega-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-testu-protostega-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "testu-protostega-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-testu-protostega-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

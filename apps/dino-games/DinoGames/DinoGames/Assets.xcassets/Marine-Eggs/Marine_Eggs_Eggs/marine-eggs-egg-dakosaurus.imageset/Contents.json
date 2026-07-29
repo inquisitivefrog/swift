@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "marine-eggs-dakosaurus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-eggs-egg-dakosaurus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "marine-eggs-dakosaurus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-eggs-egg-dakosaurus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "marine-eggs-dakosaurus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-eggs-egg-dakosaurus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "marine-diet-herbivore-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-diets-herbivore-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "marine-diet-herbivore-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-diets-herbivore-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "marine-diet-herbivore-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-diets-herbivore-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

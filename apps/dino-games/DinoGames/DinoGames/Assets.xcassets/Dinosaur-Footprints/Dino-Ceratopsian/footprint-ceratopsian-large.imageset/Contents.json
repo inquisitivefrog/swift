@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "footprint-ceratopsian-large-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "footprint-ceratopsian-large-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "footprint-ceratopsian-large-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "footprint-ceratopsian-large-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "footprint-ceratopsian-large-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "footprint-ceratopsian-large-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

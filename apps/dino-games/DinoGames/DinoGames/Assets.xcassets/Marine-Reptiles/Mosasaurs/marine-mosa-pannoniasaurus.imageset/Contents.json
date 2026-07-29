@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "mosa-pannoniasaurus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-mosa-pannoniasaurus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "mosa-pannoniasaurus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-mosa-pannoniasaurus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "mosa-pannoniasaurus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-mosa-pannoniasaurus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

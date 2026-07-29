@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "ptero-basal-anurognathus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "ptero-basal-anurognathus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "ptero-basal-anurognathus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "ptero-basal-anurognathus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "ptero-basal-anurognathus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "ptero-basal-anurognathus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

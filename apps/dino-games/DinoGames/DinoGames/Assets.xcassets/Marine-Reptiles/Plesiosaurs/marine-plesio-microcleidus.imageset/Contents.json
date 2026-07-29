@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "plesio-microcleidus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-plesio-microcleidus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "plesio-microcleidus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-plesio-microcleidus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "plesio-microcleidus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-plesio-microcleidus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

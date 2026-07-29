@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "level-nine-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "game-level-nine-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "level-nine-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "game-level-nine-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "level-nine-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "game-level-nine-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

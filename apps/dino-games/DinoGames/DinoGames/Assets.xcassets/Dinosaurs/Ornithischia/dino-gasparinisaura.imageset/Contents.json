@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-gasparinisaura-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-gasparinisaura-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-gasparinisaura-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-gasparinisaura-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-gasparinisaura-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-gasparinisaura-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

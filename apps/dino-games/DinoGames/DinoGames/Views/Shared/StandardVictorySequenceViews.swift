@@ -12,56 +12,83 @@
 
 import SwiftUI
 
+// MARK: - iPad layout scale (set by `VictorySplitColumnView`)
+
+private struct VictoryLayoutScaleKey: EnvironmentKey {
+    static let defaultValue: CGFloat = 1
+}
+
+extension EnvironmentValues {
+    /// Canvas scale for victory recap rows / success art (1.0 on phone).
+    var victoryLayoutScale: CGFloat {
+        get { self[VictoryLayoutScaleKey.self] }
+        set { self[VictoryLayoutScaleKey.self] = newValue }
+    }
+}
+
 // MARK: - List / row metrics (scroll region above success card)
 
 enum StandardVictoryLayout {
+    /// Phone-tuned recap row height (thumbnail + padding).
     static let rowHeight: CGFloat = 92
     static let rowSpacing: CGFloat = 12
-    /// Top + bottom padding inside the scroll’s inner `VStack` (matches existing games).
-    static let listContentVerticalPadding: CGFloat = 16
+    /// Phone-tuned recap thumbnail side.
+    static let recapThumbnailSide: CGFloat = 72
+    /// Top + bottom padding inside the scroll’s inner `VStack`.
+    /// Keep at 0 so a bottom-aligned `scrollTo` shows exactly `maxVisibleRecapRows` full rows (no partial peek).
+    static let listContentVerticalPadding: CGFloat = 0
     /// Fixed viewport: at most this many recap rows are visible; longer lists scroll inside the same height.
     static let maxVisibleRecapRows: Int = 3
+    /// Cap for victory art growth on wide canvases (phone stays 1.0).
+    static let iPadMaxScale: CGFloat = 1.85
+
+    static func layoutScale(safeWidth: CGFloat) -> CGFloat {
+        GameCatalogImageMetrics.canvasScale(safeWidth: safeWidth, maxScale: iPadMaxScale)
+    }
+
+    static func scaledRowHeight(_ scale: CGFloat) -> CGFloat {
+        (rowHeight * scale).rounded()
+    }
+
+    static func scaledRecapThumbnailSide(_ scale: CGFloat) -> CGFloat {
+        (recapThumbnailSide * scale).rounded()
+    }
 
     /// Standard recap list height for `itemCount` rows (caps visible slots at `maxVisibleRecapRows`).
-    static func recapListScrollHeight(itemCount: Int) -> CGFloat {
-        listScrollHeight(rowCount: itemCount, maxVisibleRows: maxVisibleRecapRows)
+    static func recapListScrollHeight(itemCount: Int, scale: CGFloat = 1) -> CGFloat {
+        listScrollHeight(rowCount: itemCount, maxVisibleRows: maxVisibleRecapRows, scale: scale)
     }
 
     /// Height of the winner / recap scroll area when the number of rows can be less than `maxVisibleRows` (e.g. Guess games with 3 rounds).
-    static func listScrollHeight(rowCount: Int, maxVisibleRows: Int = maxVisibleRecapRows) -> CGFloat {
+    static func listScrollHeight(rowCount: Int, maxVisibleRows: Int = maxVisibleRecapRows, scale: CGFloat = 1) -> CGFloat {
         let visibleRows = max(1, min(maxVisibleRows, rowCount))
         let visibleGaps = max(0, visibleRows - 1)
-        return listContentVerticalPadding
-            + CGFloat(visibleRows) * rowHeight
-            + CGFloat(visibleGaps) * rowSpacing
-            + listContentVerticalPadding
+        let rh = scaledRowHeight(scale)
+        // Exactly N full rows + gaps — no internal vertical insets (those caused a partial row when scrolling).
+        return CGFloat(visibleRows) * rh + CGFloat(visibleGaps) * rowSpacing
     }
 
     /// Fixed number of row “slots” in the scroll (legacy helper when height must match an exact row count).
-    static func listScrollHeightFixedRows(_ rowCount: Int) -> CGFloat {
+    static func listScrollHeightFixedRows(_ rowCount: Int, scale: CGFloat = 1) -> CGFloat {
         let rows = max(1, rowCount)
         let gaps = max(0, rows - 1)
-        return listContentVerticalPadding
-            + CGFloat(rows) * rowHeight
-            + CGFloat(gaps) * rowSpacing
-            + listContentVerticalPadding
+        let rh = scaledRowHeight(scale)
+        return CGFloat(rows) * rh + CGFloat(gaps) * rowSpacing
     }
 
-    /// Titles longer than this use `.title2` / `.title3` instead of `.largeTitle` / `.title` in victory (e.g. Which Marine Reptile Is Longer).
+    /// Titles longer than this use `.title2` instead of `.largeTitle` in victory (e.g. Which Marine Reptile Is Longer).
     static let compactVictoryGameTitleCharacterThreshold: Int = 24
 
-    static func victoryGameTitleFont(for title: String, showSuccessPhase: Bool) -> Font {
+    /// Stable for the whole victory screen — changing size when the success card appears reads as a blink.
+    static func victoryGameTitleFont(for title: String, showSuccessPhase _: Bool) -> Font {
         let useCompact = title.count > compactVictoryGameTitleCharacterThreshold
-        if showSuccessPhase {
-            return useCompact ? .title3 : .title
-        }
         return useCompact ? .title2 : .largeTitle
     }
 
     /// Racing: same capped recap viewport as other land games (`maxVisibleRecapRows`); then cap so the success region still fits on small screens.
-    static func listScrollHeightRacing(rowCount: Int, maxScreenHeight: CGFloat) -> CGFloat {
-        let base = recapListScrollHeight(itemCount: rowCount)
-        return min(base, max(260, maxScreenHeight * 0.58))
+    static func listScrollHeightRacing(rowCount: Int, maxScreenHeight: CGFloat, scale: CGFloat = 1) -> CGFloat {
+        let base = recapListScrollHeight(itemCount: rowCount, scale: scale)
+        return min(base, max(260 * scale, maxScreenHeight * 0.58))
     }
 
     /// Scroll only after the highlight leaves the first viewport page (e.g. Dino Ages: 9 rows, 3 visible).
@@ -108,19 +135,22 @@ struct VictoryRecapDisplayItem: Identifiable, Equatable {
     }
 }
 
-/// Shared HStack row: thumbnail + title, highlight ring, fixed `StandardVictoryLayout.rowHeight`.
+/// Shared HStack row: thumbnail + title, highlight ring, scaled `StandardVictoryLayout.rowHeight` on iPad.
 struct StandardVictoryRecapRowView: View {
     let item: VictoryRecapDisplayItem
     let isHighlighted: Bool
+    @Environment(\.victoryLayoutScale) private var layoutScale
 
     var body: some View {
+        let thumb = StandardVictoryLayout.scaledRecapThumbnailSide(layoutScale)
+        let rowH = StandardVictoryLayout.scaledRowHeight(layoutScale)
         HStack(spacing: 16) {
             Group {
                 if let name = item.imageAssetName, ImageAssetCache.imageExists(named: name) {
                     Image(name)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 72, height: 72)
+                        .frame(width: thumb, height: thumb)
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                         .opacity(isHighlighted ? 1.0 : 0.4)
                         .overlay(
@@ -129,8 +159,8 @@ struct StandardVictoryRecapRowView: View {
                         )
                 } else {
                     Text(item.fallbackEmoji)
-                        .font(.system(size: 40))
-                        .frame(width: 72, height: 72)
+                        .font(.system(size: (40 * layoutScale).rounded()))
+                        .frame(width: thumb, height: thumb)
                         .opacity(isHighlighted ? 1.0 : 0.4)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
@@ -141,7 +171,7 @@ struct StandardVictoryRecapRowView: View {
             VStack(alignment: .leading, spacing: 2) {
                 if !item.title.isEmpty {
                     Text(item.title)
-                        .font(.title2)
+                        .font(layoutScale > 1.15 ? .title : .title2)
                         .fontWeight(isHighlighted ? .semibold : .regular)
                         .foregroundColor(.primary)
                         .multilineTextAlignment(.leading)
@@ -150,11 +180,11 @@ struct StandardVictoryRecapRowView: View {
                 }
                 if let subtitle = item.subtitle, !subtitle.isEmpty {
                     Text(subtitle)
-                        .font(.subheadline)
-                        .fontWeight(isHighlighted ? .semibold : .regular)
+                        .font(layoutScale > 1.15 ? .title2 : .headline)
+                        .fontWeight(isHighlighted ? .semibold : .medium)
                         .foregroundColor(.secondary)
                         .lineLimit(1)
-                        .minimumScaleFactor(0.6)
+                        .minimumScaleFactor(0.7)
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -162,7 +192,7 @@ struct StandardVictoryRecapRowView: View {
         }
         .padding(.horizontal, 20)
         .padding(.vertical, 10)
-        .frame(height: StandardVictoryLayout.rowHeight)
+        .frame(height: rowH)
         .background(
             RoundedRectangle(cornerRadius: 12)
                 .fill(isHighlighted ? Color.accentColor.opacity(0.12) : Color.clear)
@@ -357,20 +387,32 @@ struct StandardVictorySuccessImageView: View {
     }
 
     var body: some View {
-        ZStack {
-            resolvedContent
+        GeometryReader { geometry in
+            let safeWidth = max(geometry.size.width, 1)
+            let safeHeight = max(geometry.size.height, 1)
+            // Grow toward available space on iPad; never exceed the success-phase frame.
+            let widthScaled = GameCatalogImageMetrics.scaled(
+                imageSide,
+                safeWidth: safeWidth,
+                maxScale: StandardVictoryLayout.iPadMaxScale
+            )
+            let side = min(widthScaled, safeWidth * 0.88, safeHeight * 0.92)
+            ZStack {
+                resolvedContent(side: side)
+            }
+            .frame(width: geometry.size.width, height: geometry.size.height)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .accessibilityIdentifier("victory-success-image")
     }
 
     @ViewBuilder
-    private var resolvedContent: some View {
+    private func resolvedContent(side: CGFloat) -> some View {
         if let name = candidateAssetNames.first(where: { ImageAssetCache.imageExists(named: $0) }) {
             Image(name)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(width: imageSide, height: imageSide)
+                .frame(width: side, height: side)
                 .layoutPriority(1)
         } else {
             switch missingPolicy {
@@ -378,7 +420,7 @@ struct StandardVictorySuccessImageView: View {
                 EmptyView()
             case .emojiCelebration:
                 Text("🎉")
-                    .font(.system(size: 100))
+                    .font(.system(size: min(100, side * 0.35)))
             }
         }
     }
@@ -451,12 +493,30 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
     }
 
     /// Recap list is hidden during the success card when collapsed so the title and success art fit on screen (e.g. Weigh the Marine Reptile in landscape).
-    private var activeListScrollHeight: CGFloat {
-        showSuccessPhase && collapseRecapListDuringSuccessPhase ? 0 : listScrollHeight
+    private func activeListScrollHeight(scale: CGFloat) -> CGFloat {
+        if showSuccessPhase && collapseRecapListDuringSuccessPhase { return 0 }
+        // Prefer recomputing from item count so row height and viewport stay in sync on iPad.
+        if let count = recapItemCount {
+            return StandardVictoryLayout.recapListScrollHeight(itemCount: count, scale: scale)
+        }
+        return (listScrollHeight * scale).rounded()
     }
 
     var body: some View {
-        VStack(spacing: 0) {
+        GeometryReader { geometry in
+            let safeWidth = max(geometry.size.width, 1)
+            let scale = StandardVictoryLayout.layoutScale(safeWidth: safeWidth)
+            columnContent(scale: scale)
+                .frame(width: geometry.size.width, height: geometry.size.height)
+                .environment(\.victoryLayoutScale, scale)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .accessibilityIdentifier("victory-split-column")
+    }
+
+    private func columnContent(scale: CGFloat) -> some View {
+        let listH = activeListScrollHeight(scale: scale)
+        return VStack(spacing: 0) {
             if let gameTitle, !gameTitle.isEmpty, !(hideGameTitleDuringSuccessPhase && showSuccessPhase) {
                 Text(gameTitle)
                     .font(StandardVictoryLayout.victoryGameTitleFont(for: gameTitle, showSuccessPhase: showSuccessPhase))
@@ -469,16 +529,15 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
                     .layoutPriority(2)
                     .accessibilityIdentifier("victory-game-title")
             }
-            if activeListScrollHeight > 0 {
-                scrollSection
+            if listH > 0 {
+                scrollSection(listHeight: listH)
             }
             bottomSection
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .accessibilityIdentifier("victory-split-column")
     }
 
-    private var scrollSection: some View {
+    private func scrollSection(listHeight: CGFloat) -> some View {
         ScrollViewReader { proxy in
             ScrollView {
                 Group {
@@ -494,7 +553,8 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
                 }
             }
             .scrollIndicators(scrollIndicators)
-            .frame(height: activeListScrollHeight)
+            .frame(height: listHeight)
+            .clipped()
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("victory-recap-list")
             .onChange(of: endHighlightIndex) { _, newIndex in
@@ -552,13 +612,58 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
 
 // MARK: - Source hints overlay title (Ages, Eggs, Footprints, Plants)
 
+/// Shared iPad-friendly metrics for full-screen source-hints grids.
+enum SourceHintsLayout {
+    static let maxScale: CGFloat = 1.85
+    /// Phone-tuned grid tile height; grows on wider canvases.
+    static let phoneGridCardHeight: CGFloat = 160
+    static let phoneDetailImageSide: CGFloat = 360
+    static let phoneTitleFont: CGFloat = 28
+    static let phoneDetailLabelFont: CGFloat = 26
+    static let phoneFallbackLabelFont: CGFloat = 18
+    static let phoneGridSpacing: CGFloat = 20
+    static let phoneHorizontalPadding: CGFloat = 20
+
+    static func gridCardHeight(safeWidth: CGFloat) -> CGFloat {
+        GameCatalogImageMetrics.scaled(phoneGridCardHeight, safeWidth: safeWidth, maxScale: maxScale)
+    }
+
+    static func detailImageSide(safeWidth: CGFloat) -> CGFloat {
+        min(
+            GameCatalogImageMetrics.scaled(phoneDetailImageSide, safeWidth: safeWidth, maxScale: maxScale),
+            safeWidth * 0.86
+        )
+    }
+
+    static func titleFont(safeWidth: CGFloat) -> CGFloat {
+        GameCatalogImageMetrics.scaled(phoneTitleFont, safeWidth: safeWidth, maxScale: maxScale)
+    }
+
+    static func detailLabelFont(safeWidth: CGFloat) -> CGFloat {
+        GameCatalogImageMetrics.scaled(phoneDetailLabelFont, safeWidth: safeWidth, maxScale: maxScale)
+    }
+
+    static func fallbackLabelFont(safeWidth: CGFloat) -> CGFloat {
+        GameCatalogImageMetrics.scaled(phoneFallbackLabelFont, safeWidth: safeWidth, maxScale: maxScale)
+    }
+
+    static func gridSpacing(safeWidth: CGFloat) -> CGFloat {
+        GameCatalogImageMetrics.scaled(phoneGridSpacing, safeWidth: safeWidth, maxScale: maxScale)
+    }
+
+    static func horizontalPadding(safeWidth: CGFloat) -> CGFloat {
+        GameCatalogImageMetrics.scaled(phoneHorizontalPadding, safeWidth: safeWidth, maxScale: maxScale)
+    }
+}
+
 /// Shared header for full-screen source-hints grids (`Source Ages`, `Source Eggs`, …).
 struct SourceHintsScreenTitle: View {
     let title: String
+    var fontSize: CGFloat = 28
 
     var body: some View {
         Text(title)
-            .font(.title2.weight(.semibold))
+            .font(.system(size: fontSize, weight: .semibold))
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity)
             .padding(.top, 44)

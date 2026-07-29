@@ -87,12 +87,6 @@ enum TestBundleHelpers {
 
     // MARK: - Source tree (json ↔ images) slug matching
 
-    /// JSON `char_{slug}` stems whose on-disk dinosaur body PNGs use alternate spellings in filenames.
-    private static let dinosaurBaseImageFilenameSlugVariants: [String: [String]] = [
-        "microraptor": ["microraptor", "microcraptor"],
-        "triceratops": ["triceratops", "tricerators"],
-    ]
-
     /// JSON `silh_{slug}` stems whose on-disk pterosaur silhouette PNGs use alternate spellings.
     private static let pterosaurSilhouetteJsonSlugFilenameVariants: [String: [String]] = [
         "darwinpterus": ["darwinpterus", "darwinopterus"],
@@ -100,12 +94,9 @@ enum TestBundleHelpers {
         "quetzalcoatlus": ["quetzalcoatlus", "quetzacoatlus"],
     ]
 
-    /// True when some exported dinosaur body image filename contains `"-{variant}-"` for a known variant of `slug`.
+    /// True when some exported dinosaur body image filename contains `"-{slug}-"`.
     static func dinosaurBaseJsonSlugHasMatchingSourceImage(slug: String, imageBasenamesLowercased: Set<String>) -> Bool {
-        let variants = dinosaurBaseImageFilenameSlugVariants[slug] ?? [slug]
-        return variants.contains { variant in
-            imageBasenamesLowercased.contains { $0.contains("-\(variant)-") }
-        }
+        imageBasenamesLowercased.contains { $0.contains("-\(slug)-") }
     }
 
     /// True when some exported pterosaur silhouette image matches this JSON slug (incl. historical filename spellings).

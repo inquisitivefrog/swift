@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "char-polycotylus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-plesio-polycotylus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "char-polycotylus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-plesio-polycotylus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "char-polycotylus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-plesio-polycotylus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

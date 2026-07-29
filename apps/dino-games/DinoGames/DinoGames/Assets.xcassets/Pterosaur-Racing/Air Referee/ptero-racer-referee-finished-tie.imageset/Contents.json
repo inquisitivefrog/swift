@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ptero-racer-referee-finished-tie-80.png",
+      "filename" : "ptero-racer-referee-finished-tie-360.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ptero-racer-referee-finished-tie-160.png",
+      "filename" : "ptero-racer-referee-finished-tie-720.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ptero-racer-referee-finished-tie-240.png",
+      "filename" : "ptero-racer-referee-finished-tie-1024.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

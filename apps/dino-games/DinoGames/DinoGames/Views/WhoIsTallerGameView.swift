@@ -79,24 +79,35 @@ struct WhoIsTallerGameView: View {
         !canTapGrid || speechManager.isPlaying
     }
 
-    /// Match Measure the Dinosaur layout: measure-dino-* are 140×340 px; paleontologist center 110×340 pt (larger display).
-    private let measureSlotWidth: CGFloat = 140
-    private let measureAreaHeight: CGFloat = 340
-    private let measureCenterWidth: CGFloat = 110
+    /// Phone-reference measure stage sizes; scaled via `GameCatalogImageMetrics` on wider canvases.
+    private let phoneMeasureSlotWidth: CGFloat = 140
+    private let phoneMeasureAreaHeight: CGFloat = 340
+    private let phoneMeasureCenterWidth: CGFloat = 110
     /// Minimal spacing so dinosaurs almost touch the paleontologist (tape measure).
     private let measureSpacing: CGFloat = 0
     /// Which Marine Reptile Is Longer: scuba ref left + two WIDE_WEIGHT_CARD strips stacked.
-    private let marineScubaWidth: CGFloat = 80
-    private let marineLengthStripHeight: CGFloat = 140
-    private let marineLengthTapeRulerHeight: CGFloat = 22
-    private var marineLengthAreaHeight: CGFloat { marineLengthStripHeight * 2 + marineLengthTapeRulerHeight }
+    private let phoneMarineScubaWidth: CGFloat = 80
+    private let phoneMarineLengthStripHeight: CGFloat = 140
+    private let phoneMarineLengthTapeRulerHeight: CGFloat = 22
     private let marineLengthComparisonHorizontalPadding: CGFloat = 16
     private let marineLengthTapeRulerAssetName = "measure-marine-tape-tool"
+    private let playMaxScale: CGFloat = 1.75
+
+    private func measureStageReserveHeight(safeWidth: CGFloat) -> CGFloat {
+        if isMarinePool {
+            let stripH = GameCatalogImageMetrics.scaled(phoneMarineLengthStripHeight, safeWidth: safeWidth, maxScale: playMaxScale)
+            let tapeH = GameCatalogImageMetrics.scaled(phoneMarineLengthTapeRulerHeight, safeWidth: safeWidth, maxScale: playMaxScale)
+            return stripH * 2 + tapeH + 8
+        }
+        let areaH = GameCatalogImageMetrics.scaled(phoneMeasureAreaHeight, safeWidth: safeWidth, maxScale: playMaxScale)
+        return areaH + 20 + 8
+    }
 
     var body: some View {
         GeometryReader { geometry in
             let safeHeight = max(geometry.size.height, 1)
             let safeWidth = max(geometry.size.width, 1)
+            let grid = CreatureThreeByThreeGridMetrics.make(safeWidth: safeWidth, safeHeight: safeHeight, reservedStageHeight: measureStageReserveHeight(safeWidth: safeWidth), chrome: 32)
             if isGameOver {
                 // Full-screen victory (same as Weigh / Name That Dinosaur) so the game title stays pinned and visible.
                 victoryView
@@ -106,7 +117,7 @@ struct WhoIsTallerGameView: View {
                     VStack(spacing: 0) {
                         Spacer().frame(height: 8)
 
-                        VStack(spacing: 8) {
+                        VStack(spacing: 6) {
                             VStack(spacing: 4) {
                                 Text(gameConfig.title)
                                     .font(.title2)
@@ -117,6 +128,10 @@ struct WhoIsTallerGameView: View {
                                     .foregroundColor(.secondary)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
+                            .padding(.horizontal, 10)
+                            .frame(height: grid.titleBlockHeight)
+                            .frame(maxWidth: grid.contentWidth)
+                            .frame(maxWidth: .infinity)
 
                             if !displayItems.isEmpty {
                                 let columns = [GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6)]
@@ -129,19 +144,17 @@ struct WhoIsTallerGameView: View {
                                             isDisabled: (!canTapGrid) || (selectedFirst != nil && selectedSecond != nil) || (selectedFirst != nil && selectedSecond == nil && !canSelectSecond),
                                             isTooSmallToSee: selectedFirst != nil && selectedSecond == nil && wouldBeTooSmall(second: item),
                                             isTooBigToSee: selectedFirst != nil && selectedSecond == nil && wouldBeTooBig(second: item),
-                                            isIntroHighlighted: introWalkStep >= 0 && introWalkStep < displayItems.count && introWalkStep == index
+                                            isIntroHighlighted: introWalkStep >= 0 && introWalkStep < displayItems.count && introWalkStep == index,
+                                            imageSize: grid.imageSize,
+                                            labelFontSize: grid.labelFontSize
                                         ) {
                                             handleItemTap(item)
                                         }
-                                        .aspectRatio(1, contentMode: .fit)
                                     }
                                 }
                                 .padding(.horizontal, 10)
-                                .frame(height: 330)
-
-                                whoIsTallerMeasureArea(availableWidth: safeWidth)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.top, 8)
+                                .frame(maxWidth: grid.contentWidth)
+                                .frame(maxWidth: .infinity)
                             } else {
                                 Text("Not enough creatures for this round.")
                                     .font(.subheadline)
@@ -150,7 +163,14 @@ struct WhoIsTallerGameView: View {
                                     .padding()
                             }
                         }
+                        .frame(height: grid.blockHeight)
                         .frame(width: safeWidth)
+
+                        if !displayItems.isEmpty {
+                            whoIsTallerMeasureArea(availableWidth: safeWidth)
+                                .frame(maxWidth: .infinity)
+                                .padding(.top, 8)
+                        }
 
                         Spacer(minLength: 8)
                     }
@@ -160,17 +180,18 @@ struct WhoIsTallerGameView: View {
                 .frame(minHeight: safeHeight)
             }
         }
-        .navigationTitle(isGameOver ? "" : gameConfig.title)
         .navigationBarTitleDisplayMode(.inline)
         .allowsHitTesting(!blocksUserInput)
         .gameSheetDismissDisabledWhileAudioPlaying(blocksUserInput)
         .toolbar {
-            if !isGameOver {
+            #if DEBUG
+            if DeveloperSessionFlags.showEarlyExitDone, !isGameOver {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") { isPresented = false }
                         .disabled(blocksUserInput)
                 }
             }
+            #endif
         }
         .onAppear {
             startRound()
@@ -184,16 +205,19 @@ struct WhoIsTallerGameView: View {
         if isMarinePool {
             marineLengthComparisonArea(availableWidth: availableWidth)
         } else {
+            let slotW = GameCatalogImageMetrics.scaled(phoneMeasureSlotWidth, safeWidth: availableWidth, maxScale: playMaxScale)
+            let areaH = GameCatalogImageMetrics.scaled(phoneMeasureAreaHeight, safeWidth: availableWidth, maxScale: playMaxScale)
+            let centerW = GameCatalogImageMetrics.scaled(phoneMeasureCenterWidth, safeWidth: availableWidth, maxScale: playMaxScale)
             let scales = whoIsTallerSlotScales()
             HStack(alignment: .bottom, spacing: measureSpacing) {
-                whoIsTallerSlotOptional(item: selectedFirst, scale: scales.left, alignTowardCenter: true)
+                whoIsTallerSlotOptional(item: selectedFirst, scale: scales.left, alignTowardCenter: true, slotWidth: slotW, areaHeight: areaH)
                     .id("left-\(selectedFirst?.id ?? 0)")
-                whoIsTallerCenterImage(scale: scales.center)
-                whoIsTallerSlotOptional(item: selectedSecond, scale: scales.right, alignTowardCenter: false)
+                whoIsTallerCenterImage(scale: scales.center, centerWidth: centerW, areaHeight: areaH)
+                whoIsTallerSlotOptional(item: selectedSecond, scale: scales.right, alignTowardCenter: false, slotWidth: slotW, areaHeight: areaH)
                     .id("right-\(selectedSecond?.id ?? 0)")
             }
             .frame(maxWidth: .infinity)
-            .frame(height: measureAreaHeight + 20)
+            .frame(height: areaH + 20)
             .padding(.horizontal, 24)
         }
     }
@@ -201,23 +225,27 @@ struct WhoIsTallerGameView: View {
     /// Width comes from the outer `GeometryReader` — avoid nesting another reader inside `ScrollView`
     /// (mis-measures during intro layout passes and can leak tape/scuba pixels above the strip).
     private func marineLengthComparisonArea(availableWidth: CGFloat) -> some View {
+        let scubaW = GameCatalogImageMetrics.scaled(phoneMarineScubaWidth, safeWidth: availableWidth, maxScale: playMaxScale)
+        let stripH = GameCatalogImageMetrics.scaled(phoneMarineLengthStripHeight, safeWidth: availableWidth, maxScale: playMaxScale)
+        let tapeH = GameCatalogImageMetrics.scaled(phoneMarineLengthTapeRulerHeight, safeWidth: availableWidth, maxScale: playMaxScale)
+        let areaH = stripH * 2 + tapeH
         let contentWidth = max(availableWidth - marineLengthComparisonHorizontalPadding * 2, 1)
         let magnification = marineLengthVisibilityMagnification()
-        let clipWidth = max(contentWidth - marineScubaWidth, 1)
+        let clipWidth = max(contentWidth - scubaW, 1)
         let tapeWidth = clipWidth * magnification
         return HStack(alignment: .center, spacing: 0) {
-            marineScubaPaleontologistImage(areaHeight: marineLengthAreaHeight)
+            marineScubaPaleontologistImage(areaHeight: areaH, scubaWidth: scubaW)
             marineLengthStripColumn(
                 tapeWidth: tapeWidth,
                 clipWidth: clipWidth,
-                stripHeight: marineLengthStripHeight,
-                tapeHeight: marineLengthTapeRulerHeight,
-                areaHeight: marineLengthAreaHeight
+                stripHeight: stripH,
+                tapeHeight: tapeH,
+                areaHeight: areaH
             )
         }
-        .frame(width: contentWidth, height: marineLengthAreaHeight, alignment: .leading)
+        .frame(width: contentWidth, height: areaH, alignment: .leading)
         .frame(maxWidth: .infinity)
-        .frame(height: marineLengthAreaHeight)
+        .frame(height: areaH)
         .clipped()
         .padding(.horizontal, marineLengthComparisonHorizontalPadding)
     }
@@ -263,7 +291,7 @@ struct WhoIsTallerGameView: View {
 
     /// Scuba paleontologist with measuring tape (`measure-marine-paleontologist-tape`), left of both length strips.
     /// Always full 1.7 m reference height; never shrinks for long reptiles (horizontal tape zoom handles small species).
-    private func marineScubaPaleontologistImage(areaHeight: CGFloat) -> some View {
+    private func marineScubaPaleontologistImage(areaHeight: CGFloat, scubaWidth: CGFloat) -> some View {
         let name = "measure-marine-paleontologist-tape"
         return Group {
             if ImageAssetCache.imageExists(named: name) {
@@ -274,7 +302,7 @@ struct WhoIsTallerGameView: View {
                 Color.clear
             }
         }
-        .frame(width: marineScubaWidth, height: areaHeight, alignment: .center)
+        .frame(width: scubaWidth, height: areaHeight, alignment: .center)
     }
 
     /// Horizontal tape/ruler between the two length strips; leading-aligned and clipped when zoomed.
@@ -443,20 +471,20 @@ struct WhoIsTallerGameView: View {
     }
 
     /// Slot with optional item: empty when nil, else measure-dino-* scaled. alignTowardCenter: true = left slot (trailing), false = right slot (leading).
-    private func whoIsTallerSlotOptional(item: WhoIsTallerItem?, scale: CGFloat, alignTowardCenter: Bool) -> some View {
+    private func whoIsTallerSlotOptional(item: WhoIsTallerItem?, scale: CGFloat, alignTowardCenter: Bool, slotWidth: CGFloat, areaHeight: CGFloat) -> some View {
         Group {
             if let item = item, scale > 0 {
-                whoIsTallerSlot(item: item, scale: scale, alignTowardCenter: alignTowardCenter)
+                whoIsTallerSlot(item: item, scale: scale, alignTowardCenter: alignTowardCenter, slotWidth: slotWidth, areaHeight: areaHeight)
             } else {
-                Color.clear.frame(width: measureSlotWidth, height: measureAreaHeight)
+                Color.clear.frame(width: slotWidth, height: areaHeight)
             }
         }
     }
 
     /// Left slot: measure-dino-* aligned bottomTrailing (toward paleontologist). Right slot: bottomLeading.
-    private func whoIsTallerSlot(item: WhoIsTallerItem, scale: CGFloat, alignTowardCenter: Bool) -> some View {
-        let contentW = measureSlotWidth * scale
-        let contentH = measureAreaHeight * scale
+    private func whoIsTallerSlot(item: WhoIsTallerItem, scale: CGFloat, alignTowardCenter: Bool, slotWidth: CGFloat, areaHeight: CGFloat) -> some View {
+        let contentW = slotWidth * scale
+        let contentH = areaHeight * scale
         let alignment: Alignment = alignTowardCenter ? .bottomTrailing : .bottomLeading
         return Group {
             if let name = measureDinoImageName(for: item), ImageAssetCache.imageExists(named: name) {
@@ -469,7 +497,7 @@ struct WhoIsTallerGameView: View {
             }
         }
         .frame(width: contentW, height: contentH, alignment: .bottom)
-        .frame(width: measureSlotWidth, height: measureAreaHeight, alignment: alignment)
+        .frame(width: slotWidth, height: areaHeight, alignment: alignment)
     }
 
     /// Dino: ladder pose (`measure-dino-paleontologist-ladder`); ptero: tape pose (`measure-ptero-paleontologist-tape`).
@@ -478,10 +506,10 @@ struct WhoIsTallerGameView: View {
     }
 
     /// Paleontologist reference: bottom-aligned with left/right creatures for height comparison. Scaled relative to max(creature heights, human).
-    private func whoIsTallerCenterImage(scale: CGFloat) -> some View {
+    private func whoIsTallerCenterImage(scale: CGFloat, centerWidth: CGFloat, areaHeight: CGFloat) -> some View {
         let name = whoIsTallerCenterImageName()
-        let contentW = measureCenterWidth * scale
-        let contentH = measureAreaHeight * scale
+        let contentW = centerWidth * scale
+        let contentH = areaHeight * scale
         return Group {
             if ImageAssetCache.imageExists(named: name) {
                 Image(name)
@@ -493,7 +521,7 @@ struct WhoIsTallerGameView: View {
             }
         }
         .frame(width: contentW, height: contentH, alignment: .bottom)
-        .frame(width: measureCenterWidth, height: measureAreaHeight, alignment: .bottom)
+        .frame(width: centerWidth, height: areaHeight, alignment: .bottom)
     }
 
     // MARK: - Logic
@@ -874,10 +902,9 @@ private struct WhoIsTallerItemCard: View {
     /// Marine: true when the second pick would be "too big to see" with the current first selection.
     let isTooBigToSee: Bool
     let isIntroHighlighted: Bool
+    var imageSize: CGFloat = 96
+    var labelFontSize: CGFloat = 15
     let onTap: () -> Void
-
-    /// Grid cell image size; compact to fit without overlapping Round/paleontologist.
-    private let imageSize: CGFloat = 72
 
     var body: some View {
         Button(action: onTap) {
@@ -891,17 +918,19 @@ private struct WhoIsTallerItemCard: View {
                             .clipped()
                     } else {
                         Text(item.emoji)
-                            .font(.system(size: 60))
+                            .font(.system(size: imageSize * 0.625))
                             .frame(width: imageSize, height: imageSize)
                     }
                 }
                 Text(item.name)
-                    .font(.subheadline)
+                    .font(.system(size: labelFontSize))
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.65)
+                    // Same as Weigh ItemCard: one line so land / air / sea 3×3 rows stay even.
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
                     .allowsTightening(true)
+                    .frame(width: imageSize)
             }
         }
         .padding(5)

@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-torosaurus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-torosaurus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-torosaurus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-torosaurus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-torosaurus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-torosaurus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

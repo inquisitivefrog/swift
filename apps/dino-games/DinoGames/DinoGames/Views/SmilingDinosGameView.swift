@@ -250,19 +250,35 @@ struct SmilingDinosGameView: View {
     // MARK: - Main Game
 
     private var mainGameView: some View {
-        VStack(spacing: 20) {
+        GeometryReader { geometry in
+            let safeWidth = max(geometry.size.width, 1)
+            let safeHeight = max(geometry.size.height, 1)
+            // Phone-tuned baselines; grow on iPad (Dino / Ptero / Marine Smile share this view).
+            let playMaxScale: CGFloat = 1.5
+            let layoutScale = GameCatalogImageMetrics.canvasScale(safeWidth: safeWidth, maxScale: playMaxScale)
+            let isPadLayout = layoutScale > 1.05
+            let smileSize = min(
+                GameCatalogImageMetrics.scaled(130, safeWidth: safeWidth, maxScale: playMaxScale),
+                (safeHeight - 200) / 3.6,
+                (safeWidth * 0.38)
+            )
+            let toothSize = min(
+                GameCatalogImageMetrics.scaled(100, safeWidth: safeWidth, maxScale: playMaxScale),
+                smileSize * 0.78
+            )
+            VStack(spacing: 20) {
             VStack(spacing: 4) {
                 Text(gameConfig.title)
-                    .font(.title2)
+                    .font(isPadLayout ? .largeTitle : .title2)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                     .padding(.top, 8)
                 Text("Round \(currentRound) of \(totalRounds)")
-                    .font(.subheadline)
+                    .font(isPadLayout ? .title3 : .subheadline)
                     .foregroundColor(.secondary)
                 // Fixed-height label area: selection name or intro name
                 Text(selectedItemLabel ?? " ")
-                    .font(.title3)
+                    .font(isPadLayout ? .title2 : .title3)
                     .fontWeight(.medium)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
@@ -270,14 +286,14 @@ struct SmilingDinosGameView: View {
                     .minimumScaleFactor(0.8)
                     .padding(.horizontal, 24)
                     .padding(.top, 8)
-                    .frame(height: 52)
+                    .frame(height: isPadLayout ? 60 : 52)
                     .opacity(selectedItemLabel != nil ? 1 : 0)
             }
 
             HStack(spacing: 20) {
-                VStack(spacing: 12) {
+                VStack(spacing: isPadLayout ? 16 : 12) {
                     Text("Smiles")
-                        .font(.headline)
+                        .font(isPadLayout ? .title3.weight(.semibold) : .headline)
                     ForEach(Array(activeDinosaurs.enumerated()), id: \.element.id) { index, dino in
                         SmileCard(
                             line: gameConfig.line,
@@ -286,14 +302,15 @@ struct SmilingDinosGameView: View {
                             isMatched: matchedPairs.contains(dino.id),
                             hasFailedAttempt: failedAttempts.contains(dino.id),
                             isIntroHighlighted: isSmileIntroHighlighted(at: index, dinosaur: dino),
+                            cardSize: smileSize,
                             onTap: { handleSmileTap(dino) }
                         )
                     }
                 }
 
-                VStack(spacing: 12) {
+                VStack(spacing: isPadLayout ? 16 : 12) {
                     Text("Tooth Shapes")
-                        .font(.headline)
+                        .font(isPadLayout ? .title3.weight(.semibold) : .headline)
                     ForEach(Array(activeToothTypes.enumerated()), id: \.offset) { index, toothType in
                         ToothCard(
                             imageName: gameConfig.toothImageName(for: toothType),
@@ -302,6 +319,7 @@ struct SmilingDinosGameView: View {
                             isMatched: isToothMatched(toothType),
                             hasFailedAttempt: matchedPairs.isEmpty && selectedToothType == toothType && showMatchFeedback && !isCorrect,
                             isIntroHighlighted: isToothIntroHighlighted(at: index, toothType: toothType),
+                            cardSize: toothSize,
                             onTap: { handleToothTap(toothType) }
                         )
                     }
@@ -311,11 +329,13 @@ struct SmilingDinosGameView: View {
             .padding(.horizontal, 20)
             .padding(.vertical)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .task(id: currentRound) {
             displayedDinosaurs = dinosaurs.shuffled()
             displayedToothTypes = toothTypes.shuffled()
         }
         .id(currentRound)
+        }
     }
 
     // MARK: - Intro Walk
@@ -573,6 +593,7 @@ private struct SmileCard: View {
     let isMatched: Bool
     let hasFailedAttempt: Bool
     var isIntroHighlighted: Bool = false
+    var cardSize: CGFloat = dinoSmileCardSize
     let onTap: () -> Void
 
     private var imageName: String? {
@@ -595,13 +616,13 @@ private struct SmileCard: View {
                     Image(name)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: dinoSmileCardSize, height: dinoSmileCardSize)
+                        .frame(width: cardSize, height: cardSize)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                 } else {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color.gray.opacity(0.3))
-                        .frame(width: dinoSmileCardSize, height: dinoSmileCardSize)
-                        .overlay(Text(dinosaur.icon).font(.system(size: 48)))
+                        .frame(width: cardSize, height: cardSize)
+                        .overlay(Text(dinosaur.icon).font(.system(size: min(48, cardSize * 0.48))))
                 }
             }
             .overlay(
@@ -628,6 +649,7 @@ private struct ToothCard: View {
     let isMatched: Bool
     let hasFailedAttempt: Bool
     var isIntroHighlighted: Bool = false
+    var cardSize: CGFloat = 72
     let onTap: () -> Void
 
     private var isDiamondBattery: Bool { toothType.contains("diamond-battery") }
@@ -639,14 +661,14 @@ private struct ToothCard: View {
                     Image(imageName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: dinoSmileCardSize, height: dinoSmileCardSize)
+                        .frame(width: cardSize, height: cardSize)
                         .clipShape(RoundedRectangle(cornerRadius: 12))
                         .overlay(diamondBatteryShineOverlay)
                 } else {
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color.gray.opacity(0.3))
-                        .frame(width: dinoSmileCardSize, height: dinoSmileCardSize)
-                        .overlay(Text("🦷").font(.system(size: 48)))
+                        .frame(width: cardSize, height: cardSize)
+                        .overlay(Text("🦷").font(.system(size: min(48, cardSize * 0.67))))
                 }
             }
             .overlay(

@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-bones-allosaurus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-bones-allosaurus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-bones-allosaurus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-bones-allosaurus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-bones-allosaurus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-bones-allosaurus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

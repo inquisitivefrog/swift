@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-argentinosaurus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-argentinosaurus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-argentinosaurus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-argentinosaurus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-argentinosaurus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-argentinosaurus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

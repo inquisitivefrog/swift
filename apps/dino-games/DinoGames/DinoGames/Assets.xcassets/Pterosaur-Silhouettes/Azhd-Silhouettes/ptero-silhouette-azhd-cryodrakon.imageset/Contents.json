@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "silh-cryodrakon-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "ptero-silhouette-azhd-cryodrakon-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "silh-cryodrakon-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "ptero-silhouette-azhd-cryodrakon-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "silh-cryodrakon-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "ptero-silhouette-azhd-cryodrakon-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

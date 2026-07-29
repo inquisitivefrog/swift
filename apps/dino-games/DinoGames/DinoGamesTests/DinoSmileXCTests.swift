@@ -47,6 +47,36 @@ final class DinoSmileXCTests: XCTestCase {
         XCTAssertEqual(DentalMorphology.smileToothType(for: landDino("oviraptor")), "nutcracker")
     }
 
+    func testPachycephalosauridsShareNutcrackerTeeth() {
+        for slug in ["pachycephalosaurus", "stegoceras", "stygimoloch"] {
+            XCTAssertEqual(
+                DentalMorphology.toothType(for: landDino(slug)),
+                "nutcracker",
+                "\(slug) should use nutcracker with the other pachycephalosaurids"
+            )
+            XCTAssertEqual(
+                DentalMorphology.smileToothType(for: landDino(slug)),
+                "nutcracker",
+                "Dino Smile for \(slug) should use nutcracker"
+            )
+        }
+    }
+
+    func testSpinosauridsMapToSmoothCone() {
+        for slug in ["spinosaurus", "suchomimus", "baryonyx"] {
+            XCTAssertEqual(
+                DentalMorphology.smileToothType(for: landDino(slug)),
+                "smooth-cone",
+                "\(slug) is a spinosaurid / piscivore and should use smooth-cone, not hooked-needle or needle-spike"
+            )
+            XCTAssertEqual(
+                DentalMorphology.toothType(for: landDino(slug)),
+                "smooth-cone",
+                "Toothache mapping for \(slug) should stay aligned with Smile"
+            )
+        }
+    }
+
     func testDinoSmileFlutedLeafImagesetUsesFlutedSlug() {
         let known = ImageAssetNames.knownAssets
         XCTAssertTrue(known.contains("dino-smile-tooth-fluted-leaf"))

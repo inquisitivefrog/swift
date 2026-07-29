@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-stegoceras-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-stegoceras-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-stegoceras-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-stegoceras-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-stegoceras-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-stegoceras-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

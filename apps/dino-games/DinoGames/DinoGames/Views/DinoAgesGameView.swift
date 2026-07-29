@@ -33,27 +33,38 @@ private enum DinoAgesPeriod: String, CaseIterable {
 enum DinoAgesMechanics {
     /// Dino image set names (dino-*) that are Jurassic period.
     static let jurassicImageNames: Set<String> = [
-        "dino-anchiornis", "dino-apatosaurus", "dino-archaeopteryx", "dino-brachiosaurus", "dino-camarasaurus",
-        "dino-ceratosaurus", "dino-compsognathus", "dino-diplodocus", "dino-dryosaurus", "dino-eosinopteryx",
-        "dino-allosaurus", "dino-pedopenna", "dino-stegosaurus", "dino-torvosaurus", "dino-xiaotingia",
+        "dino-allosaurus", "dino-anchiornis", "dino-apatosaurus", "dino-archaeopteryx",
+        "dino-brachiosaurus", "dino-brontosaurus", "dino-camarasaurus", "dino-ceratosaurus",
+        "dino-compsognathus", "dino-diplodocus", "dino-dryosaurus", "dino-eosinopteryx",
+        "dino-huayangosaurus", "dino-kentrosaurus", "dino-mamenchisaurus", "dino-pedopenna",
+        "dino-stegosaurus", "dino-torvosaurus", "dino-xiaotingia",
     ]
 
     /// Dino image set names (dino-*) that are Cretaceous period.
     static let cretaceousImageNames: Set<String> = [
-        "dino-albertosaurus", "dino-ankylosaurus", "dino-argentinosaurus", "dino-baryonyx", "dino-chasmosaurus",
-        "dino-corythosaurus", "dino-deinonychus", "dino-dromaeosaurus", "dino-edmontosaurus", "dino-gallimimus",
-        "dino-giganotosaurus", "dino-iguanodon", "dino-kosmoceratops", "dino-majungasaurus", "dino-masiakasaurus",
-        "dino-microraptor", "dino-pachycephalosaurus", "dino-parasaurolophus", "dino-rapetosaurus", "dino-spinosaurus",
-        "dino-therizinosaurus", "dino-torosaurus", "dino-trex", "dino-triceratops", "dino-troodon",
-        "dino-oviraptor", "dino-utahraptor", "dino-velociraptor",
+        "dino-acrocanthosaurus", "dino-albertosaurus", "dino-amargasaurus", "dino-ankylosaurus",
+        "dino-argentinosaurus", "dino-baryonyx", "dino-carcharodontosaurus", "dino-carnotaurus",
+        "dino-chasmosaurus", "dino-corythosaurus", "dino-deinocheirus", "dino-deinonychus",
+        "dino-dromaeosaurus", "dino-edmontonia", "dino-edmontosaurus", "dino-euoplocephalus",
+        "dino-fukuiraptor", "dino-gallimimus", "dino-gasparinisaura", "dino-giganotosaurus",
+        "dino-gigantoraptor", "dino-iguanodon", "dino-kosmoceratops", "dino-lambeosaurus",
+        "dino-maiasaura", "dino-majungasaurus", "dino-masiakasaurus", "dino-microraptor",
+        "dino-nodosaurus", "dino-ornithomimus", "dino-ouranosaurus", "dino-oviraptor",
+        "dino-pachycephalosaurus", "dino-parasaurolophus", "dino-polacanthus", "dino-rapetosaurus",
+        "dino-riparovenator", "dino-spinosaurus", "dino-stegoceras", "dino-struthiomimus",
+        "dino-stygimoloch", "dino-styracosaurus", "dino-suchomimus", "dino-therizinosaurus",
+        "dino-torosaurus", "dino-trex", "dino-triceratops", "dino-troodon", "dino-utahraptor",
+        "dino-velociraptor",
     ]
 
     /// Three correct picks × three rounds without reuse.
     static let minimumUniqueDinosPerPeriod = 9
 
-    /// Matches gameplay: explicit Jurassic list, otherwise Cretaceous (see `dinoAgesPeriodById`).
-    fileprivate static func mesozoicPeriod(forImageName name: String) -> DinoAgesPeriod {
-        jurassicImageNames.contains(name) ? .jurassic : .cretaceous
+    /// Explicit Jurassic / Cretaceous membership (no silent default).
+    fileprivate static func mesozoicPeriod(forImageName name: String) -> DinoAgesPeriod? {
+        if jurassicImageNames.contains(name) { return .jurassic }
+        if cretaceousImageNames.contains(name) { return .cretaceous }
+        return nil
     }
 }
 
@@ -101,8 +112,10 @@ private let dinoAgesPool: [Dinosaur] = {
 private let dinoAgesPeriodById: [Int: DinoAgesPeriod] = {
     var map: [Int: DinoAgesPeriod] = [:]
     for d in dinoAgesPool {
-        guard let name = d.imageName else { continue }
-        map[d.id] = DinoAgesMechanics.mesozoicPeriod(forImageName: name)
+        guard let name = d.imageName,
+              let period = DinoAgesMechanics.mesozoicPeriod(forImageName: name)
+        else { continue }
+        map[d.id] = period
     }
     return map
 }()
@@ -290,22 +303,27 @@ struct DinoAgesGameView: View {
                 .opacity(blocksUserInput ? 0.85 : 1.0)
                 .overlay(alignment: .topTrailing) {
                     if period != nil, !isGameComplete {
-                        Button {
-                            guessChoiceTimer.pauseForHints()
-                            showSourceAgesHints = true
-                        } label: {
-                            Text("Hints")
-                                .font(.caption.weight(.semibold))
-                                .foregroundColor(.white)
-                                .padding(.horizontal, 14)
-                                .padding(.vertical, 10)
-                                .background(Circle().fill(Color.blue))
-                                .frame(width: 72, height: 72)
+                        GeometryReader { geo in
+                            let safeWidth = max(geo.size.width, 1)
+                            let playMaxScale: CGFloat = 1.85
+                            let hintSide = GameCatalogImageMetrics.scaled(72, safeWidth: safeWidth, maxScale: playMaxScale)
+                            let hintFont = GameCatalogImageMetrics.scaled(12, safeWidth: safeWidth, maxScale: playMaxScale)
+                            Button {
+                                guessChoiceTimer.pauseForHints()
+                                showSourceAgesHints = true
+                            } label: {
+                                Text("Hints")
+                                    .font(.system(size: hintFont, weight: .semibold))
+                                    .foregroundColor(.white)
+                                    .frame(width: hintSide, height: hintSide)
+                                    .background(Circle().fill(Color.blue))
+                            }
+                            .disabled(blocksUserInput)
+                            .opacity(blocksUserInput ? 0.45 : 1.0)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                            .padding(.top, 8)
+                            .padding(.trailing, 16)
                         }
-                        .disabled(blocksUserInput)
-                        .opacity(blocksUserInput ? 0.45 : 1.0)
-                        .padding(.top, 8)
-                        .padding(.trailing, 16)
                     }
                 }
                 .fullScreenCover(isPresented: $showSourceAgesHints) {
@@ -337,27 +355,59 @@ struct DinoAgesGameView: View {
     @ViewBuilder
     private var gameBody: some View {
         if let p = period, !isGameComplete {
-            periodImage(p)
-            Text(p.rawValue.capitalized)
-                .font(.title2)
-                .fontWeight(.semibold)
-                .foregroundColor(.primary)
-            Text("Round \(currentRound) of \(totalRounds)")
-                .font(.headline)
-                .foregroundColor(.secondary)
-                .padding(.vertical, 4)
-            // Fixed-height slot for dinosaur name to prevent layout stretch/shrink when name appears
-            ZStack {
-                if let name = displayedDinoName {
-                    Text(name)
-                        .font(.title3)
+            GeometryReader { geometry in
+                let safeWidth = max(geometry.size.width, 1)
+                let safeHeight = max(geometry.size.height, 1)
+                // Phone-tuned baselines; grow on iPad when width/height allow.
+                let playMaxScale: CGFloat = 1.85
+                let isPadCanvas = safeWidth > GameCatalogImageMetrics.phoneReferenceWidth
+                // iPad has spare vertical room under the period art; phone stays tighter.
+                let periodHeightFraction: CGFloat = isPadCanvas ? 0.40 : 0.30
+                let periodWidthFraction: CGFloat = isPadCanvas ? 0.92 : 0.88
+                let periodMaxW = min(
+                    GameCatalogImageMetrics.scaled(isPadCanvas ? 460 : 380, safeWidth: safeWidth, maxScale: playMaxScale),
+                    safeWidth * periodWidthFraction
+                )
+                let periodMaxH = min(
+                    GameCatalogImageMetrics.scaled(isPadCanvas ? 280 : 220, safeWidth: safeWidth, maxScale: playMaxScale),
+                    safeHeight * periodHeightFraction
+                )
+                let choiceRowH = min(
+                    GameCatalogImageMetrics.scaled(360, safeWidth: safeWidth, maxScale: playMaxScale),
+                    safeHeight * (isPadCanvas ? 0.44 : 0.50)
+                )
+                let circleSize = GameCatalogImageMetrics.scaled(dinoAgesCircleSize, safeWidth: safeWidth, maxScale: playMaxScale)
+                let starRadius = GameCatalogImageMetrics.scaled(100, safeWidth: safeWidth, maxScale: playMaxScale)
+                let periodLabelFont = GameCatalogImageMetrics.scaled(22, safeWidth: safeWidth, maxScale: playMaxScale)
+                let roundFont = GameCatalogImageMetrics.scaled(17, safeWidth: safeWidth, maxScale: playMaxScale)
+                let critterNameFont = GameCatalogImageMetrics.scaled(20, safeWidth: safeWidth, maxScale: playMaxScale)
+                let critterNameSlotH = max(28, critterNameFont + 12)
+                let stackSpacing = GameCatalogImageMetrics.scaled(16, safeWidth: safeWidth, maxScale: playMaxScale)
+                VStack(spacing: stackSpacing) {
+                    periodImage(p, maxWidth: periodMaxW, maxHeight: periodMaxH)
+                    Text(p.rawValue.capitalized)
+                        .font(.system(size: periodLabelFont, weight: .semibold))
+                        .foregroundColor(.primary)
+                    Text("Round \(currentRound) of \(totalRounds)")
+                        .font(.system(size: roundFont, weight: .semibold))
                         .foregroundColor(.secondary)
-                        .padding(.horizontal)
-                        .lineLimit(1)
+                        .padding(.vertical, 4)
+                    // Fixed-height slot for dinosaur name to prevent layout stretch/shrink when name appears
+                    ZStack {
+                        if let name = displayedDinoName {
+                            Text(name)
+                                .font(.system(size: critterNameFont, weight: .medium))
+                                .foregroundColor(.secondary)
+                                .padding(.horizontal)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.65)
+                        }
+                    }
+                    .frame(height: critterNameSlotH)
+                    fiveStarLayout(height: choiceRowH, circleSize: circleSize, radius: starRadius)
                 }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             }
-            .frame(height: 28)
-            fiveStarLayout
         } else if isGameComplete {
             dinoAgesEndSequenceView
         } else {
@@ -366,7 +416,7 @@ struct DinoAgesGameView: View {
         }
     }
 
-    private func periodImage(_ p: DinoAgesPeriod) -> some View {
+    private func periodImage(_ p: DinoAgesPeriod, maxWidth: CGFloat, maxHeight: CGFloat) -> some View {
         let preferredImageName: String = {
             switch agesVariant {
             case .ptero: return p.pteroImageName
@@ -380,25 +430,32 @@ struct DinoAgesGameView: View {
                 Image(preferredImageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 340, maxHeight: 180)
+                    .frame(maxWidth: maxWidth, maxHeight: maxHeight)
             } else if ImageAssetCache.imageExists(named: fallbackImageName) {
                 Image(fallbackImageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 340, maxHeight: 180)
+                    .frame(maxWidth: maxWidth, maxHeight: maxHeight)
             } else {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color.orange.opacity(0.2))
-                    .frame(width: 200, height: 80)
+                    .frame(width: min(200, maxWidth * 0.6), height: min(80, maxHeight * 0.45))
                     .overlay(Text(p.rawValue.capitalized).font(.title2))
             }
         }
         .padding(.horizontal)
     }
 
-    private var fiveStarLayout: some View {
-        DinoAgesStarLayoutView(slots: slots, matchedIds: matchedIds, introHighlightIndex: introWalkIndex, tapHandler: DinoAgesTapHandler(perform: handleTap))
-            .frame(height: 320)
+    private func fiveStarLayout(height: CGFloat, circleSize: CGFloat, radius: CGFloat) -> some View {
+        DinoAgesStarLayoutView(
+            slots: slots,
+            matchedIds: matchedIds,
+            introHighlightIndex: introWalkIndex,
+            circleSize: circleSize,
+            radius: radius,
+            tapHandler: DinoAgesTapHandler(perform: handleTap)
+        )
+            .frame(height: height)
             .padding(.horizontal)
     }
 
@@ -675,19 +732,23 @@ private struct DinoAgesStarLayoutView: View {
     let slots: [Dinosaur]
     let matchedIds: Set<Int>
     let introHighlightIndex: Int?
+    let circleSize: CGFloat
+    let radius: CGFloat
     let tapHandler: DinoAgesTapHandler
-
-    private let radius: CGFloat = 100
 
     var body: some View {
         GeometryReader { geo in
+            // Keep the star inside the allocated frame when circles grow on iPad.
+            let maxRadius = max(0, min(geo.size.width, geo.size.height) / 2 - circleSize / 2 - 8)
+            let fittedRadius = min(radius, maxRadius)
             DinoAgesStarLayoutContent(
                 width: geo.size.width,
                 height: geo.size.height,
                 slots: slots,
                 matchedIds: matchedIds,
                 introHighlightIndex: introHighlightIndex,
-                radius: radius,
+                circleSize: circleSize,
+                radius: fittedRadius,
                 angles: dinoAgesStarAngles,
                 tapHandler: tapHandler
             )
@@ -701,6 +762,7 @@ private struct DinoAgesStarLayoutContent: View {
     let slots: [Dinosaur]
     let matchedIds: Set<Int>
     let introHighlightIndex: Int?
+    let circleSize: CGFloat
     let radius: CGFloat
     let angles: [Double]
     let tapHandler: DinoAgesTapHandler
@@ -711,7 +773,8 @@ private struct DinoAgesStarLayoutContent: View {
                 DinoAgesCircleView(
                     dino: dino,
                     isMatched: matchedIds.contains(dino.id),
-                    isIntroHighlighted: introHighlightIndex == index
+                    isIntroHighlighted: introHighlightIndex == index,
+                    size: circleSize
                 )
                 .position(
                     x: width / 2 + radius * CGFloat(cos(angles[index])),
@@ -827,52 +890,65 @@ fileprivate struct SourceAgesHintsView: View {
     }
 
     private var gridView: some View {
-        VStack(spacing: 20) {
-            SourceHintsScreenTitle(title: title)
-            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                ForEach(hintPeriods) { period in
-                    Button {
-                        showPeriodDetail(period)
-                    } label: {
-                        if UIImage(named: period.imageName) != nil {
-                            Image(period.imageName)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 140)
-                                .clipped()
-                        } else {
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.gray.opacity(0.3))
-                                .frame(height: 140)
-                                .overlay(Text(period.displayName).font(.title3).foregroundColor(.secondary))
+        GeometryReader { geometry in
+            let safeWidth = max(geometry.size.width, 1)
+            let cardHeight = SourceHintsLayout.gridCardHeight(safeWidth: safeWidth)
+            let spacing = SourceHintsLayout.gridSpacing(safeWidth: safeWidth)
+            let hPad = SourceHintsLayout.horizontalPadding(safeWidth: safeWidth)
+            let titleFont = SourceHintsLayout.titleFont(safeWidth: safeWidth)
+            let fallbackFont = SourceHintsLayout.fallbackLabelFont(safeWidth: safeWidth)
+            VStack(spacing: spacing) {
+                SourceHintsScreenTitle(title: title, fontSize: titleFont)
+                LazyVGrid(columns: [GridItem(.flexible(), spacing: spacing), GridItem(.flexible(), spacing: spacing)], spacing: spacing) {
+                    ForEach(hintPeriods) { period in
+                        Button {
+                            showPeriodDetail(period)
+                        } label: {
+                            if UIImage(named: period.imageName) != nil {
+                                Image(period.imageName)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: cardHeight)
+                                    .clipped()
+                            } else {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: cardHeight)
+                                    .overlay(Text(period.displayName).font(.system(size: fallbackFont)).foregroundColor(.secondary))
+                            }
                         }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
+                .padding(.horizontal, hPad)
+                Spacer()
             }
-            .padding(.horizontal, 24)
-            Spacer()
         }
     }
 
     @ViewBuilder
     private var detailView: some View {
         if let period = selectedPeriod {
-            VStack(spacing: 20) {
-                Spacer()
-                if UIImage(named: period.imageName) != nil {
-                    Image(period.imageName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 340, maxHeight: 220)
+            GeometryReader { geometry in
+                let safeWidth = max(geometry.size.width, 1)
+                let detailSide = SourceHintsLayout.detailImageSide(safeWidth: safeWidth)
+                let labelFont = SourceHintsLayout.detailLabelFont(safeWidth: safeWidth)
+                VStack(spacing: 20) {
+                    Spacer()
+                    if UIImage(named: period.imageName) != nil {
+                        Image(period.imageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: detailSide, maxHeight: detailSide)
+                    }
+                    Text(period.displayName)
+                        .font(.system(size: labelFont, weight: .semibold))
+                        .foregroundColor(.primary)
+                    Spacer()
                 }
-                Text(period.displayName)
-                    .font(.title2.weight(.semibold))
-                    .foregroundColor(.primary)
-                Spacer()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 

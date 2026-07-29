@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "ptero-matrix-shale-rhamphorhynchus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "ptero-matrix-shale-rhamphorhynchus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "ptero-matrix-shale-rhamphorhynchus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "ptero-matrix-shale-rhamphorhynchus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "ptero-matrix-shale-rhamphorhynchus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "ptero-matrix-shale-rhamphorhynchus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

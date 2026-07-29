@@ -236,6 +236,7 @@ struct PortraitJigsawPuzzleGameView: View {
     @Binding var isPresented: Bool
     let line: PortraitJigsawPuzzleLine
 
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var speechManager = SpeechManager()
     @State private var rounds: [PortraitJigsawRoundBuilt] = []
     @State private var currentRoundIndex = 0
@@ -620,21 +621,23 @@ struct PortraitJigsawPuzzleGameView: View {
     private func puzzleActiveView(round: PortraitJigsawRoundBuilt) -> some View {
         let rows = round.pattern.rows
         let cols = round.pattern.cols
-        VStack(spacing: 16) {
+        let isPad = horizontalSizeClass == .regular
+        VStack(spacing: isPad ? 20 : 8) {
             Text("Round \(currentRoundIndex + 1) of 3")
-                .font(.headline)
+                .font(isPad ? .title2.weight(.semibold) : .headline)
                 .foregroundColor(.secondary)
             Text(bucketTitle(round.bucket))
-                .font(.title3)
+                .font(isPad ? .title.weight(.semibold) : .title3)
                 .fontWeight(.semibold)
             Text("Drag each piece into the matching outline.")
-                .font(.subheadline)
+                .font(isPad ? .title3 : .subheadline)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
                 .padding(.horizontal)
 
             GeometryReader { geo in
-                let side = min(geo.size.width - 16, min(geo.size.height - 8, 380))
+                // Phone layouts were capped near 380pt; on iPad use leftover space (land / air / sea).
+                let side = min(max(geo.size.width - 32, 1), max(geo.size.height - 24, 1))
                 ZStack(alignment: .topLeading) {
                     RoundedRectangle(cornerRadius: 12)
                         .stroke(Color.accentColor.opacity(0.45), style: StrokeStyle(lineWidth: 2, dash: [6, 5]))
@@ -713,7 +716,7 @@ struct PortraitJigsawPuzzleGameView: View {
                     }
                 }
                 .frame(width: side, height: side)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: isPad ? .center : .top)
                 .onAppear {
                     boardSide = side
                     guard let r = currentRound, side > 40 else { return }
@@ -739,8 +742,9 @@ struct PortraitJigsawPuzzleGameView: View {
                     setupPieces(for: r, side: newSide)
                 }
             }
-            .frame(minHeight: 320)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding()
         .allowsHitTesting(!isAudioPlaying)
         .opacity(isAudioPlaying ? 0.75 : 1)

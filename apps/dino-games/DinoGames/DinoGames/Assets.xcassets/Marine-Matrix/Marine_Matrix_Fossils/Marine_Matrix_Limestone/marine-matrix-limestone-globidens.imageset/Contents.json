@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "marine-matrix-limestone-globidens-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-matrix-limestone-globidens-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "marine-matrix-limestone-globidens-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-matrix-limestone-globidens-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "marine-matrix-limestone-globidens-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-matrix-limestone-globidens-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

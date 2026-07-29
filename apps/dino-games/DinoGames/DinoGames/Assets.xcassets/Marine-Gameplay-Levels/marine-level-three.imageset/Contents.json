@@ -1,22 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "marine-level-three-240.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-level-three-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "marine-level-three-320.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-level-three-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-level-three-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

@@ -1,15 +1,49 @@
-[
-  {
-    "id": "ptero_referee_v1_winner",
-    "character_ref": "dino_bones_paleontologist_4",
-    "description": "The Pterosaur Racing Referee at the finish line celebrating a winner.",
-    "character_anchor": "Adult male paleontologist, Latino ethnicity, short brown hair, wearing signature thin-rimmed BLACK AVIATOR glasses. He wears a tan safari pith helmet and a black-and-white vertical striped referee jersey over a khaki safari vest.",
-    "action": "He is beaming with a huge, joyful smile, holding a large, shiny gold trophy high above his head with one hand and a checkered flag in the other.",
-    "setting": "A prehistoric coastal finish line with tropical palms and ferns in the background.",
-    "art_style": "STYLE_ANIMATED_FEATURE_V3",
-    "lighting": "SUNNY_EXPOSED_CINEMATIC",
-    "framing": "SQUARE_HERO_CARD",
-    "visual_identity": "High-fidelity 3D animated feature film style with expressive facial features.”,
-    “constraints”: “NO cables or circles.  Focus entirely on the referee character’s body language celebrating a clear winner."
-  }
-]
+{
+  "image_manifest": {
+    "filename": "game-pterosaur-race-referee-finish.png",
+    "description": "A 3D rendered asset manifest showing the aerial Pterosaur Racing Referee at the finish line, celebrating the winning pterosaur from her hang glider.",
+    "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1",
+    "assets": [
+      {
+        "id": "A1",
+        "name": "Pterosaur Race Referee",
+        "description": "An adult female grad student working as a paleontologist with braided black hair and African ethnicity (dino_bones_paleontologist_6). She is wearing a bright yellow aerial safety helmet with strap details, a white tee shirt worn UNDER a khaki safari vest, white shorts, and black hiking boots. She is seated safely in a harness attached to a hang glider, beaming with a huge, joyful smile. She is holding a shiny gold trophy high in one hand and waving the checkered flag in her other hand.",
+        "type": "character"
+      },
+      {
+        "id": "A2",
+        "name": "Hang Glider",
+        "description": "A high-visibility, lightweight hang glider with a bright yellow and red wing frame keeping the referee safely suspended mid-air at the finish line.",
+        "type": "item"
+      },
+      {
+        "id": "A3",
+        "name": "Celebratory Items",
+        "description": "A large, gleaming golden trophy held triumphantly in one hand and a black-and-white checkered flag fluttering cheerfully in the other hand.",
+        "type": "item"
+      },
+      {
+        "id": "A4",
+        "name": "Aerial Finish Line Environment",
+        "description": "High-altitude open sky near dramatic Cretaceous canyon cliffs with a festive floating archway marking the aerial finish line, under bright sunlight.",
+        "type": "environment"
+      },
+      {
+        "id": "A5",
+        "name": "Visual Effects",
+        "description": "Celebratory sparkling lens flares glinting off the gold trophy, wind swirl effects around the glider, and colorful confetti drifting in the updrafts.",
+        "type": "environment"
+      },
+      {
+        "id": "A6",
+        "name": "Bottom Right Watermark",
+        "description": "A small, translucent four-pointed star lens-flare logo located in the bottom-right corner.",
+        "type": "watermark"
+      }
+    ],
+    "constraints": "No people other than the referee. Square aspect ratio, 1:1. Ensure safety helmet is clearly visible. No ID labels, text overlays, title bars, or borders."
+  }
+}

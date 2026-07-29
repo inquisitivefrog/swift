@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "dino-silhouette-gigantoraptor-80.png",
+      "filename" : "dino-silhouette-gigantoraptor-360.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "dino-silhouette-gigantoraptor-160.png",
+      "filename" : "dino-silhouette-gigantoraptor-720.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "dino-silhouette-gigantoraptor-240.png",
+      "filename" : "dino-silhouette-gigantoraptor-1024.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

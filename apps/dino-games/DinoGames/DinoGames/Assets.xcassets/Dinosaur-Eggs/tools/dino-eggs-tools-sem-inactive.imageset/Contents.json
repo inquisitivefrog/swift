@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-eggs-tool-sem-inactive-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-eggs-tools-sem-inactive-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-eggs-tool-sem-inactive-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-eggs-tools-sem-inactive-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-eggs-tool-sem-inactive-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-eggs-tools-sem-inactive-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

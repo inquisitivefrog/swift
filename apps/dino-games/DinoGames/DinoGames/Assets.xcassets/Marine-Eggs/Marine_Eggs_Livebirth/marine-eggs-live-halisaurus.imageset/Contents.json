@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "marine-live-halisaurus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-eggs-live-halisaurus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "marine-live-halisaurus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-eggs-live-halisaurus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "marine-live-halisaurus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-eggs-live-halisaurus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

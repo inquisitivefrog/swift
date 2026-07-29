@@ -131,7 +131,10 @@ struct WeighGameView: View {
         return item.imageName
     }
 
-    /// Scale factor for seesaw image. When both selected: heavier gets full size (1.2), lighter scales down by weight ratio; min 0.55 keeps small dinos visible.
+    /// Scale factor for seesaw image. Heavier gets full size (1.2). Lighter uses cube-root of
+    /// weight ratio so extreme mismatches (chicken-sized raptor vs sauropod) read clearly;
+    /// a low floor keeps tiny poses findable for kids. Tip-safe layout then shrinks both together
+    /// so relative size is preserved.
     private func seesawImageScale(for item: WeighableItem, relativeTo other: WeighableItem?) -> CGFloat {
         let kg: Double? = {
             if gameConfig.id == "weigh-dinosaur" {
@@ -167,8 +170,10 @@ struct WeighGameView: View {
                     let heavierKg = max(kg, otherKg)
                     let lighterKg = min(kg, otherKg)
                     let ratio = lighterKg / heavierKg
-                    let t = sqrt(max(ratio, 0.001))
-                    return CGFloat(max(0.55, 0.35 + 0.85 * t))
+                    // Linear size ~ cube root of mass (volume-like); was sqrt + floor 0.55, which
+                    // made chicken-sized dinos look nearly as big as sauropods.
+                    let t = pow(max(ratio, 0.0001), 1.0 / 3.0)
+                    return CGFloat(max(0.22, 1.15 * t))
                 }
             }
         }
@@ -192,6 +197,7 @@ struct WeighGameView: View {
         GeometryReader { geometry in
             let safeWidth = max(geometry.size.width, 1)
             let safeHeight = max(geometry.size.height, 1)
+            let play = WeighPlayAreaMetrics.make(safeWidth: safeWidth, safeHeight: safeHeight)
             if isGameOver {
                 // Full-screen victory (same as MatchingGameView) so the game title stays pinned and visible.
                 weighVictoryView
@@ -200,9 +206,9 @@ struct WeighGameView: View {
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(spacing: 0) {
                     Spacer()
-                        .frame(height: 32)
+                        .frame(height: play.topSpacer)
                     
-                    // Grid: 3 columns, fixed height so all 3 rows are visible (no scroll around grid)
+                    // Grid: 3 columns; height scales up on iPad so cards remain readable
                     VStack(spacing: 6) {
                         VStack(spacing: 4) {
                             Text(gameConfig.title)
@@ -214,56 +220,61 @@ struct WeighGameView: View {
                                 .foregroundColor(.secondary)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
-                        .frame(height: 56)
-                        VStack(spacing: 6) {
-                            LazyVGrid(
-                                columns: [
-                                    GridItem(.flexible(), spacing: 6),
-                                    GridItem(.flexible(), spacing: 6),
-                                    GridItem(.flexible(), spacing: 6),
-                                ],
-                                spacing: 6
-                            ) {
-                                ForEach(displayItems) { item in
-                                    ItemCard(
-                                        item: item,
-                                        displayImageName: nil, // Grid: dino-* / ptero-* (square); seesaw: weigh-dino-* (wide poses)
-                                        isSelected: selectedLeftItem?.id == item.id || selectedRightItem?.id == item.id,
-                                        isDisabled: isWeighing || isGameOver || isChooseFirstAudioPlaying || (!introWalkComplete) || (selectedLeftItem != nil && selectedRightItem != nil) || (selectedLeftItem != nil && selectedRightItem == nil && !canSelectSecondDinosaur),
-                                        isIntroHighlighted: usesIntroWalkAndFirstPickPrompt && introWalkStep >= 0 && introWalkStep < displayItems.count && displayItems[introWalkStep].id == item.id
-                                    ) {
-                                        handleItemTap(item)
-                                    }
+                        .padding(.horizontal, 10)
+                        .frame(height: play.titleBlockHeight)
+                        .frame(maxWidth: play.gridContentWidth)
+                        .frame(maxWidth: .infinity)
+                        LazyVGrid(
+                            columns: [
+                                GridItem(.flexible(), spacing: 6),
+                                GridItem(.flexible(), spacing: 6),
+                                GridItem(.flexible(), spacing: 6),
+                            ],
+                            spacing: 6
+                        ) {
+                            ForEach(displayItems) { item in
+                                ItemCard(
+                                    item: item,
+                                    displayImageName: nil, // Grid: dino-* / ptero-* (square); seesaw: weigh-dino-* (wide poses)
+                                    imageSize: play.gridImageSize,
+                                    labelFontSize: play.gridLabelFontSize,
+                                    isSelected: selectedLeftItem?.id == item.id || selectedRightItem?.id == item.id,
+                                    isDisabled: isWeighing || isGameOver || isChooseFirstAudioPlaying || (!introWalkComplete) || (selectedLeftItem != nil && selectedRightItem != nil) || (selectedLeftItem != nil && selectedRightItem == nil && !canSelectSecondDinosaur),
+                                    isIntroHighlighted: usesIntroWalkAndFirstPickPrompt && introWalkStep >= 0 && introWalkStep < displayItems.count && displayItems[introWalkStep].id == item.id
+                                ) {
+                                    handleItemTap(item)
                                 }
                             }
                         }
                         .padding(.horizontal, 10)
+                        .frame(maxWidth: play.gridContentWidth)
+                        .frame(maxWidth: .infinity)
                     }
-                    .frame(height: 422) // Room for game title + Round label + 3 full rows; compact so seesaw fits on screen
+                    .frame(height: play.gridBlockHeight)
                     .frame(width: safeWidth)
                 
                     // Expandable spacer: pushes seesaw toward bottom, ensures no collision with grid
                     Spacer()
-                        .frame(minHeight: 36)
+                        .frame(minHeight: play.midSpacer)
                     
                     if isMarineWeighGame {
-                        marineBuoyancyArea(safeWidth: safeWidth)
+                        marineBuoyancyArea(safeWidth: safeWidth, play: play)
                     } else {
-                    // Bottom - Seesaw area (fixed min height so seesaw never slides off screen)
-                    let beamW = max(safeWidth * 0.28, 100)
-                    let sideMargin: CGFloat = 12
-                    let beamTopY: CGFloat = -9       // Beam height 18, center 0 → top at -9
-                    let seesawSeatHeight: CGFloat = 12
-                    let seatTopY = beamTopY - seesawSeatHeight  // Dinosaur bottom aligns with top of seat (sitting surface)
-                    let maxDinoWidth = max(100, safeWidth - 2 * beamW - 2 * sideMargin) // Cap so wide sauropod images fit with margin
+                    // Bottom — seesaw grows with leftover height so iPad landscape does not clip the beam
+                    let beamW = play.beamHalfWidth
+                    let sideMargin = play.sideMargin
+                    let beamTopY: CGFloat = -9 * play.layoutScale
+                    let seesawSeatHeight: CGFloat = 12 * play.layoutScale
+                    let seatTopY = beamTopY - seesawSeatHeight
+                    let dinoBaseHeight = play.dinoBaseHeight
                     VStack {
                         Spacer()
-                            .frame(minHeight: 10) // Small spacer
+                            .frame(minHeight: 10 * play.layoutScale)
                         
                         ZStack {
                             // A-frame support (playground seesaw style)
-                            SeesawSupportView()
-                                .offset(y: 45)
+                            SeesawSupportView(scale: play.layoutScale)
+                                .offset(y: 45 * play.layoutScale)
                             
                             // Beam + seats + dinosaurs rotate as one unit around fulcrum; fulcrum stays fixed
                             ZStack {
@@ -273,36 +284,33 @@ struct WeighGameView: View {
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 6)
                                             .fill(LinearGradient(colors: [Color.brown, Color.brown.opacity(0.85)], startPoint: .top, endPoint: .bottom))
-                                            .frame(width: beamW, height: 18)
+                                            .frame(width: beamW, height: 18 * play.layoutScale)
                                             .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.brown.opacity(0.6), lineWidth: 1))
                                             .offset(x: -beamW / 2)
                                         RoundedRectangle(cornerRadius: 6)
                                             .fill(LinearGradient(colors: [Color.brown, Color.brown.opacity(0.85)], startPoint: .top, endPoint: .bottom))
-                                            .frame(width: beamW, height: 18)
+                                            .frame(width: beamW, height: 18 * play.layoutScale)
                                             .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.brown.opacity(0.6), lineWidth: 1))
                                             .offset(x: beamW / 2)
                                     }
                                     // Seats (above beam; center y=-15, height seesawSeatHeight → seat top at beamTopY - seesawSeatHeight; drawn on top so both dinosaur images remain visible)
                                     RoundedRectangle(cornerRadius: 4)
                                         .fill(Color.brown.opacity(0.9))
-                                        .frame(width: 56, height: seesawSeatHeight)
-                                        .offset(x: -beamW, y: -15)
+                                        .frame(width: 56 * play.layoutScale, height: seesawSeatHeight)
+                                        .offset(x: -beamW, y: -15 * play.layoutScale)
                                         .zIndex(10)
                                     RoundedRectangle(cornerRadius: 4)
                                         .fill(Color.brown.opacity(0.9))
-                                        .frame(width: 56, height: seesawSeatHeight)
-                                        .offset(x: beamW, y: -15)
+                                        .frame(width: 56 * play.layoutScale, height: seesawSeatHeight)
+                                        .offset(x: beamW, y: -15 * play.layoutScale)
                                         .zIndex(10)
                                     
                                     // Left side item (on left seat) — inside rotating assembly so it tilts with seesaw
                                     if let leftItem = selectedLeftItem {
                                         let scale = seesawImageScale(for: leftItem, relativeTo: selectedRightItem)
-                                        let idealHeight = 130 * scale
-                                        let idealWidth = idealHeight * 2
-                                        let rightIdealW = selectedRightItem.map { 130 * seesawImageScale(for: $0, relativeTo: leftItem) * 2 } ?? idealWidth
-                                        let maxIdealW = max(idealWidth, rightIdealW)
-                                        let scaleFactor = maxIdealW > maxDinoWidth ? maxDinoWidth / maxIdealW : 1.0
-                                        let (width, height) = (idealWidth * scaleFactor, idealHeight * scaleFactor)
+                                        let peerScale = selectedRightItem.map { seesawImageScale(for: $0, relativeTo: leftItem) }
+                                        let pose = play.poseSize(scale: scale, peerScale: peerScale)
+                                        let (width, height, scaleFactor) = (pose.width, pose.height, pose.fit)
                                         let baseY = seatTopY - height / 2 // Group is centered in ZStack; offset so bottom lands on seat top
                                         Group {
                                             if let imageName = weighImageName(for: leftItem) {
@@ -315,7 +323,7 @@ struct WeighGameView: View {
                                                 }
                                             } else {
                                                 Text(leftItem.emoji)
-                                                    .font(.system(size: 80))
+                                                    .font(.system(size: 80 * play.layoutScale))
                                                     .frame(width: width, height: height)
                                             }
                                         }
@@ -326,12 +334,14 @@ struct WeighGameView: View {
                                         .zIndex(5)
                                         
                                         if showSpeedLines, lighterFlewFromLeft == false, let rightItem = selectedRightItem {
-                                            let rightH = 130 * seesawImageScale(for: rightItem, relativeTo: selectedLeftItem) * scaleFactor
+                                            let rightH = dinoBaseHeight * seesawImageScale(for: rightItem, relativeTo: selectedLeftItem) * scaleFactor
                                             SpeedLinesView()
+                                                .scaleEffect(play.layoutScale)
                                                 .offset(x: beamW, y: rightItemOffset + (seatTopY - rightH / 2))
                                         }
                                         if showSpeedLines, lighterFlewFromLeft == true, selectedLeftItem != nil {
                                             SpeedLinesView()
+                                                .scaleEffect(play.layoutScale)
                                                 .offset(x: -beamW + leftItemOffsetX, y: leftItemOffset + baseY)
                                         }
                                     }
@@ -339,12 +349,9 @@ struct WeighGameView: View {
                                     // Right side item (on right seat) — inside rotating assembly so it tilts with seesaw
                                     if let rightItem = selectedRightItem {
                                         let scale = seesawImageScale(for: rightItem, relativeTo: selectedLeftItem)
-                                        let idealHeight = 130 * scale
-                                        let idealWidth = idealHeight * 2
-                                        let leftIdealW = selectedLeftItem.map { 130 * seesawImageScale(for: $0, relativeTo: rightItem) * 2 } ?? idealWidth
-                                        let maxIdealW = max(idealWidth, leftIdealW)
-                                        let scaleFactor = maxIdealW > maxDinoWidth ? maxDinoWidth / maxIdealW : 1.0
-                                        let (width, height) = (idealWidth * scaleFactor, idealHeight * scaleFactor)
+                                        let peerScale = selectedLeftItem.map { seesawImageScale(for: $0, relativeTo: rightItem) }
+                                        let pose = play.poseSize(scale: scale, peerScale: peerScale)
+                                        let (width, height) = (pose.width, pose.height)
                                         let baseY = seatTopY - height / 2 // Group is centered in ZStack; offset so bottom lands on seat top
                                         Group {
                                             if let imageName = weighImageName(for: rightItem) {
@@ -357,7 +364,7 @@ struct WeighGameView: View {
                                                 }
                                             } else {
                                                 Text(rightItem.emoji)
-                                                    .font(.system(size: 80))
+                                                    .font(.system(size: 80 * play.layoutScale))
                                                     .frame(width: width, height: height)
                                             }
                                         }
@@ -369,22 +376,22 @@ struct WeighGameView: View {
                                     }
                                 }
                                 .rotationEffect(.degrees(seesawAngle), anchor: .center)
-                                .offset(y: 28)
+                                .offset(y: 28 * play.layoutScale)
                                 // Fulcrum (fixed, does not rotate)
                                 Circle()
                                     .fill(Color.gray)
-                                    .frame(width: 32, height: 32)
+                                    .frame(width: 32 * play.layoutScale, height: 32 * play.layoutScale)
                                     .overlay(Circle().stroke(Color.brown, lineWidth: 2))
-                                    .offset(y: 28)
+                                    .offset(y: 28 * play.layoutScale)
                             }
                         }
-                    .frame(width: max(1, safeWidth - 2 * sideMargin), height: 260) // Inset with margin so dinosaurs don't truncate at screen edge
+                    .frame(width: max(1, safeWidth - 2 * sideMargin), height: play.seesawHeight)
                     .clipped() // Keep rotated beam from affecting layout
                         
                         Spacer()
                             .frame(minHeight: 8)
                     }
-                    .frame(minHeight: 270)
+                    .frame(minHeight: play.seesawHeight + 10)
                     .frame(width: safeWidth)
                     }
                 }
@@ -397,12 +404,16 @@ struct WeighGameView: View {
         .allowsHitTesting(!blocksUserInput)
         .gameSheetDismissDisabledWhileAudioPlaying(blocksUserInput)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Done") {
-                    isPresented = false
+            #if DEBUG
+            if DeveloperSessionFlags.showEarlyExitDone, !isGameOver {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Done") {
+                        isPresented = false
+                    }
+                    .disabled(blocksUserInput)
                 }
-                .disabled(blocksUserInput)
             }
+            #endif
         }
         .onAppear {
             // First round: use shuffled pool (or config items if no per-round randomizer for this game)
@@ -431,32 +442,33 @@ struct WeighGameView: View {
     }
 
     @ViewBuilder
-    private func marineBuoyancyArea(safeWidth: CGFloat) -> some View {
-        let sideMargin: CGFloat = 12
-        let podOffset = max(safeWidth * 0.24, 88)
-        let maxCreatureWidth = max(110, safeWidth * 0.28)
+    private func marineBuoyancyArea(safeWidth: CGFloat, play: WeighPlayAreaMetrics) -> some View {
+        let sideMargin = play.sideMargin
+        let layoutScale = play.layoutScale
+        let podOffset = play.marinePodOffset
+        let maxCreatureWidth = play.marineMaxCreatureWidth
         // Start lower in the water so the lighter side can rise without clipping at the top.
-        let plateBaseY: CGFloat = 64
-        let waterlineY: CGFloat = -8
-        let leftCreatureSize = selectedLeftItem.map { marineCreatureSize(item: $0, other: selectedRightItem, maxWidth: maxCreatureWidth) }
-        let rightCreatureSize = selectedRightItem.map { marineCreatureSize(item: $0, other: selectedLeftItem, maxWidth: maxCreatureWidth) }
-        let seatTopY = plateBaseY - 7
-        let defaultCreatureHeight: CGFloat = 130
+        let plateBaseY: CGFloat = 64 * layoutScale
+        let waterlineY: CGFloat = -8 * layoutScale
+        let leftCreatureSize = selectedLeftItem.map { marineCreatureSize(item: $0, other: selectedRightItem, maxWidth: maxCreatureWidth, baseHeight: play.dinoBaseHeight) }
+        let rightCreatureSize = selectedRightItem.map { marineCreatureSize(item: $0, other: selectedLeftItem, maxWidth: maxCreatureWidth, baseHeight: play.dinoBaseHeight) }
+        let seatTopY = plateBaseY - 7 * layoutScale
+        let defaultCreatureHeight = play.dinoBaseHeight
         // Keep creature bottoms pinned to seat tops even when scaled down.
         let leftCreatureCenterY = seatTopY + leftItemOffset - ((leftCreatureSize?.height ?? defaultCreatureHeight) / 2)
         let rightCreatureCenterY = seatTopY + rightItemOffset - ((rightCreatureSize?.height ?? defaultCreatureHeight) / 2)
         let leftCreatureTopY = leftCreatureCenterY - ((leftCreatureSize?.height ?? defaultCreatureHeight) / 2)
         let rightCreatureTopY = rightCreatureCenterY - ((rightCreatureSize?.height ?? defaultCreatureHeight) / 2)
-        let leftRigX = -podOffset - 22
-        let rightRigX = podOffset + 22
-        let leftPodY = min(plateBaseY - 40 + leftItemOffset * 0.22, leftCreatureTopY - 34)
-        let rightPodY = min(plateBaseY - 40 + rightItemOffset * 0.22, rightCreatureTopY - 34)
-        let leftRopeBottomY = plateBaseY - 1 + leftItemOffset
-        let rightRopeBottomY = plateBaseY - 1 + rightItemOffset
-        let leftRopeLength = max(24, leftRopeBottomY - leftPodY - 18)
-        let rightRopeLength = max(24, rightRopeBottomY - rightPodY - 18)
-        let leftRopeY = leftPodY + 18 + leftRopeLength / 2
-        let rightRopeY = rightPodY + 18 + rightRopeLength / 2
+        let leftRigX = -podOffset - 22 * layoutScale
+        let rightRigX = podOffset + 22 * layoutScale
+        let leftPodY = min(plateBaseY - 40 * layoutScale + leftItemOffset * 0.22, leftCreatureTopY - 34 * layoutScale)
+        let rightPodY = min(plateBaseY - 40 * layoutScale + rightItemOffset * 0.22, rightCreatureTopY - 34 * layoutScale)
+        let leftRopeBottomY = plateBaseY - 1 * layoutScale + leftItemOffset
+        let rightRopeBottomY = plateBaseY - 1 * layoutScale + rightItemOffset
+        let leftRopeLength = max(24 * layoutScale, leftRopeBottomY - leftPodY - 18 * layoutScale)
+        let rightRopeLength = max(24 * layoutScale, rightRopeBottomY - rightPodY - 18 * layoutScale)
+        let leftRopeY = leftPodY + 18 * layoutScale + leftRopeLength / 2
+        let rightRopeY = rightPodY + 18 * layoutScale + rightRopeLength / 2
         VStack {
             Spacer()
                 .frame(minHeight: 6)
@@ -467,74 +479,74 @@ struct WeighGameView: View {
                     endPoint: .bottom
                 )
                 .clipShape(RoundedRectangle(cornerRadius: 18))
-                .frame(height: 248)
+                .frame(height: play.seesawHeight - 12)
 
                 Path { p in
                     p.move(to: CGPoint(x: -safeWidth * 0.45, y: waterlineY))
                     p.addCurve(
                         to: CGPoint(x: safeWidth * 0.45, y: waterlineY),
-                        control1: CGPoint(x: -safeWidth * 0.20, y: waterlineY - 8),
-                        control2: CGPoint(x: safeWidth * 0.20, y: waterlineY + 8)
+                        control1: CGPoint(x: -safeWidth * 0.20, y: waterlineY - 8 * layoutScale),
+                        control2: CGPoint(x: safeWidth * 0.20, y: waterlineY + 8 * layoutScale)
                     )
                 }
                 .stroke(Color.white.opacity(0.7), lineWidth: 2)
 
                 Capsule()
                     .fill(LinearGradient(colors: [Color.gray.opacity(0.85), Color.gray.opacity(0.65)], startPoint: .top, endPoint: .bottom))
-                    .frame(width: podOffset * 2 + 120, height: 12)
-                    .offset(y: plateBaseY - 22)
+                    .frame(width: podOffset * 2 + 120 * layoutScale, height: 12 * layoutScale)
+                    .offset(y: plateBaseY - 22 * layoutScale)
                     .rotationEffect(.degrees(seesawAngle * 0.35))
 
-                marineBuoyancyPod
+                marineBuoyancyPod(scale: layoutScale)
                     .offset(x: leftRigX, y: leftPodY)
-                marineBuoyancyPod
+                marineBuoyancyPod(scale: layoutScale)
                     .offset(x: rightRigX, y: rightPodY)
 
-                Capsule().fill(Color.white.opacity(0.35)).frame(width: 4, height: leftRopeLength).offset(x: leftRigX, y: leftRopeY)
-                Capsule().fill(Color.white.opacity(0.35)).frame(width: 4, height: rightRopeLength).offset(x: rightRigX, y: rightRopeY)
+                Capsule().fill(Color.white.opacity(0.35)).frame(width: 4 * layoutScale, height: leftRopeLength).offset(x: leftRigX, y: leftRopeY)
+                Capsule().fill(Color.white.opacity(0.35)).frame(width: 4 * layoutScale, height: rightRopeLength).offset(x: rightRigX, y: rightRopeY)
 
-                RoundedRectangle(cornerRadius: 8).fill(Color.brown.opacity(0.85)).frame(width: 72, height: 14).offset(x: -podOffset, y: plateBaseY + leftItemOffset)
-                RoundedRectangle(cornerRadius: 8).fill(Color.brown.opacity(0.85)).frame(width: 72, height: 14).offset(x: podOffset, y: plateBaseY + rightItemOffset)
+                RoundedRectangle(cornerRadius: 8).fill(Color.brown.opacity(0.85)).frame(width: 72 * layoutScale, height: 14 * layoutScale).offset(x: -podOffset, y: plateBaseY + leftItemOffset)
+                RoundedRectangle(cornerRadius: 8).fill(Color.brown.opacity(0.85)).frame(width: 72 * layoutScale, height: 14 * layoutScale).offset(x: podOffset, y: plateBaseY + rightItemOffset)
 
                 if let leftItem = selectedLeftItem {
-                    marineCreatureImage(item: leftItem, other: selectedRightItem, maxWidth: maxCreatureWidth)
+                    marineCreatureImage(item: leftItem, other: selectedRightItem, maxWidth: maxCreatureWidth, baseHeight: play.dinoBaseHeight)
                         .offset(x: -podOffset + leftItemOffsetX, y: leftCreatureCenterY)
                         .opacity(leftItemOpacity)
                 }
                 if let rightItem = selectedRightItem {
-                    marineCreatureImage(item: rightItem, other: selectedLeftItem, maxWidth: maxCreatureWidth)
+                    marineCreatureImage(item: rightItem, other: selectedLeftItem, maxWidth: maxCreatureWidth, baseHeight: play.dinoBaseHeight)
                         .offset(x: podOffset + rightItemOffsetX, y: rightCreatureCenterY)
                         .opacity(rightItemOpacity)
                 }
             }
-            .frame(width: max(1, safeWidth - 2 * sideMargin), height: 260)
+            .frame(width: max(1, safeWidth - 2 * sideMargin), height: play.seesawHeight)
             .clipped()
             Spacer().frame(minHeight: 8)
         }
-        .frame(minHeight: 270)
+        .frame(minHeight: play.seesawHeight + 10)
         .frame(width: safeWidth)
     }
 
-    private var marineBuoyancyPod: some View {
+    private func marineBuoyancyPod(scale: CGFloat) -> some View {
         ZStack {
             Circle().fill(LinearGradient(colors: [Color.white.opacity(0.95), Color.cyan.opacity(0.55)], startPoint: .topLeading, endPoint: .bottomTrailing))
             Circle().stroke(Color.white.opacity(0.75), lineWidth: 2)
-            Circle().fill(Color.white.opacity(0.35)).frame(width: 16, height: 16).offset(x: -8, y: -7)
+            Circle().fill(Color.white.opacity(0.35)).frame(width: 16 * scale, height: 16 * scale).offset(x: -8 * scale, y: -7 * scale)
         }
-        .frame(width: 38, height: 38)
+        .frame(width: 38 * scale, height: 38 * scale)
     }
 
-    private func marineCreatureSize(item: WeighableItem, other: WeighableItem?, maxWidth: CGFloat) -> CGSize {
+    private func marineCreatureSize(item: WeighableItem, other: WeighableItem?, maxWidth: CGFloat, baseHeight: CGFloat) -> CGSize {
         let scale = seesawImageScale(for: item, relativeTo: other)
         // Slightly higher cap so heavy-vs-light differences read more clearly.
-        let height = min(130 * scale, 130)
+        let height = min(baseHeight * scale, baseHeight)
         let width = min(height * 1.8, maxWidth)
         return CGSize(width: width, height: height)
     }
 
     @ViewBuilder
-    private func marineCreatureImage(item: WeighableItem, other: WeighableItem?, maxWidth: CGFloat) -> some View {
-        let size = marineCreatureSize(item: item, other: other, maxWidth: maxWidth)
+    private func marineCreatureImage(item: WeighableItem, other: WeighableItem?, maxWidth: CGFloat, baseHeight: CGFloat) -> some View {
+        let size = marineCreatureSize(item: item, other: other, maxWidth: maxWidth, baseHeight: baseHeight)
         if let imageName = weighImageName(for: item) {
             Image(imageName)
                 .resizable()
@@ -542,7 +554,7 @@ struct WeighGameView: View {
                 .frame(width: size.width, height: size.height, alignment: .bottom)
         } else {
             Text(item.emoji)
-                .font(.system(size: 62))
+                .font(.system(size: 62 * (baseHeight / 130)))
                 .frame(width: size.width, height: size.height)
         }
     }
@@ -714,7 +726,7 @@ struct WeighGameView: View {
                     leftItemOffset = isMassiveDifference ? -220 : -150
                     leftItemOffsetX = isMassiveDifference ? 140 : 100 // Parabola arc to the right
                     leftItemOpacity = 0
-                    showSpeedLines = true
+                    showSpeedLines = !isPterosaurWeighGame
                 }
             }
             
@@ -796,6 +808,7 @@ struct WeighGameView: View {
             showSuccessPhase: endSequenceStep == 2,
             endHighlightIndex: endHighlightIndex,
             gameTitle: gameConfig.title,
+            recapItemCount: weighVictoryRecapItems.count,
             scrollRows: {
                 ForEach(Array(weighVictoryRecapItems.enumerated()), id: \.element.id) { index, item in
                     StandardVictoryRecapRowView(
@@ -934,14 +947,15 @@ struct ItemCard: View {
     let item: WeighableItem
     /// When set (e.g. weigh-dino-* for Weigh the Dinosaur), use this instead of item.imageName.
     var displayImageName: String? = nil
+    /// Grid cell image size; scales up on larger canvases (iPad).
+    var imageSize: CGFloat = 96
+    /// Base label size; long names still shrink via `minimumScaleFactor`.
+    var labelFontSize: CGFloat = 15
     let isSelected: Bool
     let isDisabled: Bool
     /// When true, show accent border for intro walk (e.g. weigh-dinosaur introducing each dinosaur).
     var isIntroHighlighted: Bool = false
     let onTap: () -> Void
-    
-    /// Grid cell image size; compact so seesaw fits on screen.
-    private let imageSize: CGFloat = 96
     
     var body: some View {
         Button(action: onTap) {
@@ -954,17 +968,18 @@ struct ItemCard: View {
                         .clipped()
                 } else {
                     Text(item.emoji)
-                        .font(.system(size: 60))
+                        .font(.system(size: imageSize * 0.625))
                         .frame(width: imageSize, height: imageSize)
                 }
                 Text(item.name)
-                    .font(.subheadline)
+                    .font(.system(size: labelFontSize))
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
                     // Keep all grid cards the same height: shrink long names instead of wrapping to two lines.
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                     .allowsTightening(true)
+                    .frame(width: imageSize)
             }
         }
         .padding(5)
@@ -997,24 +1012,143 @@ struct SpeedLinesView: View {
     }
 }
 
+// Phone-tuned seesaw was height 260 while beam grew with iPad width — clip truncation.
+// Derive leftover height for the play stage and scale beam/dinos to fit.
+struct WeighPlayAreaMetrics {
+    static let phoneSeesawHeight: CGFloat = 260
+    static let phoneGridBlockHeight: CGFloat = 422
+    static let phoneTitleBlockHeight: CGFloat = 56
+    static let phoneDinoBaseHeight: CGFloat = 130
+    static let phoneSideMargin: CGFloat = 12
+    static let phoneGridImageSize: CGFloat = 96
+    static let phoneGridLabelFontSize: CGFloat = 15
+    /// Weigh poses are typically ~2:1 landscape; reserve that box when sizing.
+    static let weighPoseAspect: CGFloat = 2
+    /// Shrink poses so a tipped (~15–25°) wide image still fits inside `.clipped()`.
+    static let tipSafety: CGFloat = 0.68
+
+    let topSpacer: CGFloat
+    let midSpacer: CGFloat
+    let titleBlockHeight: CGFloat
+    let gridBlockHeight: CGFloat
+    let gridImageSize: CGFloat
+    let gridLabelFontSize: CGFloat
+    let gridContentWidth: CGFloat
+    let seesawHeight: CGFloat
+    let layoutScale: CGFloat
+    let sideMargin: CGFloat
+    let beamHalfWidth: CGFloat
+    let maxDinoWidth: CGFloat
+    let maxDinoHeight: CGFloat
+    let dinoBaseHeight: CGFloat
+    let marinePodOffset: CGFloat
+    let marineMaxCreatureWidth: CGFloat
+
+    static func make(safeWidth: CGFloat, safeHeight: CGFloat) -> WeighPlayAreaMetrics {
+        let topSpacer: CGFloat = 16
+        let midSpacer: CGFloat = 16
+        let titleBlockHeight = phoneTitleBlockHeight
+        let chrome = topSpacer + midSpacer + 16
+        let reservedSeesaw = phoneSeesawHeight * 1.2
+        let grid = CreatureThreeByThreeGridMetrics.make(
+            safeWidth: safeWidth,
+            safeHeight: safeHeight,
+            reservedStageHeight: reservedSeesaw,
+            chrome: chrome,
+            minimumGridBudget: phoneGridBlockHeight * 0.85
+        )
+        let gridImageSize = grid.imageSize
+        let gridLabelFontSize = grid.labelFontSize
+        let gridContentWidth = grid.contentWidth
+        let gridBlockHeight = grid.blockHeight
+        let seesawHeight = max(
+            phoneSeesawHeight,
+            safeHeight - gridBlockHeight - chrome
+        )
+        let layoutScale = max(1, seesawHeight / phoneSeesawHeight)
+        let sideMargin = phoneSideMargin
+        // Keep seats inward on wide iPads so landscape weigh art has room to tip without clipping.
+        let beamHalfWidth = min(
+            max(safeWidth * 0.22, 100),
+            seesawHeight * 0.70,
+            safeWidth * 0.26
+        )
+        // Distance from a seat (±beam) to the canvas edge — that is the max half-width before tip.
+        let seatToEdge = max(70, safeWidth / 2 - beamHalfWidth - sideMargin)
+        let maxDinoWidth = max(90, seatToEdge * tipSafety * 2)
+        let maxDinoHeight = max(70, seesawHeight * 0.48 * tipSafety)
+        let dinoBaseHeight = min(
+            phoneDinoBaseHeight * min(layoutScale, 1.35),
+            maxDinoHeight
+        )
+        let marinePodOffset = min(max(safeWidth * 0.22, 88), seesawHeight * 0.75)
+        let marineMaxCreatureWidth = max(110, min(safeWidth * 0.26, maxDinoWidth))
+        return WeighPlayAreaMetrics(
+            topSpacer: topSpacer,
+            midSpacer: midSpacer,
+            titleBlockHeight: titleBlockHeight,
+            gridBlockHeight: gridBlockHeight,
+            gridImageSize: gridImageSize,
+            gridLabelFontSize: gridLabelFontSize,
+            gridContentWidth: gridContentWidth,
+            seesawHeight: seesawHeight,
+            layoutScale: layoutScale,
+            sideMargin: sideMargin,
+            beamHalfWidth: beamHalfWidth,
+            maxDinoWidth: maxDinoWidth,
+            maxDinoHeight: maxDinoHeight,
+            dinoBaseHeight: dinoBaseHeight,
+            marinePodOffset: marinePodOffset,
+            marineMaxCreatureWidth: marineMaxCreatureWidth
+        )
+    }
+
+    /// Size a weigh pose (wide) so it remains inside the clip box while the beam tips.
+    func poseSize(scale: CGFloat, peerScale: CGFloat?) -> (width: CGFloat, height: CGFloat, fit: CGFloat) {
+        let idealHeight = dinoBaseHeight * scale
+        let idealWidth = idealHeight * Self.weighPoseAspect
+        let peerHeight = peerScale.map { dinoBaseHeight * $0 } ?? idealHeight
+        let peerWidth = peerHeight * Self.weighPoseAspect
+        let maxIdealW = max(idealWidth, peerWidth)
+        let maxIdealH = max(idealHeight, peerHeight)
+        let fit = min(
+            1,
+            maxDinoWidth / max(maxIdealW, 1),
+            maxDinoHeight / max(maxIdealH, 1)
+        )
+        return (idealWidth * fit, idealHeight * fit, fit)
+    }
+
+    /// Balance (landscape): allot a seesaw band from canvas height, then reuse tip-safe beam/pose metrics.
+    static func makeSeesawStage(safeWidth: CGFloat, canvasHeight: CGFloat) -> WeighPlayAreaMetrics {
+        let allotted = max(phoneSeesawHeight, min(canvasHeight * 0.42, 440))
+        return make(
+            safeWidth: safeWidth,
+            safeHeight: allotted + phoneGridBlockHeight + 56
+        )
+    }
+}
+
 // A-frame support: legs meet at the pivot point (top) and diverge at the base, so the beam is clearly free to tip.
 struct SeesawSupportView: View {
+    var scale: CGFloat = 1
+
     var body: some View {
         ZStack(alignment: .bottom) {
             // Left leg: pivots from top center, bottom sweeps left
             Rectangle()
                 .fill(Color.brown.opacity(0.9))
-                .frame(width: 12, height: 58)
+                .frame(width: 12 * scale, height: 58 * scale)
                 .rotationEffect(.degrees(-22), anchor: UnitPoint(x: 0.5, y: 0))
             // Right leg: pivots from top center, bottom sweeps right
             Rectangle()
                 .fill(Color.brown.opacity(0.9))
-                .frame(width: 12, height: 58)
+                .frame(width: 12 * scale, height: 58 * scale)
                 .rotationEffect(.degrees(22), anchor: UnitPoint(x: 0.5, y: 0))
             // Base bar (wider for stability)
             RoundedRectangle(cornerRadius: 3)
                 .fill(Color.brown)
-                .frame(width: 140, height: 12)
+                .frame(width: 140 * scale, height: 12 * scale)
         }
     }
 }

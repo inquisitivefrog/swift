@@ -113,19 +113,39 @@ struct CategorySelectionView: View {
                     .padding(.top, 16)
                     .padding(.bottom, 8)
 
-                ScrollView(.vertical, showsIndicators: true) {
-                    VStack(spacing: 12) {
+                GeometryReader { geo in
+                    let cardCount = CGFloat(RootGameType.allCases.count)
+                    let rowSpacing: CGFloat = 12
+                    let horizontalPadding: CGFloat = 20
+                    let contentWidth = max(0, geo.size.width - horizontalPadding * 2)
+                    let verticalBudget = max(0, geo.size.height - 8)
+                    // Always fit all three genre cards on one screen (no scroll).
+                    let cardHeight = max(
+                        RootCategoryCardMetrics.minCardHeight,
+                        (verticalBudget - rowSpacing * (cardCount - 1)) / cardCount
+                    )
+                    let imageSide = min(
+                        contentWidth * RootCategoryCardMetrics.widthFraction,
+                        max(
+                            RootCategoryCardMetrics.minImageSide,
+                            cardHeight - RootCategoryCardMetrics.titleReserve - 16
+                        )
+                    )
+
+                    VStack(spacing: rowSpacing) {
                         ForEach(RootGameType.allCases) { root in
                             RootCategoryCard(
                                 root: root,
+                                imageSide: imageSide,
                                 isSelected: selectedRoot == root,
                                 isDisabled: !isEnabled(root),
                                 onTap: { handleRootTap(root) }
                             )
+                            .frame(height: cardHeight)
                         }
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 24)
+                    .padding(.horizontal, horizontalPadding)
+                    .frame(width: geo.size.width, height: geo.size.height, alignment: .top)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
@@ -145,6 +165,9 @@ struct CategorySelectionView: View {
                         guidedPlayMode: CategoryPlaySession.shouldUseGuidedMode(for: category),
                         onReturnToCategoryMenu: returnToCategoryMenu
                     )
+                    // Force a fresh level picker when switching Land / Air / Sea (avoids briefly
+                    // showing the previous category’s header/art during NavigationStack transitions).
+                    .id(category)
                 }
             }
         }
@@ -225,6 +248,8 @@ struct CategorySelectionView: View {
     private func handleRootTap(_ root: RootGameType) {
         guard !categoryNavigationLocked else { return }
         categoryNavigationLocked = true
+        // Cancel any pending cold-start resume so it cannot overwrite this choice.
+        didAttemptResumeSession = true
         selectedRoot = root
         let category = category(for: root)
         let guided = CategoryPlaySession.shouldUseGuidedMode(for: category)
@@ -237,7 +262,8 @@ struct CategorySelectionView: View {
         if UITestConfiguration.skipGameSelectionIntros {
             speechManager.onAudioFinished = nil
             DispatchQueue.main.async {
-                self.navigationPath.append(.gameLevels(category))
+                // Replace (do not append) so a stale resume destination cannot stack under Land.
+                self.navigationPath = [.gameLevels(category)]
                 self.categoryNavigationLocked = false
             }
             return
@@ -245,7 +271,7 @@ struct CategorySelectionView: View {
         speechManager.onAudioFinished = {
             self.speechManager.onAudioFinished = nil
             DispatchQueue.main.async {
-                self.navigationPath.append(.gameLevels(category))
+                self.navigationPath = [.gameLevels(category)]
                 self.categoryNavigationLocked = false
             }
         }
@@ -256,6 +282,8 @@ struct CategorySelectionView: View {
     private func resumeGuidedSessionIfNeeded() {
         guard !didAttemptResumeSession else { return }
         didAttemptResumeSession = true
+        // If the player already tapped a genre, never hijack navigation with a saved session.
+        guard navigationPath.isEmpty, selectedRoot == nil else { return }
         guard CategoryPlaySession.hasResumableGuidedSession else { return }
         let snap = CategoryPlaySession.load()
         guard let category = snap.category else { return }
@@ -270,11 +298,15 @@ struct CategorySelectionView: View {
     private func returnToCategoryMenu() {
         speechManager.stopCurrentAudio()
         speechManager.onAudioFinished = nil
+        // Leaving the level picker is an intentional genre re-pick — do not auto-resume the old category.
+        CategoryPlaySession.clearAll()
         navigationPath.removeAll()
+        selectedRoot = nil
         coverSequenceComplete = true
         enabledDinosaurs = true
         enabledPterosaurs = true
         enabledSea = true
+        guard !UITestConfiguration.skipGameSelectionIntros else { return }
         DispatchQueue.main.async {
             self.speechManager.speak("cover-choose-a-game-type")
         }
@@ -283,27 +315,35 @@ struct CategorySelectionView: View {
 
 // MARK: - Root splash cards (Dinosaurs / Pterosaurs / Sea)
 
+private enum RootCategoryCardMetrics {
+    static let minImageSide: CGFloat = 160
+    static let minCardHeight: CGFloat = 180
+    /// Vertical space reserved so a selected title does not squash the art.
+    static let titleReserve: CGFloat = 28
+    /// Cap relative to content width so squares stay proportional without forcing scroll.
+    static let widthFraction: CGFloat = 0.48
+}
+
 private struct RootCategoryCard: View {
     let root: RootGameType
+    let imageSide: CGFloat
     let isSelected: Bool
     let isDisabled: Bool
     let onTap: () -> Void
 
     var body: some View {
         Button(action: onTap) {
-            VStack(spacing: 12) {
+            VStack(spacing: 8) {
                 if UIImage(named: root.imageAssetName) != nil {
                     Image(root.imageAssetName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(minHeight: 160, maxHeight: 200)
-                        .padding(.top, 6)
+                        .frame(width: imageSide, height: imageSide)
                 } else {
                     Image(systemName: root.fallbackSystemImageName)
-                        .font(.system(size: 56, weight: .semibold))
+                        .font(.system(size: max(56, imageSide * 0.35), weight: .semibold))
                         .foregroundColor(.accentColor)
-                        .frame(height: 160)
-                        .padding(.top, 6)
+                        .frame(width: imageSide, height: imageSide)
                 }
 
                 if isSelected {
@@ -313,8 +353,8 @@ private struct RootCategoryCard: View {
                         .transition(.opacity.combined(with: .move(edge: .bottom)))
                 }
             }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 6)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding(.vertical, 8)
             .background(
                 RoundedRectangle(cornerRadius: 18)
                     .fill(isSelected ? Color.blue.opacity(0.18) : Color.gray.opacity(0.10))

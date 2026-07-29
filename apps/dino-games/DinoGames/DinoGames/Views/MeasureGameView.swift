@@ -254,6 +254,7 @@ struct MeasureGameView: View {
     /// Display floor is 48pt; rejection uses 32pt so small dinosaurs (e.g. Pedopenna 0.2m with Dryosaurus 2m) are allowed.
     private let measureMinSegmentHeight: CGFloat = 48
     private let measureMinSegmentHeightForRejection: CGFloat = 32
+    private let playMaxScale: CGFloat = 1.75
     /// All creatures selected and played this game (left + right stack per round), for victory re-intro.
     @State private var victoryCreatures: [MeasureCreature] = []
     /// Victory sequence: -1 none, 1 = walking list (highlight + name), 2 = success image then good-job + crowd.
@@ -264,6 +265,13 @@ struct MeasureGameView: View {
         GeometryReader { geometry in
             let safeHeight = max(geometry.size.height, 1)
             let safeWidth = max(geometry.size.width, 1)
+            let measureStageH = GameCatalogImageMetrics.scaled(340, safeWidth: safeWidth, maxScale: playMaxScale) + 20 + 8
+            let grid = CreatureThreeByThreeGridMetrics.make(
+                safeWidth: safeWidth,
+                safeHeight: safeHeight,
+                reservedStageHeight: measureStageH,
+                chrome: 32
+            )
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(spacing: 0) {
                     Spacer().frame(height: 8)
@@ -271,7 +279,7 @@ struct MeasureGameView: View {
                     if isGameOver {
                         measureVictoryView
                     } else {
-                        VStack(spacing: 8) {
+                        VStack(spacing: 6) {
                             VStack(spacing: 4) {
                                 Text(gameConfig.title)
                                     .font(.title2)
@@ -282,6 +290,10 @@ struct MeasureGameView: View {
                                     .foregroundColor(.secondary)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
+                            .padding(.horizontal, 10)
+                            .frame(height: grid.titleBlockHeight)
+                            .frame(maxWidth: grid.contentWidth)
+                            .frame(maxWidth: .infinity)
 
                             if !measureGridSlots.isEmpty {
                                 let columns = [GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6)]
@@ -299,18 +311,19 @@ struct MeasureGameView: View {
                                             isBlockedAsFirstChoice: selectedFirst == nil && isSmallestInGrid(creature),
                                             isBlockedAsHugeWhenLeftNotHuge: wouldBeHugeWhenLeftIsNot(creature),
                                             isBlockedAsExceedsReferenceAlone: wouldExceedReferenceAlone(creature),
-                                            isIntroHighlighted: !introWalkComplete && introWalkStep == index
+                                            isIntroHighlighted: !introWalkComplete && introWalkStep == index,
+                                            imageSize: grid.imageSize, labelFontSize: grid.labelFontSize
                                         ) {
                                             handleCreatureTap(index: index, creature: creature)
                                         }
-                                        .aspectRatio(1, contentMode: .fit)
-                                    }
+                                                                            }
                                 }
                                 .padding(.horizontal, 10)
-                                .frame(height: 330)
+                                .frame(maxWidth: grid.contentWidth)
+                                .frame(maxWidth: .infinity)
 
                                 // Bottom: left and right comparison (match Who Is Taller layout)
-                                measureComparisonArea(geometry: geometry)
+                                measureComparisonArea(safeWidth: safeWidth)
                                     .padding(.top, 8)
                                     .padding(.horizontal, 24)
                             } else {
@@ -321,6 +334,7 @@ struct MeasureGameView: View {
                                     .padding()
                             }
                         }
+                        .frame(height: grid.blockHeight)
                         .frame(width: safeWidth)
                     }
 
@@ -335,19 +349,23 @@ struct MeasureGameView: View {
     }
 
     /// Bottom area: left creature | center | right tower (stack tallest-at-bottom). Tight spacing; slot content aligned toward center.
-    private func measureComparisonArea(geometry: GeometryProxy) -> some View {
-        let leftScale = measureLeftScale()
+    private func measureComparisonArea(safeWidth: CGFloat) -> some View {
+        let slotW = GameCatalogImageMetrics.scaled(measureSlotWidth, safeWidth: safeWidth, maxScale: playMaxScale)
+        let areaH = GameCatalogImageMetrics.scaled(measureAreaHeight, safeWidth: safeWidth, maxScale: playMaxScale)
+        let centerW = GameCatalogImageMetrics.scaled(measureCenterWidth, safeWidth: safeWidth, maxScale: playMaxScale)
+        let minSegH = GameCatalogImageMetrics.scaled(measureMinSegmentHeight, safeWidth: safeWidth, maxScale: playMaxScale)
+        let leftScale = measureLeftScale(areaHeight: areaH)
         return HStack(alignment: .bottom, spacing: measureSpacing) {
-            measureSlot(creature: selectedFirst, scale: leftScale, alignTowardCenter: true)
-            measureCenterImage
-            measureRightTowerView
+            measureSlot(creature: selectedFirst, scale: leftScale, alignTowardCenter: true, slotWidth: slotW, areaHeight: areaH)
+            measureCenterImage(centerWidth: centerW, areaHeight: areaH)
+            measureRightTowerView(slotWidth: slotW, areaHeight: areaH, minSegmentHeight: minSegH)
         }
         .frame(maxWidth: .infinity)
-        .frame(height: measureAreaHeight + 20)
+        .frame(height: areaH + 20)
     }
 
     /// Scale for left dinosaur: 1.0 if left >= right stack total; else scaled down, but never below measureMinLeftHeight.
-    private func measureLeftScale() -> CGFloat {
+    private func measureLeftScale(areaHeight: CGFloat) -> CGFloat {
         guard let first = selectedFirst, !selectedRightStack.isEmpty else {
             return selectedFirst != nil ? 1.0 : 0
         }
@@ -356,13 +374,14 @@ struct MeasureGameView: View {
         let maxH = max(hLeft, stackTotalH)
         if maxH <= 0 { return 1.0 }
         let rawScale: CGFloat = hLeft >= stackTotalH ? 1.0 : CGFloat(hLeft / maxH)
-        let minScale = measureMinLeftHeight / measureAreaHeight
+        let minLeftH = areaHeight * (measureMinLeftHeight / measureAreaHeight)
+        let minScale = minLeftH / areaHeight
         return max(rawScale, minScale)
     }
 
     /// Center image: paleontologist on ladder with tape measure (`measure-dino-paleontologist-ladder`, 110×340 pt display).
     /// Bottom-aligned so it lines up with left/right dinosaurs for height comparison.
-    private var measureCenterImage: some View {
+    private func measureCenterImage(centerWidth: CGFloat, areaHeight: CGFloat) -> some View {
         let name = "measure-dino-paleontologist-ladder"
         return Group {
             if ImageAssetCache.imageExists(named: name) {
@@ -374,7 +393,7 @@ struct MeasureGameView: View {
                     .fill(Color.accentColor.opacity(0.5))
             }
         }
-        .frame(width: measureCenterWidth, height: measureAreaHeight, alignment: .bottom)
+        .frame(width: centerWidth, height: areaHeight, alignment: .bottom)
     }
 
     /// Image for left/right of paleontologist only: prefer measure-dino-{slug} (140×340), else fall back to shared square.
@@ -387,10 +406,10 @@ struct MeasureGameView: View {
     }
 
     /// Left slot only: one creature at full 140×340. alignTowardCenter = true so image sits next to paleontologist (trailing in slot).
-    private func measureSlot(creature: MeasureCreature?, scale: CGFloat, alignTowardCenter: Bool) -> some View {
+    private func measureSlot(creature: MeasureCreature?, scale: CGFloat, alignTowardCenter: Bool, slotWidth: CGFloat, areaHeight: CGFloat) -> some View {
         let s = scale > 0 ? scale : 0.3
-        let contentW = measureSlotWidth * s
-        let contentH = measureAreaHeight * s
+        let contentW = slotWidth * s
+        let contentH = areaHeight * s
         let alignment: Alignment = alignTowardCenter ? .bottomTrailing : .bottomLeading
         return Group {
             if let c = creature, scale > 0 {
@@ -411,32 +430,32 @@ struct MeasureGameView: View {
                     .frame(width: contentW, height: contentH)
             }
         }
-        .frame(width: measureSlotWidth, height: measureAreaHeight, alignment: alignment)
+        .frame(width: slotWidth, height: areaHeight, alignment: alignment)
     }
 
-    /// Right side: tower scaled by (stack total / left height) with head room; each segment at least measureMinSegmentHeight, then fit in 340pt.
+    /// Right side: tower scaled by (stack total / left height) with head room; each segment at least measureMinSegmentHeight, then fit in area.
     /// When left >= stack, right tower is scaled down by 8% so the left reference is always visually dominant (avoids image aspect-ratio mismatch).
-    private var measureRightTowerView: some View {
+    private func measureRightTowerView(slotWidth: CGFloat, areaHeight: CGFloat, minSegmentHeight: CGFloat) -> some View {
         let sorted = selectedRightStack.sorted { (LandDinosaurHeightCatalog.standingHeightMetersById[$0.id] ?? 0) > (LandDinosaurHeightCatalog.standingHeightMetersById[$1.id] ?? 0) }
         let stackTotalH = sorted.reduce(0.0) { $0 + (LandDinosaurHeightCatalog.standingHeightMetersById[$1.id] ?? 1) }
         let leftH = selectedFirst.flatMap { LandDinosaurHeightCatalog.standingHeightMetersById[$0.id] } ?? 1
         let maxH = max(leftH, stackTotalH)
         let proportional: CGFloat = maxH > 0 ? CGFloat(stackTotalH / maxH) : 0
         let buffer: CGFloat = leftH >= stackTotalH ? 0.92 : 1.0  // right 8% smaller when left is reference
-        let rawTowerHeight: CGFloat = min(measureAreaHeight, measureAreaHeight * proportional * buffer)
+        let rawTowerHeight: CGFloat = min(areaHeight, areaHeight * proportional * buffer)
         let rawHeights: [CGFloat] = sorted.map { c in
             let h = LandDinosaurHeightCatalog.standingHeightMetersById[c.id] ?? 1
             let portion = stackTotalH > 0 ? (h / stackTotalH) : (1.0 / Double(sorted.count))
-            return max(rawTowerHeight * CGFloat(portion), measureMinSegmentHeight)
+            return max(rawTowerHeight * CGFloat(portion), minSegmentHeight)
         }
         let sumRaw = rawHeights.reduce(0, +)
-        let scale = sumRaw > measureAreaHeight ? measureAreaHeight / sumRaw : 1.0
+        let scale = sumRaw > areaHeight ? areaHeight / sumRaw : 1.0
         let cellHeights = rawHeights.map { $0 * scale }
         return Group {
             if sorted.isEmpty {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color(.systemGray5))
-                    .frame(width: measureSlotWidth * 0.3, height: measureAreaHeight * 0.3)
+                    .frame(width: slotWidth * 0.3, height: areaHeight * 0.3)
             } else {
                 ZStack(alignment: .bottom) {
                     VStack(spacing: 0) {
@@ -444,14 +463,14 @@ struct MeasureGameView: View {
                             let sortedIdx = sorted.count - 1 - revIdx
                             // Bottom segment (touching ground) = last in VStack = revIdx == count-1; use .bottom so feet align
                             let alignBottom = (revIdx == sorted.count - 1)
-                            measureTowerCell(creature: c, width: measureSlotWidth, height: cellHeights[sortedIdx], alignBottom: alignBottom)
+                            measureTowerCell(creature: c, width: slotWidth, height: cellHeights[sortedIdx], alignBottom: alignBottom)
                         }
                     }
                 }
                 .clipped()
             }
         }
-        .frame(width: measureSlotWidth, height: measureAreaHeight, alignment: .bottomLeading)
+        .frame(width: slotWidth, height: areaHeight, alignment: .bottomLeading)
     }
 
     /// Each cell: alignBottom = true for the bottom segment only so images stack flush (no gap between segments).
@@ -1084,9 +1103,9 @@ private struct MeasureCreatureCard: View {
     /// True when this creature alone is bigger than the left reference (absurd choice; tappable for "you can't be serious" feedback).
     let isBlockedAsExceedsReferenceAlone: Bool
     let isIntroHighlighted: Bool
+    var imageSize: CGFloat = 96
+    var labelFontSize: CGFloat = 15
     let onTap: () -> Void
-
-    private let imageSize: CGFloat = 72
 
     var body: some View {
         Button(action: onTap) {
@@ -1100,17 +1119,18 @@ private struct MeasureCreatureCard: View {
                             .clipped()
                     } else {
                         Text(creature.icon)
-                            .font(.system(size: 60))
+                            .font(.system(size: imageSize * 0.625))
                             .frame(width: imageSize, height: imageSize)
                     }
                 }
                 Text(creature.name)
-                    .font(.subheadline)
+                    .font(.system(size: labelFontSize))
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.65)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
                     .allowsTightening(true)
+                    .frame(width: imageSize)
             }
         }
         .padding(5)

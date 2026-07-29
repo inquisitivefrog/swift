@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "silh-aigialosaurus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-mosa-silhouette-aigialosaurus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "silh-aigialosaurus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-mosa-silhouette-aigialosaurus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "silh-aigialosaurus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-mosa-silhouette-aigialosaurus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

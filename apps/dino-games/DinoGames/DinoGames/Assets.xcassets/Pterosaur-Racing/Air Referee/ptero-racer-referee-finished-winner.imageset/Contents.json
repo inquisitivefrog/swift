@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "ptero-racer-referee-finished-winner-80.png",
+      "filename" : "ptero-racer-referee-finished-winner-360.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ptero-racer-referee-finished-winner-160.png",
+      "filename" : "ptero-racer-referee-finished-winner-720.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "ptero-racer-referee-finished-winner-240.png",
+      "filename" : "ptero-racer-referee-finished-winner-1024.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

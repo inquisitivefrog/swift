@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "plesio-dolichorhynchops-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-plesio-dolichorhynchops-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "plesio-dolichorhynchops-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-plesio-dolichorhynchops-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "plesio-dolichorhynchops-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-plesio-dolichorhynchops-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

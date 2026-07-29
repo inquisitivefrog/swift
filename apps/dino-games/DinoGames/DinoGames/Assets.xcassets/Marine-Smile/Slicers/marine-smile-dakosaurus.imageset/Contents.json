@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "marine-smile-dakosaurus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-smile-dakosaurus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "marine-smile-dakosaurus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-smile-dakosaurus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "marine-smile-dakosaurus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-smile-dakosaurus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

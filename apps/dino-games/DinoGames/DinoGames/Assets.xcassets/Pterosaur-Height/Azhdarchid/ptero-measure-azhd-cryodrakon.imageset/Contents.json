@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "measure-azhd-cryodrakon-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "ptero-measure-azhd-cryodrakon-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "measure-azhd-cryodrakon-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "ptero-measure-azhd-cryodrakon-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "measure-azhd-cryodrakon-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "ptero-measure-azhd-cryodrakon-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

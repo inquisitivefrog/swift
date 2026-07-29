@@ -19,21 +19,22 @@ final class EggsGameCatalogXCTests: XCTestCase {
         let names = Self.allIntroCreatureNames()
         XCTAssertFalse(names.isEmpty, "Expected at least one Eggs intro creature name")
 
-        let font = UIFont.preferredFont(forTextStyle: .caption1)
-        let maxScaledWidth = EggsGameIntroLabelLayout.compactPortraitWidth + 0.5
+        let font = UIFont.systemFont(ofSize: EggsGameIntroLabelLayout.phoneNameFont, weight: .medium)
+        // Card labels may use up to ~1.45× portrait width on iPad-scaled cards.
+        let maxScaledWidth = EggsGameIntroLabelLayout.compactPortraitWidth * 1.45 + 0.5
         let minScale = EggsGameIntroLabelLayout.minimumScaleFactor
 
         var offenders: [String] = []
         for name in names.sorted() {
             let width = (name as NSString).size(withAttributes: [.font: font]).width
             if width * minScale > maxScaledWidth {
-                offenders.append("\(name) (\(Int(width))pt at caption1)")
+                offenders.append("\(name) (\(Int(width))pt at \(Int(EggsGameIntroLabelLayout.phoneNameFont))pt)")
             }
         }
 
         XCTAssertTrue(
             offenders.isEmpty,
-            "Intro caption names must shrink to fit \(Int(EggsGameIntroLabelLayout.compactPortraitWidth))pt: \(offenders.joined(separator: ", "))"
+            "Intro caption names must shrink to fit \(Int(EggsGameIntroLabelLayout.compactPortraitWidth * 1.45))pt: \(offenders.joined(separator: ", "))"
         )
     }
 

@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "level-two-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "game-level-two-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "level-two-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "game-level-two-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "level-two-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "game-level-two-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "ptero-smile-thalassodromeus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "ptero-smile-thalassodromeus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "ptero-smile-thalassodromeus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "ptero-smile-thalassodromeus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "ptero-smile-thalassodromeus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "ptero-smile-thalassodromeus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

@@ -38,6 +38,23 @@ final class StandardVictorySequenceXCTests: XCTestCase {
 
     // MARK: - Layout
 
+    func testRecapListScrollHeightScalesForWiderCanvas() {
+        let phone = StandardVictoryLayout.recapListScrollHeight(itemCount: 3, scale: 1)
+        let iPad = StandardVictoryLayout.recapListScrollHeight(itemCount: 3, scale: 1.5)
+        XCTAssertGreaterThan(iPad, phone)
+        XCTAssertEqual(StandardVictoryLayout.scaledRowHeight(1.5), 138)
+        XCTAssertEqual(StandardVictoryLayout.scaledRecapThumbnailSide(1.5), 108)
+        XCTAssertEqual(
+            StandardVictoryLayout.layoutScale(safeWidth: GameCatalogImageMetrics.phoneReferenceWidth),
+            1,
+            accuracy: 0.001
+        )
+        XCTAssertGreaterThan(
+            StandardVictoryLayout.layoutScale(safeWidth: 1024),
+            1
+        )
+    }
+
     func testRecapListScrollHeightCapsAtThreeVisibleRows() {
         let three = StandardVictoryLayout.recapListScrollHeight(itemCount: 3)
         let nine = StandardVictoryLayout.recapListScrollHeight(itemCount: 9)

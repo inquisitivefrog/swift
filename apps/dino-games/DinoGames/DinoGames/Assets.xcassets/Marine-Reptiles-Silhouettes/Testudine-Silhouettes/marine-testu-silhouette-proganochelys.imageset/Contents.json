@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "testu-silhouette-proganochelys-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-testu-silhouette-proganochelys-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "testu-silhouette-proganochelys-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-testu-silhouette-proganochelys-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "testu-silhouette-proganochelys-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-testu-silhouette-proganochelys-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

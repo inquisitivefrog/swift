@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-flora-ginkgo-seeds-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-flora-morrison-ginkgo-seeds-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-flora-ginkgo-seeds-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-flora-morrison-ginkgo-seeds-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-flora-ginkgo-seeds-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-flora-morrison-ginkgo-seeds-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

@@ -1,7 +1,7 @@
 {
   "image_manifest": {
-    "filename": "game-weigh-the-pterosaur-win_001.png",
-    "description": "A celebratory 3D rendered asset manifest showing the outcome of a weight comparison game with two pterosaurs of vastly different sizes on a beach seesaw.",
+    "filename": "game-pterosaur-race-referee.png",
+    "description": "A 3D rendered asset manifest showing the aerial race referee for the Racing Pterosaurs game, suspended high in the air near a cliffside raceway.",
     "art_styles": ["STYLE_ANIMATED_FEATURE_V3"],
     "lighting": "SUNNY_EXPOSED_CINEMATIC",
     "framing": "SQUARE_HERO_CARD",
@@ -9,53 +9,41 @@
     "assets": [
       {
         "id": "A1",
-        "name": "Header Text",
-        "description": "Red text with a yellow 3D border reading 'Weigh The Pterosaur!' centered at the top of the frame, matching the previous card's typography.",
-        "type": "text_element"
+        "name": "Pterosaur Race Referee",
+        "description": "An adult female grad student working as a paleontologist with braided black hair and African ethnicity (dino_bones_paleontologist_6). She is wearing a bright yellow aerial safety helmet with strap details, a white tee shirt worn UNDER a khaki safari vest, white shorts, and black hiking boots. She is seated safely in a harness attached to a hang glider, looking energetic and ready to signal the start of the race.",
+        "type": "character"
       },
       {
         "id": "A2",
-        "name": "Victory Text",
-        "description": "Bold, celebratory red 3D text reading 'Player Wins!' centered at the bottom of the frame.",
-        "type": "text_element"
-      },
-      {
-        "id": "A3",
-        "name": "Hatzegopteryx (Heavy Character)",
-        "description": "A massive, robust Hatzegopteryx with a thick neck and mottled orange-brown skin. It is seated firmly on the right end of the seesaw, which is pressed deep into the sand, indicating its immense weight.",
-        "type": "character"
-      },
-      {
-        "id": "A4",
-        "name": "Nemicolopterus (Light Character)",
-        "description": "A tiny, sparrow-sized Nemicolopterus with bright green and yellow markings. It is positioned on the left end of the seesaw, which is tilted high toward the sky, causing the small creature to look down with a surprised, wide-eyed expression.",
-        "type": "character"
-      },
-      {
-        "id": "A5",
-        "name": "Wooden Seesaw Item",
-        "description": "The same wooden plank and log pivot from the previous scene, now at a steep diagonal angle with the right side touching the ground.",
+        "name": "Hang Glider",
+        "description": "A high-visibility, lightweight hang glider with a bright yellow and red wing frame keeping the referee safely suspended mid-air.",
         "type": "item"
       },
       {
-        "id": "A6",
-        "name": "Solnhofen Beach Environment",
-        "description": "The tropical lagoon environment from the Solnhofen formation, featuring fine white sand, a turquoise sea, and a distant limestone cliff under a bright, clear sky.",
+        "id": "A3",
+        "name": "Starting Flag",
+        "description": "A vibrant, checkered racing flag held out and waved high with one hand, fluttering in the wind to signal the race start.",
+        "type": "item"
+      },
+      {
+        "id": "A4",
+        "name": "Aerial Cliffside Environment",
+        "description": "A high-altitude, open-sky environment inspired by Cretaceous coastal cliffs. Bright blue sky with sweeping cirrus clouds and distant limestone canyon cliffs far below.",
         "type": "environment"
       },
       {
-        "id": "A7",
+        "id": "A5",
         "name": "Visual Effects",
-        "description": "A small dust cloud kicked up where the heavy end of the seesaw hit the sand, and bright, celebratory sun glints reflecting off the water.",
+        "description": "Wind swirl lines around the flag and glider wings to emphasize motion and high altitude, with bright sun flares catching the edge of the glider frame.",
         "type": "environment"
       },
       {
-        "id": "A8",
+        "id": "A6",
         "name": "Bottom Right Watermark",
         "description": "A small, translucent four-pointed star lens-flare logo located in the bottom-right corner.",
         "type": "watermark"
       }
-     “constraints”: “NO cables or circles.  Focus entirely on the referee character’s body language indicating start of race."
-    ]
+    ],
+    "constraints": "No people other than the referee. Square aspect ratio, 1:1. Focus entirely on the referee's body language and airborne pose signaling the start of the race. Ensure safety helmet is clearly visible. No title bars or borders."
   }
 }

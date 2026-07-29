@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-racer-parasaurolophus-tripped-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-racer-parasaurolophus-tripped-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-racer-parasaurolophus-tripped-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-racer-parasaurolophus-tripped-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-racer-parasaurolophus-tripped-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-racer-parasaurolophus-tripped-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

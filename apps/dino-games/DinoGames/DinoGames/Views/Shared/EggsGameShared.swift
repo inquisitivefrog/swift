@@ -415,22 +415,27 @@ struct EggsGameView: View {
             .gameSheetDismissDisabledWhileAudioPlaying(speechManager.isPlaying)
             .overlay(alignment: .topTrailing) {
                 if gameConfig.settings.hasSourceHints, !showVictory {
-                    Button {
-                        guessChoiceTimer.pauseForHints()
-                        showSourceEggsHints = true
-                    } label: {
-                        Text("Hints")
-                            .font(.caption.weight(.semibold))
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 10)
-                            .background(Circle().fill(Color.blue))
-                            .frame(width: 72, height: 72)
+                    GeometryReader { geo in
+                        let safeWidth = max(geo.size.width, 1)
+                        let playMaxScale: CGFloat = 1.85
+                        let hintSide = GameCatalogImageMetrics.scaled(72, safeWidth: safeWidth, maxScale: playMaxScale)
+                        let hintFont = GameCatalogImageMetrics.scaled(12, safeWidth: safeWidth, maxScale: playMaxScale)
+                        Button {
+                            guessChoiceTimer.pauseForHints()
+                            showSourceEggsHints = true
+                        } label: {
+                            Text("Hints")
+                                .font(.system(size: hintFont, weight: .semibold))
+                                .foregroundColor(.white)
+                                .frame(width: hintSide, height: hintSide)
+                                .background(Circle().fill(Color.blue))
+                        }
+                        .disabled(speechManager.isPlaying)
+                        .opacity(speechManager.isPlaying ? 0.45 : 1.0)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                        .padding(.top, 8)
+                        .padding(.trailing, 16)
                     }
-                    .disabled(speechManager.isPlaying)
-                    .opacity(speechManager.isPlaying ? 0.45 : 1.0)
-                    .padding(.top, 8)
-                    .padding(.trailing, 16)
                 }
             }
             .fullScreenCover(isPresented: $showSourceEggsHints) {
@@ -467,38 +472,73 @@ struct EggsGameView: View {
     // MARK: - Main Game
 
     private var mainGameView: some View {
-        VStack(spacing: 16) {
-            VStack(spacing: 4) {
-                Text(gameConfig.title)
-                    .font(.title2)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
-                    .padding(.top, 8)
-                Text("Round \(currentRound) of \(totalRounds)")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
+        GeometryReader { geometry in
+            let safeWidth = max(geometry.size.width, 1)
+            let safeHeight = max(geometry.size.height, 1)
+            // Phone-tuned baselines; grow on iPad when width/height allow (Dino / Ptero / Marine Eggs).
+            let playMaxScale: CGFloat = 1.5
+            let stageMaxW = min(
+                GameCatalogImageMetrics.scaled(400, safeWidth: safeWidth, maxScale: playMaxScale),
+                safeWidth * 0.88
+            )
+            let stageMaxH = min(
+                GameCatalogImageMetrics.scaled(260, safeWidth: safeWidth, maxScale: playMaxScale),
+                safeHeight * 0.36
+            )
+            let cardSize = min(
+                GameCatalogImageMetrics.scaled(130, safeWidth: safeWidth, maxScale: playMaxScale),
+                (safeWidth - 48) / 3.2
+            )
+            let cardSizeCompact = min(
+                GameCatalogImageMetrics.scaled(110, safeWidth: safeWidth, maxScale: playMaxScale),
+                cardSize * 0.88
+            )
+            let scannerSize = GameCatalogImageMetrics.scaled(120, safeWidth: safeWidth, maxScale: playMaxScale)
+            let creatureNameFont = GameCatalogImageMetrics.scaled(
+                EggsGameIntroLabelLayout.phoneNameFont,
+                safeWidth: safeWidth,
+                maxScale: 1.85
+            )
+            let titleFont = GameCatalogImageMetrics.scaled(34, safeWidth: safeWidth, maxScale: 1.85)
+            let roundFont = GameCatalogImageMetrics.scaled(17, safeWidth: safeWidth, maxScale: 1.85)
+            VStack(spacing: 16) {
+                VStack(spacing: 4) {
+                    Text(gameConfig.title)
+                        .font(.system(size: titleFont, weight: .semibold))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                        .padding(.top, 8)
+                    Text("Round \(currentRound) of \(totalRounds)")
+                        .font(.system(size: roundFont, weight: .semibold))
+                        .foregroundColor(.secondary)
+                }
+
+                // Alternating main image: nest ↔ egg, then nest ↔ egg ↔ scan after CT scan.
+                mainAlternatingImage(maxWidth: stageMaxW, maxHeight: stageMaxH)
+
+                // CT scanner only (magnify + SEM removed for simpler flow)
+                scannerToolRowView(scannerSize: scannerSize)
+                    .allowsHitTesting(!speechManager.isPlaying)
+
+                // Three dinosaurs below (dino-{slug}), tappable—only one matches the displayed egg
+                threeCreatureLayout(
+                    cardSize: cardSize,
+                    cardSizeCompact: cardSizeCompact,
+                    creatureNameFont: creatureNameFont
+                )
+                    .allowsHitTesting(!speechManager.isPlaying)
             }
-
-            // Alternating main image: nest ↔ egg, then nest ↔ egg ↔ scan after CT scan.
-            mainAlternatingImage
-
-            // CT scanner only (magnify + SEM removed for simpler flow)
-            scannerToolRowView
-                .allowsHitTesting(!speechManager.isPlaying)
-
-            // Three dinosaurs below (dino-{slug}), tappable—only one matches the displayed egg
-            threeCreatureLayout
-                .allowsHitTesting(!speechManager.isPlaying)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .task(id: currentRound) {
+                if displayedCreatures.isEmpty {
+                    prepareDisplayedCreaturesForRound()
+                }
+                if let clade = currentRoundConfig?.eggType {
+                    roundColorsAsset = gameConfig.settings.morphology.randomColorsAsset(clade)
+                }
+            }
+            .id(currentRound)
         }
-        .task(id: currentRound) {
-            if displayedCreatures.isEmpty {
-                prepareDisplayedCreaturesForRound()
-            }
-            if let clade = currentRoundConfig?.eggType {
-                roundColorsAsset = gameConfig.settings.morphology.randomColorsAsset(clade)
-            }
-        }
-        .id(currentRound)
     }
 
     private func mainImageAssetName(style: String, phase: MainExploreImagePhase) -> String? {
@@ -551,7 +591,7 @@ struct EggsGameView: View {
         return .egg
     }
 
-    private var mainAlternatingImage: some View {
+    private func mainAlternatingImage(maxWidth: CGFloat, maxHeight: CGFloat) -> some View {
         let style = nestingStyle ?? eggType ?? "ground-nest"
         let nestingAvailable = !usesSpecimenOnlyRound && nestingImageExists(style: style)
         let displayPhase: MainExploreImagePhase = {
@@ -566,11 +606,11 @@ struct EggsGameView: View {
                 Image(imgName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 340, maxHeight: 220)
+                    .frame(maxWidth: maxWidth, maxHeight: maxHeight)
             } else {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color.brown.opacity(0.2))
-                    .frame(width: 260, height: 130)
+                    .frame(width: min(260, maxWidth * 0.76), height: min(130, maxHeight * 0.6))
             }
         }
         .padding(.horizontal)
@@ -619,9 +659,7 @@ struct EggsGameView: View {
         }
     }
 
-    private let scannerToolImageSize: CGFloat = 100
-
-    private var scannerToolRowView: some View {
+    private func scannerToolRowView(scannerSize: CGFloat) -> some View {
         let egg = currentRoundConfig?.eggType ?? ""
         let emptyExists = ImageAssetCache.imageExists(named: morphology.scansEmptyName())
         let cladeImageName = egg.isEmpty ? "" : gameConfig.settings.morphology.scanAssetName(egg)
@@ -629,7 +667,7 @@ struct EggsGameView: View {
 
         return HStack {
             Spacer(minLength: 0)
-            scannerToolImage(eggClade: egg, emptyExists: emptyExists, cladeExists: cladeExists)
+            scannerToolImage(eggClade: egg, emptyExists: emptyExists, cladeExists: cladeExists, scannerSize: scannerSize)
             Spacer(minLength: 0)
         }
         .padding(.horizontal)
@@ -640,7 +678,7 @@ struct EggsGameView: View {
     }
 
     @ViewBuilder
-    private func scannerToolImage(eggClade: String, emptyExists: Bool, cladeExists: Bool) -> some View {
+    private func scannerToolImage(eggClade: String, emptyExists: Bool, cladeExists: Bool, scannerSize: CGFloat) -> some View {
         let openName = morphology.scannerOpenName()
         let closedName = morphology.scannerClosedName()
         let scannerEnabled = scannerAvailableForRound
@@ -656,10 +694,10 @@ struct EggsGameView: View {
                 Image(name)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: scannerToolImageSize, height: scannerToolImageSize)
+                    .frame(width: scannerSize, height: scannerSize)
                     .opacity(scanInProgress ? scanFlashOpacity : 1)
             } else {
-                scannerToolPlaceholder
+                scannerToolPlaceholder(scannerSize: scannerSize)
             }
         }
         .contentShape(Rectangle())
@@ -714,10 +752,10 @@ struct EggsGameView: View {
     }
 
     @ViewBuilder
-    private var scannerToolPlaceholder: some View {
+    private func scannerToolPlaceholder(scannerSize: CGFloat) -> some View {
         Text("📡")
-            .font(.system(size: 32))
-            .frame(width: scannerToolImageSize, height: scannerToolImageSize)
+            .font(.system(size: min(32, scannerSize * 0.32)))
+            .frame(width: scannerSize, height: scannerSize)
             .background(RoundedRectangle(cornerRadius: 8).fill(Color.gray.opacity(0.15)))
     }
 
@@ -751,17 +789,17 @@ struct EggsGameView: View {
         }
     }
 
-    private var threeCreatureLayout: some View {
+    private func threeCreatureLayout(cardSize: CGFloat, cardSizeCompact: CGFloat, creatureNameFont: CGFloat) -> some View {
         let dinos = displayedCreatures.isEmpty ? creatures : displayedCreatures
         return VStack(spacing: 12) {
             // Top: middle dinosaur (index 1)
             if dinos.count > 1 {
-                creatureCard(for: dinos[1], index: 1)
+                creatureCard(for: dinos[1], index: 1, cardSize: cardSize, cardSizeCompact: cardSizeCompact, creatureNameFont: creatureNameFont)
             }
             // Bottom: left (0) and right (2)
             HStack(spacing: 24) {
-                if !dinos.isEmpty { creatureCard(for: dinos[0], index: 0) }
-                if dinos.count > 2 { creatureCard(for: dinos[2], index: 2) }
+                if !dinos.isEmpty { creatureCard(for: dinos[0], index: 0, cardSize: cardSize, cardSizeCompact: cardSizeCompact, creatureNameFont: creatureNameFont) }
+                if dinos.count > 2 { creatureCard(for: dinos[2], index: 2, cardSize: cardSize, cardSizeCompact: cardSizeCompact, creatureNameFont: creatureNameFont) }
             }
         }
         .frame(maxWidth: .infinity)
@@ -769,7 +807,7 @@ struct EggsGameView: View {
         .padding(.vertical, 8)
     }
 
-    private func creatureCard(for creature: Dinosaur, index: Int) -> some View {
+    private func creatureCard(for creature: Dinosaur, index: Int, cardSize: CGFloat, cardSizeCompact: CGFloat, creatureNameFont: CGFloat) -> some View {
         let isHighlighted = introHighlightsCreature(creature)
         return EggsGameCreatureCard(
             creatureEmoji: gameConfig.settings.creatureEmoji,
@@ -781,6 +819,9 @@ struct EggsGameView: View {
             hasFailedAttempt: failedAttempts.contains(creature.id),
             isIntroHighlighted: isHighlighted,
             compact: true,
+            portraitSize: cardSize,
+            portraitSizeCompact: cardSizeCompact,
+            nameFontSize: creatureNameFont,
             onTap: { handleCreatureTap(creature) }
         )
     }
@@ -1134,8 +1175,10 @@ struct EggsGameView: View {
 enum EggsGameIntroLabelLayout {
     /// Portrait width for compact Eggs creature cards (matches `eggsGameCardSizeCompact`).
     static let compactPortraitWidth: CGFloat = 88
+    /// Phone-tuned creature name under intro portraits; grows on iPad via `GameCatalogImageMetrics.scaled`.
+    static let phoneNameFont: CGFloat = 15
     /// Smallest scale applied to caption names before truncation.
-    static let minimumScaleFactor: CGFloat = 0.55
+    static let minimumScaleFactor: CGFloat = 0.65
 }
 
 private let eggsGameCardSize: CGFloat = 100
@@ -1152,9 +1195,12 @@ private struct EggsGameCreatureCard: View {
     let hasFailedAttempt: Bool
     var isIntroHighlighted: Bool = false
     var compact: Bool = false
+    var portraitSize: CGFloat = eggsGameCardSize
+    var portraitSizeCompact: CGFloat = eggsGameCardSizeCompact
+    var nameFontSize: CGFloat = EggsGameIntroLabelLayout.phoneNameFont
     let onTap: () -> Void
 
-    private var size: CGFloat { compact ? eggsGameCardSizeCompact : eggsGameCardSize }
+    private var size: CGFloat { compact ? portraitSizeCompact : portraitSize }
 
     private var imageName: String? {
         let name = creature.imageName ?? "dino-\(creature.id)"
@@ -1193,13 +1239,13 @@ private struct EggsGameCreatureCard: View {
                     }
                     if showsName || showsNameDuringIntro {
                         Text(creature.name)
-                            .font(.caption)
+                            .font(.system(size: nameFontSize, weight: .medium))
                             .multilineTextAlignment(.center)
                             .lineLimit(1)
                             .minimumScaleFactor(EggsGameIntroLabelLayout.minimumScaleFactor)
-                            .frame(maxWidth: size)
+                            .frame(maxWidth: max(size * 1.45, size))
                             .opacity(showsName || isIntroHighlighted ? 1 : 0)
-                            .frame(minHeight: 14)
+                            .frame(minHeight: max(14, nameFontSize + 4))
                     }
                 }
                 if hasFailedAttempt && !isMatched {
@@ -1266,52 +1312,65 @@ struct SourceEggsHintsView: View {
     }
 
     private var gridView: some View {
-        VStack(spacing: 20) {
-            SourceHintsScreenTitle(title: title)
-            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                ForEach(hints) { hint in
-                    Button {
-                        showHintDetail(hint)
-                    } label: {
-                        if ImageAssetCache.imageExists(named: hint.imageName) {
-                            Image(hint.imageName)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 140)
-                                .clipped()
-                        } else {
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.gray.opacity(0.3))
-                                .frame(height: 140)
-                                .overlay(Text(hint.displayName).font(.title3).foregroundColor(.secondary))
+        GeometryReader { geometry in
+            let safeWidth = max(geometry.size.width, 1)
+            let cardHeight = SourceHintsLayout.gridCardHeight(safeWidth: safeWidth)
+            let spacing = SourceHintsLayout.gridSpacing(safeWidth: safeWidth)
+            let hPad = SourceHintsLayout.horizontalPadding(safeWidth: safeWidth)
+            let titleFont = SourceHintsLayout.titleFont(safeWidth: safeWidth)
+            let fallbackFont = SourceHintsLayout.fallbackLabelFont(safeWidth: safeWidth)
+            VStack(spacing: spacing) {
+                SourceHintsScreenTitle(title: title, fontSize: titleFont)
+                LazyVGrid(columns: [GridItem(.flexible(), spacing: spacing), GridItem(.flexible(), spacing: spacing)], spacing: spacing) {
+                    ForEach(hints) { hint in
+                        Button {
+                            showHintDetail(hint)
+                        } label: {
+                            if ImageAssetCache.imageExists(named: hint.imageName) {
+                                Image(hint.imageName)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: cardHeight)
+                                    .clipped()
+                            } else {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: cardHeight)
+                                    .overlay(Text(hint.displayName).font(.system(size: fallbackFont)).foregroundColor(.secondary))
+                            }
                         }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
+                .padding(.horizontal, hPad)
+                Spacer()
             }
-            .padding(.horizontal, 24)
-            Spacer()
         }
     }
 
     @ViewBuilder
     private var detailView: some View {
         if let hint = selectedHint {
-            VStack(spacing: 20) {
-                Spacer()
-                if ImageAssetCache.imageExists(named: hint.imageName) {
-                    Image(hint.imageName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 340, maxHeight: 220)
+            GeometryReader { geometry in
+                let safeWidth = max(geometry.size.width, 1)
+                let detailSide = SourceHintsLayout.detailImageSide(safeWidth: safeWidth)
+                let labelFont = SourceHintsLayout.detailLabelFont(safeWidth: safeWidth)
+                VStack(spacing: 20) {
+                    Spacer()
+                    if ImageAssetCache.imageExists(named: hint.imageName) {
+                        Image(hint.imageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: detailSide, maxHeight: detailSide * 0.72)
+                    }
+                    Text(hint.displayName)
+                        .font(.system(size: labelFont, weight: .semibold))
+                        .foregroundColor(.primary)
+                    Spacer()
                 }
-                Text(hint.displayName)
-                    .font(.title2.weight(.semibold))
-                    .foregroundColor(.primary)
-                Spacer()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 

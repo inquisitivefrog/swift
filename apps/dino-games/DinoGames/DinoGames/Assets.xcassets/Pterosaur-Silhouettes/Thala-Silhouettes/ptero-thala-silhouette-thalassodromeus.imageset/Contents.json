@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "silh-thalassodromeus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "ptero-thala-silhouette-thalassodromeus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "silh-thalassodromeus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "ptero-thala-silhouette-thalassodromeus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "silh-thalassodromeus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "ptero-thala-silhouette-thalassodromeus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

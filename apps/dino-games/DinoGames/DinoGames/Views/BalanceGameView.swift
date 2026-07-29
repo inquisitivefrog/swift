@@ -113,7 +113,8 @@ struct BalanceGameView: View {
         gameConfig.id == "balance-the-dinosaur" ? item.imageName : (weighImageName(for: item) ?? item.imageName)
     }
 
-    /// Scale factor for seesaw image (like Weigh the Dinosaur). Heavier gets full size (1.2); lighter scales by weight ratio; min 0.55 keeps small dinos visible.
+    /// Scale factor for seesaw image (like Weigh the Dinosaur). Heavier gets full size (1.2);
+    /// lighter uses cube-root of weight ratio; floor keeps tiny poses findable for kids.
     private func seesawImageScale(for item: BalanceItem, relativeTo other: BalanceItem?) -> CGFloat {
         guard gameConfig.id == "balance-the-dinosaur" else { return 1.0 }
         let kg = item.estimatedWeightKg
@@ -123,15 +124,15 @@ struct BalanceGameView: View {
                 return 1.2
             } else {
                 let ratio = kg / otherKg
-                let t = sqrt(max(ratio, 0.001))
-                return CGFloat(max(0.55, 0.35 + 0.85 * t))
+                let t = pow(max(ratio, 0.0001), 1.0 / 3.0)
+                return CGFloat(max(0.22, 1.15 * t))
             }
         }
         let logMin = log10(0.5)
         let logMax = log10(70_000.0)
         let logKg = log10(max(kg, 0.5))
         let t = (logKg - logMin) / (logMax - logMin)
-        return CGFloat(max(0.55, 0.35 + 0.85 * min(max(t, 0), 1)))
+        return CGFloat(0.35 + 0.85 * min(max(t, 0), 1))
     }
 
     /// Victory / ran-out: game title, recap list, then success + optional stinger.
@@ -207,30 +208,40 @@ struct BalanceGameView: View {
 
     var body: some View {
         GeometryReader { geometry in
+            let safeWidth = max(geometry.size.width, 1)
             let safeHeight = max(geometry.size.height, 0)
+            let play = WeighPlayAreaMetrics.makeSeesawStage(safeWidth: safeWidth, canvasHeight: max(safeHeight, 1))
+            let grid = CreatureThreeByThreeGridMetrics.make(
+                safeWidth: safeWidth,
+                safeHeight: max(safeHeight, 1),
+                reservedStageHeight: play.seesawHeight + max(0, safeHeight * 0.16),
+                chrome: max(0, safeHeight * 0.04) + 16
+            )
             VStack(spacing: 0) {
                 Spacer().frame(height: max(0, safeHeight * 0.04))
 
                 if phase == .victory || phase == .ranOut {
                     victoryOrRanOutView
                 } else if phase == .selectHeavy {
-                    selectHeavyView(geometry: geometry)
+                    selectHeavyView(geometry: geometry, grid: grid)
                 } else {
-                    addingView(geometry: geometry)
+                    addingView(geometry: geometry, cardImageSize: grid.imageSize, labelFontSize: grid.labelFontSize)
                 }
 
                 Spacer().frame(height: max(0, safeHeight * 0.12 + addingPhaseExtraSpacing))
-                seesawView(geometry: geometry)
+                seesawView(geometry: geometry, play: play)
                 Spacer()
             }
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            if phase != .victory && phase != .ranOut {
+            #if DEBUG
+            if DeveloperSessionFlags.showEarlyExitDone, phase != .victory && phase != .ranOut {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Done") { isPresented = false }
                 }
             }
+            #endif
         }
         .onAppear {
             // Init round items on first load
@@ -257,34 +268,39 @@ struct BalanceGameView: View {
 
     // MARK: - Select heavy (phase 1)
 
-    private func selectHeavyView(geometry: GeometryProxy) -> some View {
-        let rows = (currentRoundItems.count + 2) / 3
-        return VStack(spacing: 12) {
+    private func selectHeavyView(geometry: GeometryProxy, grid: CreatureThreeByThreeGridMetrics) -> some View {
+        VStack(spacing: 6) {
             if maxRounds > 1 {
                 Text("Round \(currentRound) of \(maxRounds)")
-                    .font(.headline)
+                    .font(.subheadline)
                     .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 10)
             }
             Text(gameConfig.id == "balance-the-pterosaur" ? "Choose a heavy pterosaur" : "Choose a heavy dinosaur")
                 .font(.headline)
                 .foregroundColor(.secondary)
-            VStack(spacing: 10) {
-                ForEach(0..<rows, id: \.self) { row in
-                    HStack(spacing: 10) {
-                        ForEach(0..<3, id: \.self) { col in
-                            let index = row * 3 + col
-                            if index < currentRoundItems.count {
-                                let item = currentRoundItems[index]
-                                BalanceItemCard(item: item, displayImageName: gridImageName(for: item), isIntroHighlighted: introWalkStep == index, isDisabled: !introWalkComplete) {
-                                    handleSelectHeavy(item)
-                                }
-                            }
-                        }
+                .frame(maxWidth: .infinity)
+            let columns = [GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6), GridItem(.flexible(), spacing: 6)]
+            LazyVGrid(columns: columns, spacing: 6) {
+                ForEach(Array(currentRoundItems.enumerated()), id: \.element.id) { index, item in
+                    BalanceItemCard(
+                        item: item,
+                        displayImageName: gridImageName(for: item),
+                        imageSize: grid.imageSize,
+                        labelFontSize: grid.labelFontSize,
+                        isIntroHighlighted: introWalkStep == index,
+                        isDisabled: !introWalkComplete
+                    ) {
+                        handleSelectHeavy(item)
                     }
                 }
             }
-            .padding(.horizontal, 15)
+            .padding(.horizontal, 10)
+            .frame(maxWidth: grid.contentWidth)
+            .frame(maxWidth: .infinity)
         }
+        .frame(height: grid.blockHeight)
         .frame(width: max(1, geometry.size.width))
     }
 
@@ -359,20 +375,22 @@ struct BalanceGameView: View {
 
     // MARK: - Adding (phase 2): available dinosaurs at top in 2 rows of 4; remove as selected.
 
-    private func addingView(geometry: GeometryProxy) -> some View {
+    private func addingView(geometry: GeometryProxy, cardImageSize: CGFloat, labelFontSize: CGFloat = 15) -> some View {
         let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
         return VStack(spacing: 10) {
             if maxRounds > 1 {
                 Text("Round \(currentRound) of \(maxRounds)")
                     .font(.headline)
                     .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 10)
             }
             Text("Add dinosaurs to balance")
                 .font(.headline)
                 .foregroundColor(.secondary)
             LazyVGrid(columns: columns, spacing: 12) {
                 ForEach(availableToAdd) { item in
-                    BalanceItemCard(item: item, displayImageName: gridImageName(for: item), isDisabled: !canSelectNext) {
+                    BalanceItemCard(item: item, displayImageName: gridImageName(for: item), imageSize: cardImageSize, labelFontSize: labelFontSize, isDisabled: !canSelectNext) {
                         handleAddToRight(item)
                     }
                 }
@@ -571,21 +589,21 @@ struct BalanceGameView: View {
         }
     }
 
-    // MARK: - Seesaw (same structure as Weigh the Dinosaur)
+    // MARK: - Seesaw (same structure / tip-safe metrics as Weigh the Dinosaur)
 
-    private func seesawView(geometry: GeometryProxy) -> some View {
+    private func seesawView(geometry: GeometryProxy, play: WeighPlayAreaMetrics) -> some View {
         let safeWidth = max(geometry.size.width, 1)
-        let beamW = max(safeWidth * 0.28, 100)
-        let sideMargin: CGFloat = 12
-        // Seat top (where dinosaur feet rest): seat is at y:-15, height 12, so top at -21
-        let seatTopY: CGFloat = -21
+        let beamW = play.beamHalfWidth
+        let sideMargin = play.sideMargin
+        let beamTopY: CGFloat = -9 * play.layoutScale
+        let seesawSeatHeight: CGFloat = 12 * play.layoutScale
+        let seatTopY = beamTopY - seesawSeatHeight
         let frameWidth = max(1, safeWidth - 2 * sideMargin)
-        let maxDinoWidth = max(100, frameWidth - 2 * beamW)
 
         return ZStack {
             // A-frame support (shared with Weigh)
-            SeesawSupportView()
-                .offset(y: 45)
+            SeesawSupportView(scale: play.layoutScale)
+                .offset(y: 45 * play.layoutScale)
 
             // Beam + seats + dinosaurs rotate as one unit around fulcrum; fulcrum stays fixed
             ZStack {
@@ -594,39 +612,37 @@ struct BalanceGameView: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 6)
                             .fill(LinearGradient(colors: [Color.brown, Color.brown.opacity(0.85)], startPoint: .top, endPoint: .bottom))
-                            .frame(width: beamW, height: 18)
+                            .frame(width: beamW, height: 18 * play.layoutScale)
                             .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.brown.opacity(0.6), lineWidth: 1))
                             .offset(x: -beamW / 2)
                         RoundedRectangle(cornerRadius: 6)
                             .fill(LinearGradient(colors: [Color.brown, Color.brown.opacity(0.85)], startPoint: .top, endPoint: .bottom))
-                            .frame(width: beamW, height: 18)
+                            .frame(width: beamW, height: 18 * play.layoutScale)
                             .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.brown.opacity(0.6), lineWidth: 1))
                             .offset(x: beamW / 2)
                     }
                     // Seats (above beam center)
                     RoundedRectangle(cornerRadius: 4)
                         .fill(Color.brown.opacity(0.9))
-                        .frame(width: 56, height: 12)
-                        .offset(x: -beamW, y: -15)
+                        .frame(width: 56 * play.layoutScale, height: seesawSeatHeight)
+                        .offset(x: -beamW, y: -15 * play.layoutScale)
                     RoundedRectangle(cornerRadius: 4)
                         .fill(Color.brown.opacity(0.9))
-                        .frame(width: 56, height: 12)
-                        .offset(x: beamW, y: -15)
+                        .frame(width: 56 * play.layoutScale, height: seesawSeatHeight)
+                        .offset(x: beamW, y: -15 * play.layoutScale)
 
                     // Left dinosaur (on left seat) – rotates with beam so stays on seat
                     if let left = leftItem, phase == .adding || phase == .victory || phase == .ranOut {
                 let heaviestRight = rightItems.max(by: { $0.estimatedWeightKg < $1.estimatedWeightKg })
                 let scale = seesawImageScale(for: left, relativeTo: heaviestRight)
-                let idealHeight = 130 * scale
-                let idealWidth = idealHeight * 2
-                let rightMaxW: CGFloat = {
+                let peerScale: CGFloat? = {
                     if rightItems.count == 1, let r = rightItems.first {
-                        return 130 * seesawImageScale(for: r, relativeTo: left) * 2
+                        return seesawImageScale(for: r, relativeTo: left)
                     }
-                    return idealWidth
+                    return nil
                 }()
-                let scaleFactor = max(idealWidth, rightMaxW) > maxDinoWidth ? maxDinoWidth / max(idealWidth, rightMaxW) : 1.0
-                let (width, height) = (idealWidth * scaleFactor, idealHeight * scaleFactor)
+                let pose = play.poseSize(scale: scale, peerScale: peerScale)
+                let (width, height) = (pose.width, pose.height)
                 let baseY = seatTopY - height / 2
                 Group {
                     if let imageName = weighImageName(for: left) {
@@ -635,7 +651,7 @@ struct BalanceGameView: View {
                             .scaledToFit()
                             .frame(width: width, height: height, alignment: .bottom)
                     } else {
-                        Text(left.emoji).font(.system(size: 80))
+                        Text(left.emoji).font(.system(size: 80 * play.layoutScale))
                             .frame(width: width, height: height)
                     }
                 }
@@ -648,33 +664,32 @@ struct BalanceGameView: View {
 
                     // Right side (single or grid) – rotates with beam so stays on seat
                     if phase == .adding || phase == .victory || phase == .ranOut {
-                        rightSideStackView(beamW: beamW, seatTopY: seatTopY, maxDinoWidth: maxDinoWidth)
+                        rightSideStackView(beamW: beamW, seatTopY: seatTopY, play: play)
                     }
 
                     // Speed lines (only when left flew; rotate with beam)
                     if showSpeedLines, lighterFlewFromLeft == false {
+                let cellSize = 52 * min(play.layoutScale, 1.25)
                 let rightBaseY: CGFloat = {
                     switch rightItems.count {
                     case 1:
                         if let r = rightItems.first, let left = leftItem {
-                            let scale = seesawImageScale(for: r, relativeTo: left)
-                            let idealH = 130 * scale
-                            let idealW = idealH * 2
-                            let leftW = 130 * seesawImageScale(for: left, relativeTo: r) * 2
-                            let sf = max(idealW, leftW) > maxDinoWidth ? maxDinoWidth / max(idealW, leftW) : 1.0
-                            return seatTopY - (idealH * sf) / 2
+                            let pose = play.poseSize(
+                                scale: seesawImageScale(for: r, relativeTo: left),
+                                peerScale: seesawImageScale(for: left, relativeTo: r)
+                            )
+                            return seatTopY - pose.height / 2
                         }
-                        return seatTopY - 65
+                        return seatTopY - play.dinoBaseHeight / 2
                     case 2:
-                        let gridH: CGFloat = 52  // 1 row
-                        return seatTopY - gridH / 2
+                        return seatTopY - cellSize / 2
                     case 3...6:
                         let rows: CGFloat = rightItems.count <= 4 ? 2 : 3
-                        let gridH = rows * 52 + max(0, rows - 1) * 2
+                        let gridH = rows * cellSize + max(0, rows - 1) * 2
                         return seatTopY - gridH / 2
                     default:
                         let rows: CGFloat = 4
-                        let gridH = rows * 52 + 3 * 2
+                        let gridH = rows * cellSize + 3 * 2
                         return seatTopY - gridH / 2
                     }
                 }()
@@ -683,17 +698,17 @@ struct BalanceGameView: View {
                     }
                     if showSpeedLines, lighterFlewFromLeft == true, let left = leftItem {
                 let heaviestRight = rightItems.max(by: { $0.estimatedWeightKg < $1.estimatedWeightKg })
-                let scale = seesawImageScale(for: left, relativeTo: heaviestRight)
-                let idealH = 130 * scale
-                let idealW = idealH * 2
-                let rightMaxW: CGFloat = {
+                let peerScale: CGFloat? = {
                     if rightItems.count == 1, let r = rightItems.first {
-                        return 130 * seesawImageScale(for: r, relativeTo: left) * 2
+                        return seesawImageScale(for: r, relativeTo: left)
                     }
-                    return idealW
+                    return nil
                 }()
-                let sf = max(idealW, rightMaxW) > maxDinoWidth ? maxDinoWidth / max(idealW, rightMaxW) : 1.0
-                let baseY = seatTopY - (idealH * sf) / 2
+                let pose = play.poseSize(
+                    scale: seesawImageScale(for: left, relativeTo: heaviestRight),
+                    peerScale: peerScale
+                )
+                let baseY = seatTopY - pose.height / 2
                 SpeedLinesView()
                     .offset(x: -beamW, y: leftItemOffset + baseY)
                     }
@@ -701,24 +716,23 @@ struct BalanceGameView: View {
                 .rotationEffect(.degrees(seesawAngle), anchor: UnitPoint(x: 0.5, y: 1))
             }
         }
-        .frame(width: frameWidth, height: 260)
+        .frame(width: frameWidth, height: play.seesawHeight)
         .clipped()
         .frame(width: safeWidth)
     }
 
     /// Right side: one dino = full size on seat; multiple = 2-column grid (same layout as before).
-    private func rightSideStackView(beamW: CGFloat, seatTopY: CGFloat, maxDinoWidth: CGFloat) -> some View {
+    private func rightSideStackView(beamW: CGFloat, seatTopY: CGFloat, play: WeighPlayAreaMetrics) -> some View {
         Group {
             if rightItems.isEmpty {
                 EmptyView()
             } else if rightItems.count == 1 {
                 let right = rightItems[0]
-                let scale = seesawImageScale(for: right, relativeTo: leftItem)
-                let idealHeight = 130 * scale
-                let idealWidth = idealHeight * 2
-                let leftIdealW = leftItem.map { 130 * seesawImageScale(for: $0, relativeTo: right) * 2 } ?? idealWidth
-                let scaleFactor = max(idealWidth, leftIdealW) > maxDinoWidth ? maxDinoWidth / max(idealWidth, leftIdealW) : 1.0
-                let (width, height) = (idealWidth * scaleFactor, idealHeight * scaleFactor)
+                let pose = play.poseSize(
+                    scale: seesawImageScale(for: right, relativeTo: leftItem),
+                    peerScale: leftItem.map { seesawImageScale(for: $0, relativeTo: right) }
+                )
+                let (width, height) = (pose.width, pose.height)
                 let baseY = seatTopY - height / 2
                 Group {
                     if let imageName = weighImageName(for: right) {
@@ -727,7 +741,7 @@ struct BalanceGameView: View {
                             .scaledToFit()
                             .frame(width: width, height: height, alignment: .bottom)
                     } else {
-                        Text(right.emoji).font(.system(size: 80))
+                        Text(right.emoji).font(.system(size: 80 * play.layoutScale))
                             .frame(width: width, height: height)
                     }
                 }
@@ -737,7 +751,7 @@ struct BalanceGameView: View {
                 .opacity(rightItemOpacity)
                 .zIndex(10)
             } else {
-                let cellSize: CGFloat = 52
+                let cellSize: CGFloat = 52 * min(play.layoutScale, 1.25)
                 let rowSpacing: CGFloat = 2   // Tight stack so dinosaurs appear on seat without gaps
                 let colSpacing: CGFloat = 4
                 let rows: CGFloat = {
@@ -886,6 +900,9 @@ struct BalanceItemCard: View {
     let item: BalanceItem
     /// When provided (e.g. weigh-dino-* for Balance the Dinosaurs), use this for the image instead of item.imageName.
     var displayImageName: String? = nil
+    /// Grid cell image size; scales up on larger canvases (iPad).
+    var imageSize: CGFloat = 96
+    var labelFontSize: CGFloat = 15
     var isIntroHighlighted: Bool = false
     var isDisabled: Bool = false
     let onTap: () -> Void
@@ -898,18 +915,20 @@ struct BalanceItemCard: View {
                 if let name = imageNameToUse, ImageAssetCache.imageExists(named: name) {
                     Image(name)
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 72, height: 72)
+                        .aspectRatio(contentMode: .fill)
+                        .clipped()
+                        .frame(width: imageSize, height: imageSize)
                 } else {
-                    Text(item.emoji).font(.system(size: 50))
+                    Text(item.emoji).font(.system(size: imageSize * 0.7))
                 }
                 Text(item.name)
-                    .font(.subheadline)
+                    .font(.system(size: labelFontSize))
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
-                    .minimumScaleFactor(0.65)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
                     .allowsTightening(true)
+                    .frame(width: imageSize)
             }
         }
         .disabled(isDisabled)

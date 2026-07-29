@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-egg-nest-ornithischian-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-nest-ornithischian-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-egg-nest-ornithischian-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-nest-ornithischian-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-egg-nest-ornithischian-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-nest-ornithischian-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

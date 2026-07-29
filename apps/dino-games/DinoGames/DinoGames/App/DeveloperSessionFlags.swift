@@ -29,4 +29,15 @@ enum DeveloperSessionFlags {
     static var manualGameSelection: Bool {
         unlockAllGameLevels
     }
+
+    /// `UserDefaults` key. When `true` (Debug builds only): show a toolbar **Done** on Weigh / Who Is Taller / Balance so you can leave mid-game.
+    /// Off by default so free-browse and device play look like production.
+    ///
+    /// Enable: `defaults write com.inquisitivefrog.DinoGames devShowEarlyExitDone -bool YES`
+    /// Disable: `defaults delete com.inquisitivefrog.DinoGames devShowEarlyExitDone`
+    static let showEarlyExitDoneUserDefaultsKey = "devShowEarlyExitDone"
+
+    static var showEarlyExitDone: Bool {
+        UserDefaults.standard.bool(forKey: showEarlyExitDoneUserDefaultsKey)
+    }
 }

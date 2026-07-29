@@ -118,7 +118,7 @@ struct DinoPushGameView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             GeometryReader { geometry in
                 VStack(spacing: 0) {
                     if needsPeriodSelection && effectiveConfig == nil {
@@ -177,38 +177,76 @@ struct DinoPushGameView: View {
     // MARK: - Selection
 
     private func selectionGrid(geometry: GeometryProxy) -> some View {
-        VStack(spacing: 12) {
+        let safeWidth = max(geometry.size.width, 1)
+        let playMaxScale: CGFloat = 1.85
+        let roundFontSize = GameCatalogImageMetrics.scaled(17, safeWidth: safeWidth, maxScale: playMaxScale)
+        let promptFontSize = GameCatalogImageMetrics.scaled(17, safeWidth: safeWidth, maxScale: playMaxScale)
+        let labelFontSize = GameCatalogImageMetrics.scaled(16, safeWidth: safeWidth, maxScale: playMaxScale)
+        let strengthFontSize = GameCatalogImageMetrics.scaled(13, safeWidth: safeWidth, maxScale: playMaxScale)
+        let colSpacing = GameCatalogImageMetrics.scaled(16, safeWidth: safeWidth, maxScale: playMaxScale)
+        let rowSpacing = GameCatalogImageMetrics.scaled(14, safeWidth: safeWidth, maxScale: playMaxScale)
+        let stackSpacing: CGFloat = 10
+        let topPad: CGFloat = 8
+        let hPad: CGFloat = 28
+        return VStack(spacing: stackSpacing) {
             Text("Round \(roundsCompleted + 1) of \(maxRounds)")
-                .font(.subheadline)
+                .font(.system(size: roundFontSize, weight: .semibold))
                 .foregroundColor(.secondary)
             if selected1 == nil {
                 Text("Choose your first dinosaur to race")
-                    .font(.subheadline)
+                    .font(.system(size: promptFontSize))
                     .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
             } else if selected2 == nil && pendingRacer2 == nil {
                 Text("Choose your second dinosaur to race")
-                    .font(.subheadline)
+                    .font(.system(size: promptFontSize))
                     .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+            } else {
+                Text(" ")
+                    .font(.system(size: promptFontSize))
+                    .hidden()
             }
-            VStack(spacing: 10) {
-                ForEach(0..<((config.racers.count + 1) / 2), id: \.self) { row in
-                    HStack(spacing: 10) {
-                        ForEach(Array(config.racers.dropFirst(row * 2).prefix(2))) { racer in
+            GeometryReader { scrollGeo in
+                let columns = 2
+                let rowCount = max(1, (config.racers.count + columns - 1) / columns)
+                let visibleRows = min(rowCount, 3)
+                let availW = max(1, scrollGeo.size.width - hPad * 2 - colSpacing)
+                let availH = max(160, scrollGeo.size.height - CGFloat(visibleRows - 1) * rowSpacing - 20)
+                let widthBased = (availW / CGFloat(columns)).rounded()
+                let heightBased = (availH / CGFloat(visibleRows)).rounded()
+                let cardHeight = min(widthBased, heightBased)
+                let imageSide = max(96, cardHeight - labelFontSize - strengthFontSize - 36)
+                AlwaysVisibleScrollbarScrollView {
+                    LazyVGrid(
+                        columns: [
+                            GridItem(.flexible(), spacing: colSpacing),
+                            GridItem(.flexible(), spacing: colSpacing),
+                        ],
+                        spacing: rowSpacing
+                    ) {
+                        ForEach(config.racers) { racer in
                             DinoPushRacerCard(
                                 racer: racer,
                                 selectionImageName: racerSelectionImageName(racer),
                                 isSelected: selected1?.id == racer.id || selected2?.id == racer.id || pendingRacer2?.id == racer.id,
-                                isDisabled: selectionTapsBlocked || (selected1 != nil && selected2 == nil && pendingRacer2 == nil && !canSelectSecond) || (selected1 != nil && (selected2 != nil || pendingRacer2 != nil))
+                                isDisabled: selectionTapsBlocked || (selected1 != nil && selected2 == nil && pendingRacer2 == nil && !canSelectSecond) || (selected1 != nil && (selected2 != nil || pendingRacer2 != nil)),
+                                imageSide: imageSide,
+                                cardHeight: cardHeight,
+                                labelFontSize: labelFontSize,
+                                strengthFontSize: strengthFontSize
                             ) {
                                 handleRacerTap(racer)
                             }
                         }
                     }
+                    .padding(.horizontal, hPad)
+                    .padding(.bottom, 20)
                 }
             }
-            .padding(.horizontal, 15)
         }
-        .padding()
+        .padding(.top, topPad)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 
     private func handleRacerTap(_ racer: DinoPushRacer) {
@@ -828,6 +866,10 @@ private struct DinoPushRacerCard: View {
     let selectionImageName: String?
     let isSelected: Bool
     let isDisabled: Bool
+    var imageSide: CGFloat = 48
+    var cardHeight: CGFloat = 120
+    var labelFontSize: CGFloat = 13
+    var strengthFontSize: CGFloat = 11
     let onTap: () -> Void
 
     var body: some View {
@@ -837,21 +879,25 @@ private struct DinoPushRacerCard: View {
                     Image(img)
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 48, height: 48)
+                        .frame(width: imageSide, height: imageSide)
                 } else {
                     Text(racer.icon)
-                        .font(.system(size: 48))
+                        .font(.system(size: imageSide * 0.85))
                 }
                 Text(racer.name)
-                    .font(.caption)
+                    .font(.system(size: labelFontSize, weight: isSelected ? .semibold : .regular))
                     .lineLimit(1)
-                    .minimumScaleFactor(0.6)
+                    .minimumScaleFactor(0.55)
+                    .allowsTightening(true)
+                    .frame(maxWidth: .infinity)
                 Text("\(Int(racer.strength))")
-                    .font(.caption2)
+                    .font(.system(size: strengthFontSize))
                     .foregroundColor(.secondary)
             }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 10)
             .frame(maxWidth: .infinity)
-            .padding(12)
+            .frame(height: cardHeight)
             .background(RoundedRectangle(cornerRadius: 12).fill(Color.gray.opacity(0.12)))
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
@@ -959,33 +1005,80 @@ struct DinoPushPeriodSelectionView: View {
     ]
 
     var body: some View {
-        NavigationView {
-            VStack(spacing: 20) {
+        Group {
+            if embedMode {
+                periodSelectionContent
+            } else {
+                NavigationStack {
+                    periodSelectionContent
+                        .navigationBarTitleDisplayMode(.inline)
+                }
+            }
+        }
+    }
+
+    private var periodSelectionContent: some View {
+        GeometryReader { geometry in
+            let safeWidth = max(geometry.size.width, 1)
+            let safeHeight = max(geometry.size.height, 1)
+            let playMaxScale: CGFloat = 1.85
+            let titleFontSize = GameCatalogImageMetrics.scaled(22, safeWidth: safeWidth, maxScale: playMaxScale)
+            let subtitleFontSize = GameCatalogImageMetrics.scaled(15, safeWidth: safeWidth, maxScale: playMaxScale)
+            let sectionFontSize = GameCatalogImageMetrics.scaled(17, safeWidth: safeWidth, maxScale: playMaxScale)
+            let stackSpacing = GameCatalogImageMetrics.scaled(14, safeWidth: safeWidth, maxScale: playMaxScale)
+            let contentWidth = min(safeWidth - 40, max(320, safeWidth * 0.78))
+            let headerReserve: CGFloat = 24 + titleFontSize + 8 + subtitleFontSize * 2.2 + 8 + sectionFontSize + 24
+            let cardChrome: CGFloat = sectionFontSize + 36
+            let availableForImages = max(220, safeHeight - headerReserve - stackSpacing * 2)
+            let periodImageHeight = min(
+                contentWidth - 28,
+                availableForImages / 3.15 - cardChrome
+            ).rounded()
+            let bothImageHeight = (periodImageHeight * 0.62).rounded()
+            VStack(spacing: GameCatalogImageMetrics.scaled(16, safeWidth: safeWidth, maxScale: playMaxScale)) {
                 Text("Choose a period")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .padding(.top, 24)
+                    .font(.system(size: titleFontSize, weight: .semibold))
+                    .padding(.top, 16)
                     .opacity(showText ? 1 : 0)
                 Text("Only dinosaurs from that period can push.")
-                    .font(.subheadline)
+                    .font(.system(size: subtitleFontSize))
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                     .opacity(showText ? 1 : 0)
                 Text("Mesozoic Age")
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                    .padding(.top, 8)
+                    .font(.system(size: sectionFontSize, weight: .semibold))
+                    .padding(.top, 4)
                     .opacity(showText ? 1 : 0)
-                VStack(spacing: 16) {
-                    periodCard(name: periods[0].name, imageAssetName: periods[0].imageAssetName, emoji: periods[0].emoji, period: periods[0].period, isEnabled: enabledJurassic)
-                    periodCard(name: periods[1].name, imageAssetName: periods[1].imageAssetName, emoji: periods[1].emoji, period: periods[1].period, isEnabled: enabledCretaceous)
-                    bothPeriodCard(isEnabled: enabledBoth)
+                VStack(spacing: stackSpacing) {
+                    periodCard(
+                        name: periods[0].name,
+                        imageAssetName: periods[0].imageAssetName,
+                        emoji: periods[0].emoji,
+                        period: periods[0].period,
+                        isEnabled: enabledJurassic,
+                        imageHeight: periodImageHeight,
+                        labelFontSize: sectionFontSize
+                    )
+                    periodCard(
+                        name: periods[1].name,
+                        imageAssetName: periods[1].imageAssetName,
+                        emoji: periods[1].emoji,
+                        period: periods[1].period,
+                        isEnabled: enabledCretaceous,
+                        imageHeight: periodImageHeight,
+                        labelFontSize: sectionFontSize
+                    )
+                    bothPeriodCard(
+                        isEnabled: enabledBoth,
+                        imageHeight: bothImageHeight,
+                        labelFontSize: sectionFontSize
+                    )
                 }
-                .padding(.horizontal, 24)
-                Spacer()
+                .frame(maxWidth: contentWidth)
+                Spacer(minLength: 8)
             }
-            .navigationBarTitleDisplayMode(.inline)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .onAppear {
                 showText = true
                 if !hasStartedSequence {
@@ -1000,7 +1093,7 @@ struct DinoPushPeriodSelectionView: View {
         }
     }
 
-    private func bothPeriodCard(isEnabled: Bool) -> some View {
+    private func bothPeriodCard(isEnabled: Bool, imageHeight: CGFloat, labelFontSize: CGFloat) -> some View {
         Button {
             onSelectPeriod(DinoPushGameConfigs.makeConfig(for: .both))
             if !embedMode { isPresented = false }
@@ -1011,29 +1104,34 @@ struct DinoPushPeriodSelectionView: View {
                         Image("period-jurassic")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(height: 60)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: imageHeight)
                     } else {
                         Text("🦕")
-                            .font(.system(size: 40))
-                            .frame(height: 60)
+                            .font(.system(size: imageHeight * 0.67))
+                            .frame(maxWidth: .infinity)
+                            .frame(height: imageHeight)
                     }
                     if UIImage(named: "period-cretaceous") != nil {
                         Image("period-cretaceous")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(height: 60)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: imageHeight)
                     } else {
                         Text("🦖")
-                            .font(.system(size: 40))
-                            .frame(height: 60)
+                            .font(.system(size: imageHeight * 0.67))
+                            .frame(maxWidth: .infinity)
+                            .frame(height: imageHeight)
                     }
                 }
                 Text("Both")
-                    .font(.headline)
+                    .font(.system(size: labelFontSize, weight: .semibold))
                     .foregroundColor(.primary)
             }
             .frame(maxWidth: .infinity)
-            .padding()
+            .padding(.horizontal, 12)
+            .padding(.vertical, 10)
             .background(RoundedRectangle(cornerRadius: 16).fill(Color.gray.opacity(0.12)))
             .opacity(isEnabled ? 1 : 0.7)
         }
@@ -1041,7 +1139,15 @@ struct DinoPushPeriodSelectionView: View {
         .disabled(!isEnabled)
     }
 
-    private func periodCard(name: String, imageAssetName: String, emoji: String, period: DinoPushPeriod, isEnabled: Bool) -> some View {
+    private func periodCard(
+        name: String,
+        imageAssetName: String,
+        emoji: String,
+        period: DinoPushPeriod,
+        isEnabled: Bool,
+        imageHeight: CGFloat,
+        labelFontSize: CGFloat
+    ) -> some View {
         Button {
             onSelectPeriod(DinoPushGameConfigs.makeConfig(for: period))
             if !embedMode { isPresented = false }
@@ -1051,18 +1157,20 @@ struct DinoPushPeriodSelectionView: View {
                     Image(imageAssetName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(height: 100)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: imageHeight)
                 } else {
                     Text(emoji)
-                        .font(.system(size: 64))
-                        .frame(height: 100)
+                        .font(.system(size: imageHeight * 0.64))
+                        .frame(height: imageHeight)
                 }
                 Text(name)
-                    .font(.headline)
+                    .font(.system(size: labelFontSize, weight: .semibold))
                     .foregroundColor(.primary)
             }
             .frame(maxWidth: .infinity)
-            .padding()
+            .padding(.horizontal, 12)
+            .padding(.vertical, 10)
             .background(RoundedRectangle(cornerRadius: 16).fill(Color.gray.opacity(0.12)))
             .opacity(isEnabled ? 1 : 0.7)
         }

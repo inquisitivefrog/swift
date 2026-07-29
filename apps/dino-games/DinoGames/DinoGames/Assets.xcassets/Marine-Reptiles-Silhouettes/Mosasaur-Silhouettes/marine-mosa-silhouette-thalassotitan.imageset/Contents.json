@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "silh-thalassotitan-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-mosa-silhouette-thalassotitan-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "silh-thalassotitan-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-mosa-silhouette-thalassotitan-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "silh-thalassotitan-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-mosa-silhouette-thalassotitan-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

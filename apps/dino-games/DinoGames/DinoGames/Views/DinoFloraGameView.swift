@@ -211,22 +211,27 @@ struct DinoFloraGameView: View {
                 .opacity(speechManager.isPlaying ? 0.85 : 1.0)
                 .overlay(alignment: .topTrailing) {
                     if plant != nil, !isGameComplete {
-                        Button {
-                            guessChoiceTimer.pauseForHints()
-                            showSourceFloraHints = true
-                        } label: {
-                            Text("Hints")
-                                .font(.caption.weight(.semibold))
-                                .foregroundColor(.white)
-                                .padding(.horizontal, 14)
-                                .padding(.vertical, 10)
-                                .background(Circle().fill(Color.blue))
-                                .frame(width: 72, height: 72)
+                        GeometryReader { geo in
+                            let safeWidth = max(geo.size.width, 1)
+                            let playMaxScale: CGFloat = 1.85
+                            let hintSide = GameCatalogImageMetrics.scaled(72, safeWidth: safeWidth, maxScale: playMaxScale)
+                            let hintFont = GameCatalogImageMetrics.scaled(12, safeWidth: safeWidth, maxScale: playMaxScale)
+                            Button {
+                                guessChoiceTimer.pauseForHints()
+                                showSourceFloraHints = true
+                            } label: {
+                                Text("Hints")
+                                    .font(.system(size: hintFont, weight: .semibold))
+                                    .foregroundColor(.white)
+                                    .frame(width: hintSide, height: hintSide)
+                                    .background(Circle().fill(Color.blue))
+                            }
+                            .disabled(speechManager.isPlaying)
+                            .opacity(speechManager.isPlaying ? 0.45 : 1.0)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                            .padding(.top, 8)
+                            .padding(.trailing, 16)
                         }
-                        .disabled(speechManager.isPlaying)
-                        .opacity(speechManager.isPlaying ? 0.45 : 1.0)
-                        .padding(.top, 8)
-                        .padding(.trailing, 16)
                     }
                 }
                 .fullScreenCover(isPresented: $showSourceFloraHints) {
@@ -258,28 +263,57 @@ struct DinoFloraGameView: View {
     @ViewBuilder
     private var gameBody: some View {
         if let p = plant, !isGameComplete {
-            VStack(spacing: 6) {
-                plantImage(p)
-                    .id(p.id)
-                Text(p.displayName)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.primary)
-                Text("Round \(currentRound) of \(totalRounds)")
-                    .font(.headline)
-                    .foregroundColor(.secondary)
-                // Fixed-height slot for dinosaur name to prevent layout shift when name appears/disappears
-                ZStack {
-                    if let name = displayedDinoName {
-                        Text(name)
-                            .font(.title3)
-                            .foregroundColor(.secondary)
-                            .padding(.horizontal)
-                            .lineLimit(1)
+            GeometryReader { geometry in
+                let safeWidth = max(geometry.size.width, 1)
+                let safeHeight = max(geometry.size.height, 1)
+                // Phone-tuned baselines; grow on iPad when width/height allow (same idea as Dino Ages).
+                let playMaxScale: CGFloat = 1.85
+                let isPadCanvas = safeWidth > GameCatalogImageMetrics.phoneReferenceWidth
+                let plantHeightFraction: CGFloat = isPadCanvas ? 0.40 : 0.30
+                let plantWidthFraction: CGFloat = isPadCanvas ? 0.92 : 0.88
+                let plantMaxW = min(
+                    GameCatalogImageMetrics.scaled(isPadCanvas ? 460 : 380, safeWidth: safeWidth, maxScale: playMaxScale),
+                    safeWidth * plantWidthFraction
+                )
+                let plantMaxH = min(
+                    GameCatalogImageMetrics.scaled(isPadCanvas ? 280 : 240, safeWidth: safeWidth, maxScale: playMaxScale),
+                    safeHeight * plantHeightFraction
+                )
+                let gridH = min(
+                    GameCatalogImageMetrics.scaled(360, safeWidth: safeWidth, maxScale: playMaxScale),
+                    safeHeight * (isPadCanvas ? 0.44 : 0.50)
+                )
+                let circleSize = GameCatalogImageMetrics.scaled(dinoFloraCircleSize, safeWidth: safeWidth, maxScale: playMaxScale)
+                let starRadius = GameCatalogImageMetrics.scaled(100, safeWidth: safeWidth, maxScale: playMaxScale)
+                let plantLabelFont = GameCatalogImageMetrics.scaled(22, safeWidth: safeWidth, maxScale: playMaxScale)
+                let roundFont = GameCatalogImageMetrics.scaled(17, safeWidth: safeWidth, maxScale: playMaxScale)
+                let critterNameFont = GameCatalogImageMetrics.scaled(20, safeWidth: safeWidth, maxScale: playMaxScale)
+                let critterNameSlotH = max(28, critterNameFont + 12)
+                let stackSpacing = GameCatalogImageMetrics.scaled(16, safeWidth: safeWidth, maxScale: playMaxScale)
+                VStack(spacing: stackSpacing) {
+                    plantImage(p, maxWidth: plantMaxW, maxHeight: plantMaxH)
+                        .id(p.id)
+                    Text(p.displayName)
+                        .font(.system(size: plantLabelFont, weight: .semibold))
+                        .foregroundColor(.primary)
+                    Text("Round \(currentRound) of \(totalRounds)")
+                        .font(.system(size: roundFont, weight: .semibold))
+                        .foregroundColor(.secondary)
+                    // Fixed-height slot for dinosaur name to prevent layout shift when name appears/disappears
+                    ZStack {
+                        if let name = displayedDinoName {
+                            Text(name)
+                                .font(.system(size: critterNameFont, weight: .medium))
+                                .foregroundColor(.secondary)
+                                .padding(.horizontal)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.65)
+                        }
                     }
+                    .frame(height: critterNameSlotH)
+                    fiveStarLayout(height: gridH, circleSize: circleSize, radius: starRadius)
                 }
-                .frame(height: 32)
-                fiveStarLayout
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             }
         } else if isGameComplete {
             endSequenceView
@@ -303,7 +337,7 @@ struct DinoFloraGameView: View {
         return ImageAssetCache.imageExists(named: name) ? name : nil
     }
 
-    private func plantImage(_ p: DinoFloraPlant) -> some View {
+    private func plantImage(_ p: DinoFloraPlant, maxWidth: CGFloat, maxHeight: CGFloat) -> some View {
         let habitat = showPlantHabitatImage
         let imageName = dinoFloraResolvedAssetName(for: p, habitat: habitat)
         return Group {
@@ -311,11 +345,11 @@ struct DinoFloraGameView: View {
                 Image(imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 340, maxHeight: 220)
+                    .frame(maxWidth: maxWidth, maxHeight: maxHeight)
             } else {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color.green.opacity(0.2))
-                    .frame(width: 260, height: 130)
+                    .frame(width: min(260, maxWidth * 0.76), height: min(130, maxHeight * 0.6))
                     .overlay(Text(p.displayName).font(.title2))
             }
         }
@@ -336,9 +370,16 @@ struct DinoFloraGameView: View {
         }
     }
 
-    private var fiveStarLayout: some View {
-        DinoFloraStarLayoutView(slots: slots, matchedIds: matchedIds, introHighlightIndex: introWalkIndex, tapHandler: DinoFloraTapHandler(perform: handleTap))
-            .frame(height: 320)
+    private func fiveStarLayout(height: CGFloat, circleSize: CGFloat, radius: CGFloat) -> some View {
+        DinoFloraStarLayoutView(
+            slots: slots,
+            matchedIds: matchedIds,
+            introHighlightIndex: introWalkIndex,
+            circleSize: circleSize,
+            radius: radius,
+            tapHandler: DinoFloraTapHandler(perform: handleTap)
+        )
+            .frame(height: height)
             .padding(.horizontal)
     }
 
@@ -600,18 +641,26 @@ private struct DinoFloraStarLayoutView: View {
     let slots: [Dinosaur]
     let matchedIds: Set<Int>
     let introHighlightIndex: Int?
+    let circleSize: CGFloat
+    let radius: CGFloat
     let tapHandler: DinoFloraTapHandler
-
-    private let radius: CGFloat = 100
 
     var body: some View {
         GeometryReader { geo in
+            // Keep the star inside the allocated frame when circles grow on iPad.
+            let maxRadius = max(0, min(geo.size.width, geo.size.height) / 2 - circleSize / 2 - 8)
+            let fittedRadius = min(radius, maxRadius)
             ZStack(alignment: .center) {
                 ForEach(Array(slots.enumerated()), id: \.offset) { index, dino in
-                    DinoFloraCircleView(dino: dino, isMatched: matchedIds.contains(dino.id), isIntroHighlighted: introHighlightIndex == index)
+                    DinoFloraCircleView(
+                        dino: dino,
+                        isMatched: matchedIds.contains(dino.id),
+                        isIntroHighlighted: introHighlightIndex == index,
+                        size: circleSize
+                    )
                         .position(
-                            x: geo.size.width / 2 + radius * CGFloat(cos(dinoFormationsStarAngles[index])),
-                            y: geo.size.height / 2 + 20 + radius * CGFloat(sin(dinoFormationsStarAngles[index]))
+                            x: geo.size.width / 2 + fittedRadius * CGFloat(cos(dinoFormationsStarAngles[index])),
+                            y: geo.size.height / 2 + 20 + fittedRadius * CGFloat(sin(dinoFormationsStarAngles[index]))
                         )
                         .onTapGesture { tapHandler.perform(dino) }
                 }
@@ -625,6 +674,7 @@ private struct DinoFloraCircleView: View {
     let dino: Dinosaur
     let isMatched: Bool
     var isIntroHighlighted: Bool = false
+    var size: CGFloat = dinoFloraCircleSize
 
     var body: some View {
         Group {
@@ -632,18 +682,18 @@ private struct DinoFloraCircleView: View {
                 Image(name)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: dinoFloraCircleSize, height: dinoFloraCircleSize)
+                    .frame(width: size, height: size)
                     .clipShape(Circle())
             } else {
                 Circle()
                     .fill(Color.gray.opacity(0.3))
-                    .frame(width: dinoFloraCircleSize, height: dinoFloraCircleSize)
-                    .overlay(Text(dino.icon).font(.system(size: 32)))
+                    .frame(width: size, height: size)
+                    .overlay(Text(dino.icon).font(.system(size: size > 80 ? 32 : 24)))
             }
         }
         .scaleEffect(isIntroHighlighted ? 1.08 : 1.0)
         .animation(.easeInOut(duration: 0.25), value: isIntroHighlighted)
-        .overlay(Circle().stroke(strokeColor, lineWidth: isMatched || isIntroHighlighted ? 4 : 2).frame(width: dinoFloraCircleSize, height: dinoFloraCircleSize))
+        .overlay(Circle().stroke(strokeColor, lineWidth: isMatched || isIntroHighlighted ? 4 : 2).frame(width: size, height: size))
         .opacity(isMatched ? 0.9 : 1.0)
     }
 
@@ -705,52 +755,65 @@ struct SourceFloraHintsView: View {
     }
 
     private var gridView: some View {
-        VStack(spacing: 20) {
-            SourceHintsScreenTitle(title: title)
-            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                ForEach(hints) { hint in
-                    Button {
-                        showHintDetail(hint)
-                    } label: {
-                        if ImageAssetCache.imageExists(named: hint.imageAssetName) {
-                            Image(hint.imageAssetName)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 120)
-                                .clipped()
-                        } else {
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.gray.opacity(0.3))
-                                .frame(height: 120)
-                                .overlay(Text(hint.displayText).font(.caption).foregroundColor(.secondary))
+        GeometryReader { geometry in
+            let safeWidth = max(geometry.size.width, 1)
+            let cardHeight = SourceHintsLayout.gridCardHeight(safeWidth: safeWidth)
+            let spacing = SourceHintsLayout.gridSpacing(safeWidth: safeWidth)
+            let hPad = SourceHintsLayout.horizontalPadding(safeWidth: safeWidth)
+            let titleFont = SourceHintsLayout.titleFont(safeWidth: safeWidth)
+            let fallbackFont = SourceHintsLayout.fallbackLabelFont(safeWidth: safeWidth)
+            VStack(spacing: spacing) {
+                SourceHintsScreenTitle(title: title, fontSize: titleFont)
+                LazyVGrid(columns: [GridItem(.flexible(), spacing: spacing), GridItem(.flexible(), spacing: spacing)], spacing: spacing) {
+                    ForEach(hints) { hint in
+                        Button {
+                            showHintDetail(hint)
+                        } label: {
+                            if ImageAssetCache.imageExists(named: hint.imageAssetName) {
+                                Image(hint.imageAssetName)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: cardHeight)
+                                    .clipped()
+                            } else {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: cardHeight)
+                                    .overlay(Text(hint.displayText).font(.system(size: fallbackFont)).foregroundColor(.secondary))
+                            }
                         }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
+                .padding(.horizontal, hPad)
+                Spacer()
             }
-            .padding(.horizontal, 24)
-            Spacer()
         }
     }
 
     @ViewBuilder
     private var detailView: some View {
         if let hint = selectedHint {
-            VStack(spacing: 20) {
-                Spacer()
-                if ImageAssetCache.imageExists(named: hint.imageAssetName) {
-                    Image(hint.imageAssetName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 320, maxHeight: 320)
+            GeometryReader { geometry in
+                let safeWidth = max(geometry.size.width, 1)
+                let detailSide = SourceHintsLayout.detailImageSide(safeWidth: safeWidth)
+                let labelFont = SourceHintsLayout.detailLabelFont(safeWidth: safeWidth)
+                VStack(spacing: 20) {
+                    Spacer()
+                    if ImageAssetCache.imageExists(named: hint.imageAssetName) {
+                        Image(hint.imageAssetName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: detailSide, maxHeight: detailSide)
+                    }
+                    Text(hint.displayText)
+                        .font(.system(size: labelFont, weight: .semibold))
+                        .foregroundColor(.primary)
+                    Spacer()
                 }
-                Text(hint.displayText)
-                    .font(.title2.weight(.semibold))
-                    .foregroundColor(.primary)
-                Spacer()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 

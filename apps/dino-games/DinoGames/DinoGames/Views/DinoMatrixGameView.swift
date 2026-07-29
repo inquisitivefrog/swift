@@ -188,18 +188,83 @@ struct DinoMatrixGameView: View {
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 24) {
+            GeometryReader { geometry in
+                let safeWidth = max(geometry.size.width, 1)
+                let safeHeight = max(geometry.size.height, 1)
+                // Phone keeps baselines; iPad grows (Dino / Ptero / Marine Matrix share this view).
+                let playMaxScale: CGFloat = 1.85
+                let isPadCanvas = safeWidth > GameCatalogImageMetrics.phoneReferenceWidth
+                let fossilMaxH = min(
+                    GameCatalogImageMetrics.scaled(
+                        isPadCanvas ? DinoMatrixLayout.fossilImageMaxHeight + 40 : DinoMatrixLayout.fossilImageMaxHeight,
+                        safeWidth: safeWidth,
+                        maxScale: playMaxScale
+                    ),
+                    safeHeight * (isPadCanvas ? 0.40 : 0.34)
+                )
+                let fossilMaxW = min(
+                    GameCatalogImageMetrics.scaled(
+                        isPadCanvas ? DinoMatrixLayout.fossilImageMaxWidth + 60 : DinoMatrixLayout.fossilImageMaxWidth,
+                        safeWidth: safeWidth,
+                        maxScale: playMaxScale
+                    ),
+                    safeWidth * (isPadCanvas ? 0.88 : 0.86)
+                )
+                // Card frame is `imageSide + 30`; fit three cards + gaps inside padded width.
+                let outerPad: CGFloat = 16
+                let rowHPad: CGFloat = 12
+                let cardGap: CGFloat = 10
+                let cardChrome: CGFloat = 30
+                let availableForCards = max(1, safeWidth - outerPad * 2 - rowHPad * 2 - cardGap * 2)
+                let maxImageFromWidth = (availableForCards / 3) - cardChrome
+                let optionImageSide = min(
+                    GameCatalogImageMetrics.scaled(isPadCanvas ? 100 : 70, safeWidth: safeWidth, maxScale: playMaxScale),
+                    max(48, maxImageFromWidth)
+                )
+                let optionLabelFont = GameCatalogImageMetrics.scaled(
+                    MatrixMaterialOptionCardLayout.phoneLabelFont,
+                    safeWidth: safeWidth,
+                    maxScale: isPadCanvas ? playMaxScale : 1
+                )
+                let optionLabelHeight = GameCatalogImageMetrics.scaled(
+                    MatrixMaterialOptionCardLayout.labelHeight,
+                    safeWidth: safeWidth,
+                    maxScale: isPadCanvas ? playMaxScale : 1
+                )
+            VStack(spacing: isPadCanvas ? 24 : 16) {
                 if !isGameComplete {
-                    Text(gameConfig.title)
-                        .font(.largeTitle)
-                        .padding(.top)
+                    let hintSide = GameCatalogImageMetrics.scaled(72, safeWidth: safeWidth, maxScale: isPadCanvas ? playMaxScale : 1)
+                    let hintFont = GameCatalogImageMetrics.scaled(12, safeWidth: safeWidth, maxScale: isPadCanvas ? playMaxScale : 1)
+                    HStack(alignment: .center, spacing: 8) {
+                        Color.clear.frame(width: hintSide, height: 1)
+                        Text(gameConfig.title)
+                            .font(.largeTitle)
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity)
+                        if !gameConfig.sourceHints.isEmpty {
+                            Button {
+                                showSourceMatrixHints = true
+                            } label: {
+                                Text("Hints")
+                                    .font(.system(size: hintFont, weight: .semibold))
+                                    .foregroundColor(.white)
+                                    .frame(width: hintSide, height: hintSide)
+                                    .background(Circle().fill(Color.blue))
+                            }
+                            .disabled(isAudioPlaying || isProcessingAnswer || optionsWalkIndex != nil)
+                            .opacity((isAudioPlaying || isProcessingAnswer || optionsWalkIndex != nil) ? 0.45 : 1.0)
+                        } else {
+                            Color.clear.frame(width: hintSide, height: 1)
+                        }
+                    }
+                    .padding(.top, 4)
                 }
 
                 if let question = currentQuestion, !isGameComplete {
-                    VStack(spacing: 20) {
+                    VStack(spacing: isPadCanvas ? 20 : 12) {
                         // Top: Dinosaur (when round has one) or generic fossil prompt + round label
                         VStack(spacing: 10) {
-                            roundPromptView(question: question)
+                            roundPromptView(question: question, fossilMaxWidth: fossilMaxW, fossilMaxHeight: fossilMaxH)
                             Text("Round \(currentRound) of 3")
                                 .font(.headline)
                                 .foregroundColor(.secondary)
@@ -207,7 +272,7 @@ struct DinoMatrixGameView: View {
                         .padding(.horizontal)
 
                         // Bottom: 3 material options (walk then tap). Use dino-matrix-material-{stone} only so the choices are stones, not dinosaurs.
-                        HStack(spacing: 10) {
+                        HStack(spacing: cardGap) {
                             ForEach(Array(question.options.enumerated()), id: \.element.id) { index, material in
                                 MatrixMaterialOptionCard(
                                     material: material,
@@ -217,11 +282,14 @@ struct DinoMatrixGameView: View {
                                     isDisabled: isProcessingAnswer || isAudioPlaying || optionsWalkIndex != nil,
                                     isHighlighted: optionsWalkIndex == index,
                                     isOptionsWalkInProgress: optionsWalkIndex != nil,
+                                    imageSide: optionImageSide,
+                                    labelFontSize: optionLabelFont,
+                                    labelHeight: optionLabelHeight,
                                     onTap: { handleMaterialTap(material, question: question) }
                                 )
                             }
                         }
-                        .padding(.horizontal, 12)
+                        .padding(.horizontal, rowHPad)
                     }
                     .frame(maxWidth: .infinity)
                 } else if isGameComplete {
@@ -229,8 +297,8 @@ struct DinoMatrixGameView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .padding(outerPad)
             .onAppear {
                 resetGameState()
                 speechManager.onAudioFinished = nil
@@ -251,25 +319,6 @@ struct DinoMatrixGameView: View {
             .allowsHitTesting(!isAudioPlaying && !isProcessingAnswer && optionsWalkIndex == nil)
             .gameSheetDismissDisabledWhileAudioPlaying(isAudioPlaying || isProcessingAnswer || optionsWalkIndex != nil)
             .navigationBarTitleDisplayMode(.inline)
-            .overlay(alignment: .topTrailing) {
-                if !isGameComplete, !gameConfig.sourceHints.isEmpty {
-                    Button {
-                        showSourceMatrixHints = true
-                    } label: {
-                        Text("Hints")
-                            .font(.caption.weight(.semibold))
-                            .foregroundColor(.white)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 10)
-                            .background(Circle().fill(Color.blue))
-                            .frame(width: 72, height: 72)
-                    }
-                    .disabled(isAudioPlaying || isProcessingAnswer || optionsWalkIndex != nil)
-                    .opacity((isAudioPlaying || isProcessingAnswer || optionsWalkIndex != nil) ? 0.45 : 1.0)
-                    .padding(.top, 8)
-                    .padding(.trailing, 16)
-                }
-            }
             .fullScreenCover(isPresented: $showSourceMatrixHints) {
                 SourceMatrixHintsView(
                     hints: gameConfig.sourceHints,
@@ -278,6 +327,7 @@ struct DinoMatrixGameView: View {
                     onDismiss: { showSourceMatrixHints = false }
                 )
             }
+            } // GeometryReader
         }
     }
 
@@ -286,7 +336,7 @@ struct DinoMatrixGameView: View {
         gameConfig.fossilCreatureSlug(creature)
     }
 
-    private func roundPromptView(question: DinoMatrixRound) -> some View {
+    private func roundPromptView(question: DinoMatrixRound, fossilMaxWidth: CGFloat, fossilMaxHeight: CGFloat) -> some View {
         Group {
             if let dino = question.dinosaur {
                 let correctMaterial = gameConfig.allMaterials.first { $0.id == question.correctMaterialId }
@@ -305,8 +355,8 @@ struct DinoMatrixGameView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(
-                                maxWidth: DinoMatrixLayout.fossilImageMaxWidth,
-                                maxHeight: DinoMatrixLayout.fossilImageMaxHeight
+                                maxWidth: fossilMaxWidth,
+                                maxHeight: fossilMaxHeight
                             )
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                     } else if let imageName = dino.imageName, UIImage(named: imageName) != nil {
@@ -314,8 +364,8 @@ struct DinoMatrixGameView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(
-                                maxWidth: DinoMatrixLayout.fossilImageMaxWidth,
-                                maxHeight: DinoMatrixLayout.fossilImageMaxHeight
+                                maxWidth: fossilMaxWidth,
+                                maxHeight: fossilMaxHeight
                             )
                             .clipShape(RoundedRectangle(cornerRadius: 12))
                     } else {
@@ -561,8 +611,9 @@ private enum MatrixMaterialOptionCardLayout {
     static let width: CGFloat = 100
     static let height: CGFloat = 128
     static let imageSide: CGFloat = 70
-    /// Fixed label slot so longer names (e.g. volcanic tuff) never resize the stone thumbnails.
+    /// Phone-tuned label slot; grows on iPad via `labelHeight` / `labelFontSize` from the play layout.
     static let labelHeight: CGFloat = 34
+    static let phoneLabelFont: CGFloat = 15
 }
 
 struct MatrixMaterialOptionCard: View {
@@ -574,6 +625,9 @@ struct MatrixMaterialOptionCard: View {
     var isHighlighted: Bool = false
     /// True when the three options are being walked (audio intro); keep cards bright but taps still disabled.
     var isOptionsWalkInProgress: Bool = false
+    var imageSide: CGFloat = MatrixMaterialOptionCardLayout.imageSide
+    var labelFontSize: CGFloat = MatrixMaterialOptionCardLayout.phoneLabelFont
+    var labelHeight: CGFloat = MatrixMaterialOptionCardLayout.labelHeight
     let onTap: () -> Void
 
     private var showHighlight: Bool { isSelected || isHighlighted }
@@ -608,16 +662,16 @@ struct MatrixMaterialOptionCard: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(
-                            width: MatrixMaterialOptionCardLayout.imageSide,
-                            height: MatrixMaterialOptionCardLayout.imageSide
+                            width: imageSide,
+                            height: imageSide
                         )
                         .clipShape(RoundedRectangle(cornerRadius: 8))
                 } else {
                     RoundedRectangle(cornerRadius: 8)
                         .fill(Color.brown.opacity(0.35))
                         .frame(
-                            width: MatrixMaterialOptionCardLayout.imageSide,
-                            height: MatrixMaterialOptionCardLayout.imageSide
+                            width: imageSide,
+                            height: imageSide
                         )
                         .overlay(
                             Text(material.name.prefix(1))
@@ -627,18 +681,18 @@ struct MatrixMaterialOptionCard: View {
                         )
                 }
                 Text(displayName)
-                    .font(.subheadline.weight(.semibold))
+                    .font(.system(size: labelFontSize, weight: .semibold))
                     .foregroundColor(.primary)
                     .lineLimit(2)
                     .minimumScaleFactor(0.65)
                     .multilineTextAlignment(.center)
-                    .frame(height: MatrixMaterialOptionCardLayout.labelHeight)
+                    .frame(height: labelHeight)
                     .opacity(showHighlight ? 1 : 0)
                     .accessibilityHidden(!showHighlight)
             }
             .frame(
-                width: MatrixMaterialOptionCardLayout.width,
-                height: MatrixMaterialOptionCardLayout.height
+                width: imageSide + 30,
+                height: imageSide + labelHeight + 24
             )
             .background(
                 RoundedRectangle(cornerRadius: 12)
@@ -1019,54 +1073,65 @@ struct SourceMatrixHintsView: View {
     }
 
     private var gridView: some View {
-        VStack(spacing: 20) {
-            Text(title)
-                .font(.title2.weight(.semibold))
-                .padding(.top, 44)
-            LazyVGrid(columns: [GridItem(.flexible(), spacing: 16), GridItem(.flexible(), spacing: 16)], spacing: 16) {
-                ForEach(hints) { hint in
-                    Button {
-                        showHintDetail(hint)
-                    } label: {
-                        if ImageAssetCache.imageExists(named: hint.imageName) {
-                            Image(hint.imageName)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxWidth: .infinity)
-                                .frame(height: 140)
-                                .clipped()
-                        } else {
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(Color.gray.opacity(0.3))
-                                .frame(height: 140)
-                                .overlay(Text(hint.displayName).font(.title3).foregroundColor(.secondary))
+        GeometryReader { geometry in
+            let safeWidth = max(geometry.size.width, 1)
+            let cardHeight = SourceHintsLayout.gridCardHeight(safeWidth: safeWidth)
+            let spacing = SourceHintsLayout.gridSpacing(safeWidth: safeWidth)
+            let hPad = SourceHintsLayout.horizontalPadding(safeWidth: safeWidth)
+            let titleFont = SourceHintsLayout.titleFont(safeWidth: safeWidth)
+            let fallbackFont = SourceHintsLayout.fallbackLabelFont(safeWidth: safeWidth)
+            VStack(spacing: spacing) {
+                SourceHintsScreenTitle(title: title, fontSize: titleFont)
+                LazyVGrid(columns: [GridItem(.flexible(), spacing: spacing), GridItem(.flexible(), spacing: spacing)], spacing: spacing) {
+                    ForEach(hints) { hint in
+                        Button {
+                            showHintDetail(hint)
+                        } label: {
+                            if ImageAssetCache.imageExists(named: hint.imageName) {
+                                Image(hint.imageName)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: cardHeight)
+                                    .clipped()
+                            } else {
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: cardHeight)
+                                    .overlay(Text(hint.displayName).font(.system(size: fallbackFont)).foregroundColor(.secondary))
+                            }
                         }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
                 }
+                .padding(.horizontal, hPad)
+                Spacer()
             }
-            .padding(.horizontal, 24)
-            Spacer()
         }
     }
 
     @ViewBuilder
     private var detailView: some View {
         if let hint = selectedHint {
-            VStack(spacing: 20) {
-                Spacer()
-                if ImageAssetCache.imageExists(named: hint.imageName) {
-                    Image(hint.imageName)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 340, maxHeight: 220)
+            GeometryReader { geometry in
+                let safeWidth = max(geometry.size.width, 1)
+                let detailSide = SourceHintsLayout.detailImageSide(safeWidth: safeWidth)
+                let labelFont = SourceHintsLayout.detailLabelFont(safeWidth: safeWidth)
+                VStack(spacing: 20) {
+                    Spacer()
+                    if ImageAssetCache.imageExists(named: hint.imageName) {
+                        Image(hint.imageName)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: detailSide, maxHeight: detailSide * 0.72)
+                    }
+                    Text(hint.displayName)
+                        .font(.system(size: labelFont, weight: .semibold))
+                        .foregroundColor(.primary)
+                    Spacer()
                 }
-                Text(hint.displayName)
-                    .font(.title2.weight(.semibold))
-                    .foregroundColor(.primary)
-                Spacer()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
     }
 

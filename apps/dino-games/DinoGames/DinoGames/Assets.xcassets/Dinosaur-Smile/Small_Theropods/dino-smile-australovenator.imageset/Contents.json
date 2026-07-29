@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-smile-australovenator-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-smile-australovenator-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-smile-australovenator-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-smile-australovenator-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-smile-australovenator-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-smile-australovenator-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

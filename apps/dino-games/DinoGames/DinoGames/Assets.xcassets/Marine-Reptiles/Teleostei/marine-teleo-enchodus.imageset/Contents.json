@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "tele-enchodus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-teleo-enchodus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "tele-enchodus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-teleo-enchodus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "tele-enchodus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-teleo-enchodus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "ptero-ornitho-coloborhynchus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "ptero-ornitho-coloborhynchus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "ptero-ornitho-coloborhynchus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "ptero-ornitho-coloborhynchus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "ptero-ornitho-coloborhynchus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "ptero-ornitho-coloborhynchus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

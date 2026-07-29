@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "measure-spec-pteradactylus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "ptero-measure-spec-pterodactylus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "measure-spec-pteradactylus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "ptero-measure-spec-pterodactylus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "measure-spec-pteradactylus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "ptero-measure-spec-pterodactylus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

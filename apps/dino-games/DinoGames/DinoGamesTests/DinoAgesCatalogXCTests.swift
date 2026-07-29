@@ -66,6 +66,36 @@ final class DinoAgesCatalogXCTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(cretaceous.count, minimum, "Need enough Cretaceous dinos for three rounds")
     }
 
+    func testEveryCatalogDinoPortraitIsInExactlyOneAgesPeriodSet() {
+        let portraits = LandDinosaurData.allDinosaurs
+            .compactMap(\.imageName)
+            .filter { $0.hasPrefix("dino-") }
+        let jurassic = DinoAgesMechanics.jurassicImageNames
+        let cretaceous = DinoAgesMechanics.cretaceousImageNames
+        var missing: [String] = []
+        var inBoth: [String] = []
+        for name in portraits {
+            let isJurassic = jurassic.contains(name)
+            let isCretaceous = cretaceous.contains(name)
+            if isJurassic && isCretaceous {
+                inBoth.append(name)
+            } else if !isJurassic && !isCretaceous {
+                missing.append(name)
+            }
+        }
+        XCTAssertTrue(inBoth.isEmpty, "Dino Ages period sets overlap: \(inBoth.sorted())")
+        XCTAssertTrue(
+            missing.isEmpty,
+            "Catalog dino portraits missing from Dino Ages period sets (would be scored wrong): \(missing.sorted())"
+        )
+    }
+
+    func testBrontosaurusIsJurassicLikeBrachiosaurus() {
+        XCTAssertTrue(DinoAgesMechanics.jurassicImageNames.contains("dino-brontosaurus"))
+        XCTAssertTrue(DinoAgesMechanics.jurassicImageNames.contains("dino-brachiosaurus"))
+        XCTAssertFalse(DinoAgesMechanics.cretaceousImageNames.contains("dino-brontosaurus"))
+    }
+
     func testDinoAgesPeriodSetsHaveBundledPortraits() {
         let known = ImageAssetNames.knownAssets
         var missing: [String] = []

@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-silhouette-parasaurolophus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-silhouette-parasaurolophus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-silhouette-parasaurolophus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-silhouette-parasaurolophus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-silhouette-parasaurolophus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-silhouette-parasaurolophus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

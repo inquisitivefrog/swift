@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "ichthyo-silhouette-mixosaurus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-ichthyo-silhouette-mixosaurus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "ichthyo-silhouette-mixosaurus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-ichthyo-silhouette-mixosaurus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "ichthyo-silhouette-mixosaurus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-ichthyo-silhouette-mixosaurus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

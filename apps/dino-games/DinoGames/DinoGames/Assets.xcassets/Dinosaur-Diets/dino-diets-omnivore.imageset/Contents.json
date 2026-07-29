@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-diet-omnivore-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-diets-omnivore-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-diet-omnivore-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-diets-omnivore-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-diet-omnivore-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-diets-omnivore-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

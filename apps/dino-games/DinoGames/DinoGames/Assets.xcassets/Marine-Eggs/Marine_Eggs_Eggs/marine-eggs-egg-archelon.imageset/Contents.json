@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "marine-eggs-archelon-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-eggs-egg-archelon-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "marine-eggs-archelon-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-eggs-egg-archelon-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "marine-eggs-archelon-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-eggs-egg-archelon-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

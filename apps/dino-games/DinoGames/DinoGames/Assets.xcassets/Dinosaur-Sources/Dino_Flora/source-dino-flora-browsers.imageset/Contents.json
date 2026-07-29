@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "source-flora-browsers-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "source-dino-flora-browsers-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "source-flora-browsers-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "source-dino-flora-browsers-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "source-flora-browsers-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "source-dino-flora-browsers-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

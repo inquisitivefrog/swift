@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-flora-totara-habitat-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-flora-la-amarga-totara-habitat-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-flora-totara-habitat-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-flora-la-amarga-totara-habitat-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-flora-totara-habitat-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-flora-la-amarga-totara-habitat-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

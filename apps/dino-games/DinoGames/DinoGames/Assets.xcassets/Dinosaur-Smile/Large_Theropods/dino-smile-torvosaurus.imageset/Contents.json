@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-smile-torvosaurus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-smile-torvosaurus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-smile-torvosaurus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-smile-torvosaurus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-smile-torvosaurus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-smile-torvosaurus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

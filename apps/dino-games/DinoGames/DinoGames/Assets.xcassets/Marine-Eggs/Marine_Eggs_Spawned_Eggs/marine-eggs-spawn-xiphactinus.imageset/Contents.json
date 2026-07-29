@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "marine-spawn-xiphactinus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-eggs-spawn-xiphactinus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "marine-spawn-xiphactinus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-eggs-spawn-xiphactinus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "marine-spawn-xiphactinus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-eggs-spawn-xiphactinus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

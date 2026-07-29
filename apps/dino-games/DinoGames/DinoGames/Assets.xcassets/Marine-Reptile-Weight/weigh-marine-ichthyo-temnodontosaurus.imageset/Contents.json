@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "weigh-marine-ichthyo-temnodontosaurus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "weigh-marine-ichthyo-temnodontosaurus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "weigh-marine-ichthyo-temnodontosaurus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "weigh-marine-ichthyo-temnodontosaurus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "weigh-marine-ichthyo-temnodontosaurus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "weigh-marine-ichthyo-temnodontosaurus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

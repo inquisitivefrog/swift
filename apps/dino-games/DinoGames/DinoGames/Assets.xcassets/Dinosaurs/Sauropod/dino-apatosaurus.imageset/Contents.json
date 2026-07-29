@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-apatosaurus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-apatosaurus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-apatosaurus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-apatosaurus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-apatosaurus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-apatosaurus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

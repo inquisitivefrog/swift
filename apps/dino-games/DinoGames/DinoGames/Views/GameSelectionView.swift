@@ -428,34 +428,64 @@ struct GameSelectionView: View {
         gamesForCategory.isEmpty
     }
 
-    /// Level picker: ten levels in a grid. Shown when no level is selected yet.
+    /// Level picker: shipping levels in a grid. Shown when no level is selected yet.
+    /// iPad (regular width): 2×2 so four level tiles read large; compact phones keep 2 columns too
+    /// now that only four levels ship (was a dense 4-column strip for up to ~20 levels).
     @ViewBuilder
     private var levelPickerContent: some View {
-        ScrollView {
-            VStack(spacing: 12) {
-                if !guidedPlayMode, let snapshot = GameCatalog.categoryProgressSnapshot(for: category) {
-                    CategoryProgressLevelPickerHeader(snapshot: snapshot)
-                }
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: 4), spacing: 16) {
-                    ForEach(GameLevel.visibleInGamePicker) { level in
-                        LevelCard(
-                            category: category,
-                            level: level,
-                            isLocked: isCategoryLevelLocked(level),
-                            progressLabel: guidedPlayMode ? nil : GameCatalog.levelProgressLabel(for: level, category: category),
-                            onTap: {
-                                guard !isCategoryLevelLocked(level) else { return }
-                                // Activate intermission before `selectedLevel` so `onChange(of: showingGameList)` cannot
-                                // run level intro audio ahead of the level image + crowd sequence.
-                                selectedLevel = level
-                            }
-                        )
+        GeometryReader { geo in
+            let columnCount = 2
+            let rowSpacing: CGFloat = 16
+            let columnSpacing: CGFloat = 16
+            let horizontalPadding: CGFloat = 20
+            let headerReserve: CGFloat = guidedPlayMode ? 8 : 88
+            let levelCount = CGFloat(GameLevel.visibleInGamePicker.count)
+            let rowCount = max(1, ceil(levelCount / CGFloat(columnCount)))
+            let verticalBudget = max(0, geo.size.height - headerReserve - 24)
+            let tileHeight = max(
+                140,
+                (verticalBudget - rowSpacing * (rowCount - 1)) / rowCount
+            )
+            let imageMaxHeight = max(72, tileHeight - 64)
+
+            ScrollView {
+                VStack(spacing: 12) {
+                    if !guidedPlayMode, let snapshot = GameCatalog.categoryProgressSnapshot(for: category) {
+                        CategoryProgressLevelPickerHeader(snapshot: snapshot)
+                    }
+                    LazyVGrid(
+                        columns: Array(
+                            repeating: GridItem(.flexible(), spacing: columnSpacing),
+                            count: columnCount
+                        ),
+                        spacing: rowSpacing
+                    ) {
+                        ForEach(GameLevel.visibleInGamePicker) { level in
+                            LevelCard(
+                                category: category,
+                                level: level,
+                                isLocked: isCategoryLevelLocked(level),
+                                progressLabel: guidedPlayMode ? nil : GameCatalog.levelProgressLabel(for: level, category: category),
+                                imageMaxHeight: imageMaxHeight,
+                                onTap: {
+                                    guard !isCategoryLevelLocked(level) else { return }
+                                    // Activate intermission before `selectedLevel` so `onChange(of: showingGameList)` cannot
+                                    // run level intro audio ahead of the level image + crowd sequence.
+                                    selectedLevel = level
+                                }
+                            )
+                            .frame(minHeight: tileHeight)
+                        }
                     }
                 }
+                .padding(.horizontal, horizontalPadding)
+                .padding(.vertical, 16)
+                .frame(maxWidth: .infinity)
             }
-            .padding(.horizontal, 20)
-            .padding(.vertical, 16)
+            .scrollBounceBehavior(.basedOnSize)
+            .frame(width: geo.size.width, height: geo.size.height)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .accessibilityIdentifier("level-picker")
         .onAppear {
             // Manual replay only: guided auto-play skips the level picker (and this prompt).
@@ -569,68 +599,87 @@ struct GameSelectionView: View {
     }
 
     /// Game cards list; single ForEach over catalog (shared UI). When category has no games for the selected level, show game-coming-soon image.
-    /// Level header (back + title) stays in the scroll so layout is stable when returning from a game sheet.
+    /// Level header (back + title) stays with the list so layout is stable when returning from a game sheet.
+    /// Sizes from available canvas so all games fit on one screen (same idea as category landing).
     @ViewBuilder
     private var gameCardsStack: some View {
-        Group {
-            if let level = selectedLevel {
-                levelHeaderView(level: level)
-                    .id("levelHeader")
-            }
-            if hasNoGames {
-                if ImageAssetCache.imageExists(named: "game-coming-soon") {
-                    Image("game-coming-soon")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 320, maxHeight: 320)
-                        .padding(.vertical, 24)
+        GeometryReader { geo in
+            let games = gamesForCategory
+            let cardCount = CGFloat(max(games.count, 1))
+            let rowSpacing: CGFloat = 12
+            let horizontalPadding: CGFloat = 20
+            let headerHeight: CGFloat = 52
+            let contentWidth = max(0, geo.size.width - horizontalPadding * 2)
+            let verticalBudget = max(0, geo.size.height - headerHeight - 8)
+            let cardHeight = max(
+                GameCatalogImageMetrics.levelTwoListCardHeight,
+                (verticalBudget - rowSpacing * max(cardCount - 1, 0)) / cardCount
+            )
+            let nameReserve: CGFloat = 8
+            let imageSide = min(
+                contentWidth * GameCatalogImageMetrics.listWidthFraction,
+                max(
+                    GameCatalogImageMetrics.levelTwoListGameImageSide,
+                    cardHeight - nameReserve - 16
+                )
+            )
+            let cardWidth = min(contentWidth, max(imageSide + 32, contentWidth * 0.92))
+
+            VStack(spacing: rowSpacing) {
+                if let level = selectedLevel {
+                    levelHeaderView(level: level)
+                        .id("levelHeader")
+                        .frame(height: headerHeight)
+                }
+                if hasNoGames {
+                    if ImageAssetCache.imageExists(named: "game-coming-soon") {
+                        Image("game-coming-soon")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(maxWidth: min(320, contentWidth), maxHeight: min(320, verticalBudget))
+                            .padding(.vertical, 24)
+                    } else {
+                        Text("New games are coming soon")
+                            .font(.headline)
+                            .foregroundColor(.secondary)
+                            .padding(.vertical, 12)
+                    }
+                    Spacer(minLength: 0)
                 } else {
-                    Text("New games are coming soon")
-                        .font(.headline)
-                        .foregroundColor(.secondary)
-                        .padding(.vertical, 12)
+                    ForEach(Array(games.enumerated()), id: \.element.id) { index, gameType in
+                        GameCard(
+                            gameType: gameType,
+                            icon: gameType.icon,
+                            imageName: gameType.imageName,
+                            isSelected: selectedGameId == gameType.id || (gameWalkIndex != nil && gameWalkIndex == index),
+                            isIntroduced: hasIntroducedCurrentGameList || (gameWalkIndex == nil && !isAudioPlaying) || (gameWalkIndex != nil && index <= gameWalkIndex!),
+                            showCompletionCheckmark: guidedPlayMode && GameCatalog.hasPlayed(gameType, category: category),
+                            showName: showGameName && selectedGameId == gameType.id,
+                            isDisabled: isAudioPlaying || !isCurrentCategoryGamePlayable(gameType),
+                            imageSide: imageSide,
+                            cardWidth: cardWidth,
+                            cardHeight: cardHeight,
+                            onTap: { handleGameTap(gameType) }
+                        )
+                        .id(gameType.id)
+                        .frame(height: cardHeight)
+                        .accessibilityIdentifier(gameType.id.map { "game-\($0)" } ?? "game-unknown")
+                    }
                 }
             }
-            ForEach(Array(gamesForCategory.enumerated()), id: \.element.id) { index, gameType in
-                GameCard(
-                    gameType: gameType,
-                    icon: gameType.icon,
-                    imageName: gameType.imageName,
-                    isSelected: selectedGameId == gameType.id || (gameWalkIndex != nil && gameWalkIndex == index),
-                    isIntroduced: hasIntroducedCurrentGameList || (gameWalkIndex == nil && !isAudioPlaying) || (gameWalkIndex != nil && index <= gameWalkIndex!),
-                    showCompletionCheckmark: guidedPlayMode && GameCatalog.hasPlayed(gameType, category: category),
-                    showName: showGameName && selectedGameId == gameType.id,
-                    isDisabled: isAudioPlaying || !isCurrentCategoryGamePlayable(gameType),
-                    onTap: { handleGameTap(gameType) }
-                )
-                .id(gameType.id)
-                .accessibilityIdentifier(gameType.id.map { "game-\($0)" } ?? "game-unknown")
-            }
+            .padding(.horizontal, horizontalPadding)
+            .frame(width: geo.size.width, height: geo.size.height, alignment: .top)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     /// Level header at top of game list (title + back). Nav bar is hidden on this screen so sheet dismiss does not leave an empty bar that steals list height.
     private func levelHeaderView(level: GameLevel) -> some View {
-        HStack(spacing: 10) {
-            Button(action: handleGameSelectionBack) {
-                Image(systemName: "chevron.left")
-                    .font(.body.weight(.semibold))
-                    .frame(width: 44, height: 44)
-                    .contentShape(Rectangle())
-            }
-            .buttonStyle(.plain)
-            .disabled(gameSelectionBackDisabled)
-
-            Text(level.gameListTitle)
-                .font(.headline)
-                .multilineTextAlignment(.center)
-                .foregroundColor(.primary)
-                .frame(maxWidth: .infinity)
-
-            // Balance chevron width so title stays centered.
-            Color.clear.frame(width: 44, height: 44)
-        }
-        .padding(.vertical, 4)
+        LevelGameListHeader(
+            title: level.gameListTitle,
+            backDisabled: gameSelectionBackDisabled,
+            onBack: handleGameSelectionBack
+        )
     }
     
     var body: some View {
@@ -808,6 +857,7 @@ private struct GameSelectionNavigationContent: View {
     @Binding var showWeighGame: Bool
     @Binding var showBalanceGame: Bool
     @Binding var showGuessGame: Bool
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Binding var showFindMamaGame: Bool
     @Binding var showDinoLunchGame: Bool
     @Binding var showDinoMatrixGame: Bool
@@ -968,14 +1018,17 @@ private struct GameSelectionNavigationContent: View {
     /// “UIScrollView does not support multiple observers implementing _observeScrollView:willEndDragging…”).
     private var navigationContent: some View {
         ScrollViewReader { proxy in
-            ScrollView {
-                VStack(spacing: 20) {
+            Group {
+                if selectedLevel != nil {
+                    // Level game list fills the canvas (GeometryReader inside gameCardsStack).
                     content
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    // Level picker also fills the canvas (2×2 GeometryReader inside levelPickerContent).
+                    content
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                .padding()
-                .padding(.bottom, 8)
             }
-            .scrollBounceBehavior(.basedOnSize)
             .onChange(of: gameListScrollToTopToken) { _, _ in
                 scrollGameListToTop(proxy: proxy)
             }
@@ -1002,14 +1055,25 @@ private struct GameSelectionNavigationContent: View {
                 }
             }
         }
-        .navigationTitle(selectedLevel == nil ? gameSelectionTitle : "")
+        .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar(selectedLevel == nil ? .automatic : .hidden, for: .navigationBar)
+        .toolbar {
+            if selectedLevel == nil {
+                ToolbarItem(placement: .principal) {
+                    Text(gameSelectionTitle)
+                        .font(horizontalSizeClass == .regular ? .title2.weight(.semibold) : .headline)
+                        .accessibilityAddTraits(.isHeader)
+                }
+            }
+        }
     }
 
+    /// Gameplay uses fullScreenCover so iPad does not float a page sheet over the level list.
     private var contentWithSheets: some View {
         navigationContent
-            .sheet(isPresented: $showMatchingGame) {
+            .fullScreenCover(isPresented: $showMatchingGame) {
+                NavigationStack {
                 // Dino Diets!: always pass a fresh diet config so right side shows diets (dino-diets- images + Diets audio), not dinosaur characteristics
                 if selectedGameId == "match-the-diet" {
                     MatchingGameView(isPresented: $showMatchingGame, gameConfig: MatchingGameConfigs.dinoDietFeatures)
@@ -1022,74 +1086,107 @@ private struct GameSelectionNavigationContent: View {
                 } else {
                     MatchingGameView(isPresented: $showMatchingGame, gameConfig: MatchingGameConfigs.dinoFeatures)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showWeighGame) {
+            .fullScreenCover(isPresented: $showWeighGame) {
+                NavigationStack {
                 if let config = currentWeighConfig {
                     WeighGameView(isPresented: $showWeighGame, gameConfig: config)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showBalanceGame) {
+            .fullScreenCover(isPresented: $showBalanceGame) {
+                NavigationStack {
                 if let config = currentBalanceConfig {
                     BalanceGameView(isPresented: $showBalanceGame, gameConfig: config)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showGuessGame) {
+            .fullScreenCover(isPresented: $showGuessGame) {
+                NavigationStack {
                 if let config = currentGuessConfig {
                     GuessGameView(isPresented: $showGuessGame, gameConfig: config)
                 } else {
                     GuessGameView(isPresented: $showGuessGame, gameConfig: GuessGameConfigs.nameThatDinosaur)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showFindMamaGame) {
+            .fullScreenCover(isPresented: $showFindMamaGame) {
+                NavigationStack {
                 if let config = currentFindMamaConfig {
                     FindMamaGameView(isPresented: $showFindMamaGame, gameConfig: config)
                 } else {
                     FindMamaGameView(isPresented: $showFindMamaGame, gameConfig: FindMamaConfigs.findMama)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showDinoLunchGame) {
+            .fullScreenCover(isPresented: $showDinoLunchGame) {
+                NavigationStack {
                 if let config = currentDinoLunchConfig {
                     DinoLunchGameView(isPresented: $showDinoLunchGame, gameConfig: config)
                 } else {
                     DinoLunchGameView(isPresented: $showDinoLunchGame, gameConfig: DinoLunchConfigs.dinoLunch)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showWackyGame) {
+            .fullScreenCover(isPresented: $showWackyGame) {
+                NavigationStack {
                 if let config = currentWackyConfig {
                     WackyGameView(isPresented: $showWackyGame, gameConfig: config)
                 } else {
                     WackyGameView(isPresented: $showWackyGame, gameConfig: WackyGameConfigs.wackyDinosaurs)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showToothacheGame) {
+            .fullScreenCover(isPresented: $showToothacheGame) {
+                NavigationStack {
                 if let config = currentToothacheConfig {
                     ToothacheGameView(isPresented: $showToothacheGame, gameConfig: config)
                 } else {
                     ToothacheGameView(isPresented: $showToothacheGame, gameConfig: ToothacheGameConfigs.toothache)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showSmilingDinosGame) {
+            .fullScreenCover(isPresented: $showSmilingDinosGame) {
+                NavigationStack {
                 if let config = currentSmilingDinosConfig {
                     SmilingDinosGameView(isPresented: $showSmilingDinosGame, gameConfig: config)
                 } else {
                     SmilingDinosGameView(isPresented: $showSmilingDinosGame, gameConfig: SmilingDinosGameConfigs.config(for: category))
                 }
+            
+                }
             }
-            .sheet(isPresented: $showDinoEggsGame) {
+            .fullScreenCover(isPresented: $showDinoEggsGame) {
+                NavigationStack {
                 if let config = currentDinoEggsConfig {
                     DinoEggsGameView(isPresented: $showDinoEggsGame, gameConfig: config)
                 } else {
                     DinoEggsGameView(isPresented: $showDinoEggsGame, gameConfig: DinoEggsGameConfigs.dinoEggs)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showDinoToolsGame) {
+            .fullScreenCover(isPresented: $showDinoToolsGame) {
+                NavigationStack {
                 if let config = currentDinoToolsConfig {
                     DinoToolsGameView(isPresented: $showDinoToolsGame, gameConfig: config)
                 } else {
                     DinoToolsGameView(isPresented: $showDinoToolsGame, gameConfig: DinoToolsGameConfigs.dinoTools)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showRacingPeriodSelection) {
+            .fullScreenCover(isPresented: $showRacingPeriodSelection) {
+                NavigationStack {
                 RacingPeriodSelectionView(isPresented: $showRacingPeriodSelection, onSelectPeriod: { config in
                     currentRacingConfig = config
                     showRacingPeriodSelection = false
@@ -1097,20 +1194,29 @@ private struct GameSelectionNavigationContent: View {
                         showRacingGame = true
                     }
                 })
+            
+                }
             }
-            .sheet(isPresented: $showRacingGame) {
+            .fullScreenCover(isPresented: $showRacingGame) {
+                NavigationStack {
                 if let config = currentRacingConfig {
                     RacingGameView(isPresented: $showRacingGame, gameConfig: config)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showDinoMatrixGame) {
+            .fullScreenCover(isPresented: $showDinoMatrixGame) {
+                NavigationStack {
                 if let config = currentDinoMatrixConfig {
                     DinoMatrixGameView(isPresented: $showDinoMatrixGame, gameConfig: config)
                 } else {
                     DinoMatrixGameView(isPresented: $showDinoMatrixGame, gameConfig: DinoMatrixGameConfigs.dinoMatrix)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showDinoAgesGame) {
+            .fullScreenCover(isPresented: $showDinoAgesGame) {
+                NavigationStack {
                 if let config = currentDinoAgesConfig {
                     DinoAgesGameView(isPresented: $showDinoAgesGame, gameConfig: config)
                 } else {
@@ -1119,90 +1225,135 @@ private struct GameSelectionNavigationContent: View {
                         gameConfig: DinoAgesGameConfigs.config(for: category)
                     )
                 }
+            
+                }
             }
-            .sheet(isPresented: $showDinoFormationsGame) {
+            .fullScreenCover(isPresented: $showDinoFormationsGame) {
+                NavigationStack {
                 if let config = currentDinoFormationsConfig {
                     DinoFormationsGameView(isPresented: $showDinoFormationsGame, gameConfig: config)
                 } else {
                     DinoFormationsGameView(isPresented: $showDinoFormationsGame, gameConfig: DinoFormationsGameConfigs.dinoFormations)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showDinoHabitatsGame) {
+            .fullScreenCover(isPresented: $showDinoHabitatsGame) {
+                NavigationStack {
                 if let config = currentDinoHabitatsConfig {
                     DinoHabitatsGameView(isPresented: $showDinoHabitatsGame, gameConfig: config)
                 } else {
                     DinoHabitatsGameView(isPresented: $showDinoHabitatsGame, gameConfig: DinoHabitatsGameConfigs.dinoHabitats)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showDinoFloraGame) {
+            .fullScreenCover(isPresented: $showDinoFloraGame) {
+                NavigationStack {
                 if let config = currentDinoFloraConfig {
                     DinoFloraGameView(isPresented: $showDinoFloraGame, gameConfig: config)
                 } else {
                     DinoFloraGameView(isPresented: $showDinoFloraGame, gameConfig: DinoFloraGameConfigs.dinoFlora)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showPteroFloraGame) {
+            .fullScreenCover(isPresented: $showPteroFloraGame) {
+                NavigationStack {
                 if let config = currentPteroFloraConfig {
                     PteroFloraGameView(isPresented: $showPteroFloraGame, gameConfig: config)
                 } else {
                     PteroFloraGameView(isPresented: $showPteroFloraGame, gameConfig: PteroFloraGameConfigs.pteroFloraKarabastau)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showPteroEggsGame) {
+            .fullScreenCover(isPresented: $showPteroEggsGame) {
+                NavigationStack {
                 if let config = currentPteroEggsConfig {
                     PteroEggsGameView(isPresented: $showPteroEggsGame, gameConfig: config)
                 } else {
                     PteroEggsGameView(isPresented: $showPteroEggsGame, gameConfig: PteroEggsGameConfigs.pteroEggs)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showDinoFaunaGame) {
+            .fullScreenCover(isPresented: $showDinoFaunaGame) {
+                NavigationStack {
                 if let config = currentDinoFaunaConfig {
                     DinoFaunaGameView(isPresented: $showDinoFaunaGame, gameConfig: config)
                 } else {
                     DinoFaunaGameView(isPresented: $showDinoFaunaGame, gameConfig: DinoFaunaGameConfigs.dinoFauna)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showDinoFossilHuntGame) {
+            .fullScreenCover(isPresented: $showDinoFossilHuntGame) {
+                NavigationStack {
                 if let config = currentDinoFossilHuntConfig {
                     DinoFossilHuntGameView(isPresented: $showDinoFossilHuntGame, gameConfig: config)
                 } else {
                     DinoFossilHuntGameView(isPresented: $showDinoFossilHuntGame, gameConfig: DinoFossilHuntGameConfigs.dinoFossilHunt)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showMeasureGame) {
+            .fullScreenCover(isPresented: $showMeasureGame) {
+                NavigationStack {
                 if let config = currentMeasureConfig {
                     MeasureGameView(isPresented: $showMeasureGame, gameConfig: config)
                 } else {
                     MeasureGameView(isPresented: $showMeasureGame, gameConfig: MeasureGameConfigs.measureDinosaur)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showWhoIsTallerGame) {
+            .fullScreenCover(isPresented: $showWhoIsTallerGame) {
+                NavigationStack {
                 if let config = currentWhoIsTallerConfig {
                     WhoIsTallerGameView(isPresented: $showWhoIsTallerGame, gameConfig: config)
                 } else {
                     WhoIsTallerGameView(isPresented: $showWhoIsTallerGame, gameConfig: WhoIsTallerGameConfigs.whoIsTallerRandomized())
                 }
+            
+                }
             }
-            .sheet(isPresented: $showDinoPushGame) {
+            .fullScreenCover(isPresented: $showDinoPushGame) {
+                NavigationStack {
                 DinoPushGameView(isPresented: $showDinoPushGame, gameConfig: DinoPushGameConfigs.dinoPushNeedsPeriod)
+            
+                }
             }
-            .sheet(isPresented: $showDinoPuzzleGame) {
+            .fullScreenCover(isPresented: $showDinoPuzzleGame) {
+                NavigationStack {
                 DinoPuzzleGameView(isPresented: $showDinoPuzzleGame, gameConfig: DinoPuzzleGameConfigs.dinoPuzzle)
+            
+                }
             }
-            .sheet(isPresented: $showPteroPuzzleGame) {
+            .fullScreenCover(isPresented: $showPteroPuzzleGame) {
+                NavigationStack {
                 PteroPuzzleGameView(isPresented: $showPteroPuzzleGame, gameConfig: PteroPuzzleGameConfigs.pteroPuzzle)
+            
+                }
             }
-            .sheet(isPresented: $showMarinePuzzleGame) {
+            .fullScreenCover(isPresented: $showMarinePuzzleGame) {
+                NavigationStack {
                 MarineReptilePuzzleGameView(isPresented: $showMarinePuzzleGame, gameConfig: MarineReptilePuzzleGameConfigs.marinePuzzle)
+            
+                }
             }
-            .sheet(isPresented: $showMarineFloraGame) {
+            .fullScreenCover(isPresented: $showMarineFloraGame) {
+                NavigationStack {
                 if let config = currentMarineFloraConfig {
                     MarineFloraGameView(isPresented: $showMarineFloraGame, gameConfig: config)
                 } else {
                     MarineFloraGameView(isPresented: $showMarineFloraGame, gameConfig: MarineFloraGameConfigs.marineFlora)
                 }
+            
+                }
             }
-            .sheet(isPresented: $showMarineEggsGame) {
+            .fullScreenCover(isPresented: $showMarineEggsGame) {
+                NavigationStack {
                 if let config = currentMarineEggsConfig {
                     MarineEggsGameView(isPresented: $showMarineEggsGame, gameConfig: config)
                 } else {
@@ -1212,6 +1363,8 @@ private struct GameSelectionNavigationContent: View {
                         Text("Marine Eggs is not available yet.")
                             .padding()
                     }
+                }
+            
                 }
             }
     }
@@ -2395,16 +2548,52 @@ enum GameType {
     }
 }
 
-private struct CategoryProgressLevelPickerHeader: View {
-    let snapshot: CategoryProgressSnapshot
+private struct LevelGameListHeader: View {
+    let title: String
+    let backDisabled: Bool
+    let onBack: () -> Void
+
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
-        VStack(spacing: 4) {
+        HStack(spacing: 10) {
+            Button(action: onBack) {
+                Image(systemName: "chevron.left")
+                    .font((horizontalSizeClass == .regular ? Font.title3 : Font.body).weight(.semibold))
+                    .frame(width: 44, height: 44)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .disabled(backDisabled)
+
+            Text(title)
+                .font(horizontalSizeClass == .regular ? .title2.weight(.semibold) : .headline)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.primary)
+                .frame(maxWidth: .infinity)
+
+            // Balance chevron width so title stays centered.
+            Color.clear.frame(width: 44, height: 44)
+        }
+        .padding(.vertical, 4)
+    }
+}
+
+private struct CategoryProgressLevelPickerHeader: View {
+    let snapshot: CategoryProgressSnapshot
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
+    private var usesRegularTypography: Bool {
+        horizontalSizeClass == .regular
+    }
+
+    var body: some View {
+        VStack(spacing: usesRegularTypography ? 8 : 4) {
             Text(snapshot.category.categoryProgressMenuTitle)
-                .font(.title3.weight(.semibold))
+                .font(usesRegularTypography ? .title.weight(.semibold) : .title3.weight(.semibold))
                 .multilineTextAlignment(.center)
             Text(snapshot.displayText)
-                .font(.title3.weight(.semibold))
+                .font(usesRegularTypography ? .title2.weight(.semibold) : .title3.weight(.semibold))
                 .multilineTextAlignment(.center)
                 .accessibilityIdentifier("category-progress-header")
         }
@@ -2413,14 +2602,22 @@ private struct CategoryProgressLevelPickerHeader: View {
     }
 }
 
-// MARK: - Level card (4×2 grid: image above, text below)
+// MARK: - Level card (2×2 when four levels ship; image above, text below)
 
 private struct LevelCard: View {
     let category: GameCategory
     let level: GameLevel
     var isLocked: Bool = false
     var progressLabel: String? = nil
+    /// Max height for level art; set by the picker so tiles fill available canvas.
+    var imageMaxHeight: CGFloat = 80
     let onTap: () -> Void
+
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
+    private var usesRegularTypography: Bool {
+        horizontalSizeClass == .regular
+    }
 
     private var levelImageName: String {
         switch category {
@@ -2440,39 +2637,37 @@ private struct LevelCard: View {
     var body: some View {
         Button(action: onTap) {
             ZStack(alignment: .topTrailing) {
-                VStack(spacing: 8) {
+                VStack(spacing: usesRegularTypography ? 12 : 8) {
                     if ImageAssetCache.imageExists(named: levelImageName) {
                         Image(levelImageName)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(maxWidth: .infinity)
-                            .frame(minHeight: 60, maxHeight: 80)
+                            .frame(minHeight: min(80, imageMaxHeight * 0.7), maxHeight: imageMaxHeight)
                     } else {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(Color.accentColor.opacity(0.15))
-                            .frame(minHeight: 60, maxHeight: 80)
+                            .frame(minHeight: min(80, imageMaxHeight * 0.7), maxHeight: imageMaxHeight)
                             .overlay(
                                 Text(level.title)
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
+                                    .font(usesRegularTypography ? .title3.weight(.semibold) : .subheadline.weight(.semibold))
                                     .foregroundColor(.primary)
                             )
                     }
                     Text(level.title)
-                        .font(.subheadline)
-                        .fontWeight(.medium)
+                        .font(usesRegularTypography ? .title3.weight(.semibold) : .subheadline.weight(.medium))
                         .foregroundColor(.primary)
                         .lineLimit(1)
                         .minimumScaleFactor(0.5)
                     if let progressLabel {
                         Text(progressLabel)
-                            .font(.caption.weight(.semibold))
+                            .font(usesRegularTypography ? .body.weight(.semibold) : .caption.weight(.semibold))
                             .foregroundColor(.secondary)
                             .accessibilityIdentifier("level-progress-\(level.rawValue)")
                     }
                 }
-                .padding(10)
-                .frame(maxWidth: .infinity)
+                .padding(usesRegularTypography ? 16 : 10)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(
                     RoundedRectangle(cornerRadius: 12)
                         .fill(Color.gray.opacity(0.1))
@@ -2483,7 +2678,7 @@ private struct LevelCard: View {
                 )
                 if isLocked {
                     Image(systemName: "lock.fill")
-                        .font(.caption)
+                        .font(usesRegularTypography ? .title3 : .caption)
                         .foregroundColor(.secondary)
                         .padding(8)
                 }
@@ -2498,10 +2693,91 @@ private struct LevelCard: View {
 
 /// Sizes for catalog game art vs name-that guess victory (list stays compact; end-sequence success reads larger).
 enum GameCatalogImageMetrics {
+    /// Phone-first catalog thumbnail floor when space is tight.
     static let levelTwoListGameImageSide: CGFloat = 180
+    static let levelTwoListCardHeight: CGFloat = 210
+    /// Cap relative to content width so squares stay proportional without forcing scroll.
+    static let listWidthFraction: CGFloat = 0.55
     /// Name That Dinosaur / Pterosaur / Marine Reptile / Racing victory `game-*-success` (matches Match the Dinosaur / Weigh success treatment).
-    static let nameThatVictorySuccessImageSide: CGFloat = 280
+    /// Phone baseline; `StandardVictorySuccessImageView` grows this further on iPad within the success-phase frame.
+    static let nameThatVictorySuccessImageSide: CGFloat = 360
+
+    /// Phone reference width used by Weigh / Balance / play-area iPad scale.
+    static let phoneReferenceWidth: CGFloat = 430
+
+    /// Modest bump on wider canvases; keep phone at 1.0. Same formula as `WeighPlayAreaMetrics` grid scale.
+    static func canvasScale(safeWidth: CGFloat, maxScale: CGFloat = 1.38) -> CGFloat {
+        max(1, min(maxScale, safeWidth / phoneReferenceWidth))
+    }
+
+    /// Scale a phone-tuned point size for iPad without overgrowing.
+    static func scaled(_ phoneSize: CGFloat, safeWidth: CGFloat, maxScale: CGFloat = 1.38) -> CGFloat {
+        (phoneSize * canvasScale(safeWidth: safeWidth, maxScale: maxScale)).rounded()
+    }
 }
+
+/// Shared 3×3 creature-portrait grid for gameplay pickers.
+/// Used by Weigh / Which taller-longer / Measure / Balance select-heavy so land-air-sea stay aligned.
+struct CreatureThreeByThreeGridMetrics {
+    static let phoneImageSize: CGFloat = 96
+    static let phoneLabelFontSize: CGFloat = 15
+    static let phoneTitleBlockHeight: CGFloat = 56
+    static let maxScale: CGFloat = 1.85
+
+    let imageSize: CGFloat
+    let labelFontSize: CGFloat
+    let contentWidth: CGFloat
+    let blockHeight: CGFloat
+    let titleBlockHeight: CGFloat
+
+    /// `reservedStageHeight` is the play area below the grid (seesaw, measure stage, etc).
+    static func make(
+        safeWidth: CGFloat,
+        safeHeight: CGFloat,
+        reservedStageHeight: CGFloat,
+        chrome: CGFloat = 40,
+        minimumGridBudget: CGFloat = 280
+    ) -> CreatureThreeByThreeGridMetrics {
+        let titleBlockHeight = phoneTitleBlockHeight
+        let maxGridBudget = max(minimumGridBudget, safeHeight - reservedStageHeight - chrome)
+        let widthScale = max(1, min(maxScale, safeWidth / GameCatalogImageMetrics.phoneReferenceWidth))
+        var imageSize = (phoneImageSize * widthScale).rounded()
+        var labelFontSize = (phoneLabelFontSize * min(widthScale, 1.35)).rounded()
+
+        func rowHeight(image: CGFloat, label: CGFloat) -> CGFloat {
+            image + 6 + max(18, label * 1.25) + 10
+        }
+
+        func blockHeight(image: CGFloat, label: CGFloat) -> CGFloat {
+            titleBlockHeight + 6 + rowHeight(image: image, label: label) * 3 + 12
+        }
+
+        var computed = blockHeight(image: imageSize, label: labelFontSize)
+        if computed > maxGridBudget {
+            let rows: CGFloat = 3
+            let fixed = titleBlockHeight + 6 + 12 + rows * (6 + 10)
+            let perRowLabel = max(18, phoneLabelFontSize * min(widthScale, 1.35) * 1.25)
+            let availableForImages = max(phoneImageSize * rows, maxGridBudget - fixed - rows * perRowLabel)
+            imageSize = max(phoneImageSize, (availableForImages / rows).rounded())
+            labelFontSize = (phoneLabelFontSize * min(imageSize / phoneImageSize, 1.35)).rounded()
+            computed = blockHeight(image: imageSize, label: labelFontSize)
+        }
+
+        let contentWidth = min(
+            safeWidth - 24,
+            imageSize * 3 + 10 * 2 + 6 * 2 + 24
+        )
+
+        return CreatureThreeByThreeGridMetrics(
+            imageSize: imageSize,
+            labelFontSize: labelFontSize,
+            contentWidth: contentWidth,
+            blockHeight: min(computed, maxGridBudget),
+            titleBlockHeight: titleBlockHeight
+        )
+    }
+}
+
 
 struct GameCard: View {
     let gameType: GameType
@@ -2514,21 +2790,25 @@ struct GameCard: View {
     var showCompletionCheckmark: Bool = false
     let showName: Bool
     let isDisabled: Bool
+    /// Explicit layout from the level list GeometryReader (fills iPad without exceeding three-up fit).
+    var imageSide: CGFloat = GameCatalogImageMetrics.levelTwoListGameImageSide
+    var cardWidth: CGFloat = 260
+    var cardHeight: CGFloat = GameCatalogImageMetrics.levelTwoListCardHeight
     let onTap: () -> Void
     
     var body: some View {
         Button(action: onTap) {
             ZStack(alignment: .topTrailing) {
-                VStack(spacing: 15) {
+                VStack(spacing: 8) {
                     if let imageName = imageName, ImageAssetCache.imageExists(named: imageName) {
                         Image(imageName)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: GameCatalogImageMetrics.levelTwoListGameImageSide, height: GameCatalogImageMetrics.levelTwoListGameImageSide)
+                            .frame(width: imageSide, height: imageSide)
                             .brightness(imageName == "game-name-that-dinosaur" ? 0.2 : 0)
                     } else {
                         Text(icon)
-                            .font(.system(size: 100))
+                            .font(.system(size: max(56, imageSide * 0.45)))
                     }
 
                     if showName {
@@ -2541,7 +2821,8 @@ struct GameCard: View {
                             .transition(.opacity.combined(with: .move(edge: .bottom)))
                     }
                 }
-                .frame(width: 260, height: showName ? 240 : 210)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(width: cardWidth, height: cardHeight)
                 .background(
                     RoundedRectangle(cornerRadius: 20)
                         .fill(isSelected ? Color.blue.opacity(0.2) : Color.gray.opacity(0.1))
@@ -2565,6 +2846,7 @@ struct GameCard: View {
                         .accessibilityLabel("Completed")
                 }
             }
+            .frame(maxWidth: .infinity)
         }
         .buttonStyle(.plain)
         .disabled(isDisabled)

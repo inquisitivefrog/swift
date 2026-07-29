@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "plio-silhouette-simolestes-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-plio-silhouette-simolestes-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "plio-silhouette-simolestes-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-plio-silhouette-simolestes-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "plio-silhouette-simolestes-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-plio-silhouette-simolestes-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

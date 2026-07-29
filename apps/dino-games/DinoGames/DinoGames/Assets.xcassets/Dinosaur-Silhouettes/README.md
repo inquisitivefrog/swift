@@ -6,4 +6,4 @@ The following imagesets are **temporary placeholders** (copies of `dino-silhouet
 - `dino-silhouette-fukuiraptor`
 - `dino-silhouette-riparovenator`
 
-After replacing PNGs, no script change is required beyond normal asset workflow; run `Scripts/regenerate-asset-names.sh` if you add or rename imagesets.
+After replacing PNGs, no script change is required beyond normal asset workflow; run `scripts/regenerate-asset-names.sh` if you add or rename imagesets.

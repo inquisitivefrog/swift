@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-eosinopteryx-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-eosinopteryx-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-eosinopteryx-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-eosinopteryx-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-eosinopteryx-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-eosinopteryx-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

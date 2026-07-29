@@ -17,7 +17,7 @@ From `DentalMorphology.swift`. Tooth types shown are those used in **Dino Smile*
 | **hooked-slicer** | Allosaurus, Australovenator, Ceratosaurus, Torvosaurus |
 | **large-ridged-leaf** | Ankylosaurus, Edmontonia, Euoplocephalus, Nodosaurus, Polacanthus |
 | **leaf-slicer** | Therizinosaurus |
-| **needle-spike** | Archaeopteryx, Baryonyx, Compsognathus, Eosinopteryx, Microraptor, Pedopenna, Xiaotingia |
+| **needle-spike** | Archaeopteryx, Compsognathus, Eosinopteryx, Microraptor, Pedopenna, Xiaotingia |
 | **nipping-beak** | Gallimimus, Ornithomimus, Struthiomimus |
 | **nutcracker** | Deinocheirus, Gigantoraptor, Oviraptor, Stegoceras, Stygimoloch |
 | **pencil-peg** | Amargasaurus, Apatosaurus, Brontosaurus, Diplodocus, Mamenchisaurus |
@@ -25,7 +25,7 @@ From `DentalMorphology.swift`. Tooth types shown are those used in **Dino Smile*
 | **sharp-serrated-leaf** | Anchiornis |
 | **silver-spoon** | Brachiosaurus, Camarasaurus |
 | **small-scalloped-leaf** | Dryosaurus, Gasparinisaura |
-| **smooth-cone** | Spinosaurus, Suchomimus |
+| **smooth-cone** | Baryonyx, Spinosaurus, Suchomimus |
 
 ---
 
@@ -46,7 +46,7 @@ From `DentalMorphology.swift`. Tooth types shown are those used in **Dino Smile*
 | hooked-slicer | 4 | Allosaurus, Australovenator, Ceratosaurus, Torvosaurus |
 | large-ridged-leaf | 5 | Ankylosaurus, Edmontonia, Euoplocephalus, Nodosaurus, Polacanthus |
 | leaf-slicer | 1 | Therizinosaurus |
-| needle-spike | 7 | Archaeopteryx, Baryonyx, Compsognathus, Eosinopteryx, Microraptor, Pedopenna, Xiaotingia |
+| needle-spike | 6 | Archaeopteryx, Compsognathus, Eosinopteryx, Microraptor, Pedopenna, Xiaotingia |
 | nipping-beak | 3 | Gallimimus, Ornithomimus, Struthiomimus |
 | nutcracker | 5 | Deinocheirus, Gigantoraptor, Oviraptor, Stegoceras, Stygimoloch |
 | pencil-peg | 5 | Amargasaurus, Apatosaurus, Brontosaurus, Diplodocus, Mamenchisaurus |
@@ -54,6 +54,6 @@ From `DentalMorphology.swift`. Tooth types shown are those used in **Dino Smile*
 | sharp-serrated-leaf | 1 | Anchiornis |
 | silver-spoon | 2 | Brachiosaurus, Camarasaurus |
 | small-scalloped-leaf | 2 | Dryosaurus, Gasparinisaura |
-| smooth-cone | 2 | Spinosaurus, Suchomimus |
+| smooth-cone | 3 | Baryonyx, Spinosaurus, Suchomimus |
 
 **Total: 69 dinosaurs** with tooth morphology mapping. Of these, 57 are in `MatchingGameConfigs.allDinosaurs` (main game pool). The following 12 have mappings but are not in the main pool: Acrocanthosaurus, Amargasaurus, Australovenator, Carcharodontosaurus, Deinocheirus, Fukuiraptor, Gasparinisaura, Gigantoraptor, Gigantosaurus, Mamenchisaurus, Ornithomimus, Struthiomimus.

@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "footprint-basal-large-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "ptero-footprint-basal-large-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "footprint-basal-large-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "ptero-footprint-basal-large-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "footprint-basal-large-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "ptero-footprint-basal-large-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

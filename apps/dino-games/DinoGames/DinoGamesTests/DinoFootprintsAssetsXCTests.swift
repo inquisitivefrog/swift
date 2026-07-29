@@ -130,7 +130,7 @@ final class DinoFootprintsAssetsXCTests: XCTestCase {
         for round in config.rounds {
             XCTAssertTrue(
                 known.contains(round.questionImageName),
-                "Round \(round.id) question image not in generated catalog: \(round.questionImageName) (run Scripts/regenerate-asset-names.sh)"
+                "Round \(round.id) question image not in generated catalog: \(round.questionImageName) (run scripts/regenerate-asset-names.sh)"
             )
             if let fallback = round.questionImageFallback {
                 XCTAssertTrue(

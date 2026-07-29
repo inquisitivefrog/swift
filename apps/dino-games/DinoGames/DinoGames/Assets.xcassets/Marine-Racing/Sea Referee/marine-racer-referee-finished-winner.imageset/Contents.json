@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "marine-racer-referee-finish-winner-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-racer-referee-finished-winner-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "marine-racer-referee-finish-winner-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-racer-referee-finished-winner-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "marine-racer-referee-finish-winner-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-racer-referee-finished-winner-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

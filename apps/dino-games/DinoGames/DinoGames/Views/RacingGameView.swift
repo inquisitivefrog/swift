@@ -458,6 +458,17 @@ private func raceStepPerTick(for config: RacingGameConfig) -> Double {
     config.assetPrefix == "marine" ? marineRaceStepPerTick : landAirRaceStepPerTick
 }
 
+/// Shared race-speed math for land / air / sea (finish clock counts ticks).
+enum RacingSpeedMath {
+    /// Average mph after a trip: track length is calibrated so max-speed finishes in `1/stepPerTick` ticks.
+    /// Land/air step 0.05 → 20 ticks at max speed; marine step 0.025 → 40 ticks.
+    /// Example: Gallimimus 45 mph, land, finish 26 → `20 * 45 / 26` ≈ 34.6 (not the old `10 * 45 / 26` ≈ 17.3).
+    static func effectiveAverageSpeedMph(finishTicks: Int, raceMaxSpeedMph: Double, stepPerTick: Double) -> Double {
+        guard finishTicks > 0, stepPerTick > 0, raceMaxSpeedMph > 0 else { return max(0, raceMaxSpeedMph) }
+        return (1.0 / stepPerTick) * raceMaxSpeedMph / Double(finishTicks)
+    }
+}
+
 /// Positions a marine racer by animating `progress` along the course path (arc + radial legs).
 private struct MarineRacerCoursePlacement: AnimatableModifier {
     var progress: Double
@@ -612,7 +623,7 @@ struct RacingGameView: View {
     private var blocksUserInput: Bool { speechManager.isPlaying }
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             GeometryReader { geometry in
                 VStack(spacing: 0) {
                     if needsPeriodSelection && effectiveConfig == nil {
@@ -659,7 +670,8 @@ struct RacingGameView: View {
                 stopRace()
                 speechManager.stopCurrentAudio()
             }
-            .allowsHitTesting(!blocksUserInput)
+            // Selection grid: allow scrolling while prompts play; cards self-disable via `isDisabled`.
+            .allowsHitTesting(!blocksUserInput || (showSelection && showingExpandedRacer == nil))
             .gameSheetDismissDisabledWhileAudioPlaying(blocksUserInput)
         }
     }
@@ -677,40 +689,80 @@ struct RacingGameView: View {
         return .dinosaurs
     }
     
-    // MARK: - Selection (2×4 grid, emoji only)
-    
+    // MARK: - Selection (2-column grid; scales up on iPad, scrolls when the pool is taller than the screen)
+
     private func selectionGrid(geometry: GeometryProxy) -> some View {
-        VStack(spacing: 12) {
+        let safeWidth = max(geometry.size.width, 1)
+        let playMaxScale: CGFloat = 1.85
+        let roundFontSize = GameCatalogImageMetrics.scaled(17, safeWidth: safeWidth, maxScale: playMaxScale)
+        let promptFontSize = GameCatalogImageMetrics.scaled(17, safeWidth: safeWidth, maxScale: playMaxScale)
+        let labelFontSize = GameCatalogImageMetrics.scaled(16, safeWidth: safeWidth, maxScale: playMaxScale)
+        let colSpacing = GameCatalogImageMetrics.scaled(16, safeWidth: safeWidth, maxScale: playMaxScale)
+        let rowSpacing = GameCatalogImageMetrics.scaled(14, safeWidth: safeWidth, maxScale: playMaxScale)
+        let stackSpacing: CGFloat = 10
+        let topPad: CGFloat = 8
+        let hPad: CGFloat = 28
+        return VStack(spacing: stackSpacing) {
             Text("Round \(roundsCompleted + 1) of \(maxRounds)")
-                .font(.subheadline)
+                .font(.system(size: roundFontSize, weight: .semibold))
                 .foregroundColor(.secondary)
             if selectedLane1 == nil {
                 Text(chooseFirstRacerLabel)
-                    .font(.subheadline)
+                    .font(.system(size: promptFontSize))
                     .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
             } else if selectedLane2 == nil && pendingRacer2 == nil {
                 Text(chooseSecondRacerLabel)
-                    .font(.subheadline)
+                    .font(.system(size: promptFontSize))
                     .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+            } else {
+                Text(" ")
+                    .font(.system(size: promptFontSize))
+                    .hidden()
             }
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.flexible(), spacing: 10), GridItem(.flexible(), spacing: 10)], spacing: 10) {
-                    ForEach(config.racers) { racer in
-                        RacingRacerCard(
-                            racer: racer,
-                            gameConfig: config,
-                            isSelected: selectedLane1?.id == racer.id || selectedLane2?.id == racer.id || pendingRacer2?.id == racer.id,
-                            isDisabled: (selectedLane1 != nil && selectedLane2 == nil && pendingRacer2 == nil && !canSelectSecond) || (selectedLane1 != nil && (selectedLane2 != nil || pendingRacer2 != nil))
-                        ) {
-                            handleRacerTap(racer)
+            // Remaining height after headers — avoids ScrollView expanding to content and clipping.
+            GeometryReader { scrollGeo in
+                let columns = 2
+                let rowCount = max(1, (config.racers.count + columns - 1) / columns)
+                let layoutRows = min(rowCount, 3)
+                let availW = max(1, scrollGeo.size.width - hPad * 2 - colSpacing)
+                let availH = max(160, scrollGeo.size.height - CGFloat(layoutRows - 1) * rowSpacing - 20)
+                let widthBased = (availW / CGFloat(columns)).rounded()
+                let heightBased = (availH / CGFloat(layoutRows)).rounded()
+                let cardSide = min(widthBased, heightBased)
+                let imageSide = max(96, cardSide - labelFontSize - 28)
+                AlwaysVisibleScrollbarScrollView {
+                    LazyVGrid(
+                        columns: [
+                            GridItem(.flexible(), spacing: colSpacing),
+                            GridItem(.flexible(), spacing: colSpacing),
+                        ],
+                        spacing: rowSpacing
+                    ) {
+                        ForEach(config.racers) { racer in
+                            RacingRacerCard(
+                                racer: racer,
+                                gameConfig: config,
+                                isSelected: selectedLane1?.id == racer.id || selectedLane2?.id == racer.id || pendingRacer2?.id == racer.id,
+                                isDisabled: blocksUserInput
+                                    || (selectedLane1 != nil && selectedLane2 == nil && pendingRacer2 == nil && !canSelectSecond)
+                                    || (selectedLane1 != nil && (selectedLane2 != nil || pendingRacer2 != nil)),
+                                cardSide: cardSide,
+                                imageSide: imageSide,
+                                labelFontSize: labelFontSize
+                            ) {
+                                handleRacerTap(racer)
+                            }
                         }
                     }
+                    .padding(.horizontal, hPad)
+                    .padding(.bottom, 20)
                 }
-                .padding(.horizontal, 15)
-                .padding(.bottom, 8)
             }
         }
-        .padding()
+        .padding(.top, topPad)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
     
     private func handleRacerTap(_ racer: RacingRacer) {
@@ -957,27 +1009,47 @@ struct RacingGameView: View {
 
     /// Both contestants in one view, labeled "Contestants"; highlight the one whose audio is playing.
     private func preRaceContestantsView(geometry: GeometryProxy, outsideRacer: RacingRacer, insideRacer: RacingRacer, highlightedRacer: RacingRacer?, showCountdownArea: Bool, countdownWord: String?) -> some View {
-        let size = min(geometry.size.width, geometry.size.height) * 0.32
+        let w = geometry.size.width
+        let h = geometry.size.height
+        let hPad: CGFloat = 12
+        let colGap: CGFloat = 16
+        let titleChrome: CGFloat = 44
+        let countdownChrome: CGFloat = showCountdownArea ? 58 : 0
+        let labelChrome: CGFloat = 44
+        let spacingChrome: CGFloat = showCountdownArea ? 48 : 24
+        let artBudget = max(180, h - titleChrome - countdownChrome - spacingChrome)
+        let halfW = max(120, (w - hPad * 2 - colGap) / 2)
+        let contestantSize: CGFloat
+        let refereeSide: CGFloat
+        if showCountdownArea {
+            // Split art budget: contestant row + referee; fill width/height instead of the old ~280pt caps.
+            let contestantRowBudget = artBudget * 0.44
+            contestantSize = min(contestantRowBudget - labelChrome, halfW, 440)
+            refereeSide = min(artBudget * 0.52, w * 0.78, 480)
+        } else {
+            contestantSize = min(artBudget - labelChrome, halfW, 440)
+            refereeSide = 280
+        }
+        let countdownFont = min(52, max(32, w * 0.055))
         return VStack(spacing: 12) {
             Text("Contestants")
                 .font(.title2)
                 .fontWeight(.semibold)
                 .foregroundColor(.primary)
                 .padding(.top, 4)
-            HStack(spacing: 20) {
-                contestantCell(racer: outsideRacer, size: size, isHighlighted: highlightedRacer?.id == outsideRacer.id, laneLabel: "First position")
-                contestantCell(racer: insideRacer, size: size, isHighlighted: highlightedRacer?.id == insideRacer.id, laneLabel: "Second position")
+            HStack(spacing: colGap) {
+                contestantCell(racer: outsideRacer, size: contestantSize, isHighlighted: highlightedRacer?.id == outsideRacer.id, laneLabel: "First position")
+                contestantCell(racer: insideRacer, size: contestantSize, isHighlighted: highlightedRacer?.id == insideRacer.id, laneLabel: "Second position")
             }
-            .padding(.horizontal, 8)
+            .padding(.horizontal, hPad)
             if showCountdownArea {
                 Text(countdownWord ?? "Ready")
-                    .font(.system(size: 38, weight: .bold))
+                    .font(.system(size: countdownFont, weight: .bold))
                     .foregroundColor(.primary)
                     .opacity(countdownWord == nil ? 0.3 : 1.0)
                     .animation(.easeInOut(duration: 0.18), value: countdownWord)
-                    .padding(.top, 8)
-                refereeImageView(startRefereeImageName(prefix: config.assetPrefix))
-                    .frame(maxHeight: 280)
+                    .padding(.top, 4)
+                refereeImageView(startRefereeImageName(prefix: config.assetPrefix), maxSide: refereeSide)
             }
             Spacer(minLength: 0)
         }
@@ -985,7 +1057,9 @@ struct RacingGameView: View {
     }
 
     private func contestantCell(racer: RacingRacer, size: CGFloat, isHighlighted: Bool, laneLabel: String) -> some View {
-        VStack(spacing: 6) {
+        let laneFont = min(18, max(12, size * 0.055))
+        let nameFont = min(22, max(14, size * 0.07))
+        return VStack(spacing: 6) {
             Group {
                 if let imageName = racerDisplayImageName(for: racer, config: config) {
                     Image(imageName)
@@ -1007,12 +1081,10 @@ struct RacingGameView: View {
             )
             .opacity(isHighlighted ? 1.0 : 0.6)
             Text(laneLabel)
-                .font(.caption)
-                .fontWeight(.semibold)
+                .font(.system(size: laneFont, weight: .semibold))
                 .foregroundColor(.secondary)
             Text(racer.name)
-                .font(.subheadline)
-                .fontWeight(.medium)
+                .font(.system(size: nameFont, weight: .medium))
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
         }
@@ -1048,18 +1120,49 @@ struct RacingGameView: View {
         .frame(width: size, height: size)
     }
 
-    private func refereeImageView(_ imageName: String) -> some View {
+    private func refereeImageView(_ imageName: String, maxSide: CGFloat = 280) -> some View {
         Group {
             if ImageAssetCache.imageExists(named: imageName) {
                 Image(imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 280, maxHeight: 280)
+                    .frame(maxWidth: maxSide, maxHeight: maxSide)
             } else {
                 Text("🏁")
-                    .font(.system(size: 120))
+                    .font(.system(size: maxSide * 0.45))
             }
         }
+    }
+
+    /// Shared typography for post-race announce screens (scales up on iPad with the art).
+    private func postRaceAnnounceFonts(geometry: GeometryProxy, longNames: Bool) -> (time: CGFloat, headline: CGFloat, caption: CGFloat) {
+        let safeWidth = max(geometry.size.width, 1)
+        let playMaxScale: CGFloat = 1.85
+        let timePhone: CGFloat = longNames ? 24 : 30
+        let captionPhone: CGFloat = longNames ? 20 : 24
+        return (
+            GameCatalogImageMetrics.scaled(timePhone, safeWidth: safeWidth, maxScale: playMaxScale),
+            GameCatalogImageMetrics.scaled(34, safeWidth: safeWidth, maxScale: playMaxScale),
+            GameCatalogImageMetrics.scaled(captionPhone, safeWidth: safeWidth, maxScale: playMaxScale)
+        )
+    }
+
+    /// Shared art sizing for post-race announce screens (referee + victor image(s)).
+    private func postRaceAnnounceArtSides(geometry: GeometryProxy, victorCount: Int) -> (referee: CGFloat, victor: CGFloat) {
+        let w = geometry.size.width
+        let h = geometry.size.height
+        // Times + headline (tie) + spacings + speed/caption + padding (fonts scale on iPad).
+        let chrome: CGFloat = victorCount > 1 ? 260 : 210
+        let artBudget = max(200, h - chrome)
+        let referee = min(artBudget * (victorCount > 1 ? 0.40 : 0.46), w * 0.78, 480)
+        let victor: CGFloat
+        if victorCount > 1 {
+            let halfW = max(120, (w - 48) / 2)
+            victor = min(artBudget * 0.48, halfW, 400)
+        } else {
+            victor = min(artBudget * 0.46, w * 0.78, 480)
+        }
+        return (referee, victor)
     }
 
     /// Post-race: clear screen with final clock, referee (excited/worried by delta), and winner dinosaur (excited/exhausted or winner-race fallback).
@@ -1082,36 +1185,39 @@ struct RacingGameView: View {
 
         let refereeName = finishRefereeImageName(prefix: config.assetPrefix, isBroadDelta: isBroadDelta)
         let dinosaurName = finishWinnerImageName(for: w, config: config, isBroadDelta: isBroadDelta)
+        let art = postRaceAnnounceArtSides(geometry: geometry, victorCount: 1)
+        let longNames = nameLength(r1.name) > 10 || nameLength(r2.name) > 10 || nameLength(w.name) > 10
+        let fonts = postRaceAnnounceFonts(geometry: geometry, longNames: longNames)
 
         func format(_ sec: Int) -> String { String(format: "%d:%02d", sec / 60, sec % 60) }
         let t1 = finishTime1 ?? raceElapsedSeconds
         let t2 = finishTime2 ?? raceElapsedSeconds
-        return VStack(spacing: 24) {
-            VStack(spacing: 4) {
+        return VStack(spacing: 16) {
+            VStack(spacing: 6) {
                 Text("\(r1.name): \(format(t1))")
-                    .font(.system(size: nameLength(r1.name) > 10 ? 20 : 28, weight: .bold, design: .monospaced))
+                    .font(.system(size: fonts.time, weight: .bold, design: .monospaced))
                     .foregroundColor(.primary)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.6)
+                    .minimumScaleFactor(0.7)
                 Text("\(r2.name): \(format(t2))")
-                    .font(.system(size: nameLength(r2.name) > 10 ? 20 : 28, weight: .bold, design: .monospaced))
+                    .font(.system(size: fonts.time, weight: .bold, design: .monospaced))
                     .foregroundColor(.primary)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.6)
+                    .minimumScaleFactor(0.7)
             }
 
-            VStack(spacing: 16) {
-                refereeImageView(refereeName)
+            VStack(spacing: 12) {
+                refereeImageView(refereeName, maxSide: art.referee)
                     .frame(maxWidth: .infinity)
                 Group {
                     if let name = dinosaurName {
                         Image(name)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: 280, maxHeight: 280)
+                            .frame(maxWidth: art.victor, maxHeight: art.victor)
                     } else {
                         Text(w.icon)
-                            .font(.system(size: 120))
+                            .font(.system(size: art.victor * 0.45))
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -1119,11 +1225,12 @@ struct RacingGameView: View {
             .frame(maxWidth: .infinity)
 
             Text("\(w.name) – \(formatSpeed(displayedSpeed(racer: w, finishTime: w.id == r1.id ? finishTime1 : finishTime2, maxSpeed: maxSpeed))) mph")
-                .font(.system(size: nameLength(w.name) > 10 ? 18 : 22, weight: .semibold))
+                .font(.system(size: fonts.caption, weight: .semibold))
                 .lineLimit(1)
-                .minimumScaleFactor(0.6)
+                .minimumScaleFactor(0.7)
         }
-        .padding(32)
+        .padding(.horizontal, 24)
+        .padding(.vertical, 16)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             playWinnerAnnouncement(winner: w)
@@ -1911,10 +2018,14 @@ struct RacingGameView: View {
         String(format: "%.1f", mph)
     }
 
-    /// Effective speed when tripped: distance/time = 10*maxSpeed/finishTime (ideal ticks = 10*maxSpeed/speed).
+    /// Effective speed when tripped: distance/time using the same tick step as the race timer.
     private func displayedSpeed(racer: RacingRacer, finishTime: Int?, maxSpeed: Double) -> Double {
         if trippedRacerIdForPenalty == racer.id, let t = finishTime, t > 0 {
-            return 10 * maxSpeed / Double(t)
+            return RacingSpeedMath.effectiveAverageSpeedMph(
+                finishTicks: t,
+                raceMaxSpeedMph: maxSpeed,
+                stepPerTick: raceStepPerTick(for: config)
+            )
         }
         return racer.speed
     }
@@ -2235,26 +2346,29 @@ struct RacingGameView: View {
         func format(_ sec: Int) -> String { String(format: "%d:%02d", sec / 60, sec % 60) }
         let t1 = finishTime1 ?? raceElapsedSeconds
         let t2 = finishTime2 ?? raceElapsedSeconds
-        return VStack(spacing: 24) {
-            VStack(spacing: 4) {
+        let art = postRaceAnnounceArtSides(geometry: geometry, victorCount: 2)
+        let longNames = nameLength(r1.name) > 10 || nameLength(r2.name) > 10
+            || nameLength(r1.name) + nameLength(r2.name) > 16
+        let fonts = postRaceAnnounceFonts(geometry: geometry, longNames: longNames)
+        return VStack(spacing: 14) {
+            VStack(spacing: 6) {
                 Text("\(r1.name): \(format(t1))")
-                    .font(.system(size: nameLength(r1.name) > 10 ? 20 : 28, weight: .bold, design: .monospaced))
+                    .font(.system(size: fonts.time, weight: .bold, design: .monospaced))
                     .foregroundColor(.primary)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.6)
+                    .minimumScaleFactor(0.7)
                 Text("\(r2.name): \(format(t2))")
-                    .font(.system(size: nameLength(r2.name) > 10 ? 20 : 28, weight: .bold, design: .monospaced))
+                    .font(.system(size: fonts.time, weight: .bold, design: .monospaced))
                     .foregroundColor(.primary)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.6)
+                    .minimumScaleFactor(0.7)
             }
 
             Text("It's a tie!")
-                .font(.title)
-                .fontWeight(.bold)
+                .font(.system(size: fonts.headline, weight: .bold))
 
-            VStack(spacing: 16) {
-                refereeImageView(tieRefereeImageName(prefix: config.assetPrefix))
+            VStack(spacing: 12) {
+                refereeImageView(tieRefereeImageName(prefix: config.assetPrefix), maxSide: art.referee)
                     .frame(maxWidth: .infinity)
                 HStack(spacing: 16) {
                     Group {
@@ -2262,9 +2376,10 @@ struct RacingGameView: View {
                             Image(name)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: art.victor, maxHeight: art.victor)
                         } else {
                             Text(r1.icon)
-                                .font(.system(size: 80))
+                                .font(.system(size: art.victor * 0.45))
                         }
                     }
                     .frame(maxWidth: .infinity)
@@ -2273,24 +2388,25 @@ struct RacingGameView: View {
                             Image(name)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
+                                .frame(maxWidth: art.victor, maxHeight: art.victor)
                         } else {
                             Text(r2.icon)
-                                .font(.system(size: 80))
+                                .font(.system(size: art.victor * 0.45))
                         }
                     }
                     .frame(maxWidth: .infinity)
                 }
-                .frame(maxHeight: 220)
                 .frame(maxWidth: .infinity)
             }
             .frame(maxWidth: .infinity)
 
             Text("\(r1.name) & \(r2.name) – \(formatSpeed(r1.speed)) / \(formatSpeed(r2.speed)) mph")
-                .font(.system(size: nameLength(r1.name) + nameLength(r2.name) > 16 ? 16 : 20, weight: .semibold))
+                .font(.system(size: fonts.caption, weight: .semibold))
                 .lineLimit(1)
-                .minimumScaleFactor(0.6)
+                .minimumScaleFactor(0.7)
         }
-        .padding(32)
+        .padding(.horizontal, 24)
+        .padding(.vertical, 16)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .onAppear {
             playTieAnnouncement(racer1: r1, racer2: r2)
@@ -2762,6 +2878,74 @@ private struct AirportCourseWaterBackground: View {
     }
 }
 
+// MARK: - Always-visible scroll bar (iPad system indicators fade even with `.visible`)
+
+private struct ScrollBarGeometry: Equatable {
+    var offsetY: CGFloat = 0
+    var contentHeight: CGFloat = 0
+    var containerHeight: CGFloat = 0
+}
+
+/// Vertical `ScrollView` with a persistent trailing thumb whenever content overflows.
+struct AlwaysVisibleScrollbarScrollView<Content: View>: View {
+    @ViewBuilder let content: () -> Content
+    @State private var bar = ScrollBarGeometry()
+
+    var body: some View {
+        ZStack(alignment: .trailing) {
+            ScrollView(.vertical) {
+                content()
+            }
+            .scrollIndicators(.hidden)
+            .onScrollGeometryChange(for: ScrollBarGeometry.self) { geometry in
+                ScrollBarGeometry(
+                    offsetY: geometry.contentOffset.y,
+                    contentHeight: geometry.contentSize.height,
+                    containerHeight: geometry.containerSize.height
+                )
+            } action: { _, newValue in
+                bar = newValue
+            }
+
+            AlwaysVisibleVerticalScrollBar(geometry: bar)
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+        }
+    }
+}
+
+private struct AlwaysVisibleVerticalScrollBar: View {
+    let geometry: ScrollBarGeometry
+
+    private var canScroll: Bool {
+        geometry.contentHeight > geometry.containerHeight + 1
+    }
+
+    var body: some View {
+        if canScroll {
+            GeometryReader { proxy in
+                let trackHeight = max(proxy.size.height, 1)
+                let thumbRatio = min(1, geometry.containerHeight / max(geometry.contentHeight, 1))
+                let thumbHeight = max(44, trackHeight * thumbRatio)
+                let maxOffset = max(geometry.contentHeight - geometry.containerHeight, 1)
+                let travel = max(trackHeight - thumbHeight, 0)
+                let y = travel * min(1, max(0, geometry.offsetY / maxOffset))
+                ZStack(alignment: .top) {
+                    Capsule()
+                        .fill(Color.primary.opacity(0.12))
+                    Capsule()
+                        .fill(Color.primary.opacity(0.45))
+                        .frame(height: thumbHeight)
+                        .offset(y: y)
+                }
+            }
+            .frame(width: 10)
+            .padding(.trailing, 3)
+            .padding(.vertical, 10)
+        }
+    }
+}
+
 // MARK: - Racer Card (dino-racer-[clade-]{slug} image when present, else emoji)
 
 struct RacingRacerCard: View {
@@ -2769,33 +2953,41 @@ struct RacingRacerCard: View {
     let gameConfig: RacingGameConfig
     let isSelected: Bool
     let isDisabled: Bool
+    var cardSide: CGFloat = 150
+    var imageSide: CGFloat = 84
+    var labelFontSize: CGFloat = 13
     let onTap: () -> Void
     
     var body: some View {
         Button(action: onTap) {
-            VStack(spacing: 6) {
+            VStack(spacing: 8) {
                 if let imageName = racerDisplayImageName(for: racer, config: gameConfig) {
                     Image(imageName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 84, height: 84)
+                        .frame(width: imageSide, height: imageSide)
                 } else {
                     Text(racer.icon)
-                        .font(.system(size: 84))
+                        .font(.system(size: imageSide * 0.85))
                 }
                 Text(racer.name)
-                    .font(.footnote.weight(isSelected ? .semibold : .regular))
+                    .font(.system(size: labelFontSize, weight: isSelected ? .semibold : .regular))
                     .foregroundColor(.primary)
                     .lineLimit(1)
-                    .minimumScaleFactor(0.65)
+                    .minimumScaleFactor(0.55)
+                    .allowsTightening(true)
+                    .frame(maxWidth: .infinity)
             }
-            .frame(width: 150, height: 150)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 10)
+            .frame(maxWidth: .infinity)
+            .frame(height: cardSide)
             .background(
-                RoundedRectangle(cornerRadius: 10)
+                RoundedRectangle(cornerRadius: 12)
                     .fill(isSelected ? Color.blue.opacity(0.3) : Color.gray.opacity(0.1))
             )
             .overlay(
-                RoundedRectangle(cornerRadius: 10)
+                RoundedRectangle(cornerRadius: 12)
                     .stroke(isSelected ? Color.blue : Color.clear, lineWidth: 2)
             )
             .opacity(isDisabled && !isSelected ? 0.5 : 1.0)
@@ -3093,33 +3285,82 @@ struct RacingPeriodSelectionView: View {
     ]
 
     var body: some View {
-        NavigationView {
-            VStack(spacing: 20) {
+        Group {
+            if embedMode {
+                periodSelectionContent
+            } else {
+                NavigationStack {
+                    periodSelectionContent
+                        .navigationBarTitleDisplayMode(.inline)
+                }
+            }
+        }
+    }
+
+    private var periodSelectionContent: some View {
+        GeometryReader { geometry in
+            let safeWidth = max(geometry.size.width, 1)
+            let safeHeight = max(geometry.size.height, 1)
+            let playMaxScale: CGFloat = 1.85
+            let titleFontSize = GameCatalogImageMetrics.scaled(22, safeWidth: safeWidth, maxScale: playMaxScale)
+            let subtitleFontSize = GameCatalogImageMetrics.scaled(15, safeWidth: safeWidth, maxScale: playMaxScale)
+            let sectionFontSize = GameCatalogImageMetrics.scaled(17, safeWidth: safeWidth, maxScale: playMaxScale)
+            let stackSpacing = GameCatalogImageMetrics.scaled(14, safeWidth: safeWidth, maxScale: playMaxScale)
+            // Wide enough on iPad for large period art; still inset from screen edges.
+            let contentWidth = min(safeWidth - 40, max(320, safeWidth * 0.78))
+            // Spend leftover vertical space on the three cards (image-dominant).
+            let headerReserve: CGFloat = 24 + titleFontSize + 8 + subtitleFontSize * 2.2 + 8 + sectionFontSize + 24
+            let cardChrome: CGFloat = sectionFontSize + 36 // label + padding
+            let availableForImages = max(220, safeHeight - headerReserve - stackSpacing * 2)
+            let periodImageHeight = min(
+                contentWidth - 28,
+                availableForImages / 3.15 - cardChrome
+            ).rounded()
+            let bothImageHeight = (periodImageHeight * 0.62).rounded()
+            VStack(spacing: GameCatalogImageMetrics.scaled(16, safeWidth: safeWidth, maxScale: playMaxScale)) {
                 Text("Choose a period")
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .padding(.top, 24)
+                    .font(.system(size: titleFontSize, weight: .semibold))
+                    .padding(.top, 16)
                     .opacity(showText ? 1 : 0)
                 Text(periodSelectionSubtitle)
-                    .font(.subheadline)
+                    .font(.system(size: subtitleFontSize))
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                     .opacity(showText ? 1 : 0)
                 Text("Mesozoic Age")
-                    .font(.headline)
-                    .fontWeight(.semibold)
-                    .padding(.top, 8)
+                    .font(.system(size: sectionFontSize, weight: .semibold))
+                    .padding(.top, 4)
                     .opacity(showText ? 1 : 0)
-                VStack(spacing: 16) {
-                    periodCard(name: periods[0].name, imageAssetName: periods[0].imageAssetName, emoji: periods[0].emoji, period: periods[0].period, isEnabled: enabledJurassic)
-                    periodCard(name: periods[1].name, imageAssetName: periods[1].imageAssetName, emoji: periods[1].emoji, period: periods[1].period, isEnabled: enabledCretaceous)
-                    bothPeriodCard(isEnabled: enabledBoth)
+                VStack(spacing: stackSpacing) {
+                    periodCard(
+                        name: periods[0].name,
+                        imageAssetName: periods[0].imageAssetName,
+                        emoji: periods[0].emoji,
+                        period: periods[0].period,
+                        isEnabled: enabledJurassic,
+                        imageHeight: periodImageHeight,
+                        labelFontSize: sectionFontSize
+                    )
+                    periodCard(
+                        name: periods[1].name,
+                        imageAssetName: periods[1].imageAssetName,
+                        emoji: periods[1].emoji,
+                        period: periods[1].period,
+                        isEnabled: enabledCretaceous,
+                        imageHeight: periodImageHeight,
+                        labelFontSize: sectionFontSize
+                    )
+                    bothPeriodCard(
+                        isEnabled: enabledBoth,
+                        imageHeight: bothImageHeight,
+                        labelFontSize: sectionFontSize
+                    )
                 }
-                .padding(.horizontal, 24)
-                Spacer()
+                .frame(maxWidth: contentWidth)
+                Spacer(minLength: 8)
             }
-            .navigationBarTitleDisplayMode(.inline)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .onAppear {
                 showText = true
                 if !hasStartedSequence {
@@ -3135,7 +3376,7 @@ struct RacingPeriodSelectionView: View {
     }
 
     /// Both period: Jurassic and Cretaceous images side by side, smaller.
-    private func bothPeriodCard(isEnabled: Bool) -> some View {
+    private func bothPeriodCard(isEnabled: Bool, imageHeight: CGFloat, labelFontSize: CGFloat) -> some View {
         Button {
             onSelectPeriod(config(for: .both))
             if !embedMode { isPresented = false }
@@ -3146,29 +3387,34 @@ struct RacingPeriodSelectionView: View {
                         Image("period-jurassic")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(height: 60)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: imageHeight)
                     } else {
                         Text("🦕")
-                            .font(.system(size: 40))
-                            .frame(height: 60)
+                            .font(.system(size: imageHeight * 0.67))
+                            .frame(maxWidth: .infinity)
+                            .frame(height: imageHeight)
                     }
                     if ImageAssetCache.imageExists(named: "period-cretaceous") {
                         Image("period-cretaceous")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(height: 60)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: imageHeight)
                     } else {
                         Text("🦖")
-                            .font(.system(size: 40))
-                            .frame(height: 60)
+                            .font(.system(size: imageHeight * 0.67))
+                            .frame(maxWidth: .infinity)
+                            .frame(height: imageHeight)
                     }
                 }
                 Text("Both")
-                    .font(.headline)
+                    .font(.system(size: labelFontSize, weight: .semibold))
                     .foregroundColor(.primary)
             }
             .frame(maxWidth: .infinity)
-            .padding()
+            .padding(.horizontal, 12)
+            .padding(.vertical, 10)
             .background(RoundedRectangle(cornerRadius: 16).fill(Color.gray.opacity(0.12)))
             .opacity(isEnabled ? 1 : 0.7)
         }
@@ -3176,7 +3422,15 @@ struct RacingPeriodSelectionView: View {
         .disabled(!isEnabled)
     }
 
-    private func periodCard(name: String, imageAssetName: String, emoji: String, period: RacingPeriod, isEnabled: Bool) -> some View {
+    private func periodCard(
+        name: String,
+        imageAssetName: String,
+        emoji: String,
+        period: RacingPeriod,
+        isEnabled: Bool,
+        imageHeight: CGFloat,
+        labelFontSize: CGFloat
+    ) -> some View {
         Button {
             onSelectPeriod(config(for: period))
             if !embedMode { isPresented = false }
@@ -3186,18 +3440,20 @@ struct RacingPeriodSelectionView: View {
                     Image(imageAssetName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(height: 100)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: imageHeight)
                 } else {
                     Text(emoji)
-                        .font(.system(size: 64))
-                        .frame(height: 100)
+                        .font(.system(size: imageHeight * 0.64))
+                        .frame(height: imageHeight)
                 }
                 Text(name)
-                    .font(.headline)
+                    .font(.system(size: labelFontSize, weight: .semibold))
                     .foregroundColor(.primary)
             }
             .frame(maxWidth: .infinity)
-            .padding()
+            .padding(.horizontal, 12)
+            .padding(.vertical, 10)
             .background(RoundedRectangle(cornerRadius: 16).fill(Color.gray.opacity(0.12)))
             .opacity(isEnabled ? 1 : 0.7)
         }

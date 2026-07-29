@@ -1,22 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "ptero-footprints-specialist-240.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "source-ptero-footprints-specialist-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "ptero-footprints-specialist-320.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "source-ptero-footprints-specialist-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "source-ptero-footprints-specialist-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

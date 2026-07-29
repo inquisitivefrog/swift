@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "ptero-smile-tooth-barbed-spear-tip-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "ptero-smile-tooth-barbed-spear-tip-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "ptero-smile-tooth-barbed-spear-tip-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "ptero-smile-tooth-barbed-spear-tip-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "ptero-smile-tooth-barbed-spear-tip-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "ptero-smile-tooth-barbed-spear-tip-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

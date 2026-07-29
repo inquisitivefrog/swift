@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-stygimoloch-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-stygimoloch-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-stygimoloch-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-stygimoloch-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-stygimoloch-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-stygimoloch-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "thala-silhouette-metriorhynchus-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-thala-silhouette-metriorhynchus-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "thala-silhouette-metriorhynchus-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-thala-silhouette-metriorhynchus-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "thala-silhouette-metriorhynchus-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-thala-silhouette-metriorhynchus-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

@@ -33,7 +33,7 @@ final class UnifiedGameMediaContractXCTests: XCTestCase {
             let card = slot.game.imageName
             XCTAssertTrue(
                 known.contains(card),
-                "\(category.title) — Level \(slot.level.number) — config `\(slot.game.id ?? "?")` — missing game card imageset `\(card)` (run Scripts/regenerate-asset-names.sh after adding assets)."
+                "\(category.title) — Level \(slot.level.number) — config `\(slot.game.id ?? "?")` — missing game card imageset `\(card)` (run scripts/regenerate-asset-names.sh after adding assets)."
             )
         }
     }

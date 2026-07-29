@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "source-footprint-hadrosaur-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "source-dino-footprints-hadrosaur-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "source-footprint-hadrosaur-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "source-dino-footprints-hadrosaur-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "source-footprint-hadrosaur-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "source-dino-footprints-hadrosaur-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

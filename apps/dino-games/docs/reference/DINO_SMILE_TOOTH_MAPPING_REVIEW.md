@@ -37,7 +37,7 @@ DentalMorphology was designed for Dino Toothache (`dino-toothache-tooth-*`). Din
 | fluted-leaf-v2 | ✗ | **kentrosaurus, huayangosaurus** |
 | hooked-blade | ✓ | velociraptor, deinonychus, dromaeosaurus, utahraptor |
 | leaf-slicer | ✓ | therizinosaurus |
-| smooth-cone | ✓ | spinosaurus, suchomimus |
+| smooth-cone | ✓ | spinosaurus, suchomimus, baryonyx |
 | pencil-peg | ✓ | apatosaurus, diplodocus, brontosaurus, amargasaurus, mamenchisaurus |
 | large-ridged-leaf | ✓ | ankylosaurus, edmontonia, nodosaurus, euoplocephalus, polacanthus |
 | honeycomb-battery | ✓ | corythosaurus, parasaurolophus, edmontosaurus, lambeosaurus, maiasaura |
@@ -48,7 +48,7 @@ DentalMorphology was designed for Dino Toothache (`dino-toothache-tooth-*`). Din
 | nipping-beak-v1 | ✗ | **gallimimus** |
 | nipping-beak-v2 | ✗ | **oviraptor, deinocheirus, gigantoraptor, ornithomimus, struthiomimus** |
 | scalloped-blade | ✓ | pachycephalosaurus |
-| needle-spike | ✓ | archaeopteryx, baryonyx, compsognathus, eosinopteryx, microraptor, pedopenna, xiaotingia |
+| needle-spike | ✓ | archaeopteryx, compsognathus, eosinopteryx, microraptor, pedopenna, xiaotingia |
 | heavy-peg | ✓ | argentinosaurus, rapetosaurus |
 | forked-battery | ✓ | chasmosaurus, kosmoceratops, torosaurus, styracosaurus |
 | nutcracker | ✓ | stegoceras, stygimoloch |

@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "mosa-prognathodon-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "marine-mosa-prognathodon-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "mosa-prognathodon-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "marine-mosa-prognathodon-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "mosa-prognathodon-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "marine-mosa-prognathodon-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

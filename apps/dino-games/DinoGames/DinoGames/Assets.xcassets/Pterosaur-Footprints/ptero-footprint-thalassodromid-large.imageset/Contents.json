@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "footprint-thalassodromid-large-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "ptero-footprint-thalassodromid-large-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "footprint-thalassodromid-large-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "ptero-footprint-thalassodromid-large-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "footprint-thalassodromid-large-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "ptero-footprint-thalassodromid-large-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

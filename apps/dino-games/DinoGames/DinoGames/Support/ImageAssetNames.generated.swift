@@ -1,9 +1,11 @@
-// Auto-generated - do not edit. Run Scripts/regenerate-asset-names.sh to regenerate.
+// Auto-generated - do not edit. Run scripts/regenerate-asset-names.sh to regenerate.
 
 import Foundation
 
 enum ImageAssetNames {
     static let knownAssets: Set<String> = [
+        "CoverImage",
+        "Dental-Morphology-4",
         "category-air",
         "category-land",
         "category-sea",
@@ -29,8 +31,6 @@ enum ImageAssetNames {
         "clue-nesting-type-mound",
         "clue-nesting-type-open-ground",
         "clue-question-mark",
-        "CoverImage",
-        "Dental-Morphology-4",
         "dino-acrocanthosaurus",
         "dino-ages-cretaceous",
         "dino-ages-jurassic",

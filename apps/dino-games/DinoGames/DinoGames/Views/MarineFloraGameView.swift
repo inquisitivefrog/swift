@@ -209,27 +209,49 @@ struct MarineFloraGameView: View {
     @ViewBuilder
     private var gameBody: some View {
         if let p = plant, !isGameComplete {
-            VStack(spacing: 6) {
-                plantImage(p)
-                    .id(p.id)
-                Text(p.displayName)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                    .foregroundColor(.primary)
-                Text("Round \(currentRound) of \(totalRounds)")
-                    .font(.headline)
-                    .foregroundColor(.secondary)
-                ZStack {
-                    if let name = displayedCreatureName {
-                        Text(name)
-                            .font(.title3)
-                            .foregroundColor(.secondary)
-                            .padding(.horizontal)
-                            .lineLimit(1)
+            GeometryReader { geometry in
+                let safeWidth = max(geometry.size.width, 1)
+                let safeHeight = max(geometry.size.height, 1)
+                // Phone-tuned baselines; grow on iPad when width/height allow.
+                let playMaxScale: CGFloat = 1.5
+                let plantMaxW = min(
+                    GameCatalogImageMetrics.scaled(380, safeWidth: safeWidth, maxScale: playMaxScale),
+                    safeWidth * 0.88
+                )
+                let plantMaxH = min(
+                    GameCatalogImageMetrics.scaled(240, safeWidth: safeWidth, maxScale: playMaxScale),
+                    safeHeight * 0.30
+                )
+                let gridH = min(
+                    GameCatalogImageMetrics.scaled(360, safeWidth: safeWidth, maxScale: playMaxScale),
+                    safeHeight * 0.50
+                )
+                let circleSize = GameCatalogImageMetrics.scaled(marineFloraCircleSize, safeWidth: safeWidth, maxScale: playMaxScale)
+                let starRadius = GameCatalogImageMetrics.scaled(100, safeWidth: safeWidth, maxScale: playMaxScale)
+                VStack(spacing: 6) {
+                    plantImage(p, maxWidth: plantMaxW, maxHeight: plantMaxH)
+                        .id(p.id)
+                    Text(p.displayName)
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.primary)
+                    Text("Round \(currentRound) of \(totalRounds)")
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                    ZStack {
+                        if let name = displayedCreatureName {
+                            Text(name)
+                                .font(.title3)
+                                .foregroundColor(.secondary)
+                                .padding(.horizontal)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.65)
+                        }
                     }
+                    .frame(height: 32)
+                    fiveStarLayout(height: gridH, circleSize: circleSize, radius: starRadius)
                 }
-                .frame(height: 32)
-                fiveStarLayout
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         } else if isGameComplete {
             endSequenceView
@@ -248,18 +270,18 @@ struct MarineFloraGameView: View {
         }
     }
 
-    private func plantImage(_ p: MarineFloraPlant) -> some View {
+    private func plantImage(_ p: MarineFloraPlant, maxWidth: CGFloat, maxHeight: CGFloat) -> some View {
         let imageName = showPlantHabitatImage ? p.treeImageName : p.seedsImageName
         return Group {
             if ImageAssetCache.imageExists(named: imageName) {
                 Image(imageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(maxWidth: 340, maxHeight: 220)
+                    .frame(maxWidth: maxWidth, maxHeight: maxHeight)
             } else {
                 RoundedRectangle(cornerRadius: 12)
                     .fill(Color.green.opacity(0.2))
-                    .frame(width: 260, height: 130)
+                    .frame(width: min(260, maxWidth * 0.76), height: min(130, maxHeight * 0.6))
                     .overlay(Text(p.displayName).font(.title2))
             }
         }
@@ -280,14 +302,16 @@ struct MarineFloraGameView: View {
         }
     }
 
-    private var fiveStarLayout: some View {
+    private func fiveStarLayout(height: CGFloat, circleSize: CGFloat, radius: CGFloat) -> some View {
         MarineFloraStarLayoutView(
             slots: slots,
             matchedIds: matchedIds,
             introHighlightIndex: introWalkIndex,
+            circleSize: circleSize,
+            radius: radius,
             tapHandler: MarineFloraTapHandler(perform: handleTap)
         )
-        .frame(height: 320)
+        .frame(height: height)
         .padding(.horizontal)
     }
 
@@ -547,22 +571,26 @@ private struct MarineFloraStarLayoutView: View {
     let slots: [Dinosaur]
     let matchedIds: Set<Int>
     let introHighlightIndex: Int?
+    let circleSize: CGFloat
+    let radius: CGFloat
     let tapHandler: MarineFloraTapHandler
-
-    private let radius: CGFloat = 100
 
     var body: some View {
         GeometryReader { geo in
+            // Keep the star inside the allocated frame when circles grow on iPad.
+            let maxRadius = max(0, min(geo.size.width, geo.size.height) / 2 - circleSize / 2 - 8)
+            let fittedRadius = min(radius, maxRadius)
             ZStack(alignment: .center) {
                 ForEach(Array(slots.enumerated()), id: \.offset) { index, creature in
                     MarineFloraCircleView(
                         creature: creature,
                         isMatched: matchedIds.contains(creature.id),
-                        isIntroHighlighted: introHighlightIndex == index
+                        isIntroHighlighted: introHighlightIndex == index,
+                        size: circleSize
                     )
                     .position(
-                        x: geo.size.width / 2 + radius * CGFloat(cos(marineFloraStarAngles[index])),
-                        y: geo.size.height / 2 + 20 + radius * CGFloat(sin(marineFloraStarAngles[index]))
+                        x: geo.size.width / 2 + fittedRadius * CGFloat(cos(marineFloraStarAngles[index])),
+                        y: geo.size.height / 2 + 20 + fittedRadius * CGFloat(sin(marineFloraStarAngles[index]))
                     )
                     .onTapGesture { tapHandler.perform(creature) }
                 }
@@ -576,6 +604,7 @@ private struct MarineFloraCircleView: View {
     let creature: Dinosaur
     let isMatched: Bool
     var isIntroHighlighted: Bool = false
+    var size: CGFloat = marineFloraCircleSize
 
     var body: some View {
         Group {
@@ -583,13 +612,13 @@ private struct MarineFloraCircleView: View {
                 Image(name)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .frame(width: marineFloraCircleSize, height: marineFloraCircleSize)
+                    .frame(width: size, height: size)
                     .clipShape(Circle())
             } else {
                 Circle()
                     .fill(Color.gray.opacity(0.3))
-                    .frame(width: marineFloraCircleSize, height: marineFloraCircleSize)
-                    .overlay(Text(creature.icon).font(.system(size: 32)))
+                    .frame(width: size, height: size)
+                    .overlay(Text(creature.icon).font(.system(size: size > 80 ? 32 : 24)))
             }
         }
         .scaleEffect(isIntroHighlighted ? 1.08 : 1.0)
@@ -597,7 +626,7 @@ private struct MarineFloraCircleView: View {
         .overlay(
             Circle()
                 .stroke(strokeColor, lineWidth: isMatched || isIntroHighlighted ? 4 : 2)
-                .frame(width: marineFloraCircleSize, height: marineFloraCircleSize)
+                .frame(width: size, height: size)
         )
         .opacity(isMatched ? 0.9 : 1.0)
     }

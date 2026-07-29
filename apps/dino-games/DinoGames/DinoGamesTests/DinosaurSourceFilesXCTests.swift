@@ -30,6 +30,40 @@ final class DinosaurSourceFilesXCTests: XCTestCase {
         XCTAssertFalse(silhouetteImageFiles.isEmpty, "Expected image files under \(silhouetteImages.path)")
     }
 
+    func testMicroraptorSourcePortraitUsesCorrectFilenameSpelling() throws {
+        let root = TestBundleHelpers.projectRootURL()
+        let smallTherapods = root.appendingPathComponent("images/dinosaurs/small-therapods")
+        let imageFiles = try TestBundleHelpers.recursiveFiles(in: smallTherapods, allowedExtensions: ["png"])
+        let names = Set(imageFiles.map { $0.lastPathComponent.lowercased() })
+
+        XCTAssertTrue(
+            names.contains("dino-microraptor-1024.png"),
+            "Expected square portrait master at images/dinosaurs/small-therapods/dino-microraptor-1024.png"
+        )
+        let misspelled = names.filter { $0.contains("microcraptor") }
+        XCTAssertTrue(
+            misspelled.isEmpty,
+            "Remove misspelled microraptor source files: \(misspelled.sorted())"
+        )
+    }
+
+    func testTriceratopsSourcePortraitUsesCorrectFilenameSpelling() throws {
+        let root = TestBundleHelpers.projectRootURL()
+        let ceratopsian = root.appendingPathComponent("images/dinosaurs/ceratopsian")
+        let imageFiles = try TestBundleHelpers.recursiveFiles(in: ceratopsian, allowedExtensions: ["png"])
+        let names = Set(imageFiles.map { $0.lastPathComponent.lowercased() })
+
+        XCTAssertTrue(
+            names.contains("dino-triceratops-1024.png"),
+            "Expected square portrait master at images/dinosaurs/ceratopsian/dino-triceratops-1024.png"
+        )
+        let misspelled = names.filter { $0.contains("tricerators") }
+        XCTAssertTrue(
+            misspelled.isEmpty,
+            "Remove misspelled triceratops source files: \(misspelled.sorted())"
+        )
+    }
+
     func testDinosaurJSONSlugsHaveMatchingImageFiles() throws {
         let root = TestBundleHelpers.projectRootURL()
         let dinosaurJSON = root.appendingPathComponent("json/dinosaurs")

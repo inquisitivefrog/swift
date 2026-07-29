@@ -1947,25 +1947,63 @@ struct MatchingGameView: View {
     }
 
     private var mainGameView: some View {
-            VStack(spacing: 20) {
+            GeometryReader { geometry in
+                let safeWidth = max(geometry.size.width, 1)
+                let safeHeight = max(geometry.size.height, 1)
+                let playMaxScale: CGFloat = 1.85
+                let colSpacing = GameCatalogImageMetrics.scaled(20, safeWidth: safeWidth, maxScale: playMaxScale)
+                let cardSpacing = GameCatalogImageMetrics.scaled(12, safeWidth: safeWidth, maxScale: playMaxScale)
+                let hPad: CGFloat = min(28, max(10, safeWidth * 0.04))
+                let titleFont = GameCatalogImageMetrics.scaled(34, safeWidth: safeWidth, maxScale: playMaxScale)
+                let roundFont = GameCatalogImageMetrics.scaled(17, safeWidth: safeWidth, maxScale: playMaxScale)
+                let columnHeaderFont = GameCatalogImageMetrics.scaled(20, safeWidth: safeWidth, maxScale: playMaxScale)
+                let nameFont = GameCatalogImageMetrics.scaled(17, safeWidth: safeWidth, maxScale: playMaxScale)
+                // Two columns must fit width; height is usually bound by the taller (diet/feature) column.
+                let maxCardWidth = max(120, (safeWidth - hPad * 2 - colSpacing) / 2)
+                let dietRows = CGFloat(max(characteristics.count, 1))
+                let titleBlockH = titleFont + roundFont + 28
+                let chrome = titleBlockH + columnHeaderFont + 56
+                let columnGaps = max(0, dietRows - 1) * cardSpacing
+                let maxHPerCard = max(72, (safeHeight - chrome - columnGaps) / dietRows)
+                let desiredWidth = min(
+                    GameCatalogImageMetrics.scaled(200, safeWidth: safeWidth, maxScale: playMaxScale),
+                    maxCardWidth
+                )
+                let cardWidth = min(desiredWidth, maxHPerCard * 1.6)
+                let widthScale = cardWidth / 180
+                let cardHeightCompact = min(max(72, (100 * widthScale).rounded()), maxHPerCard)
+                let cardHeightExpanded = min(
+                    max(96, (130 * widthScale).rounded()),
+                    max(cardHeightCompact, maxHPerCard * 0.95)
+                )
+                let cardHeightFeatureExpanded = min(
+                    max(88, (120 * widthScale).rounded()),
+                    max(cardHeightCompact, maxHPerCard * 0.95)
+                )
+                let imageSide = min(
+                    max(56, (90 * widthScale).rounded()),
+                    cardHeightCompact * 0.78,
+                    cardWidth * 0.58
+                )
+            VStack(spacing: GameCatalogImageMetrics.scaled(16, safeWidth: safeWidth, maxScale: playMaxScale)) {
                 // Title (use gameConfig so Dino Diets! always shows "Dino Diets!" not config.title)
                 VStack(spacing: 4) {
                     Text(dietMatchingDisplayTitle)
-                    .font(.title2)
+                    .font(.system(size: titleFont, weight: .semibold))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal)
                     .padding(.top, 8)
                     Text("Round \(currentRound) of \(totalRounds)")
-                        .font(.subheadline)
+                        .font(.system(size: roundFont, weight: .semibold))
                         .foregroundColor(.secondary)
                 }
                 
                 // Main game area (centered)
-                HStack(spacing: 20) {
+                HStack(alignment: .top, spacing: colSpacing) {
                     // Left: Dinosaurs or Pterosaurs (dynamic by game)
-                    VStack(spacing: 15) {
+                    VStack(spacing: cardSpacing) {
                         Text(matchingCreatureColumnTitle)
-                            .font(.headline)
+                            .font(.system(size: columnHeaderFont, weight: .semibold))
                         
                         ForEach(Array(dinosaurs.enumerated()), id: \.element.id) { index, dinosaur in
                             let isMatched = matchedPairs.contains { $0.dinosaurId == dinosaur.id }
@@ -1975,6 +2013,11 @@ struct MatchingGameView: View {
                                 isMatched: isMatched,
                                 hasFailedAttempt: failedAttempts.contains { $0.dinosaurId == dinosaur.id },
                                 isIntroHighlighted: !introWalkComplete && introWalkStep == index,
+                                imageSide: imageSide,
+                                cardWidth: cardWidth,
+                                cardHeightCompact: cardHeightCompact,
+                                cardHeightExpanded: cardHeightExpanded,
+                                nameFontSize: nameFont,
                                 onTap: {
                                     handleDinosaurTap(dinosaur)
                                 }
@@ -1983,9 +2026,9 @@ struct MatchingGameView: View {
                     }
                     
                     // Right: Diets (for Dino Diets!) or Special Feature (Match the Dinosaur / Pterosaur)
-                    VStack(spacing: 15) {
+                    VStack(spacing: cardSpacing) {
                         Text(isDietMatchingGame ? "Diet" : "Special Feature")
-                            .font(.headline)
+                            .font(.system(size: columnHeaderFont, weight: .semibold))
                         
                         ForEach(Array(characteristics.enumerated()), id: \.element.id) { index, characteristic in
                             CharacteristicCard(
@@ -1994,6 +2037,11 @@ struct MatchingGameView: View {
                                 isMatched: matchedPairs.contains { $0.characteristicId == characteristic.id },
                                 hasFailedAttempt: failedAttempts.contains { $0.characteristicId == characteristic.id },
                                 isIntroHighlighted: !introWalkComplete && introWalkStep == index + 3,
+                                imageSide: imageSide,
+                                cardWidth: cardWidth,
+                                cardHeightCompact: cardHeightCompact,
+                                cardHeightExpanded: cardHeightFeatureExpanded,
+                                nameFontSize: nameFont,
                                 onTap: {
                                     handleCharacteristicTap(characteristic)
                                 }
@@ -2002,9 +2050,11 @@ struct MatchingGameView: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .padding(.horizontal, 40)
-                .padding(.vertical)
+                .padding(.horizontal, hPad)
+                .padding(.vertical, 8)
+                Spacer(minLength: 0)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .id(currentRound)
             .onAppear {
                 // Only start intro walk from here for round 1; rounds 2–3 are started from startNextRound() to avoid double-start and rate-limit stuck highlight
@@ -2012,6 +2062,8 @@ struct MatchingGameView: View {
                     startIntroWalkIfNeeded()
                 }
             }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     /// Before gameplay each round: walk dinosaurs then characteristics (name/trait audio + highlight); then enable tapping. Dino Diets! plays instruction first (game-dino-diets-match-each-dinosaur), then dinosaurs, then diets.
@@ -2482,6 +2534,11 @@ struct DinosaurCard: View {
     let isMatched: Bool
     let hasFailedAttempt: Bool
     let isIntroHighlighted: Bool
+    var imageSide: CGFloat = 80
+    var cardWidth: CGFloat = 180
+    var cardHeightCompact: CGFloat = 100
+    var cardHeightExpanded: CGFloat = 130
+    var nameFontSize: CGFloat = 17
     let onTap: () -> Void
     
     private var backgroundColor: Color {
@@ -2515,7 +2572,7 @@ struct DinosaurCard: View {
                         Image(imageName)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 80, height: 80)
+                            .frame(width: imageSide, height: imageSide)
                             .onAppear {
                                 // Debug: Check if image exists
                                 if UIImage(named: imageName) == nil {
@@ -2524,18 +2581,18 @@ struct DinosaurCard: View {
                             }
                     } else {
                         Text(dinosaur.icon)
-                            .font(.system(size: 60))
+                            .font(.system(size: min(60, imageSide * 0.75)))
                     }
                     
                     // Show text only when selected, intro-highlighted, or matched (for parents)
                     if isSelected || isIntroHighlighted || isMatched {
                         if isMatched {
                             Text("✓")
-                                .font(.title)
+                                .font(.system(size: max(22, nameFontSize + 6), weight: .bold))
                                 .foregroundColor(.green)
                         } else {
                             Text(dinosaur.name)
-                                .font(.headline)
+                                .font(.system(size: nameFontSize, weight: .semibold))
                                 .foregroundColor(.primary)
                                 .multilineTextAlignment(.center)
                                 .lineLimit(2)
@@ -2548,12 +2605,12 @@ struct DinosaurCard: View {
                 // Show X for failed attempt (temporary, fades)
                 if hasFailedAttempt && !isMatched {
                     Text("✗")
-                        .font(.system(size: 40))
+                        .font(.system(size: max(32, imageSide * 0.35)))
                         .foregroundColor(.red.opacity(0.7))
                         .transition(.opacity)
                 }
             }
-            .frame(width: 180, height: isSelected || isIntroHighlighted || isMatched ? 130 : 100)
+            .frame(width: cardWidth, height: isSelected || isIntroHighlighted || isMatched ? cardHeightExpanded : cardHeightCompact)
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(backgroundColor)
@@ -2578,6 +2635,11 @@ struct CharacteristicCard: View {
     let isMatched: Bool
     let hasFailedAttempt: Bool
     let isIntroHighlighted: Bool
+    var imageSide: CGFloat = 80
+    var cardWidth: CGFloat = 180
+    var cardHeightCompact: CGFloat = 100
+    var cardHeightExpanded: CGFloat = 120
+    var nameFontSize: CGFloat = 17
     let onTap: () -> Void
     
     private var backgroundColor: Color {
@@ -2611,7 +2673,7 @@ struct CharacteristicCard: View {
                         Image(imageName)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 80, height: 80)
+                            .frame(width: imageSide, height: imageSide)
                             .onAppear {
                                 // Debug: Check if image exists
                                 if UIImage(named: imageName) == nil {
@@ -2620,19 +2682,22 @@ struct CharacteristicCard: View {
                             }
                     } else {
                         Text(characteristic.icon)
-                            .font(.system(size: 60))
+                            .font(.system(size: min(60, imageSide * 0.75)))
                     }
                     
                     // Show text only when selected, intro-highlighted, or matched (for parents)
                     if isSelected || isIntroHighlighted || isMatched {
                         if isMatched {
                             Text("✓")
-                                .font(.title)
+                                .font(.system(size: max(22, nameFontSize + 6), weight: .bold))
                                 .foregroundColor(.green)
                         } else {
                             Text(characteristic.type)
-                                .font(.headline)
+                                .font(.system(size: nameFontSize, weight: .semibold))
                                 .foregroundColor(.primary)
+                                .multilineTextAlignment(.center)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.65)
                                 .transition(.opacity.combined(with: .move(edge: .bottom)))
                         }
                     }
@@ -2641,12 +2706,12 @@ struct CharacteristicCard: View {
                 // Show X for failed attempt (temporary, fades)
                 if hasFailedAttempt && !isMatched {
                     Text("✗")
-                        .font(.system(size: 40))
+                        .font(.system(size: max(32, imageSide * 0.35)))
                         .foregroundColor(.red.opacity(0.7))
                         .transition(.opacity)
                 }
             }
-            .frame(width: 180, height: isSelected || isIntroHighlighted || isMatched ? 120 : 100)
+            .frame(width: cardWidth, height: isSelected || isIntroHighlighted || isMatched ? cardHeightExpanded : cardHeightCompact)
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(backgroundColor)

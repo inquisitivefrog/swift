@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "footprint-spinosaurid-medium-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "footprint-spinosaurid-medium-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "footprint-spinosaurid-medium-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "footprint-spinosaurid-medium-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "footprint-spinosaurid-medium-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "footprint-spinosaurid-medium-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

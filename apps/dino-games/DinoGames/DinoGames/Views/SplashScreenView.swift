@@ -36,46 +36,55 @@ struct SplashScreenView: View {
                         Color(.systemBackground)
                             .ignoresSafeArea()
 
-                        VStack(spacing: 24) {
-                            Spacer()
+                        GeometryReader { geo in
+                            // Phone-first art was capped at 300pt; on iPad use most of the
+                            // upper canvas while leaving room for copyright copy below.
+                            // Clamp: GeometryReader can propose 0 during the first layout pass.
+                            let coverSide = max(
+                                1,
+                                min(geo.size.width - 48, geo.size.height * 0.58)
+                            )
 
-                            // Cover image (replaces text title)
-                            Image("CoverImage")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxHeight: 300)
-                                .padding(.horizontal, 20)
+                            VStack(spacing: 24) {
+                                Spacer(minLength: 12)
 
-                            Spacer()
+                                Image("CoverImage")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: coverSide, height: coverSide)
+                                    .padding(.horizontal, 20)
 
-                            // Copyright and credits
-                            VStack(spacing: 12) {
-                                Text("© 2026 Timothy Stilwell. All rights reserved.")
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                    .multilineTextAlignment(.center)
+                                Spacer(minLength: 12)
 
-                                Text("Character illustrations and environmental assets were created with the assistance of generative AI technologies. All rights to the original game design, story, and software are reserved by Timothy Stilwell.")
-                                    .font(.caption2)
-                                    .foregroundColor(.secondary)
-                                    .multilineTextAlignment(.center)
+                                VStack(spacing: 12) {
+                                    Text("© 2026 Timothy Stilwell. All rights reserved.")
+                                        .font(.subheadline)
+                                        .foregroundColor(.secondary)
+                                        .multilineTextAlignment(.center)
 
-                                Link("inquisitivefrog@gmail.com", destination: URL(string: "mailto:inquisitivefrog@gmail.com")!)
-                                    .font(.caption)
-                                    .foregroundColor(.blue)
+                                    Text("Character illustrations and environmental assets were created with the assistance of generative AI technologies. All rights to the original game design, story, and software are reserved by Timothy Stilwell.")
+                                        .font(.caption2)
+                                        .foregroundColor(.secondary)
+                                        .multilineTextAlignment(.center)
 
-                                Text("Educational app for dinosaur enthusiasts.")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                                    .multilineTextAlignment(.center)
+                                    Link("inquisitivefrog@gmail.com", destination: URL(string: "mailto:inquisitivefrog@gmail.com")!)
+                                        .font(.caption)
+                                        .foregroundColor(.blue)
 
-                                Text("Designed for non-readers with audio-first learning.")
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                                    .multilineTextAlignment(.center)
+                                    Text("Educational app for dinosaur enthusiasts.")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                        .multilineTextAlignment(.center)
+
+                                    Text("Designed for non-readers with audio-first learning.")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                        .multilineTextAlignment(.center)
+                                }
+                                .padding(.horizontal, geo.size.width > 700 ? 80 : 40)
+                                .padding(.bottom, 60)
                             }
-                            .padding(.horizontal, 40)
-                            .padding(.bottom, 60)
+                            .frame(width: geo.size.width, height: geo.size.height)
                         }
                     }
                     .navigationBarTitleDisplayMode(.inline)

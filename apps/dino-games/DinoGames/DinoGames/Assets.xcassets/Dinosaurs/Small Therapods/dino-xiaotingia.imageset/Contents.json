@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "dino-xiaotingia-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "dino-xiaotingia-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "dino-xiaotingia-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "dino-xiaotingia-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "dino-xiaotingia-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "dino-xiaotingia-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }

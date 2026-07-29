@@ -1,23 +1,23 @@
 {
-  "images" : [
+  "images": [
     {
-      "filename" : "silh-kariridraco-80.png",
-      "idiom" : "universal",
-      "scale" : "1x"
+      "filename": "ptero-thala-silhouette-kariridraco-360.png",
+      "idiom": "universal",
+      "scale": "1x"
     },
     {
-      "filename" : "silh-kariridraco-160.png",
-      "idiom" : "universal",
-      "scale" : "2x"
+      "filename": "ptero-thala-silhouette-kariridraco-720.png",
+      "idiom": "universal",
+      "scale": "2x"
     },
     {
-      "filename" : "silh-kariridraco-240.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename": "ptero-thala-silhouette-kariridraco-1024.png",
+      "idiom": "universal",
+      "scale": "3x"
     }
   ],
-  "info" : {
-    "author" : "xcode",
-    "version" : 1
+  "info": {
+    "author": "xcode",
+    "version": 1
   }
 }
