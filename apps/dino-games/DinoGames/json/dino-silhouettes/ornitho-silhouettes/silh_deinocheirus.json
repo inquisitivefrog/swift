@@ -1,0 +1,12 @@
+{
+    "id": "GAME_CARD_DEINOCHEIRUS_SILHOUETTE_020",
+    "species": "Deinocheirus",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_id": "STYLE_SILHOUETTE",
+    "visual_logic": {
+      "subject_appearance": "Solid black silhouette; massive sail-backed body with a wide duck-billed head.",
+      "facial_silhouette": "Elongated, duck-like broad beak and rounded low skull profile.",
+      "backlight_strategy": "High-key 'savanna-noon' backlight."
+    },
+    "pose": "Side profile in a low stance; silhouette emphasizes the distinctive high back hump/sail and enormous, heavily clawed arms extended forward."
+  }

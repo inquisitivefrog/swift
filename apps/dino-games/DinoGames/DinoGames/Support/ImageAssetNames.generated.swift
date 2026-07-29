@@ -4,8 +4,6 @@ import Foundation
 
 enum ImageAssetNames {
     static let knownAssets: Set<String> = [
-        "CoverImage",
-        "Dental-Morphology-4",
         "category-air",
         "category-land",
         "category-sea",
@@ -31,6 +29,8 @@ enum ImageAssetNames {
         "clue-nesting-type-mound",
         "clue-nesting-type-open-ground",
         "clue-question-mark",
+        "CoverImage",
+        "Dental-Morphology-4",
         "dino-acrocanthosaurus",
         "dino-ages-cretaceous",
         "dino-ages-jurassic",

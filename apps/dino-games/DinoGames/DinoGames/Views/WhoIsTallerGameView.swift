@@ -79,6 +79,15 @@ struct WhoIsTallerGameView: View {
         !canTapGrid || speechManager.isPlaying
     }
 
+    /// Hide the nav bar unless Debug early-exit Done is enabled (avoids empty chrome + duplicate titles).
+    private var earlyExitNavigationBarVisibility: Visibility {
+        #if DEBUG
+        DeveloperSessionFlags.showEarlyExitDone ? .automatic : .hidden
+        #else
+        .hidden
+        #endif
+    }
+
     /// Phone-reference measure stage sizes; scaled via `GameCatalogImageMetrics` on wider canvases.
     private let phoneMeasureSlotWidth: CGFloat = 140
     private let phoneMeasureAreaHeight: CGFloat = 340
@@ -181,6 +190,7 @@ struct WhoIsTallerGameView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(earlyExitNavigationBarVisibility, for: .navigationBar)
         .allowsHitTesting(!blocksUserInput)
         .gameSheetDismissDisabledWhileAudioPlaying(blocksUserInput)
         .toolbar {
@@ -205,20 +215,47 @@ struct WhoIsTallerGameView: View {
         if isMarinePool {
             marineLengthComparisonArea(availableWidth: availableWidth)
         } else {
+            // Pack left | tape | right tightly so height comparison stays readable; fit the row
+            // when ideal widths would overflow (common on phone with two full-height poses).
             let slotW = GameCatalogImageMetrics.scaled(phoneMeasureSlotWidth, safeWidth: availableWidth, maxScale: playMaxScale)
             let areaH = GameCatalogImageMetrics.scaled(phoneMeasureAreaHeight, safeWidth: availableWidth, maxScale: playMaxScale)
             let centerW = GameCatalogImageMetrics.scaled(phoneMeasureCenterWidth, safeWidth: availableWidth, maxScale: playMaxScale)
             let scales = whoIsTallerSlotScales()
+            let horizontalPadding: CGFloat = 8
+            let maxRowWidth = max(availableWidth - horizontalPadding * 2, 1)
+            let leftW = (selectedFirst != nil && scales.left > 0) ? slotW * scales.left : 0
+            let rightW = (selectedSecond != nil && scales.right > 0) ? slotW * scales.right : 0
+            let centerContentW = centerW * max(scales.center, 0)
+            let idealTotal = max(leftW + centerContentW + rightW, 1)
+            let fit = min(1, maxRowWidth / idealTotal)
+            let rowHeight = areaH * fit
             HStack(alignment: .bottom, spacing: measureSpacing) {
-                whoIsTallerSlotOptional(item: selectedFirst, scale: scales.left, alignTowardCenter: true, slotWidth: slotW, areaHeight: areaH)
-                    .id("left-\(selectedFirst?.id ?? 0)")
-                whoIsTallerCenterImage(scale: scales.center, centerWidth: centerW, areaHeight: areaH)
-                whoIsTallerSlotOptional(item: selectedSecond, scale: scales.right, alignTowardCenter: false, slotWidth: slotW, areaHeight: areaH)
-                    .id("right-\(selectedSecond?.id ?? 0)")
+                whoIsTallerSlotOptional(
+                    item: selectedFirst,
+                    scale: scales.left,
+                    slotWidth: slotW,
+                    areaHeight: areaH,
+                    layoutFit: fit
+                )
+                .id("left-\(selectedFirst?.id ?? 0)")
+                whoIsTallerCenterImage(
+                    scale: scales.center,
+                    centerWidth: centerW,
+                    areaHeight: areaH,
+                    layoutFit: fit
+                )
+                whoIsTallerSlotOptional(
+                    item: selectedSecond,
+                    scale: scales.right,
+                    slotWidth: slotW,
+                    areaHeight: areaH,
+                    layoutFit: fit
+                )
+                .id("right-\(selectedSecond?.id ?? 0)")
             }
             .frame(maxWidth: .infinity)
-            .frame(height: areaH + 20)
-            .padding(.horizontal, 24)
+            .frame(height: rowHeight + 20)
+            .padding(.horizontal, horizontalPadding)
         }
     }
 
@@ -470,22 +507,38 @@ struct WhoIsTallerGameView: View {
         return (firstScale, 1.0, centerScale)
     }
 
-    /// Slot with optional item: empty when nil, else measure-dino-* scaled. alignTowardCenter: true = left slot (trailing), false = right slot (leading).
-    private func whoIsTallerSlotOptional(item: WhoIsTallerItem?, scale: CGFloat, alignTowardCenter: Bool, slotWidth: CGFloat, areaHeight: CGFloat) -> some View {
+    /// Slot with optional item: empty when nil (no reserved width), else measure art sized to height scale.
+    private func whoIsTallerSlotOptional(
+        item: WhoIsTallerItem?,
+        scale: CGFloat,
+        slotWidth: CGFloat,
+        areaHeight: CGFloat,
+        layoutFit: CGFloat
+    ) -> some View {
         Group {
             if let item = item, scale > 0 {
-                whoIsTallerSlot(item: item, scale: scale, alignTowardCenter: alignTowardCenter, slotWidth: slotWidth, areaHeight: areaHeight)
-            } else {
-                Color.clear.frame(width: slotWidth, height: areaHeight)
+                whoIsTallerSlot(
+                    item: item,
+                    scale: scale,
+                    slotWidth: slotWidth,
+                    areaHeight: areaHeight,
+                    layoutFit: layoutFit
+                )
             }
         }
     }
 
-    /// Left slot: measure-dino-* aligned bottomTrailing (toward paleontologist). Right slot: bottomLeading.
-    private func whoIsTallerSlot(item: WhoIsTallerItem, scale: CGFloat, alignTowardCenter: Bool, slotWidth: CGFloat, areaHeight: CGFloat) -> some View {
-        let contentW = slotWidth * scale
-        let contentH = areaHeight * scale
-        let alignment: Alignment = alignTowardCenter ? .bottomTrailing : .bottomLeading
+    /// Left/right creature: frame hugs scaled width so art sits against the paleontologist (no empty side padding).
+    private func whoIsTallerSlot(
+        item: WhoIsTallerItem,
+        scale: CGFloat,
+        slotWidth: CGFloat,
+        areaHeight: CGFloat,
+        layoutFit: CGFloat
+    ) -> some View {
+        let contentW = slotWidth * scale * layoutFit
+        let contentH = areaHeight * scale * layoutFit
+        let rowH = areaHeight * layoutFit
         return Group {
             if let name = measureDinoImageName(for: item), ImageAssetCache.imageExists(named: name) {
                 Image(name)
@@ -493,11 +546,11 @@ struct WhoIsTallerGameView: View {
                     .aspectRatio(contentMode: .fit)
             } else {
                 Text(item.emoji)
-                    .font(.system(size: 80))
+                    .font(.system(size: 80 * layoutFit))
             }
         }
         .frame(width: contentW, height: contentH, alignment: .bottom)
-        .frame(width: slotWidth, height: areaHeight, alignment: alignment)
+        .frame(width: contentW, height: rowH, alignment: .bottom)
     }
 
     /// Dino: ladder pose (`measure-dino-paleontologist-ladder`); ptero: tape pose (`measure-ptero-paleontologist-tape`).
@@ -505,11 +558,17 @@ struct WhoIsTallerGameView: View {
         isPterosaurPool ? "measure-ptero-paleontologist-tape" : "measure-dino-paleontologist-ladder"
     }
 
-    /// Paleontologist reference: bottom-aligned with left/right creatures for height comparison. Scaled relative to max(creature heights, human).
-    private func whoIsTallerCenterImage(scale: CGFloat, centerWidth: CGFloat, areaHeight: CGFloat) -> some View {
+    /// Paleontologist reference: bottom-aligned; frame hugs scaled width so left/right creatures sit against the tape.
+    private func whoIsTallerCenterImage(
+        scale: CGFloat,
+        centerWidth: CGFloat,
+        areaHeight: CGFloat,
+        layoutFit: CGFloat
+    ) -> some View {
         let name = whoIsTallerCenterImageName()
-        let contentW = centerWidth * scale
-        let contentH = areaHeight * scale
+        let contentW = centerWidth * scale * layoutFit
+        let contentH = areaHeight * scale * layoutFit
+        let rowH = areaHeight * layoutFit
         return Group {
             if ImageAssetCache.imageExists(named: name) {
                 Image(name)
@@ -521,7 +580,7 @@ struct WhoIsTallerGameView: View {
             }
         }
         .frame(width: contentW, height: contentH, alignment: .bottom)
-        .frame(width: centerWidth, height: areaHeight, alignment: .bottom)
+        .frame(width: contentW, height: rowH, alignment: .bottom)
     }
 
     // MARK: - Logic
