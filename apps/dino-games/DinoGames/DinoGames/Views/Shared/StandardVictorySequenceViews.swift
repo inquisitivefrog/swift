@@ -505,8 +505,9 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
     var body: some View {
         GeometryReader { geometry in
             let safeWidth = max(geometry.size.width, 1)
+            let topInset = geometry.safeAreaInsets.top
             let scale = StandardVictoryLayout.layoutScale(safeWidth: safeWidth)
-            columnContent(scale: scale)
+            columnContent(scale: scale, topInset: topInset)
                 .frame(width: geometry.size.width, height: geometry.size.height)
                 .environment(\.victoryLayoutScale, scale)
         }
@@ -514,7 +515,7 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
         .accessibilityIdentifier("victory-split-column")
     }
 
-    private func columnContent(scale: CGFloat) -> some View {
+    private func columnContent(scale: CGFloat, topInset: CGFloat) -> some View {
         let listH = activeListScrollHeight(scale: scale)
         return VStack(spacing: 0) {
             if let gameTitle, !gameTitle.isEmpty, !(hideGameTitleDuringSuccessPhase && showSuccessPhase) {
@@ -523,7 +524,7 @@ struct VictorySplitColumnView<ScrollRows: View, SuccessPhase: View>: View {
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
                     .minimumScaleFactor(0.85)
-                    .padding(.top, 8)
+                    .padding(.top, 8 + topInset)
                     .padding(.bottom, 8)
                     .frame(maxWidth: .infinity)
                     .layoutPriority(2)

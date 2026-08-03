@@ -114,9 +114,18 @@ struct WhoIsTallerGameView: View {
 
     var body: some View {
         GeometryReader { geometry in
+            // GeometryReader lays out under the status bar / Dynamic Island; pad content and
+            // fold the same inset into grid chrome so the 3×3 shrinks instead of colliding
+            // with the reserved tall measure stage (worst case: two sauropods).
+            let topInset = geometry.safeAreaInsets.top
             let safeHeight = max(geometry.size.height, 1)
             let safeWidth = max(geometry.size.width, 1)
-            let grid = CreatureThreeByThreeGridMetrics.make(safeWidth: safeWidth, safeHeight: safeHeight, reservedStageHeight: measureStageReserveHeight(safeWidth: safeWidth), chrome: 32)
+            let grid = CreatureThreeByThreeGridMetrics.make(
+                safeWidth: safeWidth,
+                safeHeight: safeHeight,
+                reservedStageHeight: measureStageReserveHeight(safeWidth: safeWidth),
+                chrome: 32 + topInset
+            )
             if isGameOver {
                 // Full-screen victory (same as Weigh / Name That Dinosaur) so the game title stays pinned and visible.
                 victoryView
@@ -124,13 +133,16 @@ struct WhoIsTallerGameView: View {
             } else {
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 0) {
-                        Spacer().frame(height: 8)
+                        Spacer().frame(height: 8 + topInset)
 
                         VStack(spacing: 6) {
                             VStack(spacing: 4) {
                                 Text(gameConfig.title)
                                     .font(.title2)
                                     .multilineTextAlignment(.center)
+                                    .lineLimit(2)
+                                    .minimumScaleFactor(0.75)
+                                    .allowsTightening(true)
                                     .frame(maxWidth: .infinity)
                                 Text("Round \(roundsCompleted + 1) of \(maxRounds)")
                                     .font(.subheadline)

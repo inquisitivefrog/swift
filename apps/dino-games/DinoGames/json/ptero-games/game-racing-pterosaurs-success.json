@@ -1,68 +1,42 @@
 {
-  "image_manifest": {
-    "filename": "pterosaur_race_finish_001.png",
-    "description": "An asset manifest for a stylized 3D rendered scene depicting the climax of a race where three pterosaurs approach a floating finish line, with a clear winner established.",
-    "art_styles": [
-      "STYLE_ANIMATED_FEATURE_V3"
-    ],
-    "lighting": "SUNNY_EXPOSED_CINEMATIC",
-    "framing": "SQUARE_HERO_CARD",
-    "aspect_ratio": "1:1",
-    "assets": [
-      {
-        "id": "A1",
-        "name": "Header Text",
-        "description": "Blue and yellow, stylized, irregular 3D block text reading 'RACING PTEROSAURS!' located at the top of the image.",
-        "type": "text_element"
-      },
-      {
-        "id": "A2",
-        "name": "Victory Text",
-        "description": "Bold, celebratory 3D block text reading 'PLAYER WINS!' located at the bottom of the image, styled to match the header.",
-        "type": "text_element"
-      },
-      {
-        "id": "A3",
-        "name": "Winning Pterosaur (Quetzalcoatlus)",
-        "description": "The gigantic, slender Quetzalcoatlus in a full-speed flight pose, neck extended forward, clearly ahead of the others and inches away from the finish sash.",
-        "type": "character"
-      },
-      {
-        "id": "A4",
-        "name": "Trailing Racer 1 (Tupandactylus)",
-        "description": "The colorful Tupandactylus in mid-air behind the leader, wings flapping vigorously with a determined expression.",
-        "type": "character"
-      },
-      {
-        "id": "A5",
-        "name": "Trailing Racer 2 (Cearadactylus)",
-        "description": "The compact Cearadactylus flying on the opposite side of the leader, showing visible effort to catch up.",
-        "type": "character"
-      },
-      {
-        "id": "A6",
-        "name": "Floating Finish Line Sash",
-        "description": "A vibrant red checkered finish line sash stretched horizontally across the air, held aloft by several large, colorful 3D balloons attached to each end.",
-        "type": "item"
-      },
-      {
-        "id": "A7",
-        "name": "Djadokhta Aerial Environment",
-        "description": "A high-altitude view of the Djadokhta canyon with its signature flame-orange and sunset-red sandstone walls visible below.",
-        "type": "environment"
-      },
-      {
-        "id": "A8",
-        "name": "Atmospheric Perspective",
-        "description": "Motion blur streaks behind the pterosaurs to emphasize speed, with a slight hazy glow in the distant horizon as per the SUNNY_EXPOSED_CINEMATIC lighting preset.",
-        "type": "environment"
-      },
-      {
-        "id": "A9",
-        "name": "Bottom Right Watermark",
-        "description": "A small, translucent lens-flare type logo/watermark located in the bottom-right corner.",
-        "type": "watermark"
-      }
-    ]
-  }
+  "image_manifest": {
+    "filename": "pterosaur_race_finish_001.png",
+    "description": "Stylized 3D animated feature scene: climax of a pterosaur race at a floating finish line with a clear winner. FINAL ART ONLY — do not draw asset id labels, callout dots, A1–A9 markers, watermarks, or annotation overlays.",
+    "art_styles": [
+      "STYLE_ANIMATED_FEATURE_V3"
+    ],
+    "lighting": "SUNNY_EXPOSED_CINEMATIC",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1",
+    "elements": [
+      {
+        "name": "Header Text",
+        "description": "Blue and yellow, stylized, irregular 3D block text reading 'RACING PTEROSAURS!' at the top of the image."
+      },
+      {
+        "name": "Victory Text",
+        "description": "Bold, celebratory 3D block text reading 'PLAYER WINS!' at the bottom of the image, styled to match the header."
+      },
+      {
+        "name": "Winning Pterosaur",
+        "description": "Gigantic slender pterosaur in a full-speed flight pose, neck extended forward, clearly ahead and inches from the finish sash."
+      },
+      {
+        "name": "Trailing Racer 1",
+        "description": "Colorful crest pterosaur mid-air behind the leader, wings flapping vigorously."
+      },
+      {
+        "name": "Trailing Racer 2",
+        "description": "Compact pterosaur on the opposite side of the leader, showing effort to catch up."
+      },
+      {
+        "name": "Floating Finish Line Sash",
+        "description": "Vibrant red checkered finish line sash stretched horizontally across the air, held aloft by colorful balloons at each end."
+      },
+      {
+        "name": "Canyon Environment",
+        "description": "High-altitude view of flame-orange and sunset-red sandstone canyon walls below, motion blur streaks, clear bright sky."
+      }
+    ]
+  }
 }

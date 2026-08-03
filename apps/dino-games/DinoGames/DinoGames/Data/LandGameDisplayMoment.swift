@@ -1246,10 +1246,10 @@ enum LandGameDisplayMomentCatalog {
 
     private static func marineSmileMoments() -> [LandGameDisplayMoment] {
         var moments: [LandGameDisplayMoment] = []
-        // Reference tooth + per-portrait `marine-smile-*` narration omitted until Marine-Smile audio ships.
+        // Smiling portraits use smile art; narration uses body keys under Audio/Marine-Reptiles/.
         for creature in MarineSmileMorphology.playableCreatures {
             guard let smileImage = creature.imageName,
-                  let bodyAudio = marineBodyPortraitAssetName(forSmileAsset: smileImage),
+                  let bodyAudio = MarineSmileMorphology.bodyAudioKey(for: creature),
                   !creature.name.isEmpty else { continue }
             moments.append(
                 LandGameDisplayMoment(
@@ -1265,18 +1265,6 @@ enum LandGameDisplayMomentCatalog {
             )
         }
         return moments
-    }
-
-    private static func marineBodyPortraitAssetName(forSmileAsset smileAsset: String) -> String? {
-        guard smileAsset.hasPrefix("marine-smile-") else { return nil }
-        let slug = String(smileAsset.dropFirst("marine-smile-".count))
-        let slugCandidates = [slug, "pllioplatecarpus" == slug ? "plioplatecarpus" : nil].compactMap { $0 }
-        for candidate in slugCandidates {
-            if let match = SeaMarineReptileData.allMarineReptiles.first(where: { $0.imageName?.hasSuffix("-\(candidate)") == true })?.imageName {
-                return match
-            }
-        }
-        return nil
     }
 
     static func creatureMoment(

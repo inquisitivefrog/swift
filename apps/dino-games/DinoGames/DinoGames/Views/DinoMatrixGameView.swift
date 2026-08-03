@@ -191,6 +191,8 @@ struct DinoMatrixGameView: View {
             GeometryReader { geometry in
                 let safeWidth = max(geometry.size.width, 1)
                 let safeHeight = max(geometry.size.height, 1)
+                let topInset = geometry.safeAreaInsets.top
+                let usableHeight = max(1, safeHeight - topInset)
                 // Phone keeps baselines; iPad grows (Dino / Ptero / Marine Matrix share this view).
                 let playMaxScale: CGFloat = 1.85
                 let isPadCanvas = safeWidth > GameCatalogImageMetrics.phoneReferenceWidth
@@ -200,7 +202,7 @@ struct DinoMatrixGameView: View {
                         safeWidth: safeWidth,
                         maxScale: playMaxScale
                     ),
-                    safeHeight * (isPadCanvas ? 0.40 : 0.34)
+                    usableHeight * (isPadCanvas ? 0.40 : 0.34)
                 )
                 let fossilMaxW = min(
                     GameCatalogImageMetrics.scaled(
@@ -240,6 +242,8 @@ struct DinoMatrixGameView: View {
                         Text(gameConfig.title)
                             .font(.largeTitle)
                             .multilineTextAlignment(.center)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
                             .frame(maxWidth: .infinity)
                         if !gameConfig.sourceHints.isEmpty {
                             Button {
@@ -257,7 +261,7 @@ struct DinoMatrixGameView: View {
                             Color.clear.frame(width: hintSide, height: 1)
                         }
                     }
-                    .padding(.top, 4)
+                    .padding(.top, 4 + topInset)
                 }
 
                 if let question = currentQuestion, !isGameComplete {

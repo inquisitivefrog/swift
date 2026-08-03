@@ -757,11 +757,21 @@ struct SourceFloraHintsView: View {
     private var gridView: some View {
         GeometryReader { geometry in
             let safeWidth = max(geometry.size.width, 1)
-            let cardHeight = SourceHintsLayout.gridCardHeight(safeWidth: safeWidth)
+            let safeHeight = max(geometry.size.height, 1)
             let spacing = SourceHintsLayout.gridSpacing(safeWidth: safeWidth)
             let hPad = SourceHintsLayout.horizontalPadding(safeWidth: safeWidth)
             let titleFont = SourceHintsLayout.titleFont(safeWidth: safeWidth)
             let fallbackFont = SourceHintsLayout.fallbackLabelFont(safeWidth: safeWidth)
+            let isPadCanvas = safeWidth > GameCatalogImageMetrics.phoneReferenceWidth
+            let widthBasedHeight = SourceHintsLayout.gridCardHeight(safeWidth: safeWidth)
+            // Few flora hint tiles — on iPad fill leftover height so plant art reads larger.
+            let rowCount = max(1, Int(ceil(Double(hints.count) / 2.0)))
+            let titleBlock = titleFont + 28
+            let leftover = max(0, safeHeight - titleBlock - spacing * CGFloat(rowCount) - 24)
+            let heightFromSpace = leftover / CGFloat(rowCount)
+            let cardHeight = isPadCanvas
+                ? max(widthBasedHeight, min(heightFromSpace, safeHeight * 0.40))
+                : widthBasedHeight
             VStack(spacing: spacing) {
                 SourceHintsScreenTitle(title: title, fontSize: titleFont)
                 LazyVGrid(columns: [GridItem(.flexible(), spacing: spacing), GridItem(.flexible(), spacing: spacing)], spacing: spacing) {
@@ -787,7 +797,7 @@ struct SourceFloraHintsView: View {
                     }
                 }
                 .padding(.horizontal, hPad)
-                Spacer()
+                Spacer(minLength: 0)
             }
         }
     }
@@ -797,10 +807,16 @@ struct SourceFloraHintsView: View {
         if let hint = selectedHint {
             GeometryReader { geometry in
                 let safeWidth = max(geometry.size.width, 1)
-                let detailSide = SourceHintsLayout.detailImageSide(safeWidth: safeWidth)
+                let safeHeight = max(geometry.size.height, 1)
+                let isPadCanvas = safeWidth > GameCatalogImageMetrics.phoneReferenceWidth
+                let widthBased = SourceHintsLayout.detailImageSide(safeWidth: safeWidth)
+                // Pad: use more of the canvas for the plant image after a grid tap.
+                let detailSide = isPadCanvas
+                    ? min(max(widthBased, safeWidth * 0.92), safeHeight * 0.72)
+                    : widthBased
                 let labelFont = SourceHintsLayout.detailLabelFont(safeWidth: safeWidth)
                 VStack(spacing: 20) {
-                    Spacer()
+                    Spacer(minLength: 0)
                     if ImageAssetCache.imageExists(named: hint.imageAssetName) {
                         Image(hint.imageAssetName)
                             .resizable()
@@ -810,7 +826,7 @@ struct SourceFloraHintsView: View {
                     Text(hint.displayText)
                         .font(.system(size: labelFont, weight: .semibold))
                         .foregroundColor(.primary)
-                    Spacer()
+                    Spacer(minLength: 0)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }

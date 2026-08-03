@@ -1,10 +1,31 @@
 {
-    "id": "ui_beak_clipper_istiodactylus",
-    "morphology": "Duck Razor Bill",
-    "tech_ref": "DEFAULT_SQUARE",
-    "framing_ref": "SQUARE_HERO_CARD",
-    "lighting_ref": "STUDIO_GROUNDED",
-    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
-    "visual_logic": "Highlights the flat, wide, duck-like beak lined with miniature razor-sharp, interlocking triangular teeth.",
-    "prompt": "High-fidelity 3D asset of the front profile of an Istiodactylus jaw, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The jaw is broad, flat, and rounded at the front like a duck's bill, but the margins are lined with closely packed, tiny, razor-sharp triangular ivory teeth that interlock perfectly to form a continuous zig-zag cutting edge. The jaw has a smooth, matte leather-like finish in pale olive-green tones. The specimen is vertically oriented and perfectly centered in a 1:1 square composition, keeping a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with soft contact shadows. Illuminated by soft studio lighting with ambient occlusion to show the scissor-like cutting line."
+  "image_manifest": {
+    "filename": "ui_beak_clipper_istiodactylus_v2.png",
+    "description": "Stylized 3D Istiodactylus jaw for Ptero Smile Clip card. Three-quarter open duck bill, warm tan/orange, small interlocking triangular teeth. FINAL ART ONLY — no asset id labels, callout dots, or watermarks.",
+    "art_styles": [
+      "STYLE_ANIMATED_FEATURE_V3",
+      "STYLE_CLAY_MASTER"
+    ],
+    "lighting": "STUDIO_SOFT",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1",
+    "elements": [
+      {
+        "name": "Three-Quarter Beak Profile",
+        "description": "Open bill from a three-quarter camera angle — not dead-on front or top-down."
+      },
+      {
+        "name": "Wide Rounded Tip",
+        "description": "Broad duck-like tip with toy-like proportions."
+      },
+      {
+        "name": "Interlocking Triangular Teeth",
+        "description": "Small ivory triangular teeth along the bill margin forming a zig-zag clip edge."
+      },
+      {
+        "name": "Warm Tan Palette",
+        "description": "Matte warm tan/orange matching the Istiodactylus smile portrait."
+      }
+    ]
   }
+}

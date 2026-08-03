@@ -475,6 +475,8 @@ struct EggsGameView: View {
         GeometryReader { geometry in
             let safeWidth = max(geometry.size.width, 1)
             let safeHeight = max(geometry.size.height, 1)
+            let topInset = geometry.safeAreaInsets.top
+            let usableHeight = max(1, safeHeight - topInset)
             // Phone-tuned baselines; grow on iPad when width/height allow (Dino / Ptero / Marine Eggs).
             let playMaxScale: CGFloat = 1.5
             let stageMaxW = min(
@@ -483,7 +485,7 @@ struct EggsGameView: View {
             )
             let stageMaxH = min(
                 GameCatalogImageMetrics.scaled(260, safeWidth: safeWidth, maxScale: playMaxScale),
-                safeHeight * 0.36
+                usableHeight * 0.36
             )
             let cardSize = min(
                 GameCatalogImageMetrics.scaled(130, safeWidth: safeWidth, maxScale: playMaxScale),
@@ -506,8 +508,10 @@ struct EggsGameView: View {
                     Text(gameConfig.title)
                         .font(.system(size: titleFont, weight: .semibold))
                         .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.85)
                         .padding(.horizontal)
-                        .padding(.top, 8)
+                        .padding(.top, 8 + topInset)
                     Text("Round \(currentRound) of \(totalRounds)")
                         .font(.system(size: roundFont, weight: .semibold))
                         .foregroundColor(.secondary)
@@ -1314,11 +1318,20 @@ struct SourceEggsHintsView: View {
     private var gridView: some View {
         GeometryReader { geometry in
             let safeWidth = max(geometry.size.width, 1)
-            let cardHeight = SourceHintsLayout.gridCardHeight(safeWidth: safeWidth)
+            let safeHeight = max(geometry.size.height, 1)
             let spacing = SourceHintsLayout.gridSpacing(safeWidth: safeWidth)
             let hPad = SourceHintsLayout.horizontalPadding(safeWidth: safeWidth)
             let titleFont = SourceHintsLayout.titleFont(safeWidth: safeWidth)
             let fallbackFont = SourceHintsLayout.fallbackLabelFont(safeWidth: safeWidth)
+            // Keep a 2-column card grid (even for one hint) so tiles read as tappable, not full-bleed.
+            // Size up to column width / leftover height like Source Ages — larger than phone scale, not screen-filling.
+            let titleBlock: CGFloat = 44 + titleFont + 16 + spacing
+            let colWidth = max(1, (safeWidth - hPad * 2 - spacing) / 2)
+            let heightBudget = max(
+                SourceHintsLayout.gridCardHeight(safeWidth: safeWidth),
+                safeHeight - titleBlock - 32
+            )
+            let cardHeight = min(colWidth, heightBudget)
             VStack(spacing: spacing) {
                 SourceHintsScreenTitle(title: title, fontSize: titleFont)
                 LazyVGrid(columns: [GridItem(.flexible(), spacing: spacing), GridItem(.flexible(), spacing: spacing)], spacing: spacing) {
@@ -1344,7 +1357,7 @@ struct SourceEggsHintsView: View {
                     }
                 }
                 .padding(.horizontal, hPad)
-                Spacer()
+                Spacer(minLength: 0)
             }
         }
     }
@@ -1357,17 +1370,17 @@ struct SourceEggsHintsView: View {
                 let detailSide = SourceHintsLayout.detailImageSide(safeWidth: safeWidth)
                 let labelFont = SourceHintsLayout.detailLabelFont(safeWidth: safeWidth)
                 VStack(spacing: 20) {
-                    Spacer()
+                    Spacer(minLength: 0)
                     if ImageAssetCache.imageExists(named: hint.imageName) {
                         Image(hint.imageName)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(maxWidth: detailSide, maxHeight: detailSide * 0.72)
+                            .frame(maxWidth: detailSide, maxHeight: detailSide)
                     }
                     Text(hint.displayName)
                         .font(.system(size: labelFont, weight: .semibold))
                         .foregroundColor(.primary)
-                    Spacer()
+                    Spacer(minLength: 0)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }

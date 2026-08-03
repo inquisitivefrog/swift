@@ -21,6 +21,8 @@ final class OrderedTouchFeedbackAudioXCTests: XCTestCase {
 
     private let requiredFeedbackStems: Set<String> = [
         "pick-a-dinosaur-first",
+        "pick-a-pterosaur-first",
+        "pick-a-marine-reptile-first",
         "wow-that-was-tricky",
         "great-match",
         "try-again",

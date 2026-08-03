@@ -584,7 +584,8 @@ struct PortraitJigsawPuzzleGameView: View {
                         .foregroundColor(.secondary)
                 }
             }
-            .navigationTitle(line.navigationTitle)
+            // Empty nav title — gameplay / victory put the title in content (avoids tiny + duplicate titles on iPad).
+            .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("\(line.catalogGameId)-screen")
@@ -623,6 +624,9 @@ struct PortraitJigsawPuzzleGameView: View {
         let cols = round.pattern.cols
         let isPad = horizontalSizeClass == .regular
         VStack(spacing: isPad ? 20 : 8) {
+            Text(line.navigationTitle)
+                .font(isPad ? .largeTitle.weight(.bold) : .title2.weight(.bold))
+                .multilineTextAlignment(.center)
             Text("Round \(currentRoundIndex + 1) of 3")
                 .font(isPad ? .title2.weight(.semibold) : .headline)
                 .foregroundColor(.secondary)

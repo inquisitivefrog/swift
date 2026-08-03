@@ -138,6 +138,14 @@ final class MarineDietsXCTests: XCTestCase {
         )
     }
 
+    @MainActor
+    func testMarineDietsPickCreatureFirstAudioResolvesInBundle() {
+        TestBundleHelpers.assertBundleResolvesAudioKeys(
+            [OrderedTouchFeedback.pickMarineReptileFirst],
+            messagePrefix: "Marine Diets pick-first handrail"
+        )
+    }
+
     // MARK: - Display moments
 
     func testMarineDietsDisplayMomentsAreNonEmpty() {

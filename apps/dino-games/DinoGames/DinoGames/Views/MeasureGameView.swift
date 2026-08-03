@@ -263,6 +263,10 @@ struct MeasureGameView: View {
 
     var body: some View {
         GeometryReader { geometry in
+            // GeometryReader lays out under the status bar / Dynamic Island; pad content and
+            // fold the same inset into grid chrome so the 3×3 shrinks instead of colliding
+            // with the reserved measure stage.
+            let topInset = geometry.safeAreaInsets.top
             let safeHeight = max(geometry.size.height, 1)
             let safeWidth = max(geometry.size.width, 1)
             let measureStageH = GameCatalogImageMetrics.scaled(340, safeWidth: safeWidth, maxScale: playMaxScale) + 20 + 8
@@ -270,11 +274,11 @@ struct MeasureGameView: View {
                 safeWidth: safeWidth,
                 safeHeight: safeHeight,
                 reservedStageHeight: measureStageH,
-                chrome: 32
+                chrome: 32 + topInset
             )
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(spacing: 0) {
-                    Spacer().frame(height: 8)
+                    Spacer().frame(height: 8 + topInset)
 
                     if isGameOver {
                         measureVictoryView
@@ -284,6 +288,9 @@ struct MeasureGameView: View {
                                 Text(gameConfig.title)
                                     .font(.title2)
                                     .multilineTextAlignment(.center)
+                                    .lineLimit(2)
+                                    .minimumScaleFactor(0.75)
+                                    .allowsTightening(true)
                                     .frame(maxWidth: .infinity)
                                 Text("Round \(roundsCompleted + 1) of \(maxRounds)")
                                     .font(.subheadline)
@@ -927,11 +934,14 @@ struct MeasureGameView: View {
     /// Victory: top half = scrolling list of all dinosaurs played (highlight + name audio); bottom half = success image, then good-job + crowd and dismiss.
     private var measureVictoryView: some View {
         GeometryReader { geometry in
+            let topInset = geometry.safeAreaInsets.top
             VStack(spacing: 0) {
                 Text(gameConfig.title)
                     .font(.largeTitle)
                     .multilineTextAlignment(.center)
-                    .padding(.top, 8)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                    .padding(.top, 8 + topInset)
                     .padding(.bottom, 8)
                 ScrollViewReader { proxy in
                     ScrollView {

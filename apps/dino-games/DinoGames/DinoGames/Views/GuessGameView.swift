@@ -413,12 +413,13 @@ struct GuessGameView: View {
             GeometryReader { geometry in
                 let safeWidth = max(geometry.size.width, 1)
                 let safeHeight = max(geometry.size.height, 1)
+                let topInset = geometry.safeAreaInsets.top
                 // Phone-tuned baselines; grow on iPad (Footprints / Name That / Bones share this layout).
                 let playMaxScale: CGFloat = 1.85
                 let clueSide = min(
                     GameCatalogImageMetrics.scaled(340, safeWidth: safeWidth, maxScale: playMaxScale),
                     safeWidth * 0.72,
-                    safeHeight * 0.52
+                    max(1, safeHeight - topInset) * 0.52
                 )
                 let optionSpacing = GameCatalogImageMetrics.scaled(14, safeWidth: safeWidth, maxScale: playMaxScale)
                 let optionRowHPad: CGFloat = 12
@@ -436,7 +437,10 @@ struct GuessGameView: View {
                 VStack(spacing: GameCatalogImageMetrics.scaled(20, safeWidth: safeWidth, maxScale: playMaxScale)) {
                 Text(gameConfig.title)
                     .font(.system(size: titleFontSize, weight: .bold))
-                    .padding(.top)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
+                    .padding(.top, 8 + topInset)
 
                 if let question = currentQuestion {
                     // Main game area - one question at a time

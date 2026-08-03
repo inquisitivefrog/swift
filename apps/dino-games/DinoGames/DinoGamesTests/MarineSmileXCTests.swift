@@ -75,4 +75,27 @@ final class MarineSmileXCTests: XCTestCase {
         let speech = SpeechManager()
         XCTAssertNotNil(speech.urlForAudio(key: "game-marine-smile"))
     }
+
+    @MainActor
+    func testMarineSmilePortraitKeysResolveToMarineReptileBodyAudio() throws {
+        guard MarineSmileMorphology.isPlayable else {
+            throw XCTSkip("Marine Smile not playable yet")
+        }
+        let speech = SpeechManager()
+        var missing: [String] = []
+        for creature in MarineSmileMorphology.playableCreatures {
+            guard let smile = creature.imageName else {
+                missing.append("\(creature.name) (nil image)")
+                continue
+            }
+            guard let body = MarineSmileMorphology.bodyAudioKey(forSmileAsset: smile) else {
+                missing.append("\(smile) → no body key")
+                continue
+            }
+            if speech.urlForAudio(key: smile) == nil {
+                missing.append("\(smile) (expected Marine-Reptiles/\(body))")
+            }
+        }
+        XCTAssertTrue(missing.isEmpty, "Marine Smile portraits should resolve body name audio: \(missing.joined(separator: "; "))")
+    }
 }

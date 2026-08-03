@@ -272,6 +272,15 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
                 }
             }
         }
+        // Marine Smile: tooth clips under Marine-Smile/; smiling portraits use body names in Marine-Reptiles/.
+        if normalized.hasPrefix("marine-smile-") {
+            if let url = resolveURL(forPath: "Marine-Smile/\(normalized)") { return url }
+            if let bodyKey = MarineSmileMorphology.bodyAudioKey(forSmileAsset: normalized),
+               let url = resolveURL(forPath: "Marine-Reptiles/\(bodyKey)") {
+                return url
+            }
+            return nil
+        }
         guard let path = audioFilePath(for: key) else { return nil }
         return resolveURL(forPath: path)
     }
@@ -864,6 +873,8 @@ class SpeechManager: NSObject, ObservableObject, AVAudioPlayerDelegate, AVSpeech
             return "Feedback/that-dinosaur-is-too-tall"
         case "pick-a-pterosaur-first", "pick a pterosaur first":
             return "Feedback/pick-a-pterosaur-first"
+        case "pick-a-marine-reptile-first", "pick a marine reptile first":
+            return "Feedback/pick-a-marine-reptile-first"
         case "you-cannot-use-me-twice", "you cannot use me twice", "already matched", "pick-another-one", "pick another one":
             return "Feedback/pick-another-one"
         // Balance the Dinosaurs handrails
@@ -1950,6 +1961,7 @@ struct MatchingGameView: View {
             GeometryReader { geometry in
                 let safeWidth = max(geometry.size.width, 1)
                 let safeHeight = max(geometry.size.height, 1)
+                let topInset = geometry.safeAreaInsets.top
                 let playMaxScale: CGFloat = 1.85
                 let colSpacing = GameCatalogImageMetrics.scaled(20, safeWidth: safeWidth, maxScale: playMaxScale)
                 let cardSpacing = GameCatalogImageMetrics.scaled(12, safeWidth: safeWidth, maxScale: playMaxScale)
@@ -1962,7 +1974,7 @@ struct MatchingGameView: View {
                 let maxCardWidth = max(120, (safeWidth - hPad * 2 - colSpacing) / 2)
                 let dietRows = CGFloat(max(characteristics.count, 1))
                 let titleBlockH = titleFont + roundFont + 28
-                let chrome = titleBlockH + columnHeaderFont + 56
+                let chrome = titleBlockH + columnHeaderFont + 56 + topInset
                 let columnGaps = max(0, dietRows - 1) * cardSpacing
                 let maxHPerCard = max(72, (safeHeight - chrome - columnGaps) / dietRows)
                 let desiredWidth = min(
@@ -1991,8 +2003,10 @@ struct MatchingGameView: View {
                     Text(dietMatchingDisplayTitle)
                     .font(.system(size: titleFont, weight: .semibold))
                     .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
                     .padding(.horizontal)
-                    .padding(.top, 8)
+                    .padding(.top, 8 + topInset)
                     Text("Round \(currentRound) of \(totalRounds)")
                         .font(.system(size: roundFont, weight: .semibold))
                         .foregroundColor(.secondary)
@@ -2203,7 +2217,7 @@ struct MatchingGameView: View {
                 DispatchQueue.main.async {  }
             }
             let pickFirstKey: String = {
-                if isMarineMatchingGame { return OrderedTouchFeedback.pickDinosaurFirst }
+                if isMarineMatchingGame { return OrderedTouchFeedback.pickMarineReptileFirst }
                 if isPterosaurMatchingGame { return OrderedTouchFeedback.pickPterosaurFirst }
                 return OrderedTouchFeedback.pickDinosaurFirst
             }()

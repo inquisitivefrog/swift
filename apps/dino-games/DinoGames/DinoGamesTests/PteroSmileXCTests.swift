@@ -50,15 +50,17 @@ final class PteroSmileXCTests: XCTestCase {
 
     func testPteroSmileVictoryRecapDedupesPlayerLabels() {
         let matchedSlugs = [
-            "crested-terminal-spikes",
-            "forward-protruding-spikes",
-            "spaced-raptor-fangs",
-            "pebble-crushers",
+            "crested-terminal-spikes", // Fang
+            "spoon-tipped-fangs", // Fang
+            "tangled-interlocking-spikes", // Fang
+            "barbed-spear-tip", // Spike
+            "pebble-crushers", // Peg
         ]
         let unique = smileVictoryRecapToothSlugs(matchedSlugs, line: .air)
-        XCTAssertEqual(unique.count, 2)
+        XCTAssertEqual(unique.count, 3)
         XCTAssertEqual(PteroSmileMorphology.playerLabel(for: unique[0]), "Fang")
-        XCTAssertEqual(PteroSmileMorphology.playerLabel(for: unique[1]), "Peg")
+        XCTAssertEqual(PteroSmileMorphology.playerLabel(for: unique[1]), "Spike")
+        XCTAssertEqual(PteroSmileMorphology.playerLabel(for: unique[2]), "Peg")
     }
 
     func testPteroSmilePlayerAudioKeysListedInContract() {
@@ -69,10 +71,33 @@ final class PteroSmileXCTests: XCTestCase {
 
     // MARK: - Registry / round mechanics
 
+    func testPteroSmileExpectedPlayerLabelsForCommonSpecies() {
+        XCTAssertEqual(PteroSmileMorphology.playerKind(for: pteroSlug("pteranodon")), .spear)
+        XCTAssertEqual(PteroSmileMorphology.playerLabel(for: PteroSmileMorphology.smileToothType(for: pteroSlug("pteranodon"))!), "Spear")
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: pteroSlug("pteranodon")), "classic-pelican-javelin")
+        XCTAssertFalse(PteroSmileMorphology.smilePortraitShowsTeeth(for: pteroSlug("pteranodon")))
+        XCTAssertFalse(PteroSmileMorphology.toothArtShowsTeeth(for: "classic-pelican-javelin"))
+        XCTAssertEqual(PteroSmileMorphology.playerKind(for: pteroSlug("nemicolopterus")), .pin)
+        XCTAssertEqual(PteroSmileMorphology.playerLabel(for: PteroSmileMorphology.smileToothType(for: pteroSlug("nemicolopterus"))!), "Pin")
+        XCTAssertEqual(PteroSmileMorphology.playerKind(for: pteroSlug("sordes")), .spike)
+        XCTAssertEqual(PteroSmileMorphology.playerLabel(for: PteroSmileMorphology.smileToothType(for: pteroSlug("sordes"))!), "Spike")
+        XCTAssertEqual(PteroSmileMorphology.playerKind(for: pteroSlug("darwinopterus")), .peg)
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: pteroSlug("darwinopterus")), "spaced-vertical-pegs")
+        XCTAssertEqual(PteroSmileMorphology.playerKind(for: pteroSlug("ludodactylus")), .spike)
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: pteroSlug("ludodactylus")), "barbed-spear-tip")
+        XCTAssertTrue(PteroSmileMorphology.toothArtShowsTeeth(for: "barbed-spear-tip"))
+        XCTAssertEqual(PteroSmileMorphology.playerKind(for: pteroSlug("guidraco")), .fang)
+        XCTAssertEqual(PteroSmileMorphology.playerKind(for: pteroSlug("pterodactylus")), .peg)
+        XCTAssertEqual(PteroSmileMorphology.playerKind(for: pteroSlug("nyctosaurus")), .needle)
+        XCTAssertEqual(PteroSmileMorphology.smileToothType(for: pteroSlug("nyctosaurus")), "needle-cage-braces")
+        XCTAssertTrue(PteroSmileMorphology.toothArtShowsTeeth(for: "needle-cage-braces"))
+    }
+
     func testPteroSmileRegistryMatchesREADME() {
         XCTAssertEqual(PteroSmileMorphology.allCategorySlugs.count, 14)
-        XCTAssertEqual(PteroSmileMorphology.allToothSlugs.count, 42)
-        XCTAssertEqual(PteroSmileMorphology.allPlayerToothKinds.count, 12)
+        XCTAssertEqual(Set(PteroSmileMorphology.allToothSlugs).count, PteroSmileMorphology.allToothSlugs.count)
+        XCTAssertGreaterThanOrEqual(PteroSmileMorphology.allToothSlugs.count, 38)
+        XCTAssertEqual(PteroSmileMorphology.allPlayerToothKinds.count, 14)
     }
 
     /// Bundled tooth-card art names its species in JSON prompts; portrait pairings must follow the art, not stale README rows.
@@ -114,14 +139,36 @@ final class PteroSmileXCTests: XCTestCase {
             XCTAssertTrue(answerTeeth.isDisjoint(with: round.distractorToothTypes))
             let allTeethInRound = round.pairs.map(\.toothType) + round.distractorToothTypes
             let playerKindsInRound = allTeethInRound.compactMap { PteroSmileMorphology.playerKind(for: $0) }
-            XCTAssertEqual(
-                playerKindsInRound.count,
-                Set(playerKindsInRound).count,
-                "Each round should have at most one tooth per player alias (Fang, Peg, …); got \(playerKindsInRound.map(\.displayLabel))"
-            )
             XCTAssertEqual(playerKindsInRound.count, allTeethInRound.count)
+            let uniquenessKeys = playerKindsInRound.map(\.roundUniquenessKey)
+            XCTAssertEqual(
+                uniquenessKeys.count,
+                Set(uniquenessKeys).count,
+                "Each round needs unique tooth shapes (Spike/Needle share a key); got \(playerKindsInRound.map(\.displayLabel))"
+            )
+            let labels = Set(playerKindsInRound.map(\.displayLabel))
+            XCTAssertFalse(
+                labels.isSuperset(of: ["Spike", "Needle"]),
+                "Spike and Needle must not co-appear in one round (shared audio + similar dentition)"
+            )
         }
         XCTAssertEqual(morphologiesAcrossGame.count, 9)
+    }
+
+    /// Stress: many shuffles still never pack Spike + Needle into one round.
+    func testPteroSmileNeverPacksSpikeAndNeedleTogether() {
+        for _ in 0..<40 {
+            guard let config = SmilingDinosGameConfigs.makePteroSmile() else {
+                XCTFail("makePteroSmile() returned nil")
+                return
+            }
+            for round in config.rounds {
+                let kinds = (round.pairs.map(\.toothType) + round.distractorToothTypes)
+                    .compactMap { PteroSmileMorphology.playerKind(for: $0) }
+                let labels = Set(kinds.map(\.displayLabel))
+                XCTAssertFalse(labels.isSuperset(of: ["Spike", "Needle"]))
+            }
+        }
     }
 
     func testPteroSmileToothImagesetsUseREADMESlugs() {

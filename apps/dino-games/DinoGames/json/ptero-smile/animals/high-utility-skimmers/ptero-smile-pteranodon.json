@@ -2,6 +2,6 @@
   "id": "ptero-spec-pteranodon",
   "morphology": "Barbed-Spear",
   "tech_ref": "DEFAULT_SQUARE",
-  "prompt": "High-fidelity 3D animated feature style. Close-up headshot of a smiling Pteranodon. Features the prominent backward-swept cranial crest. The long, tapered beak is set into a wide, joyful, and enthusiastic smile. The jaw reveals smooth, rounded, ivory-colored forms that stylize the barbed-spear morphology into safe, friendly, toy-like shapes. The expression is bright and adventurous, with large, soulful, expressive eyes that convey a welcoming personality.",
-  "visual_logic": "Captures the iconic crest and elongated beak while ensuring the predatory 'barbed' features are transformed into soft, blunt, child-safe forms that maintain the game's friendly aesthetic."
+  "prompt": "High-fidelity 3D animated feature style. Close-up headshot of a smiling Pteranodon. Features the prominent backward-swept cranial crest. The long, tapered beak is set into a wide, joyful, and enthusiastic smile. The open jaws are completely toothless — smooth keratin beak margins only, with no teeth, pegs, spikes, or ivory dentition of any kind. The expression is bright and adventurous, with large, soulful, expressive eyes that convey a welcoming personality.",
+  "visual_logic": "Captures the iconic crest and elongated toothless spear beak; predatory edges stay soft and child-safe while remaining clearly edentulous for Spear matching."
 }

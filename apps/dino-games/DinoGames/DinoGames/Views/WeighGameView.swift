@@ -20,8 +20,162 @@ struct WeighableItem: Identifiable {
 }
 
 // MARK: - Game Configuration
+// Weigh dino/marine seesaw art: WIDE_WEIGHT_CARD 17:7 (340×140) — trim empty sky/ground, keep the creature.
 // TODO (future): Consider stacking items on the right with heaviest at bottom (tower like Measure the Dinosaur's height stack) to teach relative size/weight when balancing.
-// TODO (future): Make additional images 340×70 px for Weigh the Dinosaur to emphasize width as well as weight.
+
+/// Trims low-detail top/bottom bands from square weigh assets (negative space), then caches the result.
+private enum WeighSeesawImagePrep {
+    private static let lock = NSLock()
+    private static var cache: [String: (image: UIImage, aspect: CGFloat)] = [:]
+
+    static func prepared(named name: String) -> (image: UIImage, aspect: CGFloat)? {
+        lock.lock()
+        if let hit = cache[name] {
+            lock.unlock()
+            return hit
+        }
+        lock.unlock()
+        guard let source = UIImage(named: name) else { return nil }
+        let trimmed = verticallyTrimNegativeSpace(source)
+        let aspect = trimmed.size.width / max(trimmed.size.height, 1)
+        let value = (trimmed, aspect)
+        lock.lock()
+        cache[name] = value
+        lock.unlock()
+        return value
+    }
+
+    /// Remove empty sky/ground/letterbox bands. Uses the largest contiguous content run so
+    /// bottom sparkles / watermark lines do not keep huge empty blue/black fields.
+    private static func verticallyTrimNegativeSpace(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { return image }
+        let width = cgImage.width
+        let height = cgImage.height
+        guard width > 8, height > 8 else { return image }
+
+        let bytesPerPixel = 4
+        let bytesPerRow = width * bytesPerPixel
+        var data = [UInt8](repeating: 0, count: height * bytesPerRow)
+        guard let ctx = CGContext(
+            data: &data,
+            width: width,
+            height: height,
+            bitsPerComponent: 8,
+            bytesPerRow: bytesPerRow,
+            space: CGColorSpaceCreateDeviceRGB(),
+            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+        ) else { return image }
+        ctx.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
+
+        var activities = [Double](repeating: 0, count: height)
+        var meanLuma = [Double](repeating: 0, count: height)
+        for y in 0..<height {
+            let row = y * bytesPerRow
+            var sumR = 0, sumG = 0, sumB = 0
+            for x in 0..<width {
+                let i = row + x * bytesPerPixel
+                sumR += Int(data[i])
+                sumG += Int(data[i + 1])
+                sumB += Int(data[i + 2])
+            }
+            let n = Double(width)
+            let meanR = Double(sumR) / n
+            let meanG = Double(sumG) / n
+            let meanB = Double(sumB) / n
+            meanLuma[y] = (meanR + meanG + meanB) / 3
+            var acc = 0.0
+            for x in 0..<width {
+                let i = row + x * bytesPerPixel
+                acc += abs(Double(data[i]) - meanR)
+                acc += abs(Double(data[i + 1]) - meanG)
+                acc += abs(Double(data[i + 2]) - meanB)
+            }
+            activities[y] = acc / (n * 3)
+        }
+
+        let mid = Array(activities[height / 4 ..< (height * 3 / 4)])
+        let sortedMid = mid.sorted()
+        let thr = max(sortedMid[sortedMid.count / 5], 4.0) * 1.15
+        let uniformThr = min(thr, 6.0)
+
+        // Near-black letterbox bars (Troodon) count as empty even with slight noise.
+        func isContent(_ y: Int) -> Bool {
+            let a = activities[y]
+            if meanLuma[y] < 18, a < 12 { return false }
+            return a >= uniformThr
+        }
+
+        // Longest contiguous content run = the creature (ignore isolated sparkles / captions).
+        var bestStart = 0
+        var bestEnd = height - 1
+        var bestLen = 0
+        var runStart: Int?
+        for y in 0...height {
+            let on = y < height && isContent(y)
+            if on {
+                if runStart == nil { runStart = y }
+            } else if let s = runStart {
+                let len = y - s
+                if len > bestLen {
+                    bestLen = len
+                    bestStart = s
+                    bestEnd = y - 1
+                }
+                runStart = nil
+            }
+        }
+        guard bestLen > 0 else { return image }
+
+        // Textured dirt floors (e.g. Stegosaurus) stay above uniformThr but are much quieter
+        // than the subject. Only climb when content runs to the image edge — letterboxed
+        // cards (Ankylosaurus black bar) already stop before the edge.
+        let runMax = activities[bestStart...bestEnd].max() ?? 0
+        let band = max(8, bestLen / 5)
+        if bestEnd >= height - 3 {
+            let botSlice = activities[(bestEnd - band + 1)...bestEnd]
+            let botMean = botSlice.reduce(0, +) / Double(botSlice.count)
+            if botMean < 0.22 * runMax {
+                let climb = 0.32 * runMax
+                while bestEnd > bestStart && activities[bestEnd] < climb {
+                    bestEnd -= 1
+                }
+            }
+        }
+        if bestStart <= 2 {
+            let topSlice = activities[bestStart..<(bestStart + band)]
+            let topMean = topSlice.reduce(0, +) / Double(topSlice.count)
+            if topMean < 0.22 * runMax {
+                let climb = 0.32 * runMax
+                while bestStart < bestEnd && activities[bestStart] < climb {
+                    bestStart += 1
+                }
+            }
+        }
+        bestLen = bestEnd - bestStart + 1
+
+        // Already filling most of the frame — leave upright / filled portraits alone.
+        if Double(bestLen) / Double(height) >= 0.88 {
+            return image
+        }
+
+        let pad = max(2, height / 64)
+        let top = max(0, bestStart - pad)
+        let bottom = min(height - 1, bestEnd + pad)
+        let cropH = bottom - top + 1
+        guard cropH > 0, cropH < height else { return image }
+
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = image.scale
+        format.opaque = false
+        let renderer = UIGraphicsImageRenderer(
+            size: CGSize(width: width, height: cropH),
+            format: format
+        )
+        return renderer.image { _ in
+            image.draw(in: CGRect(x: 0, y: -top, width: width, height: height))
+        }
+    }
+}
 
 struct WeighGameConfig {
     let id: String
@@ -50,9 +204,6 @@ struct WeighGameView: View {
     @State private var rightItemOffsetX: CGFloat = 0 // for slide-down-the-arm effect (heavy left, light right)
     @State private var leftItemOpacity: Double = 1.0
     @State private var rightItemOpacity: Double = 1.0
-    @State private var showSpeedLines = false
-    /// When the lighter dino is sent flying: true = left flew, false = right flew (used for speed lines).
-    @State private var lighterFlewFromLeft: Bool? = nil
     @State private var roundsCompleted = 0
     private let maxRounds = 3
     /// When true, the user can tap a second dinosaur; stays false until the first dinosaur's name audio (and "choose second" prompt for dinosaur game) has finished.
@@ -96,10 +247,15 @@ struct WeighGameView: View {
         return left.weight - right.weight
     }
 
-    /// Prefer weigh-dino-{slug} / weigh-marine-* when present; else base creature asset.
+    /// Prefer weigh-dino-{slug} when it is a true wide card; square-hero / bad weigh art → `dino-*` portrait.
     private func weighImageName(for item: WeighableItem) -> String? {
         guard let base = item.imageName else { return nil }
         if gameConfig.id == "weigh-dinosaur" {
+            let slug = base.replacingOccurrences(of: "dino-", with: "")
+            // Karate-Kid / upright cards + weigh art with watermark text: keep square portrait on seesaw.
+            if Self.squareSeesawDinosaurSlugs.contains(slug) {
+                return item.imageName
+            }
             let weighName = "weigh-\(base)"
             let found = ImageAssetCache.imageExists(named: weighName)
             #if DEBUG
@@ -129,6 +285,28 @@ struct WeighGameView: View {
             return base
         }
         return item.imageName
+    }
+
+    /// Square on seesaw: SQUARE_HERO_CARD raptors/ornithomimids + weigh assets with watermark/bad framing.
+    private static let squareSeesawDinosaurSlugs: Set<String> = [
+        "albertosaurus", "carnotaurus", "deinocheirus", "deinonychus", "dromaeosaurus",
+        "gallimimus", "gigantoraptor", "microraptor", "ornithomimus", "oviraptor",
+        "struthiomimus", "therizinosaurus", "utahraptor", "velociraptor", "troodon",
+        "argentinosaurus", // weigh-dino-* has AI prompt text burned into the bottom
+    ]
+
+    /// Pose box aspect from content-trimmed wide weigh art only. Portraits stay 1:1.
+    private func seesawPoseAspect(for imageName: String?) -> CGFloat {
+        guard let imageName, !isPterosaurWeighGame else { return 1 }
+        guard imageName.hasPrefix("weigh-dino-")
+                || imageName.hasPrefix("weigh-marine-")
+                || imageName.hasPrefix("weight-marine-") else {
+            return 1
+        }
+        if let prepared = WeighSeesawImagePrep.prepared(named: imageName) {
+            return min(max(prepared.aspect, 1), WeighPlayAreaMetrics.weighPoseAspect)
+        }
+        return WeighPlayAreaMetrics.weighPoseAspect
     }
 
     /// Scale factor for seesaw image. Heavier gets full size (1.2). Lighter uses cube-root of
@@ -197,7 +375,14 @@ struct WeighGameView: View {
         GeometryReader { geometry in
             let safeWidth = max(geometry.size.width, 1)
             let safeHeight = max(geometry.size.height, 1)
-            let play = WeighPlayAreaMetrics.make(safeWidth: safeWidth, safeHeight: safeHeight)
+            // GeometryReader can lay out under the status bar / Dynamic Island — clear the title and
+            // fold the inset into play chrome so the 3×3 shrinks instead of colliding with the seesaw.
+            let topInset = geometry.safeAreaInsets.top
+            let play = WeighPlayAreaMetrics.make(
+                safeWidth: safeWidth,
+                safeHeight: safeHeight,
+                topSafeInset: topInset
+            )
             if isGameOver {
                 // Full-screen victory (same as MatchingGameView) so the game title stays pinned and visible.
                 weighVictoryView
@@ -214,6 +399,9 @@ struct WeighGameView: View {
                             Text(gameConfig.title)
                                 .font(.title2)
                                 .multilineTextAlignment(.center)
+                                .lineLimit(2)
+                                .minimumScaleFactor(0.75)
+                                .allowsTightening(true)
                                 .frame(maxWidth: .infinity)
                             Text("Round \(roundsCompleted + 1) of \(maxRounds)")
                                 .font(.subheadline)
@@ -266,7 +454,6 @@ struct WeighGameView: View {
                     let beamTopY: CGFloat = -9 * play.layoutScale
                     let seesawSeatHeight: CGFloat = 12 * play.layoutScale
                     let seatTopY = beamTopY - seesawSeatHeight
-                    let dinoBaseHeight = play.dinoBaseHeight
                     VStack {
                         Spacer()
                             .frame(minHeight: 10 * play.layoutScale)
@@ -309,18 +496,19 @@ struct WeighGameView: View {
                                     if let leftItem = selectedLeftItem {
                                         let scale = seesawImageScale(for: leftItem, relativeTo: selectedRightItem)
                                         let peerScale = selectedRightItem.map { seesawImageScale(for: $0, relativeTo: leftItem) }
-                                        let pose = play.poseSize(scale: scale, peerScale: peerScale)
-                                        let (width, height, scaleFactor) = (pose.width, pose.height, pose.fit)
+                                        let leftName = weighImageName(for: leftItem)
+                                        let peerName = selectedRightItem.flatMap { weighImageName(for: $0) }
+                                        let pose = play.poseSize(
+                                            scale: scale,
+                                            aspect: seesawPoseAspect(for: leftName),
+                                            peerScale: peerScale,
+                                            peerAspect: seesawPoseAspect(for: peerName)
+                                        )
+                                        let (width, height) = (pose.width, pose.height)
                                         let baseY = seatTopY - height / 2 // Group is centered in ZStack; offset so bottom lands on seat top
                                         Group {
-                                            if let imageName = weighImageName(for: leftItem) {
-                                                ZStack(alignment: .bottom) {
-                                                    Color.clear.frame(width: width, height: height)
-                                                    Image(imageName)
-                                                        .resizable()
-                                                        .scaledToFit()
-                                                        .frame(maxWidth: width, maxHeight: height, alignment: .bottom)
-                                                }
+                                            if let imageName = leftName {
+                                                weighSeesawCreatureImage(imageName: imageName, width: width, height: height)
                                             } else {
                                                 Text(leftItem.emoji)
                                                     .font(.system(size: 80 * play.layoutScale))
@@ -332,36 +520,25 @@ struct WeighGameView: View {
                                         .offset(x: -beamW + leftItemOffsetX, y: leftItemOffset + baseY)
                                         .opacity(leftItemOpacity)
                                         .zIndex(5)
-                                        
-                                        if showSpeedLines, lighterFlewFromLeft == false, let rightItem = selectedRightItem {
-                                            let rightH = dinoBaseHeight * seesawImageScale(for: rightItem, relativeTo: selectedLeftItem) * scaleFactor
-                                            SpeedLinesView()
-                                                .scaleEffect(play.layoutScale)
-                                                .offset(x: beamW, y: rightItemOffset + (seatTopY - rightH / 2))
-                                        }
-                                        if showSpeedLines, lighterFlewFromLeft == true, selectedLeftItem != nil {
-                                            SpeedLinesView()
-                                                .scaleEffect(play.layoutScale)
-                                                .offset(x: -beamW + leftItemOffsetX, y: leftItemOffset + baseY)
-                                        }
                                     }
                                     
                                     // Right side item (on right seat) — inside rotating assembly so it tilts with seesaw
                                     if let rightItem = selectedRightItem {
                                         let scale = seesawImageScale(for: rightItem, relativeTo: selectedLeftItem)
                                         let peerScale = selectedLeftItem.map { seesawImageScale(for: $0, relativeTo: rightItem) }
-                                        let pose = play.poseSize(scale: scale, peerScale: peerScale)
+                                        let rightName = weighImageName(for: rightItem)
+                                        let peerName = selectedLeftItem.flatMap { weighImageName(for: $0) }
+                                        let pose = play.poseSize(
+                                            scale: scale,
+                                            aspect: seesawPoseAspect(for: rightName),
+                                            peerScale: peerScale,
+                                            peerAspect: seesawPoseAspect(for: peerName)
+                                        )
                                         let (width, height) = (pose.width, pose.height)
                                         let baseY = seatTopY - height / 2 // Group is centered in ZStack; offset so bottom lands on seat top
                                         Group {
-                                            if let imageName = weighImageName(for: rightItem) {
-                                                ZStack(alignment: .bottom) {
-                                                    Color.clear.frame(width: width, height: height)
-                                                    Image(imageName)
-                                                        .resizable()
-                                                        .scaledToFit()
-                                                        .frame(maxWidth: width, maxHeight: height, alignment: .bottom)
-                                                }
+                                            if let imageName = rightName {
+                                                weighSeesawCreatureImage(imageName: imageName, width: width, height: height)
                                             } else {
                                                 Text(rightItem.emoji)
                                                     .font(.system(size: 80 * play.layoutScale))
@@ -540,7 +717,7 @@ struct WeighGameView: View {
         let scale = seesawImageScale(for: item, relativeTo: other)
         // Slightly higher cap so heavy-vs-light differences read more clearly.
         let height = min(baseHeight * scale, baseHeight)
-        let width = min(height * 1.8, maxWidth)
+        let width = min(height * WeighPlayAreaMetrics.weighPoseAspect, maxWidth)
         return CGSize(width: width, height: height)
     }
 
@@ -548,17 +725,34 @@ struct WeighGameView: View {
     private func marineCreatureImage(item: WeighableItem, other: WeighableItem?, maxWidth: CGFloat, baseHeight: CGFloat) -> some View {
         let size = marineCreatureSize(item: item, other: other, maxWidth: maxWidth, baseHeight: baseHeight)
         if let imageName = weighImageName(for: item) {
-            Image(imageName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: size.width, height: size.height, alignment: .bottom)
+            weighSeesawCreatureImage(imageName: imageName, width: size.width, height: size.height)
         } else {
             Text(item.emoji)
                 .font(.system(size: 62 * (baseHeight / 130)))
                 .frame(width: size.width, height: size.height)
         }
     }
-    
+
+    /// Seesaw art: trim empty bands on wide weigh cards only; portraits / ptero use plain fit.
+    @ViewBuilder
+    private func weighSeesawCreatureImage(imageName: String, width: CGFloat, height: CGFloat) -> some View {
+        let useTrimmed = !isPterosaurWeighGame
+            && (imageName.hasPrefix("weigh-dino-")
+                || imageName.hasPrefix("weigh-marine-")
+                || imageName.hasPrefix("weight-marine-"))
+        if useTrimmed, let prepared = WeighSeesawImagePrep.prepared(named: imageName) {
+            Image(uiImage: prepared.image)
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: width, maxHeight: height, alignment: .bottom)
+        } else {
+            Image(imageName)
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: width, maxHeight: height, alignment: .bottom)
+        }
+    }
+
     private func handleItemTap(_ item: WeighableItem) {
         guard !isWeighing else { return }
         
@@ -672,8 +866,6 @@ struct WeighGameView: View {
                     // Buoyancy rig: heavier side sinks, lighter side rises.
                     let sinkAmount: CGFloat = isMassiveDifference ? 42 : 28
                     seesawAngle = isNearlySame ? 0 : (weightDiff > 0 ? -8 : 8)
-                    showSpeedLines = false
-                    lighterFlewFromLeft = nil
                     leftItemOpacity = 1
                     rightItemOpacity = 1
                     leftItemOffsetX = 0
@@ -712,21 +904,17 @@ struct WeighGameView: View {
                     }
                 } else if weightDiff > 0 {
                     // Left heavy, right light: right dino slides along the beam toward the left seat (no fly)
-                    lighterFlewFromLeft = nil
                     seesawAngle = isMassiveDifference ? -20 : -14
                     leftItemOffset = 0 // No vertical fall; dinosaurs stay on seats
                     rightItemOffset = 0 // No vertical offset; slide follows the beam
                     rightItemOffsetX = -80 // Slides inward along the arm toward fulcrum (beam is horizontal in assembly coords; rotation makes it appear along the tilt)
-                    showSpeedLines = false
                 } else {
                     // Right heavy, left light: left dino flies in parabola up and to the right
-                    lighterFlewFromLeft = true
                     seesawAngle = isMassiveDifference ? 22 : 15
                     rightItemOffset = 0 // No vertical fall; right dino stays on seat
                     leftItemOffset = isMassiveDifference ? -220 : -150
                     leftItemOffsetX = isMassiveDifference ? 140 : 100 // Parabola arc to the right
                     leftItemOpacity = 0
-                    showSpeedLines = !isPterosaurWeighGame
                 }
             }
             
@@ -872,8 +1060,6 @@ struct WeighGameView: View {
             rightItemOffsetX = 0
             leftItemOpacity = 1.0
             rightItemOpacity = 1.0
-            showSpeedLines = false
-            lighterFlewFromLeft = nil
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -1017,13 +1203,14 @@ struct SpeedLinesView: View {
 struct WeighPlayAreaMetrics {
     static let phoneSeesawHeight: CGFloat = 260
     static let phoneGridBlockHeight: CGFloat = 422
-    static let phoneTitleBlockHeight: CGFloat = 56
+    /// Match `CreatureThreeByThreeGridMetrics` — 2-line title + round line.
+    static let phoneTitleBlockHeight: CGFloat = 80
     static let phoneDinoBaseHeight: CGFloat = 130
     static let phoneSideMargin: CGFloat = 12
     static let phoneGridImageSize: CGFloat = 96
     static let phoneGridLabelFontSize: CGFloat = 15
-    /// Weigh poses are typically ~2:1 landscape; reserve that box when sizing.
-    static let weighPoseAspect: CGFloat = 2
+    /// WIDE_WEIGHT_CARD (17:7 / 340×140). Square weigh assets are center-cropped into this box.
+    static let weighPoseAspect: CGFloat = 17.0 / 7.0
     /// Shrink poses so a tipped (~15–25°) wide image still fits inside `.clipped()`.
     static let tipSafety: CGFloat = 0.68
 
@@ -1044,8 +1231,8 @@ struct WeighPlayAreaMetrics {
     let marinePodOffset: CGFloat
     let marineMaxCreatureWidth: CGFloat
 
-    static func make(safeWidth: CGFloat, safeHeight: CGFloat) -> WeighPlayAreaMetrics {
-        let topSpacer: CGFloat = 16
+    static func make(safeWidth: CGFloat, safeHeight: CGFloat, topSafeInset: CGFloat = 0) -> WeighPlayAreaMetrics {
+        let topSpacer: CGFloat = 16 + topSafeInset
         let midSpacer: CGFloat = 16
         let titleBlockHeight = phoneTitleBlockHeight
         let chrome = topSpacer + midSpacer + 16
@@ -1103,12 +1290,18 @@ struct WeighPlayAreaMetrics {
         )
     }
 
-    /// Size a weigh pose (wide) so it remains inside the clip box while the beam tips.
-    func poseSize(scale: CGFloat, peerScale: CGFloat?) -> (width: CGFloat, height: CGFloat, fit: CGFloat) {
+    /// Size a weigh pose so it remains inside the clip box while the beam tips.
+    /// `aspect` is 17:7 for WIDE_WEIGHT_CARD, 1 for square Karate-Kid / upright cards.
+    func poseSize(
+        scale: CGFloat,
+        aspect: CGFloat = weighPoseAspect,
+        peerScale: CGFloat? = nil,
+        peerAspect: CGFloat? = nil
+    ) -> (width: CGFloat, height: CGFloat, fit: CGFloat) {
         let idealHeight = dinoBaseHeight * scale
-        let idealWidth = idealHeight * Self.weighPoseAspect
+        let idealWidth = idealHeight * aspect
         let peerHeight = peerScale.map { dinoBaseHeight * $0 } ?? idealHeight
-        let peerWidth = peerHeight * Self.weighPoseAspect
+        let peerWidth = peerHeight * (peerAspect ?? aspect)
         let maxIdealW = max(idealWidth, peerWidth)
         let maxIdealH = max(idealHeight, peerHeight)
         let fit = min(

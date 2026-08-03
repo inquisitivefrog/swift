@@ -1,10 +1,51 @@
 {
-    "id": "ui_tooth_cage_scaphognathus_v2",
-    "morphology": "Spaced Vertical Pegs V2",
-    "tech_ref": "DEFAULT_SQUARE",
-    "framing_ref": "SQUARE_HERO_CARD",
-    "lighting_ref": "STUDIO_GROUNDED",
-    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
-    "visual_logic": "Moves away from a human denture look by framing the distinct, short, boxy reptilian jaw structure in a wide-open view with character-consistent features.",
-    "prompt": "High-fidelity 3D asset of the open jaws of a Scaphognathus, showcasing its distinctively blunt, boxy, non-human reptilian jaw shape from a direct top-down split perspective, rendered in a 3D animated feature film aesthetic with soft, stylized edges. The jaws are spread wide open around a hollow central mouth cavity. Lined strictly along the outer margins are widely spaced, completely vertical peg-like ivory teeth, forming a clear basket-like cage silhouette. The base of the jaw features a stylized, warm terracotta-colored head skin texture with large, expressive, animated cartoon eyes peeking upward. The entire asset is centered in a 1:1 square composition, ensuring a strict 25% negative space safety margin. Placed flat against a neutral, 50% grey studio floor plane with soft contact shadows. Illuminated by balanced studio lighting to emphasize the unique, rhythmic gaps between each peg tooth."
+  "image_manifest": {
+    "filename": "ui_tooth_cage_scaphognathus_v7.png",
+    "description": "An asset manifest for a stylized 3D rendered Scaphognathus jaw asset, featuring an isolated jaw structure composed strictly of upper and lower horizontal bars, completely omitting the back skull, temporal fenestrae, and eye sockets for optimal UI legibility.",
+    "art_styles": [
+      "STYLE_ANIMATED_FEATURE_V3",
+      "STYLE_CLAY_MASTER"
+    ],
+    "lighting": "STUDIO_GROUNDED",
+    "framing": "SQUARE_HERO_CARD",
+    "aspect_ratio": "1:1",
+    "assets": [
+      {
+        "id": "A1",
+        "name": "Isolated Jaw-Only Composition",
+        "description": "A tight, dedicated asset composition featuring strictly the open upper and lower jaw bars viewed in clean left profile, entirely omitting the back portion of the skull, post-orbital structures, and eye sockets.",
+        "type": "framing"
+      },
+      {
+        "id": "A2",
+        "name": "Right-Side Up Orientation",
+        "description": "Correctly oriented right-side up, with the upper jaw positioned stably above the lower jaw on a neutral 50% grey studio floor plane with soft contact shadows.",
+        "type": "orientation"
+      },
+      {
+        "id": "A3",
+        "name": "Strict Left Profile Perspective",
+        "description": "Viewed from a direct, flat left profile camera angle with the open mouth facing right, eliminating three-quarter rotation to prevent unintended cranial generation.",
+        "type": "camera_angle"
+      },
+      {
+        "id": "A4",
+        "name": "Long and Boxy Snout Beams",
+        "description": "An elongated, sharply squared-off horizontal upper beam and matching lower jaw bar that define the non-human geometric form of the Scaphognathus tooth-cage structure.",
+        "type": "morphology"
+      },
+      {
+        "id": "A5",
+        "name": "Stubby Peg Teeth with Wide Spacing",
+        "description": "Short, blunt, rounded-tip ivory peg teeth lined strictly along the outer margins of the jaw bars, separated by wide, distinct open gaps to form the signature tooth-cage silhouette.",
+        "type": "morphology"
+      },
+      {
+        "id": "A6",
+        "name": "Terracotta Vinyl Finish",
+        "description": "Warm terracotta-colored matte vinyl-like texture with soft, stylized edges consistent with the animated feature film aesthetic, preserving a strict 25% negative space safety margin.",
+        "type": "material"
+      }
+    ]
   }
+}

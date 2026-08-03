@@ -1,7 +1,31 @@
-{
-    "id": "pterodaustro_prestige_comb",
-    "morphology": "Comb-Bristle-Battery",
-    "tech_ref": "DEFAULT_SQUARE",
-    "prompt": "High-fidelity 3D animated feature style. Close-up of a smiling, pink-tinged Pterodaustro. Jaw curves upward like a friendly scoop. A broad smile reveals an incredibly dense, soft, bristle-like golden comb lining the lower jaw that looks like a friendly whalebone filter brush. Extremely happy, large cartoon eyes looking directly at the viewer.",
-    "visual_logic": "Shows off the highly specialized flamingo-like filter battery in a warm, inviting preschool format."
-  }
+[
+  {
+    "id": "pterodaustro_close_up_angled",
+    "species": "Pterodaustro guinazui",
+    "morphology": "Comb-Bristle-Battery",
+    "tech_ref": "DEFAULT_SQUARE",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "LAGARCITO",
+    "habitat_ref": "PLAYA_LAKE_SYSTEM",
+    "pose": "Close-up headshot, angled three-quarters toward the camera, showing a wide, friendly smile with an open beak.",
+    "character_details": {
+      "expression": "Expressive, soulful large brown eyes with light catchlights, wide-open beak forming a warm, friendly smile.",
+      "coloration": "Soft pastel pink downy 'feathers' covering the head and neck, transitioning to a smoother, leathery texture on the beak. Beak exterior is pastel pink.",
+      "beak_details": {
+        "upper_jaw": "Toothless, featuring a continuous, pronounced upward curve resembling an avocet.",
+        "lower_jaw": "Dense, clean, comb-like row of hundreds of incredibly fine, vertical white keratin filter bristles, rising uniformly toward the upper jaw. Clean, pristine, and free of any visible invertebrates or bugs.",
+        "tip": "Long, slender, and smooth, resolving with an elegant upward sweep."
+      }
+    },
+    "environment": {
+      "foreground": "Shoreline with soft green Equisetites (giant horsetails) and clusters of small, friendly pink flowering plants.",
+      "background": "Dappled light on calm, clear turquoise lagoon water with sun-bleached limestone nodules, viewed in soft-focus depth.",
+      "setting_details": {
+        "substrate": "Fine white carbonate sand with salt crystals.",
+        "sky": "Intense, saturated blue, viewed indirectly through warm atmospheric light and distant hazy palm-like trees."
+      }
+    },
+    "visual_logic": "This headshot is designed to be child-friendly and inviting, prioritizing soft, appealing forms and clear expression. It features strict anatomical integration of the re-sculpted 'avocet' morphology for the upper jaw while maintaining the accurate filter-bristle battery in the lower jaw."
+  }
+]

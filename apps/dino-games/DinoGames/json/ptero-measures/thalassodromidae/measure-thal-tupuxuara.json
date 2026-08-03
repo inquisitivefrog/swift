@@ -1,16 +1,16 @@
 [
-  {
-    "id": "ptero_taller_v2_tupuxuara",
-    "species": "Tupuxuara",
-    "tech_ref": "TALL_MEASUREMENT_CARD",
-    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
-    "formation_ref": "SANTANA_ROMUALDO",
-    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
-    "habitat": "TROPICAL_ISLAND_LAGOONS",
-    "pose": "TALL_MEASURE framing. The massive, colorful head crest is centered at the top of the 1024px vertical span.",
-    "environmental_details": {
-      "ground": "Reddish-brown mud with shallow turquoise pools.",
-      "atmosphere": "Heat shimmer and high-key tropical saturation."
-    }
-  }
+  {
+    "id": "ptero_taller_v2_tupuxuara",
+    "species": "Tupuxuara",
+    "tech_ref": "TALL_MEASUREMENT_CARD",
+    "lighting_ref": "SUNNY_EXPOSED_CINEMATIC",
+    "formation_ref": "SANTANA_ROMUALDO",
+    "style_ref": "STYLE_ANIMATED_FEATURE_V3",
+    "habitat": "TROPICAL_ISLAND_LAGOONS",
+    "pose": "TALL_MEASURE framing. The subject spans the entire vertical height from head crest to feet. The crest is positioned near the top edge, and the feet rest as close as possible to the bottom edge of the frame with minimal ground clearance below.",
+    "environmental_details": {
+      "ground": "Reddish-brown mud with shallow turquoise pools.",
+      "atmosphere": "Heat shimmer and high-key tropical saturation."
+    }
+  }
 ]

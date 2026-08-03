@@ -625,7 +625,21 @@ struct RacingGameView: View {
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
+                let safeWidth = max(geometry.size.width, 1)
+                let showInContentTitle = !showVictory && !(needsPeriodSelection && effectiveConfig == nil)
+                let titleFontSize = GameCatalogImageMetrics.scaled(28, safeWidth: safeWidth, maxScale: 1.85)
                 VStack(spacing: 0) {
+                    if showInContentTitle {
+                        Text(config.title)
+                            .font(.system(size: titleFontSize, weight: .bold))
+                            .multilineTextAlignment(.center)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.85)
+                            .padding(.horizontal, 16)
+                            .padding(.top, 8)
+                            .padding(.bottom, 4)
+                            .frame(maxWidth: .infinity)
+                    }
                     if needsPeriodSelection && effectiveConfig == nil {
                         embeddedPeriodSelectionView(geometry: geometry)
                     } else if showVictory {
@@ -664,7 +678,8 @@ struct RacingGameView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            .navigationTitle(showVictory ? "" : config.title)
+            // Title lives in content (scales on iPad); empty nav avoids a tiny duplicate.
+            .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .onDisappear {
                 stopRace()
@@ -1350,50 +1365,62 @@ struct RacingGameView: View {
                 .padding(.horizontal, padding)
             )
         case .ovalDualLane:
-        let padding: CGFloat = 24
-        let trackInset: CGFloat = 44
+        let metrics = ovalDualLaneMetrics(safeWidth: geometry.size.width)
+        let padding = metrics.padding
+        let trackInset = metrics.trackInset
         let ovalWidth = max(trackInset * 2 + 4, geometry.size.width - padding * 2)
-        let ovalHeight = max(120, geometry.size.height - 140)
-        let racerSize: CGFloat = 48
-        let cornerRadius = min(min(ovalWidth, ovalHeight) * 0.18, min(ovalWidth, ovalHeight) / 4)
-        let innerW = ovalWidth - trackInset * 2
-        let innerH = ovalHeight - trackInset * 2
-        let innerCornerRadius = max(0, cornerRadius - trackInset / 2)
-        let refereeSize: CGFloat = 64
-        let innerR = min(innerCornerRadius, min(innerW, innerH) / 2)
-        let pt1Outer = pointOnRoundedRect(progress: 1.0, width: ovalWidth, height: ovalHeight)
-        let pt2Outer = pointOnRoundedRect(progress: 1.0, width: ovalWidth, height: ovalHeight)
-        let pt1InnerRaw = pointOnRoundedRect(progress: 1.0, width: innerW, height: innerH, cornerRadius: innerR)
-        let pt2InnerRaw = pointOnRoundedRect(progress: 1.0, width: innerW, height: innerH, cornerRadius: innerR)
-        let pt1Inner = CGPoint(x: pt1InnerRaw.x + trackInset, y: pt1InnerRaw.y + trackInset)
-        let pt2Inner = CGPoint(x: pt2InnerRaw.x + trackInset, y: pt2InnerRaw.y + trackInset)
-        let racer1OnInner = r1.speed <= r2.speed
-        let pos1 = racer1OnInner ? pt1Inner : pt1Outer
-        let pos2 = racer1OnInner ? pt2Outer : pt2Inner
-        let half = racerSize / 2
-        let refereeFinishX = ovalWidth / 2 - refereeSize / 2
-        let refereeFinishY = trackInset + innerH - refereeSize - 16
+        let racerSize = metrics.racerSize
+        let laneInsets = ovalLaneCenterInsets(trackInset: trackInset)
+        let refereeSize: CGFloat = metrics.racerSize + 16
         return AnyView(VStack(spacing: 8) {
             Text(finishHeadline)
                 .font(.headline)
-            ZStack(alignment: .topLeading) {
-                OvalDualLaneCourseChrome(
-                    width: ovalWidth,
-                    height: ovalHeight,
-                    trackInset: trackInset,
-                    cornerRadius: cornerRadius,
-                    showFinishLines: true
+            GeometryReader { trackGeo in
+                let ovalHeight = max(120, trackGeo.size.height)
+                let cornerRadius = min(min(ovalWidth, ovalHeight) * 0.18, min(ovalWidth, ovalHeight) / 4)
+                let pt1Outer = ovalPointOnLaneCenter(
+                    progress: 1.0, ovalWidth: ovalWidth, ovalHeight: ovalHeight,
+                    cornerRadius: cornerRadius, laneInset: laneInsets.outer
                 )
-                racerView(racer: r1, size: racerSize, pose: .finish)
-                    .offset(x: pos1.x - half, y: pos1.y - half)
-                racerView(racer: r2, size: racerSize, pose: .finish)
-                    .offset(x: pos2.x - half, y: pos2.y - half)
-                refereeImageViewSmall(finishRefereeName, size: refereeSize)
-                    .offset(x: refereeFinishX, y: refereeFinishY)
+                let pt2Outer = ovalPointOnLaneCenter(
+                    progress: 1.0, ovalWidth: ovalWidth, ovalHeight: ovalHeight,
+                    cornerRadius: cornerRadius, laneInset: laneInsets.outer
+                )
+                let pt1Inner = ovalPointOnLaneCenter(
+                    progress: 1.0, ovalWidth: ovalWidth, ovalHeight: ovalHeight,
+                    cornerRadius: cornerRadius, laneInset: laneInsets.inner
+                )
+                let pt2Inner = ovalPointOnLaneCenter(
+                    progress: 1.0, ovalWidth: ovalWidth, ovalHeight: ovalHeight,
+                    cornerRadius: cornerRadius, laneInset: laneInsets.inner
+                )
+                let racer1OnInner = r1.speed <= r2.speed
+                let pos1 = racer1OnInner ? pt1Inner : pt1Outer
+                let pos2 = racer1OnInner ? pt2Outer : pt2Inner
+                let half = racerSize / 2
+                let infieldBottom = trackInset + (ovalHeight - trackInset * 2)
+                let refereeFinishX = ovalWidth / 2 - refereeSize / 2
+                let refereeFinishY = infieldBottom - refereeSize - 16
+                ZStack(alignment: .topLeading) {
+                    OvalDualLaneCourseChrome(
+                        width: ovalWidth,
+                        height: ovalHeight,
+                        trackInset: trackInset,
+                        cornerRadius: cornerRadius,
+                        showFinishLines: true
+                    )
+                    racerView(racer: r1, size: racerSize, pose: .finish)
+                        .offset(x: pos1.x - half, y: pos1.y - half)
+                    racerView(racer: r2, size: racerSize, pose: .finish)
+                        .offset(x: pos2.x - half, y: pos2.y - half)
+                    refereeImageViewSmall(finishRefereeName, size: refereeSize)
+                        .offset(x: refereeFinishX, y: refereeFinishY)
+                }
+                .frame(width: ovalWidth, height: ovalHeight)
             }
-            .frame(width: ovalWidth, height: ovalHeight)
         }
-        .padding(.horizontal, padding))
+        .padding(.horizontal, padding)
+        .padding(.bottom, metrics.bottomPad))
         }
     }
     
@@ -1523,20 +1550,19 @@ struct RacingGameView: View {
     ) -> some View {
         let padding: CGFloat = 24
         let trackWidth = max(1, geometry.size.width - padding * 2)
-        let trackHeight = max(120, geometry.size.height - 140)
         let racerSize: CGFloat = 48
         let waypointSize: CGFloat = 36
-        let classic = MarineRacingTrackGeometry.classicRadii(width: trackWidth, height: trackHeight)
-        let slalom = MarineRacingTrackGeometry.slalomRadii(width: trackWidth, height: trackHeight)
         let count = max(3, buoyCount)
         let finishLineWidth: CGFloat = 4
         let finishLineHeight: CGFloat = 10
         let finishLineX = trackWidth / 2 - finishLineWidth / 2
         let refereeSize: CGFloat = 64
+        let headerScale = GameCatalogImageMetrics.canvasScale(safeWidth: trackWidth, maxScale: 1.75)
 
+        // Header (Race! + scoreboard) sizes intrinsically; raceway fills leftover height (trims empty top on iPad).
         return VStack(spacing: 8) {
             Text("Race!")
-                .font(.headline)
+                .font(headerScale > 1.1 ? .title2.weight(.semibold) : .headline)
             speedClockView(
                 racer1: racer1,
                 racer2: racer2,
@@ -1546,49 +1572,57 @@ struct RacingGameView: View {
                 maxWidth: trackWidth
             )
             .frame(maxWidth: .infinity, alignment: .leading)
-            marineRacewayZStack(
-                trackWidth: trackWidth,
-                trackHeight: trackHeight,
-                buoyCount: count,
-                style: style,
-                waypointSize: waypointSize,
-                clipWideLegs: style == .slalom,
-                finishLineWidth: finishLineWidth,
-                finishLineHeight: finishLineHeight,
-                finishLineX: finishLineX,
-                racerOverlays: {
-                    marineRacerOnCourse(
-                        racer: racer1,
-                        size: racerSize,
-                        pose: trippedRacerId == racer1.id ? .tripped : .running,
-                        progress: progress1,
-                        racerIndex: 0,
-                        trackWidth: trackWidth,
-                        trackHeight: trackHeight,
-                        style: style,
-                        buoyCount: count,
-                        radiiClassic: classic,
-                        radiiSlalom: slalom
-                    )
-                    marineRacerOnCourse(
-                        racer: racer2,
-                        size: racerSize,
-                        pose: trippedRacerId == racer2.id ? .tripped : .running,
-                        progress: progress2,
-                        racerIndex: 1,
-                        trackWidth: trackWidth,
-                        trackHeight: trackHeight,
-                        style: style,
-                        buoyCount: count,
-                        radiiClassic: classic,
-                        radiiSlalom: slalom
-                    )
-                    refereeImageViewSmall(startRefereeImageName(prefix: config.assetPrefix), size: refereeSize)
-                        .offset(x: trackWidth / 2 - refereeSize / 2, y: trackHeight / 2 - refereeSize / 2)
-                }
-            )
+            GeometryReader { trackGeo in
+                let trackHeight = max(120, trackGeo.size.height)
+                let classic = MarineRacingTrackGeometry.classicRadii(width: trackWidth, height: trackHeight)
+                let slalom = MarineRacingTrackGeometry.slalomRadii(width: trackWidth, height: trackHeight)
+                marineRacewayZStack(
+                    trackWidth: trackWidth,
+                    trackHeight: trackHeight,
+                    buoyCount: count,
+                    style: style,
+                    waypointSize: waypointSize,
+                    clipWideLegs: style == .slalom,
+                    finishLineWidth: finishLineWidth,
+                    finishLineHeight: finishLineHeight,
+                    finishLineX: finishLineX,
+                    racerOverlays: {
+                        marineRacerOnCourse(
+                            racer: racer1,
+                            size: racerSize,
+                            pose: trippedRacerId == racer1.id ? .tripped : .running,
+                            progress: progress1,
+                            racerIndex: 0,
+                            trackWidth: trackWidth,
+                            trackHeight: trackHeight,
+                            style: style,
+                            buoyCount: count,
+                            radiiClassic: classic,
+                            radiiSlalom: slalom
+                        )
+                        marineRacerOnCourse(
+                            racer: racer2,
+                            size: racerSize,
+                            pose: trippedRacerId == racer2.id ? .tripped : .running,
+                            progress: progress2,
+                            racerIndex: 1,
+                            trackWidth: trackWidth,
+                            trackHeight: trackHeight,
+                            style: style,
+                            buoyCount: count,
+                            radiiClassic: classic,
+                            radiiSlalom: slalom
+                        )
+                        refereeImageViewSmall(startRefereeImageName(prefix: config.assetPrefix), size: refereeSize)
+                            .offset(x: trackWidth / 2 - refereeSize / 2, y: trackHeight / 2 - refereeSize / 2)
+                    }
+                )
+                .frame(width: trackGeo.size.width, height: trackGeo.size.height, alignment: .top)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .padding(.horizontal, padding)
+        .frame(width: geometry.size.width, height: geometry.size.height)
     }
 
     /// Airport hop course for pterosaurs: A → E → B → C → E → D → A.
@@ -1681,18 +1715,18 @@ struct RacingGameView: View {
         ]
     }
 
-    /// Default fraction along the **incoming** segment where landing lag begins (open-water approach), not on the waypoint icon.
-    private let airportHopLagApproachAlongSegmentDefault: Double = 0.88
+    /// Fraction along the incoming segment where hop-lag detection arms. Near 1 so pause is at the waypoint (land), not short over open water.
+    private let airportHopLagApproachAlongSegmentDefault: Double = 0.985
 
-    /// B→C is a long vertical leg; the default fraction leaves racers visibly short of the bottom-right (C) marker.
     private func airportHopLagApproachAlongSegment(for node: AirportHopNode) -> Double {
+        // Long B→C leg used to undershoot C badly at 0.88; keep all nodes near the marker.
         switch node {
-        case .c: return 0.95
+        case .c: return 0.995
         default: return airportHopLagApproachAlongSegmentDefault
         }
     }
 
-    /// Course progress where hop lag triggers — slightly **before** each landmark along the path.
+    /// Course progress where hop lag arms — just before each landmark so a fast tick cannot skip the stop.
     private func airportLagTriggerProgress(waypointIndex: Int, width: CGFloat, height: CGFloat, inset: CGFloat = 0) -> Double {
         let wps = airportWaypointProgresses(width: width, height: height, inset: inset)
         guard waypointIndex >= 0, waypointIndex < wps.count else { return 1.0 }
@@ -1939,48 +1973,45 @@ struct RacingGameView: View {
         return CGPoint(x: r + t9 * (cx - r), y: h)
     }
 
+    /// iPad: more margin from screen edges + wider dirt band so two lanes read clearly.
+    private func ovalDualLaneMetrics(safeWidth: CGFloat) -> (padding: CGFloat, trackInset: CGFloat, bottomPad: CGFloat, racerSize: CGFloat) {
+        let isPad = safeWidth > GameCatalogImageMetrics.phoneReferenceWidth
+        return (
+            padding: isPad ? 40 : 24,
+            trackInset: isPad ? 88 : 48,
+            bottomPad: isPad ? 20 : 8,
+            racerSize: isPad ? 56 : 48
+        )
+    }
+
+    /// Centerline inset within the dirt band: outer lane ~¼ in, inner lane ~¾ in (divider at ½).
+    private func ovalLaneCenterInsets(trackInset: CGFloat) -> (outer: CGFloat, inner: CGFloat, divider: CGFloat) {
+        (trackInset * 0.25, trackInset * 0.75, trackInset * 0.5)
+    }
+
+    private func ovalPointOnLaneCenter(
+        progress: Double,
+        ovalWidth: CGFloat,
+        ovalHeight: CGFloat,
+        cornerRadius: CGFloat,
+        laneInset: CGFloat
+    ) -> CGPoint {
+        let w = max(4, ovalWidth - laneInset * 2)
+        let h = max(4, ovalHeight - laneInset * 2)
+        let r = max(0, min(cornerRadius - laneInset, min(w, h) / 2))
+        let raw = pointOnRoundedRect(progress: progress, width: w, height: h, cornerRadius: r)
+        return CGPoint(x: raw.x + laneInset, y: raw.y + laneInset)
+    }
+
     private func ovalTrackView(geometry: GeometryProxy, progress1: Double, progress2: Double, racer1: RacingRacer, racer2: RacingRacer, trippedRacerId: Int?, raceElapsedSeconds: Int) -> some View {
-        let padding: CGFloat = 24
-        let trackInset: CGFloat = 44
+        let metrics = ovalDualLaneMetrics(safeWidth: geometry.size.width)
+        let padding = metrics.padding
+        let trackInset = metrics.trackInset
         let ovalWidth = max(trackInset * 2 + 4, geometry.size.width - padding * 2)
-        let ovalHeight = max(120, geometry.size.height - 140)
-        let racerSize: CGFloat = 48
-        let cornerRadius = min(min(ovalWidth, ovalHeight) * 0.18, min(ovalWidth, ovalHeight) / 4)
+        let racerSize = metrics.racerSize
+        let laneInsets = ovalLaneCenterInsets(trackInset: trackInset)
 
-        // Rounded-rectangle tracks (outer and inner) — chrome drawn by `OvalDualLaneCourseChrome`.
-        let innerW = ovalWidth - trackInset * 2
-        let innerH = ovalHeight - trackInset * 2
-        let innerCornerRadius = max(0, cornerRadius - trackInset / 2)
-
-        // Outer and inner positions: progress 0 = finish line (center bottom), progress 1 = finish line after one lap.
-        // Outer lane is longer; outer runner gets a staggered start (same arc distance per lap as inner — like track and field).
-        let innerR = min(innerCornerRadius, min(innerW, innerH) / 2)
-        let innerPathLength = ovalPathLength(width: innerW, height: innerH, cornerRadius: innerR)
-        let outerPathLength = ovalPathLength(width: ovalWidth, height: ovalHeight, cornerRadius: cornerRadius)
-        let stagger = ovalOuterLaneStaggerFraction(innerPathLength: innerPathLength, outerPathLength: outerPathLength)
-
-        let outerStart = ovalPathStartOffset(width: ovalWidth, height: ovalHeight)
-        let innerStart = ovalPathStartOffset(width: innerW, height: innerH)
-        let outerSpan = 1.0 - outerStart
-        let innerSpan = 1.0 - innerStart
-        let p1Outer = ovalOuterPathProgress(raceProgress: progress1, outerStart: outerStart, outerSpan: outerSpan, staggerFraction: stagger)
-        let p2Outer = ovalOuterPathProgress(raceProgress: progress2, outerStart: outerStart, outerSpan: outerSpan, staggerFraction: stagger)
-        let p1Inner = innerStart + progress1 * innerSpan
-        let p2Inner = innerStart + progress2 * innerSpan
-        let pt1Outer = pointOnRoundedRect(progress: p1Outer, width: ovalWidth, height: ovalHeight)
-        let pt2Outer = pointOnRoundedRect(progress: p2Outer, width: ovalWidth, height: ovalHeight)
-        let pt1InnerRaw = pointOnRoundedRect(progress: p1Inner, width: innerW, height: innerH, cornerRadius: innerR)
-        let pt2InnerRaw = pointOnRoundedRect(progress: p2Inner, width: innerW, height: innerH, cornerRadius: innerR)
-        let pt1Inner = CGPoint(x: pt1InnerRaw.x + trackInset, y: pt1InnerRaw.y + trackInset)
-        let pt2Inner = CGPoint(x: pt2InnerRaw.x + trackInset, y: pt2InnerRaw.y + trackInset)
-
-        // Slower racer on inner (shorter) track, faster on outer (longer) track
-        let racer1OnInner = racer1.speed <= racer2.speed
-        let pos1 = racer1OnInner ? pt1Inner : pt1Outer
-        let pos2 = racer1OnInner ? pt2Outer : pt2Inner
-
-        let half = racerSize / 2
-        let refereeSize: CGFloat = 64
+        // Header sizes intrinsically; oval fills leftover height (avoids bottom clipping on iPad).
         return VStack(spacing: 8) {
             Text("Race!")
                 .font(.headline)
@@ -1993,25 +2024,75 @@ struct RacingGameView: View {
                 maxWidth: ovalWidth
             )
             .frame(maxWidth: .infinity, alignment: .leading)
-            ZStack(alignment: .topLeading) {
-                OvalDualLaneCourseChrome(
-                    width: ovalWidth,
-                    height: ovalHeight,
-                    trackInset: trackInset,
-                    cornerRadius: cornerRadius,
-                    showFinishLines: true
+            GeometryReader { trackGeo in
+                let ovalHeight = max(120, trackGeo.size.height)
+                let cornerRadius = min(min(ovalWidth, ovalHeight) * 0.18, min(ovalWidth, ovalHeight) / 4)
+
+                let outerLaneW = max(4, ovalWidth - laneInsets.outer * 2)
+                let outerLaneH = max(4, ovalHeight - laneInsets.outer * 2)
+                let outerLaneR = max(0, min(cornerRadius - laneInsets.outer, min(outerLaneW, outerLaneH) / 2))
+                let innerLaneW = max(4, ovalWidth - laneInsets.inner * 2)
+                let innerLaneH = max(4, ovalHeight - laneInsets.inner * 2)
+                let innerLaneR = max(0, min(cornerRadius - laneInsets.inner, min(innerLaneW, innerLaneH) / 2))
+
+                let outerPathLength = ovalPathLength(width: outerLaneW, height: outerLaneH, cornerRadius: outerLaneR)
+                let innerPathLength = ovalPathLength(width: innerLaneW, height: innerLaneH, cornerRadius: innerLaneR)
+                let stagger = ovalOuterLaneStaggerFraction(innerPathLength: innerPathLength, outerPathLength: outerPathLength)
+
+                let outerStart = ovalPathStartOffset(width: outerLaneW, height: outerLaneH)
+                let innerStart = ovalPathStartOffset(width: innerLaneW, height: innerLaneH)
+                let outerSpan = 1.0 - outerStart
+                let innerSpan = 1.0 - innerStart
+                let p1Outer = ovalOuterPathProgress(raceProgress: progress1, outerStart: outerStart, outerSpan: outerSpan, staggerFraction: stagger)
+                let p2Outer = ovalOuterPathProgress(raceProgress: progress2, outerStart: outerStart, outerSpan: outerSpan, staggerFraction: stagger)
+                let p1Inner = innerStart + progress1 * innerSpan
+                let p2Inner = innerStart + progress2 * innerSpan
+
+                let pt1Outer = ovalPointOnLaneCenter(
+                    progress: p1Outer, ovalWidth: ovalWidth, ovalHeight: ovalHeight,
+                    cornerRadius: cornerRadius, laneInset: laneInsets.outer
                 )
-                racerView(racer: racer1, size: racerSize, pose: trippedRacerId == racer1.id ? .tripped : .running)
-                    .offset(x: pos1.x - half, y: pos1.y - half)
-                racerView(racer: racer2, size: racerSize, pose: trippedRacerId == racer2.id ? .tripped : .running)
-                    .offset(x: pos2.x - half, y: pos2.y - half)
-                // Referee off the track, at lower bottom of infield near the track edge—close to racers to detect cheating, not blocking or in their path
-                refereeImageViewSmall(startRefereeImageName(prefix: config.assetPrefix), size: refereeSize)
-                    .offset(x: ovalWidth / 2 - refereeSize / 2, y: trackInset + innerH - refereeSize - 16)
+                let pt2Outer = ovalPointOnLaneCenter(
+                    progress: p2Outer, ovalWidth: ovalWidth, ovalHeight: ovalHeight,
+                    cornerRadius: cornerRadius, laneInset: laneInsets.outer
+                )
+                let pt1Inner = ovalPointOnLaneCenter(
+                    progress: p1Inner, ovalWidth: ovalWidth, ovalHeight: ovalHeight,
+                    cornerRadius: cornerRadius, laneInset: laneInsets.inner
+                )
+                let pt2Inner = ovalPointOnLaneCenter(
+                    progress: p2Inner, ovalWidth: ovalWidth, ovalHeight: ovalHeight,
+                    cornerRadius: cornerRadius, laneInset: laneInsets.inner
+                )
+
+                // Slower racer on inner (shorter) lane, faster on outer (longer) lane
+                let racer1OnInner = racer1.speed <= racer2.speed
+                let pos1 = racer1OnInner ? pt1Inner : pt1Outer
+                let pos2 = racer1OnInner ? pt2Outer : pt2Inner
+
+                let half = racerSize / 2
+                let refereeSize: CGFloat = metrics.racerSize + 16
+                let infieldBottom = trackInset + (ovalHeight - trackInset * 2)
+                ZStack(alignment: .topLeading) {
+                    OvalDualLaneCourseChrome(
+                        width: ovalWidth,
+                        height: ovalHeight,
+                        trackInset: trackInset,
+                        cornerRadius: cornerRadius,
+                        showFinishLines: true
+                    )
+                    racerView(racer: racer1, size: racerSize, pose: trippedRacerId == racer1.id ? .tripped : .running)
+                        .offset(x: pos1.x - half, y: pos1.y - half)
+                    racerView(racer: racer2, size: racerSize, pose: trippedRacerId == racer2.id ? .tripped : .running)
+                        .offset(x: pos2.x - half, y: pos2.y - half)
+                    refereeImageViewSmall(startRefereeImageName(prefix: config.assetPrefix), size: refereeSize)
+                        .offset(x: ovalWidth / 2 - refereeSize / 2, y: infieldBottom - refereeSize - 16)
+                }
+                .frame(width: ovalWidth, height: ovalHeight)
             }
-            .frame(width: ovalWidth, height: ovalHeight)
         }
         .padding(.horizontal, padding)
+        .padding(.bottom, metrics.bottomPad)
     }
 
     private func formatSpeed(_ mph: Double) -> String {
@@ -2032,13 +2113,15 @@ struct RacingGameView: View {
 
     private func nameLength(_ name: String) -> Int { name.count }
 
-    private func racingNameFontSize(_ name: String) -> CGFloat {
+    private func racingNameFontSize(_ name: String, scale: CGFloat = 1) -> CGFloat {
+        let base: CGFloat
         switch name.count {
-        case ...8: return 18
-        case ...12: return 16
-        case ...16: return 14
-        default: return 12
+        case ...8: base = 18
+        case ...12: base = 16
+        case ...16: base = 14
+        default: base = 12
         }
+        return (base * scale).rounded()
     }
 
     private func speedClockView(
@@ -2052,12 +2135,14 @@ struct RacingGameView: View {
         let t1 = finishTime1 ?? raceElapsedSeconds
         let t2 = finishTime2 ?? raceElapsedSeconds
         let maxSpeed = max(racer1.speed, racer2.speed)
+        // Phone stays 1.0; iPad scoreboard has unused width — bump names/times without wrapping.
+        let padScale = GameCatalogImageMetrics.canvasScale(safeWidth: maxWidth, maxScale: 1.75)
         func format(_ sec: Int) -> String { String(format: "%d:%02d", sec / 60, sec % 60) }
 
         func racerRow(_ racer: RacingRacer, seconds: Int) -> some View {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
                 Text(racer.name)
-                    .font(.system(size: racingNameFontSize(racer.name), weight: .semibold))
+                    .font(.system(size: racingNameFontSize(racer.name, scale: padScale), weight: .semibold))
                     .foregroundColor(.primary)
                     .lineLimit(2)
                     .minimumScaleFactor(0.75)
@@ -2065,20 +2150,20 @@ struct RacingGameView: View {
                     .frame(maxWidth: max(120, maxWidth * 0.68), alignment: .leading)
                 Spacer(minLength: 4)
                 Text(format(seconds))
-                    .font(.system(size: 16, weight: .semibold, design: .monospaced))
+                    .font(.system(size: (16 * padScale).rounded(), weight: .semibold, design: .monospaced))
                     .foregroundColor(.primary)
                     .layoutPriority(1)
             }
         }
 
-        return VStack(alignment: .leading, spacing: 4) {
+        return VStack(alignment: .leading, spacing: padScale > 1.1 ? 6 : 4) {
             racerRow(racer1, seconds: t1)
             racerRow(racer2, seconds: t2)
             Text("\(formatSpeed(displayedSpeed(racer: racer1, finishTime: finishTime1, maxSpeed: maxSpeed))) / \(formatSpeed(displayedSpeed(racer: racer2, finishTime: finishTime2, maxSpeed: maxSpeed))) mph")
-                .font(.caption)
+                .font(padScale > 1.1 ? .body : .caption)
                 .foregroundColor(.secondary)
         }
-        .padding(10)
+        .padding(padScale > 1.1 ? 14 : 10)
         .background(Color.black.opacity(0.15))
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .frame(maxWidth: maxWidth, alignment: .leading)
@@ -2231,8 +2316,8 @@ struct RacingGameView: View {
                 var newP1 = min(1.0, rawP1)
                 var newP2 = min(1.0, rawP2)
 
-                // Pterosaur hops: pause **short of** each waypoint (open-water approach), then continue past the landmark — species-specific lag length.
-                // Fast racers can skip the narrow [trigger, landmark) window in one tick; treat crossing the landmark from below as “snap to trigger” too.
+                // Pterosaur hops: pause **on** each waypoint (land marker), then continue — species-specific lag length.
+                // Fast racers can skip the narrow [trigger, landmark) window in one tick; snap to the landmark either way.
                 if config.assetPrefix == "ptero", !hopWaypoints.isEmpty {
                     if let idx = nextLagWaypointIndexByRacerId[r1.id], idx < hopWaypoints.count {
                         let waypoint = hopWaypoints[idx]
@@ -2240,11 +2325,11 @@ struct RacingGameView: View {
                         let trigger = airportLagTriggerProgress(waypointIndex: idx, width: pteroTrackWidth, height: pteroTrackHeight, inset: 0)
                         if progress1 < landmark {
                             if newP1 >= landmark {
-                                newP1 = trigger
+                                newP1 = landmark
                                 lagTicksRemainingByRacerId[r1.id] = hopLagTicks(for: r1, at: waypoint.node)
                                 nextLagWaypointIndexByRacerId[r1.id] = idx + 1
                             } else if newP1 >= trigger && progress1 < trigger {
-                                newP1 = trigger
+                                newP1 = landmark
                                 lagTicksRemainingByRacerId[r1.id] = hopLagTicks(for: r1, at: waypoint.node)
                                 nextLagWaypointIndexByRacerId[r1.id] = idx + 1
                             }
@@ -2256,11 +2341,11 @@ struct RacingGameView: View {
                         let trigger = airportLagTriggerProgress(waypointIndex: idx, width: pteroTrackWidth, height: pteroTrackHeight, inset: 0)
                         if progress2 < landmark {
                             if newP2 >= landmark {
-                                newP2 = trigger
+                                newP2 = landmark
                                 lagTicksRemainingByRacerId[r2.id] = hopLagTicks(for: r2, at: waypoint.node)
                                 nextLagWaypointIndexByRacerId[r2.id] = idx + 1
                             } else if newP2 >= trigger && progress2 < trigger {
-                                newP2 = trigger
+                                newP2 = landmark
                                 lagTicksRemainingByRacerId[r2.id] = hopLagTicks(for: r2, at: waypoint.node)
                                 nextLagWaypointIndexByRacerId[r2.id] = idx + 1
                             }
@@ -2778,10 +2863,17 @@ private struct OvalDualLaneCourseChrome: View {
     private var innerCornerRadius: CGFloat { max(0, cornerRadius - trackInset / 2) }
     private var courseSize: CGSize { CGSize(width: width, height: height) }
     private var innerSize: CGSize { CGSize(width: innerWidth, height: innerHeight) }
+    private var dividerInset: CGFloat { trackInset * 0.5 }
+    private var dividerWidth: CGFloat { width - dividerInset * 2 }
+    private var dividerHeight: CGFloat { height - dividerInset * 2 }
+    private var dividerCornerRadius: CGFloat { max(0, cornerRadius - dividerInset / 2) }
 
     var body: some View {
         let outerPath = RoundedRectangle(cornerRadius: cornerRadius).path(in: CGRect(origin: .zero, size: courseSize))
         let innerPath = RoundedRectangle(cornerRadius: innerCornerRadius).path(in: CGRect(origin: .zero, size: innerSize))
+        let dividerPath = RoundedRectangle(cornerRadius: dividerCornerRadius).path(
+            in: CGRect(x: 0, y: 0, width: dividerWidth, height: dividerHeight)
+        )
         let trackBand = OvalTrackBandShape(
             outerCornerRadius: cornerRadius,
             innerCornerRadius: innerCornerRadius,
@@ -2789,10 +2881,11 @@ private struct OvalDualLaneCourseChrome: View {
             size: courseSize
         )
         let finishLineWidth: CGFloat = 4
-        let finishLineRowHeight: CGFloat = 10
+        let finishLineRowHeight: CGFloat = max(8, min(14, trackInset * 0.28))
         let finishLineX = width / 2 - finishLineWidth / 2
         let outerEdge = Color(red: 0.44, green: 0.33, blue: 0.21)
         let innerEdge = Color(red: 0.50, green: 0.38, blue: 0.24)
+        let laneDivider = Color.white.opacity(0.78)
 
         ZStack(alignment: .topLeading) {
             RoundedRectangle(cornerRadius: cornerRadius + 2)
@@ -2823,20 +2916,26 @@ private struct OvalDualLaneCourseChrome: View {
             outerPath
                 .stroke(outerEdge, lineWidth: 3)
                 .frame(width: width, height: height)
+            // Mid-band divider so the dirt reads as two racing lanes.
+            dividerPath
+                .stroke(laneDivider, style: StrokeStyle(lineWidth: 2.5, dash: [12, 10]))
+                .frame(width: dividerWidth, height: dividerHeight)
+                .offset(x: dividerInset, y: dividerInset)
             innerPath
                 .stroke(innerEdge, lineWidth: 3)
                 .frame(width: innerWidth, height: innerHeight)
                 .offset(x: trackInset, y: trackInset)
 
             if showFinishLines {
+                // Finish marks on each lane (outer + inner half of the dirt band).
                 Rectangle()
                     .fill(Color.white.opacity(0.95))
                     .frame(width: finishLineWidth, height: finishLineRowHeight)
-                    .offset(x: finishLineX, y: height - finishLineRowHeight)
+                    .offset(x: finishLineX, y: height - finishLineRowHeight - trackInset * 0.12)
                 Rectangle()
                     .fill(Color.white.opacity(0.95))
                     .frame(width: finishLineWidth, height: finishLineRowHeight)
-                    .offset(x: finishLineX, y: trackInset + innerHeight - finishLineRowHeight)
+                    .offset(x: finishLineX, y: trackInset + innerHeight - finishLineRowHeight + trackInset * 0.12)
             }
         }
         .frame(width: width, height: height)

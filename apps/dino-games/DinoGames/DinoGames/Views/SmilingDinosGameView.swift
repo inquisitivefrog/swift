@@ -200,7 +200,7 @@ struct SmilingDinosGameView: View {
                 return dinoSmileToothDisplayName(introTeethOrder[toothIndex], line: gameConfig.line)
             }
         }
-        // During gameplay: show user selection
+        // During gameplay: show user selection (wrong attempts keep this text while try-again audio plays)
         guard selectedDinosaur != nil || selectedToothType != nil else { return nil }
         var parts: [String] = []
         if let dino = selectedDinosaur {
@@ -208,7 +208,11 @@ struct SmilingDinosGameView: View {
         }
         if let tooth = selectedToothType {
             let formatted = dinoSmileToothDisplayName(tooth, line: gameConfig.line)
-            parts.append(parts.isEmpty ? formatted : "→ \(formatted)")
+            if showMatchFeedback && !isCorrect {
+                parts.append(parts.isEmpty ? formatted : "≠ \(formatted)")
+            } else {
+                parts.append(parts.isEmpty ? formatted : "→ \(formatted)")
+            }
         }
         return parts.isEmpty ? nil : parts.joined(separator: " ")
     }
@@ -253,26 +257,38 @@ struct SmilingDinosGameView: View {
         GeometryReader { geometry in
             let safeWidth = max(geometry.size.width, 1)
             let safeHeight = max(geometry.size.height, 1)
-            // Phone-tuned baselines; grow on iPad (Dino / Ptero / Marine Smile share this view).
-            let playMaxScale: CGFloat = 1.5
+            let topInset = geometry.safeAreaInsets.top
+            // Phone-tuned baselines; on iPad spend leftover height so 5 tooth cards drive scale.
+            let playMaxScale: CGFloat = 1.85
             let layoutScale = GameCatalogImageMetrics.canvasScale(safeWidth: safeWidth, maxScale: playMaxScale)
             let isPadLayout = layoutScale > 1.05
+            let columnSpacing = isPadLayout ? CGFloat(10) : 12
+            let stackSpacing = isPadLayout ? CGFloat(12) : 20
+            // Title + round + name slot + column headers + paddings + Dynamic Island clearance.
+            let chromeHeight: CGFloat = (isPadLayout ? 168 : 190) + topInset
+            let heightBudget = max(160, safeHeight - chromeHeight)
+            let toothFromHeight = (heightBudget - 4 * columnSpacing) / 5
+            let smileFromHeight = (heightBudget - 2 * columnSpacing) / 3
             let smileSize = min(
-                GameCatalogImageMetrics.scaled(130, safeWidth: safeWidth, maxScale: playMaxScale),
-                (safeHeight - 200) / 3.6,
-                (safeWidth * 0.38)
+                GameCatalogImageMetrics.scaled(isPadLayout ? 200 : 130, safeWidth: safeWidth, maxScale: playMaxScale),
+                smileFromHeight,
+                safeWidth * (isPadLayout ? 0.44 : 0.38),
+                toothFromHeight / 0.78
             )
             let toothSize = min(
-                GameCatalogImageMetrics.scaled(100, safeWidth: safeWidth, maxScale: playMaxScale),
+                GameCatalogImageMetrics.scaled(isPadLayout ? 160 : 100, safeWidth: safeWidth, maxScale: playMaxScale),
+                toothFromHeight,
                 smileSize * 0.78
             )
-            VStack(spacing: 20) {
+            VStack(spacing: stackSpacing) {
             VStack(spacing: 4) {
                 Text(gameConfig.title)
                     .font(isPadLayout ? .largeTitle : .title2)
                     .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.85)
                     .padding(.horizontal)
-                    .padding(.top, 8)
+                    .padding(.top, (isPadLayout ? 4 : 8) + topInset)
                 Text("Round \(currentRound) of \(totalRounds)")
                     .font(isPadLayout ? .title3 : .subheadline)
                     .foregroundColor(.secondary)
@@ -285,13 +301,13 @@ struct SmilingDinosGameView: View {
                     .lineLimit(2)
                     .minimumScaleFactor(0.8)
                     .padding(.horizontal, 24)
-                    .padding(.top, 8)
-                    .frame(height: isPadLayout ? 60 : 52)
+                    .padding(.top, 4)
+                    .frame(height: isPadLayout ? 48 : 52)
                     .opacity(selectedItemLabel != nil ? 1 : 0)
             }
 
-            HStack(spacing: 20) {
-                VStack(spacing: isPadLayout ? 16 : 12) {
+            HStack(alignment: .top, spacing: 20) {
+                VStack(spacing: columnSpacing) {
                     Text("Smiles")
                         .font(isPadLayout ? .title3.weight(.semibold) : .headline)
                     ForEach(Array(activeDinosaurs.enumerated()), id: \.element.id) { index, dino in
@@ -300,7 +316,8 @@ struct SmilingDinosGameView: View {
                             dinosaur: dino,
                             isSelected: selectedDinosaur?.id == dino.id,
                             isMatched: matchedPairs.contains(dino.id),
-                            hasFailedAttempt: failedAttempts.contains(dino.id),
+                            hasFailedAttempt: failedAttempts.contains(dino.id)
+                                || (showMatchFeedback && !isCorrect && selectedDinosaur?.id == dino.id),
                             isIntroHighlighted: isSmileIntroHighlighted(at: index, dinosaur: dino),
                             cardSize: smileSize,
                             onTap: { handleSmileTap(dino) }
@@ -308,7 +325,7 @@ struct SmilingDinosGameView: View {
                     }
                 }
 
-                VStack(spacing: isPadLayout ? 16 : 12) {
+                VStack(spacing: columnSpacing) {
                     Text("Tooth Shapes")
                         .font(isPadLayout ? .title3.weight(.semibold) : .headline)
                     ForEach(Array(activeToothTypes.enumerated()), id: \.offset) { index, toothType in
@@ -326,10 +343,10 @@ struct SmilingDinosGameView: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .padding(.horizontal, 20)
-            .padding(.vertical)
+            .padding(.horizontal, isPadLayout ? 28 : 20)
+            Spacer(minLength: 0)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .task(id: currentRound) {
             displayedDinosaurs = dinosaurs.shuffled()
             displayedToothTypes = toothTypes.shuffled()
@@ -887,7 +904,8 @@ struct SmilingDinosGameConfigs {
     }
 
     /// Three rounds × three morphology families (no family repeats across rounds).
-    /// Each round: one playable pterosaur per family, plus two dummy teeth — at most one tooth per player alias (Fang, Peg, …) so pairs stay unambiguous.
+    /// Each round: one playable pterosaur per family, plus two dummy teeth — at most one
+    /// tooth per player uniqueness key (Fang, Peg, …; Spike/Needle share a key) so pairs stay unambiguous.
     private static func buildPteroSmileRounds(from pool: [Dinosaur]) -> [SmilingDinosRound]? {
         var byCategory: [String: [Dinosaur]] = [:]
         for ptero in pool {
@@ -937,12 +955,15 @@ struct SmilingDinosGameConfigs {
 
             let usedSlugs = Set(pairs.map(\.1))
             let usedKinds = Set(pairs.compactMap { PteroSmileMorphology.playerKind(for: $0.0) })
-            guard usedKinds.count == needed else { continue }
+            let usedUniqueness = Set(usedKinds.map(\.roundUniquenessKey))
+            guard usedUniqueness.count == needed else { continue }
 
+            let answersShowTeeth = pairs.contains { PteroSmileMorphology.smilePortraitShowsTeeth(for: $0.0) }
             guard let distractors = pickPteroDistractorTeeth(
                 from: allToothSlugs,
                 excludingSlugs: usedSlugs,
-                excludingKinds: usedKinds,
+                excludingUniquenessKeys: usedUniqueness,
+                preferTeethVisible: answersShowTeeth,
                 count: SmilingDinosRound.distractorTeethPerRound
             ) else { continue }
 
@@ -954,7 +975,8 @@ struct SmilingDinosGameConfigs {
         return nil
     }
 
-    /// One pterosaur per morphology family, each with a distinct player tooth alias.
+    /// One pterosaur per morphology family, each with a distinct round uniqueness key
+    /// (distinct display kind except Spike/Needle, which share one key).
     private static func pickPteroPairsWithDistinctPlayerKinds(
         categories: [String],
         byCategory: [String: [Dinosaur]]
@@ -962,42 +984,66 @@ struct SmilingDinosGameConfigs {
         func search(
             index: Int,
             pairs: [(Dinosaur, String)],
-            usedKinds: Set<PteroSmilePlayerToothKind>
+            usedUniqueness: Set<String>
         ) -> [(Dinosaur, String)]? {
             if index >= categories.count { return pairs }
             let category = categories[index]
             for ptero in (byCategory[category] ?? []).shuffled() {
                 guard let toothSlug = PteroSmileMorphology.smileToothType(for: ptero),
                       let kind = PteroSmileMorphology.playerKind(for: ptero),
-                      !usedKinds.contains(kind) else { continue }
+                      !usedUniqueness.contains(kind.roundUniquenessKey) else { continue }
                 if let result = search(
                     index: index + 1,
                     pairs: pairs + [(ptero, toothSlug)],
-                    usedKinds: usedKinds.union([kind])
+                    usedUniqueness: usedUniqueness.union([kind.roundUniquenessKey])
                 ) {
                     return result
                 }
             }
             return nil
         }
-        return search(index: 0, pairs: [], usedKinds: [])
+        return search(index: 0, pairs: [], usedUniqueness: [])
     }
 
     private static func pickPteroDistractorTeeth(
         from allToothSlugs: Set<String>,
         excludingSlugs: Set<String>,
-        excludingKinds: Set<PteroSmilePlayerToothKind>,
+        excludingUniquenessKeys: Set<String>,
+        preferTeethVisible: Bool,
         count: Int
     ) -> [String]? {
-        var usedKinds = excludingKinds
+        var usedUniqueness = excludingUniquenessKeys
         var picked: [String] = []
-        for slug in allToothSlugs.subtracting(excludingSlugs).shuffled() {
+        let candidates = allToothSlugs.subtracting(excludingSlugs).shuffled()
+        let ordered = candidates.sorted { a, b in
+            let aMatch = PteroSmileMorphology.toothArtShowsTeeth(for: a) == preferTeethVisible
+            let bMatch = PteroSmileMorphology.toothArtShowsTeeth(for: b) == preferTeethVisible
+            if aMatch == bMatch { return false }
+            return aMatch && !bMatch
+        }
+        for slug in ordered {
             guard let kind = PteroSmileMorphology.playerKind(for: slug),
-                  !usedKinds.contains(kind) else { continue }
+                  !usedUniqueness.contains(kind.roundUniquenessKey) else { continue }
+            // When answers show teeth, skip toothless distractors that invite a false “no teeth” heuristic.
+            if preferTeethVisible && !PteroSmileMorphology.toothArtShowsTeeth(for: slug) {
+                continue
+            }
             picked.append(slug)
-            usedKinds.insert(kind)
+            usedUniqueness.insert(kind.roundUniquenessKey)
             if picked.count == count { return picked }
         }
-        return nil
+        // Fall back without dentition preference if the preferred pool is too thin.
+        if picked.count < count {
+            usedUniqueness = excludingUniquenessKeys
+            picked = []
+            for slug in candidates {
+                guard let kind = PteroSmileMorphology.playerKind(for: slug),
+                      !usedUniqueness.contains(kind.roundUniquenessKey) else { continue }
+                picked.append(slug)
+                usedUniqueness.insert(kind.roundUniquenessKey)
+                if picked.count == count { return picked }
+            }
+        }
+        return picked.count == count ? picked : nil
     }
 }

@@ -67,6 +67,15 @@ enum MarineSmileMorphology {
     /// Catalog imageset typo: disk slug `plioplatecarpus` ships as `marine-smile-pllioplatecarpus`.
     private static let portraitAssetSlugAliases: [String: String] = [
         "plioplatecarpus": "pllioplatecarpus",
+        "eurhinosaurus": "eurhonisaurus",
+    ]
+
+    /// Smile portrait slug → catalog body / `Audio/Marine-Reptiles/` stem slug when spellings diverge.
+    private static let bodyAudioSlugAliases: [String: String] = [
+        "pllioplatecarpus": "plioplatecarpus",
+        "gendelius": "grendelius",
+        "hupenhsuchus": "hupehsuchus",
+        "eurhonisaurus": "eurhinosaurus",
     ]
 
     static func toothType(forSlug slug: String) -> MarineSmileToothType? {
@@ -96,6 +105,31 @@ enum MarineSmileMorphology {
             }
         }
         return nil
+    }
+
+    /// Body portrait / name-audio key under `Audio/Marine-Reptiles/` for a smiling portrait imageset.
+    static func bodyAudioKey(forSmileAsset smileAsset: String) -> String? {
+        guard smileAsset.hasPrefix("marine-smile-") else { return nil }
+        let slug = String(smileAsset.dropFirst("marine-smile-".count))
+        guard !isReferenceToothAsset(smileAsset) else { return nil }
+        var slugCandidates = [slug]
+        if let aliased = bodyAudioSlugAliases[slug] {
+            slugCandidates.append(aliased)
+        }
+        for candidate in slugCandidates {
+            if let match = SeaMarineReptileData.allMarineReptiles.first(where: {
+                $0.imageName?.hasSuffix("-\(candidate)") == true
+            })?.imageName {
+                return match
+            }
+        }
+        return nil
+    }
+
+    /// Name-audio key for a Marine Smile option (smile art for image; body key for Marine-Reptiles narration).
+    static func bodyAudioKey(for creature: Dinosaur) -> String? {
+        guard let smile = creature.imageName else { return nil }
+        return bodyAudioKey(forSmileAsset: smile)
     }
 
     static func referenceToothImageName(for type: MarineSmileToothType) -> String? {
@@ -132,6 +166,9 @@ enum MarineSmileMorphology {
         let slug = imageName.replacingOccurrences(of: "marine-smile-", with: "")
         for (registrySlug, alias) in portraitAssetSlugAliases where alias == slug {
             return toothType(forSlug: registrySlug)
+        }
+        for (portraitSlug, bodySlug) in bodyAudioSlugAliases where portraitSlug == slug {
+            if let type = toothType(forSlug: bodySlug) { return type }
         }
         return toothType(forSlug: slug)
     }

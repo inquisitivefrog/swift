@@ -892,11 +892,20 @@ fileprivate struct SourceAgesHintsView: View {
     private var gridView: some View {
         GeometryReader { geometry in
             let safeWidth = max(geometry.size.width, 1)
-            let cardHeight = SourceHintsLayout.gridCardHeight(safeWidth: safeWidth)
+            let safeHeight = max(geometry.size.height, 1)
             let spacing = SourceHintsLayout.gridSpacing(safeWidth: safeWidth)
             let hPad = SourceHintsLayout.horizontalPadding(safeWidth: safeWidth)
             let titleFont = SourceHintsLayout.titleFont(safeWidth: safeWidth)
             let fallbackFont = SourceHintsLayout.fallbackLabelFont(safeWidth: safeWidth)
+            // Ages is two square period tiles in one row — grow to column width / leftover height on iPad
+            // instead of the shared phone-tuned `gridCardHeight` used by denser hint grids.
+            let titleBlock: CGFloat = 44 + titleFont + 16 + spacing
+            let colWidth = max(1, (safeWidth - hPad * 2 - spacing) / 2)
+            let heightBudget = max(
+                SourceHintsLayout.gridCardHeight(safeWidth: safeWidth),
+                safeHeight - titleBlock - 32
+            )
+            let cardHeight = min(colWidth, heightBudget)
             VStack(spacing: spacing) {
                 SourceHintsScreenTitle(title: title, fontSize: titleFont)
                 LazyVGrid(columns: [GridItem(.flexible(), spacing: spacing), GridItem(.flexible(), spacing: spacing)], spacing: spacing) {
@@ -922,7 +931,7 @@ fileprivate struct SourceAgesHintsView: View {
                     }
                 }
                 .padding(.horizontal, hPad)
-                Spacer()
+                Spacer(minLength: 0)
             }
         }
     }
@@ -932,8 +941,13 @@ fileprivate struct SourceAgesHintsView: View {
         if let period = selectedPeriod {
             GeometryReader { geometry in
                 let safeWidth = max(geometry.size.width, 1)
-                let detailSide = SourceHintsLayout.detailImageSide(safeWidth: safeWidth)
+                let safeHeight = max(geometry.size.height, 1)
                 let labelFont = SourceHintsLayout.detailLabelFont(safeWidth: safeWidth)
+                let detailSide = min(
+                    safeWidth * 0.86,
+                    max(safeHeight - labelFont - 96, 1),
+                    GameCatalogImageMetrics.scaled(420, safeWidth: safeWidth, maxScale: SourceHintsLayout.maxScale)
+                )
                 VStack(spacing: 20) {
                     Spacer()
                     if UIImage(named: period.imageName) != nil {

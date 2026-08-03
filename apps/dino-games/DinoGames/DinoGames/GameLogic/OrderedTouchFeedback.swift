@@ -50,6 +50,7 @@ struct GuessChoiceTimer {
 enum OrderedTouchFeedback {
     static let pickDinosaurFirst = "pick-a-dinosaur-first"
     static let pickPterosaurFirst = "pick-a-pterosaur-first"
+    static let pickMarineReptileFirst = "pick-a-marine-reptile-first"
     static let wowThatWasTricky = "wow-that-was-tricky"
     static let greatMatch = "great-match"
     static let tryAgain = "try-again"

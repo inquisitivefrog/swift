@@ -166,21 +166,26 @@ struct MarineFloraGameView: View {
                 .opacity(blocksReptileSelection ? 0.85 : 1.0)
                 .overlay(alignment: .topTrailing) {
                     if plant != nil, !isGameComplete {
-                        Button {
-                            showSourceFloraHints = true
-                        } label: {
-                            Text("Hints")
-                                .font(.caption.weight(.semibold))
-                                .foregroundColor(.white)
-                                .padding(.horizontal, 14)
-                                .padding(.vertical, 10)
-                                .background(Circle().fill(Color.blue))
-                                .frame(width: 72, height: 72)
+                        GeometryReader { geo in
+                            let safeWidth = max(geo.size.width, 1)
+                            let playMaxScale: CGFloat = 1.85
+                            let hintSide = GameCatalogImageMetrics.scaled(72, safeWidth: safeWidth, maxScale: playMaxScale)
+                            let hintFont = GameCatalogImageMetrics.scaled(12, safeWidth: safeWidth, maxScale: playMaxScale)
+                            Button {
+                                showSourceFloraHints = true
+                            } label: {
+                                Text("Hints")
+                                    .font(.system(size: hintFont, weight: .semibold))
+                                    .foregroundColor(.white)
+                                    .frame(width: hintSide, height: hintSide)
+                                    .background(Circle().fill(Color.blue))
+                            }
+                            .disabled(blocksReptileSelection)
+                            .opacity(blocksReptileSelection ? 0.45 : 1.0)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+                            .padding(.top, 8)
+                            .padding(.trailing, 16)
                         }
-                        .disabled(blocksReptileSelection)
-                        .opacity(blocksReptileSelection ? 0.45 : 1.0)
-                        .padding(.top, 8)
-                        .padding(.trailing, 16)
                     }
                 }
                 .fullScreenCover(isPresented: $showSourceFloraHints) {
@@ -212,43 +217,50 @@ struct MarineFloraGameView: View {
             GeometryReader { geometry in
                 let safeWidth = max(geometry.size.width, 1)
                 let safeHeight = max(geometry.size.height, 1)
-                // Phone-tuned baselines; grow on iPad when width/height allow.
-                let playMaxScale: CGFloat = 1.5
+                // Match Dino / Ptero Flora iPad layout: larger plant, selectable circles, chrome fonts.
+                let playMaxScale: CGFloat = 1.85
+                let isPadCanvas = safeWidth > GameCatalogImageMetrics.phoneReferenceWidth
+                let plantHeightFraction: CGFloat = isPadCanvas ? 0.40 : 0.30
+                let plantWidthFraction: CGFloat = isPadCanvas ? 0.92 : 0.88
                 let plantMaxW = min(
-                    GameCatalogImageMetrics.scaled(380, safeWidth: safeWidth, maxScale: playMaxScale),
-                    safeWidth * 0.88
+                    GameCatalogImageMetrics.scaled(isPadCanvas ? 460 : 380, safeWidth: safeWidth, maxScale: playMaxScale),
+                    safeWidth * plantWidthFraction
                 )
                 let plantMaxH = min(
-                    GameCatalogImageMetrics.scaled(240, safeWidth: safeWidth, maxScale: playMaxScale),
-                    safeHeight * 0.30
+                    GameCatalogImageMetrics.scaled(isPadCanvas ? 280 : 240, safeWidth: safeWidth, maxScale: playMaxScale),
+                    safeHeight * plantHeightFraction
                 )
                 let gridH = min(
                     GameCatalogImageMetrics.scaled(360, safeWidth: safeWidth, maxScale: playMaxScale),
-                    safeHeight * 0.50
+                    safeHeight * (isPadCanvas ? 0.44 : 0.50)
                 )
                 let circleSize = GameCatalogImageMetrics.scaled(marineFloraCircleSize, safeWidth: safeWidth, maxScale: playMaxScale)
                 let starRadius = GameCatalogImageMetrics.scaled(100, safeWidth: safeWidth, maxScale: playMaxScale)
-                VStack(spacing: 6) {
+                let plantLabelFont = GameCatalogImageMetrics.scaled(22, safeWidth: safeWidth, maxScale: playMaxScale)
+                let roundFont = GameCatalogImageMetrics.scaled(17, safeWidth: safeWidth, maxScale: playMaxScale)
+                let critterNameFont = GameCatalogImageMetrics.scaled(20, safeWidth: safeWidth, maxScale: playMaxScale)
+                let critterNameSlotH = max(28, critterNameFont + 12)
+                let stackSpacing = GameCatalogImageMetrics.scaled(16, safeWidth: safeWidth, maxScale: playMaxScale)
+                VStack(spacing: stackSpacing) {
                     plantImage(p, maxWidth: plantMaxW, maxHeight: plantMaxH)
                         .id(p.id)
                     Text(p.displayName)
-                        .font(.title2)
-                        .fontWeight(.semibold)
+                        .font(.system(size: plantLabelFont, weight: .semibold))
                         .foregroundColor(.primary)
                     Text("Round \(currentRound) of \(totalRounds)")
-                        .font(.headline)
+                        .font(.system(size: roundFont, weight: .semibold))
                         .foregroundColor(.secondary)
                     ZStack {
                         if let name = displayedCreatureName {
                             Text(name)
-                                .font(.title3)
+                                .font(.system(size: critterNameFont, weight: .medium))
                                 .foregroundColor(.secondary)
                                 .padding(.horizontal)
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.65)
                         }
                     }
-                    .frame(height: 32)
+                    .frame(height: critterNameSlotH)
                     fiveStarLayout(height: gridH, circleSize: circleSize, radius: starRadius)
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

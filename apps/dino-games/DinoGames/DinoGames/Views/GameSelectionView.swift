@@ -218,7 +218,11 @@ struct GameSelectionView: View {
         if guidedPlayMode {
             guidedPendingLevelAdvance = true
         }
+        // Swap level + cover in one update so the completed level's game list never paints
+        // under the sheet dismiss before hopping/cheering starts.
         selectedLevel = next
+        landLevelIntermissionActive = true
+        isAudioPlaying = true
         persistPlaySession(gameCanonicalId: nil)
     }
 
@@ -592,6 +596,7 @@ struct GameSelectionView: View {
             landLevelIntermissionActive: $landLevelIntermissionActive,
             guidedPendingLevelAdvance: $guidedPendingLevelAdvance,
             guidedPlayMode: guidedPlayMode,
+            onImmediatePostGameSheetDismissed: { maybeAutoAdvanceToNextLevelAfterGameDismissed() },
             onPostGameSheetDismissalCleanup: { runPostGameDismissalSideEffects() },
             onGuidedWalkFinished: { pendingGuidedAutoLaunch = true },
             content: AnyView(mainSelectionContent)
@@ -917,6 +922,8 @@ private struct GameSelectionNavigationContent: View {
     @Binding var landLevelIntermissionActive: Bool
     @Binding var guidedPendingLevelAdvance: Bool
     let guidedPlayMode: Bool
+    /// Runs as soon as a game sheet flag clears (before settle delay) so level-up intermission can cover the list.
+    let onImmediatePostGameSheetDismissed: () -> Void
     let onPostGameSheetDismissalCleanup: () -> Void
     let onGuidedWalkFinished: () -> Void
     let content: AnyView
@@ -935,6 +942,8 @@ private struct GameSelectionNavigationContent: View {
     private var gameSheetDismissSettleDelay: TimeInterval { guidedPlayMode ? 0.04 : 0.1 }
 
     private func scheduleAfterGameSheetDismissed(_ action: @escaping () -> Void) {
+        // Level-up intermission must start on this turn — waiting for settle delay flashes the completed level list.
+        onImmediatePostGameSheetDismissed()
         DispatchQueue.main.asyncAfter(deadline: .now() + gameSheetDismissSettleDelay, execute: action)
     }
 
@@ -2569,6 +2578,8 @@ private struct LevelGameListHeader: View {
             Text(title)
                 .font(horizontalSizeClass == .regular ? .title2.weight(.semibold) : .headline)
                 .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.75)
                 .foregroundColor(.primary)
                 .frame(maxWidth: .infinity)
 
@@ -2721,7 +2732,8 @@ enum GameCatalogImageMetrics {
 struct CreatureThreeByThreeGridMetrics {
     static let phoneImageSize: CGFloat = 96
     static let phoneLabelFontSize: CGFloat = 15
-    static let phoneTitleBlockHeight: CGFloat = 56
+    /// Room for 2-line game title + "Round N of M" (56pt forced single-line ellipsis on long sea titles).
+    static let phoneTitleBlockHeight: CGFloat = 80
     static let maxScale: CGFloat = 1.85
 
     let imageSize: CGFloat
