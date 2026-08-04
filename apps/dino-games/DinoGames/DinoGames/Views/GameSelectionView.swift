@@ -2731,6 +2731,9 @@ enum GameCatalogImageMetrics {
 /// Used by Weigh / Which taller-longer / Measure / Balance select-heavy so land-air-sea stay aligned.
 struct CreatureThreeByThreeGridMetrics {
     static let phoneImageSize: CGFloat = 96
+    /// Floor when the play stage (seesaw / measure) leaves a tight vertical budget — must go below
+    /// `phoneImageSize` or the 3×3 cannot fit under a tall reserved stage on phone.
+    static let phoneMinImageSize: CGFloat = 44
     static let phoneLabelFontSize: CGFloat = 15
     /// Room for 2-line game title + "Round N of M" (56pt forced single-line ellipsis on long sea titles).
     static let phoneTitleBlockHeight: CGFloat = 80
@@ -2769,8 +2772,11 @@ struct CreatureThreeByThreeGridMetrics {
             let rows: CGFloat = 3
             let fixed = titleBlockHeight + 6 + 12 + rows * (6 + 10)
             let perRowLabel = max(18, phoneLabelFontSize * min(widthScale, 1.35) * 1.25)
-            let availableForImages = max(phoneImageSize * rows, maxGridBudget - fixed - rows * perRowLabel)
-            imageSize = max(phoneImageSize, (availableForImages / rows).rounded())
+            // Do not floor available space at phoneImageSize×3 — that prevented shrink and left
+            // blockHeight capped below content (clipped title / missing third row on phone).
+            let availableForImages = maxGridBudget - fixed - rows * perRowLabel
+            let target = availableForImages > 0 ? (availableForImages / rows).rounded() : phoneMinImageSize
+            imageSize = max(phoneMinImageSize, min(imageSize, target))
             labelFontSize = (phoneLabelFontSize * min(imageSize / phoneImageSize, 1.35)).rounded()
             computed = blockHeight(image: imageSize, label: labelFontSize)
         }
@@ -2784,7 +2790,9 @@ struct CreatureThreeByThreeGridMetrics {
             imageSize: imageSize,
             labelFontSize: labelFontSize,
             contentWidth: contentWidth,
-            blockHeight: min(computed, maxGridBudget),
+            // Prefer content height so title + 3 rows are never frame-clipped; ScrollView can scroll
+            // if the reserved stage still leaves the page slightly tall.
+            blockHeight: computed,
             titleBlockHeight: titleBlockHeight
         )
     }

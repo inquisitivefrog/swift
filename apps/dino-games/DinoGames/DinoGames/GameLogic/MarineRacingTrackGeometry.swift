@@ -4,7 +4,8 @@
 //
 //  Racing Marine Reptiles course math. Two layouts:
 //  • `classic` — preserved Feb 2026 design: buoys and wide legs on one outer ring, inner legs inset 36pt (switch back via `RacingTrackLayout.marineBuoyCircle`).
-//  • `slalom` — buoys on outer ring; racers alternate wide legs (past the buoys, may clip the frame) and tight inner legs.
+//  • `slalom` — buoys on outer ring; racers alternate wide legs (past the buoys) and tight inner legs.
+//    Radii are fit-to-rect so wide legs + racer art stay inside the track frame (no L/R clip).
 //
 
 import CoreGraphics
@@ -32,8 +33,17 @@ enum MarineRacingTrackGeometry {
     /// Classic inset between outer and inner racing arcs (preserved design).
     static let classicLaneInset: CGFloat = 36
 
-    /// How far wide legs extend beyond the buoy ring on the slalom course.
+    /// How far wide legs extend beyond the buoy ring on the slalom course (before fit-to-rect).
     static let slalomWideBulge: CGFloat = 38
+
+    /// Lane offset used by `racerOffset` (must stay in sync).
+    static let racerLaneGap: CGFloat = 11
+
+    /// Phone racer art is 48pt; keep half + lane gap + 1pt stroke outside the wide racing line.
+    static let slalomRacerHalfSize: CGFloat = 24
+
+    /// Space outside `wideRadius` so an outer-lane racer stays on-canvas.
+    static var slalomEdgeClearance: CGFloat { racerLaneGap + slalomRacerHalfSize + 1 }
 
     static func circleLaneRadius(width: CGFloat, height: CGFloat, laneInset: CGFloat) -> CGFloat {
         max(40, min(width, height) * 0.36 - laneInset)
@@ -46,11 +56,24 @@ enum MarineRacingTrackGeometry {
         )
     }
 
+    /// Slalom radii sized for the track rect. Prefer ideal buoy/wide/tight proportions; if
+    /// `wideRadius + edgeClearance` would exceed half the shorter side, scale all three uniformly
+    /// (buoy and racer *art* stay at their view sizes — only the course shrinks).
     static func slalomRadii(width: CGFloat, height: CGFloat) -> MarineSlalomRadii {
         let minDim = min(width, height)
-        let buoyRadius = max(48, minDim * 0.395)
-        let wideRadius = buoyRadius + slalomWideBulge
-        let tightRadius = max(34, minDim * 0.215)
+        let half = minDim / 2
+        var buoyRadius = max(48, minDim * 0.395)
+        var wideRadius = buoyRadius + slalomWideBulge
+        var tightRadius = max(34, minDim * 0.215)
+
+        let maxWide = max(40, half - slalomEdgeClearance)
+        if wideRadius > maxWide {
+            let scale = maxWide / wideRadius
+            buoyRadius *= scale
+            wideRadius *= scale
+            tightRadius *= scale
+        }
+
         return MarineSlalomRadii(
             buoyRadius: buoyRadius,
             wideRadius: wideRadius,
@@ -432,7 +455,7 @@ enum MarineRacingTrackGeometry {
         let nx = -tangent.dy / len
         let ny = tangent.dx / len
         let side: CGFloat = racerIndex == 0 ? -1 : 1
-        let gap: CGFloat = 11
+        let gap = racerLaneGap
         return CGSize(width: nx * gap * side, height: ny * gap * side)
     }
 }

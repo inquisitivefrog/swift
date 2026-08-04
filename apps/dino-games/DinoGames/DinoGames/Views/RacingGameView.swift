@@ -1264,16 +1264,8 @@ struct RacingGameView: View {
         case .airportHop:
             let padding: CGFloat = 24
             let trackWidth = max(1, geometry.size.width - padding * 2)
-            let trackHeight = max(120, geometry.size.height - 140)
             let racerSize: CGFloat = 48
             let refereeSize: CGFloat = 64
-
-            let outerPath = airportPath(width: trackWidth, height: trackHeight, inset: 0)
-            let pos1 = pointOnAirportCourse(progress: 1.0, width: trackWidth, height: trackHeight, inset: 0)
-            let pos2 = pointOnAirportCourse(progress: 1.0, width: trackWidth, height: trackHeight, inset: 0)
-            let stagger1 = pteroSharedCourseRacerOffset(forRacerIndex: 0)
-            let stagger2 = pteroSharedCourseRacerOffset(forRacerIndex: 1)
-            let half = racerSize / 2
             let margin: CGFloat = 24
             let finishLineHeight: CGFloat = 12
             let finishLineX = margin - 2
@@ -1282,34 +1274,50 @@ struct RacingGameView: View {
                 VStack(spacing: 8) {
                     Text(finishHeadline)
                         .font(.headline)
-                    ZStack(alignment: .topLeading) {
-                        AirportCourseWaterBackground(width: trackWidth, height: trackHeight)
-                        outerPath
-                            .stroke(style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
-                            .foregroundColor(Color.white.opacity(0.42))
-                            .frame(width: trackWidth, height: trackHeight)
-                        Rectangle()
-                            .fill(Color.white.opacity(0.95))
-                            .frame(width: 4, height: finishLineHeight)
-                            .offset(x: finishLineX, y: trackHeight - margin - finishLineHeight / 2)
+                    GeometryReader { trackGeo in
+                        let trackHeight = max(120, trackGeo.size.height)
+                        let outerPath = airportPath(width: trackWidth, height: trackHeight, inset: 0)
+                        let place1 = pteroAirportRacerTopLeading(
+                            progress: 1.0, racerIndex: 0,
+                            trackWidth: trackWidth, trackHeight: trackHeight, racerSize: racerSize
+                        )
+                        let place2 = pteroAirportRacerTopLeading(
+                            progress: 1.0, racerIndex: 1,
+                            trackWidth: trackWidth, trackHeight: trackHeight, racerSize: racerSize
+                        )
+                        ZStack(alignment: .topLeading) {
+                            AirportCourseWaterBackground(width: trackWidth, height: trackHeight)
+                            outerPath
+                                .stroke(style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
+                                .foregroundColor(Color.white.opacity(0.42))
+                                .frame(width: trackWidth, height: trackHeight)
+                            Rectangle()
+                                .fill(Color.white.opacity(0.95))
+                                .frame(width: 4, height: finishLineHeight)
+                                .offset(x: finishLineX, y: trackHeight - margin - finishLineHeight / 2)
 
-                        Text("🌲").font(.caption).offset(x: margin - 8, y: trackHeight - margin - 6)
-                        Text("🪨").font(.caption).offset(x: trackWidth - margin - 8, y: margin - 4)
-                        Text("🌴").font(.caption).offset(x: trackWidth - margin - 8, y: trackHeight - margin - 6)
-                        Text("⛰️").font(.caption).offset(x: margin - 8, y: margin - 4)
-                        Text("🗿").font(.caption).offset(x: trackWidth * 0.5 - 8, y: trackHeight * 0.5 - 10)
+                            Text("🌲").font(.caption).offset(x: margin - 8, y: trackHeight - margin - 6)
+                            Text("🪨").font(.caption).offset(x: trackWidth - margin - 8, y: margin - 4)
+                            Text("🌴").font(.caption).offset(x: trackWidth - margin - 8, y: trackHeight - margin - 6)
+                            Text("⛰️").font(.caption).offset(x: margin - 8, y: margin - 4)
+                            Text("🗿").font(.caption).offset(x: trackWidth * 0.5 - 8, y: trackHeight * 0.5 - 10)
 
-                        racerView(racer: r1, size: racerSize, pose: .finish)
-                            .offset(x: pos1.x - half + stagger1.width, y: pos1.y - half + stagger1.height)
-                        racerView(racer: r2, size: racerSize, pose: .finish)
-                            .offset(x: pos2.x - half + stagger2.width, y: pos2.y - half + stagger2.height)
+                            racerView(racer: r1, size: racerSize, pose: .finish)
+                                .offset(x: place1.x, y: place1.y)
+                            racerView(racer: r2, size: racerSize, pose: .finish)
+                                .offset(x: place2.x, y: place2.y)
 
-                        refereeImageViewSmall(finishRefereeName, size: refereeSize)
-                        .offset(x: trackWidth / 2 - refereeSize / 2, y: trackHeight * 0.5 + 20)
+                            refereeImageViewSmall(finishRefereeName, size: refereeSize)
+                                .offset(x: trackWidth / 2 - refereeSize / 2, y: trackHeight * 0.5 + 20)
+                        }
+                        .frame(width: trackWidth, height: trackHeight)
+                        .clipped()
+                        .frame(width: trackGeo.size.width, height: trackGeo.size.height, alignment: .top)
                     }
-                    .frame(width: trackWidth, height: trackHeight)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 .padding(.horizontal, padding)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             )
         case .marineBuoyCircle(let buoyCount), .marineBuoySlalom(let buoyCount):
             let style = cfg.trackLayout.marineTrackStyle ?? .slalom
@@ -1628,6 +1636,21 @@ struct RacingGameView: View {
     /// Airport hop course for pterosaurs: A → E → B → C → E → D → A.
     /// Returns point on path for progress in [0, 1]. inset > 0 gives inner (shorter) path.
     private func pointOnAirportCourse(progress: Double, width: CGFloat, height: CGFloat, inset: CGFloat = 0) -> CGPoint {
+        airportCourseSample(progress: progress, width: width, height: height, inset: inset).point
+    }
+
+    private struct AirportCourseSample {
+        let point: CGPoint
+        /// Unit tangent in the direction of increasing race progress.
+        let tangent: CGVector
+    }
+
+    private func airportCourseSample(
+        progress: Double,
+        width: CGFloat,
+        height: CGFloat,
+        inset: CGFloat = 0
+    ) -> AirportCourseSample {
         let p = max(0, min(1, progress))
         let m = 24 + inset
         let w = width
@@ -1640,6 +1663,13 @@ struct RacingGameView: View {
         func len(_ a: CGPoint, _ b: CGPoint) -> CGFloat {
             hypot(b.x - a.x, b.y - a.y)
         }
+        func unit(_ from: CGPoint, _ to: CGPoint) -> CGVector {
+            let dx = to.x - from.x
+            let dy = to.y - from.y
+            let L = hypot(dx, dy)
+            guard L > 0.001 else { return CGVector(dx: 0, dy: -1) }
+            return CGVector(dx: dx / L, dy: dy / L)
+        }
         let L_AE = len(A, E)
         let L_EB = len(E, B)
         let L_BC = len(B, C)
@@ -1651,17 +1681,28 @@ struct RacingGameView: View {
         func lerp(_ a: CGPoint, _ b: CGPoint, t: CGFloat) -> CGPoint {
             CGPoint(x: a.x + t * (b.x - a.x), y: a.y + t * (b.y - a.y))
         }
-        if d < L_AE { return lerp(A, E, t: d / L_AE) }
+        if d < L_AE {
+            return AirportCourseSample(point: lerp(A, E, t: d / L_AE), tangent: unit(A, E))
+        }
         let d2 = d - L_AE
-        if d2 < L_EB { return lerp(E, B, t: d2 / L_EB) }
+        if d2 < L_EB {
+            return AirportCourseSample(point: lerp(E, B, t: d2 / L_EB), tangent: unit(E, B))
+        }
         let d3 = d2 - L_EB
-        if d3 < L_BC { return lerp(B, C, t: d3 / L_BC) }
+        if d3 < L_BC {
+            return AirportCourseSample(point: lerp(B, C, t: d3 / L_BC), tangent: unit(B, C))
+        }
         let d4 = d3 - L_BC
-        if d4 < L_CE { return lerp(C, E, t: d4 / L_CE) }
+        if d4 < L_CE {
+            return AirportCourseSample(point: lerp(C, E, t: d4 / L_CE), tangent: unit(C, E))
+        }
         let d5 = d4 - L_CE
-        if d5 < L_ED { return lerp(E, D, t: d5 / L_ED) }
+        if d5 < L_ED {
+            return AirportCourseSample(point: lerp(E, D, t: d5 / L_ED), tangent: unit(E, D))
+        }
         let d6 = d5 - L_ED
-        return lerp(D, A, t: d6 / L_DA)
+        let t = L_DA > 0 ? min(1, d6 / L_DA) : 1
+        return AirportCourseSample(point: lerp(D, A, t: t), tangent: unit(D, A))
     }
 
     /// Path for airport hop course (same nodes as pointOnAirportCourse with inset 0).
@@ -1715,28 +1756,6 @@ struct RacingGameView: View {
         ]
     }
 
-    /// Fraction along the incoming segment where hop-lag detection arms. Near 1 so pause is at the waypoint (land), not short over open water.
-    private let airportHopLagApproachAlongSegmentDefault: Double = 0.985
-
-    private func airportHopLagApproachAlongSegment(for node: AirportHopNode) -> Double {
-        // Long B→C leg used to undershoot C badly at 0.88; keep all nodes near the marker.
-        switch node {
-        case .c: return 0.995
-        default: return airportHopLagApproachAlongSegmentDefault
-        }
-    }
-
-    /// Course progress where hop lag arms — just before each landmark so a fast tick cannot skip the stop.
-    private func airportLagTriggerProgress(waypointIndex: Int, width: CGFloat, height: CGFloat, inset: CGFloat = 0) -> Double {
-        let wps = airportWaypointProgresses(width: width, height: height, inset: inset)
-        guard waypointIndex >= 0, waypointIndex < wps.count else { return 1.0 }
-        let landmark = wps[waypointIndex].progress
-        let prev = waypointIndex == 0 ? 0.0 : wps[waypointIndex - 1].progress
-        let span = landmark - prev
-        guard span > 1e-9 else { return landmark }
-        return prev + span * airportHopLagApproachAlongSegment(for: wps[waypointIndex].node)
-    }
-
     /// Species-specific landing/takeoff lag ticks at hop nodes.
     private func hopLagTicks(for racer: RacingRacer, at node: AirportHopNode) -> Int {
         let seed = abs(racer.id * 31 + racer.name.count * 17)
@@ -1748,39 +1767,86 @@ struct RacingGameView: View {
         }
     }
 
-    /// Both pterosaurs use one airport course; when progress matches they share the same point — slight diagonal nudge so neither sprite fully hides the other (neck-and-neck).
-    private func pteroSharedCourseRacerOffset(forRacerIndex index: Int) -> CGSize {
-        let d: CGFloat = 9
-        switch index {
-        case 0:
-            return CGSize(width: -d * 0.78, height: -d * 0.56)
-        default:
-            return CGSize(width: d * 0.78, height: d * 0.56)
+    /// Half-gap between the two airport “lanes” (perpendicular to course tangent) while in transit.
+    private let pteroAirportLaneHalfGap: CGFloat = 14
+    /// Progress epsilon: treat as landed on a hop marker (must match timer snap-to-landmark).
+    private let pteroAirportHopLandEpsilon: Double = 0.0015
+
+    private func airportHopLandmarkIndex(
+        progress: Double,
+        width: CGFloat,
+        height: CGFloat
+    ) -> Int? {
+        let wps = airportWaypointProgresses(width: width, height: height, inset: 0)
+        return wps.firstIndex { abs($0.progress - progress) <= pteroAirportHopLandEpsilon }
+    }
+
+    /// Place a racer on the shared airport path.
+    /// In transit: offset left/right of the tangent (like marine lanes).
+    /// On a hop landmark (E/B/C/D): sit on the marker (tiny stack if both land), not beside it.
+    /// Near finish A: stack vertically inside the track.
+    private func pteroAirportRacerTopLeading(
+        progress: Double,
+        racerIndex: Int,
+        trackWidth: CGFloat,
+        trackHeight: CGFloat,
+        racerSize: CGFloat
+    ) -> CGPoint {
+        let sample = airportCourseSample(progress: progress, width: trackWidth, height: trackHeight, inset: 0)
+        let half = racerSize / 2
+        let minX: CGFloat = 2
+        let minY: CGFloat = 2
+        let maxX = max(minX, trackWidth - racerSize - 2)
+        let maxY = max(minY, trackHeight - racerSize - 2)
+
+        let center: CGPoint
+        if progress >= 0.96 {
+            // Finish at A (bottom-left): park both on the infield side of the finish line, stacked up.
+            let stackGap = racerSize + 8
+            center = CGPoint(
+                x: sample.point.x + half + 6,
+                y: sample.point.y - CGFloat(racerIndex) * stackGap
+            )
+        } else if airportHopLandmarkIndex(progress: progress, width: trackWidth, height: trackHeight) != nil {
+            // Land on the waypoint itself — lane offset was reading as “before/after, never on”.
+            let stack: CGFloat = CGFloat(racerIndex) * 12
+            center = CGPoint(
+                x: sample.point.x + (racerIndex == 0 ? -5 : 5),
+                y: sample.point.y - stack
+            )
+        } else {
+            let tangent = sample.tangent
+            let len = hypot(tangent.dx, tangent.dy)
+            let nx: CGFloat
+            let ny: CGFloat
+            if len > 0.001 {
+                nx = -tangent.dy / len
+                ny = tangent.dx / len
+            } else {
+                nx = 1
+                ny = 0
+            }
+            let side: CGFloat = racerIndex == 0 ? -1 : 1
+            center = CGPoint(
+                x: sample.point.x + nx * pteroAirportLaneHalfGap * side,
+                y: sample.point.y + ny * pteroAirportLaneHalfGap * side
+            )
         }
+        return CGPoint(
+            x: min(max(center.x - half, minX), maxX),
+            y: min(max(center.y - half, minY), maxY)
+        )
     }
 
     private func airportTrackView(geometry: GeometryProxy, progress1: Double, progress2: Double, racer1: RacingRacer, racer2: RacingRacer, trippedRacerId: Int?, raceElapsedSeconds: Int) -> some View {
         let padding: CGFloat = 24
         let trackWidth = max(1, geometry.size.width - padding * 2)
-        let trackHeight = max(120, geometry.size.height - 140)
         let racerSize: CGFloat = 48
-        // Keep timer waypoint math aligned with current rendered course dimensions.
-        DispatchQueue.main.async {
-            if abs(self.pteroTrackWidth - trackWidth) > 0.5 || abs(self.pteroTrackHeight - trackHeight) > 0.5 {
-                self.pteroTrackWidth = trackWidth
-                self.pteroTrackHeight = trackHeight
-            }
-        }
-        let outerPath = airportPath(width: trackWidth, height: trackHeight, inset: 0)
-        let pos1 = pointOnAirportCourse(progress: progress1, width: trackWidth, height: trackHeight, inset: 0)
-        let pos2 = pointOnAirportCourse(progress: progress2, width: trackWidth, height: trackHeight, inset: 0)
-        let stagger1 = config.assetPrefix == "ptero" ? pteroSharedCourseRacerOffset(forRacerIndex: 0) : .zero
-        let stagger2 = config.assetPrefix == "ptero" ? pteroSharedCourseRacerOffset(forRacerIndex: 1) : .zero
-
-        let half = racerSize / 2
         let margin: CGFloat = 24
         let finishLineHeight: CGFloat = 12
         let finishLineX = margin - 2
+        let waypointSize: CGFloat = 36
+        let refereeSize: CGFloat = 66
         let nearingFinish = max(progress1, progress2) >= 0.88
         // Last segment (includes D→A): tie pose only for a close race — not whenever anyone crosses ~88% progress.
         let neckAndNeck = abs(progress1 - progress2) < 0.04
@@ -1789,14 +1855,12 @@ struct RacingGameView: View {
             if neckAndNeck { return tieRefereeImageName(prefix: config.assetPrefix) }
             return finishRefereeImageName(prefix: config.assetPrefix, isBroadDelta: true)
         }()
-        let waypointSize: CGFloat = 36
-        let refereeSize: CGFloat = 66
-        // Keep referee beside the course (right side), not on start node A.
-        let refereeX = trackWidth - refereeSize - 8
-        let refereeY = max(8, (trackHeight * 0.5) - (refereeSize * 0.5))
+        let headerScale = GameCatalogImageMetrics.canvasScale(safeWidth: trackWidth, maxScale: 1.75)
+
+        // Header sizes intrinsically; raceway fills leftover height (same as marine/oval — avoids iPad bottom clip).
         return VStack(spacing: 8) {
             Text("Race!")
-                .font(.headline)
+                .font(headerScale > 1.1 ? .title2.weight(.semibold) : .headline)
             speedClockView(
                 racer1: racer1,
                 racer2: racer2,
@@ -1806,87 +1870,115 @@ struct RacingGameView: View {
                 maxWidth: trackWidth
             )
             .frame(maxWidth: .infinity, alignment: .leading)
-            ZStack(alignment: .topLeading) {
-                AirportCourseWaterBackground(width: trackWidth, height: trackHeight)
-                outerPath
-                    .stroke(style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
-                    .foregroundColor(Color.white.opacity(0.42))
-                    .frame(width: trackWidth, height: trackHeight)
-                // Start/finish at airport A (left)
-                Rectangle()
-                    .fill(Color.white.opacity(0.95))
-                    .frame(width: 4, height: finishLineHeight)
-                    .offset(x: finishLineX, y: trackHeight - margin - finishLineHeight / 2)
-                // Raceway points A→E use dedicated waypoint assets (1...5).
-                Group {
-                    if ImageAssetCache.imageExists(named: "ptero-raceway-point-1") {
-                        Image("ptero-raceway-point-1")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: waypointSize, height: waypointSize)
-                    } else {
-                        Text("🌲").font(.caption)
+            GeometryReader { trackGeo in
+                let trackHeight = max(120, trackGeo.size.height)
+                let outerPath = airportPath(width: trackWidth, height: trackHeight, inset: 0)
+                let place1 = pteroAirportRacerTopLeading(
+                    progress: progress1, racerIndex: 0,
+                    trackWidth: trackWidth, trackHeight: trackHeight, racerSize: racerSize
+                )
+                let place2 = pteroAirportRacerTopLeading(
+                    progress: progress2, racerIndex: 1,
+                    trackWidth: trackWidth, trackHeight: trackHeight, racerSize: racerSize
+                )
+                // Keep referee beside the course (right side), not on start node A.
+                let refereeX = trackWidth - refereeSize - 8
+                let refereeY = max(8, (trackHeight * 0.5) - (refereeSize * 0.5))
+                ZStack(alignment: .topLeading) {
+                    AirportCourseWaterBackground(width: trackWidth, height: trackHeight)
+                    outerPath
+                        .stroke(style: StrokeStyle(lineWidth: 2, dash: [6, 6]))
+                        .foregroundColor(Color.white.opacity(0.42))
+                        .frame(width: trackWidth, height: trackHeight)
+                    // Start/finish at airport A (left)
+                    Rectangle()
+                        .fill(Color.white.opacity(0.95))
+                        .frame(width: 4, height: finishLineHeight)
+                        .offset(x: finishLineX, y: trackHeight - margin - finishLineHeight / 2)
+                    // Raceway points A→E use dedicated waypoint assets (1...5).
+                    Group {
+                        if ImageAssetCache.imageExists(named: "ptero-raceway-point-1") {
+                            Image("ptero-raceway-point-1")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: waypointSize, height: waypointSize)
+                        } else {
+                            Text("🌲").font(.caption)
+                        }
                     }
-                }
-                .offset(x: margin - 17, y: trackHeight - margin - 15)
-                Group {
-                    if ImageAssetCache.imageExists(named: "ptero-raceway-point-2") {
-                        Image("ptero-raceway-point-2")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: waypointSize, height: waypointSize)
-                    } else {
-                        Text("🪨").font(.caption)
+                    .offset(x: margin - 17, y: trackHeight - margin - 15)
+                    Group {
+                        if ImageAssetCache.imageExists(named: "ptero-raceway-point-2") {
+                            Image("ptero-raceway-point-2")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: waypointSize, height: waypointSize)
+                        } else {
+                            Text("🪨").font(.caption)
+                        }
                     }
-                }
-                .offset(x: trackWidth - margin - 17, y: margin - 13)
-                Group {
-                    if ImageAssetCache.imageExists(named: "ptero-raceway-point-3") {
-                        Image("ptero-raceway-point-3")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: waypointSize, height: waypointSize)
-                    } else {
-                        Text("🌴").font(.caption)
+                    .offset(x: trackWidth - margin - 17, y: margin - 13)
+                    Group {
+                        if ImageAssetCache.imageExists(named: "ptero-raceway-point-3") {
+                            Image("ptero-raceway-point-3")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: waypointSize, height: waypointSize)
+                        } else {
+                            Text("🌴").font(.caption)
+                        }
                     }
-                }
-                .offset(x: trackWidth - margin - 17, y: trackHeight - margin - 15)
-                Group {
-                    if ImageAssetCache.imageExists(named: "ptero-raceway-point-4") {
-                        Image("ptero-raceway-point-4")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: waypointSize, height: waypointSize)
-                    } else {
-                        Text("⛰️").font(.caption)
+                    .offset(x: trackWidth - margin - 17, y: trackHeight - margin - 15)
+                    Group {
+                        if ImageAssetCache.imageExists(named: "ptero-raceway-point-4") {
+                            Image("ptero-raceway-point-4")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: waypointSize, height: waypointSize)
+                        } else {
+                            Text("⛰️").font(.caption)
+                        }
                     }
-                }
-                .offset(x: margin - 17, y: margin - 13)
-                Group {
-                    if ImageAssetCache.imageExists(named: "ptero-raceway-point-5") {
-                        Image("ptero-raceway-point-5")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: waypointSize, height: waypointSize)
-                    } else {
-                        Text("🗿").font(.caption)
+                    .offset(x: margin - 17, y: margin - 13)
+                    Group {
+                        if ImageAssetCache.imageExists(named: "ptero-raceway-point-5") {
+                            Image("ptero-raceway-point-5")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: waypointSize, height: waypointSize)
+                        } else {
+                            Text("🗿").font(.caption)
+                        }
                     }
+                    .offset(x: trackWidth * 0.5 - 17, y: trackHeight * 0.5 - 19)
+                    Circle()
+                        .fill(Color.white.opacity(0.9))
+                        .frame(width: 6, height: 6)
+                        .offset(x: trackWidth * 0.5 - 3, y: trackHeight * 0.5 - 3)
+                    racerView(racer: racer1, size: racerSize, pose: trippedRacerId == racer1.id ? .tripped : .running)
+                        .offset(x: place1.x, y: place1.y)
+                    racerView(racer: racer2, size: racerSize, pose: trippedRacerId == racer2.id ? .tripped : .running)
+                        .offset(x: place2.x, y: place2.y)
+                    refereeImageViewSmall(refereeImageName, size: refereeSize)
+                        .offset(x: refereeX, y: refereeY)
                 }
-                .offset(x: trackWidth * 0.5 - 17, y: trackHeight * 0.5 - 19)
-                Circle()
-                    .fill(Color.white.opacity(0.9))
-                    .frame(width: 6, height: 6)
-                    .offset(x: trackWidth * 0.5 - 3, y: trackHeight * 0.5 - 3)
-                racerView(racer: racer1, size: racerSize, pose: trippedRacerId == racer1.id ? .tripped : .running)
-                    .offset(x: pos1.x - half + stagger1.width, y: pos1.y - half + stagger1.height)
-                racerView(racer: racer2, size: racerSize, pose: trippedRacerId == racer2.id ? .tripped : .running)
-                    .offset(x: pos2.x - half + stagger2.width, y: pos2.y - half + stagger2.height)
-                refereeImageViewSmall(refereeImageName, size: refereeSize)
-                    .offset(x: refereeX, y: refereeY)
+                .frame(width: trackWidth, height: trackHeight)
+                .clipped()
+                .frame(width: trackGeo.size.width, height: trackGeo.size.height, alignment: .top)
+                .onAppear {
+                    pteroTrackWidth = trackWidth
+                    pteroTrackHeight = trackHeight
+                }
+                .onChange(of: trackHeight) { _, newHeight in
+                    pteroTrackWidth = trackWidth
+                    pteroTrackHeight = newHeight
+                }
             }
-            .frame(width: trackWidth, height: trackHeight)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .padding(.horizontal, padding)
+        // Fill leftover under the in-content title (do not force full geometry height — that clips on iPad).
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
     /// Total path length for oval (rounded rect). Same segment breakdown as `pointOnRoundedRect`.
@@ -2289,9 +2381,6 @@ struct RacingGameView: View {
         }()
         let isMaxDelta = config.poolMinSpeed.map { slowerRacer.speed <= $0 } ?? false
             && config.poolMaxSpeed.map { fasterRacer.speed >= $0 } ?? false
-        let hopWaypoints = config.assetPrefix == "ptero"
-            ? airportWaypointProgresses(width: pteroTrackWidth, height: pteroTrackHeight, inset: 0)
-            : []
         var lagTicksRemainingByRacerId: [Int: Int] = [:]
         var nextLagWaypointIndexByRacerId: [Int: Int] = [r1.id: 0, r2.id: 0]
 
@@ -2300,12 +2389,7 @@ struct RacingGameView: View {
         let timer = Timer(timeInterval: tickInterval, repeats: true) { _ in
             DispatchQueue.main.async {
                 let isTripped = trippedRacerId != nil
-                if let ticks = lagTicksRemainingByRacerId[r1.id], ticks > 0 {
-                    lagTicksRemainingByRacerId[r1.id] = ticks - 1
-                }
-                if let ticks = lagTicksRemainingByRacerId[r2.id], ticks > 0 {
-                    lagTicksRemainingByRacerId[r2.id] = ticks - 1
-                }
+                // Pause check before decrement so a land tick holds the full lag on the marker.
                 let r1LagPaused = (lagTicksRemainingByRacerId[r1.id] ?? 0) > 0
                 let r2LagPaused = (lagTicksRemainingByRacerId[r2.id] ?? 0) > 0
                 let r1Paused = (isTripped && trippedRacerId == r1.id) || r1LagPaused
@@ -2316,41 +2400,39 @@ struct RacingGameView: View {
                 var newP1 = min(1.0, rawP1)
                 var newP2 = min(1.0, rawP2)
 
-                // Pterosaur hops: pause **on** each waypoint (land marker), then continue — species-specific lag length.
-                // Fast racers can skip the narrow [trigger, landmark) window in one tick; snap to the landmark either way.
-                if config.assetPrefix == "ptero", !hopWaypoints.isEmpty {
+                // Pterosaur hops: snap onto each landmark (E→B→C→E→D) and lag there — never pause short of the marker.
+                // Recompute progresses from live track size (frozen 300×200 defaults were landing mid-leg).
+                if config.assetPrefix == "ptero" {
+                    let hopWaypoints = airportWaypointProgresses(
+                        width: pteroTrackWidth,
+                        height: pteroTrackHeight,
+                        inset: 0
+                    )
                     if let idx = nextLagWaypointIndexByRacerId[r1.id], idx < hopWaypoints.count {
                         let waypoint = hopWaypoints[idx]
                         let landmark = waypoint.progress
-                        let trigger = airportLagTriggerProgress(waypointIndex: idx, width: pteroTrackWidth, height: pteroTrackHeight, inset: 0)
-                        if progress1 < landmark {
-                            if newP1 >= landmark {
-                                newP1 = landmark
-                                lagTicksRemainingByRacerId[r1.id] = hopLagTicks(for: r1, at: waypoint.node)
-                                nextLagWaypointIndexByRacerId[r1.id] = idx + 1
-                            } else if newP1 >= trigger && progress1 < trigger {
-                                newP1 = landmark
-                                lagTicksRemainingByRacerId[r1.id] = hopLagTicks(for: r1, at: waypoint.node)
-                                nextLagWaypointIndexByRacerId[r1.id] = idx + 1
-                            }
+                        if progress1 < landmark, newP1 >= landmark {
+                            newP1 = landmark
+                            lagTicksRemainingByRacerId[r1.id] = hopLagTicks(for: r1, at: waypoint.node)
+                            nextLagWaypointIndexByRacerId[r1.id] = idx + 1
                         }
                     }
                     if let idx = nextLagWaypointIndexByRacerId[r2.id], idx < hopWaypoints.count {
                         let waypoint = hopWaypoints[idx]
                         let landmark = waypoint.progress
-                        let trigger = airportLagTriggerProgress(waypointIndex: idx, width: pteroTrackWidth, height: pteroTrackHeight, inset: 0)
-                        if progress2 < landmark {
-                            if newP2 >= landmark {
-                                newP2 = landmark
-                                lagTicksRemainingByRacerId[r2.id] = hopLagTicks(for: r2, at: waypoint.node)
-                                nextLagWaypointIndexByRacerId[r2.id] = idx + 1
-                            } else if newP2 >= trigger && progress2 < trigger {
-                                newP2 = landmark
-                                lagTicksRemainingByRacerId[r2.id] = hopLagTicks(for: r2, at: waypoint.node)
-                                nextLagWaypointIndexByRacerId[r2.id] = idx + 1
-                            }
+                        if progress2 < landmark, newP2 >= landmark {
+                            newP2 = landmark
+                            lagTicksRemainingByRacerId[r2.id] = hopLagTicks(for: r2, at: waypoint.node)
+                            nextLagWaypointIndexByRacerId[r2.id] = idx + 1
                         }
                     }
+                }
+
+                if r1LagPaused {
+                    lagTicksRemainingByRacerId[r1.id] = max(0, (lagTicksRemainingByRacerId[r1.id] ?? 0) - 1)
+                }
+                if r2LagPaused {
+                    lagTicksRemainingByRacerId[r2.id] = max(0, (lagTicksRemainingByRacerId[r2.id] ?? 0) - 1)
                 }
 
                 // Random trip: faster dinosaur can trip once per race. Max delta = 50% chance; else scaled by speed ratio.

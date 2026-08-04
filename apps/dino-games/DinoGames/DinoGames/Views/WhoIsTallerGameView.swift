@@ -184,7 +184,7 @@ struct WhoIsTallerGameView: View {
                                     .padding()
                             }
                         }
-                        .frame(height: grid.blockHeight)
+                        .frame(height: grid.blockHeight, alignment: .top)
                         .frame(width: safeWidth)
 
                         if !displayItems.isEmpty {
@@ -266,7 +266,9 @@ struct WhoIsTallerGameView: View {
                 .id("right-\(selectedSecond?.id ?? 0)")
             }
             .frame(maxWidth: .infinity)
-            .frame(height: rowHeight + 20)
+            .frame(height: rowHeight + 20, alignment: .bottom)
+            // Azhdarchid measure poses are very tall; without clip they can paint into the 3×3 above.
+            .clipped()
             .padding(.horizontal, horizontalPadding)
         }
     }
@@ -561,8 +563,11 @@ struct WhoIsTallerGameView: View {
                     .font(.system(size: 80 * layoutFit))
             }
         }
+        .frame(maxWidth: contentW, maxHeight: contentH, alignment: .bottom)
         .frame(width: contentW, height: contentH, alignment: .bottom)
+        .clipped()
         .frame(width: contentW, height: rowH, alignment: .bottom)
+        .clipped()
     }
 
     /// Dino: ladder pose (`measure-dino-paleontologist-ladder`); ptero: tape pose (`measure-ptero-paleontologist-tape`).
@@ -591,8 +596,11 @@ struct WhoIsTallerGameView: View {
                     .fill(Color.accentColor.opacity(0.5))
             }
         }
+        .frame(maxWidth: contentW, maxHeight: contentH, alignment: .bottom)
         .frame(width: contentW, height: contentH, alignment: .bottom)
+        .clipped()
         .frame(width: contentW, height: rowH, alignment: .bottom)
+        .clipped()
     }
 
     // MARK: - Logic

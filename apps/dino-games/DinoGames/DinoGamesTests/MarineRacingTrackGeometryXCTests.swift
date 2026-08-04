@@ -14,6 +14,46 @@ final class MarineRacingTrackGeometryXCTests: XCTestCase {
         XCTAssertLessThan(radii.tightRadius, radii.buoyRadius)
     }
 
+    /// Phone-width tracks used to clip: wide = buoy + 38 exceeded half the shorter side.
+    func testSlalomWideRadiusFitsInTrackBounds() {
+        let sizes: [(CGFloat, CGFloat)] = [
+            (320, 280),
+            (342, 400),
+            (280, 500),
+            (390, 300),
+            (700, 500),
+        ]
+        for (w, h) in sizes {
+            let radii = MarineRacingTrackGeometry.slalomRadii(width: w, height: h)
+            let half = min(w, h) / 2
+            let outerExtent = radii.wideRadius + MarineRacingTrackGeometry.slalomEdgeClearance
+            XCTAssertLessThanOrEqual(
+                outerExtent,
+                half + 0.01,
+                "wide+clearance \(outerExtent) must fit in half \(half) for \(Int(w))×\(Int(h))"
+            )
+            XCTAssertGreaterThan(radii.wideRadius, radii.buoyRadius)
+            XCTAssertLessThan(radii.tightRadius, radii.buoyRadius)
+        }
+    }
+
+    func testSlalomCoursePointsStayInsideTrackWithRacerClearance() {
+        let w: CGFloat = 320
+        let h: CGFloat = 280
+        let radii = MarineRacingTrackGeometry.slalomRadii(width: w, height: h)
+        let margin = MarineRacingTrackGeometry.slalomEdgeClearance
+        for step in 0...64 {
+            let progress = Double(step) / 64.0
+            let point = MarineRacingTrackGeometry.pointOnSlalomCourse(
+                progress: progress, width: w, height: h, radii: radii, buoyCount: 8
+            )
+            XCTAssertGreaterThanOrEqual(point.x, margin - 0.5)
+            XCTAssertLessThanOrEqual(point.x, w - margin + 0.5)
+            XCTAssertGreaterThanOrEqual(point.y, margin - 0.5)
+            XCTAssertLessThanOrEqual(point.y, h - margin + 0.5)
+        }
+    }
+
     func testClassicPreservedRadiiMatchPriorInset() {
         let radii = MarineRacingTrackGeometry.classicRadii(width: 320, height: 280)
         let expectedOuter = MarineRacingTrackGeometry.circleLaneRadius(width: 320, height: 280, laneInset: 0)
