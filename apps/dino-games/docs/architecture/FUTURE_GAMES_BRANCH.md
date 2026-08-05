@@ -17,8 +17,9 @@
 | Branch | `future-games` / `origin/future-games` |
 | Why it exists | Park **unreleased** high-res game art so the shipping app stays thinner |
 | What moved (Jul 2026, `bcf35920`) | `DinoGames/images/` masters for Tools, Toothache, Fossil Hunt, Habitats, Lunch, Push, Whose Bones, Ptero Formations — **not** `Assets.xcassets` |
+| Assets parked off `main` | Unreleased imagesets removed from release `Assets.xcassets` after syncing onto `future-games`. Some games (Wacky, Clues, Formations, Teens, Coprolites, Pterosaur-Characteristics) have **no** `images/` 1024 masters — catalog on `future-games` is the archive |
 | LFS | Already repo-wide (`*.png` in `.gitattributes`). No per-branch enable. After `git checkout future-games`, run `git lfs pull` |
-| Shipping app still fat? | Unreleased **imagesets** may still live under `DinoGames/Assets.xcassets/` on the release branch — those go in the IPA until removed |
+| Shipping app still fat? | Only imagesets still present under release `Assets.xcassets` go in the IPA |
 
 ## Restore masters onto this branch (do not re-bundle unless shipping)
 

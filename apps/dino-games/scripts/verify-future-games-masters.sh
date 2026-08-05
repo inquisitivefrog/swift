@@ -67,6 +67,7 @@ echo "$CANDIDATES" | while IFS='|' read -r assets_name images_name; do
 
   if [ ! -d "$assets_path" ]; then
     printf '%-28s %10s %8s %10s %10s %s\n' "$assets_name" "-" "-" "-" "-" "NO_ASSETS_ON_RELEASE"
+    echo "NO_ASSETS_ON_RELEASE" >> /tmp/verify-future-games-status.$$
     continue
   fi
 
