@@ -19,6 +19,8 @@
 | File | Description |
 |------|-------------|
 | [OVERVIEW.md](architecture/OVERVIEW.md) | Folder layout, three-layer content model, tests |
+| [FUTURE_GAMES_BRANCH.md](architecture/FUTURE_GAMES_BRANCH.md) | **`future-games` branch** cheat sheet (missing images/) |
+| [APP_SIZE_AND_RELEASE_STRATEGY.md](architecture/APP_SIZE_AND_RELEASE_STRATEGY.md) | App size, `future-games` masters, Build 3/4 packaging strategy |
 | [REFACTOR_GAME_PLATFORM.md](architecture/REFACTOR_GAME_PLATFORM.md) | Shared framework refactor goals and progress |
 
 ---

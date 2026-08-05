@@ -47,8 +47,17 @@ apps/dino-games/
 
 ## Shipping scope
 
-Land category: **12 games** (levels 1–4 in `DinosaurGameCatalog`). Air, sea, and additional land games are built but parked behind level gates.
+Land / air / sea: **levels 1–4** in the game picker (`GameLevel.visibleInGamePicker`). Extra land games (levels 5+) may still have code and JSON on this branch.
+
+**High-res masters for several unreleased games live on git branch `future-games`** (not an LFS glitch if `images/dino-tools/` etc. look empty here).
+
+- Short: [docs/architecture/FUTURE_GAMES_BRANCH.md](docs/architecture/FUTURE_GAMES_BRANCH.md)  
+- Full: [docs/architecture/APP_SIZE_AND_RELEASE_STRATEGY.md](docs/architecture/APP_SIZE_AND_RELEASE_STRATEGY.md)  
+
+(Commit `bcf35920`; folders: Tools, Toothache, Fossil Hunt, Habitats, Lunch, Push, Whose Bones, Ptero Formations.)
+
+Do **not** copy those masters into `Assets.xcassets` until that game is scheduled to ship (app is already ~1.2 GB thinned).
 
 ## Content pipeline
 
-Authoring (`json/`, `images/`) → runtime bundle (`Assets.xcassets`, `Assets/Audio`) → Swift catalogs (`Catalogs/`, `Data/`). Contract tests in `DinoGamesTests/` verify audio and imagesets stay aligned.
+Authoring (`json/`, `images/`) → runtime bundle (`Assets.xcassets`, `Assets/Audio`) → Swift catalogs (`Catalogs/`, `Data/`). Contract tests in `DinoGamesTests/` verify audio and imagesets stay aligned. Unreleased masters may be parked on **`future-games`** instead of `images/` on the release line.

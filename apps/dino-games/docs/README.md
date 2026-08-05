@@ -7,6 +7,7 @@ Documentation for the Dino Games iOS app. Everything lives under `apps/dino-game
 | If you want to… | Read |
 |-----------------|------|
 | Understand code & data flow | [architecture/OVERVIEW.md](architecture/OVERVIEW.md) |
+| Find **`future-games`** branch / missing `images/` art | [architecture/FUTURE_GAMES_BRANCH.md](architecture/FUTURE_GAMES_BRANCH.md) → full story in [architecture/APP_SIZE_AND_RELEASE_STRATEGY.md](architecture/APP_SIZE_AND_RELEASE_STRATEGY.md) |
 | Onboard as a developer | [development/CONVENTIONS.md](development/CONVENTIONS.md) · [development/SETUP.md](development/SETUP.md) |
 | See original game ideas | [brainstorm/BRAINSTORMING.md](brainstorm/BRAINSTORMING.md) |
 | Understand child UX principles | [design/philosophy/DESIGN_PHILOSOPHY.md](design/philosophy/DESIGN_PHILOSOPHY.md) |

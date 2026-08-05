@@ -1,0 +1,29 @@
+---
+description: App size, levels 1–4 shipping scope, and future-games asset parking
+alwaysApply: true
+---
+
+# App size and release scope
+
+Full write-up: `docs/architecture/APP_SIZE_AND_RELEASE_STRATEGY.md`.
+
+**Branch cheat sheet (filename matches the branch):** `docs/architecture/FUTURE_GAMES_BRANCH.md`
+
+## Hard constraints
+
+- Thinned install is ~**1.2 GB**; universal package ~**3.9 GB** (near Apple’s ~4 GB ceiling). Image-heavy `Assets.xcassets` is the driver.
+- **Catalog visibility ≠ IPA contents.** Imagesets in the app target ship even if the game is not in levels 1–4.
+- **Do not** add unreleased game art to `Assets.xcassets` “for later.” Prefer `json/` + masters on branch **`future-games`** (or `images/` out of target) until that game is exposed.
+
+## `future-games` branch
+
+Commit `bcf35920` moved high-res masters for Tools, Toothache, Fossil Hunt, Habitats, Lunch, Push, Whose Bones, Ptero Formations from `images/` on the release line to **`future-games`**. Empty `images/dino-tools/` etc. on main is intentional — not an LFS checkout glitch.
+
+Before deleting an Assets group: confirm 1024 masters exist on `future-games` and/or harvest from Assets into `images/`.
+
+## Product strategy (current)
+
+- One app; levels **1–4** only in the picker.
+- Build 3 stays in review — don’t swap the App Store binary casually.
+- Build 4+: trim unexposed Assets; grow later via packs/ODR, not endless binary stuffing.
+- Land-only future drops OK; three-way parity is optional.
