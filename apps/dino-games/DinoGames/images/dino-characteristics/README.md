@@ -2,10 +2,11 @@
 
 This game is **not** in shipping levels 1–4.
 
-- **1024 masters** and **Xcode imagesets** for `Dinosaur-Characteristics` live on git branch **`future-games`** (see also `origin/future-games`).
+- **Xcode imagesets** (`Assets.xcassets/Dinosaur-Characteristics`) live on git branch **`future-games`** (see also `origin/future-games`). They are **not** on `main`, so they are **not** in the IPA.
+- **1024 masters** under this folder may still exist on `main` for authoring. They are **not** in the app target / IPA. The same masters are also archived on `future-games`.
 - Docs: `docs/architecture/FUTURE_GAMES_BRANCH.md` → `docs/architecture/APP_SIZE_AND_RELEASE_STRATEGY.md`
 
-## Restore (do not re-bundle into the IPA unless shipping this game)
+## Restore imagesets (do not re-bundle into the IPA unless shipping this game)
 
 ```bash
 git checkout future-games -- \
