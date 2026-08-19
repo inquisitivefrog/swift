@@ -36,7 +36,7 @@ Riding near Apple’s ~**4 GB** package ceiling is a hard risk; the 200 MB banne
 
 ### Why it is fat
 
-- Almost all art lives in **`DinoGames/Assets.xcassets`** (~**5.8 GB** on disk before Apple compresses/thins).
+- Almost all art lives in **`DinoGames/Assets.xcassets`**. Local disk after parking unreleased imagesets off `main` (**2026-08-05**, commits `87c883ff` + `ac1d1209`): ~**5.36 GB** (was ~**5.8 GB** before trim). ASC Build 3 numbers above are pre-trim; remasure universal/thinned after the next archive upload.
 - Spoken **audio** is smaller (~tens of MB) but cumulative.
 - **Unlocking or listing only levels 1–4 does not omit assets.** If an imageset is in the app target, it ships. No On Demand Resources yet.
 - App Thinning drops **device variants**, not “unused games.”
@@ -44,7 +44,7 @@ Riding near Apple’s ~**4 GB** package ceiling is a hard risk; the 200 MB banne
 Rough disk examples (order-of-magnitude):
 
 - Live ecology trio Flora (dino + ptero + marine): ~**626 MB** art alone.
-- Unexposed land packs still in Assets (Bones, Characteristics, Fauna, Tools, Toothache, …): ~**500 MB** combined — nothing in the 1–4 picker needs them.
+- Unreleased level‑5+ imagesets are **out of** release `Assets.xcassets` (parked on `future-games`); verify with `bash apps/dino-games/scripts/verify-future-games-masters.sh` (expect `NO_ASSETS_ON_RELEASE`).
 
 Repo masters under **`DinoGames/images/`** (~4+ GB) are for generation / provenance; they only affect the IPA if copied into the Xcode asset catalog / target.
 
