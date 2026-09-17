@@ -1,6 +1,6 @@
 # App size, catalog scope, and release strategy
 
-Recorded **2026-08-05** after App Store Connect size review (Build **1.0 (3)**) and related product discussion. Updated **2026-08-20** after **1.0 (3)** went live (Pending Developer Release → released) and the post-ship discussion on levels 5+ / a second app. Use this when trimming assets, planning updates, or deciding whether to add games / a second listing.
+Recorded **2026-08-05** after App Store Connect size review (Build **1.0 (3)**) and related product discussion. Updated **2026-08-20** after **1.0 (3)** went live (Pending Developer Release → released) and the post-ship discussion on levels 5+ / a second app. Updated **2026-09-17** after the TestFlight-Internal walkthrough demo build (crash fix + app-icon-validation fix) and the **1.0.2 (11)** metadata-only submission (title/subtitle/keywords ASO, category change). Use this when trimming assets, planning updates, or deciding whether to add games / a second listing.
 
 > **`future-games` branch:** High-res `images/` masters for several level‑5+ games were moved off the release line onto **`future-games`** / `origin/future-games` (commit `bcf35920`, 2026-07-02). If `images/dino-tools/` (and similar) look empty here, check that branch first — it is not a Git LFS checkout failure. See [§3](#3-future-games-branch-do-not-forget).
 >
@@ -88,7 +88,34 @@ git checkout future-games -- apps/dino-games/DinoGames/images/dino-tools
 - **1.0 (3)** submitted **2026-08-03**, approved, then **manually released** **2026-08-20** (status had been Pending Developer Release).
 - **1.0 (4)** stayed TestFlight-only (still labeled marketing version 1.0 — cannot relabel an uploaded binary).
 - Bugfix follow-up: archive **1.0.1 (5)** → TestFlight → App Store version **1.0.1**, prefer **Automatically release this version** for patches.
+- **1.0.1 (7)** is the live/current App Store release as of 2026-09.
 - While a version is **In Review**, do not swap the selected binary (resets the queue).
+
+### TestFlight-Internal walkthrough / demo track (2026-09-16 → 2026-09-17)
+
+Built for showing the app at interviews (see [`WALKTHROUGH_TESTFLIGHT.md`](../development/WALKTHROUGH_TESTFLIGHT.md)) — separate from the App Store track above, same marketing version numbering but its own build lineage:
+
+| Build | Result |
+|-------|--------|
+| **1.0.2 (8)** | Uploaded to TestFlight Internal Only; **crashed immediately on selecting Land**. Root cause: `DeveloperSessionFlags.showAllCatalogLevels` expanded the picker to every `GameLevel` for every category, which forced construction of Land's level 5–10 games (Dino Tools, Dino Bones, …) whose art is parked on `future-games`. At least two of those configs `fatalError()` when their round builder can't find enough qualifying creatures (`DinoToolsGameConfigs.dinoTools`, `GuessGameConfigs.dinoBones` — both confirmed via on-device crash traces). |
+| **1.0.2 (9)** | Crash fixed (walkthrough reverted to the same 1–4 levels as shipping — free navigation without forced completion order was always the actual goal, not extra levels). Upload itself then **rejected by ASC** with icon errors (91111 missing opaque 1024 "Any Appearance" icon, 90023 missing iPad 152×152, 90022 missing iPhone 120×120). |
+| **1.0.2 (10)** | Icon fixed (see app-icon fix below). Uploaded to TestFlight Internal Only successfully — this is the working interview/demo build. |
+
+Also discovered along the way: the `DinoGames-Walkthrough` shared Xcode scheme didn't exist (`xcshareddata/xcschemes/` was empty) — only the `Walkthrough` build configuration did. Added shared schemes for both `DinoGames` and `DinoGames-Walkthrough` so `xcodebuild archive -scheme DinoGames-Walkthrough` works from the CLI.
+
+### App icon fix (2026-09-17, applies to every config)
+
+Two defects in `AppIcon.appiconset`, both real for the production build too (not walkthrough-specific):
+
+1. `Dino-Games-app-icon-1024.png` carried an unused-but-present alpha channel (image was already 100% opaque). The App Store marketing icon slot requires **no alpha at all**; ASC treats an icon with any alpha channel as missing. Stripped the channel — lossless, no visual change.
+2. The project never set `ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS`, so Xcode's single-1024-source app icon never generated the full legacy icon roster (120×120 iPhone, 152×152 iPad, etc.) — contrary to the assumption in [`development/setup/APP_ICON_SETUP.md`](../development/setup/APP_ICON_SETUP.md) that a single 1024 PNG is sufficient. Added the build setting to all three `DinoGames` target configs.
+
+### 1.0.2 (11) — metadata-only App Store submission (2026-09-17)
+
+Production `DinoGames` (Release-scheme) archive, separate build number from the walkthrough track since App Store Connect enforces (version, build) uniqueness across TestFlight *and* the App Store regardless of which scheme built it. No functional/code changes beyond the app icon fix above — the walkthrough feature stays compile-gated off (`DINO_WALKTHROUGH`) for Release. Submitted for review with:
+
+- Updated **Name**, **Subtitle**, and **Keywords** for ASO (current values live in App Store Connect; the app's bare "DinoGames" title/subtitle were indexing almost nothing per an unsolicited ASO-tool email that turned out to be factually correct).
+- **Category** changed: primary **Family → Education**, secondary **Games → Puzzle** added — see [§7](#7-app-store-discovery-notes-2026-08-20), which had flagged this as a "revisit later" item since launch.
 
 ### Product shape
 
@@ -147,6 +174,8 @@ Treat those as **downloadable expansions** (or a later deliberate cut after meas
 | Topic | Decision |
 |-------|----------|
 | Live (2026-08-20) | **1.0 (3)** released; patch via **1.0.1** (+ new build numbers) |
+| Live (2026-09) | **1.0.1 (7)**; **1.0.2 (11)** submitted for review 2026-09-17 (metadata-only: ASO title/subtitle/keywords, category → Education + Games/Puzzle, app icon validation fix) |
+| Demo track | TestFlight-Internal-Only `DinoGames-Walkthrough` scheme, separate build lineage; current working build **1.0.2 (10)** — never eligible for App Store submission |
 | Ship core | One app, levels 1–4, three biomes |
 | Extra land games (5+) | Code/JSON/`future-games` masters OK; **out of IPA** until exposed |
 | Image-heavy next | Fauna (×3) and Fossil Hunt → packs / ODR, not main-binary stuffing |
@@ -165,3 +194,4 @@ Observed right after **1.0** went live:
 - iPhone **Search** for `Dinogames` may not surface the new app yet (indexing lag + zero ratings vs established/sponsored results).
 - Search suggestion chips under that query (e.g. kids, offline, zoo, baby, survival, hunter) are **related search terms**, **not** App Store primary categories — **Family does not appear there**, and that does not mean the listing lost its category.
 - Visible competitors on that query were tagged **Education** in results. Revisit later whether primary category **Family** vs **Education** (or Education + Family secondary) helps ASO; change only as a deliberate metadata decision on a new version.
+- **Resolved 2026-09-17:** changed primary category to **Education**, added secondary **Games → Puzzle**, as part of the **1.0.2 (11)** metadata submission (see §4).
