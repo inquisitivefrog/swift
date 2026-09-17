@@ -234,15 +234,6 @@ struct BalanceGameView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            #if DEBUG
-            if DeveloperSessionFlags.showEarlyExitDone, phase != .victory && phase != .ranOut {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") { isPresented = false }
-                }
-            }
-            #endif
-        }
         .onAppear {
             // Init round items on first load
             if roundItems.isEmpty && !gameConfig.items.isEmpty {

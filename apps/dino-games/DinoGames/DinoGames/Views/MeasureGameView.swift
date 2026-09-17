@@ -269,12 +269,14 @@ struct MeasureGameView: View {
             let topInset = geometry.safeAreaInsets.top
             let safeHeight = max(geometry.size.height, 1)
             let safeWidth = max(geometry.size.width, 1)
-            let measureStageH = GameCatalogImageMetrics.scaled(340, safeWidth: safeWidth, maxScale: playMaxScale) + 20 + 8
+            let chrome = 32 + topInset
+            let desiredMeasureH = GameCatalogImageMetrics.scaled(340, safeWidth: safeWidth, maxScale: playMaxScale) + 20 + 8
+            let measureStageH = min(desiredMeasureH, max(200, (safeHeight - chrome) * 0.30))
             let grid = CreatureThreeByThreeGridMetrics.make(
                 safeWidth: safeWidth,
                 safeHeight: safeHeight,
                 reservedStageHeight: measureStageH,
-                chrome: 32 + topInset
+                chrome: chrome
             )
             ScrollView(.vertical, showsIndicators: true) {
                 VStack(spacing: 0) {

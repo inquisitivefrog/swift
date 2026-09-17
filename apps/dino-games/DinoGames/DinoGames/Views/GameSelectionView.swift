@@ -443,7 +443,8 @@ struct GameSelectionView: View {
             let columnSpacing: CGFloat = 16
             let horizontalPadding: CGFloat = 20
             let headerReserve: CGFloat = guidedPlayMode ? 8 : 88
-            let levelCount = CGFloat(GameLevel.visibleInGamePicker.count)
+            let pickerLevels = GameCatalog.pickerLevels(for: category)
+            let levelCount = CGFloat(pickerLevels.count)
             let rowCount = max(1, ceil(levelCount / CGFloat(columnCount)))
             let verticalBudget = max(0, geo.size.height - headerReserve - 24)
             let tileHeight = max(
@@ -464,7 +465,7 @@ struct GameSelectionView: View {
                         ),
                         spacing: rowSpacing
                     ) {
-                        ForEach(GameLevel.visibleInGamePicker) { level in
+                        ForEach(pickerLevels) { level in
                             LevelCard(
                                 category: category,
                                 level: level,
@@ -494,7 +495,7 @@ struct GameSelectionView: View {
         .onAppear {
             // Manual replay only: guided auto-play skips the level picker (and this prompt).
             guard !guidedPlayMode else { return }
-            if UITestConfiguration.skipGameSelectionIntros {
+            if DeveloperSessionFlags.skipGameSelectionIntros {
                 isAudioPlaying = false
                 return
             }
@@ -737,7 +738,7 @@ struct GameSelectionView: View {
             // So the game-name walk runs for each level when the list changes (non-readers memorize by hearing names).
             lastCompletedGameForGuidedAdvance = nil
             if newLevel != nil {
-                if UITestConfiguration.skipGameSelectionIntros {
+                if DeveloperSessionFlags.skipGameSelectionIntros {
                     hasPlayedWelcome = true
                     isAudioPlaying = false
                     landLevelIntermissionActive = false
@@ -1097,6 +1098,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showMatchingGame)
             }
             .fullScreenCover(isPresented: $showWeighGame) {
                 NavigationStack {
@@ -1105,6 +1107,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showWeighGame)
             }
             .fullScreenCover(isPresented: $showBalanceGame) {
                 NavigationStack {
@@ -1113,6 +1116,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showBalanceGame)
             }
             .fullScreenCover(isPresented: $showGuessGame) {
                 NavigationStack {
@@ -1123,6 +1127,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showGuessGame)
             }
             .fullScreenCover(isPresented: $showFindMamaGame) {
                 NavigationStack {
@@ -1133,6 +1138,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showFindMamaGame)
             }
             .fullScreenCover(isPresented: $showDinoLunchGame) {
                 NavigationStack {
@@ -1143,6 +1149,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showDinoLunchGame)
             }
             .fullScreenCover(isPresented: $showWackyGame) {
                 NavigationStack {
@@ -1153,6 +1160,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showWackyGame)
             }
             .fullScreenCover(isPresented: $showToothacheGame) {
                 NavigationStack {
@@ -1163,6 +1171,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showToothacheGame)
             }
             .fullScreenCover(isPresented: $showSmilingDinosGame) {
                 NavigationStack {
@@ -1173,6 +1182,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showSmilingDinosGame)
             }
             .fullScreenCover(isPresented: $showDinoEggsGame) {
                 NavigationStack {
@@ -1183,6 +1193,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showDinoEggsGame)
             }
             .fullScreenCover(isPresented: $showDinoToolsGame) {
                 NavigationStack {
@@ -1193,6 +1204,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showDinoToolsGame)
             }
             .fullScreenCover(isPresented: $showRacingPeriodSelection) {
                 NavigationStack {
@@ -1205,6 +1217,7 @@ private struct GameSelectionNavigationContent: View {
                 })
             
                 }
+                .walkthroughEarlyExit(isPresented: $showRacingPeriodSelection)
             }
             .fullScreenCover(isPresented: $showRacingGame) {
                 NavigationStack {
@@ -1213,6 +1226,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showRacingGame)
             }
             .fullScreenCover(isPresented: $showDinoMatrixGame) {
                 NavigationStack {
@@ -1223,6 +1237,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showDinoMatrixGame)
             }
             .fullScreenCover(isPresented: $showDinoAgesGame) {
                 NavigationStack {
@@ -1236,6 +1251,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showDinoAgesGame)
             }
             .fullScreenCover(isPresented: $showDinoFormationsGame) {
                 NavigationStack {
@@ -1246,6 +1262,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showDinoFormationsGame)
             }
             .fullScreenCover(isPresented: $showDinoHabitatsGame) {
                 NavigationStack {
@@ -1256,6 +1273,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showDinoHabitatsGame)
             }
             .fullScreenCover(isPresented: $showDinoFloraGame) {
                 NavigationStack {
@@ -1266,6 +1284,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showDinoFloraGame)
             }
             .fullScreenCover(isPresented: $showPteroFloraGame) {
                 NavigationStack {
@@ -1276,6 +1295,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showPteroFloraGame)
             }
             .fullScreenCover(isPresented: $showPteroEggsGame) {
                 NavigationStack {
@@ -1286,6 +1306,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showPteroEggsGame)
             }
             .fullScreenCover(isPresented: $showDinoFaunaGame) {
                 NavigationStack {
@@ -1296,6 +1317,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showDinoFaunaGame)
             }
             .fullScreenCover(isPresented: $showDinoFossilHuntGame) {
                 NavigationStack {
@@ -1306,6 +1328,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showDinoFossilHuntGame)
             }
             .fullScreenCover(isPresented: $showMeasureGame) {
                 NavigationStack {
@@ -1316,6 +1339,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showMeasureGame)
             }
             .fullScreenCover(isPresented: $showWhoIsTallerGame) {
                 NavigationStack {
@@ -1326,30 +1350,35 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showWhoIsTallerGame)
             }
             .fullScreenCover(isPresented: $showDinoPushGame) {
                 NavigationStack {
                 DinoPushGameView(isPresented: $showDinoPushGame, gameConfig: DinoPushGameConfigs.dinoPushNeedsPeriod)
             
                 }
+                .walkthroughEarlyExit(isPresented: $showDinoPushGame)
             }
             .fullScreenCover(isPresented: $showDinoPuzzleGame) {
                 NavigationStack {
                 DinoPuzzleGameView(isPresented: $showDinoPuzzleGame, gameConfig: DinoPuzzleGameConfigs.dinoPuzzle)
             
                 }
+                .walkthroughEarlyExit(isPresented: $showDinoPuzzleGame)
             }
             .fullScreenCover(isPresented: $showPteroPuzzleGame) {
                 NavigationStack {
                 PteroPuzzleGameView(isPresented: $showPteroPuzzleGame, gameConfig: PteroPuzzleGameConfigs.pteroPuzzle)
             
                 }
+                .walkthroughEarlyExit(isPresented: $showPteroPuzzleGame)
             }
             .fullScreenCover(isPresented: $showMarinePuzzleGame) {
                 NavigationStack {
                 MarineReptilePuzzleGameView(isPresented: $showMarinePuzzleGame, gameConfig: MarineReptilePuzzleGameConfigs.marinePuzzle)
             
                 }
+                .walkthroughEarlyExit(isPresented: $showMarinePuzzleGame)
             }
             .fullScreenCover(isPresented: $showMarineFloraGame) {
                 NavigationStack {
@@ -1360,6 +1389,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showMarineFloraGame)
             }
             .fullScreenCover(isPresented: $showMarineEggsGame) {
                 NavigationStack {
@@ -1375,6 +1405,7 @@ private struct GameSelectionNavigationContent: View {
                 }
             
                 }
+                .walkthroughEarlyExit(isPresented: $showMarineEggsGame)
             }
     }
 
@@ -1857,7 +1888,7 @@ private struct GameSelectionNavigationContent: View {
 
     private func runWelcomeAndWalkIfNeeded() {
         guard showingGameList, !hasPlayedWelcome else { return }
-        if UITestConfiguration.skipGameSelectionIntros {
+        if DeveloperSessionFlags.skipGameSelectionIntros {
             hasPlayedWelcome = true
             isAudioPlaying = false
             speechManager.onAudioFinished = nil
@@ -2731,19 +2762,30 @@ enum GameCatalogImageMetrics {
 /// Used by Weigh / Which taller-longer / Measure / Balance select-heavy so land-air-sea stay aligned.
 struct CreatureThreeByThreeGridMetrics {
     static let phoneImageSize: CGFloat = 96
-    /// Floor when the play stage (seesaw / measure) leaves a tight vertical budget — must go below
-    /// `phoneImageSize` or the 3×3 cannot fit under a tall reserved stage on phone.
-    static let phoneMinImageSize: CGFloat = 44
+    /// Readable / tappable floor on phone. Below this the 3×3 looks like a thumbnail strip.
+    static let phoneMinImageSize: CGFloat = 80
     static let phoneLabelFontSize: CGFloat = 15
     /// Room for 2-line game title + "Round N of M" (56pt forced single-line ellipsis on long sea titles).
     static let phoneTitleBlockHeight: CGFloat = 80
     static let maxScale: CGFloat = 1.85
+    /// Outer inset used by `contentWidth` (`safeWidth - 24`).
+    static let outerHorizontalInset: CGFloat = 24
+    /// LazyVGrid padding + two gutters + card chrome packed into the width formula.
+    static let packedNonImageWidth: CGFloat = 10 * 2 + 6 * 2 + 24
 
     let imageSize: CGFloat
     let labelFontSize: CGFloat
     let contentWidth: CGFloat
     let blockHeight: CGFloat
     let titleBlockHeight: CGFloat
+
+    /// Three portraits across `safeWidth`, capped at the iPad max scale.
+    static func widthFillingImageSize(safeWidth: CGFloat) -> CGFloat {
+        let maxContent = max(1, safeWidth - outerHorizontalInset)
+        let filled = ((maxContent - packedNonImageWidth) / 3).rounded()
+        let iPadCap = (phoneImageSize * maxScale).rounded()
+        return min(max(filled, phoneMinImageSize), iPadCap)
+    }
 
     /// `reservedStageHeight` is the play area below the grid (seesaw, measure stage, etc).
     static func make(
@@ -2756,7 +2798,7 @@ struct CreatureThreeByThreeGridMetrics {
         let titleBlockHeight = phoneTitleBlockHeight
         let maxGridBudget = max(minimumGridBudget, safeHeight - reservedStageHeight - chrome)
         let widthScale = max(1, min(maxScale, safeWidth / GameCatalogImageMetrics.phoneReferenceWidth))
-        var imageSize = (phoneImageSize * widthScale).rounded()
+        var imageSize = widthFillingImageSize(safeWidth: safeWidth)
         var labelFontSize = (phoneLabelFontSize * min(widthScale, 1.35)).rounded()
 
         func rowHeight(image: CGFloat, label: CGFloat) -> CGFloat {
@@ -2772,8 +2814,6 @@ struct CreatureThreeByThreeGridMetrics {
             let rows: CGFloat = 3
             let fixed = titleBlockHeight + 6 + 12 + rows * (6 + 10)
             let perRowLabel = max(18, phoneLabelFontSize * min(widthScale, 1.35) * 1.25)
-            // Do not floor available space at phoneImageSize×3 — that prevented shrink and left
-            // blockHeight capped below content (clipped title / missing third row on phone).
             let availableForImages = maxGridBudget - fixed - rows * perRowLabel
             let target = availableForImages > 0 ? (availableForImages / rows).rounded() : phoneMinImageSize
             imageSize = max(phoneMinImageSize, min(imageSize, target))
@@ -2782,8 +2822,8 @@ struct CreatureThreeByThreeGridMetrics {
         }
 
         let contentWidth = min(
-            safeWidth - 24,
-            imageSize * 3 + 10 * 2 + 6 * 2 + 24
+            safeWidth - outerHorizontalInset,
+            imageSize * 3 + packedNonImageWidth
         )
 
         return CreatureThreeByThreeGridMetrics(
@@ -2917,7 +2957,7 @@ struct GameTransitionView: View {
         }
         .allowsHitTesting(false)
         .onAppear {
-            if UITestConfiguration.skipGameSelectionIntros {
+            if DeveloperSessionFlags.skipGameSelectionIntros {
                 onComplete()
                 return
             }

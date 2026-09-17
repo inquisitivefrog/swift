@@ -108,8 +108,15 @@ enum GameLevel: String, CaseIterable, Identifiable {
 }
 
 extension GameLevel {
-    /// Levels shown in each category’s level picker (land / air / marine). Levels 5+ remain on the enum for assets and future releases but are omitted from the picker and from catalog `games` aggregation until re-enabled.
-    static let visibleInGamePicker: [GameLevel] = [.level1, .level2, .level3, .level4]
+    /// App Store picker: levels **1–4** only. Walkthrough (`DeveloperSessionFlags.showAllCatalogLevels`) expands `visibleInGamePicker` to every rung.
+    static let shippingVisibleInGamePicker: [GameLevel] = [.level1, .level2, .level3, .level4]
+
+    /// Levels shown in each category’s level picker and used to flatten catalog `games`. Shipping builds stay on 1–4; a walkthrough session lists every `GameLevel`.
+    static var visibleInGamePicker: [GameLevel] {
+        DeveloperSessionFlags.showAllCatalogLevels
+            ? Array(GameLevel.allCases)
+            : shippingVisibleInGamePicker
+    }
 }
 
 enum DinosaurGameCatalog {

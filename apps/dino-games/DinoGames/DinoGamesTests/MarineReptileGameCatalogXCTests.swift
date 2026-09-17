@@ -41,7 +41,7 @@ final class MarineReptileGameCatalogXCTests: XCTestCase {
     }
 
     func testVisibleMarineLevelsAreOneThroughFour() {
-        XCTAssertEqual(GameLevel.visibleInGamePicker, [.level1, .level2, .level3, .level4])
+        XCTAssertEqual(GameLevel.shippingVisibleInGamePicker, [.level1, .level2, .level3, .level4])
     }
 
     func testEachShippingMarineLevelOneAndTwoHasThreeGamesInCatalogOrder() {
@@ -73,7 +73,7 @@ final class MarineReptileGameCatalogXCTests: XCTestCase {
     }
 
     func testShippingMarineGamesMapToMarineProgressCategory() {
-        let ids = GameLevel.visibleInGamePicker.flatMap { MarineReptileGameCatalog.games(level: $0).compactMap(\.id) }
+        let ids = GameLevel.shippingVisibleInGamePicker.flatMap { MarineReptileGameCatalog.games(level: $0).compactMap(\.id) }
         for id in ids {
             XCTAssertEqual(
                 GameCategory.forCatalogConfigId(id),

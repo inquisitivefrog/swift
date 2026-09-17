@@ -51,7 +51,7 @@ struct CategoryGuidedCompletionView: View {
         .allowsHitTesting(true)
         .accessibilityIdentifier("category-guided-completion")
         .task {
-            if UITestConfiguration.skipGameSelectionIntros {
+            if DeveloperSessionFlags.skipGameSelectionIntros {
                 onComplete()
                 return
             }

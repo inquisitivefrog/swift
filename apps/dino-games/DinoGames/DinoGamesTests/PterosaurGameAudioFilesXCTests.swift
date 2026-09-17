@@ -13,7 +13,7 @@ import XCTest
 final class PterosaurGameAudioFilesXCTests: XCTestCase {
 
     func testAirGameCatalogHasAudioContractForEveryPlacedGame() {
-        let placed = GameCatalog.allPlacedGames().filter { $0.category == .air }
+        let placed = GameCatalog.allPlacedGames(levels: GameLevel.shippingVisibleInGamePicker).filter { $0.category == .air }
         XCTAssertFalse(placed.isEmpty, "Expected air games in the visible catalog.")
 
         let contractedIds = Set(PterosaurGameAudioContracts.all.map(\.configId))
@@ -37,7 +37,7 @@ final class PterosaurGameAudioFilesXCTests: XCTestCase {
 
     @MainActor
     func testPlacedAirGameAudioKeysResolveInBundle() {
-        let placed = GameCatalog.allPlacedGames().filter { $0.category == .air }
+        let placed = GameCatalog.allPlacedGames(levels: GameLevel.shippingVisibleInGamePicker).filter { $0.category == .air }
         for slot in placed {
             guard let configId = slot.game.id else { continue }
             if configId == "ptero-smile" {
@@ -92,7 +92,7 @@ final class PterosaurGameAudioFilesXCTests: XCTestCase {
     @MainActor
     func testPteroMatrixIntroResolvesWhenGameIsPlaced() {
         guard PteroMatrixGameConfigs.makePteroMatrix() != nil else { return }
-        let placed = GameCatalog.allPlacedGames().filter { $0.category == .air }
+        let placed = GameCatalog.allPlacedGames(levels: GameLevel.shippingVisibleInGamePicker).filter { $0.category == .air }
         guard placed.contains(where: { $0.game.id == "ptero-matrix" }) else { return }
 
         let speech = SpeechManager()

@@ -79,15 +79,6 @@ struct WhoIsTallerGameView: View {
         !canTapGrid || speechManager.isPlaying
     }
 
-    /// Hide the nav bar unless Debug early-exit Done is enabled (avoids empty chrome + duplicate titles).
-    private var earlyExitNavigationBarVisibility: Visibility {
-        #if DEBUG
-        DeveloperSessionFlags.showEarlyExitDone ? .automatic : .hidden
-        #else
-        .hidden
-        #endif
-    }
-
     /// Phone-reference measure stage sizes; scaled via `GameCatalogImageMetrics` on wider canvases.
     private let phoneMeasureSlotWidth: CGFloat = 140
     private let phoneMeasureAreaHeight: CGFloat = 340
@@ -102,30 +93,38 @@ struct WhoIsTallerGameView: View {
     private let marineLengthTapeRulerAssetName = "measure-marine-tape-tool"
     private let playMaxScale: CGFloat = 1.75
 
-    private func measureStageReserveHeight(safeWidth: CGFloat) -> CGFloat {
+    private func measureStageReserveHeight(safeWidth: CGFloat, stageBudget: CGFloat) -> CGFloat {
         if isMarinePool {
             let stripH = GameCatalogImageMetrics.scaled(phoneMarineLengthStripHeight, safeWidth: safeWidth, maxScale: playMaxScale)
             let tapeH = GameCatalogImageMetrics.scaled(phoneMarineLengthTapeRulerHeight, safeWidth: safeWidth, maxScale: playMaxScale)
-            return stripH * 2 + tapeH + 8
+            return min(stripH * 2 + tapeH + 8, stageBudget)
         }
         let areaH = GameCatalogImageMetrics.scaled(phoneMeasureAreaHeight, safeWidth: safeWidth, maxScale: playMaxScale)
-        return areaH + 20 + 8
+        return min(areaH + 20 + 8, stageBudget)
     }
 
     var body: some View {
         GeometryReader { geometry in
             // GeometryReader lays out under the status bar / Dynamic Island; pad content and
-            // fold the same inset into grid chrome so the 3×3 shrinks instead of colliding
-            // with the reserved tall measure stage (worst case: two sauropods).
+            // fold the same inset into grid chrome. Cap the measure-stage claim so the 3×3
+            // keeps phone-width portraits instead of shrinking under two sauropods.
             let topInset = geometry.safeAreaInsets.top
             let safeHeight = max(geometry.size.height, 1)
             let safeWidth = max(geometry.size.width, 1)
+            let chrome = 32 + topInset
+            let stageBudget = max(200, (safeHeight - chrome) * 0.30)
+            let reservedStage = measureStageReserveHeight(safeWidth: safeWidth, stageBudget: stageBudget)
             let grid = CreatureThreeByThreeGridMetrics.make(
                 safeWidth: safeWidth,
                 safeHeight: safeHeight,
-                reservedStageHeight: measureStageReserveHeight(safeWidth: safeWidth),
-                chrome: 32 + topInset
+                reservedStageHeight: reservedStage,
+                chrome: chrome
             )
+            // Pterosaur height poses are tall-and-narrow; leftover below the 3×3 goes to them.
+            // Land taller and marine length already look right in the reserved band.
+            let measureStageHeight = isPterosaurPool
+                ? max(reservedStage, safeHeight - grid.blockHeight - chrome)
+                : reservedStage
             if isGameOver {
                 // Full-screen victory (same as Weigh / Name That Dinosaur) so the game title stays pinned and visible.
                 victoryView
@@ -188,8 +187,8 @@ struct WhoIsTallerGameView: View {
                         .frame(width: safeWidth)
 
                         if !displayItems.isEmpty {
-                            whoIsTallerMeasureArea(availableWidth: safeWidth)
-                                .frame(maxWidth: .infinity)
+                            whoIsTallerMeasureArea(availableWidth: safeWidth, maxHeight: measureStageHeight)
+                                .frame(width: safeWidth)
                                 .padding(.top, 8)
                         }
 
@@ -202,19 +201,9 @@ struct WhoIsTallerGameView: View {
             }
         }
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar(earlyExitNavigationBarVisibility, for: .navigationBar)
+        .toolbar(.hidden, for: .navigationBar)
         .allowsHitTesting(!blocksUserInput)
         .gameSheetDismissDisabledWhileAudioPlaying(blocksUserInput)
-        .toolbar {
-            #if DEBUG
-            if DeveloperSessionFlags.showEarlyExitDone, !isGameOver {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") { isPresented = false }
-                        .disabled(blocksUserInput)
-                }
-            }
-            #endif
-        }
         .onAppear {
             startRound()
         }
@@ -223,62 +212,118 @@ struct WhoIsTallerGameView: View {
     // MARK: - Measure area — dino/ptero: left | paleontologist | right; marine: scuba | stacked wide strips
 
     @ViewBuilder
-    private func whoIsTallerMeasureArea(availableWidth: CGFloat) -> some View {
+    private func whoIsTallerMeasureArea(availableWidth: CGFloat, maxHeight: CGFloat) -> some View {
         if isMarinePool {
-            marineLengthComparisonArea(availableWidth: availableWidth)
+            marineLengthComparisonArea(availableWidth: availableWidth, maxHeight: maxHeight)
+        } else if isPterosaurPool {
+            pterosaurHeightComparisonArea(availableWidth: availableWidth, maxHeight: maxHeight)
         } else {
-            // Pack left | tape | right tightly so height comparison stays readable; fit the row
-            // when ideal widths would overflow (common on phone with two full-height poses).
-            let slotW = GameCatalogImageMetrics.scaled(phoneMeasureSlotWidth, safeWidth: availableWidth, maxScale: playMaxScale)
-            let areaH = GameCatalogImageMetrics.scaled(phoneMeasureAreaHeight, safeWidth: availableWidth, maxScale: playMaxScale)
-            let centerW = GameCatalogImageMetrics.scaled(phoneMeasureCenterWidth, safeWidth: availableWidth, maxScale: playMaxScale)
-            let scales = whoIsTallerSlotScales()
-            let horizontalPadding: CGFloat = 8
-            let maxRowWidth = max(availableWidth - horizontalPadding * 2, 1)
-            let leftW = (selectedFirst != nil && scales.left > 0) ? slotW * scales.left : 0
-            let rightW = (selectedSecond != nil && scales.right > 0) ? slotW * scales.right : 0
-            let centerContentW = centerW * max(scales.center, 0)
-            let idealTotal = max(leftW + centerContentW + rightW, 1)
-            let fit = min(1, maxRowWidth / idealTotal)
-            let rowHeight = areaH * fit
-            HStack(alignment: .bottom, spacing: measureSpacing) {
-                whoIsTallerSlotOptional(
-                    item: selectedFirst,
-                    scale: scales.left,
-                    slotWidth: slotW,
-                    areaHeight: areaH,
-                    layoutFit: fit
-                )
-                .id("left-\(selectedFirst?.id ?? 0)")
-                whoIsTallerCenterImage(
-                    scale: scales.center,
-                    centerWidth: centerW,
-                    areaHeight: areaH,
-                    layoutFit: fit
-                )
-                whoIsTallerSlotOptional(
-                    item: selectedSecond,
-                    scale: scales.right,
-                    slotWidth: slotW,
-                    areaHeight: areaH,
-                    layoutFit: fit
-                )
-                .id("right-\(selectedSecond?.id ?? 0)")
-            }
-            .frame(maxWidth: .infinity)
-            .frame(height: rowHeight + 20, alignment: .bottom)
-            // Azhdarchid measure poses are very tall; without clip they can paint into the 3×3 above.
-            .clipped()
-            .padding(.horizontal, horizontalPadding)
+            dinosaurHeightComparisonArea(availableWidth: availableWidth, maxHeight: maxHeight)
         }
+    }
+
+    /// Which Ptero Is Taller: hug 140×340 poses so a shorter phone stage doesn't leave
+    /// empty side padding (gaps) or a leading-aligned row (left/right shift).
+    private func pterosaurHeightComparisonArea(availableWidth: CGFloat, maxHeight: CGFloat) -> some View {
+        let desiredAreaH = GameCatalogImageMetrics.scaled(phoneMeasureAreaHeight, safeWidth: availableWidth, maxScale: playMaxScale)
+        let scales = whoIsTallerSlotScales()
+        let row = WhoIsTallerMeasureRowMetrics.make(
+            availableWidth: availableWidth,
+            maxHeight: maxHeight,
+            desiredAreaHeight: desiredAreaH,
+            leftScale: scales.left,
+            rightScale: scales.right,
+            centerScale: scales.center,
+            showsLeft: selectedFirst != nil && scales.left > 0,
+            showsRight: selectedSecond != nil && scales.right > 0
+        )
+        // Pin the cluster to its packed width, then center that block. Spacers inside
+        // a vertical ScrollView collapse, which left the row leading-aligned.
+        return HStack(alignment: .bottom, spacing: measureSpacing) {
+            whoIsTallerSlotOptional(
+                item: selectedFirst,
+                scale: scales.left,
+                contentWidth: row.leftWidth,
+                areaHeight: row.areaHeight,
+                layoutFit: row.layoutFit
+            )
+            .id("left-\(selectedFirst?.id ?? 0)")
+            whoIsTallerCenterImage(
+                scale: scales.center,
+                contentWidth: row.centerWidth,
+                areaHeight: row.areaHeight,
+                layoutFit: row.layoutFit
+            )
+            whoIsTallerSlotOptional(
+                item: selectedSecond,
+                scale: scales.right,
+                contentWidth: row.rightWidth,
+                areaHeight: row.areaHeight,
+                layoutFit: row.layoutFit
+            )
+            .id("right-\(selectedSecond?.id ?? 0)")
+        }
+        .frame(width: max(row.packedWidth, 1), height: row.rowHeight, alignment: .bottom)
+        .frame(width: availableWidth, height: row.rowHeight + 20, alignment: .bottom)
+        // Azhdarchid measure poses are very tall; without clip they can paint into the 3×3 above.
+        .clipped()
+    }
+
+    /// Which Dino Is Taller: keep the existing 140-pt slot widths (many land poses are square).
+    private func dinosaurHeightComparisonArea(availableWidth: CGFloat, maxHeight: CGFloat) -> some View {
+        let slotW = GameCatalogImageMetrics.scaled(phoneMeasureSlotWidth, safeWidth: availableWidth, maxScale: playMaxScale)
+        let desiredAreaH = GameCatalogImageMetrics.scaled(phoneMeasureAreaHeight, safeWidth: availableWidth, maxScale: playMaxScale)
+        let areaH = min(desiredAreaH, max(160, maxHeight - 20))
+        let centerW = GameCatalogImageMetrics.scaled(phoneMeasureCenterWidth, safeWidth: availableWidth, maxScale: playMaxScale)
+        let scales = whoIsTallerSlotScales()
+        let horizontalPadding: CGFloat = 8
+        let maxRowWidth = max(availableWidth - horizontalPadding * 2, 1)
+        let leftW = (selectedFirst != nil && scales.left > 0) ? slotW * scales.left : 0
+        let rightW = (selectedSecond != nil && scales.right > 0) ? slotW * scales.right : 0
+        let centerContentW = centerW * max(scales.center, 0)
+        let idealTotal = max(leftW + centerContentW + rightW, 1)
+        let fit = min(1, maxRowWidth / idealTotal)
+        let rowHeight = areaH * fit
+        return HStack(alignment: .bottom, spacing: measureSpacing) {
+            whoIsTallerSlotOptional(
+                item: selectedFirst,
+                scale: scales.left,
+                contentWidth: leftW * fit,
+                areaHeight: areaH,
+                layoutFit: fit
+            )
+            .id("left-\(selectedFirst?.id ?? 0)")
+            whoIsTallerCenterImage(
+                scale: scales.center,
+                contentWidth: centerContentW * fit,
+                areaHeight: areaH,
+                layoutFit: fit
+            )
+            whoIsTallerSlotOptional(
+                item: selectedSecond,
+                scale: scales.right,
+                contentWidth: rightW * fit,
+                areaHeight: areaH,
+                layoutFit: fit
+            )
+            .id("right-\(selectedSecond?.id ?? 0)")
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: rowHeight + 20, alignment: .bottom)
+        .clipped()
+        .padding(.horizontal, horizontalPadding)
     }
 
     /// Width comes from the outer `GeometryReader` — avoid nesting another reader inside `ScrollView`
     /// (mis-measures during intro layout passes and can leak tape/scuba pixels above the strip).
-    private func marineLengthComparisonArea(availableWidth: CGFloat) -> some View {
+    private func marineLengthComparisonArea(availableWidth: CGFloat, maxHeight: CGFloat) -> some View {
         let scubaW = GameCatalogImageMetrics.scaled(phoneMarineScubaWidth, safeWidth: availableWidth, maxScale: playMaxScale)
-        let stripH = GameCatalogImageMetrics.scaled(phoneMarineLengthStripHeight, safeWidth: availableWidth, maxScale: playMaxScale)
-        let tapeH = GameCatalogImageMetrics.scaled(phoneMarineLengthTapeRulerHeight, safeWidth: availableWidth, maxScale: playMaxScale)
+        let desiredStripH = GameCatalogImageMetrics.scaled(phoneMarineLengthStripHeight, safeWidth: availableWidth, maxScale: playMaxScale)
+        let desiredTapeH = GameCatalogImageMetrics.scaled(phoneMarineLengthTapeRulerHeight, safeWidth: availableWidth, maxScale: playMaxScale)
+        let desiredAreaH = desiredStripH * 2 + desiredTapeH
+        let fitH = min(1, maxHeight / max(desiredAreaH, 1))
+        let stripH = desiredStripH * fitH
+        let tapeH = desiredTapeH * fitH
         let areaH = stripH * 2 + tapeH
         let contentWidth = max(availableWidth - marineLengthComparisonHorizontalPadding * 2, 1)
         let magnification = marineLengthVisibilityMagnification()
@@ -525,16 +570,16 @@ struct WhoIsTallerGameView: View {
     private func whoIsTallerSlotOptional(
         item: WhoIsTallerItem?,
         scale: CGFloat,
-        slotWidth: CGFloat,
+        contentWidth: CGFloat,
         areaHeight: CGFloat,
         layoutFit: CGFloat
     ) -> some View {
         Group {
-            if let item = item, scale > 0 {
+            if let item = item, scale > 0, contentWidth > 0 {
                 whoIsTallerSlot(
                     item: item,
                     scale: scale,
-                    slotWidth: slotWidth,
+                    contentWidth: contentWidth,
                     areaHeight: areaHeight,
                     layoutFit: layoutFit
                 )
@@ -542,15 +587,14 @@ struct WhoIsTallerGameView: View {
         }
     }
 
-    /// Left/right creature: frame hugs scaled width so art sits against the paleontologist (no empty side padding).
+    /// Left/right creature: frame hugs the fitted 140×340 pose so art sits against the paleontologist.
     private func whoIsTallerSlot(
         item: WhoIsTallerItem,
         scale: CGFloat,
-        slotWidth: CGFloat,
+        contentWidth: CGFloat,
         areaHeight: CGFloat,
         layoutFit: CGFloat
     ) -> some View {
-        let contentW = slotWidth * scale * layoutFit
         let contentH = areaHeight * scale * layoutFit
         let rowH = areaHeight * layoutFit
         return Group {
@@ -563,10 +607,10 @@ struct WhoIsTallerGameView: View {
                     .font(.system(size: 80 * layoutFit))
             }
         }
-        .frame(maxWidth: contentW, maxHeight: contentH, alignment: .bottom)
-        .frame(width: contentW, height: contentH, alignment: .bottom)
+        .frame(maxWidth: contentWidth, maxHeight: contentH, alignment: .bottom)
+        .frame(width: contentWidth, height: contentH, alignment: .bottom)
         .clipped()
-        .frame(width: contentW, height: rowH, alignment: .bottom)
+        .frame(width: contentWidth, height: rowH, alignment: .bottom)
         .clipped()
     }
 
@@ -578,12 +622,11 @@ struct WhoIsTallerGameView: View {
     /// Paleontologist reference: bottom-aligned; frame hugs scaled width so left/right creatures sit against the tape.
     private func whoIsTallerCenterImage(
         scale: CGFloat,
-        centerWidth: CGFloat,
+        contentWidth: CGFloat,
         areaHeight: CGFloat,
         layoutFit: CGFloat
     ) -> some View {
         let name = whoIsTallerCenterImageName()
-        let contentW = centerWidth * scale * layoutFit
         let contentH = areaHeight * scale * layoutFit
         let rowH = areaHeight * layoutFit
         return Group {
@@ -596,10 +639,10 @@ struct WhoIsTallerGameView: View {
                     .fill(Color.accentColor.opacity(0.5))
             }
         }
-        .frame(maxWidth: contentW, maxHeight: contentH, alignment: .bottom)
-        .frame(width: contentW, height: contentH, alignment: .bottom)
+        .frame(maxWidth: contentWidth, maxHeight: contentH, alignment: .bottom)
+        .frame(width: contentWidth, height: contentH, alignment: .bottom)
         .clipped()
-        .frame(width: contentW, height: rowH, alignment: .bottom)
+        .frame(width: contentWidth, height: rowH, alignment: .bottom)
         .clipped()
     }
 
@@ -1197,6 +1240,60 @@ enum WhoIsTallerGameConfigs {
 
     static func whichMarineReptileIsLongerRandomized() -> WhoIsTallerGameConfig {
         randomized(from: whichMarineReptileIsLonger)
+    }
+}
+
+/// Phone height-comparison row: hug 140×340 (creatures) and 110×340 (paleontologist) so a
+/// shorter reserved stage does not leave empty slot padding or a leading-shifted HStack.
+struct WhoIsTallerMeasureRowMetrics {
+    static let creatureAspect: CGFloat = 140.0 / 340.0
+    static let paleontologistAspect: CGFloat = 110.0 / 340.0
+    static let minAreaHeight: CGFloat = 160
+    static let horizontalPadding: CGFloat = 8
+
+    let areaHeight: CGFloat
+    let layoutFit: CGFloat
+    let rowHeight: CGFloat
+    let leftWidth: CGFloat
+    let centerWidth: CGFloat
+    let rightWidth: CGFloat
+
+    var packedWidth: CGFloat { leftWidth + centerWidth + rightWidth }
+
+    static func make(
+        availableWidth: CGFloat,
+        maxHeight: CGFloat,
+        desiredAreaHeight: CGFloat,
+        leftScale: CGFloat,
+        rightScale: CGFloat,
+        centerScale: CGFloat,
+        showsLeft: Bool,
+        showsRight: Bool
+    ) -> WhoIsTallerMeasureRowMetrics {
+        let areaH = min(desiredAreaHeight, max(minAreaHeight, maxHeight - 20))
+        let maxRowWidth = max(availableWidth - horizontalPadding * 2, 1)
+
+        func creatureWidth(_ scale: CGFloat, present: Bool) -> CGFloat {
+            guard present, scale > 0 else { return 0 }
+            return areaH * scale * creatureAspect
+        }
+        func paleontologistWidth(_ scale: CGFloat) -> CGFloat {
+            guard scale > 0 else { return 0 }
+            return areaH * scale * paleontologistAspect
+        }
+
+        let idealLeft = creatureWidth(leftScale, present: showsLeft)
+        let idealRight = creatureWidth(rightScale, present: showsRight)
+        let idealCenter = paleontologistWidth(centerScale)
+        let fit = min(1, maxRowWidth / max(idealLeft + idealCenter + idealRight, 1))
+        return WhoIsTallerMeasureRowMetrics(
+            areaHeight: areaH,
+            layoutFit: fit,
+            rowHeight: areaH * fit,
+            leftWidth: idealLeft * fit,
+            centerWidth: idealCenter * fit,
+            rightWidth: idealRight * fit
+        )
     }
 }
 

@@ -43,13 +43,14 @@ enum GameCatalog {
         }
     }
 
-    /// Every non-empty `(category, level, game)` slot in display order: `GameCategory.allCases` × `GameLevel.visibleInGamePicker` × catalog row order.
+    /// Every non-empty `(category, level, game)` slot in display order: `GameCategory.allCases` × `levels` × catalog row order.
     /// Empty levels (no games configured) are skipped — the slice has no rows for that level.
-    static func allPlacedGames() -> [GameCatalogPlacedGame] {
+    /// Default `levels` follows the live picker (`GameLevel.visibleInGamePicker`). Contract tests should pass `GameLevel.shippingVisibleInGamePicker`.
+    static func allPlacedGames(levels: [GameLevel] = GameLevel.visibleInGamePicker) -> [GameCatalogPlacedGame] {
         var out: [GameCatalogPlacedGame] = []
         out.reserveCapacity(64)
         for category in GameCategory.allCases {
-            for level in GameLevel.visibleInGamePicker {
+            for level in levels {
                 for game in games(for: category, level: level) {
                     out.append(GameCatalogPlacedGame(category: category, level: level, game: game))
                 }
@@ -61,6 +62,14 @@ enum GameCatalog {
     /// Visible picker levels that have at least one configured game (empty levels are ignored for “category complete”).
     static func levelsWithGames(for category: GameCategory) -> [GameLevel] {
         GameLevel.visibleInGamePicker.filter { !games(for: category, level: $0).isEmpty }
+    }
+
+    /// Tiles on the level picker. Walkthrough hides empty rungs so land 5–10 appear without a marine 5–10 “coming soon” graveyard.
+    static func pickerLevels(for category: GameCategory) -> [GameLevel] {
+        if DeveloperSessionFlags.showAllCatalogLevels {
+            return levelsWithGames(for: category)
+        }
+        return GameLevel.visibleInGamePicker
     }
 
     static func isCategoryFullyPlayed(_ category: GameCategory) -> Bool {

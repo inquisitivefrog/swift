@@ -26,7 +26,7 @@ final class UnifiedGameMediaContractXCTests: XCTestCase {
 
     private func assertEveryPlacedGameCardExists(in category: GameCategory) {
         let known = ImageAssetNames.knownAssets
-        let slots = GameCatalog.allPlacedGames().filter { $0.category == category }
+        let slots = GameCatalog.allPlacedGames(levels: GameLevel.shippingVisibleInGamePicker).filter { $0.category == category }
         XCTAssertFalse(slots.isEmpty, "Expected at least one catalog row for \(category.title).")
 
         for slot in slots {

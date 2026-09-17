@@ -2,12 +2,29 @@
 //  DeveloperSessionFlags.swift
 //  DinoGames
 //
-//  Opt-in flags for development / QA (not shown in the child UI). Toggle via UserDefaults without rebuilding.
+//  Opt-in flags for development / QA / TestFlight walkthrough (not shown in the child UI).
 //
 
 import Foundation
 
 enum DeveloperSessionFlags {
+    /// Compile-time walkthrough (`DINO_WALKTHROUGH`) or `UserDefaults` `devWalkthrough`.
+    /// When true: all catalog levels in the picker, every game unlocked, picker/cover audio skipped,
+    /// guided auto-play off, and an Exit control on every game cover.
+    ///
+    /// TestFlight / archive: use scheme **DinoGames-Walkthrough** (see `docs/development/WALKTHROUGH_TESTFLIGHT.md`).
+    /// Simulator without that scheme:
+    /// `defaults write com.inquisitivefrog.DinoGames devWalkthrough -bool YES`
+    static let walkthroughUserDefaultsKey = "devWalkthrough"
+
+    static var isWalkthroughSession: Bool {
+        #if DINO_WALKTHROUGH
+        true
+        #else
+        UserDefaults.standard.bool(forKey: walkthroughUserDefaultsKey)
+        #endif
+    }
+
     /// `UserDefaults` key. When `true`:
     /// - Every difficulty level is unlocked (Land, Air, Marine).
     /// - Land **concept prerequisites** (`LandDinosaurGamePairing`) are ignored so any listed game is playable.
@@ -21,7 +38,8 @@ enum DeveloperSessionFlags {
     static let unlockAllGameLevelsUserDefaultsKey = "devUnlockAllGameLevels"
 
     static var unlockAllGameLevels: Bool {
-        UserDefaults.standard.bool(forKey: unlockAllGameLevelsUserDefaultsKey)
+        isWalkthroughSession
+            || UserDefaults.standard.bool(forKey: unlockAllGameLevelsUserDefaultsKey)
             || UITestConfiguration.unlockAllLevels
     }
 
@@ -30,14 +48,28 @@ enum DeveloperSessionFlags {
         unlockAllGameLevels
     }
 
-    /// `UserDefaults` key. When `true` (Debug builds only): show a toolbar **Done** on Weigh / Who Is Taller / Balance so you can leave mid-game.
-    /// Off by default so free-browse and device play look like production.
-    ///
+    /// Show every catalog level that has games (including land 5+), not only shipping 1–4.
+    static var showAllCatalogLevels: Bool {
+        isWalkthroughSession
+    }
+
+    /// Skip spoken cover/level intros, intermission, game-card walk, and transition delays.
+    static var skipGameSelectionIntros: Bool {
+        isWalkthroughSession || UITestConfiguration.skipGameSelectionIntros
+    }
+
+    /// Skip splash welcome and the category cover walk.
+    static var skipLaunchCoverSequence: Bool {
+        isWalkthroughSession || UITestConfiguration.skipSplash
+    }
+
+    /// `UserDefaults` key. When `true`: show early-exit chrome (Walkthrough uses this automatically).
     /// Enable: `defaults write com.inquisitivefrog.DinoGames devShowEarlyExitDone -bool YES`
     /// Disable: `defaults delete com.inquisitivefrog.DinoGames devShowEarlyExitDone`
     static let showEarlyExitDoneUserDefaultsKey = "devShowEarlyExitDone"
 
     static var showEarlyExitDone: Bool {
-        UserDefaults.standard.bool(forKey: showEarlyExitDoneUserDefaultsKey)
+        isWalkthroughSession
+            || UserDefaults.standard.bool(forKey: showEarlyExitDoneUserDefaultsKey)
     }
 }

@@ -13,7 +13,7 @@ import XCTest
 final class LandDinosaurGameAudioFilesXCTests: XCTestCase {
 
     func testLandGameCatalogHasAudioContractForEveryPlacedGame() {
-        let placed = GameCatalog.allPlacedGames().filter { $0.category == .land }
+        let placed = GameCatalog.allPlacedGames(levels: GameLevel.shippingVisibleInGamePicker).filter { $0.category == .land }
         XCTAssertFalse(placed.isEmpty, "Expected land games in the visible catalog.")
 
         let contractedIds = Set(LandDinosaurGameAudioContracts.all.map(\.configId))
@@ -37,7 +37,7 @@ final class LandDinosaurGameAudioFilesXCTests: XCTestCase {
 
     @MainActor
     func testPlacedLandGameAudioKeysResolveInBundle() {
-        let placed = GameCatalog.allPlacedGames().filter { $0.category == .land }
+        let placed = GameCatalog.allPlacedGames(levels: GameLevel.shippingVisibleInGamePicker).filter { $0.category == .land }
         for slot in placed {
             guard let configId = slot.game.id else { continue }
             let keys = LandDinosaurGameAudioContracts.allRequiredKeys(forConfigId: configId)
@@ -85,7 +85,7 @@ final class LandDinosaurGameAudioFilesXCTests: XCTestCase {
         XCTAssertTrue(TestBundleHelpers.directoryExists(directory), "Missing directory: \(directory.path)")
 
         let stems = try TestBundleHelpers.audioStems(in: directory)
-        let expected = Set(GameLevel.visibleInGamePicker.map { $0.introAudioKey.lowercased() })
+        let expected = Set(GameLevel.shippingVisibleInGamePicker.map { $0.introAudioKey.lowercased() })
         let missing = expected.subtracting(stems).sorted()
         XCTAssertTrue(missing.isEmpty, "Missing level-picker intro audio under Levels/: \(missing)")
     }

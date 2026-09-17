@@ -111,7 +111,14 @@ struct CategorySelectionView: View {
                     .font(.title2)
                     .fontWeight(.semibold)
                     .padding(.top, 16)
-                    .padding(.bottom, 8)
+                    .padding(.bottom, DeveloperSessionFlags.isWalkthroughSession ? 4 : 8)
+
+                if DeveloperSessionFlags.isWalkthroughSession {
+                    Text("Walkthrough — Exit any game to switch")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .padding(.bottom, 8)
+                }
 
                 GeometryReader { geo in
                     let cardCount = CGFloat(RootGameType.allCases.count)
@@ -259,7 +266,7 @@ struct CategorySelectionView: View {
             gameCanonicalId: nil,
             guidedPlayMode: guided
         )
-        if UITestConfiguration.skipGameSelectionIntros {
+        if DeveloperSessionFlags.skipGameSelectionIntros {
             speechManager.onAudioFinished = nil
             DispatchQueue.main.async {
                 // Replace (do not append) so a stale resume destination cannot stack under Land.
@@ -306,7 +313,7 @@ struct CategorySelectionView: View {
         enabledDinosaurs = true
         enabledPterosaurs = true
         enabledSea = true
-        guard !UITestConfiguration.skipGameSelectionIntros else { return }
+        guard !DeveloperSessionFlags.skipGameSelectionIntros else { return }
         DispatchQueue.main.async {
             self.speechManager.speak("cover-choose-a-game-type")
         }

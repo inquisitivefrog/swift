@@ -28,7 +28,7 @@ final class PterosaurGameCatalogXCTests: XCTestCase {
     }
 
     func testVisibleAirLevelsAreOneThroughFour() {
-        XCTAssertEqual(GameLevel.visibleInGamePicker, [.level1, .level2, .level3, .level4])
+        XCTAssertEqual(GameLevel.shippingVisibleInGamePicker, [.level1, .level2, .level3, .level4])
     }
 
     func testEachShippingAirLevelOneThroughThreeHasThreeGamesInCatalogOrder() {
@@ -51,7 +51,7 @@ final class PterosaurGameCatalogXCTests: XCTestCase {
     }
 
     func testShippingAirGamesMapToAirProgressCategory() {
-        let ids = GameLevel.visibleInGamePicker.flatMap { PterosaurGameCatalog.games(level: $0).compactMap(\.id) }
+        let ids = GameLevel.shippingVisibleInGamePicker.flatMap { PterosaurGameCatalog.games(level: $0).compactMap(\.id) }
         for id in ids {
             XCTAssertEqual(GameCategory.forCatalogConfigId(id), .air, "Config `\(id)` should map to air")
         }

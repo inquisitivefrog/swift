@@ -20,6 +20,7 @@
 | Assets parked off `main` | Unreleased imagesets removed from release `Assets.xcassets` after syncing onto `future-games`. Some games (Wacky, Clues, Formations, Teens, Coprolites, Pterosaur-Characteristics) have **no** `images/` 1024 masters — catalog on `future-games` is the archive |
 | LFS | Already repo-wide (`*.png` in `.gitattributes`). No per-branch enable. After `git checkout future-games`, run `git lfs pull` |
 | Shipping app still fat? | Only imagesets still present under release `Assets.xcassets` go in the IPA |
+| Levels 5+ / 2nd app? | Not a size fix — grow via packs/ODR; see §4 “Future levels / second app” in the canonical doc. Fauna ×3 and Fossil Hunt are known heavy candidates |
 
 ## Restore masters onto this branch (do not re-bundle unless shipping)
 

@@ -17,11 +17,11 @@ final class LandDinosaurGameCatalogXCTests: XCTestCase {
     ]
 
     func testVisibleLandLevelsAreOneThroughFour() {
-        XCTAssertEqual(GameLevel.visibleInGamePicker, [.level1, .level2, .level3, .level4])
+        XCTAssertEqual(GameLevel.shippingVisibleInGamePicker, [.level1, .level2, .level3, .level4])
     }
 
     func testEachShippingLevelHasThreeGamesInCatalogOrder() {
-        for level in GameLevel.visibleInGamePicker {
+        for level in GameLevel.shippingVisibleInGamePicker {
             let expected = shippingCanonicalByLevel[level] ?? []
             let games = DinosaurGameCatalog.games(level: level)
             XCTAssertEqual(games.count, 3, "Land level \(level.number) should list three games")
@@ -31,7 +31,7 @@ final class LandDinosaurGameCatalogXCTests: XCTestCase {
     }
 
     func testShippingLandGamesMapToLandProgressCategory() {
-        let ids = GameLevel.visibleInGamePicker.flatMap { DinosaurGameCatalog.games(level: $0).compactMap(\.id) }
+        let ids = GameLevel.shippingVisibleInGamePicker.flatMap { DinosaurGameCatalog.games(level: $0).compactMap(\.id) }
         for id in ids {
             XCTAssertEqual(GameCategory.forCatalogConfigId(id), .land, "Config `\(id)` should map to land")
         }

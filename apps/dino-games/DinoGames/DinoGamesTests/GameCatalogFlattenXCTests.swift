@@ -11,12 +11,12 @@ import XCTest
 final class GameCatalogFlattenXCTests: XCTestCase {
 
     func testAllPlacedGamesMatchesPerCategoryConcatenation() {
-        let placed = GameCatalog.allPlacedGames()
+        let placed = GameCatalog.allPlacedGames(levels: GameLevel.shippingVisibleInGamePicker)
         XCTAssertFalse(placed.isEmpty, "Expected at least one placed game across all categories.")
 
         for category in GameCategory.allCases {
             let fromIterator = placed.filter { $0.category == category }.map(\.game)
-            let fromCatalog = GameCatalog.games(for: category, level: nil)
+            let fromCatalog = GameLevel.shippingVisibleInGamePicker.flatMap { GameCatalog.games(for: category, level: $0) }
             XCTAssertEqual(
                 fromIterator.count,
                 fromCatalog.count,
@@ -31,7 +31,7 @@ final class GameCatalogFlattenXCTests: XCTestCase {
     }
 
     func testAllPlacedGamesHaveUniquePlacementKeys() {
-        let placed = GameCatalog.allPlacedGames()
+        let placed = GameCatalog.allPlacedGames(levels: GameLevel.shippingVisibleInGamePicker)
         let keys = placed.map(\.placementKey)
         XCTAssertEqual(
             Set(keys).count,
@@ -41,7 +41,7 @@ final class GameCatalogFlattenXCTests: XCTestCase {
     }
 
     func testEveryPlacedGameHasConfigId() {
-        let placed = GameCatalog.allPlacedGames()
+        let placed = GameCatalog.allPlacedGames(levels: GameLevel.shippingVisibleInGamePicker)
         let missing = placed.filter { $0.game.id == nil || ($0.game.id?.isEmpty == true) }
         XCTAssertTrue(
             missing.isEmpty,
@@ -50,7 +50,7 @@ final class GameCatalogFlattenXCTests: XCTestCase {
     }
 
     func testForCatalogConfigIdMatchesPlacedGameCategory() {
-        for placed in GameCatalog.allPlacedGames() {
+        for placed in GameCatalog.allPlacedGames(levels: GameLevel.shippingVisibleInGamePicker) {
             guard let id = placed.game.id else { continue }
             XCTAssertEqual(
                 GameCategory.forCatalogConfigId(id),

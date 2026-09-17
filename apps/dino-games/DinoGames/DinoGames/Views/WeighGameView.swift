@@ -580,18 +580,6 @@ struct WeighGameView: View {
         .navigationBarTitleDisplayMode(.inline)
         .allowsHitTesting(!blocksUserInput)
         .gameSheetDismissDisabledWhileAudioPlaying(blocksUserInput)
-        .toolbar {
-            #if DEBUG
-            if DeveloperSessionFlags.showEarlyExitDone, !isGameOver {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Done") {
-                        isPresented = false
-                    }
-                    .disabled(blocksUserInput)
-                }
-            }
-            #endif
-        }
         .onAppear {
             // First round: use shuffled pool (or config items if no per-round randomizer for this game)
             currentRoundItems = WeighGameConfigs.randomizedItems(forId: gameConfig.id)
@@ -1202,6 +1190,8 @@ struct SpeedLinesView: View {
 // Derive leftover height for the play stage and scale beam/dinos to fit.
 struct WeighPlayAreaMetrics {
     static let phoneSeesawHeight: CGFloat = 260
+    /// Floor for the seesaw band so the 3×3 can keep phone-width portraits.
+    static let phoneMinSeesawHeight: CGFloat = 200
     static let phoneGridBlockHeight: CGFloat = 422
     /// Match `CreatureThreeByThreeGridMetrics` — 2-line title + round line.
     static let phoneTitleBlockHeight: CGFloat = 80
@@ -1236,7 +1226,12 @@ struct WeighPlayAreaMetrics {
         let midSpacer: CGFloat = 16
         let titleBlockHeight = phoneTitleBlockHeight
         let chrome = topSpacer + midSpacer + 16
-        let reservedSeesaw = phoneSeesawHeight * 1.2
+        // Cap the seesaw claim so phone 3×3 portraits fill the width instead of shrinking
+        // into a thumbnail strip above an empty band.
+        let reservedSeesaw = min(
+            phoneSeesawHeight,
+            max(phoneMinSeesawHeight, (safeHeight - chrome) * 0.28)
+        )
         let grid = CreatureThreeByThreeGridMetrics.make(
             safeWidth: safeWidth,
             safeHeight: safeHeight,
@@ -1249,7 +1244,7 @@ struct WeighPlayAreaMetrics {
         let gridContentWidth = grid.contentWidth
         let gridBlockHeight = grid.blockHeight
         let seesawHeight = max(
-            phoneSeesawHeight,
+            phoneMinSeesawHeight,
             safeHeight - gridBlockHeight - chrome
         )
         let layoutScale = max(1, seesawHeight / phoneSeesawHeight)

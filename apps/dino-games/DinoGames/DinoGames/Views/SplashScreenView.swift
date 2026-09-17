@@ -27,7 +27,7 @@ struct SplashScreenView: View {
         Group {
             if showMainApp {
                 CategorySelectionView(
-                    skipLaunchCoverSequence: CategoryPlaySession.shouldSkipLaunchIntros || UITestConfiguration.skipSplash
+                    skipLaunchCoverSequence: CategoryPlaySession.shouldSkipLaunchIntros || DeveloperSessionFlags.skipLaunchCoverSequence
                 )
             } else {
                 NavigationStack {
@@ -118,7 +118,7 @@ struct SplashScreenView: View {
     }
 
     private func handleSplashAppear() {
-        let skipIntros = CategoryPlaySession.shouldSkipLaunchIntros || UITestConfiguration.skipSplash
+        let skipIntros = CategoryPlaySession.shouldSkipLaunchIntros || DeveloperSessionFlags.skipLaunchCoverSequence
         if skipIntros {
             advanceTask = Task { @MainActor in
                 try? await Task.sleep(for: Self.skipIntroDelay)
