@@ -64,12 +64,9 @@ enum GameCatalog {
         GameLevel.visibleInGamePicker.filter { !games(for: category, level: $0).isEmpty }
     }
 
-    /// Tiles on the level picker. Walkthrough hides empty rungs so land 5–10 appear without a marine 5–10 “coming soon” graveyard.
+    /// Tiles on the level picker: the same shipping levels (1–4) in every build, including the TestFlight walkthrough.
     static func pickerLevels(for category: GameCategory) -> [GameLevel] {
-        if DeveloperSessionFlags.showAllCatalogLevels {
-            return levelsWithGames(for: category)
-        }
-        return GameLevel.visibleInGamePicker
+        GameLevel.visibleInGamePicker
     }
 
     static func isCategoryFullyPlayed(_ category: GameCategory) -> Bool {

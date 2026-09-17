@@ -108,15 +108,15 @@ enum GameLevel: String, CaseIterable, Identifiable {
 }
 
 extension GameLevel {
-    /// App Store picker: levels **1–4** only. Walkthrough (`DeveloperSessionFlags.showAllCatalogLevels`) expands `visibleInGamePicker` to every rung.
-    static let shippingVisibleInGamePicker: [GameLevel] = [.level1, .level2, .level3, .level4]
+    /// Levels shown in each category's level picker and used to flatten catalog `games`: the same **1–4** in
+    /// every build, including the TestFlight walkthrough. Levels 5+ reference games whose art is parked on
+    /// `future-games` (see `CLAUDE.md`) and are not safe to construct — several `fatalError()` when their round
+    /// builder can't find enough qualifying creatures. The walkthrough's job is free navigation within the
+    /// shipping catalog (see `DeveloperSessionFlags.manualGameSelection`), not exposing unshipped levels.
+    static let visibleInGamePicker: [GameLevel] = [.level1, .level2, .level3, .level4]
 
-    /// Levels shown in each category’s level picker and used to flatten catalog `games`. Shipping builds stay on 1–4; a walkthrough session lists every `GameLevel`.
-    static var visibleInGamePicker: [GameLevel] {
-        DeveloperSessionFlags.showAllCatalogLevels
-            ? Array(GameLevel.allCases)
-            : shippingVisibleInGamePicker
-    }
+    /// Alias for call sites/tests that want to be explicit this is the shipping set (identical to `visibleInGamePicker`).
+    static var shippingVisibleInGamePicker: [GameLevel] { visibleInGamePicker }
 }
 
 enum DinosaurGameCatalog {

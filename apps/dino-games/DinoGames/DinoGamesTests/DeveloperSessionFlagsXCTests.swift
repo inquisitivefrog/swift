@@ -2,7 +2,9 @@
 //  DeveloperSessionFlagsXCTests.swift
 //  DinoGamesTests
 //
-//  Walkthrough session expands the picker and unlocks games without changing the shipping 1–4 catalog.
+//  Walkthrough session unlocks free navigation (no forced completion order) within the shipping 1–4
+//  catalog — it does not expose levels 5+, whose games depend on art parked on `future-games` and can
+//  crash (fatalError) when their round builder can't find enough qualifying creatures.
 //
 
 import XCTest
@@ -31,37 +33,31 @@ final class DeveloperSessionFlagsXCTests: XCTestCase {
         )
         XCTAssertEqual(GameLevel.visibleInGamePicker, GameLevel.shippingVisibleInGamePicker)
         XCTAssertFalse(DeveloperSessionFlags.isWalkthroughSession)
-        XCTAssertFalse(DeveloperSessionFlags.showAllCatalogLevels)
         XCTAssertEqual(GameCatalog.pickerLevels(for: .land).count, 4)
     }
 
-    func testWalkthroughSessionUnlocksAllCatalogLevelsAndEarlyExit() {
+    func testWalkthroughSessionUnlocksFreeNavigationWithoutExpandingLevels() {
         UserDefaults.standard.set(true, forKey: DeveloperSessionFlags.walkthroughUserDefaultsKey)
 
         XCTAssertTrue(DeveloperSessionFlags.isWalkthroughSession)
-        XCTAssertTrue(DeveloperSessionFlags.showAllCatalogLevels)
         XCTAssertTrue(DeveloperSessionFlags.unlockAllGameLevels)
         XCTAssertTrue(DeveloperSessionFlags.manualGameSelection)
         XCTAssertTrue(DeveloperSessionFlags.showEarlyExitDone)
         XCTAssertTrue(DeveloperSessionFlags.skipGameSelectionIntros)
         XCTAssertTrue(DeveloperSessionFlags.skipLaunchCoverSequence)
 
-        XCTAssertEqual(GameLevel.visibleInGamePicker, Array(GameLevel.allCases))
+        // Free navigation, not more levels: walkthrough still stays on the shipping 1–4 set.
+        XCTAssertEqual(GameLevel.visibleInGamePicker, GameLevel.shippingVisibleInGamePicker)
 
         let landLevels = GameCatalog.pickerLevels(for: .land)
-        XCTAssertTrue(landLevels.contains(.level1))
-        XCTAssertTrue(landLevels.contains(.level5), "Walkthrough should list land games past shipping level 4")
+        XCTAssertEqual(landLevels, [.level1, .level2, .level3, .level4])
+        XCTAssertFalse(landLevels.contains(.level5), "Walkthrough must not surface land levels 5+ (parked art, some fatalError)")
         XCTAssertFalse(landLevels.contains(where: { DinosaurGameCatalog.games(level: $0).isEmpty }))
-
-        let marineLevels = GameCatalog.pickerLevels(for: .marineReptiles)
-        XCTAssertFalse(marineLevels.contains(.level10), "Empty marine rungs stay off the walkthrough picker")
-        XCTAssertTrue(marineLevels.allSatisfy { !MarineReptileGameCatalog.games(level: $0).isEmpty })
     }
 
     func testUnlockAllDefaultsDoesNotExpandShippingPicker() {
         UserDefaults.standard.set(true, forKey: DeveloperSessionFlags.unlockAllGameLevelsUserDefaultsKey)
         XCTAssertTrue(DeveloperSessionFlags.unlockAllGameLevels)
-        XCTAssertFalse(DeveloperSessionFlags.showAllCatalogLevels)
         XCTAssertEqual(GameLevel.visibleInGamePicker, GameLevel.shippingVisibleInGamePicker)
     }
 }

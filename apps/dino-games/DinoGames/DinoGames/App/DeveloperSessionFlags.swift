@@ -9,8 +9,10 @@ import Foundation
 
 enum DeveloperSessionFlags {
     /// Compile-time walkthrough (`DINO_WALKTHROUGH`) or `UserDefaults` `devWalkthrough`.
-    /// When true: all catalog levels in the picker, every game unlocked, picker/cover audio skipped,
-    /// guided auto-play off, and an Exit control on every game cover.
+    /// When true: free navigation within the same shipping levels (1–4) — every game unlocked, no forced
+    /// completion order, picker/cover audio skipped, guided auto-play off, and an Exit control on every game
+    /// cover. Does **not** expose levels 5+: those games' art is parked on `future-games` and several
+    /// `fatalError()` when their round builder can't find enough qualifying creatures.
     ///
     /// TestFlight / archive: use scheme **DinoGames-Walkthrough** (see `docs/development/WALKTHROUGH_TESTFLIGHT.md`).
     /// Simulator without that scheme:
@@ -46,11 +48,6 @@ enum DeveloperSessionFlags {
     /// Manual level + game selection for QA (same switch as `unlockAllGameLevels`).
     static var manualGameSelection: Bool {
         unlockAllGameLevels
-    }
-
-    /// Show every catalog level that has games (including land 5+), not only shipping 1–4.
-    static var showAllCatalogLevels: Bool {
-        isWalkthroughSession
     }
 
     /// Skip spoken cover/level intros, intermission, game-card walk, and transition delays.
