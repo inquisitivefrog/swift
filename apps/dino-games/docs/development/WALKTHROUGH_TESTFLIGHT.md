@@ -35,6 +35,19 @@ Then Organizer → Distribute App → **TestFlight Internal Only** (not "App Sto
 
 After archiving, `open ./build/DinoGames-Walkthrough.xcarchive` registers it with Xcode's Organizer if it isn't already showing there (a CLI-built archive at a custom path isn't auto-discovered otherwise).
 
+## TestFlight tester groups: keep the demo build from getting shadowed (2026-09-17)
+
+Internal testing groups default to **"Enable automatic distribution" checked** when created. That means the original/default internal group auto-receives *every* successfully processed build — including production builds uploaded via the "App Store Connect" method for an actual App Store submission (e.g. `1.0.2 (11)`), even though that upload was never meant for TestFlight. Since the TestFlight app shows only **one current build per tester per app** (resolved across *all* their group memberships, not one entry per group), a newer production build landing in a group you're still in will silently override the demo build as what's offered to you — even if the demo build is explicitly assigned to a different group you're also in.
+
+**Symptom:** a demo build (e.g. `1.0.2 (10)`) that worked fine suddenly shows as "already tested" / isn't offered for install, right after a newer build (e.g. `1.0.2 (11)`) is uploaded for an unrelated purpose.
+
+**Fix, one-time setup:**
+1. Create a separate internal testing group dedicated to interview/demo builds (e.g. "Interview Demo"), and **uncheck "Enable automatic distribution"** during creation.
+2. Add yourself as a tester to that group only.
+3. Explicitly assign the demo build (pick it by build number, not "latest") to that group.
+
+**If the cycle repeats anyway** (a newer production build shadows the demo build again): you're probably still a member of the original/default group too. Remove yourself from that group, leaving membership only in the demo group, then reload TestFlight's content on-device (pull-to-refresh the Apps list, or force-quit and relaunch TestFlight) to pick up the change.
+
 ## Simulator without the scheme
 
 ```bash
