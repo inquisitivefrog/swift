@@ -1,0 +1,12 @@
+{
+  "warning_scenes": {
+    "man_on": {
+      "scene_id": "soc_game_action_man_on",
+      "primary_actor": "leo",
+      "secondary_actor": "andrew",
+      "tertiary_actor": "juan", 
+      "action": "leo is facing three-quarter running and dribbling to the right with eyes focused on the ball as it moves with speed lines. andrew is hot on his trail.",
+      "reaction": "juan is calling to leo that andrew is sneaking up from behind."
+    }
+  }
+}
