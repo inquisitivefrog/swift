@@ -1,0 +1,24 @@
+{
+  "image_description": {
+    "subject": "A friendly T-Rex in a jungle setting with neon text",
+    "composition": "A medium close-up shot of a T-Rex head and shoulders with arching text overhead. Positioned in front to the left, a medium close-up shot of a Pteranodon head and wings. Positioned in front to the right, a medium close-up shot of a Mosasaur head and fins.",
+    "text": {
+      "content": "WELCOME TO PALEO-GAMES!",
+      "style": "Red glowing neon letters curved across the top of the frame"
+    },
+    "animals": [
+      {
+        "type": "T-Rex (Tyrannosaurus Rex)",
+        "pose": "Facing slightly to the left, mouth open in a cheerful roar or smile, showing sharp teeth",
+        "features": "Detailed textured green-brown scales, expressive amber eyes, powerful jaw structure"
+      }
+    ],
+    "art_style": "3D animated digital art, video game cover style",
+    "background": "Lush prehistoric jungle with soft-focus green foliage and purple-blue glowing flowers",
+    "lighting": "Cinematic lighting with a warm red glow cast from the neon text onto the dinosaur and surrounding atmosphere"
+  },
+  "text": {
+    "content": "Level 1",
+    "style": "Red glowing neon letters in the bottom right corner of the frame"
+  }
+}
